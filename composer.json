@@ -1,0 +1,23 @@
+{
+  "type": "project",
+  "name": "zoujingli/think-admin",
+  "keywords": ["ThinkPHP","ThinkAdmin"],
+  "autoload": {"psr-4": {"app\\": "application"}},
+  "authors": [{"name": "Anyon", "email": "zoujingli@qq.com"}],
+  "description": "Rapid development framework based on ThinkPHP5",
+  "require": {
+    "php": ">=5.6",
+    "ext-curl": "*",
+    "ext-json": "*",
+    "ext-iconv": "*",
+    "topthink/framework": "5.1.*",
+    "zoujingli/weopen-developer": "^1.0",
+    "zoujingli/think-library": "dev-master"
+  },
+  "repositories": {
+    "packagist": {
+      "type": "composer",
+      "url": "https://packagist.laravel-china.org"
+    }
+  }
+}

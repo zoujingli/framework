@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ThinkAdmin</title>
+    <meta name="renderer" content="webkit">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <link href="__STATIC__/plugs/awesome/css/font-awesome.min.css?v={:date('ymd')}" rel="stylesheet">
+    <link href="__STATIC__/plugs/layui/css/layui.css?v={:date('ymd')}" rel="stylesheet">
+    <link href="__STATIC__/theme/css/console.css?v={:date('ymd')}" rel="stylesheet">
+    <link href="__STATIC__/theme/css/animate.css?v={:date('ymd')}" rel="stylesheet">
+    {block name="style"}{/block}
+    <script>window.ROOT_URL = '__ROOT__';</script>
+    <script src="__STATIC__/plugs/jquery/pace.min.js"></script>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header layui-bg-blue">
+        <a href="{:url('@')}" class="layui-logo">ThinkAdmin <sup>V4.0</sup></a>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item layui-this"><a href="#">控制台</a></li>
+            <li class="layui-nav-item"><a href="#">商品管理</a></li>
+            <li class="layui-nav-item"><a href="#">用户</a></li>
+            <li class="layui-nav-item">
+                <dl class="layui-nav-child">
+                    <dd lay-unselect><a href="#">邮件管理</a></dd>
+                    <dd lay-unselect><a href="#">消息管理</a></dd>
+                    <dd lay-unselect><a href="#">授权管理</a></dd>
+                </dl>
+                <a href="#">
+                    <span>其它系统2</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <dl class="layui-nav-child">
+                    <dd lay-unselect>
+                        <a href="#"><i class="layui-icon layui-icon-set-fill"></i> 基本资料</a>
+                    </dd>
+                    <dd lay-unselect>
+                        <a href="#"><i class="layui-icon layui-icon-component"></i> 安全设置</a>
+                    </dd>
+                </dl>
+                <a href="#">
+                    <span>
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img"> 贤心
+                        </span>
+                </a>
+            </li>
+            <li class="layui-nav-item"><a href="">退了</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree " lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="#">所有商品</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="#">列表一</a></dd>
+                        <dd><a href="#">列表二</a></dd>
+                        <dd><a href="#">列表三</a></dd>
+                        <dd><a href="#">超链接</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="#">解决方案</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="#">列表一</a></dd>
+                        <dd><a href="#">列表二</a></dd>
+                        <dd><a href="">超链接</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="">云市场</a></li>
+                <li class="layui-nav-item"><a href="">发布商品</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <div class="layui-tab layui-tab-brief" lay-allowclose="true" lay-filter="NavConter">
+            <ul class="layui-tab-title">
+                <li class="layui-this" lay-id="/admin/test0.html">网站设置</li>
+                <li lay-id="/admin/test1.html">用户管理</li>
+                <li lay-id="/admin/test2.html">权限分配</li>
+                <li lay-id="/admin/test3.html">商品管理</li>
+                <li lay-id="/admin/test4.html">订单管理</li>
+                <li lay-id="/admin/test5.html">订单管理</li>
+                <li lay-id="/admin/test6.html">订单管理</li>
+                <li lay-id="/admin/test7.html">订单管理</li>
+                <li lay-id="/admin/test8.html">订单管理</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item">
+                    {$pagehtml|default=''|raw}
+                </div>
+                <div class="layui-tab-item">内容1</div>
+                <div class="layui-tab-item">内容2</div>
+                <div class="layui-tab-item">内容3</div>
+                <div class="layui-tab-item">内容4</div>
+                <div class="layui-tab-item">内容5</div>
+                <div class="layui-tab-item">内容6</div>
+                <div class="layui-tab-item">内容7</div>
+                <div class="layui-tab-item">内容8</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
+</div>
+
+<script src="__STATIC__/plugs/layui/layui.all.js"></script>
+<script src="__STATIC__/admin.js"></script>
+<script>
+    //Hash地址的定位
+    // var layid = location.hash.replace(/^#/, '');
+    // layui.element.tabChange('NavConter', layid);
+    // layui.element.on('tab(NavConter)', function (elem) {
+    //     location.hash = $(this).attr('lay-id');
+    // });
+</script>
+</body>
+</html>
