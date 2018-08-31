@@ -1,21 +1,19 @@
 <?php
+
 // +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
+// | ThinkAdmin
 // +----------------------------------------------------------------------
-// | Copyright (c) 2006-2018 http://thinkphp.cn All rights reserved.
+// | 版权所有 2014~2018 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
 // +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
+// | 官方网站: http://framework.thinkadmin.top
 // +----------------------------------------------------------------------
-// | Author: liu21st <liu21st@gmail.com>
+// | 开源协议 ( https://mit-license.org )
+// +----------------------------------------------------------------------
+// | github开源项目：https://github.com/zoujingli/ThinkAdmin
 // +----------------------------------------------------------------------
 
-// [ 应用入口文件 ]
 namespace think;
 
-// 加载基础文件
 require __DIR__ . '/../thinkphp/base.php';
 
-// 支持事先使用静态方法设置Request对象和Config对象
-
-// 执行应用并响应
 Container::get('app')->run()->send();
