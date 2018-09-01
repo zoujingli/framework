@@ -45,11 +45,11 @@ define('jquery', function () {
     return layui.$;
 });
 
-// UI框架初始化
-PageLayout.call(this);
+// 框架初始化
+AdminLayout.call(window);
 
-// UI框架布局函数
-function PageLayout(callback, custom) {
+// 框架布局
+function AdminLayout(callback, custom) {
     window.WEB_SOCKET_SWF_LOCATION = baseRoot + "plugs/socket/WebSocketMain.swf";
     require(custom || [], callback || false);
 }

@@ -20,15 +20,32 @@ use library\tools\Node;
 use think\Db;
 use think\App;
 
+/**
+ * 后台入口管理
+ * Class Index
+ * @package app\admin\controller
+ */
 class Index extends Controller
 {
+
+    /**
+     * 显示后台首页
+     * @return mixed
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
     public function index()
-    {
+    {$this->fasdfas();
         $list = (array)Db::name('SystemMenu')->where(['status' => '1'])->order('sort asc,id asc')->select();
         $menus = $this->buildMenuData(Data::arr2tree($list), $this->get(), !!session('user'));
         return $this->fetch('', ['title' => '系统管理', 'menus' => $menus]);
     }
 
+    /**
+     * rgck
+     * @return mixed
+     */
     public function main()
     {
         $_version = Db::query('select version() as ver');
