@@ -32,8 +32,8 @@
         <form onsubmit="return false;" data-time="0.001" data-auto="true" method="post" autocomplete="off" class="content layui-form layui-anim layui-anim-upbit">
             <div class="people">
                 <div class="tou"></div>
-                <div id="left-hander" class="initial_left_hand transition"></div>
-                <div id="right-hander" class="initial_right_hand transition"></div>
+                <div id="left-hander" class="initial-left-hand transition"></div>
+                <div id="right-hander" class="initial-right-hand transition"></div>
             </div>
             <ul>
                 <li class="username">
@@ -71,11 +71,11 @@
     }
     $(function () {
         $('[name="password"]').on('focus', function () {
-            $('#left-hander').removeClass('initial_left_hand').addClass('left_hand');
-            $('#right-hander').removeClass('initial_right_hand').addClass('right_hand')
+            $('#left-hander').removeClass('initial-left-hand').addClass('left-hand');
+            $('#right-hander').removeClass('initial-right-hand').addClass('right_hand')
         }).on('blur', function () {
-            $('#left-hander').addClass('initial_left_hand').removeClass('left_hand');
-            $('#right-hander').addClass('initial_right_hand').removeClass('right_hand')
+            $('#left-hander').addClass('initial-left-hand').removeClass('left-hand');
+            $('#right-hander').addClass('initial-right-hand').removeClass('right-hand')
         });
     });
 </script>
