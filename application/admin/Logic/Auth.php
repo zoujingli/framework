@@ -1,0 +1,200 @@
+<?php
+
+// +----------------------------------------------------------------------
+// | ThinkAdmin
+// +----------------------------------------------------------------------
+// | 版权所有 2014~2017 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
+// +----------------------------------------------------------------------
+// | 官方网站: http://think.ctolog.com
+// +----------------------------------------------------------------------
+// | 开源协议 ( https://mit-license.org )
+// +----------------------------------------------------------------------
+// | github开源项目：https://github.com/zoujingli/ThinkAdmin
+// +----------------------------------------------------------------------
+
+namespace app\admin\Logic;
+
+use library\tools\Data;
+use library\tools\Node;
+use think\Request;
+use think\Db;
+
+/**
+ * 权限访问管理
+ * Class Auth
+ * @package app\admin\Logic
+ */
+class Auth
+{
+    /**
+     * @param Request $request
+     * @param \Closure $next
+     * @return mixed
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function handle($request, \Closure $next)
+    {
+        list($module, $controller, $action) = [$request->module(), $request->controller(), $request->action()];
+        $node = Node::parseString("{$module}/{$controller}/{$action}");
+        $info = Db::name('SystemNode')->cache(true, 30)->where(['node' => $node])->find();
+        $access = [
+            'is_menu'  => intval(!empty($info['is_menu'])),
+            'is_auth'  => intval(!empty($info['is_auth'])),
+            'is_login' => empty($info['is_auth']) ? intval(!empty($info['is_login'])) : 1,
+        ];
+        // 登录状态检查
+        if (!empty($access['is_login']) && !session('user')) {
+            $msg = ['code' => 0, 'msg' => '抱歉，您还没有登录获取访问权限！', 'url' => url('@admin/login')];
+            return $request->isAjax() ? json($msg) : redirect($msg['url']);
+        }
+        // 访问权限检查
+        if (!empty($access['is_auth']) && !self::checkAuthNode($node)) {
+            return json(['code' => 0, 'msg' => '抱歉，您没有访问该模块的权限！']);
+        }
+        // 模板常量声明
+        app('view')->init(config('template.'))->assign(['classuri' => Node::parseString("{$module}/{$controller}")]);
+        return $next($request);
+    }
+
+    /**
+     * 获取系统代码节点
+     * @param array $nodes
+     * @return array
+     */
+    public static function get($nodes = [])
+    {
+        $alias = Db::name('SystemNode')->column('node,is_menu,is_auth,is_login,title');
+        $ignore = ['index', 'wechat/review', 'admin/plugs', 'admin/login', 'admin/index'];
+        foreach (Node::getTree(env('app_path')) as $thr) {
+            foreach ($ignore as $str) {
+                if (stripos($thr, $str) === 0) {
+                    continue 2;
+                }
+            }
+            $tmp = explode('/', $thr);
+            list($one, $two) = ["{$tmp[0]}", "{$tmp[0]}/{$tmp[1]}"];
+            $nodes[$one] = array_merge(isset($alias[$one]) ? $alias[$one] : ['node' => $one, 'title' => '', 'is_menu' => 0, 'is_auth' => 0, 'is_login' => 0], ['pnode' => '']);
+            $nodes[$two] = array_merge(isset($alias[$two]) ? $alias[$two] : ['node' => $two, 'title' => '', 'is_menu' => 0, 'is_auth' => 0, 'is_login' => 0], ['pnode' => $one]);
+            $nodes[$thr] = array_merge(isset($alias[$thr]) ? $alias[$thr] : ['node' => $thr, 'title' => '', 'is_menu' => 0, 'is_auth' => 0, 'is_login' => 0], ['pnode' => $two]);
+        }
+        foreach ($nodes as &$node) {
+            list($node['is_auth'], $node['is_menu'], $node['is_login']) = [intval($node['is_auth']), intval($node['is_menu']), empty($node['is_auth']) ? intval($node['is_login']) : 1];
+        }
+        return $nodes;
+    }
+
+    /**
+     * 检查用户节点权限
+     * @param string $node 节点
+     * @return bool
+     */
+    public static function checkAuthNode($node)
+    {
+        list($module, $controller, $action) = explode('/', str_replace(['?', '=', '&'], '/', $node . '///'));
+        $currentNode = Node::parseString("{$module}/{$controller}") . strtolower("/{$action}");
+        if (session('user.username') === 'admin' || stripos($node, 'admin/index') === 0) {
+            return true;
+        }
+        if (!in_array($currentNode, self::getAuthNode())) {
+            return true;
+        }
+        return in_array($currentNode, (array)session('user.nodes'));
+    }
+
+    /**
+     * 获取授权节点
+     * @return array
+     */
+    public static function getAuthNode()
+    {
+        $nodes = cache('need_access_node');
+        if (empty($nodes)) {
+            $nodes = Db::name('SystemNode')->where(['is_auth' => '1'])->column('node');
+            cache('need_access_node', $nodes);
+        }
+        return $nodes;
+    }
+
+
+    /**
+     * 应用用户权限节点
+     * @return bool
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public static function applyAuthNode()
+    {
+        cache('need_access_node', null);
+        if (($userid = session('user.id'))) {
+            session('user', Db::name('SystemUser')->where(['id' => $userid])->find());
+        }
+        if (($authorize = session('user.authorize'))) {
+            $where = [['status', 'eq', '1'], ['id', 'in', explode(',', $authorize)]];
+            $auths = Db::name('SystemAuth')->where($where)->column('id');
+            if (empty($auths)) {
+                return session('user.nodes', []);
+            }
+            $nodes = Db::name('SystemAuthNode')->whereIn('auth', $auths)->column('node');
+            return session('user.nodes', $nodes);
+        }
+        return false;
+    }
+
+
+    /**
+     * 后台主菜单权限过滤
+     * @param array $menus 当前菜单列表
+     * @param array $nodes 系统权限节点数据
+     * @param bool $isLogin 是否已经登录
+     * @return array
+     */
+    private static function buildMenuData($menus, $nodes, $isLogin)
+    {
+        foreach ($menus as $key => &$menu) {
+            !empty($menu['sub']) && $menu['sub'] = self::buildMenuData($menu['sub'], $nodes, $isLogin);
+            if (!empty($menu['sub'])) {
+                $menu['url'] = '#';
+            } elseif (preg_match('/^https?\:/i', $menu['url'])) {
+                continue;
+            } elseif ($menu['url'] !== '#') {
+                $node = join('/', array_slice(explode('/', preg_replace('/[\W]/', '/', $menu['url'])), 0, 3));
+                $menu['url'] = url($menu['url']) . (empty($menu['params']) ? '' : "?{$menu['params']}");
+                if (isset($nodes[$node]) && $nodes[$node]['is_login'] && empty($isLogin)) {
+                    unset($menus[$key]);
+                } elseif (isset($nodes[$node]) && $nodes[$node]['is_auth'] && $isLogin && !self::checkAuthNode($node)) {
+                    unset($menus[$key]);
+                }
+            } else {
+                unset($menus[$key]);
+            }
+        }
+        return $menus;
+    }
+
+    /**
+     * 获取授权后的菜单
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public static function getAuthMenu()
+    {
+        Auth::applyAuthNode();
+        $list = Db::name('SystemMenu')->where(['status' => '1'])->order('sort asc,id asc')->select();
+        return self::buildMenuData(Data::arr2tree($list), Auth::get(), Auth::isLogin());
+    }
+
+    /**
+     * 判断用户是否已经登录
+     * @return boolean
+     */
+    public static function isLogin()
+    {
+        return !!session('user');
+    }
+
+}

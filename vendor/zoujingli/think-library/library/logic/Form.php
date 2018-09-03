@@ -19,11 +19,16 @@ use library\tools\Data;
 
 /**
  * 表单视图管理器
- * Class ViewForm
- * @package library\view
+ * Class Form
+ * @package library\logic
  */
 class Form extends Logic
 {
+    /**
+     * 表单模板文件
+     * @var string
+     */
+    protected $tpl;
 
     /**
      * 表单扩展数据
@@ -38,12 +43,6 @@ class Form extends Logic
     protected $where;
 
     /**
-     * 表单模板文件
-     * @var string
-     */
-    protected $tplFile;
-
-    /**
      * 数据对象主键名称
      * @var array|string
      */
@@ -56,53 +55,48 @@ class Form extends Logic
     protected $pkValue;
 
     /**
-     * ViewForm constructor.
+     * Form constructor.
      * @param string|Query $dbQuery
-     * @param string $tplFile 模板名称
+     * @param string $tpl 模板名称
      * @param string $pkField 指定数据对象主键
      * @param array $where 额外更新条件
      * @param array $data 表单扩展数据
      */
-    public function __construct($dbQuery, $tplFile = '', $pkField = '', $where = [], $data = [])
+    public function __construct($dbQuery, $tpl = '', $pkField = '', $where = [], $data = [])
     {
         parent::__construct($dbQuery);
-        // 传入的参数赋值处理
-        list($this->tplFile, $this->where, $this->data) = [$tplFile, $where, $data];
-        // 获取表单主键的名称
+        list($this->tpl, $this->where, $this->data) = [$tpl, $where, $data];
         $this->pkField = empty($pkField) ? ($this->db->getPk() ? $this->db->getPk() : 'id') : $pkField;;
-        // 从where及extend中获取主键的默认值
-        $pkValue = isset($data[$this->pkField]) ? $data[$this->pkField] : null;
-        $this->pkValue = $this->request->request($this->pkField, $pkValue);
+        $this->pkValue = input($this->pkField, isset($data[$this->pkField]) ? $data[$this->pkField] : null);
     }
 
     /**
      * 应用初始化
-     * @return array|mixed
+     * @param array $data
+     * @return array|boolean
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      * @throws \think\exception\PDOException
      */
-    protected function init()
+    protected function init($data = [])
     {
         // GET请求, 获取数据并显示表单页面
         if ($this->request->isGet()) {
-            $data = [];
             if ($this->pkValue !== null) {
                 $where = [$this->pkField => $this->pkValue];
                 $data = (array)$this->db->where($where)->where($this->where)->find();
             }
             $data = array_merge($data, $this->data);
             if (false !== $this->class->_callback('_form_filter', $data)) {
-                return $this->class->fetch($this->tplFile, ['vo' => $data]);
+                return $this->class->fetch($this->tpl, ['vo' => $data]);
             }
             return $data;
         }
         // POST请求, 数据自动存库处理
         if ($this->request->isPost()) {
-            $post = $this->request->post();
-            $data = array_merge($post, $this->data);
+            $data = array_merge($this->request->post(), $this->data);
             if (false !== $this->class->_callback('_form_filter', $data, $this->where)) {
                 $result = Data::save($this->db, $data, $this->pkField, $this->where);
                 if (false !== $this->class->_callback('_form_result', $result, $data)) {
@@ -111,6 +105,7 @@ class Form extends Logic
                     }
                     $this->class->error('数据保存失败, 请稍候再试!');
                 }
+                return $result;
             }
         }
     }

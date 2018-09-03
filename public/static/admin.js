@@ -98,14 +98,15 @@ $(function () {
         };
         // 自动处理显示Think返回的Json数据
         this.auto = function (ret, time) {
-            return (parseInt(ret.code) === 1) ? self.success(ret.msg || ret.info, time, function () {
-                !!ret.data ? (window.location.href = ret.data) : $.form.reload();
+            var url = ret.url || ret.data, msg = ret.msg || ret.info;
+            return (parseInt(ret.code) === 1) ? this.success(msg, time, function () {
+                url ? (window.location.href = url) : $.form.reload();
                 for (var i in self.dialogIndexs) {
                     layer.close(self.dialogIndexs[i]);
                 }
                 self.dialogIndexs = [];
-            }) : self.error(ret.msg || ret.info, 3, function () {
-                !!ret.data && (window.location.href = ret.data);
+            }) : this.error(msg, 3, function () {
+                url ? window.location.href = url : '';
             });
         };
     };
@@ -242,6 +243,9 @@ $(function () {
             uri = this.getUri(uri);
             params.spm = obj && obj.getAttribute('data-menu-node') || this.queryNode(uri);
             delete params[""];
+            if (params.spm === '') {
+                delete params.spm;
+            }
             var query = '?' + $.param(params);
             return uri + (query !== '?' ? query : '');
         };

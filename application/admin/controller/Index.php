@@ -14,11 +14,11 @@
 
 namespace app\admin\controller;
 
+use app\admin\Logic\Auth;
 use library\Controller;
 use library\tools\Data;
-use library\tools\Node;
-use think\Db;
 use think\App;
+use think\Db;
 
 /**
  * 后台入口管理
@@ -37,9 +37,10 @@ class Index extends Controller
      */
     public function index()
     {
-        $this->fasdfas();
-        $list = (array)Db::name('SystemMenu')->where(['status' => '1'])->order('sort asc,id asc')->select();
-        $menus = $this->buildMenuData(Data::arr2tree($list), $this->get(), !!session('user'));
+        $menus = Auth::getAuthMenu();
+        if (empty($menus) && !session('user.id')) {
+            $this->redirect('@admin/login');
+        }
         return $this->fetch('', ['title' => '系统管理', 'menus' => $menus]);
     }
 
@@ -58,64 +59,8 @@ class Index extends Controller
     }
 
     /**
-     * 获取系统代码节点
-     * @param array $nodes
-     * @return array
-     */
-    private function get($nodes = [])
-    {
-        $alias = Db::name('SystemNode')->column('node,is_menu,is_auth,is_login,title');
-        $ignore = ['index', 'wechat/review', 'admin/plugs', 'admin/login', 'admin/index'];
-        foreach (Node::getTree(env('app_path')) as $thr) {
-            foreach ($ignore as $str) {
-                if (stripos($thr, $str) === 0) {
-                    continue 2;
-                }
-            }
-            $tmp = explode('/', $thr);
-            list($one, $two) = ["{$tmp[0]}", "{$tmp[0]}/{$tmp[1]}"];
-            $nodes[$one] = array_merge(isset($alias[$one]) ? $alias[$one] : ['node' => $one, 'title' => '', 'is_menu' => 0, 'is_auth' => 0, 'is_login' => 0], ['pnode' => '']);
-            $nodes[$two] = array_merge(isset($alias[$two]) ? $alias[$two] : ['node' => $two, 'title' => '', 'is_menu' => 0, 'is_auth' => 0, 'is_login' => 0], ['pnode' => $one]);
-            $nodes[$thr] = array_merge(isset($alias[$thr]) ? $alias[$thr] : ['node' => $thr, 'title' => '', 'is_menu' => 0, 'is_auth' => 0, 'is_login' => 0], ['pnode' => $two]);
-        }
-        foreach ($nodes as &$node) {
-            list($node['is_auth'], $node['is_menu'], $node['is_login']) = [intval($node['is_auth']), intval($node['is_menu']), empty($node['is_auth']) ? intval($node['is_login']) : 1];
-        }
-        return $nodes;
-    }
-
-    /**
-     * 后台主菜单权限过滤
-     * @param array $menus 当前菜单列表
-     * @param array $nodes 系统权限节点数据
-     * @param bool $isLogin 是否已经登录
-     * @return array
-     */
-    private function buildMenuData($menus, $nodes, $isLogin)
-    {
-        foreach ($menus as $key => &$menu) {
-            !empty($menu['sub']) && $menu['sub'] = $this->buildMenuData($menu['sub'], $nodes, $isLogin);
-            if (!empty($menu['sub'])) {
-                $menu['url'] = '#';
-            } elseif (preg_match('/^https?\:/i', $menu['url'])) {
-                continue;
-            } elseif ($menu['url'] !== '#') {
-                $node = join('/', array_slice(explode('/', preg_replace('/[\W]/', '/', $menu['url'])), 0, 3));
-                $menu['url'] = url($menu['url']) . (empty($menu['params']) ? '' : "?{$menu['params']}");
-                if (isset($nodes[$node]) && $nodes[$node]['is_login'] && empty($isLogin)) {
-                    unset($menus[$key]);
-                } elseif (isset($nodes[$node]) && $nodes[$node]['is_auth'] && $isLogin && !auth($node)) {
-                    unset($menus[$key]);
-                }
-            } else {
-                unset($menus[$key]);
-            }
-        }
-        return $menus;
-    }
-
-    /**
      * 修改密码
+     * @param integer $id
      * @return array|string
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException

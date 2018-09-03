@@ -4,7 +4,6 @@
 
 <div class="layui-header notselect">
     <a href="{:url('@')}" class="layui-logo">ThinkAdmin <sup>V4.0</sup></a>
-    <!-- 头部区域（可配合layui已有的水平导航） -->
     <ul class="layui-nav layui-layout-left">
         {foreach $menus as $oneMenu}
         <li class="layui-nav-item">
@@ -17,8 +16,9 @@
     </ul>
     <ul class="layui-nav layui-layout-right">
         <li lay-unselect class="layui-nav-item">
-            <a data-tips-type="3" data-tips-text="刷新"><i class="layui-icon layui-icon-refresh-3"></i></a>
+            <a data-reload><i class="layui-icon layui-icon-refresh-3"></i></a>
         </li>
+        <!--{notempty name='Think.session.user'}-->
         <li class="layui-nav-item">
             <dl class="layui-nav-child">
                 <dd lay-unselect>
@@ -39,7 +39,11 @@
             </dl>
             <a><span><img src="http://t.cn/RCzsdCq" class="layui-nav-img"> {:session('user.username')}</span></a>
         </li>
-
+        <!--{else}-->
+        <li class="layui-nav-item">
+            <a data-href="{:url('@admin/login')}"><i class="layui-icon layui-icon-username"></i> 立即登录</a>
+        </li>
+        <!--{/notempty}-->
     </ul>
 </div>
 

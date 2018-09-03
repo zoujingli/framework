@@ -15,11 +15,11 @@
 namespace library\logic;
 
 /**
- * 输入验证管理器
- * Class LogicValidate
+ * 输入管理器
+ * Class Input
  * @package library\logic
  */
-class Validate extends Logic
+class Input extends Logic
 {
 
     /**
@@ -38,20 +38,46 @@ class Validate extends Logic
      * 验证结果消息
      * @var array
      */
-    protected $message;
+    protected $info;
 
     /**
-     * LogicValidate constructor.
-     * @param array $data 待验证的数据
-     * @param array $rule 验证器规则
-     * @param array $message 验证结果消息
+     * Validate constructor.
+     * @param array $data 验证数据
+     * @param array $rule 验证规则
+     * @param array $info 验证消息
      */
-    public function __construct(array $data, $rule = [], $message = [])
+    public function __construct($data, $rule = [], $info = [])
     {
-        $this->data = $data;
         $this->rule = $rule;
-        $this->message = $message;
-        $this->request = app('request');
+        $this->info = $info;
+        $this->request = request();
+        $this->data = $this->parseData($data);
+    }
+
+    /**
+     * 解析输入数据
+     * @param array|string $data
+     * @return array
+     */
+    private function parseData($data)
+    {
+        if (is_array($data)) {
+            return $data;
+        }
+        if (is_string($data)) {
+            $result = [];
+            foreach (explode(',', $data) as $field) {
+                if (strpos($field, '|') === false) {
+                    $arr = explode('.', $field);
+                    $result[array_pop($arr)] = input($field);
+                } else {
+                    list($f, $v) = explode('|', $field);
+                    $arr = explode('.', $f);
+                    $result[array_pop($arr)] = input($f, $v);
+                }
+            }
+            return $result;
+        }
     }
 
     /**
@@ -60,7 +86,7 @@ class Validate extends Logic
      */
     public function init()
     {
-        $validate = \think\Validate::make($this->rule, $this->message);
+        $validate = \think\Validate::make($this->rule, $this->info);
         if ($validate->check($this->data)) {
             return $this->data;
         }

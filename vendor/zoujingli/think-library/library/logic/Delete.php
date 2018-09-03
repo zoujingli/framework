@@ -14,13 +14,12 @@
 
 namespace library\logic;
 
-use think\Db;
 use think\db\Query;
 
 /**
  * 通用删除管理器
- * Class ViewDelete
- * @package library\view
+ * Class Delete
+ * @package library\logic
  */
 class Delete extends Logic
 {
@@ -52,13 +51,9 @@ class Delete extends Logic
     public function __construct($dbQuery, $pkField = '', $where = [])
     {
         parent::__construct($dbQuery);
-        // 传入的参数赋值处理
         $this->where = $where;
-        // 获取表单主键的名称
-        $this->pkField = empty($pkField) ? ($this->db->getPk() ? $this->db->getPk() : 'id') : $pkField;
-        // 从where中获取主键的默认值
-        $pkValue = isset($where[$this->pkField]) ? $where[$this->pkField] : null;
-        $this->pkValue = $this->request->request($this->pkField, $pkValue);
+        $this->pkField = empty($pkField) ? $this->db->getPk() : $pkField;
+        $this->pkValue = input($this->pkField, null);
     }
 
     /**
@@ -69,29 +64,28 @@ class Delete extends Logic
      */
     protected function init()
     {
-        // 主键限制条件处理
-        $map = isset($this->where[$this->pkField]) ? [] :
-            (is_array($this->pkValue) ? [$this->pkField, 'in', $this->pkValue] :
-                (is_string($this->pkValue) ? [$this->pkField, 'in', explode(',', $this->pkValue)] :
-                    [$this->pkField => $this->pkValue]));
-        // 删除前置回调处理
-        if (false === $this->class->_callback('_delete_filter', $map, $where)) {
+        // 主键限制处理
+        if (!isset($this->where[$this->pkField]) && is_string($this->pkValue)) {
+            $this->db->whereIn($this->pkField, explode(',', $this->pkValue));
+        }
+        // 前置回调处理
+        if (false === $this->class->_callback('_delete_filter', $this->db, $where)) {
             return null;
         }
+        // 执行删除操作
         if (method_exists($this->db, 'getTableFields') && in_array('is_deleted', $this->db->getTableFields())) {
-            // 软删除操作
-            $result = Db::table($this->db->getTable())->where($this->where)->where($map)->update(['is_deleted' => '1']);
+            $result = $this->db->where($this->where)->update(['is_deleted' => '1']);
         } else {
-            // 硬删除操作
-            $result = Db::table($this->db->getTable())->where($this->where)->where($map)->delete();
+            $result = $this->db->where($this->where)->delete();
         }
-        // 删除结果回调处理
+        // 结果回调处理
         if (false !== $this->class->_callback('_delete_result', $result)) {
             if ($result !== false) {
-                $this->class->success('恭喜, 数据保存成功!', '');
+                $this->class->success('数据删除成功！', '');
             }
-            $this->class->error('数据保存失败, 请稍候再试!');
+            $this->class->error('数据删除失败, 请稍候再试！');
         }
+        // 返回处理结果
         return $result;
     }
 

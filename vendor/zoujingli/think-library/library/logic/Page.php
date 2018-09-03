@@ -18,8 +18,8 @@ use think\Db;
 
 /**
  * 列表处理管理器
- * Class ViewList
- * @package library\view
+ * Class Page
+ * @package library\logic
  */
 class Page extends Logic
 {
@@ -83,7 +83,7 @@ class Page extends Logic
     protected function _page()
     {
         // 未配置 order 规则时自动按 sort 字段排序
-        if ($this->db->getOptions('order') && method_exists($this->db, 'getTableFields')) {
+        if (!$this->db->getOptions('order') && method_exists($this->db, 'getTableFields')) {
             in_array('sort', $this->db->getTableFields()) && $this->db->order('sort asc');
         }
         // 列表分页及结果集处理
@@ -123,11 +123,10 @@ class Page extends Logic
     protected function _sort()
     {
         if ($this->request->post('action') === 'resort') {
-            $table = $this->db->getTable();
             foreach ($this->request->post() as $key => $value) {
                 if (preg_match('/^_\d{1,}$/', $key) && preg_match('/^\d{1,}$/', $value)) {
                     list($where, $update) = [['id' => trim($key, '_')], ['sort' => $value]];
-                    if (false === Db::table($table)->where($where)->update($update)) {
+                    if (false === $this->db->where($where)->update($update)) {
                         $this->class->error('排序失败, 请稍候再试！');
                     }
                 }

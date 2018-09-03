@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit57f5a7391fb4bbe2cfa21c8ff18c90b3
+class ComposerStaticInit99040da12532dde7747fa39dba2054bd
 {
     public static $prefixLengthsPsr4 = array (
         't' => 
@@ -114,17 +114,18 @@ class ComposerStaticInit57f5a7391fb4bbe2cfa21c8ff18c90b3
         'WePay\\Refund' => __DIR__ . '/..' . '/zoujingli/wechat-developer/WePay/Refund.php',
         'WePay\\Transfers' => __DIR__ . '/..' . '/zoujingli/wechat-developer/WePay/Transfers.php',
         'WePay\\TransfersBank' => __DIR__ . '/..' . '/zoujingli/wechat-developer/WePay/TransfersBank.php',
+        'app\\admin\\Logic\\Auth' => __DIR__ . '/../..' . '/application/admin/Logic/Auth.php',
         'app\\admin\\controller\\Index' => __DIR__ . '/../..' . '/application/admin/controller/Index.php',
         'app\\admin\\controller\\Login' => __DIR__ . '/../..' . '/application/admin/controller/Login.php',
         'app\\index\\controller\\Index' => __DIR__ . '/../..' . '/application/index/controller/Index.php',
         'library\\Controller' => __DIR__ . '/..' . '/zoujingli/think-library/library/Controller.php',
         'library\\logic\\Delete' => __DIR__ . '/..' . '/zoujingli/think-library/library/logic/Delete.php',
         'library\\logic\\Form' => __DIR__ . '/..' . '/zoujingli/think-library/library/logic/Form.php',
+        'library\\logic\\Input' => __DIR__ . '/..' . '/zoujingli/think-library/library/logic/Input.php',
         'library\\logic\\Logic' => __DIR__ . '/..' . '/zoujingli/think-library/library/logic/Logic.php',
         'library\\logic\\Page' => __DIR__ . '/..' . '/zoujingli/think-library/library/logic/Page.php',
         'library\\logic\\Save' => __DIR__ . '/..' . '/zoujingli/think-library/library/logic/Save.php',
         'library\\logic\\Search' => __DIR__ . '/..' . '/zoujingli/think-library/library/logic/Search.php',
-        'library\\logic\\Validate' => __DIR__ . '/..' . '/zoujingli/think-library/library/logic/Validate.php',
         'library\\tools\\Cors' => __DIR__ . '/..' . '/zoujingli/think-library/library/tools/Cors.php',
         'library\\tools\\Crypt' => __DIR__ . '/..' . '/zoujingli/think-library/library/tools/Crypt.php',
         'library\\tools\\Data' => __DIR__ . '/..' . '/zoujingli/think-library/library/tools/Data.php',
@@ -140,9 +141,9 @@ class ComposerStaticInit57f5a7391fb4bbe2cfa21c8ff18c90b3
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit57f5a7391fb4bbe2cfa21c8ff18c90b3::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit57f5a7391fb4bbe2cfa21c8ff18c90b3::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit57f5a7391fb4bbe2cfa21c8ff18c90b3::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit99040da12532dde7747fa39dba2054bd::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit99040da12532dde7747fa39dba2054bd::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit99040da12532dde7747fa39dba2054bd::$classMap;
 
         }, null, ClassLoader::class);
     }

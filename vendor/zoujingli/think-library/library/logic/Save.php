@@ -18,9 +18,9 @@ use think\db\Query;
 use library\tools\Data;
 
 /**
- * 数据更新插件管理器
- * Class ViewSave
- * @package library\view
+ * 数据更新管理器
+ * Class Save
+ * @package library\logic
  */
 class Save extends Logic
 {
@@ -53,14 +53,12 @@ class Save extends Logic
     public function __construct($dbQuery, $data = [], $pkField = '', $where = [])
     {
         parent::__construct($dbQuery);
-        // 传入的参数赋值处理
-        list($this->where, $this->data) = [$where, empty($data) ? $this->request->post() : []];
-        // 获取表单主键的名称
-        $this->pkField = empty($pkField) ? ($this->db->getPk() ? $this->db->getPk() : 'id') : $pkField;;
-        // 从extend中获取主键的默认值
+        $this->where = $where;
+        $this->data = empty($data) ? $this->request->post() : $data;
+        $this->pkField = empty($pkField) ? $this->db->getPk() : $pkField;
         if (!isset($this->data[$this->pkField])) {
-            $pkField = isset($data[$this->pkField]) ? $data[$this->pkField] : null;
-            $this->data[$this->pkField] = $this->request->request($this->pkField, $pkField);
+            $pkValue = isset($data[$this->pkField]) ? $data[$this->pkField] : null;
+            $this->data[$this->pkField] = $this->request->post($this->pkField, $pkValue);
         }
     }
 

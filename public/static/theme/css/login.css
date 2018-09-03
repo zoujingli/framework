@@ -40,13 +40,8 @@ html,body{height:100%;width:100%;overflow:hidden!important;min-width:0}
 .login-container .content{width:692px;height:336px;background:url(../img/login/bg_form.png) no-repeat;margin:80px auto auto auto;position:relative;display:block}
 .login-container .content ul{margin-left:285px;margin-right:60px}
 .login-container .content ul li{margin-bottom:25px;position:relative}
-.login-container .content ul li input{position:relative;padding-left:40px;z-index:1;width:100%;height:38px;line-height:38px;border:1px solid #e6e6e6;background-color:#fff;border-radius:2px}
-.login-container .content ul li i{position:absolute;background:url(../img/icon.png) #fff no-repeat;background-size:20px;width:34px;height:38px;z-index:2;border:1px solid #e6e6e6;border-right:none;border-radius:2px}
-.login-container .content ul li.username i{background-position:8px 8px}
-.login-container .content ul li.password i{background-position:8px -20px}
-.login-container .content a{color:#666;position:absolute;display:block;}
-.login-container .content a:hover{color:#333}
-.login-container .content a.forget{right:0}
+.login-container .content ul li input{position:relative;text-indent:40px;z-index:1;width:100%;height:38px;line-height:38px;border:1px solid #ccc}
+.login-container .content ul li i{position:absolute;width:38px;height:40px;line-height:40px;text-align:center;font-size:20px;color:#666;z-index:2}
 
 /* 头像 */
 .login-container .people{width:165px;height:96px;position:relative;top:8px;left:-70px}

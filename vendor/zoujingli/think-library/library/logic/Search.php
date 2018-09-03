@@ -46,7 +46,7 @@ class Search extends Logic
      * @param string $inputType 输入类型 get|post
      * @return $this
      */
-    public function setLike($fields, $inputType = 'get')
+    public function like($fields, $inputType = 'get')
     {
         $data = $this->request->$inputType();
         foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
@@ -63,7 +63,7 @@ class Search extends Logic
      * @param string $inputType 输入类型 get|post
      * @return $this
      */
-    public function setEqual($fields, $inputType = 'get')
+    public function equal($fields, $inputType = 'get')
     {
         $data = $this->request->$inputType();
         foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
@@ -81,7 +81,7 @@ class Search extends Logic
      * @param string $inputType 输入类型 get|post
      * @return $this
      */
-    public function setDateBetween($fields, $split = ' - ', $inputType = 'get')
+    public function dateBetween($fields, $split = ' - ', $inputType = 'get')
     {
         $data = $this->request->$inputType();
         foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
@@ -100,7 +100,7 @@ class Search extends Logic
      * @param string $inputType 输入类型 get|post
      * @return $this
      */
-    public function setValueBetween($fields, $split = ' ', $inputType = 'get')
+    public function valueBetween($fields, $split = ' ', $inputType = 'get')
     {
         $data = $this->request->$inputType();
         foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
