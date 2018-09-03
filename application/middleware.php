@@ -12,7 +12,4 @@
 // | github开源项目：https://github.com/zoujingli/ThinkAdmin
 // +----------------------------------------------------------------------
 
-return [
-    // 系统权限访问管理
-    \app\admin\logic\Auth::class,
-];
+return [\app\admin\logic\Init::class];

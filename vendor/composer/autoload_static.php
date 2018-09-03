@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit99040da12532dde7747fa39dba2054bd
+class ComposerStaticInitcbf5061df83b661dabb896e172551a3a
 {
     public static $prefixLengthsPsr4 = array (
         't' => 
@@ -115,6 +115,7 @@ class ComposerStaticInit99040da12532dde7747fa39dba2054bd
         'WePay\\Transfers' => __DIR__ . '/..' . '/zoujingli/wechat-developer/WePay/Transfers.php',
         'WePay\\TransfersBank' => __DIR__ . '/..' . '/zoujingli/wechat-developer/WePay/TransfersBank.php',
         'app\\admin\\Logic\\Auth' => __DIR__ . '/../..' . '/application/admin/Logic/Auth.php',
+        'app\\admin\\Logic\\Init' => __DIR__ . '/../..' . '/application/admin/Logic/Init.php',
         'app\\admin\\controller\\Index' => __DIR__ . '/../..' . '/application/admin/controller/Index.php',
         'app\\admin\\controller\\Login' => __DIR__ . '/../..' . '/application/admin/controller/Login.php',
         'app\\index\\controller\\Index' => __DIR__ . '/../..' . '/application/index/controller/Index.php',
@@ -141,9 +142,9 @@ class ComposerStaticInit99040da12532dde7747fa39dba2054bd
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit99040da12532dde7747fa39dba2054bd::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit99040da12532dde7747fa39dba2054bd::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit99040da12532dde7747fa39dba2054bd::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitcbf5061df83b661dabb896e172551a3a::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitcbf5061df83b661dabb896e172551a3a::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitcbf5061df83b661dabb896e172551a3a::$classMap;
 
         }, null, ClassLoader::class);
     }

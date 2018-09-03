@@ -67,7 +67,7 @@ trait Jump
      * @param array $config 引擎配置
      * @return mixed
      */
-    protected function fetch($tpl, $vars = [], $config = [])
+    protected function fetch($tpl = '', $vars = [], $config = [])
     {
         return app('view')->fetch($tpl, $vars, $config);
     }

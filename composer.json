@@ -11,7 +11,7 @@
     "ext-json": "*",
     "ext-iconv": "*",
     "topthink/framework": "5.1.*",
-    "zoujingli/think-library": "^1.0",
-    "zoujingli/weopen-developer": "^1.0"
+    "zoujingli/weopen-developer": "^1.0",
+    "zoujingli/think-library": "dev-master"
   }
 }

@@ -59,6 +59,7 @@ return array(
     'WePay\\Transfers' => $vendorDir . '/zoujingli/wechat-developer/WePay/Transfers.php',
     'WePay\\TransfersBank' => $vendorDir . '/zoujingli/wechat-developer/WePay/TransfersBank.php',
     'app\\admin\\Logic\\Auth' => $baseDir . '/application/admin/Logic/Auth.php',
+    'app\\admin\\Logic\\Init' => $baseDir . '/application/admin/Logic/Init.php',
     'app\\admin\\controller\\Index' => $baseDir . '/application/admin/controller/Index.php',
     'app\\admin\\controller\\Login' => $baseDir . '/application/admin/controller/Login.php',
     'app\\index\\controller\\Index' => $baseDir . '/application/index/controller/Index.php',

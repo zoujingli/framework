@@ -16,7 +16,6 @@ namespace app\admin\Logic;
 
 use library\tools\Data;
 use library\tools\Node;
-use think\Request;
 use think\Db;
 
 /**
@@ -26,37 +25,6 @@ use think\Db;
  */
 class Auth
 {
-    /**
-     * @param Request $request
-     * @param \Closure $next
-     * @return mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     */
-    public function handle($request, \Closure $next)
-    {
-        list($module, $controller, $action) = [$request->module(), $request->controller(), $request->action()];
-        $node = Node::parseString("{$module}/{$controller}/{$action}");
-        $info = Db::name('SystemNode')->cache(true, 30)->where(['node' => $node])->find();
-        $access = [
-            'is_menu'  => intval(!empty($info['is_menu'])),
-            'is_auth'  => intval(!empty($info['is_auth'])),
-            'is_login' => empty($info['is_auth']) ? intval(!empty($info['is_login'])) : 1,
-        ];
-        // 登录状态检查
-        if (!empty($access['is_login']) && !session('user')) {
-            $msg = ['code' => 0, 'msg' => '抱歉，您还没有登录获取访问权限！', 'url' => url('@admin/login')];
-            return $request->isAjax() ? json($msg) : redirect($msg['url']);
-        }
-        // 访问权限检查
-        if (!empty($access['is_auth']) && !self::checkAuthNode($node)) {
-            return json(['code' => 0, 'msg' => '抱歉，您没有访问该模块的权限！']);
-        }
-        // 模板常量声明
-        app('view')->init(config('template.'))->assign(['classuri' => Node::parseString("{$module}/{$controller}")]);
-        return $next($request);
-    }
 
     /**
      * 获取系统代码节点
@@ -94,12 +62,19 @@ class Auth
     {
         list($module, $controller, $action) = explode('/', str_replace(['?', '=', '&'], '/', $node . '///'));
         $currentNode = Node::parseString("{$module}/{$controller}") . strtolower("/{$action}");
-        if (session('user.username') === 'admin' || stripos($node, 'admin/index') === 0) {
+        // 后台入口无需要验证权限
+        if (stripos($node, 'admin/index') === 0) {
             return true;
         }
+        // 超级管理员无需要验证权限
+        if (session('user.username') === 'admin') {
+            return true;
+        }
+        // 未配置权限的节点默认放行
         if (!in_array($currentNode, self::getAuthNode())) {
             return true;
         }
+        // 用户指定角色授权放行
         return in_array($currentNode, (array)session('user.nodes'));
     }
 
@@ -116,7 +91,6 @@ class Auth
         }
         return $nodes;
     }
-
 
     /**
      * 应用用户权限节点
@@ -143,6 +117,19 @@ class Auth
         return false;
     }
 
+    /**
+     * 获取授权后的菜单
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public static function getAuthMenu()
+    {
+        self::applyAuthNode();
+        $list = Db::name('SystemMenu')->where(['status' => '1'])->order('sort asc,id asc')->select();
+        return self::buildMenuData(Data::arr2tree($list), self::get(), !!session('user'));
+    }
 
     /**
      * 后台主菜单权限过滤
@@ -172,29 +159,6 @@ class Auth
             }
         }
         return $menus;
-    }
-
-    /**
-     * 获取授权后的菜单
-     * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     */
-    public static function getAuthMenu()
-    {
-        Auth::applyAuthNode();
-        $list = Db::name('SystemMenu')->where(['status' => '1'])->order('sort asc,id asc')->select();
-        return self::buildMenuData(Data::arr2tree($list), Auth::get(), Auth::isLogin());
-    }
-
-    /**
-     * 判断用户是否已经登录
-     * @return boolean
-     */
-    public static function isLogin()
-    {
-        return !!session('user');
     }
 
 }

@@ -41,7 +41,7 @@ class Index extends Controller
         if (empty($menus) && !session('user.id')) {
             $this->redirect('@admin/login');
         }
-        return $this->fetch('', ['title' => '系统管理', 'menus' => $menus]);
+        return $this->fetch('', ['menus' => $menus, 'title' => '系统管理']);
     }
 
     /**
@@ -74,20 +74,30 @@ class Index extends Controller
             $this->error('只能修改当前用户的密码！');
         }
         if ($this->request->isGet()) {
-            $this->assign('verify', true);
-            $this->assign('vo', session('user'));
-            dump(session('user'));
+            $this->assign(['verify' => true]);
             return $this->_form('SystemUser', 'user/pass');
         }
-        $data = $this->request->post();
-        if ($data['password'] !== $data['repassword']) {
-            $this->error('两次输入的密码不一致，请重新输入！');
-        }
-        $user = Db::name('SystemUser')->where('id', session('user.id'))->find();
+        // 获取输入数据
+        $data = $this->_input([
+            'password'    => $this->request->post('password'),
+            'repassword'  => $this->request->post('repassword'),
+            'oldpassword' => $this->request->post('oldpassword'),
+        ], [
+            'oldpassword' => 'require',
+            'password'    => 'require|min:4',
+            'repassword'  => 'require|confirm:password',
+        ], [
+            'oldpassword.require' => '旧密码不能为空！',
+            'password.require'    => '登录密码不能为空！',
+            'password.min'        => '登录密码长度不能少于4位有效字符！',
+            'repassword.require'  => '重复密码不能为空！',
+            'repassword.confirm'  => '重复密码与登录密码不匹配，请重新输入！',
+        ]);
+        $user = Db::name('SystemUser')->where(['id' => $id])->find();
         if (md5($data['oldpassword']) !== $user['password']) {
             $this->error('旧密码验证失败，请重新输入！');
         }
-        if (Data::save('SystemUser', ['id' => session('user.id'), 'password' => md5($data['password'])])) {
+        if (Data::save('SystemUser', ['id' => $user['id'], 'password' => md5($data['password'])])) {
             $this->success('密码修改成功，下次请使用新密码登录！', '');
         }
         $this->error('密码修改失败，请稍候再试！');
@@ -103,7 +113,7 @@ class Index extends Controller
         if (intval($id) === intval(session('user.id'))) {
             return $this->_form('SystemUser', 'user/form', 'id', [], ['id' => $id]);
         }
-        $this->error('只能修改当前用户的资料！');
+        $this->error('只能修改登录用户的资料！');
     }
 
 }
