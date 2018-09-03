@@ -134,6 +134,7 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 /* 分隔线条 */
 .hr-line-dashed{border-top:1px dashed #e7eaec;color:#fff;background-color:#fff;height:1px;margin:20px 0}
 .hr-line-solid{border-bottom:1px solid #e7eaec;background-color:rgba(0,0,0,0);margin-top:15px;margin-bottom:15px}
+.label-required:after{content:'*';color:red;position:absolute;margin-left:4px;font-weight:bold;line-height:1.8em;top:6px;right:5px}
 
 /*.uploadimage{display:inline-block;width:80px;height:80px;background:url('../img/image.png') no-repeat center center;background-size:cover;cursor:pointer}*/
 /*.uploadimagemtl{margin-right:8px}*/
@@ -142,7 +143,6 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 /*.uploadimagemtl:hover a:hover{color:#fff;text-decoration:none}*/
 /*.pagination-trigger{position:absolute;line-height:31px;margin:20px 0}*/
 /*.pagination-trigger select{height:20px;text-align:center;border:1px solid #ccc;border-radius:0;font-size:12px}*/
-/*.label-required:after{content:'*';color:red;position:absolute;margin-left:4px;font-weight:bold;line-height:1.8em;top:6px;right:5px}*/
 
 /** Layui样式调整 */
 /*.think-inner-table{border:none!important;margin:0!important}*/

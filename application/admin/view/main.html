@@ -2,7 +2,7 @@
 <html lang="zh_CN">
 <head>
     <meta charset="utf-8">
-    <title>ThinkAdmin</title>
+    <title>{block name="title"}{$title|default=''}{if !empty($title)} · {/if}{:sysconf('site_name')}{/block}</title>
     <meta name="renderer" content="webkit">
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
