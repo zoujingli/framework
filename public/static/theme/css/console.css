@@ -27,7 +27,7 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 .layui-layout>.layui-body>.layui-tab{margin:5px 0 0 0}
 .layui-layout>.layui-side, .layui-layout>.layui-body{top:50px}
 
-.layui-layout.layui-layout-left-hide>.layui-body{left:0}
+.layui-layout.layui-layout-left-hide>.layui-body{left:0!important;}
 .layui-layout.layui-layout-left-hide>.layui-side{display: none}
 
 .layui-layout>.layui-side .layui-nav-item{box-shadow:0 1px 2px 0 rgba(0, 0, 0, 0.2)}
@@ -46,7 +46,7 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 .layui-layout.layui-layout-left-min>.layui-body{left:60px}
 
 /* 页面布局 - 头部 */
-.layui-header{height:50px}
+.layui-header{height:50px;background-color:#1e9fff!important}
 .layui-header .layui-layout-left,.layui-header .layui-layout-right{padding:0}
 .layui-header .layui-logo{color:#fff;font-size:18px;line-height:50px;box-shadow:0 1px 3px 0 rgba(0, 0, 0, 0.15)}
 .layui-header .layui-logo sup{font-size:10px;line-height:10px;color:#ddd!important}
@@ -123,6 +123,7 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 .margin-bottom-15{margin-bottom:15px!important}.margin-bottom-20{margin-bottom:20px!important}
 
 /* 弹框层表单 */
+.layui-form.layui-card{box-shadow:none}
 .layui-form.layui-card .layui-card-body{padding:20px 40px 0 0}
 
 /** 加载进度 */

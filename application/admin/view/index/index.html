@@ -2,7 +2,7 @@
 
 {block name='content'}
 
-<div class="layui-header layui-bg-blue notselect">
+<div class="layui-header notselect">
     <a href="{:url('@')}" class="layui-logo">ThinkAdmin <sup>V4.0</sup></a>
     <!-- 头部区域（可配合layui已有的水平导航） -->
     <ul class="layui-nav layui-layout-left">
@@ -16,6 +16,9 @@
         {/foreach}
     </ul>
     <ul class="layui-nav layui-layout-right">
+        <li lay-unselect class="layui-nav-item">
+            <a data-tips-type="3" data-tips-text="刷新"><i class="layui-icon layui-icon-refresh-3"></i></a>
+        </li>
         <li class="layui-nav-item">
             <dl class="layui-nav-child">
                 <dd lay-unselect>
@@ -28,12 +31,15 @@
                         <i class="layui-icon layui-icon-component"></i> 安全设置
                     </a>
                 </dd>
+                <dd lay-unselect>
+                    <a data-confirm="确定要退出登录吗？" data-load="{:url('admin/login/out')}">
+                        <i class="layui-icon layui-icon-release"></i> 退出登录
+                    </a>
+                </dd>
             </dl>
             <a><span><img src="http://t.cn/RCzsdCq" class="layui-nav-img"> {:session('user.username')}</span></a>
         </li>
-        <li lay-unselect class="layui-nav-item">
-            <a data-confirm="确定要退出登录吗？" data-load="{:url('admin/login/out')}">退出登录</a>
-        </li>
+
     </ul>
 </div>
 
@@ -41,7 +47,7 @@
     <div class="layui-side-scroll">
         <ul class="layui-nav layui-nav-tree layui-nav-tree-top">
             <li class="layui-nav-item" lay-unselect="">
-                <a class="text-center" data-target-tree>
+                <a class="text-center" data-target-menu-type>
                     <i class="layui-icon layui-icon-spread-left"></i>
                 </a>
             </li>

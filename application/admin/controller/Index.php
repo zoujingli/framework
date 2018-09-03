@@ -36,7 +36,8 @@ class Index extends Controller
      * @throws \think\exception\DbException
      */
     public function index()
-    {$this->fasdfas();
+    {
+        $this->fasdfas();
         $list = (array)Db::name('SystemMenu')->where(['status' => '1'])->order('sort asc,id asc')->select();
         $menus = $this->buildMenuData(Data::arr2tree($list), $this->get(), !!session('user'));
         return $this->fetch('', ['title' => '系统管理', 'menus' => $menus]);
@@ -122,13 +123,15 @@ class Index extends Controller
      * @throws \think\exception\DbException
      * @throws \think\exception\PDOException
      */
-    public function pass()
+    public function pass($id)
     {
-        if (intval($this->request->request('id')) !== intval(session('user.id'))) {
+        if (intval($id) !== intval(session('user.id'))) {
             $this->error('只能修改当前用户的密码！');
         }
         if ($this->request->isGet()) {
             $this->assign('verify', true);
+            $this->assign('vo', session('user'));
+            dump(session('user'));
             return $this->_form('SystemUser', 'user/pass');
         }
         $data = $this->request->post();

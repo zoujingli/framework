@@ -144,27 +144,18 @@ $(function () {
         };
         // 异步加载的数据
         this.load = function (url, data, type, callback, loading, tips, time) {
-            var self = this, dialogIndex = 0;
-            (loading !== false) && (dialogIndex = $.msg.loading(tips));
-            (typeof Pace === 'object') && Pace.restart();
+            var index = loading ? 0 : $.msg.loading(tips);
             $.ajax({
                 type: type || 'GET', url: $.menu.parseUri(url), data: data || {},
-                statusCode: {
-                    404: function () {
-                        $.msg.close(dialogIndex);
-                        $.msg.tips(self.errMsg.replace('{status}', 'E404 - '));
-                    },
-                    500: function () {
-                        $.msg.close(dialogIndex);
-                        $.msg.tips(self.errMsg.replace('{status}', 'E500 - '));
-                    }
+                beforeSend: function () {
+                    typeof Pace === 'object' && Pace.restart();
                 },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    $.msg.close(dialogIndex);
-                    $.msg.tips(self.errMsg.replace('{status}', 'E' + textStatus + ' - '));
+                error: function (XMLHttpRequest) {
+                    $.msg.close(index);
+                    $.msg.tips(self.errMsg.replace('{status}', 'E' + XMLHttpRequest.status + ' - '));
                 },
                 success: function (res) {
-                    $.msg.close(dialogIndex);
+                    $.msg.close(index);
                     if (typeof callback === 'function' && callback.call(self, res) === false) {
                         return false;
                     }
@@ -216,6 +207,7 @@ $(function () {
 
     /*! 后台菜单辅助插件 */
     $.menu = new function () {
+        var self = this;
         // 计算URL地址中有效的URI
         this.getUri = function (uri) {
             uri = uri || window.location.href;
@@ -255,20 +247,23 @@ $(function () {
         };
         // 后台菜单动作初始化
         this.listen = function () {
-            var self = this;
-            // Mini 模式切换
-            $('[data-target-tree]').on('click', function () {
-                $('.layui-layout-admin').toggleClass('layui-layout-left-min')
-            });
-            //  Mini 模式时TIPS显示
-            $('[data-target-tips]').mouseenter(function () {
-                if ($('.layui-layout-left-min').size() > 0) {
-                    var tips = $(this).attr('data-target-tips') || '';
-                    $(this).attr('index', layer.tips(tips, this));
-                }
-            }).mouseleave(function () {
-                layer.close($(this).attr('index'));
-            });
+            // 菜单模式切换
+            (function ($menu, miniClass) {
+                // Mini 菜单模式切换及显示
+                (layui.data('menu')['type-min']) && $menu.addClass(miniClass);
+                $body.on('click', '[data-target-menu-type]', function () {
+                    $menu.toggleClass(miniClass);
+                    layui.data('menu', {key: 'type-min', value: $menu.hasClass(miniClass)});
+                });
+                //  Mini 菜单模式时TIPS文字显示
+                $('[data-target-tips]').mouseenter(function () {
+                    if ($menu.hasClass(miniClass)) {
+                        $(this).attr('index', layer.tips($(this).attr('data-target-tips') || '', this));
+                    }
+                }).mouseleave(function () {
+                    layer.close($(this).attr('index'));
+                });
+            })($('.layui-layout-admin'), 'layui-layout-left-min');
             // 左则二级菜单展示
             $('[data-submenu-layout]>a').on('click', function () {
                 self.syncOpenStatus(1);
@@ -278,9 +273,9 @@ $(function () {
                 $('[data-submenu-layout]').map(function () {
                     var node = $(this).attr('data-submenu-layout');
                     if (mode === 1) {
-                        layui.data('menu', {key: node, value: (this.className || '').indexOf('layui-nav-itemed') > -1 ? 2 : 1});
-                    } else {
-                        ((layui.data('menu')[node] || 2) === 2) && $(this).addClass('layui-nav-itemed');
+                        layui.data('menu', {key: node, value: $(this).hasClass('layui-nav-itemed') ? 2 : 1});
+                    } else if ((layui.data('menu')[node] || 2) === 2) {
+                        $(this).addClass('layui-nav-itemed');
                     }
                 });
             };
@@ -521,7 +516,7 @@ $(function () {
                             i !== $cur.data('index') && tmp.push(data[i]);
                         }
                         $cur.data('input').value = tmp.join('|');
-                        $cur.remove(), $.msg.close(dialogIndex);
+                        $cur.remove(), $.msg.close(index);
                     });
                 });
                 $(this).before($tpl);
@@ -649,8 +644,10 @@ $(function () {
 
     /*! 注册 data-tips-text 事件行为 */
     $body.on('mouseenter', '[data-tips-text]', function () {
-        var text = $(this).attr('data-tips-text'), placement = $(this).attr('data-tips-placement') || 'auto';
-        $(this).tooltip({title: text, placement: placement}).tooltip('show');
+        var text = $(this).attr('data-tips-text'), type = $(this).attr('data-tips-type');
+        $(this).attr('index', layer.tips(text, this, {tips: [type || 3, '#78BA32']}));
+    }).on('mouseleave', '[data-tips-text]', function () {
+        layer.close($(this).attr('index'));
     });
 
     /*! 注册 data-phone-view 事件行为 */
