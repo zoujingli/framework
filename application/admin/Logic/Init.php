@@ -15,8 +15,8 @@
 namespace app\admin\logic;
 
 use library\tools\Node;
-use think\Db;
 use think\Request;
+use think\Db;
 
 /**
  * 权限验证逻辑器
@@ -27,6 +27,7 @@ class Init
 {
 
     /**
+     * 中间件入口
      * @param Request $request
      * @param \Closure $next
      * @return mixed
@@ -50,11 +51,9 @@ class Init
             return $request->isAjax() ? json($msg) : redirect($msg['url']);
         }
         // 访问权限检查
-        if (!empty($access['is_auth']) && !self::checkAuthNode($node)) {
+        if (!empty($access['is_auth']) && !Auth::checkAuthNode($node)) {
             return json(['code' => 0, 'msg' => '抱歉，您没有访问该模块的权限！']);
         }
-        // 模板常量声明
-        app('view')->init(config('template.'))->assign(['classuri' => Node::parseString("{$module}/{$controller}")]);
         return $next($request);
     }
 

@@ -1,5 +1,5 @@
 /.idea
 /.gitattributes
 /runtime
-/composer.lock
 /nbproject
+/composer.lock

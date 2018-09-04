@@ -13,6 +13,16 @@
 // +----------------------------------------------------------------------
 
 /**
+ * 节点访问权限检查
+ * @param string $node
+ * @return boolean
+ */
+function auth($node)
+{
+    return \app\admin\logic\Auth::checkAuthNode($node);
+}
+
+/**
  * UTF8字符串加密
  * @param string $string
  * @return string

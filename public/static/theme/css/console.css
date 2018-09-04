@@ -25,10 +25,7 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 
 /* 页面布局 - 全局 */
 .layui-layout>.layui-body>.layui-tab{margin:5px 0 0 0}
-.layui-layout>.layui-side, .layui-layout>.layui-body{top:50px}
-
-.layui-layout.layui-layout-left-hide>.layui-side{display:none}
-.layui-layout.layui-layout-left-hide>.layui-body{left:0!important}
+.layui-layout>.layui-side, .layui-layout>.layui-body{top:50px;bottom:0}
 
 .layui-layout>.layui-side .layui-nav-item{border-bottom:1px solid #333}
 .layui-layout>.layui-side .layui-nav-item a{height:45px;line-height:45px}
@@ -37,6 +34,9 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 .layui-layout>.layui-side .layui-nav-item .layui-nav-child dd:last-child{border-bottom:none}
 .layui-layout>.layui-side .layui-nav-tree-top a{height:28px!important;line-height:28px!important}
 .layui-layout>.layui-side .layui-nav-bar{display:none!important}
+
+.layui-layout.layui-layout-left-hide>.layui-side{display:none}
+.layui-layout.layui-layout-left-hide>.layui-body{left:0!important}
 
 .layui-layout.layui-layout-left-min>.layui-side,
 .layui-layout.layui-layout-left-min>.layui-side .layui-side-scroll,
@@ -62,7 +62,6 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 .layui-header .layui-nav-item .layui-nav-child.layui-show+a{background:#fff}
 .layui-header .layui-nav-item .layui-nav-child.layui-show+a span{color:#333}
 .layui-header .layui-nav-item .layui-nav-child dd a{color:#333;text-align:center;border-top:1px solid #eaedf1}
-
 
 /* 下拉 */
 .layui-nav .layui-nav-item .layui-nav-more{border:none;top:0;right:15px;width:auto;height:auto;margin-top:0;font-size:14px;font-style:normal;font-family:layui-icon!important;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
@@ -160,14 +159,14 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 /*.layui-input,.layui-select{line-height:38px}*/
 /*.layui-table.notevent tbody tr:hover{background-color:inherit}*/
 /*.layui-table th,.layui-table td{font-size:12px}*/
-/*.layui-table td .text-explode:first-child{opacity:0;display:none}*/
+.layui-table td .text-explode:first-child{opacity:0;display:none}
 /*.layui-table td .text-explode{color:#ccc!important;font-weight:normal!important;margin:0px 4px!important}*/
 /*.layui-table .list-table-image{width:22px;cursor:pointer}*/
-/*.layui-table .list-table-sort-td{width:60px!important;text-align:center!important}*/
-/*.layui-table .list-table-sort-td button{width:50px}*/
-/*.layui-table .list-table-sort-td input{width:50px;text-align:center;line-height:14px;padding:2px;border:1px solid #e6e6e6}*/
-/*.layui-table .list-table-check-td{width:30px!important;text-align:center}*/
-/*.layui-table .list-table-check-td input{margin:0;vertical-align:middle}*/
+.layui-table .list-table-sort-td{width:60px!important;text-align:center!important}
+.layui-table .list-table-sort-td button{width:50px}
+.layui-table .list-table-sort-td input{width:50px;text-align:center;line-height:14px;padding:2px;border:1px solid #e6e6e6}
+.layui-table .list-table-check-td{width:30px!important;text-align:center}
+.layui-table .list-table-check-td input{margin:0;vertical-align:middle}
 
 /** checkbox 优化 */
 label{

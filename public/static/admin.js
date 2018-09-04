@@ -18,8 +18,8 @@
  */
 if (typeof layui !== 'undefined') {
     var form = layui.form,
-            layer = layui.layer,
-            laydate = layui.laydate;
+        layer = layui.layer,
+        laydate = layui.laydate;
     if (typeof jQuery === 'undefined') {
         var $ = jQuery = layui.$;
     }
@@ -123,7 +123,7 @@ $(function () {
         };
         // 在内容区显示视图
         this.show = function (html) {
-            var $container = $('.layui-layout-admin > .layui-body > .layui-card-body').html(html);
+            var $container = $('.layui-layout-admin > .layui-body').html(html);
             reinit.call(this), setTimeout(reinit, 500), setTimeout(reinit, 1000);
 
             function reinit() {
@@ -436,6 +436,7 @@ $(function () {
                             $(this).off(i, func).on(i, func);
                         }
                     }
+
                     function func() {
                         self.checkInput(this);
                     }

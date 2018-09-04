@@ -1,102 +1,132 @@
-{extend name='main'}
+<!DOCTYPE html>
+<html lang="zh">
 
-{block name='content'}
+<head>
+    <meta charset="utf-8">
+    <title>{block name="title"}{$title|default=''}{if !empty($title)} · {/if}{:sysconf('site_name')}{/block}</title>
+    <meta name="renderer" content="webkit">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <link rel="stylesheet" href="__STATIC__/plugs/awesome/fonts.css?v={:date('ymd')}">
+    <link href="__STATIC__/plugs/layui/css/layui.css?v={:date('ymd')}" rel="stylesheet">
+    <link href="__STATIC__/theme/css/console.css?v={:date('ymd')}" rel="stylesheet">
+    {block name="style"}{/block}
+    <script>window.ROOT_URL = '__ROOT__';</script>
+    <script src="__STATIC__/plugs/jquery/pace.min.js"></script>
+</head>
 
-<div class="layui-header notselect">
-    <a href="{:url('@')}" class="layui-logo">ThinkAdmin <sup>V4.0</sup></a>
-    <ul class="layui-nav layui-layout-left">
-        {foreach $menus as $oneMenu}
-        <li class="layui-nav-item">
-            <a data-menu-node="m-{$oneMenu.id}" data-open="{$oneMenu.url}">
-                {notempty name='oneMenu.icon'}<span class='font-s13 {$oneMenu.icon}'></span>&nbsp;{/notempty}
-                {$oneMenu.title|default=''}
-            </a>
-        </li>
-        {/foreach}
-    </ul>
-    <ul class="layui-nav layui-layout-right">
-        <li lay-unselect class="layui-nav-item">
-            <a data-reload><i class="layui-icon layui-icon-refresh-3"></i></a>
-        </li>
-        <!--{notempty name='Think.session.user'}-->
-        <li class="layui-nav-item">
-            <dl class="layui-nav-child">
-                <dd lay-unselect>
-                    <a data-modal="{:url('admin/index/info',['id'=>session('user.id')])}">
-                        <i class="layui-icon layui-icon-set-fill"></i> 基本资料
-                    </a>
-                </dd>
-                <dd lay-unselect>
-                    <a data-modal="{:url('admin/index/pass',['id'=>session('user.id')])}">
-                        <i class="layui-icon layui-icon-component"></i> 安全设置
-                    </a>
-                </dd>
-                <dd lay-unselect>
-                    <a data-confirm="确定要退出登录吗？" data-load="{:url('admin/login/out')}">
-                        <i class="layui-icon layui-icon-release"></i> 退出登录
-                    </a>
-                </dd>
-            </dl>
-            <a><span><img src="http://t.cn/RCzsdCq" class="layui-nav-img"> {:session('user.username')}</span></a>
-        </li>
-        <!--{else}-->
-        <li class="layui-nav-item">
-            <a data-href="{:url('@admin/login')}"><i class="layui-icon layui-icon-username"></i> 立即登录</a>
-        </li>
-        <!--{/notempty}-->
-    </ul>
-</div>
+<body class="layui-layout-body">
+{block name='body'}
+<div class="layui-layout layui-layout-admin layui-layout-left-hide">
 
-<div class="layui-side layui-bg-black notselect">
-    <div class="layui-side-scroll">
-        <ul class="layui-nav layui-nav-tree layui-nav-tree-top">
-            <li class="layui-nav-item" lay-unselect="">
-                <a class="text-center" data-target-menu-type>
-                    <i class="layui-icon layui-icon-spread-left"></i>
-                </a>
-            </li>
-        </ul>
-        {foreach $menus as $oneMenu}
-        <!--{notempty name='oneMenu.sub'}-->
-        <ul class="layui-nav layui-nav-tree layui-hide" data-menu-layout="m-{$oneMenu.id}">
-            {foreach $oneMenu.sub as $twoMenu}
-            <!--{empty name='twoMenu.sub'}-->
+    <!-- 顶部菜单 开始 -->
+    <div class="layui-header notselect">
+        <a href="{:url('@')}" class="layui-logo">ThinkAdmin <sup>V4.0</sup></a>
+        <ul class="layui-nav layui-layout-left">
+            <!--{foreach $menus as $oneMenu}-->
             <li class="layui-nav-item">
-                <a data-target-tips="{$twoMenu.title}" data-menu-node="m-{$oneMenu.id}-{$twoMenu.id}" data-open="{$twoMenu.url}">
-                    <span class='nav-icon {$twoMenu.icon|default="layui-icon layui-icon-link"}'></span>
-                    <span class="nav-text">{$twoMenu.title}</span>
+                <a data-menu-node="m-{$oneMenu.id}" data-open="{$oneMenu.url}">
+                    {notempty name='oneMenu.icon'}<span class='font-s13 {$oneMenu.icon}'></span>&nbsp;{/notempty}
+                    {$oneMenu.title|default=''}
                 </a>
             </li>
-            <!--{else}-->
-            <li class="layui-nav-item" data-submenu-layout='m-{$oneMenu.id}-{$twoMenu.id}'>
-                <a data-target-tips="{$twoMenu.title}">
-                    <span class='nav-icon layui-hide {$twoMenu.icon|default="layui-icon layui-icon-link"}'></span>
-                    <span class="nav-text">{$twoMenu.title}</span>
-                </a>
+            <!--{/foreach}-->
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li lay-unselect class="layui-nav-item">
+                <a data-reload><i class="layui-icon layui-icon-refresh-3"></i></a>
+            </li>
+            <!--{notempty name='Think.session.user'}-->
+            <li class="layui-nav-item">
                 <dl class="layui-nav-child">
-                    {foreach $twoMenu.sub as $thrMenu}
-                    <dd>
-                        <a data-target-tips="{$thrMenu.title}" data-open="{$thrMenu.url}" data-menu-node="m-{$oneMenu.id}-{$twoMenu.id}-{$thrMenu.id}">
-                            <span class='{$thrMenu.icon|default="layui-icon layui-icon-link"}'></span>
-                            <span class="nav-text">{$thrMenu.title}</span>
+                    <dd lay-unselect>
+                        <a data-modal="{:url('admin/index/info',['id'=>session('user.id')])}">
+                            <i class="layui-icon layui-icon-set-fill"></i> 基本资料
                         </a>
                     </dd>
-                    {/foreach}
+                    <dd lay-unselect>
+                        <a data-modal="{:url('admin/index/pass',['id'=>session('user.id')])}">
+                            <i class="layui-icon layui-icon-component"></i> 安全设置
+                        </a>
+                    </dd>
+                    <dd lay-unselect>
+                        <a data-confirm="确定要退出登录吗？" data-load="{:url('admin/login/out')}">
+                            <i class="layui-icon layui-icon-release"></i> 退出登录
+                        </a>
+                    </dd>
                 </dl>
+                <a><span><img src="http://t.cn/RCzsdCq" class="layui-nav-img"> {:session('user.username')}</span></a>
             </li>
-            <!--{/empty}-->
-            {/foreach}
+            <!--{else}-->
+            <li class="layui-nav-item">
+                <a data-href="{:url('@admin/login')}"><i class="layui-icon layui-icon-username"></i> 立即登录</a>
+            </li>
+            <!--{/notempty}-->
         </ul>
-        <!--{/notempty}-->
-        {/foreach}
     </div>
-</div>
+    <!-- 顶部菜单 结束 -->
 
-<div class="layui-body layui-card">
-    {notempty name='title'}
-    <div class="layui-card-header">{$title|default=''}</div>
-    {/notempty}
-    <div class="layui-card-body"></div>
-</div>
+    <!-- 左则菜单 开始 -->
+    <div class="layui-side layui-bg-black notselect">
+        <div class="layui-side-scroll">
+            <ul class="layui-nav layui-nav-tree layui-nav-tree-top">
+                <li class="layui-nav-item" lay-unselect="">
+                    <a class="text-center" data-target-menu-type>
+                        <i class="layui-icon layui-icon-spread-left"></i>
+                    </a>
+                </li>
+            </ul>
+            <!--{foreach $menus as $oneMenu}-->
+            <!--{notempty name='oneMenu.sub'}-->
+            <ul class="layui-nav layui-nav-tree layui-hide" data-menu-layout="m-{$oneMenu.id}">
+                <!--{foreach $oneMenu.sub as $twoMenu}-->
+                <!--{empty name='twoMenu.sub'}-->
+                <li class="layui-nav-item">
+                    <a data-target-tips="{$twoMenu.title}" data-menu-node="m-{$oneMenu.id}-{$twoMenu.id}" data-open="{$twoMenu.url}">
+                        <span class='nav-icon {$twoMenu.icon|default="layui-icon layui-icon-link"}'></span>
+                        <span class="nav-text">{$twoMenu.title}</span>
+                    </a>
+                </li>
+                <!--{else}-->
+                <li class="layui-nav-item" data-submenu-layout='m-{$oneMenu.id}-{$twoMenu.id}'>
+                    <a data-target-tips="{$twoMenu.title}">
+                        <span class='nav-icon layui-hide {$twoMenu.icon|default="layui-icon layui-icon-link"}'></span>
+                        <span class="nav-text">{$twoMenu.title}</span>
+                    </a>
+                    <dl class="layui-nav-child">
+                        <!--{foreach $twoMenu.sub as $thrMenu}-->
+                        <dd>
+                            <a data-target-tips="{$thrMenu.title}" data-open="{$thrMenu.url}" data-menu-node="m-{$oneMenu.id}-{$twoMenu.id}-{$thrMenu.id}">
+                                <span class='{$thrMenu.icon|default="layui-icon layui-icon-link"}'></span>
+                                <span class="nav-text">{$thrMenu.title}</span>
+                            </a>
+                        </dd>
+                        <!--{/foreach}-->
+                    </dl>
+                </li>
+                <!--{/empty}-->
+                <!--{/foreach}-->
+            </ul>
+            <!--{/notempty}-->
+            <!--{/foreach}-->
+        </div>
+    </div>
+    <!-- 左则菜单 结束 -->
 
+    <!-- 主体内容 开始 -->
+    <div class="layui-body">{block name='content'}{/block}</div>
+    <!-- 主体内容 结束 -->
+
+</div>
 {/block}
+<script src="__STATIC__/plugs/layui/layui.all.js"></script>
+<script src="__STATIC__/admin.js"></script>
+<script src="__STATIC__/plugs/require/require.js"></script>
+<script src="__STATIC__/app.js"></script>
+{block name='script'}{/block}
+</body>
+
+</html>

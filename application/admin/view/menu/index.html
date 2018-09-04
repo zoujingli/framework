@@ -1,0 +1,87 @@
+{extend name='center'}
+
+{block name="button"}
+<!--{if auth("admin/menu/add")}-->
+<button data-modal='{:url("admin/menu/add")}' data-title="添加菜单" class='layui-btn layui-btn-sm layui-btn-primary'>添加菜单</button>
+<!--{/if}-->
+<!--{if auth("admin/menu/del")}-->
+<button data-update data-field='delete' data-action='{:url("admin/menu/del")}' class='layui-btn layui-btn-sm layui-btn-primary'>删除菜单</button>
+<!--{/if}-->
+{/block}
+
+{block name="content"}
+<form onsubmit="return false;" data-auto="true" method="post">
+    <!--{empty name='list'}-->
+    <p class="help-block text-center well">没 有 记 录 哦！</p>
+    <!--{else}-->
+    <input type="hidden" value="resort" name="action">
+    <table id="test" class="layui-table" lay-skin="line">
+        <thead>
+        <tr>
+            <th class='list-table-check-td think-checkbox'>
+                <input data-auto-none="" data-check-target='.list-check-box' type='checkbox'>
+            </th>
+            <th class='list-table-sort-td'>
+                <button type="submit" class="layui-btn layui-btn-normal layui-btn-xs">排 序</button>
+            </th>
+            <th class='text-center'></th>
+            <th></th>
+            <th class='visible-lg'></th>
+            <th class='text-center'></th>
+            <th class='text-center'></th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--{foreach $list as $key=>$vo}-->
+        <tr>
+            <td class='list-table-check-td think-checkbox'>
+                <input class="list-check-box" value='{$vo.ids}' type='checkbox'>
+            </td>
+            <td class='list-table-sort-td'>
+                <input name="_{$vo.id}" value="{$vo.sort}" class="list-sort-input">
+            </td>
+            <td class='text-center'>
+                <i class="{$vo.icon} font-s18"></i>
+            </td>
+            <td class="nowrap"><span class="color-desc">{$vo.spl|raw}</span>{$vo.title}</td>
+            <td class='visible-lg'>{$vo.url}</td>
+            <td class='text-center nowrap'>
+                {if $vo.status eq 0}<span>已禁用</span>{elseif $vo.status eq 1}<span class="color-green">使用中</span>{/if}
+            </td>
+            <td class='text-center nowrap notselect'>
+
+                {if auth("admin/menu/add")}
+                <span class="text-explode">|</span>
+                <!--{if $vo.spt<2}-->
+                <a data-title="添加菜单" data-modal='{:url("admin/menu/add")}?pid={$vo.id}'>添加下级</a>
+                <!--{else}-->
+                <a class="color-desc">添加下级</a>
+                <!--{/if}-->
+                {/if}
+
+                {if auth("admin/menu/edit")}
+                <span class="text-explode">|</span>
+                <a data-title="编辑菜单" data-modal='{:url("admin/menu/edit")}?id={$vo.id}'>编辑</a>
+                {/if}
+
+                {if $vo.status eq 1 and auth("admin/menu/forbid")}
+                <span class="text-explode">|</span>
+                <a data-update="{$vo.ids}" data-field='status' data-value='0' data-action='{:url("admin/menu/forbid")}'>禁用</a>
+                {elseif auth("admin/menu/resume")}
+                <span class="text-explode">|</span>
+                <a data-update="{$vo.ids}" data-field='status' data-value='1' data-action='{:url("admin/menu/resume")}'>启用</a>
+                {/if}
+
+                {if auth("admin/menu/del")}
+                <span class="text-explode">|</span>
+                <a data-update="{$vo.ids}" data-field='delete' data-action='{:url("admin/menu/del")}'>删除</a>
+                {/if}
+
+            </td>
+        </tr>
+        <!--{/foreach}-->
+        </tbody>
+    </table>
+    <!--{/empty}-->
+</form>
+{/block}

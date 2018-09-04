@@ -17,7 +17,6 @@ namespace app\admin\controller;
 use app\admin\logic\Auth;
 use library\Controller;
 use library\tools\Data;
-use think\App;
 use think\Db;
 
 /**
@@ -50,11 +49,11 @@ class Index extends Controller
      */
     public function main()
     {
-        $_version = Db::query('select version() as ver');
+        $version = Db::query('select version() as ver');
         return $this->fetch('', [
             'title'     => '后台首页',
-            'think_ver' => App::VERSION,
-            'mysql_ver' => array_pop($_version)['ver'],
+            'think_ver' => \think\App::VERSION,
+            'mysql_ver' => array_pop($version)['ver'],
         ]);
     }
 
