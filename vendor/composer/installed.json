@@ -12,7 +12,13 @@
             "type": "zip",
             "url": "https://api.github.com/repos/top-think/think-installer/zipball/f5400a12c60e513911aef41fe443fa6920952675",
             "reference": "f5400a12c60e513911aef41fe443fa6920952675",
-            "shasum": ""
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
         },
         "require": {
             "composer-plugin-api": "^1.0"
@@ -55,7 +61,13 @@
             "type": "zip",
             "url": "https://api.github.com/repos/top-think/framework/zipball/7b7f1b6b23897e7f0c7a98a56e61723a61fa27ce",
             "reference": "7b7f1b6b23897e7f0c7a98a56e61723a61fa27ce",
-            "shasum": ""
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
         },
         "require": {
             "php": ">=5.6.0",
@@ -108,7 +120,13 @@
             "type": "zip",
             "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/ba90f0bb0afdff1e3f7ae4ec419aa0940c0d5241",
             "reference": "ba90f0bb0afdff1e3f7ae4ec419aa0940c0d5241",
-            "shasum": ""
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
         },
         "require": {
             "ext-curl": "*",
@@ -119,7 +137,7 @@
         },
         "time": "2018-09-03T10:26:30+00:00",
         "type": "library",
-        "installation-source": "dist",
+        "installation-source": "source",
         "autoload": {
             "psr-4": {
                 "library\\": "library"
@@ -155,7 +173,13 @@
             "type": "zip",
             "url": "https://api.github.com/repos/zoujingli/WeChatDeveloper/zipball/39682a047e5c8f9c66107924dfed4e2080e97eb4",
             "reference": "39682a047e5c8f9c66107924dfed4e2080e97eb4",
-            "shasum": ""
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
         },
         "require": {
             "ext-curl": "*",
@@ -209,7 +233,13 @@
             "type": "zip",
             "url": "https://api.github.com/repos/zoujingli/WeOpenDeveloper/zipball/32aa04ad346790cd6ac7672c888e22e15cb007fe",
             "reference": "32aa04ad346790cd6ac7672c888e22e15cb007fe",
-            "shasum": ""
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
         },
         "require": {
             "ext-curl": "*",

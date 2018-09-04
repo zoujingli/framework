@@ -13,5 +13,11 @@
     "topthink/framework": "5.1.*",
     "zoujingli/weopen-developer": "^1.0",
     "zoujingli/think-library": "dev-master"
+  },
+  "repositories": {
+    "packagist": {
+      "type": "composer",
+      "url": "https://packagist.laravel-china.org"
+    }
   }
 }
