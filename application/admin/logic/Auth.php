@@ -75,7 +75,7 @@ class Auth
             return true;
         }
         // 用户指定角色授权放行
-        return in_array($currentNode, (array) session('user.nodes'));
+        return in_array($currentNode, (array)session('user.nodes'));
     }
 
     /**
