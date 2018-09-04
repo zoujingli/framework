@@ -1,3 +1,4 @@
+/.idea
+/.gitattributes
 /runtime
 /composer.lock
-/.idea
