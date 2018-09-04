@@ -14,7 +14,7 @@
 
 namespace app\admin\controller;
 
-use app\admin\Logic\Auth;
+use app\admin\logic\Auth;
 use library\Controller;
 use library\tools\Data;
 use think\App;
@@ -45,7 +45,7 @@ class Index extends Controller
     }
 
     /**
-     * rgck
+     * 后台环境信息
      * @return mixed
      */
     public function main()

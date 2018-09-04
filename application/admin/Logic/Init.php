@@ -12,7 +12,7 @@
 // | github开源项目：https://github.com/zoujingli/ThinkAdmin
 // +----------------------------------------------------------------------
 
-namespace app\admin\Logic;
+namespace app\admin\logic;
 
 use library\tools\Node;
 use think\Db;
@@ -21,10 +21,11 @@ use think\Request;
 /**
  * 权限验证逻辑器
  * Class Init
- * @package app\admin\Logic
+ * @package app\admin\logic
  */
 class Init
 {
+
     /**
      * @param Request $request
      * @param \Closure $next

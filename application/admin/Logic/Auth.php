@@ -12,16 +12,16 @@
 // | github开源项目：https://github.com/zoujingli/ThinkAdmin
 // +----------------------------------------------------------------------
 
-namespace app\admin\Logic;
+namespace app\admin\logic;
 
 use library\tools\Data;
 use library\tools\Node;
 use think\Db;
 
 /**
- * 权限访问管理
+ * 权限访问及菜单管理
  * Class Auth
- * @package app\admin\Logic
+ * @package app\admin\logic
  */
 class Auth
 {
@@ -75,7 +75,7 @@ class Auth
             return true;
         }
         // 用户指定角色授权放行
-        return in_array($currentNode, (array)session('user.nodes'));
+        return in_array($currentNode, (array) session('user.nodes'));
     }
 
     /**
@@ -118,6 +118,15 @@ class Auth
     }
 
     /**
+     * 判断用户登录状态
+     * @return boolean
+     */
+    public static function isLogin()
+    {
+        return !!session('user');
+    }
+
+    /**
      * 获取授权后的菜单
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -128,7 +137,7 @@ class Auth
     {
         self::applyAuthNode();
         $list = Db::name('SystemMenu')->where(['status' => '1'])->order('sort asc,id asc')->select();
-        return self::buildMenuData(Data::arr2tree($list), self::get(), !!session('user'));
+        return self::buildMenuData(Data::arr2tree($list), self::get(), self::isLogin());
     }
 
     /**

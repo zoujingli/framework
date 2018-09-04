@@ -18,8 +18,8 @@
  */
 if (typeof layui !== 'undefined') {
     var form = layui.form,
-        layer = layui.layer,
-        laydate = layui.laydate;
+            layer = layui.layer,
+            laydate = layui.laydate;
     if (typeof jQuery === 'undefined') {
         var $ = jQuery = layui.$;
     }
@@ -436,7 +436,6 @@ $(function () {
                             $(this).off(i, func).on(i, func);
                         }
                     }
-
                     function func() {
                         self.checkInput(this);
                     }
@@ -520,7 +519,7 @@ $(function () {
                             i !== $cur.data('index') && tmp.push(data[i]);
                         }
                         $cur.data('input').value = tmp.join('|');
-                        $cur.remove(), $.msg.close(index);
+                        $cur.remove(), $.msg.close(dialogIndex);
                     });
                 });
                 $(this).before($tpl);
@@ -532,13 +531,11 @@ $(function () {
     $body.on('click', '[data-load]', function () {
         var url = $(this).attr('data-load'), tips = $(this).attr('data-tips');
         if ($(this).attr('data-confirm')) {
-            return $.msg.confirm($(this).attr('data-confirm'), _goLoad);
+            return $.msg.confirm($(this).attr('data-confirm'), function () {
+                $.form.load(url, {}, 'get', null, true, tips);
+            });
         }
-        return _goLoad.call(this);
-
-        function _goLoad() {
-            $.form.load(url, {}, 'get', null, true, tips);
-        }
+        $.form.load(url, {}, 'get', null, true, tips);
     });
 
     /*! 注册 data-serach 表单搜索行为 */
@@ -626,11 +623,11 @@ $(function () {
     /*! 注册 data-tips-image 事件行为 */
     $body.on('click', '[data-tips-image]', function () {
         var img = new Image(), index = $.msg.loading();
-        var imgWidth = this.getAttribute('data-width') || '480px';
+        var width = this.getAttribute('data-width') || '480px';
         img.onload = function () {
-            var $content = $(img).appendTo('body').css({background: '#fff', width: imgWidth, height: 'auto'});
+            var $content = $(img).appendTo('body').css({background: '#fff', width: width, height: 'auto'});
             layer.open({
-                type: 1, area: imgWidth, title: false, closeBtn: 1,
+                type: 1, area: width, title: false, closeBtn: 1,
                 skin: 'layui-layer-nobg', shadeClose: true, content: $content,
                 end: function () {
                     $(img).remove();
@@ -640,7 +637,7 @@ $(function () {
                 }
             });
         };
-        img.onerror = function (e) {
+        img.onerror = function () {
             $.msg.close(index);
         };
         img.src = this.getAttribute('data-tips-image') || this.src;
@@ -659,20 +656,14 @@ $(function () {
         var $container = $('<div class="mobile-preview pull-left"><div class="mobile-header">公众号</div><div class="mobile-body"><iframe id="phone-preview" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe></div></div>').appendTo('body');
         $container.find('iframe').attr('src', this.getAttribute('data-phone-view') || this.href);
         layer.style(layer.open({
-            type: 1, scrollbar: !1, area: ['335px', '600px'], title: !1,
-            closeBtn: 1, skin: 'layui-layer-nobg', shadeClose: !1, content: $container,
+            type: true, scrollbar: false, area: ['335px', '600px'], title: false,
+            closeBtn: true, skin: 'layui-layer-nobg', shadeClose: false, content: $container,
             end: function () {
                 $container.remove();
             }
         }), {boxShadow: 'none'});
     });
 
-    /*! 分页事件切换处理 */
-    $body.on('change', '.pagination-trigger select', function () {
-        window.location.href = this.options[this.selectedIndex].getAttribute('data-url');
-    });
-
     /*! 初始化 */
-    $.menu.listen();
-    $.vali.listen();
+    $.menu.listen(), $.vali.listen();
 });
