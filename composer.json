@@ -1,7 +1,7 @@
 {
   "type": "project",
-  "name": "zoujingli/think-admin",
-  "keywords": ["ThinkPHP","ThinkAdmin"],
+  "name": "zoujingli/framework",
+  "keywords": ["framework","ThinkAdmin"],
   "autoload": {"psr-4": {"app\\": "application"}},
   "authors": [{"name": "Anyon", "email": "zoujingli@qq.com"}],
   "description": "Rapid development framework based on ThinkPHP5",
