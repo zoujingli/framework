@@ -14,7 +14,6 @@
 
 namespace app\admin\controller;
 
-
 use library\Controller;
 use library\tools\Data;
 
@@ -25,6 +24,11 @@ use library\tools\Data;
  */
 class Menu extends Controller
 {
+
+    /**
+     * 系统菜单显示
+     * @return array
+     */
     public function index()
     {
         $this->assign('title', '系统菜单管理');
