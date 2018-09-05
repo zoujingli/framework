@@ -29,6 +29,7 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 
 .layui-layout>.layui-side .layui-nav-item{border-bottom:1px solid #333}
 .layui-layout>.layui-side .layui-nav-item a{height:45px;line-height:45px}
+.layui-layout>.layui-side .layui-nav-item.layui-this a,
 .layui-layout>.layui-side .layui-nav-item .layui-this a{background-color:#1E9FFF}
 .layui-layout>.layui-side .layui-nav-item .layui-nav-child dd{border-bottom:1px solid #222}
 .layui-layout>.layui-side .layui-nav-item .layui-nav-child dd:last-child{border-bottom:none}
