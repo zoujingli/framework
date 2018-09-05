@@ -51,9 +51,8 @@ class Index extends Controller
     public function main()
     {
         $this->title = '后台首页';
-        $version = Db::query('select version() as ver');
         $this->think_ver = \think\App::VERSION;
-        $this->mysql_ver = array_pop($version)['ver'];
+        $this->mysql_ver = Db::query('select version() as ver')[0]['ver'];
         return $this->fetch();
     }
 

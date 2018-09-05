@@ -23,6 +23,9 @@ use library\Controller;
  */
 class Index extends Controller
 {
+    /**
+     * 入口跳转链接
+     */
     public function index()
     {
         $this->redirect('@admin');

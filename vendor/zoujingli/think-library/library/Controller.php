@@ -46,6 +46,12 @@ class Controller extends \stdClass
     protected $request;
 
     /**
+     * 当前数据对象
+     * @var array
+     */
+    protected $data = [];
+
+    /**
      * Controller constructor.
      */
     public function __construct()
@@ -81,7 +87,18 @@ class Controller extends \stdClass
      */
     public function __set($name, $value)
     {
+        $this->data[$name] = $value;
         $this->assign($name, $value);
+    }
+
+    /**
+     * 获取赋值数据
+     * @param string $name
+     * @return mixed|null
+     */
+    public function __get($name)
+    {
+        return isset($this->data[$name]) ? $this->data[$name] : null;
     }
 
     /**
