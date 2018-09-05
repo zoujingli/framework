@@ -26,13 +26,19 @@ class Menu extends Controller
 {
 
     /**
+     * 当前操作数据库
+     * @var string
+     */
+    protected $table = 'SystemMenu';
+
+    /**
      * 系统菜单显示
      * @return array
      */
     public function index()
     {
-        $this->assign('title', '系统菜单管理');
-        return $this->_page('SystemMenu', false);
+        $this->title = '系统菜单管理';
+        return $this->_page($this->table, false);
     }
 
     /**
@@ -55,7 +61,7 @@ class Menu extends Controller
      */
     public function resume()
     {
-        $this->_save('SystemMenu', ['status' => '1']);
+        $this->_save($this->table, ['status' => '1']);
     }
 
     /**
@@ -63,7 +69,7 @@ class Menu extends Controller
      */
     public function forbid()
     {
-        $this->_save('SystemMenu', ['status' => '0']);
+        $this->_save($this->table, ['status' => '0']);
     }
 
     /**
@@ -71,7 +77,7 @@ class Menu extends Controller
      */
     public function del()
     {
-        $this->_delete('SystemMenu');
+        $this->_delete($this->table);
     }
 
 }

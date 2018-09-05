@@ -61,6 +61,7 @@ return array(
     'app\\admin\\controller\\Index' => $baseDir . '/application/admin/controller/Index.php',
     'app\\admin\\controller\\Login' => $baseDir . '/application/admin/controller/Login.php',
     'app\\admin\\controller\\Menu' => $baseDir . '/application/admin/controller/Menu.php',
+    'app\\admin\\controller\\Plugs' => $baseDir . '/application/admin/controller/Plugs.php',
     'app\\admin\\logic\\Auth' => $baseDir . '/application/admin/logic/Auth.php',
     'app\\admin\\logic\\Init' => $baseDir . '/application/admin/logic/Init.php',
     'app\\index\\controller\\Index' => $baseDir . '/application/index/controller/Index.php',

@@ -144,8 +144,6 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 /*.uploadimagemtl a{color:#fff;width:20px;height:20px;float:right;display:none;line-height:22px;text-align:center;background:rgba(0,0,0,0.5)}*/
 /*.uploadimagemtl:hover a{display:inline-block;cursor:pointer}*/
 /*.uploadimagemtl:hover a:hover{color:#fff;text-decoration:none}*/
-/*.pagination-trigger{position:absolute;line-height:31px;margin:20px 0}*/
-/*.pagination-trigger select{height:20px;text-align:center;border:1px solid #ccc;border-radius:0;font-size:12px}*/
 
 /** Layui样式调整 */
 /*.think-inner-table{border:none!important;margin:0!important}*/
@@ -164,7 +162,7 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 /*.layui-table .list-table-image{width:22px;cursor:pointer}*/
 .layui-table .list-table-sort-td{width:60px!important;text-align:center!important}
 .layui-table .list-table-sort-td button{width:50px}
-.layui-table .list-table-sort-td input{width:50px;text-align:center;line-height:14px;padding:2px;border:1px solid #e6e6e6}
+.layui-table .list-table-sort-td input{width:50px;text-align:center;line-height:14px;padding:2px;border:1px solid #e6e6e6;color:#666}
 .layui-table .list-table-check-td{width:30px!important;text-align:center}
 .layui-table .list-table-check-td input{margin:0;vertical-align:middle}
 

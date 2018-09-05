@@ -36,11 +36,12 @@ class Index extends Controller
      */
     public function index()
     {
-        $menus = Auth::getAuthMenu();
-        if (empty($menus) && !session('user.id')) {
+        $this->title = '系统管理';
+        $this->menus = Auth::getAuthMenu();
+        if (empty($this->menus) && !session('user.id')) {
             $this->redirect('@admin/login');
         }
-        return $this->fetch('', ['menus' => $menus, 'title' => '系统管理']);
+        return $this->fetch();
     }
 
     /**
@@ -49,12 +50,11 @@ class Index extends Controller
      */
     public function main()
     {
+        $this->title = '后台首页';
         $version = Db::query('select version() as ver');
-        return $this->fetch('', [
-            'title'     => '后台首页',
-            'think_ver' => \think\App::VERSION,
-            'mysql_ver' => array_pop($version)['ver'],
-        ]);
+        $this->think_ver = \think\App::VERSION;
+        $this->mysql_ver = array_pop($version)['ver'];
+        return $this->fetch();
     }
 
     /**
@@ -73,7 +73,7 @@ class Index extends Controller
             $this->error('只能修改当前用户的密码！');
         }
         if ($this->request->isGet()) {
-            $this->assign(['verify' => true]);
+            $this->verify = true;
             return $this->_form('SystemUser', 'user/pass');
         }
         // 获取输入数据

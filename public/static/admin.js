@@ -571,9 +571,9 @@ $(function () {
         });
     });
 
-    /*! 注册 data-save 事件行为 */
-    $body.on('click', '[data-save]', function () {
-        var $this = $(this), data = {}, action = $this.attr('data-save');
+    /*! 注册 data-action 事件行为 */
+    $body.on('click', '[data-action]', function () {
+        var data = {}, $this = $(this), action = $this.attr('data-action');
         var rule = $this.attr('data-value') || (function (rule, ids) {
             $($this.attr('data-target') || 'input[type=checkbox].list-check-box').map(function () {
                 (this.checked) && ids.push(this.value);
@@ -589,7 +589,7 @@ $(function () {
             }
             data[o.split('#')[0]] = o.split('#')[1];
         }
-        $.msg.confirm('确定要更改数据状态吗？', function () {
+        $.msg.confirm($this.attr('data-confirm') || '确定要更改数据状态吗？', function () {
             $.form.load(action, data, 'post');
         });
     });
@@ -600,17 +600,12 @@ $(function () {
         (href && href.indexOf('#') !== 0) && (window.location.href = href);
     });
 
-    /*! 注册 data-page-href 事件行为 */
-    $body.on('click', 'a[data-page-href]', function () {
-        window.location.href = '#' + $.menu.parseUri(this.href, this);
-    });
-
     /*! 注册 data-file 事件行为 */
     $body.on('click', '[data-file]', function () {
         var method = $(this).attr('data-file') === 'one' ? 'one' : 'mtl';
         var type = $(this).attr('data-type') || 'jpg,png', field = $(this).attr('data-field') || 'file';
         var title = $(this).attr('data-title') || '文件上传', uptype = $(this).attr('data-uptype') || '';
-        var url = window.ROOT_URL + '/index.php/admin/plugs/upfile.html?mode=' + method + '&uptype=' + uptype + '&type=' + type + '&field=' + field;
+        var url = window.ROOT_URL + '?s=admin/plugs/upfile.html&mode=' + method + '&uptype=' + uptype + '&type=' + type + '&field=' + field;
         $.form.iframe(url, title || '文件管理');
     });
 
@@ -622,7 +617,7 @@ $(function () {
     /*! 注册 data-icon 事件行为 */
     $body.on('click', '[data-icon]', function () {
         var field = $(this).attr('data-icon') || $(this).attr('data-field') || 'icon';
-        var url = window.ROOT_URL + '/index.php/admin/plugs/icon.html?field=' + field;
+        var url = window.ROOT_URL + '?s=admin/plugs/icon.html&field=' + field;
         $.form.iframe(url, '图标选择');
     });
 
