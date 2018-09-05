@@ -1,4 +1,4 @@
-{extend name='center'}
+{extend name='main'}
 
 {block name="button"}
 
@@ -29,7 +29,7 @@
             </th>
             <th class='text-center'></th>
             <th></th>
-            <th class='visible-lg'></th>
+            <th class='layui-hide-xs'></th>
             <th class='text-center'></th>
             <th class='text-center'></th>
         </tr>
@@ -47,7 +47,7 @@
                 <i class="{$vo.icon} font-s18"></i>
             </td>
             <td class="nowrap"><span class="color-desc">{$vo.spl|raw}</span>{$vo.title}</td>
-            <td class='visible-lg'>{$vo.url}</td>
+            <td class='layui-hide-xs'>{$vo.url}</td>
             <td class='text-center nowrap'>
                 {if $vo.status eq 0}<span>已禁用</span>{elseif $vo.status eq 1}<span class="color-green">使用中</span>{/if}
             </td>
