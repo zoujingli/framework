@@ -50,4 +50,28 @@ class Menu extends Controller
         $data = Data::arr2table($data);
     }
 
+    /**
+     * 启用菜单
+     */
+    public function resume()
+    {
+        $this->_save('SystemMenu', ['status' => '1']);
+    }
+
+    /**
+     * 禁用菜单
+     */
+    public function forbid()
+    {
+        $this->_save('SystemMenu', ['status' => '0']);
+    }
+
+    /**
+     * 删除菜单
+     */
+    public function del()
+    {
+        $this->_delete('SystemMenu');
+    }
+
 }

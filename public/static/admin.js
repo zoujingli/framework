@@ -571,21 +571,26 @@ $(function () {
         });
     });
 
-    /*! 注册 data-update 事件行为 */
-    $body.on('click', '[data-update]', function () {
-        var id = $(this).attr('data-update') || (function () {
-            var data = [];
-            return $($(this).attr('data-list-target') || 'input.list-check-box').map(function () {
-                (this.checked) && data.push(this.value);
-            }), data.join(',');
-        }).call(this);
-        if (id.length < 1) {
-            return $.msg.tips('请选择需要操作的数据！');
+    /*! 注册 data-save 事件行为 */
+    $body.on('click', '[data-save]', function () {
+        var $this = $(this), data = {}, action = $this.attr('data-save');
+        var rule = $this.attr('data-value') || (function (rule, ids) {
+            $($this.attr('data-target') || 'input[type=checkbox].list-check-box').map(function () {
+                (this.checked) && ids.push(this.value);
+            });
+            return ids.length > 0 ? rule.replace('{key}', ids.join(',')) : '';
+        }).call(this, $this.attr('data-rule') || '', []) || '';
+        if (rule.length < 1) {
+            return $.msg.tips('请选择需要更改的数据！');
         }
-        var action = $(this).attr('data-action') || $(this).parents('[data-location]').attr('data-location');
-        var value = $(this).attr('data-value') || 0, field = $(this).attr('data-field') || 'status';
-        $.msg.confirm('确定要操作这些数据吗？', function () {
-            $.form.load(action, {field: field, value: value, id: id}, 'post');
+        for (var o of rule.split(';')) {
+            if (o.length < 2) {
+                return $.msg.tips('异常的数据操作规则，请修改规则！');
+            }
+            data[o.split('#')[0]] = o.split('#')[1];
+        }
+        $.msg.confirm('确定要更改数据状态吗？', function () {
+            $.form.load(action, data, 'post');
         });
     });
 

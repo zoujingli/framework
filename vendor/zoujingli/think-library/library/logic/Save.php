@@ -42,6 +42,11 @@ class Save extends Logic
      */
     protected $pkField;
 
+    /**
+     * 数据对象主键值
+     * @var string
+     */
+    protected $pkValue;
 
     /**
      * ViewForm constructor.
@@ -56,10 +61,7 @@ class Save extends Logic
         $this->where = $where;
         $this->data = empty($data) ? $this->request->post() : $data;
         $this->pkField = empty($pkField) ? $this->db->getPk() : $pkField;
-        if (!isset($this->data[$this->pkField])) {
-            $pkValue = isset($data[$this->pkField]) ? $data[$this->pkField] : null;
-            $this->data[$this->pkField] = $this->request->post($this->pkField, $pkValue);
-        }
+        $this->pkValue = $this->request->post($this->pkField, null);
     }
 
     /**
@@ -70,16 +72,28 @@ class Save extends Logic
      */
     protected function init()
     {
-        if (false !== $this->class->_callback('_save_filter', $this->data, $this->where)) {
-            $result = Data::save($this->db, $this->data, $this->pkField, $this->where);
-            if (false === $this->class->_callback('_save_result', $result)) {
-                return $result;
+        // 主键限制处理
+        if (!isset($this->where[$this->pkField]) && is_string($this->pkValue)) {
+            $this->db->whereIn($this->pkField, explode(',', $this->pkValue));
+            if (isset($this->data)) {
+                unset($this->data[$this->pkField]);
             }
-            if ($result !== false) {
-                $this->class->success('数据记录保存成功!', '');
-            }
-            $this->class->error('数据保存失败, 请稍候再试!');
         }
+        // 前置回调处理
+        if (false === $this->class->_callback('_save_filter', $this->db, $this->data)) {
+            return false;
+        }
+        // 执行更新操作
+        $result = $this->db->where($this->where)->update($this->data) !== false;
+        // 结果回调处理
+        if (false === $this->class->_callback('_save_result', $result)) {
+            return $result;
+        }
+        // 回复前端结果
+        if ($result !== false) {
+            $this->class->success('数据记录保存成功!', '');
+        }
+        $this->class->error('数据保存失败, 请稍候再试!');
     }
 
 }

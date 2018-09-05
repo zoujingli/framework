@@ -2,10 +2,10 @@
 
 {block name="button"}
 <!--{if auth("admin/menu/add")}-->
-<button data-modal='{:url("admin/menu/add")}' data-title="添加菜单" class='layui-btn layui-btn-sm layui-btn-primary'>添加菜单</button>
+<button data-modal='{:url("add")}' data-title="添加菜单" class='layui-btn layui-btn-sm layui-btn-primary'>添加菜单</button>
 <!--{/if}-->
 <!--{if auth("admin/menu/del")}-->
-<button data-update data-field='delete' data-action='{:url("admin/menu/del")}' class='layui-btn layui-btn-sm layui-btn-primary'>删除菜单</button>
+<button data-save='{:url("del")}' data-rule="id#{key}" class='layui-btn layui-btn-sm layui-btn-primary'>删除菜单</button>
 <!--{/if}-->
 {/block}
 
@@ -66,15 +66,15 @@
 
                 {if $vo.status eq 1 and auth("admin/menu/forbid")}
                 <span class="text-explode">|</span>
-                <a data-update="{$vo.ids}" data-field='status' data-value='0' data-action='{:url("admin/menu/forbid")}'>禁用</a>
+                <a data-save="{:url('forbid')}" data-value="id#{$vo.ids};status#0">禁用</a>
                 {elseif auth("admin/menu/resume")}
                 <span class="text-explode">|</span>
-                <a data-update="{$vo.ids}" data-field='status' data-value='1' data-action='{:url("admin/menu/resume")}'>启用</a>
+                <a data-save="{:url('resume')}" data-value="id#{$vo.ids};status#1">启用</a>
                 {/if}
 
                 {if auth("admin/menu/del")}
                 <span class="text-explode">|</span>
-                <a data-update="{$vo.ids}" data-field='delete' data-action='{:url("admin/menu/del")}'>删除</a>
+                <a data-confirm="确定要删除数据吗?">删除</a>
                 {/if}
 
             </td>

@@ -53,7 +53,7 @@ class Delete extends Logic
         parent::__construct($dbQuery);
         $this->where = $where;
         $this->pkField = empty($pkField) ? $this->db->getPk() : $pkField;
-        $this->pkValue = input($this->pkField, null);
+        $this->pkValue = $this->request->post($this->pkField, null);
     }
 
     /**
@@ -79,14 +79,14 @@ class Delete extends Logic
             $result = $this->db->where($this->where)->delete();
         }
         // 结果回调处理
-        if (false !== $this->class->_callback('_delete_result', $result)) {
-            if ($result !== false) {
-                $this->class->success('数据删除成功！', '');
-            }
-            $this->class->error('数据删除失败, 请稍候再试！');
+        if (false === $this->class->_callback('_delete_result', $result)) {
+            return $result;
         }
-        // 返回处理结果
-        return $result;
+        // 回复前端结果
+        if ($result !== false) {
+            $this->class->success('数据删除成功！', '');
+        }
+        $this->class->error('数据删除失败, 请稍候再试！');
     }
 
 }

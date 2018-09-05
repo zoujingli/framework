@@ -34,7 +34,7 @@ use think\Exception;
  * @author Anyon <zoujingli@qq.com>
  * @date 2018/08/10 11:31
  */
-class Controller
+class Controller extends \stdClass
 {
 
     use Jump;
@@ -72,6 +72,16 @@ class Controller
             return call_user_func_array([$this, $method], $arguments);
         }
         throw new Exception('method not exists:' . get_class($this) . '->' . $method);
+    }
+
+    /**
+     * 模板数据赋值
+     * @param string $name
+     * @param mixed $value
+     */
+    public function __set($name, $value)
+    {
+        $this->assign($name, $value);
     }
 
     /**
