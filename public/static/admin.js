@@ -145,7 +145,7 @@ $(function () {
         };
         // 异步加载的数据
         this.load = function (url, data, type, callback, loading, tips, time) {
-            var index = loading ? $.msg.loading(tips) : 0;
+            var index = loading !== false ? $.msg.loading(tips) : 0;
             $.ajax({
                 type: type || 'GET', url: $.menu.parseUri(url), data: data || {},
                 beforeSend: function () {
