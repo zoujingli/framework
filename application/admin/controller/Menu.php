@@ -14,8 +14,10 @@
 
 namespace app\admin\controller;
 
+use app\admin\logic\Auth;
 use library\Controller;
 use library\tools\Data;
+use think\Db;
 
 /**
  * 系统菜单管理
@@ -54,6 +56,66 @@ class Menu extends Controller
             $vo['ids'] = join(',', Data::getArrSubIds($data, $vo['id']));
         }
         $data = Data::arr2table($data);
+    }
+
+    /**
+     * 编辑菜单
+     * @return mixed
+     */
+    public function edit()
+    {
+        return $this->_form($this->table, 'form');
+    }
+
+    /**
+     * 添加菜单
+     * @return mixed
+     */
+    public function add()
+    {
+        return $this->_form($this->table, 'form');
+    }
+
+    /**
+     * 表单数据
+     * @param array $vo
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    protected function _form_filter(&$vo)
+    {
+        if ($this->request->isGet()) {
+            // 上级菜单处理
+            $_menus = Db::name($this->table)->where(['status' => '1'])->order('sort asc,id asc')->select();
+            $_menus[] = ['title' => '顶级菜单', 'id' => '0', 'pid' => '-1'];
+            $menus = Data::arr2table($_menus);
+            foreach ($menus as $key => &$menu) {
+                if (substr_count($menu['path'], '-') > 3) {
+                    unset($menus[$key]);
+                    continue;
+                }
+                if (isset($vo['pid'])) {
+                    $current_path = "-{$vo['pid']}-{$vo['id']}";
+                    if ($vo['pid'] !== '' && (stripos("{$menu['path']}-", "{$current_path}-") !== false || $menu['path'] === $current_path)) {
+                        unset($menus[$key]);
+                        continue;
+                    }
+                }
+            }
+            // 读取系统功能节点
+            $nodes = Auth::get();
+            foreach ($nodes as $key => $node) {
+                if (empty($node['is_menu'])) {
+                    unset($nodes[$key]);
+                }
+            }
+            // 设置上级菜单
+            if (!isset($vo['pid']) && $this->request->get('pid', '0')) {
+                $vo['pid'] = $this->request->get('pid', '0');
+            }
+            $this->assign(['nodes' => array_column($nodes, 'node'), 'menus' => $menus]);
+        }
     }
 
     /**
