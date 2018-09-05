@@ -23,8 +23,13 @@ use library\Controller;
  */
 class Plugs extends Controller
 {
+    /**
+     * 系统选择器图标
+     * @return mixed
+     */
     public function icon()
     {
+        $this->title = '图标选择器';
         $this->field = $this->request->get('field', 'icon');
         return $this->fetch();
     }
