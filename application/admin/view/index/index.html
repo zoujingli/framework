@@ -29,7 +29,7 @@
             <!--{foreach $menus as $oneMenu}-->
             <li class="layui-nav-item">
                 <a data-menu-node="m-{$oneMenu.id}" data-open="{$oneMenu.url}">
-                    {notempty name='oneMenu.icon'}<span class='font-s13 {$oneMenu.icon}'></span>&nbsp;{/notempty}
+                    {notempty name='oneMenu.icon'}<span class='{$oneMenu.icon}'></span>&nbsp;{/notempty}
                     {$oneMenu.title|default=''}
                 </a>
             </li>
