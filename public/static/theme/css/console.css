@@ -131,8 +131,7 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 
 /** 加载进度 */
 .pace-inactive{display:none}
-.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}
-.pace .pace-progress{background:#22df80;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}
+.pace-progress{position:fixed;background:#22df80;z-index:2000;top:0;right:100%;width:100%;height:2px}
 
 /* 分隔线条 */
 .hr-line-dashed{border-top:1px dashed #e7eaec;color:#fff;background-color:#fff;height:1px;margin:20px 0}
