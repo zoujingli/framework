@@ -86,22 +86,22 @@
                 <!--{empty name='twoMenu.sub'}-->
                 <li class="layui-nav-item">
                     <a data-target-tips="{$twoMenu.title}" data-menu-node="m-{$oneMenu.id}-{$twoMenu.id}" data-open="{$twoMenu.url}">
-                        <span class='nav-icon {$twoMenu.icon|default="layui-icon layui-icon-link"}'></span>&nbsp;
-                        <span class="nav-text"> {$twoMenu.title}</span>
+                        <span class='nav-icon {$twoMenu.icon|default="layui-icon layui-icon-link"}'></span>
+                        <span class="nav-text">&nbsp;{$twoMenu.title}</span>
                     </a>
                 </li>
                 <!--{else}-->
                 <li class="layui-nav-item" data-submenu-layout='m-{$oneMenu.id}-{$twoMenu.id}'>
                     <a data-target-tips="{$twoMenu.title}">
-                        <span class='nav-icon layui-hide {$twoMenu.icon|default="layui-icon layui-icon-triangle-d"}'></span>&nbsp;
-                        <span class="nav-text"> {$twoMenu.title}</span>
+                        <span class='nav-icon layui-hide {$twoMenu.icon|default="layui-icon layui-icon-triangle-d"}'></span>
+                        <span class="nav-text">&nbsp;{$twoMenu.title}</span>
                     </a>
                     <dl class="layui-nav-child">
                         <!--{foreach $twoMenu.sub as $thrMenu}-->
                         <dd>
                             <a data-target-tips="{$thrMenu.title}" data-open="{$thrMenu.url}" data-menu-node="m-{$oneMenu.id}-{$twoMenu.id}-{$thrMenu.id}">
-                                <span class='{$thrMenu.icon|default="layui-icon layui-icon-link"}'></span>&nbsp;
-                                <span class="nav-text">{$thrMenu.title}</span>
+                                <span class='{$thrMenu.icon|default="layui-icon layui-icon-link"}'></span>
+                                <span class="nav-text">&nbsp;{$thrMenu.title}</span>
                             </a>
                         </dd>
                         <!--{/foreach}-->
