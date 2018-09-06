@@ -10,7 +10,10 @@
     "ext-curl": "*",
     "ext-json": "*",
     "ext-iconv": "*",
+    "qiniu/php-sdk": "^7.2",
+    "endroid/qr-code": "^1.9",
     "topthink/framework": "5.1.*",
+    "aliyuncs/oss-sdk-php": "^2.2",
     "zoujingli/weopen-developer": "^1.0",
     "zoujingli/think-library": "dev-master"
   },

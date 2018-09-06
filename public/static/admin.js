@@ -112,7 +112,7 @@ $(function () {
         // 异常提示消息
         this.errMsg = '{status}服务器繁忙，请稍候再试！';
         // 内容区选择器
-        this.$container = $('.layui-layout-admin>.layui-body');
+        this.targetClass = '.layui-layout-admin>.layui-body';
         // 刷新当前页面
         this.reload = function () {
             window.onhashchange.call(this);
@@ -120,11 +120,11 @@ $(function () {
         // 内容区域动态加载后初始化
         this.reInit = function ($dom) {
             $.vali.listen(this), JPlaceHolder.init();
-            ($dom || this.$container).find('[required]').parent().prevAll('label').addClass('label-required');
+            ($dom || $(this.targetClass)).find('[required]').parent().prevAll('label').addClass('label-required');
         };
         // 在内容区显示视图
         this.show = function (html) {
-            this.$container.html(html);
+            $(this.targetClass).html(html);
             this.reInit(), setTimeout(this.reInit, 500), setTimeout(this.reInit, 1000);
         };
         // 以hash打开网页

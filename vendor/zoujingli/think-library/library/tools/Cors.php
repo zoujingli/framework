@@ -44,12 +44,16 @@ class Cors
         if (PHP_SESSION_ACTIVE !== session_status()) {
             Session::init(config('session.'));
         }
-        $token = request()->header('token', '');
-        empty($token) && $token = request()->get('token', '');
-        empty($token) && $token = request()->post('token', '');
-        list($name, $value) = explode('=', Crypt::decode($token) . '=');
-        if (!empty($value) && session_name() === $name) {
-            session_id($value);
+        try {
+            $token = request()->header('token', '');
+            empty($token) && $token = request()->get('token', '');
+            empty($token) && $token = request()->post('token', '');
+            list($name, $value) = explode('=', Crypt::decode($token) . '=');
+            if (!empty($value) && session_name() === $name) {
+                session_id($value);
+            }
+        } catch (\Exception $e) {
+//            dump($e);
         }
     }
 
