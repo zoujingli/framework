@@ -92,7 +92,8 @@ $(function () {
         };
         // 自动处理显示Think返回的Json数据
         this.auto = function (ret, time) {
-            var url = ret.url || ret.data, msg = ret.msg || ret.info;
+            var url = ret.url || (typeof ret.data === 'string' ? ret.data : '');
+            var msg = ret.msg || (typeof ret.info === 'string' ? ret.info : '');
             return (parseInt(ret.code) === 1) ? this.success(msg, time, function () {
                 url ? (window.location.href = url) : $.form.reload();
                 for (var i in self.dialogIndexs) {
@@ -111,7 +112,7 @@ $(function () {
         // 异常提示消息
         this.errMsg = '{status}服务器繁忙，请稍候再试！';
         // 内容区选择器
-        this.$container = $('.layui-layout-admin>.layui-body');
+        this.targetClass = '.layui-layout-admin>.layui-body';
         // 刷新当前页面
         this.reload = function () {
             window.onhashchange.call(this);
@@ -119,11 +120,11 @@ $(function () {
         // 内容区域动态加载后初始化
         this.reInit = function () {
             $.vali.listen(this), JPlaceHolder.init();
-            this.$container.find('[required]').parent().prevAll('label').addClass('label-required');
+            $(this.targetClass).find('[required]').parent().prevAll('label').addClass('label-required');
         };
         // 在内容区显示视图
         this.show = function (html) {
-            this.$container.html(html);
+            $(this.targetClass).html(html);
             this.reInit(), setTimeout(this.reInit, 500), setTimeout(this.reInit, 1000);
         };
         // 以hash打开网页

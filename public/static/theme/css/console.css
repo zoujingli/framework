@@ -20,7 +20,7 @@
 ::-moz-selection{background-color:#ec494e;color:#fff}
 :-webkit-autofill{-webkit-box-shadow:0 0 0 1000px white inset;-webkit-text-fill-color:#333}
 
-body{font-family:'微软雅黑', 'Microsoft YaHei', 'Helvetica Neue', 'Luxi Sans', 'DejaVu Sans', 'Hiragino Sans GB', 'serif'}
+body{font-family:'微软雅黑', 'Microsoft YaHei', 'Helvetica Neue', 'Luxi Sans', 'DejaVu Sans', 'Hiragino Sans GB', 'serif';font-size:12px;color:#333;}
 a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}button{border-radius:0!important}
 
 /* 页面布局 - 全局 */
@@ -139,6 +139,10 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 .hr-line-solid{border-bottom:1px solid #e7eaec;background-color:rgba(0,0,0,0);margin-top:15px;margin-bottom:15px}
 .label-required:after{content:'*';color:red;position:absolute;margin-left:4px;font-weight:bold;line-height:1.8em;top:6px;right:5px}
 
+/* 分页 */
+.pagination-container{line-height:40px;}
+.pagination-container>span{color:#666;font-size:12px}
+
 /*.uploadimage{display:inline-block;width:80px;height:80px;background:url('../img/image.png') no-repeat center center;background-size:cover;cursor:pointer}*/
 /*.uploadimagemtl{margin-right:8px}*/
 /*.uploadimagemtl a{color:#fff;width:20px;height:20px;float:right;display:none;line-height:22px;text-align:center;background:rgba(0,0,0,0.5)}*/
@@ -158,11 +162,11 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 /*.layui-table.notevent tbody tr:hover{background-color:inherit}*/
 /*.layui-table th,.layui-table td{font-size:12px}*/
 .layui-table td .text-explode:first-child{opacity:0;display:none}
-/*.layui-table td .text-explode{color:#ccc!important;font-weight:normal!important;margin:0px 4px!important}*/
+.layui-table td .text-explode{color:#ccc!important;font-weight:normal!important;margin:0px 4px!important}
 /*.layui-table .list-table-image{width:22px;cursor:pointer}*/
 .layui-table .list-table-sort-td{width:60px!important;text-align:center!important}
 .layui-table .list-table-sort-td button{width:50px}
-.layui-table .list-table-sort-td input{width:50px;text-align:center;line-height:14px;padding:2px;border:1px solid #e6e6e6;color:#666}
+.layui-table .list-table-sort-td input{font-size:12px;width:50px;text-align:center;line-height:18px;padding:2px;border:1px solid #e6e6e6;color:#666}
 .layui-table .list-table-check-td{width:30px!important;text-align:center}
 .layui-table .list-table-check-td input{margin:0;vertical-align:middle}
 
@@ -446,11 +450,13 @@ label{
 /*.framework-body>.layui-card>.layui-header span:last-child:after{content:''}*/
 
 /*!* 右则内容搜索样式 *!*/
-/*.framework-body .form-search{background:#fff;padding-top:15px}*/
-/*.framework-body .form-search .layui-btn{height:32px;line-height:30px;font-size:12px;padding:0 10px}*/
-/*.framework-body .form-search .layui-form-label{width:auto!important;border-radius:0;padding:0 6px;height:32px;line-height:30px}*/
-/*.framework-body .form-search .layui-input-inline{width:170px}*/
-/*.framework-body .form-search .layui-input-inline input,*/
-/*.framework-body .form-search .layui-input-inline select{border-radius:0;padding:0 5px;height:32px;line-height:30px;width:100%}*/
-/*.framework-body .form-search .layui-form-select{border-radius:0}*/
-/*.framework-body .form-search .layui-form-select dl{top:31px;padding:0}*/
+fieldset{border:1px solid #e6e6e6;margin:0;padding:10px 20px 10px 20px}
+fieldset legend{padding:0 10px;color:#666;font-size:14px}
+/*.form-search{background:#fff;padding-top:15px}*/
+/*.form-search .layui-btn{height:32px;line-height:30px;font-size:12px;padding:0 10px}*/
+/*.form-search .layui-form-label{font-size:12px;color:#666;width:auto!important;border-radius:0;padding:0 6px;height:32px;line-height:30px}*/
+/*.form-search .layui-input-inline{width:170px}*/
+/*.form-search .layui-input-inline input,*/
+/*.form-search .layui-input-inline select{border-radius:0;padding:0 5px;height:32px;line-height:30px;width:100%;font-size:12px}*/
+/*.form-search .layui-form-select{border-radius:0}*/
+/*.form-search .layui-form-select dl{top:31px;padding:0}*/
