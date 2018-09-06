@@ -126,7 +126,7 @@ class Page extends Logic
             foreach ($this->request->post() as $key => $value) {
                 if (preg_match('/^_\d{1,}$/', $key) && preg_match('/^\d{1,}$/', $value)) {
                     list($where, $update) = [['id' => trim($key, '_')], ['sort' => $value]];
-                    if (false === Db::name($this->db->getTable())->where($where)->update($update)) {
+                    if (false === Db::table($this->db->getTable())->where($where)->update($update)) {
                         $this->class->error('排序失败, 请稍候再试！');
                     }
                 }

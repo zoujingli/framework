@@ -108,59 +108,6 @@
         ]
     },
     {
-        "name": "zoujingli/think-library",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/zoujingli/ThinkLibrary.git",
-            "reference": "13c50545c4313d42e75053a455cff8cddb0c8af9"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/13c50545c4313d42e75053a455cff8cddb0c8af9",
-            "reference": "13c50545c4313d42e75053a455cff8cddb0c8af9",
-            "shasum": "",
-            "mirrors": [
-                {
-                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
-                    "preferred": true
-                }
-            ]
-        },
-        "require": {
-            "ext-curl": "*",
-            "ext-iconv": "*",
-            "ext-openssl": "*",
-            "php": ">=5.4",
-            "topthink/framework": "^5.1"
-        },
-        "time": "2018-09-05T07:06:27+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "library\\": "library"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Anyon",
-                "email": "zoujingli@qq.com"
-            }
-        ],
-        "description": "ThinkPHP development of Library",
-        "homepage": "https://library.thinkadmin.top",
-        "keywords": [
-            "ThinkAdmin",
-            "ThinkLibrary"
-        ]
-    },
-    {
         "name": "zoujingli/wechat-developer",
         "version": "v1.1.13",
         "version_normalized": "1.1.13.0",
@@ -512,6 +459,59 @@
             "qiniu",
             "sdk",
             "storage"
+        ]
+    },
+    {
+        "name": "zoujingli/think-library",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/zoujingli/ThinkLibrary.git",
+            "reference": "391a6d809cb98aba35a259ba0b733ef69a722d1a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/391a6d809cb98aba35a259ba0b733ef69a722d1a",
+            "reference": "391a6d809cb98aba35a259ba0b733ef69a722d1a",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "ext-curl": "*",
+            "ext-iconv": "*",
+            "ext-openssl": "*",
+            "php": ">=5.4",
+            "topthink/framework": "^5.1"
+        },
+        "time": "2018-09-06T10:09:16+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "library\\": "library"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Anyon",
+                "email": "zoujingli@qq.com"
+            }
+        ],
+        "description": "ThinkPHP development of Library",
+        "homepage": "https://library.thinkadmin.top",
+        "keywords": [
+            "ThinkAdmin",
+            "ThinkLibrary"
         ]
     }
 ]
