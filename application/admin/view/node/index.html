@@ -11,6 +11,7 @@
 <style>
     .layui-table .title-input {
         width: auto;
+        color: #666;
         height: 28px;
         line-height: 28px;
     }
@@ -19,11 +20,7 @@
         cursor: pointer
     }
 </style>
-<script>
-    $(function () {
-        $('.layui-tab ul.layui-tab-title li:first').trigger('click');
-    });
-</script>
+
 <div class="layui-tab layui-tab-card layui-box">
     <ul class="layui-tab-title">
         <!--{foreach $groups as $key=>$group}-->
@@ -100,7 +97,7 @@
 <!--{if auth("admin/node/save")}-->
 <script>
     $(function () {
-
+        $('.layui-tab ul.layui-tab-title li:first').trigger('click');
         syncLoginGroup.call(this);
         $('[data-login-group]').on('click', function () {
             var twoNode = this.getAttribute('data-login-group');
