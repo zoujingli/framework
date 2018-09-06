@@ -145,8 +145,12 @@ $(function () {
                     typeof Pace === 'object' && Pace.restart();
                 },
                 error: function (XMLHttpRequest) {
-                    $.msg.close(index);
-                    $.msg.tips(self.errMsg.replace('{status}', 'E' + XMLHttpRequest.status + ' - '));
+                    if (parseInt(XMLHttpRequest.status) === 200) {
+                        this.success(XMLHttpRequest.responseText);
+                    } else {
+                        $.msg.close(index);
+                        $.msg.tips(self.errMsg.replace('{status}', 'E' + XMLHttpRequest.status + ' - '));
+                    }
                 },
                 success: function (res) {
                     $.msg.close(index);

@@ -41,6 +41,11 @@ class Auth extends Controller
         return $this->_page($this->table);
     }
 
+    protected function _index_page_filter($data)
+    {
+        dump($data);
+    }
+
     /**
      * 权限授权
      * @return string
