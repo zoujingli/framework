@@ -1,4 +1,3 @@
-
 // +----------------------------------------------------------------------
 // | ThinkAdmin
 // +----------------------------------------------------------------------
@@ -34,15 +33,14 @@ require.config({
     },
     shim: {
         'websocket': {deps: [baseRoot + 'plugs/socket/swfobject.min.js']},
-        'jquery.ztree': {deps: ['css!' + baseRoot + 'plugs/ztree/zTreeStyle/zTreeStyle.css']},
+        'jquery.ztree': {deps: ['jquery', 'css!' + baseRoot + 'plugs/ztree/zTreeStyle/zTreeStyle.css']},
     },
-    deps: ['json'],
-    // 开启debug模式，不缓存资源
+    // deps: [],
     // urlArgs: "ver=" + (new Date()).getTime()
 });
 
 // 注册jquery到require模块
-define('jquery', function () {
+define('jquery', [], function () {
     return layui.$;
 });
 
