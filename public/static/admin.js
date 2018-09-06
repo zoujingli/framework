@@ -10,12 +10,6 @@
 // | github开源项目：https://github.com/zoujingli/ThinkAdmin
 // +----------------------------------------------------------------------
 
-/**
- * jQuery后台初始化
- * @version 1.0
- * @date 2018/02/03
- * @author Anyon <zoujingli@qq.com>
- */
 if (typeof layui !== 'undefined') {
     var form = layui.form,
         layer = layui.layer,
@@ -114,21 +108,23 @@ $(function () {
     /*! 表单自动化组件 */
     $.form = new function () {
         var self = this;
-        // 默认异常提示消息
+        // 异常提示消息
         this.errMsg = '{status}服务器繁忙，请稍候再试！';
+        // 内容区选择器
+        this.$container = $('.layui-layout-admin>.layui-body');
+        // 刷新当前页面
+        this.reload = function () {
+            window.onhashchange.call(this);
+        };
         // 内容区域动态加载后初始化
-        this.reInit = function ($container) {
+        this.reInit = function () {
             $.vali.listen(this), JPlaceHolder.init();
-            $container.find('[required]').parent().prevAll('label').addClass('label-required');
+            this.$container.find('[required]').parent().prevAll('label').addClass('label-required');
         };
         // 在内容区显示视图
         this.show = function (html) {
-            var $container = $('.layui-layout-admin > .layui-body').html(html);
-            reinit.call(this), setTimeout(reinit, 500), setTimeout(reinit, 1000);
-
-            function reinit() {
-                $.form.reInit($container);
-            }
+            this.$container.html(html);
+            this.reInit(), setTimeout(this.reInit, 500), setTimeout(this.reInit, 1000);
         };
         // 以hash打开网页
         this.href = function (url, obj) {
@@ -138,10 +134,6 @@ $(function () {
                 var node = obj.getAttribute('data-menu-node');
                 $('[data-menu-node^="' + node + '-"][data-open!="#"]:first').trigger('click');
             }
-        };
-        // 刷新当前页面
-        this.reload = function () {
-            window.onhashchange.call(this);
         };
         // 异步加载的数据
         this.load = function (url, data, type, callback, loading, tips, time) {
@@ -160,20 +152,14 @@ $(function () {
                     if (typeof callback === 'function' && callback.call(self, res) === false) {
                         return false;
                     }
-                    if (typeof (res) === 'object') {
-                        return $.msg.auto(res, time || res.wait || undefined);
-                    }
-                    self.show(res);
+                    return typeof res === 'object' ? $.msg.auto(res, time || res.wait || undefined) : self.show(res);
                 }
             });
         };
         // 加载HTML到目标位置
         this.open = function (url, data, callback, loading, tips) {
             this.load(url, data, 'get', function (res) {
-                if (typeof (res) === 'object') {
-                    return $.msg.auto(res);
-                }
-                self.show(res);
+                return typeof res === 'object' ? $.msg.auto(res) : self.show(res);
             }, loading, tips);
         };
         // 打开一个iframe窗口
@@ -316,7 +302,7 @@ $(function () {
         };
     };
 
-    // 注册对象到Jq
+    /*! 注册对象到Jq */
     $.vali = function (form, callback, options) {
         return (new function () {
             var self = this;
@@ -431,14 +417,14 @@ $(function () {
                 var params = $.extend({}, options || {});
                 $(form).attr("novalidate", "novalidate");
                 $(form).find(self.tags).map(function () {
+                    function func() {
+                        self.checkInput(this);
+                    }
+
                     for (var i in self.checkEvent) {
                         if (self.checkEvent[i] === true) {
                             $(this).off(i, func).on(i, func);
                         }
-                    }
-
-                    function func() {
-                        self.checkInput(this);
                     }
                 });
                 $(form).bind("submit", function (event) {
@@ -457,7 +443,7 @@ $(function () {
         }).check(form, callback, options);
     };
 
-    // 自动监听规则内表单
+    /*! 自动监听规则内表单 */
     $.vali.listen = function () {
         $('form[data-auto]').map(function () {
             if ($(this).attr('data-listen') !== 'true') {
@@ -478,12 +464,12 @@ $(function () {
         });
     };
 
-    // 注册对象到JqFn
+    /*! 注册对象到JqFn */
     $.fn.vali = function (callback, options) {
         return $.vali(this, callback, options);
     };
 
-    // 上传单个图片
+    /*! 上传单个图片 */
     $.fn.uploadOneImage = function () {
         var name = $(this).attr('name') || 'image';
         var type = $(this).data('type') || 'png,jpg';
@@ -493,7 +479,7 @@ $(function () {
         }).trigger('change');
     };
 
-    // 上传多个图片
+    /*! 上传多个图片 */
     $.fn.uploadMultipleImage = function () {
         var type = $(this).data('type') || 'png,jpg';
         var name = $(this).attr('name') || 'umt-image';
@@ -666,5 +652,6 @@ $(function () {
     });
 
     /*! 初始化 */
-    $.menu.listen(), $.vali.listen();
+    $.menu.listen();
+    $.vali.listen();
 });
