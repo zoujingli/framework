@@ -32,6 +32,10 @@ class Node extends Controller
      */
     protected $table = 'SystemNode';
 
+    /**
+     * 显示节点列表
+     * @return mixed
+     */
     public function index()
     {
         $this->title = '系统节点管理';
@@ -48,15 +52,25 @@ class Node extends Controller
         return $this->fetch();
     }
 
+    /**
+     * 清理无效的节点数据
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     */
     public function clear()
     {
-        $nodes = array_keys(Auth::get());
-        if (false !== Db::name($this->table)->whereNotIn('node', $nodes)->delete()) {
+        $where = [['node', 'not in', array_keys(Auth::get())]];
+        if (false !== Db::name($this->table)->where($where)->delete()) {
             $this->success('清理无效节点记录成功！', '');
         }
         $this->error('清理无效记录失败，请稍候再试！');
     }
 
+    /**
+     * 更新数据记录
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     */
     public function save()
     {
         if ($this->request->isPost()) {
@@ -67,7 +81,7 @@ class Node extends Controller
                     $data[$vo['name']] = $vo['value'];
                 }
             }
-            !empty($data) && Data::save($this->table, $data, 'node');
+            empty($data) || Data::save($this->table, $data, 'node');
             $this->success('参数保存成功！', '');
         }
         $this->error('访问异常，请重新进入...');
