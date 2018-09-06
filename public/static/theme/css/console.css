@@ -450,7 +450,7 @@ label{
 /*.framework-body>.layui-card>.layui-header span:last-child:after{content:''}*/
 
 /*!* 右则内容搜索样式 *!*/
-fieldset{border:1px solid #e6e6e6;margin:0;padding:10px 20px 10px 20px}
+fieldset{border:1px solid #e6e6e6;margin:0;padding:10px 20px 5px 20px}
 fieldset legend{padding:0 10px;color:#666;font-size:14px}
 /*.form-search{background:#fff;padding-top:15px}*/
 /*.form-search .layui-btn{height:32px;line-height:30px;font-size:12px;padding:0 10px}*/
