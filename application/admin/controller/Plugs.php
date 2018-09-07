@@ -39,7 +39,7 @@ class Plugs extends Controller
         }
         $mode = $this->request->get('mode', 'one');
         $types = $this->request->get('type', 'jpg,png');
-        $this->assign('mimes', File::getFileMine($types));
+        $this->assign('mimes', File::mine($types));
         $this->assign('field', $this->request->get('field', 'file'));
         return $this->fetch('', ['mode' => $mode, 'types' => $types, 'uptype' => $uptype]);
     }
@@ -49,7 +49,6 @@ class Plugs extends Controller
      * @return \think\response\Json
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @throws \OSS\Core\OssException
      */
     public function upload()
     {
@@ -66,7 +65,7 @@ class Plugs extends Controller
         }
         // 文件上传处理
         if (($info = $file->move("public/upload/{$names[0]}", "{$names[1]}.{$ext}", true))) {
-            if (($site_url = File::getFileUrl($filename, 'local'))) {
+            if (($site_url = File::instance('local')->url($filename))) {
                 return json(['data' => ['site_url' => $site_url], 'code' => 'SUCCESS', 'msg' => '文件上传成功']);
             }
         }
@@ -75,7 +74,6 @@ class Plugs extends Controller
 
     /**
      * 文件状态检查
-     * @throws \OSS\Core\OssException
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
@@ -84,33 +82,30 @@ class Plugs extends Controller
         $post = $this->request->post();
         $filename = join('/', str_split($post['md5'], 16)) . '.' . strtolower(pathinfo($post['filename'], 4));
         // 检查文件是否已上传
-        if (($site_url = File::getFileUrl($filename))) {
+        if (($site_url = File::url($filename))) {
             $this->success('文件已上传', ['site_url' => $site_url], 'IS_FOUND');
         }
         // 需要上传文件，生成上传配置参数
-        $config = ['uptype' => $post['uptype'], 'file_url' => $filename];
+        $param = ['uptype' => $post['uptype'], 'file_url' => $filename, 'server' => File::upload()];
         switch (strtolower($post['uptype'])) {
             case 'local':
-                $config['server'] = File::getUploadLocalUrl();
-                $config['token'] = md5($filename . session_id());
+                $param['token'] = md5($filename . session_id());
                 break;
             case 'qiniu':
-                $config['server'] = File::getUploadQiniuUrl(true);
-                $config['token'] = $this->_getQiniuToken($filename);
+                $param['token'] = $this->_getQiniuToken($filename);
                 break;
             case 'oss':
                 $time = time() + 3600;
                 $policyText = [
-                    'expiration' => date('Y-m-d', $time) . 'T' . date('H:i:s', $time) . '.000Z',
                     'conditions' => [['content-length-range', 0, 1048576000]],
+                    'expiration' => date('Y-m-d', $time) . 'T' . date('H:i:s', $time) . '.000Z',
                 ];
-                $config['server'] = File::getUploadOssUrl();
-                $config['policy'] = base64_encode(json_encode($policyText));
-                $config['site_url'] = File::getBaseUriOss() . $filename;
-                $config['signature'] = base64_encode(hash_hmac('sha1', $config['policy'], sysconf('storage_oss_secret'), true));
-                $config['OSSAccessKeyId'] = sysconf('storage_oss_keyid');
+                $param['policy'] = base64_encode(json_encode($policyText));
+                $param['site_url'] = File::base() . $filename;
+                $param['signature'] = base64_encode(hash_hmac('sha1', $param['policy'], sysconf('storage_oss_secret'), true));
+                $param['OSSAccessKeyId'] = sysconf('storage_oss_keyid');
         }
-        $this->success('文件未上传', $config, 'NOT_FOUND');
+        $this->success('文件未上传', $param, 'NOT_FOUND');
     }
 
     /**
@@ -122,7 +117,7 @@ class Plugs extends Controller
      */
     protected function _getQiniuToken($key)
     {
-        $baseUrl = File::getBaseUriQiniu();
+        $baseUrl = File::base();
         $bucket = sysconf('storage_qiniu_bucket');
         $accessKey = sysconf('storage_qiniu_access_key');
         $secretKey = sysconf('storage_qiniu_secret_key');
