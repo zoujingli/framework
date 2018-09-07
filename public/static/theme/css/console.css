@@ -33,7 +33,7 @@ input::-ms-clear{display:none}button{border-radius:0!important}
 .layui-layout>.layui-side .layui-nav-item a{height:45px;line-height:45px}
 .layui-layout>.layui-side .layui-nav-item.layui-this a,
 .layui-layout>.layui-side .layui-nav-item .layui-this a{background-color:#1E9FFF}
-.layui-layout>.layui-side .layui-nav-item .layui-nav-child dd{border-bottom:1px solid #222}
+.layui-layout>.layui-side .layui-nav-item .layui-nav-child dd{border-bottom:1px solid #252525}
 .layui-layout>.layui-side .layui-nav-item .layui-nav-child dd:last-child{border-bottom:none}
 .layui-layout>.layui-side .layui-nav-tree-top a{height:28px!important;line-height:28px!important}
 .layui-layout>.layui-side .layui-nav-bar{display:none!important}
