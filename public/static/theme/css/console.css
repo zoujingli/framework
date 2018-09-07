@@ -53,7 +53,7 @@ input::-ms-clear{display:none}button{border-radius:0!important}
 .layui-layout.layui-layout-left-min>.layui-body{left:50px}
 
 /* 页面布局 - 头部 */
-.layui-header{height:50px;background-color:#1E9FFF!important}
+.layui-header{height:50px;background-color:#393D49!important}
 .layui-header .layui-layout-left,.layui-header .layui-layout-right{padding:0}
 .layui-header .layui-logo{color:#fff;font-size:18px;line-height:50px;box-shadow:0 1px 3px 0 rgba(0, 0, 0, 0.15)}
 .layui-header .layui-logo sup{font-size:10px;line-height:10px;color:#ddd!important}
