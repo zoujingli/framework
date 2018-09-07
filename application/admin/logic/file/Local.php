@@ -38,7 +38,7 @@ class Local extends File
     /**
      * 根据Key读取文件内容
      * @param string $name
-     * @return string|null
+     * @return string
      */
     public function get($name)
     {
@@ -49,7 +49,7 @@ class Local extends File
     /**
      * 获取文件当前URL地址
      * @param string $name 文件HASH名称
-     * @return bool|string
+     * @return boolean|string
      */
     public function url($name)
     {

@@ -46,7 +46,7 @@ class Qiniu extends File
     /**
      * 根据Key读取文件内容
      * @param string $name
-     * @return bool|null|string
+     * @return string
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
@@ -59,7 +59,7 @@ class Qiniu extends File
     /**
      * 获取文件当前URL地址
      * @param string $name
-     * @return bool|string
+     * @return boolean|string
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
@@ -73,7 +73,7 @@ class Qiniu extends File
 
     /**
      * 根据配置获取到七牛云文件上传目标地址
-     * @param bool $client
+     * @param boolean $client
      * @return string
      * @throws \think\Exception
      * @throws \think\exception\PDOException

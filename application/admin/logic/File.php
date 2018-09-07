@@ -14,7 +14,6 @@
 
 namespace app\admin\logic;
 
-use app\admin\logic\file\Local;
 use think\facade\Log;
 
 /**
@@ -55,7 +54,7 @@ class File
     /**
      * 设置文件驱动名称
      * @param string $name
-     * @return Local
+     * @return \app\admin\logic\file\Local
      * @throws \think\Exception
      */
     public static function instance($name)

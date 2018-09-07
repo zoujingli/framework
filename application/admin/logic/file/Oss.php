@@ -60,7 +60,7 @@ class Oss extends File
     /**
      * 获取文件当前URL地址
      * @param string $name 文件HASH名称
-     * @return bool|string
+     * @return boolean|string
      * @throws \OSS\Core\OssException
      * @throws \think\Exception
      * @throws \think\exception\PDOException
