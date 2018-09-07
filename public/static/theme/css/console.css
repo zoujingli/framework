@@ -20,13 +20,15 @@
 ::-moz-selection{background-color:#ec494e;color:#fff}
 :-webkit-autofill{-webkit-box-shadow:0 0 0 1000px white inset;-webkit-text-fill-color:#333}
 
-body{font-family:'微软雅黑', 'Microsoft YaHei', 'Helvetica Neue', 'Luxi Sans', 'DejaVu Sans', 'Hiragino Sans GB', 'serif';font-size:12px;color:#333;}
-a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}button{border-radius:0!important}
+body{font-size:12px;color:#333}
+a{color:#06C;cursor:pointer}a:hover{color:#039}
+input::-ms-clear{display:none}button{border-radius:0!important}
 
 /* 页面布局 - 全局 */
 .layui-layout>.layui-body>.layui-tab{margin:5px 0 0 0}
 .layui-layout>.layui-side, .layui-layout>.layui-body{top:50px;bottom:0}
 
+/* 页面布局 - 左则 */
 .layui-layout>.layui-side .layui-nav-item{border-bottom:1px solid #333}
 .layui-layout>.layui-side .layui-nav-item a{height:45px;line-height:45px}
 .layui-layout>.layui-side .layui-nav-item.layui-this a,
@@ -127,6 +129,8 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 .margin-bottom-15{margin-bottom:15px!important}.margin-bottom-20{margin-bottom:20px!important}
 
 /* 弹框层表单 */
+fieldset legend{padding:0 10px;color:#666;font-size:14px}
+fieldset{border:1px solid #e6e6e6;margin:0;padding:10px 20px 5px 20px}
 .layui-form.layui-card{box-shadow:none}
 .layui-form.layui-card .layui-card-body{padding:20px 40px 0 0}
 
@@ -143,11 +147,12 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 .pagination-container{line-height:40px;}
 .pagination-container>span{color:#666;font-size:12px}
 
-/*.uploadimage{display:inline-block;width:80px;height:80px;background:url('../img/image.png') no-repeat center center;background-size:cover;cursor:pointer}*/
-/*.uploadimagemtl{margin-right:8px}*/
-/*.uploadimagemtl a{color:#fff;width:20px;height:20px;float:right;display:none;line-height:22px;text-align:center;background:rgba(0,0,0,0.5)}*/
-/*.uploadimagemtl:hover a{display:inline-block;cursor:pointer}*/
-/*.uploadimagemtl:hover a:hover{color:#fff;text-decoration:none}*/
+/* 图片上传 */
+.uploadimage{display:inline-block;width:80px;height:80px;background:url('../img/image.png') no-repeat center center;background-size:cover;cursor:pointer}
+.uploadimagemtl{margin-right:8px}
+.uploadimagemtl a{color:#fff;width:20px;height:20px;float:right;display:none;line-height:22px;text-align:center;background:rgba(0,0,0,0.5)}
+.uploadimagemtl:hover a{display:inline-block;cursor:pointer}
+.uploadimagemtl:hover a:hover{color:#fff;text-decoration:none}
 
 /** Layui样式调整 */
 /*.think-inner-table{border:none!important;margin:0!important}*/
@@ -183,167 +188,21 @@ label.think-radio,label.think-checkbox{margin-right:10px;display:inline-block;}
 .think-checkbox input[type=checkbox]:focus, .think-radio input[type=radio]:focus{outline:none}
 
 /** 手机盒子及微信菜单 */
-.mobile-preview{
-    position:relative;
-    width:317px;
-    height:580px;
-    background:url('../img/wechat/mobile_head.png') no-repeat 0 0
-}
-
-.mobile-preview .mobile-header{
-    color:#fff;
-    text-align:center;
-    padding-top:30px;
-    font-size:15px;
-    width:auto;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
-    word-wrap:normal;
-    margin:0 30px;
-    -webkit-pointer-events:none;
-    pointer-events:none;
-    -webkit-user-select:none;
-    -moz-user-select:none;
-    user-select:none
-}
-
-.mobile-body{
-    width:100%;
-    position:absolute;
-    bottom:0;
-    top:60px;
-    border:1px solid #e7e7eb;
-    border-top-style:none;
-    background:#f5f5f5
-}
-
-.mobile-body iframe{
-    width:100%;
-    height:100%;
-}
-
-.mobile-footer{
-    list-style-type:none;
-    margin:0;
-    position:absolute;
-    bottom:0;
-    left:0;
-    right:0;
-    border:1px solid #e7e7eb;
-    background:url('../img/wechat/mobile_foot.png') no-repeat 0 0;
-    padding-left:43px
-}
-
-.mobile-footer li{
-    width:33.33%;
-    line-height:50px;
-    position:relative;
-    float:left;
-    text-align:center
-}
-
-.mobile-footer li a{
-    display:block;
-    border:1px solid rgba(255, 255, 255, 0);
-    border-left:1px solid #e7e7eb;
-    width:auto;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
-    word-wrap:normal;
-    color:#616161;
-    text-decoration:none
-}
-
-.mobile-footer li a.active{
-    background-color:#fff;
-    border:1px solid #44b549!important
-}
-
-.mobile-footer .icon-add{
-    background:url('../img/wechat/index.png') 0 0 no-repeat;
-    width:14px;
-    height:14px;
-    vertical-align:middle;
-    display:inline-block;
-    margin-top:-2px;
-    border-bottom:none!important
-}
-
-.mobile-footer .icon-sub{
-    background:url('../img/wechat/index.png') 0 -48px no-repeat;
-    width:7px;
-    height:7px;
-    vertical-align:middle;
-    display:inline-block;
-    margin-right:2px;
-    margin-top:-2px
-}
-
-.mobile-footer .sub-menu{
-    position:absolute;
-    border-radius:3px;
-    border:1px solid #d0d0d0;
-    display:block;
-    bottom:60px;
-    width:100%;
-    background-color:#fafafa
-}
-
-.mobile-footer .sub-menu ul,
-.mobile-footer .sub-menu ul li{
-    padding:0;
-    display:block;
-    width:100%;
-    float:none;
-    z-index:11
-}
-
-.mobile-footer .sub-menu ul li a{
-    border:1px solid #fff
-}
-
-.mobile-footer .sub-menu ul li a.bottom-border{
-    border-bottom:1px solid #e7e7eb
-}
-
-.mobile-footer .arrow{
-    position:absolute;
-    left:50%;
-    margin-left:-6px
-}
-
-.mobile-footer .arrow_in, .mobile-footer .arrow_out{
-    z-index:10;
-    width:0;
-    height:0;
-    display:inline-block;
-    border-width:6px;
-    border-style:dashed;
-    border-color:transparent;
-    border-bottom-width:0;
-    border-top-style:solid
-}
-
-.mobile-footer .arrow_in{
-    bottom:-5px;
-    border-top-color:#fafafa
-}
-
-.mobile-footer .arrow_out{
-    bottom:-6px;
-    border-top-color:#d0d0d0
-}
-
-/*!* 右则内容搜索样式 *!*/
-fieldset{border:1px solid #e6e6e6;margin:0;padding:10px 20px 5px 20px}
-fieldset legend{padding:0 10px;color:#666;font-size:14px}
-/*.form-search{background:#fff;padding-top:15px}*/
-/*.form-search .layui-btn{height:32px;line-height:30px;font-size:12px;padding:0 10px}*/
-/*.form-search .layui-form-label{font-size:12px;color:#666;width:auto!important;border-radius:0;padding:0 6px;height:32px;line-height:30px}*/
-/*.form-search .layui-input-inline{width:170px}*/
-/*.form-search .layui-input-inline input,*/
-/*.form-search .layui-input-inline select{border-radius:0;padding:0 5px;height:32px;line-height:30px;width:100%;font-size:12px}*/
-/*.form-search .layui-form-select{border-radius:0}*/
-/*.form-search .layui-form-select dl{top:31px;padding:0}*/
+.mobile-preview{position:relative;width:317px;height:580px;background:url('../img/wechat/mobile_head.png') no-repeat 0 0}
+.mobile-preview .mobile-header{color:#fff;text-align:center;padding-top:30px;font-size:15px;width:auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;word-wrap:normal;margin:0 30px;-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}
+.mobile-body{width:100%;position:absolute;bottom:0;top:60px;border:1px solid #e7e7eb;border-top-style:none;background:#f5f5f5}
+.mobile-body iframe{width:100%;height:100%}
+.mobile-footer{list-style-type:none;margin:0;position:absolute;bottom:0;left:0;right:0;border:1px solid #e7e7eb;background:url('../img/wechat/mobile_foot.png') no-repeat 0 0;padding-left:43px}
+.mobile-footer li{width:33.33%;line-height:50px;position:relative;float:left;text-align:center}
+.mobile-footer li a{display:block;border:1px solid rgba(255, 255, 255, 0);border-left:1px solid #e7e7eb;width:auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;word-wrap:normal;color:#616161;text-decoration:none}
+.mobile-footer li a.active{background-color:#fff;border:1px solid #44b549!important}
+.mobile-footer .icon-add{background:url('../img/wechat/index.png') 0 0 no-repeat;width:14px;height:14px;vertical-align:middle;display:inline-block;margin-top:-2px;border-bottom:none!important}
+.mobile-footer .icon-sub{background:url('../img/wechat/index.png') 0 -48px no-repeat;width:7px;height:7px;vertical-align:middle;display:inline-block;margin-right:2px;margin-top:-2px}
+.mobile-footer .sub-menu{position:absolute;border-radius:3px;border:1px solid #d0d0d0;display:block;bottom:60px;width:100%;background-color:#fafafa}
+.mobile-footer .sub-menu ul, .mobile-footer .sub-menu ul li{padding:0;display:block;width:100%;float:none;z-index:11}
+.mobile-footer .sub-menu ul li a{border:1px solid #fff}
+.mobile-footer .sub-menu ul li a.bottom-border{border-bottom:1px solid #e7e7eb}
+.mobile-footer .arrow{position:absolute;left:50%;margin-left:-6px}
+.mobile-footer .arrow_in, .mobile-footer .arrow_out{z-index:10;width:0;height:0;display:inline-block;border-width:6px;border-style:dashed;border-color:transparent;border-bottom-width:0;border-top-style:solid}
+.mobile-footer .arrow_in{bottom:-5px;border-top-color:#fafafa}
+.mobile-footer .arrow_out{bottom:-6px;border-top-color:#d0d0d0}
