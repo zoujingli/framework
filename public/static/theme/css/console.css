@@ -20,7 +20,7 @@
 ::-moz-selection{background-color:#ec494e;color:#fff}
 :-webkit-autofill{-webkit-box-shadow:0 0 0 1000px white inset;-webkit-text-fill-color:#333}
 
-body{font-size:12px;color:#333;letter-spacing:0.5px;font-family:'\5FAE\8F6F\96C5\9ED1','Microsoft YaHei','Helvetica Neue','Luxi Sans','DejaVu Sans','Hiragino Sans GB','serif'}
+body{font-size:12px;color:#333;font-family:'\5FAE\8F6F\96C5\9ED1','Microsoft YaHei','Helvetica Neue','Luxi Sans','DejaVu Sans','Hiragino Sans GB','serif'}
 a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}button{border-radius:0!important}
 
 /* 页面布局 - 全局 */
@@ -28,7 +28,7 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 .layui-layout>.layui-side, .layui-layout>.layui-body{top:50px;bottom:0}
 
 /* 页面布局 - 头部 */
-.layui-header{height:50px;background-color:#605ca8!important}
+.layui-header{height:50px;background-color:#009688!important}
 .layui-header .layui-layout-left,.layui-header .layui-layout-right{padding:0}
 .layui-header .layui-logo{color:#fff;font-size:18px;line-height:50px;box-shadow:0 1px 3px 0 rgba(0, 0, 0, 0.15)}
 .layui-header .layui-logo sup{font-size:9px;line-height:9px;color:#dfdfdf!important}
