@@ -31,7 +31,7 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 .layui-header{height:50px;background-color:#605ca8!important}
 .layui-header .layui-layout-left,.layui-header .layui-layout-right{padding:0}
 .layui-header .layui-logo{color:#fff;font-size:18px;line-height:50px;box-shadow:0 1px 3px 0 rgba(0, 0, 0, 0.15)}
-.layui-header .layui-logo sup{font-size:10px;line-height:10px;color:#fff!important}
+.layui-header .layui-logo sup{font-size:9px;line-height:9px;color:#dfdfdf!important}
 .layui-header .layui-nav-item{line-height:50px}
 .layui-header .layui-nav-item.layui-this{background:rgba(0,0,0,0.1)}
 .layui-header .layui-nav-item:after,.layui-header .layui-nav-bar{display:none!important}

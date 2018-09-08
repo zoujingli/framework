@@ -37,9 +37,7 @@
             <!--{/foreach}-->
         </ul>
         <ul class="layui-nav layui-layout-right">
-            <li lay-unselect class="layui-nav-item">
-                <a data-reload><i class="layui-icon layui-icon-refresh-3"></i></a>
-            </li>
+            <li lay-unselect class="layui-nav-item"><a data-reload><i class="layui-icon layui-icon-refresh-3"></i></a></li>
             <!--{notempty name='Think.session.user'}-->
             <li class="layui-nav-item">
                 <dl class="layui-nav-child">
@@ -59,12 +57,10 @@
                         </a>
                     </dd>
                 </dl>
-                <a><span><img src="http://t.cn/RCzsdCq" class="layui-nav-img"> {:session('user.username')}</span></a>
+                <a><span><i class="layui-icon layui-icon-username"></i> {:session('user.username')} </span></a>
             </li>
             <!--{else}-->
-            <li class="layui-nav-item">
-                <a data-href="{:url('@admin/login')}"><i class="layui-icon layui-icon-username"></i> 立即登录</a>
-            </li>
+            <li class="layui-nav-item"><a data-href="{:url('@admin/login')}"><i class="layui-icon layui-icon-username"></i> 立即登录</a></li>
             <!--{/notempty}-->
         </ul>
     </div>
