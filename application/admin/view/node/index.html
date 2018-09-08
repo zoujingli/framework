@@ -11,13 +11,12 @@
 <style>
     .layui-table .title-input {
         width: auto;
-        color: #666;
         height: 28px;
         line-height: 28px;
     }
 
     .layui-table label {
-        cursor: pointer
+        cursor: pointer;
     }
 </style>
 
@@ -30,7 +29,7 @@
     <div class="layui-tab-content">
         {foreach $groups as $key=>$group}
         <div class="layui-tab-item">
-            <table class="layui-table border-0" lay-skin="line">
+            <table class="layui-table border-0 block layui-elip" lay-skin="line">
                 <!--{empty name='nodes'}-->
                 <p class="help-block text-center well">没 有 记 录 哦！</p>
                 <!--{else}-->
@@ -73,7 +72,7 @@
                             <!--{/notempty}-->
                             加入权限控制
                         </label>
-                        <span class="color-desc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─&nbsp;</span>
+                        <span class="color-desc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─&nbsp;</span>
                         <label class="notselect think-checkbox">
                             <!--{notempty name='vo.is_menu'}-->
                             <input data-menu-filter="{$vo.pnode}" name='is_menu' data-node="{$vo.node}" checked='checked' class='check-box menu_{$key}' type='checkbox' value='1'>

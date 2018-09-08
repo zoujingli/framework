@@ -258,7 +258,7 @@ $(function () {
                 }).mouseleave(function () {
                     layer.close($(this).attr('index'));
                 });
-            })($('.layui-layout-admin'), 'layui-layout-left-min');
+            })($('.layui-layout-admin'), 'layui-layout-left-mini');
             // 左则二级菜单展示
             $('[data-submenu-layout]>a').on('click', function () {
                 self.syncOpenStatus(1);

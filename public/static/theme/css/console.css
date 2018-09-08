@@ -20,19 +20,30 @@
 ::-moz-selection{background-color:#ec494e;color:#fff}
 :-webkit-autofill{-webkit-box-shadow:0 0 0 1000px white inset;-webkit-text-fill-color:#333}
 
-body{font-size:12px;color:#333}
-a{color:#06C;cursor:pointer}a:hover{color:#039}
-input::-ms-clear{display:none}button{border-radius:0!important}
+body{font-size:12px;color:#333;letter-spacing:0.5px;font-family:'\5FAE\8F6F\96C5\9ED1','Microsoft YaHei','Helvetica Neue','Luxi Sans','DejaVu Sans','Hiragino Sans GB','serif'}
+a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}button{border-radius:0!important}
 
 /* 页面布局 - 全局 */
 .layui-layout>.layui-body>.layui-tab{margin:5px 0 0 0}
 .layui-layout>.layui-side, .layui-layout>.layui-body{top:50px;bottom:0}
 
+/* 页面布局 - 头部 */
+.layui-header{height:50px;background-color:#605ca8!important}
+.layui-header .layui-layout-left,.layui-header .layui-layout-right{padding:0}
+.layui-header .layui-logo{color:#fff;font-size:18px;line-height:50px;box-shadow:0 1px 3px 0 rgba(0, 0, 0, 0.15)}
+.layui-header .layui-logo sup{font-size:10px;line-height:10px;color:#fff!important}
+.layui-header .layui-nav-item{line-height:50px}
+.layui-header .layui-nav-item.layui-this{background:rgba(0,0,0,0.1)}
+.layui-header .layui-nav-item:after,.layui-header .layui-nav-bar{display:none!important}
+.layui-header .layui-nav-item .layui-nav-child{top:49px;padding:0;border-radius:0;border:none;line-height:45px;box-shadow:0 1px 2px 0 rgba(0, 0, 0, 0.2)}
+.layui-header .layui-nav-item .layui-nav-child+a{padding-right:35px}
+.layui-header .layui-nav-item .layui-nav-child.layui-show+a{background:#fff}
+.layui-header .layui-nav-item .layui-nav-child.layui-show+a span{color:#333}
+.layui-header .layui-nav-item .layui-nav-child dd a{color:#333;text-align:center;border-top:1px solid #eaedf1}
+
 /* 页面布局 - 左则 */
 .layui-layout>.layui-side .layui-nav-item{border-bottom:1px solid #333}
-.layui-layout>.layui-side .layui-nav-item a{height:45px;line-height:45px}
-.layui-layout>.layui-side .layui-nav-item.layui-this a,
-.layui-layout>.layui-side .layui-nav-item .layui-this a{background-color:#1E9FFF}
+.layui-layout>.layui-side .layui-nav-item a{height:40px;line-height:40px}
 .layui-layout>.layui-side .layui-nav-item .layui-nav-child dd{border-bottom:1px solid #252525}
 .layui-layout>.layui-side .layui-nav-item .layui-nav-child dd:last-child{border-bottom:none}
 .layui-layout>.layui-side .layui-nav-tree-top a{height:28px!important;line-height:28px!important}
@@ -40,31 +51,17 @@ input::-ms-clear{display:none}button{border-radius:0!important}
 
 .layui-layout.layui-layout-left-hide>.layui-side{display:none}
 .layui-layout.layui-layout-left-hide>.layui-body{left:0!important}
+.layui-layout.layui-layout-left-mini>.layui-body{left:50px!important}
 
-.layui-layout.layui-layout-left-min>.layui-side,
-.layui-layout.layui-layout-left-min>.layui-side .layui-side-scroll,
-.layui-layout.layui-layout-left-min>.layui-side .layui-nav-tree{width:50px;text-align:center}
-.layui-layout.layui-layout-left-min>.layui-side .layui-nav-item a{padding:0}
-.layui-layout.layui-layout-left-min>.layui-side .layui-nav-item .nav-text{display:none}
-.layui-layout.layui-layout-left-min>.layui-side .layui-nav-item .nav-icon{display:block!important}
-.layui-layout.layui-layout-left-min>.layui-side .layui-nav-item .layui-nav-child{display:block!important;padding:0;background:rgba(0,0,0,.3)!important}
-.layui-layout.layui-layout-left-min>.layui-side .layui-nav-tree-top i{display:inline-block;transform:rotate(180deg);-o-transform:rotate(180deg);-ms-transform:rotate(180deg);-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg)}
-.layui-layout.layui-layout-left-min>.layui-side .layui-nav-more{display:none!important}
-.layui-layout.layui-layout-left-min>.layui-body{left:50px}
-
-/* 页面布局 - 头部 */
-.layui-header{height:50px;background-color:#393D49!important}
-.layui-header .layui-layout-left,.layui-header .layui-layout-right{padding:0}
-.layui-header .layui-logo{color:#fff;font-size:18px;line-height:50px;box-shadow:0 1px 3px 0 rgba(0, 0, 0, 0.15)}
-.layui-header .layui-logo sup{font-size:10px;line-height:10px;color:#ddd!important}
-.layui-header .layui-nav-item{line-height:50px}
-.layui-header .layui-nav-item.layui-this{background:#4af}
-.layui-header .layui-nav-item:after,.layui-header .layui-nav-bar{display:none!important}
-.layui-header .layui-nav-item .layui-nav-child{top:49px;padding:0;border-radius:0;border:none;line-height:45px;box-shadow:0 1px 2px 0 rgba(0, 0, 0, 0.2)}
-.layui-header .layui-nav-item .layui-nav-child+a{padding-right:35px}
-.layui-header .layui-nav-item .layui-nav-child.layui-show+a{background:#fff}
-.layui-header .layui-nav-item .layui-nav-child.layui-show+a span{color:#333}
-.layui-header .layui-nav-item .layui-nav-child dd a{color:#333;text-align:center;border-top:1px solid #eaedf1}
+.layui-layout.layui-layout-left-mini>.layui-side,
+.layui-layout.layui-layout-left-mini>.layui-side .layui-side-scroll,
+.layui-layout.layui-layout-left-mini>.layui-side .layui-nav-tree{width:50px;text-align:center}
+.layui-layout.layui-layout-left-mini>.layui-side .layui-nav-item a{padding:0;height:45px;line-height:45px}
+.layui-layout.layui-layout-left-mini>.layui-side .layui-nav-item .nav-text{display:none}
+.layui-layout.layui-layout-left-mini>.layui-side .layui-nav-item .nav-icon{display:block!important}
+.layui-layout.layui-layout-left-mini>.layui-side .layui-nav-item .layui-nav-child{display:block!important;padding:0;background-color:rgba(0,0,0,.3)!important}
+.layui-layout.layui-layout-left-mini>.layui-side .layui-nav-tree-top i{display:inline-block;transform:rotate(180deg);-o-transform:rotate(180deg);-ms-transform:rotate(180deg);-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg)}
+.layui-layout.layui-layout-left-mini>.layui-side .layui-nav-more{display:none!important}
 
 /* 下拉 */
 .layui-nav .layui-nav-item .layui-nav-more{border:none;top:0;right:15px;width:auto;height:auto;margin-top:0;font-size:14px;font-style:normal;font-family:layui-icon!important;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
@@ -134,6 +131,14 @@ fieldset{border:1px solid #e6e6e6;margin:0;padding:10px 20px 5px 20px}
 .layui-form.layui-card{box-shadow:none}
 .layui-form.layui-card .layui-card-body{padding:20px 40px 0 0}
 
+.form-search .layui-btn{height:32px;line-height:30px;font-size:12px;padding:0 10px}
+.form-search .layui-form-label{width:auto!important;border-radius:0;padding:2px 8px;height:32px;line-height:30px}
+.form-search .layui-input-inline{width:170px}
+.form-search .layui-input-inline input,
+.form-search .layui-input-inline select{border-radius:0;padding:2px 8px;height:32px;line-height:30px;width:100%}
+.form-search .layui-form-select{border-radius:0}
+.form-search .layui-form-select dl{top:31px;padding:0}
+
 /** 加载进度 */
 .pace-inactive{display:none}
 .pace-progress{position:fixed;background:#22df80;z-index:2000;top:0;right:100%;width:100%;height:2px}
@@ -155,20 +160,11 @@ fieldset{border:1px solid #e6e6e6;margin:0;padding:10px 20px 5px 20px}
 .uploadimagemtl:hover a:hover{color:#fff;text-decoration:none}
 
 /** Layui样式调整 */
-/*.think-inner-table{border:none!important;margin:0!important}*/
-/*.think-inner-table tr:first-child td{padding-top:5px!important}*/
-/*.think-inner-table tr:last-child td{padding-bottom:5px!important}*/
-/*.think-inner-table tr td{padding:0px 3px!important;border:none!important}*/
-/*.think-inner-table tr td:first-child{padding-left:10px!important}*/
-/*.think-inner-table tr td:last-child{padding-right:10px!important}*/
-/*legend{width:auto!important;border-bottom:none!important}*/
-/*.layui-form-label{padding:9px 15px 9px 0;width:95px}*/
-/*.layui-input,.layui-select{line-height:38px}*/
-/*.layui-table.notevent tbody tr:hover{background-color:inherit}*/
-/*.layui-table th,.layui-table td{font-size:12px}*/
-.layui-table td .text-explode:first-child{opacity:0;display:none}
+.layui-input,.layui-select{line-height:38px}
+.layui-table th,.layui-table td{font-size:12px}
 .layui-table td .text-explode{color:#ccc!important;font-weight:normal!important;margin:0px 4px!important}
-/*.layui-table .list-table-image{width:22px;cursor:pointer}*/
+.layui-table td .text-explode:first-child{opacity:0;display:none}
+.layui-table .list-table-image{width:22px;cursor:pointer}
 .layui-table .list-table-sort-td{width:60px!important;text-align:center!important}
 .layui-table .list-table-sort-td button{width:50px}
 .layui-table .list-table-sort-td input{font-size:12px;width:50px;text-align:center;line-height:18px;padding:2px;border:1px solid #e6e6e6;color:#666}
