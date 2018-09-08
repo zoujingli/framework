@@ -50,8 +50,8 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 .layui-layout>.layui-side .layui-nav-bar{display:none!important}
 
 .layui-layout.layui-layout-left-hide>.layui-side{display:none}
+.layui-layout.layui-layout-left-mini>.layui-body{left:50px}
 .layui-layout.layui-layout-left-hide>.layui-body{left:0!important}
-.layui-layout.layui-layout-left-mini>.layui-body{left:50px!important}
 
 .layui-layout.layui-layout-left-mini>.layui-side,
 .layui-layout.layui-layout-left-mini>.layui-side .layui-side-scroll,
