@@ -39,7 +39,7 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 .layui-header .layui-nav-item .layui-nav-child+a{padding-right:35px}
 .layui-header .layui-nav-item .layui-nav-child.layui-show+a{background:#fff}
 .layui-header .layui-nav-item .layui-nav-child.layui-show+a span{color:#333}
-.layui-header .layui-nav-item .layui-nav-child dd a{color:#333;text-align:center;border-top:1px solid #eaedf1}
+.layui-header .layui-nav-item .layui-nav-child dd a{color:#333;text-align:center;border-top:1px solid #eaedf1;padding:0}
 
 /* 页面布局 - 左则 */
 .layui-layout>.layui-side .layui-nav-item{border-bottom:1px solid #333}
@@ -170,6 +170,7 @@ fieldset{border:1px solid #e6e6e6;margin:0;padding:10px 20px 5px 20px}
 .layui-table .list-table-sort-td input{font-size:12px;width:50px;text-align:center;line-height:18px;padding:2px;border:1px solid #e6e6e6;color:#666}
 .layui-table .list-table-check-td{width:30px!important;text-align:center}
 .layui-table .list-table-check-td input{margin:0;vertical-align:middle}
+.layui-btn.layui-btn-sm.layui-btn-primary{line-height:28px}
 
 /** checkbox 优化 */
 label.think-radio,label.think-checkbox{margin-right:10px;display:inline-block;}
