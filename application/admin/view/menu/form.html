@@ -80,7 +80,7 @@
                             value: subjects[i].node,
                             label: subjects[i].node,
                             title: subjects[i].title
-                        })
+                        });
                     }
                     return data;
                 })(JSON.parse('{$nodes|raw|json_encode}'), [])
