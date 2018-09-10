@@ -103,18 +103,20 @@ class Menu extends Controller
                     }
                 }
             }
+            // 设置上级菜单
+            if (!isset($vo['pid']) && $this->request->get('pid', '0')) {
+                $vo['pid'] = $this->request->get('pid', '0');
+            }
             // 读取系统功能节点
             $nodes = Auth::get();
             foreach ($nodes as $key => $node) {
                 if (empty($node['is_menu'])) {
                     unset($nodes[$key]);
                 }
+                unset($nodes[$key]['pnode'], $nodes[$key]['is_login']);
+                unset($nodes[$key]['is_menu'], $nodes[$key]['is_auth']);
             }
-            // 设置上级菜单
-            if (!isset($vo['pid']) && $this->request->get('pid', '0')) {
-                $vo['pid'] = $this->request->get('pid', '0');
-            }
-            $this->assign(['nodes' => array_column($nodes, 'node'), 'menus' => $menus]);
+            $this->assign(['nodes' => array_values($nodes), 'menus' => $menus]);
         }
     }
 
