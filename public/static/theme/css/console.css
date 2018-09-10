@@ -151,6 +151,14 @@ fieldset{border:1px solid #e6e6e6;margin:0;padding:10px 20px 5px 20px}
 /* 分页 */
 .pagination-container{line-height:40px;}
 .pagination-container>span{color:#666;font-size:12px}
+.pagination-container>ul{display:inline-block;margin:0;padding:0;float:right}
+.pagination-container>ul>li{display:inline-block;z-index:1}
+.pagination-container>ul>li>span,
+.pagination-container>ul>li>a{width:33px;text-align:center;height:30px;line-height:28px;display:inline-block;border:1px solid gainsboro;margin-left:-1px;color:#333}
+.pagination-container>ul>li>span{background:gainsboro;cursor:default}
+.pagination-container>ul>li>a:hover{background:gainsboro;border-color:gainsboro}
+.pagination-container>ul>li.active{z-index:2}
+.pagination-container>ul>li.active>span{background:#009688!important;border-color:#009688;color:#fff}
 
 /* 图片上传 */
 .uploadimage{display:inline-block;width:80px;height:80px;background:url('../img/image.png') no-repeat center center;background-size:cover;cursor:pointer}
