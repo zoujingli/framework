@@ -108,18 +108,18 @@
         ]
     },
     {
-        "name": "zoujingli/wechat-developer",
-        "version": "v1.1.13",
-        "version_normalized": "1.1.13.0",
+        "name": "zoujingli/think-library",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
-            "url": "https://github.com/zoujingli/WeChatDeveloper.git",
-            "reference": "39682a047e5c8f9c66107924dfed4e2080e97eb4"
+            "url": "https://github.com/zoujingli/ThinkLibrary.git",
+            "reference": "9a90dc0381529a10586ac31af8d627c680e855b3"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zoujingli/WeChatDeveloper/zipball/39682a047e5c8f9c66107924dfed4e2080e97eb4",
-            "reference": "39682a047e5c8f9c66107924dfed4e2080e97eb4",
+            "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/9a90dc0381529a10586ac31af8d627c680e855b3",
+            "reference": "9a90dc0381529a10586ac31af8d627c680e855b3",
             "shasum": "",
             "mirrors": [
                 {
@@ -130,20 +130,17 @@
         },
         "require": {
             "ext-curl": "*",
+            "ext-iconv": "*",
             "ext-openssl": "*",
-            "php": ">=5.4"
+            "php": ">=5.4",
+            "topthink/framework": "^5.1"
         },
-        "time": "2018-07-11T02:02:41+00:00",
+        "time": "2018-09-06T10:46:32+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
-            "classmap": [
-                "We.php"
-            ],
             "psr-4": {
-                "WePay\\": "WePay",
-                "WeChat\\": "WeChat",
-                "WeMini\\": "WeMini"
+                "library\\": "library"
             }
         },
         "notification-url": "https://packagist.org/downloads/",
@@ -153,33 +150,29 @@
         "authors": [
             {
                 "name": "Anyon",
-                "email": "zoujingli@qq.com",
-                "homepage": "http://ctolog.com"
+                "email": "zoujingli@qq.com"
             }
         ],
-        "description": "WeChat platform and WeChat payment development tools",
-        "homepage": "https://github.com/zoujingli/WeChatDeveloper",
+        "description": "ThinkPHP development of Library",
+        "homepage": "https://library.thinkadmin.top",
         "keywords": [
-            "WeChatDeveloper",
-            "WeMini",
-            "wechat",
-            "wechatpay",
-            "wepay"
+            "ThinkAdmin",
+            "ThinkLibrary"
         ]
     },
     {
-        "name": "zoujingli/weopen-developer",
-        "version": "v1.1.3",
-        "version_normalized": "1.1.3.0",
+        "name": "qiniu/php-sdk",
+        "version": "v7.2.6",
+        "version_normalized": "7.2.6.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/zoujingli/WeOpenDeveloper.git",
-            "reference": "32aa04ad346790cd6ac7672c888e22e15cb007fe"
+            "url": "https://github.com/qiniu/php-sdk.git",
+            "reference": "305ce1c1c0c71f794661fe45a96facf61ef96c5d"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zoujingli/WeOpenDeveloper/zipball/32aa04ad346790cd6ac7672c888e22e15cb007fe",
-            "reference": "32aa04ad346790cd6ac7672c888e22e15cb007fe",
+            "url": "https://api.github.com/repos/qiniu/php-sdk/zipball/305ce1c1c0c71f794661fe45a96facf61ef96c5d",
+            "reference": "305ce1c1c0c71f794661fe45a96facf61ef96c5d",
             "shasum": "",
             "mirrors": [
                 {
@@ -189,20 +182,22 @@
             ]
         },
         "require": {
-            "ext-curl": "*",
-            "ext-openssl": "*",
-            "php": ">=5.4",
-            "zoujingli/wechat-developer": "^1.0"
+            "php": ">=5.3.3"
         },
-        "time": "2018-06-14T08:11:03+00:00",
+        "require-dev": {
+            "phpunit/phpunit": "~4.0",
+            "squizlabs/php_codesniffer": "~2.3"
+        },
+        "time": "2018-05-18T04:37:29+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
             "psr-4": {
-                "WeOpen\\": "WeOpen",
-                "WeChat\\": "WeChat",
-                "WeMini\\": "WeMini"
-            }
+                "Qiniu\\": "src/Qiniu"
+            },
+            "files": [
+                "src/Qiniu/functions.php"
+            ]
         },
         "notification-url": "https://packagist.org/downloads/",
         "license": [
@@ -210,17 +205,18 @@
         ],
         "authors": [
             {
-                "name": "Anyon",
-                "email": "zoujingli@qq.com",
-                "homepage": "http://ctolog.com"
+                "name": "Qiniu",
+                "email": "sdk@qiniu.com",
+                "homepage": "http://www.qiniu.com"
             }
         ],
-        "description": "WeChat Open development of SDK",
-        "homepage": "https://github.com/zoujingli/WeOpenDeveloper",
+        "description": "Qiniu Resource (Cloud) Storage SDK for PHP",
+        "homepage": "http://developer.qiniu.com/",
         "keywords": [
-            "WeChatOpen",
-            "WeChatOpenDeveloper",
-            "wechat"
+            "cloud",
+            "qiniu",
+            "sdk",
+            "storage"
         ]
     },
     {
@@ -403,77 +399,18 @@
         "homepage": "http://www.aliyun.com/product/oss/"
     },
     {
-        "name": "qiniu/php-sdk",
-        "version": "v7.2.6",
-        "version_normalized": "7.2.6.0",
+        "name": "zoujingli/wechat-developer",
+        "version": "v1.1.13",
+        "version_normalized": "1.1.13.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/qiniu/php-sdk.git",
-            "reference": "305ce1c1c0c71f794661fe45a96facf61ef96c5d"
+            "url": "https://github.com/zoujingli/WeChatDeveloper.git",
+            "reference": "39682a047e5c8f9c66107924dfed4e2080e97eb4"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/qiniu/php-sdk/zipball/305ce1c1c0c71f794661fe45a96facf61ef96c5d",
-            "reference": "305ce1c1c0c71f794661fe45a96facf61ef96c5d",
-            "shasum": "",
-            "mirrors": [
-                {
-                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
-                    "preferred": true
-                }
-            ]
-        },
-        "require": {
-            "php": ">=5.3.3"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "~4.0",
-            "squizlabs/php_codesniffer": "~2.3"
-        },
-        "time": "2018-05-18T04:37:29+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Qiniu\\": "src/Qiniu"
-            },
-            "files": [
-                "src/Qiniu/functions.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Qiniu",
-                "email": "sdk@qiniu.com",
-                "homepage": "http://www.qiniu.com"
-            }
-        ],
-        "description": "Qiniu Resource (Cloud) Storage SDK for PHP",
-        "homepage": "http://developer.qiniu.com/",
-        "keywords": [
-            "cloud",
-            "qiniu",
-            "sdk",
-            "storage"
-        ]
-    },
-    {
-        "name": "zoujingli/think-library",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/zoujingli/ThinkLibrary.git",
-            "reference": "9a90dc0381529a10586ac31af8d627c680e855b3"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/9a90dc0381529a10586ac31af8d627c680e855b3",
-            "reference": "9a90dc0381529a10586ac31af8d627c680e855b3",
+            "url": "https://api.github.com/repos/zoujingli/WeChatDeveloper/zipball/39682a047e5c8f9c66107924dfed4e2080e97eb4",
+            "reference": "39682a047e5c8f9c66107924dfed4e2080e97eb4",
             "shasum": "",
             "mirrors": [
                 {
@@ -484,17 +421,20 @@
         },
         "require": {
             "ext-curl": "*",
-            "ext-iconv": "*",
             "ext-openssl": "*",
-            "php": ">=5.4",
-            "topthink/framework": "^5.1"
+            "php": ">=5.4"
         },
-        "time": "2018-09-06T10:46:32+00:00",
+        "time": "2018-07-11T02:02:41+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
+            "classmap": [
+                "We.php"
+            ],
             "psr-4": {
-                "library\\": "library"
+                "WePay\\": "WePay",
+                "WeChat\\": "WeChat",
+                "WeMini\\": "WeMini"
             }
         },
         "notification-url": "https://packagist.org/downloads/",
@@ -504,14 +444,74 @@
         "authors": [
             {
                 "name": "Anyon",
-                "email": "zoujingli@qq.com"
+                "email": "zoujingli@qq.com",
+                "homepage": "http://ctolog.com"
             }
         ],
-        "description": "ThinkPHP development of Library",
-        "homepage": "https://library.thinkadmin.top",
+        "description": "WeChat platform and WeChat payment development tools",
+        "homepage": "https://github.com/zoujingli/WeChatDeveloper",
         "keywords": [
-            "ThinkAdmin",
-            "ThinkLibrary"
+            "WeChatDeveloper",
+            "WeMini",
+            "wechat",
+            "wechatpay",
+            "wepay"
+        ]
+    },
+    {
+        "name": "zoujingli/weopen-developer",
+        "version": "v1.1.3",
+        "version_normalized": "1.1.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/zoujingli/WeOpenDeveloper.git",
+            "reference": "32aa04ad346790cd6ac7672c888e22e15cb007fe"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/zoujingli/WeOpenDeveloper/zipball/32aa04ad346790cd6ac7672c888e22e15cb007fe",
+            "reference": "32aa04ad346790cd6ac7672c888e22e15cb007fe",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "ext-curl": "*",
+            "ext-openssl": "*",
+            "php": ">=5.4",
+            "zoujingli/wechat-developer": "^1.0"
+        },
+        "time": "2018-06-14T08:11:03+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "WeOpen\\": "WeOpen",
+                "WeChat\\": "WeChat",
+                "WeMini\\": "WeMini"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Anyon",
+                "email": "zoujingli@qq.com",
+                "homepage": "http://ctolog.com"
+            }
+        ],
+        "description": "WeChat Open development of SDK",
+        "homepage": "https://github.com/zoujingli/WeOpenDeveloper",
+        "keywords": [
+            "WeChatOpen",
+            "WeChatOpenDeveloper",
+            "wechat"
         ]
     }
 ]

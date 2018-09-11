@@ -12,23 +12,18 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-namespace app\index\controller;
+/* 定义Session会话字段名 */
+$session_name = 's' . substr(md5(__DIR__), -8);
+$session_path = env('runtime_path') . 'sess' . DIRECTORY_SEPARATOR;
+file_exists($session_path) || mkdir($session_path, 0755, true);
 
-use library\Controller;
-
-/**
- * 应用入口
- * Class Index
- * @package app\index\controller
- */
-class Index extends Controller
-{
-    /**
-     * 入口跳转链接
-     */
-    public function index()
-    {
-        $this->redirect('@admin');
-    }
-
-}
+/* 定义Session会话参数 */
+return [
+    'id'             => '',
+    'type'           => '',
+    'prefix'         => 'ta',
+    'auto_start'     => true,
+    'path'           => $session_path,
+    'name'           => $session_name,
+    'var_session_id' => $session_name,
+];
