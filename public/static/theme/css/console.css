@@ -133,7 +133,7 @@ fieldset{border:1px solid #e6e6e6;margin:0;padding:10px 20px 5px 20px}
 .layui-form.layui-card .layui-card-body{padding:20px 40px 0 0}
 
 .form-search .layui-btn{height:32px;line-height:30px;font-size:12px;padding:0 10px}
-.form-search .layui-form-label{width:auto!important;border-radius:0;padding:2px 8px;height:32px;line-height:30px}
+.form-search .layui-form-label{width:auto!important;border-radius:0;padding:0 8px;height:32px;line-height:30px}
 .form-search .layui-input-inline{width:170px}
 .form-search .layui-input-inline input,
 .form-search .layui-input-inline select{border-radius:0;padding:2px 8px;height:32px;line-height:30px;width:100%}
