@@ -24,8 +24,9 @@ body{font-size:12px;color:#333;font-family:'\5FAE\8F6F\96C5\9ED1','Microsoft YaH
 a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}button{border-radius:0!important}
 
 /* 页面布局 - 全局 */
-.layui-layout>.layui-body>.layui-tab{margin:5px 0 0 0}
-.layui-layout>.layui-side, .layui-layout>.layui-body{top:50px;bottom:0}
+.layui-layout>.layui-side,.layui-layout>.layui-body{top:50px;bottom:0}
+.layui-layout>.layui-body>.layui-card{box-shadow:none}
+.layui-layout>.layui-body>.layui-card>.layui-card-header{height:50px;line-height:50px;box-shadow:0 2px 3px 0 rgba(0,0,0,.1)}
 
 /* 页面布局 - 头部 */
 .layui-header{height:50px;background-color:#009688!important}
@@ -117,7 +118,7 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 .margin-top-15{margin-top:15px!important}.margin-top-20{margin-top:20px!important}
 .margin-left-0{margin-left:0!important}
 .margin-left-5{margin-left:5px!important}.margin-left-10{margin-left:10px!important}
-.margin-left-15{margin-left:15px!important}.margin-left-20{margin-left:20px!important}
+.margin-left-15{margin-left:15px!important}.margin-left-20{margin-left:20px!important}.margin-left-40{margin-left:40px!important;}
 .margin-right-0{margin-right:0!important}
 .margin-right-5{margin-right:5px!important}.margin-right-10{margin-right:10px!important}
 .margin-right-15{margin-right:15px!important}.margin-right-20{margin-right:20px!important}

@@ -77,7 +77,7 @@
         <!--{/foreach}-->
         </tbody>
     </table>
-    {if isset($pagehtml)}<p>{$pagehtml|raw}</p>{/if}
+    {$pagehtml|default=''|raw}
     <!--{/if}-->
 </form>
 {/block}
