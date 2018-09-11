@@ -21,7 +21,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">菜单名称</label>
             <div class="layui-input-block">
-                <input name="title" value='{$vo.title|default=""}' required="required" title="请输入菜单名称" placeholder="请输入菜单名称" class="layui-input">
+                <input name="title" value='{$vo.title|default=""}' required title="请输入菜单名称" placeholder="请输入菜单名称" class="layui-input">
                 <p class="help-block"><b>必填</b>，请填写菜单名称（如：系统管理），建议字符不要太长，一般4-6个汉字</p>
             </div>
         </div>
@@ -29,7 +29,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">菜单链接</label>
             <div class="layui-input-block">
-                <input onblur="(this.value === '') && (this.value = '#')" name="url" required="required" title="请输入菜单链接" placeholder="请输入菜单链接" value="{$vo.url|default='#'}" class="layui-input">
+                <input onblur="this.value=this.value === ''?'#':this.value" name="url" required title="请输入菜单链接" placeholder="请输入菜单链接" value="{$vo.url|default='#'}" class="layui-input">
                 <p class="help-block">
                     <b>必填</b>，请填写系统节点（如：admin/user/index），节点加入权限管理时菜单才会自动隐藏，非规则内的不会隐藏；
                     <br>正常情况下，在输入的时候会有自动提示。如果是上级菜单时，请填写"#"符号，不要填写地址或节点地址
@@ -49,9 +49,9 @@
             <label class="layui-form-label">菜单图标</label>
             <div class="layui-input-block">
                 <div class="layui-input-inline">
-                    <input placeholder="请输入或选择图标" onchange="$('#icon-preview').get(0).className = this.value" name="icon" value='{$vo.icon|default=""}' class="layui-input">
+                    <input placeholder="请输入或选择图标" onchange="$('#icon-preview i').get(0).className = this.value" name="icon" value='{$vo.icon|default=""}' class="layui-input">
                 </div>
-                <span class='layui-btn layui-btn-primary' style='padding:0 12px;min-width:45px'><i id='icon-preview' style='font-size:1.2em' class='{$vo.icon|default=""}'></i></span>
+                <span id="icon-preview" class='layui-btn layui-btn-primary'><i class='{$vo.icon|default=""}'></i></span>
                 <button data-icon='icon' type='button' class='layui-btn layui-btn-primary'>选择图标</button>
                 <p class="help-block"><b>可选</b>，设置菜单选项前置图标，目前只支持 Font Awesome 5.2.0 字体图标</p>
             </div>
@@ -70,6 +70,20 @@
     </div>
 
 </form>
+
+{block name='style'}
+<style>
+    #icon-preview {
+        padding: 0 12px;
+        min-width: 45px
+    }
+
+    #icon-preview i {
+        margin: 0;
+        font-size: 1.2em;
+    }
+</style>
+{/block}
 
 {block name='script'}
 <script>
