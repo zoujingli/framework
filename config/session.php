@@ -12,12 +12,12 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-/* 定义Session会话字段名 */
+/* 定义会话路径 */
 $path = env('runtime_path') . 'sess' . DIRECTORY_SEPARATOR;
 file_exists($path) || mkdir($path, 0755, true);
 $name = 's' . substr(md5(__DIR__), -8);
 
-/* 定义Session会话参数 */
+/* 配置会话参数 */
 return [
     'prefix'         => 'ta',
     'auto_start'     => true,
