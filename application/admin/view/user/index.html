@@ -18,7 +18,7 @@
 
 <fieldset>
     <legend>列表搜索</legend>
-    <form class="layui-form layui-form-pane form-search" action="{:request()->url()}" onsubmit="return false" method="get">
+    <form class="layui-form layui-form-pane form-search" action="{:request()->url()}" onsubmit="return false" method="get" autocomplete="off">
         <div class="layui-form-item layui-inline">
 
             <label class="layui-form-label">用户账号</label>
@@ -68,7 +68,7 @@
 </script>
 <!-- 表单搜索 结束 -->
 
-<form onsubmit="return false;" data-auto="true" method="post">
+<form onsubmit="return false;" data-auto="true" method="post" autocomplete="off">
     <!--{empty name='list'}-->
     <blockquote class="layui-elem-quote">没 有 记 录 哦！</blockquote>
     <!--{else}-->

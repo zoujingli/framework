@@ -97,7 +97,7 @@ class Page extends Logic
 
             foreach ([10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200] as $num) {
                 list($query['limit'], $query['page'], $selected) = [$num, '1', $limit === $num ? 'selected' : ''];
-                $url = url('@admin') . '#' . $this->request->baseUrl() . '?' . http_build_query($query);
+                $url = url('@admin') . '#' . $this->request->baseUrl() . '?' . urldecode(http_build_query($query));
                 $rows[] = "<option data-num='{$num}' value='{$url}' {$selected}>{$num}</option>";
             }
             $select = "<select onchange='location.href=this.options[this.selectedIndex].value' data-auto-none>" . join('', $rows) . "</select>";
