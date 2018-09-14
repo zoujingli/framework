@@ -45,7 +45,7 @@ class Plugs extends Controller
     }
 
     /**
-     * 通用文件上传
+     * WebUpload文件上传
      * @return \think\response\Json
      * @throws \think\Exception
      * @throws \think\exception\PDOException
@@ -70,6 +70,25 @@ class Plugs extends Controller
             }
         }
         return json(['code' => 'ERROR', 'msg' => '文件上传失败']);
+    }
+
+    /**
+     * Plupload插件上传文件
+     * @return \think\response\Json
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     */
+    public function plupload()
+    {
+        $file = $this->request->file('upload');
+        if (!$file->checkExt(strtolower(sysconf('storage_local_exts')))) {
+            return json(['uploaded' => false, 'error' => ['message' => '文件上传类型受限']]);
+        }
+        $md5 = md5_file($file->getPathname());
+        $ext = strtolower(pathinfo($file->getInfo('name'), 4));
+        $name = date('Ymd') . "/{$md5}." . (empty($ext) ? 'tmp' : $ext);
+        $result = File::save($name, file_get_contents($file->getPathname()));
+        return json(['uploaded' => true, 'url' => $result['url'], 'filename' => $file->getInfo('name')]);
     }
 
     /**

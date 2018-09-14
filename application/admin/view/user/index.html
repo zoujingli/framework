@@ -17,6 +17,38 @@
 <!-- 表单搜索 开始 -->
 
 <fieldset>
+    <textarea style="height:100px" id="editor"></textarea>
+    <script>
+        require(['ckeditor'], function (create) {
+            console.log(create)
+
+            return create.create(document.querySelector('#editor'), {
+                ckfinder: {
+                    uploadUrl: window.ROOT_URL += '?s=admin/plugs/plupload'
+                },
+                fontFamily: {
+                    options: [
+                        'default',
+                        'Arial, Helvetica, sans-serif',
+                        'Courier New, Courier, monospace',
+                        'Georgia, serif',
+                        'Lucida Sans Unicode, Lucida Grande, sans-serif',
+                        'Tahoma, Geneva, sans-serif',
+                        'Times New Roman, Times, serif',
+                        'Trebuchet MS, Helvetica, sans-serif',
+                        'Verdana, Geneva, sans-serif'
+                    ]
+                }
+            }).then(editor => {
+                const toolbarContainer = document.querySelector('.ck-toolbar');
+                console.log(toolbarContainer)
+                console.log(editor);
+            }).catch(error => {
+                console.error(error);
+            });
+        });
+
+    </script>
     <legend>列表搜索</legend>
     <form class="layui-form layui-form-pane form-search" action="{:request()->url()}" onsubmit="return false" method="get" autocomplete="off">
         <div class="layui-form-item layui-inline">

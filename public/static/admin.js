@@ -10,14 +10,12 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-if (typeof layui !== 'undefined') {
-    var form = layui.form,
-        layer = layui.layer,
-        laydate = layui.laydate;
-    if (typeof jQuery === 'undefined') {
-        var $ = jQuery = layui.$;
-    }
+
+var form = layui.form, layer = layui.layer, laydate = layui.laydate;
+if (typeof jQuery === 'undefined') {
+    var $ = jQuery = layui.$;
 }
+
 
 $(function () {
     let $body = $('body');
@@ -95,7 +93,14 @@ $(function () {
         // 内容区域动态加载后初始化
         this.reInit = function ($dom) {
             $.vali.listen(this);
-            ($dom || $(this.targetClass)).find('[required]').parent().prevAll('label').addClass('label-required');
+            $dom = $dom || $(this.targetClass);
+            $dom.find('[required]').parent().prevAll('label').addClass('label-required');
+            $dom.find('[data-file=btn]').map(function () {
+                let self = this;
+                require(['upload'], function (r) {
+                    r(self);
+                });
+            });
         };
         // 在内容区显示视图
         this.show = function (html) {
@@ -559,11 +564,13 @@ $(function () {
 
     /*! 注册 data-file 事件行为 */
     $body.on('click', '[data-file]', function () {
-        let method = $(this).attr('data-file') === 'one' ? 'one' : 'mtl';
+        let method = $(this).attr('data-file') || 'one';
         let type = $(this).attr('data-type') || 'jpg,png', field = $(this).attr('data-field') || 'file';
-        let title = $(this).attr('data-title') || '文件上传', uptype = $(this).attr('data-uptype') || '';
-        let url = window.ROOT_URL + '?s=admin/plugs/upfile.html&mode=' + method + '&uptype=' + uptype + '&type=' + type + '&field=' + field;
-        $.form.iframe(url, title || '文件管理');
+        if (method !== 'btn') {
+            let title = $(this).attr('data-title') || '文件上传', uptype = $(this).attr('data-uptype') || '';
+            let url = window.ROOT_URL + '?s=admin/plugs/upfile.html&mode=' + method + '&uptype=' + uptype + '&type=' + type + '&field=' + field;
+            $.form.iframe(url, title || '文件管理');
+        }
     });
 
     /*! 注册 data-iframe 事件行为 */
