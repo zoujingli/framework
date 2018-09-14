@@ -11,8 +11,8 @@
 // +----------------------------------------------------------------------
 
 // 当前资源URL目录
-var baseRoot = (function () {
-    var scripts = document.scripts, src = scripts[scripts.length - 1].src;
+let baseRoot = (function () {
+    let scripts = document.scripts, src = scripts[scripts.length - 1].src;
     return src.substring(0, src.lastIndexOf("/") + 1);
 })();
 
@@ -54,6 +54,6 @@ AdminLayout.call(window);
 
 // 框架布局
 function AdminLayout(callback, custom) {
-    window.WEB_SOCKET_SWF_LOCATION = baseRoot + "plugs/socket/WebSocketMain.swf";
+    window.WEB_SOCKET_SWF_LOCATION = baseRoot + "plugs/socket/websocket.swf";
     require(custom || [], callback || false);
 }

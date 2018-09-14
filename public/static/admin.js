@@ -157,7 +157,7 @@ $(function () {
                 if (typeof (res) === 'object') {
                     return $.msg.auto(res);
                 }
-                let layerIndex = layer.open({
+                let index = layer.open({
                     type: 1, btn: false, area: "800px", content: res, title: title || '', success: function (dom, index) {
                         $(dom).find('[data-close]').off('click').on('click', function () {
                             if ($(this).attr('data-confirm')) {
@@ -171,7 +171,7 @@ $(function () {
                         $.form.reInit($(dom));
                     }
                 });
-                $.msg.dialogIndexs.push(layerIndex);
+                $.msg.dialogIndexs.push(index);
                 return (typeof callback === 'function') && callback.call(this);
             }, loading, tips);
         };
@@ -564,11 +564,13 @@ $(function () {
 
     /*! 注册 data-file 事件行为 */
     $body.on('click', '[data-file]', function () {
-        let method = $(this).attr('data-file') || 'one';
-        let type = $(this).attr('data-type') || 'jpg,png', field = $(this).attr('data-field') || 'file';
-        if (method !== 'btn') {
-            let title = $(this).attr('data-title') || '文件上传', uptype = $(this).attr('data-uptype') || '';
-            let url = window.ROOT_URL + '?s=admin/plugs/upfile.html&mode=' + method + '&uptype=' + uptype + '&type=' + type + '&field=' + field;
+        let mode = $(this).attr('data-file') || 'one';
+        let field = $(this).attr('data-field') || 'file';
+        let type = $(this).attr('data-type') || 'jpg,png';
+        if (mode !== 'btn') {
+            let uptype = $(this).attr('data-uptype') || '';
+            let title = $(this).attr('data-title') || '文件上传';
+            let url = window.ROOT_URL + '?s=admin/plugs/upfile.html&mode=' + mode + '&uptype=' + uptype + '&type=' + type + '&field=' + field;
             $.form.iframe(url, title || '文件管理');
         }
     });
@@ -589,6 +591,9 @@ $(function () {
     $body.on('click', '[data-tips-image]', function () {
         let img = new Image(), index = $.msg.loading();
         let width = this.getAttribute('data-width') || '480px';
+        img.onerror = function () {
+            $.msg.close(index);
+        };
         img.onload = function () {
             let $content = $(img).appendTo('body').css({background: '#fff', width: width, height: 'auto'});
             layer.open({
@@ -601,9 +606,6 @@ $(function () {
                     $.msg.close(index);
                 }
             });
-        };
-        img.onerror = function () {
-            $.msg.close(index);
         };
         img.src = this.getAttribute('data-tips-image') || this.src;
     });
