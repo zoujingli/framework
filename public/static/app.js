@@ -37,7 +37,6 @@ require.config({
     shim: {
         'plupload': {deps: [baseRoot + 'plugs/plupload/moxie.min.js']},
         'websocket': {deps: [baseRoot + 'plugs/socket/swfobject.min.js']},
-        'ckeditor': {deps: [baseRoot + 'plugs/ckeditor/translations/zh-cn.js']},
         'jquery.ztree': {deps: ['jquery', 'css!' + baseRoot + 'plugs/ztree/zTreeStyle/zTreeStyle.css']},
         'jquery.autocompleter': {deps: ['jquery', 'css!' + baseRoot + 'plugs/jquery/autocompleter.css']},
     },
