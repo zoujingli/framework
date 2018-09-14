@@ -41,9 +41,9 @@ CKEDITOR.plugins.add('txvideo', {
         editor.addCommand('uvideo', {
             exec: function (editor) {
                 layer.prompt({title: '插入HTML代码', formType: 2, area: ['600px', '300px']}, function (html, index) {
-                    layer.close(index);
-                    var element = CKEDITOR.dom.element.createFromHtml('<div style="text-align:center;">' + html + '</div>');
+                    let element = CKEDITOR.dom.element.createFromHtml('<div data-type="insert-html">' + html + '</div>');
                     editor.insertElement(element);
+                    layer.close(index);
                 });
             }
         });
