@@ -82,8 +82,6 @@ $(function () {
     /*! 表单自动化组件 */
     $.form = new function () {
         let self = this;
-        // 异常提示消息
-        this.errMsg = '{status}服务器繁忙，请稍候再试！';
         // 内容区选择器
         this.targetClass = '.layui-layout-admin>.layui-body';
         // 刷新当前页面
@@ -129,7 +127,8 @@ $(function () {
                         this.success(XMLHttpRequest.responseText);
                     } else {
                         $.msg.close(index);
-                        $.msg.tips(self.errMsg.replace('{status}', 'E' + XMLHttpRequest.status + ' - '));
+                        let error = 'E{status} - 服务器繁忙，请稍候再试！';
+                        $.msg.tips(error.replace('{status}', XMLHttpRequest.status));
                     }
                 },
                 success: function (res) {
