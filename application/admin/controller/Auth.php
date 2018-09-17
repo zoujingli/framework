@@ -44,23 +44,28 @@ class Auth extends Controller
     /**
      * 权限授权
      * @return string
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
      */
     public function apply()
     {
         $this->title = '节点授权';
-        $auth_id = $this->request->post('id', '0');
-        $method = '_apply_' . strtolower($this->request->post('action', '0'));
-        if (method_exists($this, $method)) {
-            return $this->$method($auth_id);
+        $auth = $this->request->post('id', '0');
+        switch ($this->request->post('action', '', 'strtolower')) {
+            case 'get':
+                return $this->_apply_get($auth);
+            case 'save':
+                return $this->_apply_save($auth);
+            default:
+                return $this->_form($this->table, 'apply');
         }
-        return $this->_form($this->table, 'apply');
     }
 
     /**
      * 读取授权节点
      * @param string $auth
      */
-    protected function _apply_getnode($auth)
+    private function _apply_get($auth)
     {
         $nodes = \app\admin\logic\Auth::get();
         $checked = Db::name('SystemAuthNode')->where(['auth' => $auth])->column('node');
@@ -77,7 +82,7 @@ class Auth extends Controller
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
-    protected function _apply_save($auth)
+    private function _apply_save($auth)
     {
         list($data, $post) = [[], $this->request->post()];
         foreach (isset($post['nodes']) ? $post['nodes'] : [] as $node) {

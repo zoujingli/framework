@@ -14,9 +14,7 @@
 
 namespace app\admin\controller;
 
-
 use library\Controller;
-
 use library\tools\Data;
 use think\Db;
 

@@ -18,6 +18,11 @@ use app\admin\logic\Auth;
 use library\Controller;
 use think\Db;
 
+/**
+ * 用户登录管理
+ * Class Login
+ * @package app\admin\controller
+ */
 class Login extends Controller
 {
     /**

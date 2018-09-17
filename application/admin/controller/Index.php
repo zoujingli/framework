@@ -15,7 +15,6 @@
 namespace app\admin\controller;
 
 use app\admin\logic\Auth;
-use app\admin\logic\File;
 use library\Controller;
 use library\tools\Data;
 use think\Db;
