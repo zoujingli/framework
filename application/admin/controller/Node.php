@@ -14,7 +14,7 @@
 
 namespace app\admin\controller;
 
-use app\admin\logic\Auth;
+use app\admin\logic\AuthLogic;
 use library\Controller;
 use library\tools\Data;
 use think\Db;
@@ -39,7 +39,7 @@ class Node extends Controller
     public function index()
     {
         $this->title = '系统节点管理';
-        $this->nodes = Data::arr2table(Auth::get(), 'node', 'pnode');
+        $this->nodes = Data::arr2table(AuthLogic::get(), 'node', 'pnode');
         $groups = [];
         foreach ($this->nodes as $node) {
             $pnode = explode('/', $node['node'])[0];
@@ -59,7 +59,7 @@ class Node extends Controller
      */
     public function clear()
     {
-        $where = [['node', 'not in', array_keys(Auth::get())]];
+        $where = [['node', 'not in', array_keys(AuthLogic::get())]];
         if (false !== Db::name($this->table)->where($where)->delete()) {
             $this->success('清理无效节点记录成功！', '');
         }

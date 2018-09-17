@@ -19,7 +19,7 @@
  */
 function auth($node)
 {
-    return \app\admin\logic\Auth::checkAuthNode($node);
+    return \app\admin\logic\AuthLogic::checkAuthNode($node);
 }
 
 /**

@@ -27,7 +27,7 @@ use think\facade\Log;
  * @method boolean has($name) static 判断文件上否已经上传
  * @method string upload($client = false) static 获取文件上传推送地址
  */
-class File
+class FileLogic
 {
     /**
      * 对象缓存器
@@ -54,14 +54,14 @@ class File
     /**
      * 设置文件驱动名称
      * @param string $name
-     * @return \app\admin\logic\file\Local
+     * @return \app\admin\logic\driver\LocalFileDrive
      * @throws \think\Exception
      */
     public static function instance($name)
     {
         $driver = ucfirst(strtolower($name));
         if (!isset(self::$instance[$driver])) {
-            if (class_exists($class = __NAMESPACE__ . "\\file\\{$driver}")) {
+            if (class_exists($class = __NAMESPACE__ . "\\driver\\{$driver}FileDriver")) {
                 return self::$instance[$driver] = new $class;
             }
             throw new \think\Exception("File driver [{$driver}] does not exist.");

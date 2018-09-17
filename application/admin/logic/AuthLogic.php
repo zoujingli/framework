@@ -23,7 +23,7 @@ use think\Db;
  * Class Auth
  * @package app\admin\logic
  */
-class Auth
+class AuthLogic
 {
 
     /**

@@ -14,7 +14,7 @@
 
 namespace app\admin\controller;
 
-use app\admin\logic\File;
+use app\admin\logic\FileLogic;
 use library\Controller;
 
 /**
@@ -39,7 +39,7 @@ class Plugs extends Controller
         }
         $mode = $this->request->get('mode', 'one');
         $types = $this->request->get('type', 'jpg,png');
-        $this->assign('mimes', File::mine($types));
+        $this->assign('mimes', FileLogic::mine($types));
         $this->assign('field', $this->request->get('field', 'file'));
         return $this->fetch('', ['mode' => $mode, 'types' => $types, 'uptype' => $uptype]);
     }
@@ -65,7 +65,7 @@ class Plugs extends Controller
         }
         // 文件上传处理
         if (($info = $file->move("public/upload/{$names[0]}", "{$names[1]}.{$ext}", true))) {
-            if (($site_url = File::instance('local')->url($filename))) {
+            if (($site_url = FileLogic::instance('local')->url($filename))) {
                 return json(['data' => ['site_url' => $site_url], 'code' => 'SUCCESS', 'msg' => '文件上传成功']);
             }
         }
@@ -87,7 +87,7 @@ class Plugs extends Controller
         $md5 = md5_file($file->getPathname());
         $ext = strtolower(pathinfo($file->getInfo('name'), 4));
         $name = date('Ymd') . "/{$md5}." . (empty($ext) ? 'tmp' : $ext);
-        $result = File::save($name, file_get_contents($file->getPathname()));
+        $result = FileLogic::save($name, file_get_contents($file->getPathname()));
         return json(['uploaded' => true, 'url' => $result['url'], 'filename' => $file->getInfo('name')]);
     }
 
@@ -101,11 +101,11 @@ class Plugs extends Controller
         $post = $this->request->post();
         $filename = join('/', str_split($post['md5'], 16)) . '.' . strtolower(pathinfo($post['filename'], 4));
         // 检查文件是否已上传
-        if (($site_url = File::url($filename))) {
+        if (($site_url = FileLogic::url($filename))) {
             $this->success('文件已上传', ['site_url' => $site_url], 'IS_FOUND');
         }
         // 需要上传文件，生成上传配置参数
-        $param = ['uptype' => $post['uptype'], 'file_url' => $filename, 'server' => File::upload()];
+        $param = ['uptype' => $post['uptype'], 'file_url' => $filename, 'server' => FileLogic::upload()];
         switch (strtolower($post['uptype'])) {
             case 'local':
                 $param['token'] = md5($filename . session_id());
@@ -120,7 +120,7 @@ class Plugs extends Controller
                     'expiration' => date('Y-m-d', $time) . 'T' . date('H:i:s', $time) . '.000Z',
                 ];
                 $param['policy'] = base64_encode(json_encode($policyText));
-                $param['site_url'] = File::base() . $filename;
+                $param['site_url'] = FileLogic::base() . $filename;
                 $param['signature'] = base64_encode(hash_hmac('sha1', $param['policy'], sysconf('storage_oss_secret'), true));
                 $param['OSSAccessKeyId'] = sysconf('storage_oss_keyid');
         }
@@ -136,7 +136,7 @@ class Plugs extends Controller
      */
     protected function _getQiniuToken($key)
     {
-        $baseUrl = File::base();
+        $baseUrl = FileLogic::base();
         $bucket = sysconf('storage_qiniu_bucket');
         $accessKey = sysconf('storage_qiniu_access_key');
         $secretKey = sysconf('storage_qiniu_secret_key');

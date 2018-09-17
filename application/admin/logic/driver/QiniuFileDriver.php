@@ -12,9 +12,9 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-namespace app\admin\logic\file;
+namespace app\admin\logic\driver;
 
-use app\admin\logic\File;
+use app\admin\logic\FileLogic;
 use Qiniu\Auth;
 use Qiniu\Storage\BucketManager;
 use Qiniu\Storage\UploadManager;
@@ -22,10 +22,10 @@ use think\facade\Log;
 
 /**
  * 七牛云文件驱动
- * Class Qiniu
- * @package app\admin\logic\file
+ * Class QiniuFileDriver
+ * @package app\admin\logic\driver
  */
-class Qiniu extends File
+class QiniuFileDriver extends FileLogic
 {
 
     /**

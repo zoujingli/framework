@@ -12,19 +12,19 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-namespace app\admin\logic\file;
+namespace app\admin\logic\driver;
 
-use app\admin\logic\File;
+use app\admin\logic\FileLogic;
 use OSS\Core\OssException;
 use OSS\OssClient;
 use think\facade\Log;
 
 /**
  * AliyunOss文件存储
- * Class Oss
- * @package app\admin\logic\file
+ * Class OssFileDriver
+ * @package app\admin\logic\driver
  */
-class Oss extends File
+class OssFileDriver extends FileLogic
 {
 
     /**

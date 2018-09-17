@@ -12,17 +12,17 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-namespace app\admin\logic\file;
+namespace app\admin\logic\driver;
 
-use app\admin\logic\File;
+use app\admin\logic\FileLogic;
 use think\facade\Log;
 
 /**
  * 本地文件上传驱动
- * Class Local
- * @package app\admin\logic\file
+ * Class LocalFileDriver
+ * @package app\admin\logic\driver
  */
-class Local extends File
+class LocalFileDriver extends FileLogic
 {
 
     /**
