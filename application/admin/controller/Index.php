@@ -14,7 +14,6 @@
 
 namespace app\admin\controller;
 
-use app\admin\logic\AuthLogic;
 use library\Controller;
 use library\tools\Data;
 use think\Db;
@@ -37,7 +36,7 @@ class Index extends Controller
     public function index()
     {
         $this->title = '系统管理';
-        $this->menus = AuthLogic::getAuthMenu();
+        $this->menus = \app\admin\logic\Auth::getAuthMenu();
         if (empty($this->menus) && !session('user.id')) {
             $this->redirect('@admin/login');
         }

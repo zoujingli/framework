@@ -23,7 +23,7 @@ use think\Db;
  * Class Auth
  * @package app\admin\logic
  */
-class AuthLogic
+class Auth
 {
 
     /**
@@ -99,7 +99,7 @@ class AuthLogic
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      */
-    public static function applyAuthNode()
+    public static function applyNode()
     {
         cache('need_access_node', null);
         if (($userid = session('user.id'))) {
@@ -135,7 +135,7 @@ class AuthLogic
      */
     public static function getAuthMenu()
     {
-        self::applyAuthNode();
+        self::applyNode();
         $list = Db::name('SystemMenu')->where(['status' => '1'])->order('sort asc,id asc')->select();
         return self::buildMenuData(Data::arr2tree($list), self::get(), self::isLogin());
     }

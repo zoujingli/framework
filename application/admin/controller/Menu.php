@@ -14,7 +14,6 @@
 
 namespace app\admin\controller;
 
-use app\admin\logic\AuthLogic;
 use library\Controller;
 use library\tools\Data;
 use think\Db;
@@ -108,7 +107,7 @@ class Menu extends Controller
                 $vo['pid'] = $this->request->get('pid', '0');
             }
             // 读取系统功能节点
-            $nodes = AuthLogic::get();
+            $nodes = \app\admin\logic\Auth::get();
             foreach ($nodes as $key => $node) {
                 if (empty($node['is_menu'])) {
                     unset($nodes[$key]);

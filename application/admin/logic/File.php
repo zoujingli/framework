@@ -27,7 +27,7 @@ use think\facade\Log;
  * @method boolean has($name) static 判断文件上否已经上传
  * @method string upload($client = false) static 获取文件上传推送地址
  */
-class FileLogic
+class File
 {
     /**
      * 对象缓存器
@@ -54,7 +54,7 @@ class FileLogic
     /**
      * 设置文件驱动名称
      * @param string $name
-     * @return \app\admin\logic\driver\LocalFileDrive
+     * @return \app\admin\logic\driver\Local
      * @throws \think\Exception
      */
     public static function instance($name)

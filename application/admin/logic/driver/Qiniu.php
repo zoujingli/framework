@@ -14,18 +14,19 @@
 
 namespace app\admin\logic\driver;
 
-use app\admin\logic\FileLogic;
+use app\admin\logic\File;
 use Qiniu\Auth;
 use Qiniu\Storage\BucketManager;
 use Qiniu\Storage\UploadManager;
 use think\facade\Log;
 
+
 /**
  * 七牛云文件驱动
- * Class QiniuFileDriver
+ * Class Qiniu
  * @package app\admin\logic\driver
  */
-class QiniuFileDriver extends FileLogic
+class Qiniu extends File
 {
 
     /**

@@ -67,7 +67,7 @@ class Auth extends Controller
      */
     private function _apply_get($auth)
     {
-        $nodes = \app\admin\logic\AuthLogic::get();
+        $nodes = \app\admin\logic\Auth::get();
         $checked = Db::name('SystemAuthNode')->where(['auth' => $auth])->column('node');
         foreach ($nodes as &$node) {
             $node['checked'] = in_array($node['node'], $checked);

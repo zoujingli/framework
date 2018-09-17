@@ -12,4 +12,4 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-return [\app\admin\logic\InitLogic::class];
+return [\app\admin\logic\Init::class];

@@ -23,7 +23,7 @@ use think\Db;
  * Class Init
  * @package app\admin\logic
  */
-class InitLogic
+class Init
 {
 
     /**
@@ -51,7 +51,7 @@ class InitLogic
             return $request->isAjax() ? json($msg) : redirect($msg['url']);
         }
         // 访问权限检查
-        if (!empty($access['is_auth']) && !AuthLogic::checkAuthNode($node)) {
+        if (!empty($access['is_auth']) && !Auth::checkAuthNode($node)) {
             return json(['code' => 0, 'msg' => '抱歉，您没有访问该模块的权限！']);
         }
         return $next($request);

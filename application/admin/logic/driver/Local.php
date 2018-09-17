@@ -14,15 +14,15 @@
 
 namespace app\admin\logic\driver;
 
-use app\admin\logic\FileLogic;
+use app\admin\logic\File;
 use think\facade\Log;
 
 /**
  * 本地文件上传驱动
- * Class LocalFileDriver
+ * Class Local
  * @package app\admin\logic\driver
  */
-class LocalFileDriver extends FileLogic
+class Local extends File
 {
 
     /**

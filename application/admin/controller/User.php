@@ -41,7 +41,7 @@ class User extends Controller
     public function index()
     {
         $this->title = '系统用户管理';
-        $search = $this->_search($this->table)->dateBetween('login_at')->like('username,phone,mail');
+        $search = $this->_search($this->table)->like('username,phone,mail')->dateBetween('login_at');
         return $this->_page($search->db()->where(['is_deleted' => '0']));
     }
 

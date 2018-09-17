@@ -14,7 +14,6 @@
 
 namespace app\admin\controller;
 
-use app\admin\logic\AuthLogic;
 use library\Controller;
 use think\Db;
 
@@ -66,7 +65,7 @@ class Login extends Controller
             'login_num' => Db::raw('login_num+1'),
         ]);
         session('user', $user);
-        !empty($user['authorize']) && AuthLogic::applyAuthNode();
+        empty($user['authorize']) || \app\admin\logic\Auth::applyNode();
         $this->success('登录成功，正在进入系统...', url('@admin'));
     }
 

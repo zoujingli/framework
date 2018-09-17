@@ -14,17 +14,17 @@
 
 namespace app\admin\logic\driver;
 
-use app\admin\logic\FileLogic;
+use app\admin\logic\File;
 use OSS\Core\OssException;
 use OSS\OssClient;
 use think\facade\Log;
 
 /**
- * AliyunOss文件存储
- * Class OssFileDriver
+ * AliOss文件存储
+ * Class Oss
  * @package app\admin\logic\driver
  */
-class OssFileDriver extends FileLogic
+class Oss extends File
 {
 
     /**
