@@ -107,15 +107,15 @@ class File
 
     /**
      * 获取文件相对名称
-     * @param string $local_url 文件标识
+     * @param string $url 文件链接
      * @param string $ext 文件后缀
      * @param string $pre 文件前缀（若有值需要以/结尾）
      * @return string
      */
-    public static function name($local_url, $ext = '', $pre = '')
+    public static function name($url, $ext = '', $pre = '')
     {
-        empty($ext) && $ext = strtolower(pathinfo($local_url, 4));
-        return $pre . join('/', str_split(md5($local_url), 16)) . '.' . ($ext ? $ext : 'tmp');
+        empty($ext) && $ext = strtolower(pathinfo($url, 4));
+        return $pre . join('/', str_split(md5($url), 16)) . '.' . ($ext ? $ext : 'tmp');
     }
 
     /**
