@@ -99,19 +99,19 @@ class Plugs extends Controller
     public function upstate()
     {
         $post = $this->request->post();
-        $filename = join('/', str_split($post['md5'], 16)) . '.' . strtolower(pathinfo($post['filename'], 4));
+        $name = join('/', str_split($post['md5'], 16)) . '.' . strtolower(pathinfo($post['filename'], 4));
         // 检查文件是否已上传
-        if (($site_url = File::url($filename))) {
+        if (($site_url = File::url($name))) {
             $this->success('文件已上传', ['site_url' => $site_url], 'IS_FOUND');
         }
         // 需要上传文件，生成上传配置参数
-        $param = ['uptype' => $post['uptype'], 'file_url' => $filename, 'server' => File::upload()];
+        $param = ['uptype' => $post['uptype'], 'file_url' => $name, 'server' => File::upload()];
         switch (strtolower($post['uptype'])) {
             case 'local':
-                $param['token'] = md5($filename . session_id());
+                $param['token'] = md5($name . session_id());
                 break;
             case 'qiniu':
-                $param['token'] = $this->_getQiniuToken($filename);
+                $param['token'] = $this->_getQiniuToken($name);
                 break;
             case 'oss':
                 $time = time() + 3600;
@@ -119,8 +119,8 @@ class Plugs extends Controller
                     'conditions' => [['content-length-range', 0, 1048576000]],
                     'expiration' => date('Y-m-d', $time) . 'T' . date('H:i:s', $time) . '.000Z',
                 ];
+                $param['site_url'] = File::base($name);
                 $param['policy'] = base64_encode(json_encode($policyText));
-                $param['site_url'] = File::base($filename);
                 $param['signature'] = base64_encode(hash_hmac('sha1', $param['policy'], sysconf('storage_oss_secret'), true));
                 $param['OSSAccessKeyId'] = sysconf('storage_oss_keyid');
         }

@@ -92,7 +92,7 @@ class Local extends File
             $file = env('root_path') . "public/upload/{$name}";
             file_exists(dirname($file)) || mkdir(dirname($file), 0755, true);
             if (file_put_contents($file, $content)) {
-                return ['file' => $file, 'hash' => md5_file($file), 'key' => "upload/{$name}", 'url' => $this->base() . $name];
+                return ['file' => $file, 'hash' => md5_file($file), 'key' => "upload/{$name}", 'url' => $this->base($name)];
             }
         } catch (\Exception $err) {
             Log::error('本地文件存储失败, ' . $err->getMessage());

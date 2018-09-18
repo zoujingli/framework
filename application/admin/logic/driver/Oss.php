@@ -81,8 +81,9 @@ class Oss extends File
      */
     public function upload()
     {
+        $domain = sysconf('storage_oss_domain');
         $protocol = request()->isSsl() ? 'https' : 'http';
-        return "{$protocol}://" . sysconf('storage_oss_domain');
+        return "{$protocol}://{$domain}";
     }
 
     /**

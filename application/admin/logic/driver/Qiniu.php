@@ -54,7 +54,7 @@ class Qiniu extends File
     public function get($name)
     {
         $auth = new Auth(sysconf('storage_qiniu_access_key'), sysconf('storage_qiniu_secret_key'));
-        return file_get_contents($auth->privateDownloadUrl($this->base() . $name));
+        return file_get_contents($auth->privateDownloadUrl($this->base($name)));
     }
 
     /**
@@ -148,7 +148,7 @@ class Qiniu extends File
             return null;
         }
         $result['file'] = $name;
-        $result['url'] = $this->base() . $name;
+        $result['url'] = $this->base($name);
         return $result;
     }
 
