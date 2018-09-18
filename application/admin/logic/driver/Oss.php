@@ -70,7 +70,7 @@ class Oss extends File
         if ($this->has($name) === false) {
             return false;
         }
-        return $this->base() . $name;
+        return $this->base($name);
     }
 
     /**
@@ -87,22 +87,23 @@ class Oss extends File
 
     /**
      * 获取阿里云对象存储URL前缀
+     * @param string $name
      * @return string
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
-    public function base()
+    public function base($name = '')
     {
+        $domain = sysconf('storage_oss_domain');
         switch (strtolower(sysconf('storage_oss_is_https'))) {
             case 'https':
-                return 'https://' . sysconf('storage_oss_domain') . '/';
+                return "https://{$domain}/{$name}";
             case 'http':
-                return 'http://' . sysconf('storage_oss_domain') . '/';
+                return "http://{$domain}/{$name}";
             case 'auto':
-                return '//' . sysconf('storage_oss_domain') . '/';
-            default:
-                throw new \think\Exception('未设置阿里云文件地址协议');
+                return "//{$domain}/{$name}";
         }
+        throw new \think\Exception('未设置阿里云文件地址协议');
     }
 
     /**

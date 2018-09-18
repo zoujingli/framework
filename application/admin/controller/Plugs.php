@@ -120,7 +120,7 @@ class Plugs extends Controller
                     'expiration' => date('Y-m-d', $time) . 'T' . date('H:i:s', $time) . '.000Z',
                 ];
                 $param['policy'] = base64_encode(json_encode($policyText));
-                $param['site_url'] = File::base() . $filename;
+                $param['site_url'] = File::base($filename);
                 $param['signature'] = base64_encode(hash_hmac('sha1', $param['policy'], sysconf('storage_oss_secret'), true));
                 $param['OSSAccessKeyId'] = sysconf('storage_oss_keyid');
         }

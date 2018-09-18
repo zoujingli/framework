@@ -23,9 +23,9 @@ use think\facade\Log;
  * @method array save($name, $content) static 保存二进制文件
  * @method string get($name) static 获取文件二进制内容
  * @method string url($name) static 获取文件对应地址
- * @method string base() static 获取文件存储基础目录
- * @method boolean has($name) static 判断文件上否已经上传
+ * @method string base($name = '') static 获取文件存储基础目录
  * @method string upload($client = false) static 获取文件上传推送地址
+ * @method boolean has($name) static 判断文件上否已经上传
  */
 class File
 {
@@ -61,7 +61,7 @@ class File
     {
         $driver = ucfirst(strtolower($name));
         if (!isset(self::$instance[$driver])) {
-            if (class_exists($class = __NAMESPACE__ . "\\driver\\{$driver}FileDriver")) {
+            if (class_exists($class = __NAMESPACE__ . "\\driver\\{$driver}")) {
                 return self::$instance[$driver] = new $class;
             }
             throw new \think\Exception("File driver [{$driver}] does not exist.");

@@ -69,7 +69,7 @@ class Qiniu extends File
         if ($this->has($name) === false) {
             return false;
         }
-        return self::base() . $name;
+        return self::base($name);
     }
 
     /**
@@ -104,29 +104,29 @@ class Qiniu extends File
                     return $client ? 'https://upload-z2.qiniup.com' : 'https://up-z2.qiniup.com';
                 }
                 return $client ? 'http://upload-z2.qiniup.com' : 'http://up-z2.qiniup.com';
-            default:
-                throw new \think\Exception('未配置七牛云存储区域');
         }
+        throw new \think\Exception('未配置七牛云存储区域');
     }
 
     /**
      * 获取七牛云URL前缀
+     * @param string $name
      * @return string
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
-    public function base()
+    public function base($name = '')
     {
+        $domain = sysconf('storage_qiniu_domain');
         switch (strtolower(sysconf('storage_qiniu_is_https'))) {
             case 'https':
-                return 'https://' . sysconf('storage_qiniu_domain') . '/';
+                return "https://{$domain}/{$name}";
             case 'http':
-                return 'http://' . sysconf('storage_qiniu_domain') . '/';
+                return "http://{$domain}/{$name}";
             case 'auto':
-                return '//' . sysconf('storage_qiniu_domain') . '/';
-            default:
-                throw new \think\Exception('未设置七牛云文件地址协议');
+                return "//{$domain}/{$name}";
         }
+        throw new \think\Exception('未设置七牛云文件地址协议');
     }
 
     /**
@@ -144,7 +144,7 @@ class Qiniu extends File
         $uploadMgr = new UploadManager();
         list($result, $err) = $uploadMgr->put($token, $name, $content);
         if ($err !== null) {
-            Log::error('七牛云文件上传失败, ' . $err->message());
+            Log::error('七牛云文件上传失败');
             return null;
         }
         $result['file'] = $name;

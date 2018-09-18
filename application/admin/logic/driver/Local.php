@@ -56,7 +56,7 @@ class Local extends File
         if ($this->has($name) === false) {
             return false;
         }
-        return $this->base() . $name;
+        return $this->base($name);
     }
 
     /**
@@ -70,13 +70,14 @@ class Local extends File
 
     /**
      * 获取服务器URL前缀
+     * @param string $name
      * @return string
      */
-    public function base()
+    public function base($name = '')
     {
         $appRoot = request()->root();
         $uriRoot = preg_match('/\.php$/', $appRoot) ? dirname($appRoot) : $appRoot;
-        return "{$uriRoot}/upload/";
+        return "{$uriRoot}/upload/{$name}";
     }
 
     /**
