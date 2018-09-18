@@ -184,7 +184,7 @@
                 }).then(function (md5) {
                     file.md5 = md5;
                     var data = {id: file.id, md5: md5, uptype: '{$uptype}', filename: file.name};
-                    $.ajax("{:url('admin/plugs/upstate')}", {
+                    $.ajax("{:url('@')}?s=admin/plugs/upstate", {
                         dataType: 'json', method: 'post', data: data, success: function (ret) {
                             if (ret.code !== 'NOT_FOUND') {
                                 owner.skipFile(file);
@@ -231,7 +231,7 @@
             auto: false,
             fileNumLimit: 300,
             /*{/if}*/
-            server: '{:url("admin/plugs/upload")}',
+            server: '{:url("@")}?s=admin/plugs/upload',
             swf: '__STATIC__/plugs/uploader/Uploader.swf',
             chunked: false,
             dnd: '#dndArea',
@@ -335,7 +335,7 @@
                         img = $('<img src="' + src + '">');
                         $wrap.empty().append(img);
                     } else {
-                        $.ajax('{"plugs/file/preview"|url}', {method: 'post', data: src, dataType: 'json'}).done(function (response) {
+                        $.ajax('{:url("@")}?s=plugs/file/preview', {method: 'post', data: src, dataType: 'json'}).done(function (response) {
                             if (response.result) {
                                 img = $('<img src="' + response.result + '">');
                                 $wrap.empty().append(img);
