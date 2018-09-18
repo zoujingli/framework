@@ -59,8 +59,8 @@ class File
     {
         $class = ucfirst(strtolower($name));
         if (!isset(self::$instance[$class])) {
-            if (class_exists($class = __NAMESPACE__ . "\\driver\\{$class}")) {
-                return self::$instance[$class] = new $class;
+            if (class_exists($object = __NAMESPACE__ . "\\driver\\{$class}")) {
+                return self::$instance[$class] = new $object;
             }
             throw new \think\Exception("File driver [{$class}] does not exist.");
         }
