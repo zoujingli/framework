@@ -56,8 +56,8 @@ function format_datetime($datetime, $format = 'Y年m月d日 H:i:s')
 /**
  * 打印输出数据到文件
  * @param mixed $data 输出的数据
- * @param bool $force 强制替换
- * @param string|null $file
+ * @param boolean $force 强制替换
+ * @param string|null $file 文件名称
  */
 function p($data, $force = false, $file = null)
 {
@@ -69,8 +69,8 @@ function p($data, $force = false, $file = null)
 /**
  * 设备或配置系统参数
  * @param string $name 参数名称
- * @param bool $value 默认是null为获取值，否则为更新
- * @return string|bool
+ * @param boolean $value 无值为获取
+ * @return string|boolean
  * @throws \think\Exception
  * @throws \think\exception\PDOException
  */

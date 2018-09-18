@@ -44,11 +44,11 @@ class File
      */
     public static function __callStatic($name, $arguments)
     {
-        $driver = self::instance(sysconf('storage_type'));
-        if (method_exists($driver, $name)) {
-            return call_user_func_array([$driver, $name], $arguments);
+        $class = self::instance(sysconf('storage_type'));
+        if (method_exists($class, $name)) {
+            return call_user_func_array([$class, $name], $arguments);
         }
-        throw new \think\Exception("File driver method not exists: " . get_class($driver) . "->{$name}");
+        throw new \think\Exception("File driver method not exists: " . get_class($class) . "->{$name}");
     }
 
     /**
@@ -59,14 +59,14 @@ class File
      */
     public static function instance($name)
     {
-        $driver = ucfirst(strtolower($name));
-        if (!isset(self::$instance[$driver])) {
-            if (class_exists($class = __NAMESPACE__ . "\\driver\\{$driver}")) {
-                return self::$instance[$driver] = new $class;
+        $class = ucfirst(strtolower($name));
+        if (!isset(self::$instance[$class])) {
+            if (class_exists($class = __NAMESPACE__ . "\\driver\\{$class}")) {
+                return self::$instance[$class] = new $class;
             }
-            throw new \think\Exception("File driver [{$driver}] does not exist.");
+            throw new \think\Exception("File driver [{$class}] does not exist.");
         }
-        return self::$instance[$driver];
+        return self::$instance[$class];
     }
 
     /**
