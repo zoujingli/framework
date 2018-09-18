@@ -64,7 +64,7 @@ class Plugs extends Controller
             return json(['code' => 'ERROR', 'msg' => '文件上传验证失败']);
         }
         // 文件上传处理
-        if (($info = $file->move("public/upload/{$names[0]}", "{$names[1]}.{$ext}", true))) {
+        if (($info = $file->move("upload/{$names[0]}", "{$names[1]}.{$ext}", true))) {
             if (($site_url = File::instance('local')->url($filename))) {
                 return json(['data' => ['site_url' => $site_url], 'code' => 'SUCCESS', 'msg' => '文件上传成功']);
             }
