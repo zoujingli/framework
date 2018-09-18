@@ -125,13 +125,13 @@ class File
     public static function down($url, $force = false)
     {
         try {
-            $driver = self::instance('local');
+            $class = self::instance('local');
             $name = self::name($url, '', 'download/');
-            if (false === $force && ($siteUrl = $driver->url($name))) {
+            if (false === $force && ($siteUrl = $class->url($name))) {
                 $file = env('root_path') . "public/upload/{$name}";
                 return ['file' => $file, 'hash' => md5_file($file), 'key' => "upload/{$name}", 'url' => $siteUrl];
             }
-            return $driver->save($name, file_get_contents($url));
+            return $class->save($name, file_get_contents($url));
         } catch (\Exception $e) {
             \think\facade\Log::error("FileService 文件下载失败 [ {$url} ] " . $e->getMessage());
         }
