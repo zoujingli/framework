@@ -130,8 +130,8 @@ class File
             $driver = self::instance('local');
             $name = self::name($url, '', 'download/');
             if (false === $force && ($siteUrl = $driver->url($name))) {
-                $realfile = env('root_path') . "public/upload/{$name}";
-                return ['file' => $realfile, 'hash' => md5_file($realfile), 'key' => "upload/{$name}", 'url' => $siteUrl];
+                $file = env('root_path') . "public/upload/{$name}";
+                return ['file' => $file, 'hash' => md5_file($file), 'key' => "upload/{$name}", 'url' => $siteUrl];
             }
             return $driver->save($name, file_get_contents($url));
         } catch (\Exception $e) {
