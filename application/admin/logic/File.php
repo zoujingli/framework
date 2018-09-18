@@ -14,8 +14,6 @@
 
 namespace app\admin\logic;
 
-use think\facade\Log;
-
 /**
  * 文件管理逻辑
  * Class File
@@ -135,7 +133,7 @@ class File
             }
             return $driver->save($name, file_get_contents($url));
         } catch (\Exception $e) {
-            Log::error("FileService 文件下载失败 [ {$url} ] " . $e->getMessage());
+            \think\facade\Log::error("FileService 文件下载失败 [ {$url} ] " . $e->getMessage());
         }
         return ['url' => $url];
     }
