@@ -200,7 +200,7 @@ $(function () {
             uri.indexOf('?') > -1 && uri.split('?')[1].split('&').map(function (item) {
                 if (item.indexOf('=') > -1) {
                     let tmp = item.split('=').slice();
-                    params[tmp[0]] = unescape(tmp[1].replace(/%2B/ig, '%20'));
+                    params[tmp[0]] = decodeURI(tmp[1].replace(/%2B/ig, '%20'));
                 }
             });
             delete params[""];
