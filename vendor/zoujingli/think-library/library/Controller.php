@@ -24,7 +24,7 @@ use think\Exception;
  * Class Controller
  * @package library
  * --------------------------------
- * @method logic\Search _search($dbQuery)
+ * @method logic\Query _query($dbQuery)
  * @method array _input($data, $rule = [], $message = [])
  * @method mixed _delete($dbQuery, $pkField = '', $where = [])
  * @method mixed _save($dbQuery, $data = [], $pkField = '', $where = [])

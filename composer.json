@@ -1,7 +1,7 @@
 {
   "type": "project",
   "name": "zoujingli/framework",
-  "keywords": ["framework","framework"],
+  "keywords": ["framework"],
   "autoload": {"psr-4": {"app\\": "application"}},
   "authors": [{"name": "Anyon", "email": "zoujingli@qq.com"}],
   "description": "Rapid development framework based on ThinkPHP5",
@@ -14,8 +14,8 @@
     "endroid/qr-code": "^1.9",
     "topthink/framework": "5.1.*",
     "aliyuncs/oss-sdk-php": "^2.2",
-    "zoujingli/weopen-developer": "^1.0",
-    "zoujingli/think-library": "dev-master"
+    "zoujingli/think-library": "^1.1",
+    "zoujingli/weopen-developer": "^1.0"
   },
   "repositories": {
     "packagist": {

@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit40988e1cbe814d21e2f896febd58a156
+class ComposerStaticInit0663c7ec83439388bb09418ea43946a8
 {
     public static $files = array (
         '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
@@ -278,8 +278,8 @@ class ComposerStaticInit40988e1cbe814d21e2f896febd58a156
         'library\\logic\\Input' => __DIR__ . '/..' . '/zoujingli/think-library/library/logic/Input.php',
         'library\\logic\\Logic' => __DIR__ . '/..' . '/zoujingli/think-library/library/logic/Logic.php',
         'library\\logic\\Page' => __DIR__ . '/..' . '/zoujingli/think-library/library/logic/Page.php',
+        'library\\logic\\Query' => __DIR__ . '/..' . '/zoujingli/think-library/library/logic/Query.php',
         'library\\logic\\Save' => __DIR__ . '/..' . '/zoujingli/think-library/library/logic/Save.php',
-        'library\\logic\\Search' => __DIR__ . '/..' . '/zoujingli/think-library/library/logic/Search.php',
         'library\\tools\\Cors' => __DIR__ . '/..' . '/zoujingli/think-library/library/tools/Cors.php',
         'library\\tools\\Crypt' => __DIR__ . '/..' . '/zoujingli/think-library/library/tools/Crypt.php',
         'library\\tools\\Data' => __DIR__ . '/..' . '/zoujingli/think-library/library/tools/Data.php',
@@ -295,9 +295,9 @@ class ComposerStaticInit40988e1cbe814d21e2f896febd58a156
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit40988e1cbe814d21e2f896febd58a156::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit40988e1cbe814d21e2f896febd58a156::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit40988e1cbe814d21e2f896febd58a156::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit0663c7ec83439388bb09418ea43946a8::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit0663c7ec83439388bb09418ea43946a8::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit0663c7ec83439388bb09418ea43946a8::$classMap;
 
         }, null, ClassLoader::class);
     }
