@@ -58,7 +58,7 @@ class Node extends Controller
      */
     public function clear()
     {
-        $nodes = \app\admin\logic\Auth::get();
+        $nodes = array_column(\app\admin\logic\Auth::get(), 'node');
         if (false !== Db::name($this->table)->whereNotIn('node', $nodes)->delete()) {
             $this->success('清理无效节点记录成功！', '');
         }
