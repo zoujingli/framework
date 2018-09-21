@@ -24,7 +24,8 @@ body{font-size:12px;color:#333;font-family:'\5FAE\8F6F\96C5\9ED1','Microsoft YaH
 a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}button{border-radius:0!important}
 
 /* 页面布局 - 全局 */
-.layui-layout>.layui-side,.layui-layout>.layui-body{top:50px;bottom:0}
+.layui-layout>.layui-side,
+.layui-layout>.layui-body{top:50px;bottom:0}
 .layui-layout>.layui-body>.layui-card{box-shadow:none}
 .layui-layout>.layui-body>.layui-card>.layui-card-header{height:50px;line-height:50px;border:none;box-shadow:0 2px 3px 0 rgba(0,0,0,.1)}
 
@@ -35,7 +36,7 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 .layui-header .layui-logo sup{font-size:9px;line-height:9px;color:#dfdfdf!important}
 .layui-header .layui-nav-item{line-height:50px}
 .layui-header .layui-nav-item.layui-this{background:rgba(0,0,0,0.1)}
-.layui-header .layui-nav-item:after,.layui-header .layui-nav-bar{display:none!important}
+.layui-header .layui-nav-bar,.layui-header .layui-nav-item:after{display:none!important}
 .layui-header .layui-nav-item .layui-nav-child{top:49px;padding:0;border-radius:0;border:none;line-height:45px;box-shadow:0 1px 2px 0 rgba(0, 0, 0, 0.2)}
 .layui-header .layui-nav-item .layui-nav-child+a{padding-right:35px}
 .layui-header .layui-nav-item .layui-nav-child.layui-show+a{background:#fff}
@@ -43,20 +44,20 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 .layui-header .layui-nav-item .layui-nav-child dd a{color:#333;text-align:center;border-top:1px solid #eaedf1;padding:0}
 
 /* 页面布局 - 左则 */
+.layui-layout>.layui-side .layui-nav-bar{display:none!important}
 .layui-layout>.layui-side .layui-nav-item{border-bottom:1px solid #333}
-.layui-layout>.layui-side .layui-nav-item a{height:40px;line-height:40px}
-.layui-layout>.layui-side .layui-nav-item .layui-nav-child dd{border-bottom:1px solid #252525}
+.layui-layout>.layui-side .layui-nav-item a{height:45px;line-height:45px}
+.layui-layout>.layui-side .layui-nav-item .layui-nav-child dd{border-bottom:1px solid #222}
 .layui-layout>.layui-side .layui-nav-item .layui-nav-child dd:last-child{border-bottom:none}
 .layui-layout>.layui-side .layui-nav-tree-top a{height:28px!important;line-height:28px!important}
-.layui-layout>.layui-side .layui-nav-bar{display:none!important}
 
-.layui-layout.layui-layout-left-hide>.layui-side{display:none}
 .layui-layout.layui-layout-left-mini>.layui-body{left:50px}
+.layui-layout.layui-layout-left-hide>.layui-side{display:none}
 .layui-layout.layui-layout-left-hide>.layui-body{left:0!important}
 
 .layui-layout.layui-layout-left-mini>.layui-side,
-.layui-layout.layui-layout-left-mini>.layui-side .layui-side-scroll,
-.layui-layout.layui-layout-left-mini>.layui-side .layui-nav-tree{width:50px;text-align:center}
+.layui-layout.layui-layout-left-mini>.layui-side .layui-nav-tree,
+.layui-layout.layui-layout-left-mini>.layui-side .layui-side-scroll{width:50px;text-align:center}
 .layui-layout.layui-layout-left-mini>.layui-side .layui-nav-item a{padding:0;height:45px;line-height:45px}
 .layui-layout.layui-layout-left-mini>.layui-side .layui-nav-item .nav-text{display:none}
 .layui-layout.layui-layout-left-mini>.layui-side .layui-nav-item .nav-icon{display:block!important}
@@ -79,51 +80,42 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 
 .block{display:block!important}
 .pointer{cursor:pointer!important}
+.full-width{width:100%!important}
+.full-height{height:100%!important}
 .nowrap{white-space:nowrap!important}
-.inline-block{display:inline-block!important}
 .help-block{font-size:12px;color:#999}
-.full-width{width:100%!important}.full-height{height:100%!important}
+.inline-block{display:inline-block!important}
 
 [data-tips-image]{cursor:zoom-in!important}
 .notselect{user-select:none;-ms-user-select:none;-moz-user-select:none;-webkit-user-select:none}
 .transition{transition:all .2s linear;-o-transition:all .2s linear;-moz-transition:all .2s linear;-webkit-transition:all .2s linear}
 
 /* 文字大小 */
-.font-s12{font-size:12px!important}.font-s13{font-size:13px!important}.font-s14{font-size:14px!important}
-.font-s16{font-size:16px!important}.font-s18{font-size:18px!important}.font-s20{font-size:20px!important}
+.font-s10{font-size:10px!important}.font-s11{font-size:11px!important}.font-s12{font-size:12px!important}.font-s13{font-size:13px!important}
+.font-s14{font-size:14px!important}.font-s16{font-size:16px!important}.font-s18{font-size:18px!important}.font-s20{font-size:20px!important}
 
 .border-0{border:0!important}.border-radius-0{border-radius:0!important}
 
-.padding-0{padding:0!important}
-.padding-5{padding:5px!important}.padding-10{padding:10px!important}.padding-15{padding:15px!important}
+.padding-0{padding:0!important}.padding-5{padding:5px!important}.padding-10{padding:10px!important}.padding-15{padding:15px!important}
 .padding-20{padding:20px!important}.padding-25{padding:25px!important}.padding-30{padding:30px!important}
-.padding-top-0{padding-top:0!important}
-.padding-top-5{padding-top:5px!important}.padding-top-10{padding-top:10px!important}
+.padding-top-0{padding-top:0!important}.padding-top-5{padding-top:5px!important}.padding-top-10{padding-top:10px!important}
 .padding-top-15{padding-top:15px!important}.padding-top-20{padding-top:20px!important}
-.padding-left-0{padding-left:0!important}
-.padding-left-5{padding-left:5px!important}.padding-left-10{padding-left:10px!important}
+.padding-left-0{padding-left:0!important}.padding-left-5{padding-left:5px!important}.padding-left-10{padding-left:10px!important}
 .padding-left-15{padding-left:15px!important}.padding-left-20{padding-left:20px!important}
-.padding-right-0{padding-right:0!important}
-.padding-right-5{padding-right:5px!important}.padding-right-10{padding-right:10px!important}
+.padding-right-0{padding-right:0!important}.padding-right-5{padding-right:5px!important}.padding-right-10{padding-right:10px!important}
 .padding-right-15{padding-right:15px!important}.padding-right-20{padding-right:20px!important}
-.padding-bottom-0{padding-bottom:0!important}
-.padding-bottom-5{padding-bottom:5px!important}.padding-bottom-10{padding-bottom:10px!important}
+.padding-bottom-0{padding-bottom:0!important}.padding-bottom-5{padding-bottom:5px!important}.padding-bottom-10{padding-bottom:10px!important}
 .padding-bottom-15{padding-bottom:15px!important}.padding-bottom-20{padding-bottom:20px!important}
 
-.margin-0{margin:0!important}.margin-top-0{margin-top:0!important}
-.margin-5{padding:5px!important}.margin-10{padding:10px!important}.margin-15{padding:15px!important}
+.margin-0{margin:0!important}.margin-5{padding:5px!important}.margin-10{padding:10px!important}.margin-15{padding:15px!important}
 .margin-20{padding:20px!important}.margin-25{padding:25px!important}.margin-30{padding:30px!important}
-.margin-top-0{margin-top:0!important}
-.margin-top-5{margin-top:5px!important}.margin-top-10{margin-top:10px!important}
+.margin-top-0{margin-top:0!important}.margin-top-5{margin-top:5px!important}.margin-top-10{margin-top:10px!important}
 .margin-top-15{margin-top:15px!important}.margin-top-20{margin-top:20px!important}
-.margin-left-0{margin-left:0!important}
-.margin-left-5{margin-left:5px!important}.margin-left-10{margin-left:10px!important}
+.margin-left-0{margin-left:0!important}.margin-left-5{margin-left:5px!important}.margin-left-10{margin-left:10px!important}
 .margin-left-15{margin-left:15px!important}.margin-left-20{margin-left:20px!important}.margin-left-40{margin-left:40px!important;}
-.margin-right-0{margin-right:0!important}
-.margin-right-5{margin-right:5px!important}.margin-right-10{margin-right:10px!important}
+.margin-right-0{margin-right:0!important}.margin-right-5{margin-right:5px!important}.margin-right-10{margin-right:10px!important}
 .margin-right-15{margin-right:15px!important}.margin-right-20{margin-right:20px!important}
-.margin-bottom-0{margin-bottom:0!important}
-.margin-bottom-5{margin-bottom:5px!important}.margin-bottom-10{margin-bottom:10px!important}
+.margin-bottom-0{margin-bottom:0!important}.margin-bottom-5{margin-bottom:5px!important}.margin-bottom-10{margin-bottom:10px!important}
 .margin-bottom-15{margin-bottom:15px!important}.margin-bottom-20{margin-bottom:20px!important}
 
 /* 弹框层表单 */
@@ -171,7 +163,7 @@ fieldset{border:1px solid #e6e6e6;margin:0;padding:10px 20px 5px 20px}
 /** Layui样式调整 */
 .layui-input,.layui-select{line-height:38px}
 .layui-table th,.layui-table td{font-size:12px}
-.layui-table td .text-explode{color:#ccc!important;font-weight:normal!important;margin:0px 4px!important}
+.layui-table td .text-explode{color:#ccc!important;margin:0 4px!important}
 .layui-table td .text-explode:first-child{opacity:0;display:none}
 .layui-table .list-table-image{width:22px;cursor:pointer}
 .layui-table .list-table-sort-td{width:60px!important;text-align:center!important}
