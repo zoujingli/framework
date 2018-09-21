@@ -339,7 +339,7 @@ $(function () {
             };
             // 验证标志
             this.remind = function (input) {
-                return this.isVisible(input) ? this.showError(input, input.getAttribute('title') || '') : false;
+                return this.isVisible(input) ? this.showError(input, input.getAttribute('title') || input.getAttribute('placeholder') || '输入错误') : false;
             };
             // 检测表单单元
             this.checkInput = function (input) {
@@ -426,9 +426,9 @@ $(function () {
                 $(this).attr('data-listen', 'true').vali(function (data) {
                     let method = this.getAttribute('method') || 'POST';
                     let tips = this.getAttribute('data-tips') || undefined;
+                    let time = this.getAttribute('data-time') || undefined;
                     let url = this.getAttribute('action') || window.location.href;
                     let callback = window[callbackname || '_default_callback'] || undefined;
-                    let time = this.getAttribute('data-time') || undefined;
                     $.form.load(url, data, method, callback, true, tips, time);
                 });
                 $(this).find('[data-form-loaded]').map(function () {

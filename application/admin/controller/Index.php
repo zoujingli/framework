@@ -72,7 +72,7 @@ class Index extends Controller
         }
         if ($this->request->isGet()) {
             $this->verify = true;
-            return $this->_form('SystemUser', 'user/pass');
+            return $this->_form('SystemUser', 'user/pass', 'id', [], ['id' => $id]);
         }
         // 获取输入数据
         $data = $this->_input([

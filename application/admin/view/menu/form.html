@@ -21,7 +21,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">菜单名称</label>
             <div class="layui-input-block">
-                <input name="title" value='{$vo.title|default=""}' required title="请输入菜单名称" placeholder="请输入菜单名称" class="layui-input">
+                <input name="title" value='{$vo.title|default=""}' required placeholder="请输入菜单名称" class="layui-input">
                 <p class="help-block"><b>必填</b>，请填写菜单名称（如：系统管理），建议字符不要太长，一般4-6个汉字</p>
             </div>
         </div>
@@ -29,7 +29,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">菜单链接</label>
             <div class="layui-input-block">
-                <input onblur="this.value=this.value === ''?'#':this.value" name="url" required title="请输入菜单链接" placeholder="请输入菜单链接" value="{$vo.url|default='#'}" class="layui-input">
+                <input onblur="this.value=this.value === ''?'#':this.value" name="url" required placeholder="请输入菜单链接" value="{$vo.url|default='#'}" class="layui-input">
                 <p class="help-block">
                     <b>必填</b>，请填写系统节点（如：admin/user/index），节点加入权限管理时菜单才会自动隐藏，非规则内的不会隐藏；
                     <br>正常情况下，在输入的时候会有自动提示。如果是上级菜单时，请填写"#"符号，不要填写地址或节点地址
@@ -40,7 +40,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">链接参数</label>
             <div class="layui-input-block">
-                <input name="params" title="请输入链接参数" placeholder="请输入链接参数" value="{$vo.params|default=''}" class="layui-input">
+                <input name="params" placeholder="请输入链接参数" value="{$vo.params|default=''}" class="layui-input">
                 <p class="help-block"><b>可选</b>，设置菜单链接的GET访问参数（如：name=1&age=3）</p>
             </div>
         </div>
