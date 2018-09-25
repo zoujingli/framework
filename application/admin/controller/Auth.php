@@ -42,55 +42,35 @@ class Auth extends Controller
     }
 
     /**
-     * 权限授权
-     * @return string
+     * 权限授权节点
+     * @return mixed
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
     public function apply()
     {
-        $this->title = '节点授权';
+        $this->title = '权限授权节点';
         $auth = $this->request->post('id', '0');
-        switch ($this->request->post('action', '', 'strtolower')) {
-            case 'get':
-                return $this->_apply_get($auth);
-            case 'save':
-                return $this->_apply_save($auth);
+        switch ($this->request->post('action')) {
+            case 'get': // 获取权限配置
+                $nodes = \app\admin\logic\Auth::get();
+                $checked = Db::name('SystemAuthNode')->where(['auth' => $auth])->column('node');
+                foreach ($nodes as &$node) {
+                    $node['checked'] = in_array($node['node'], $checked);
+                }
+                $data = $this->_apply_filter(Data::arr2tree($nodes, 'node', 'pnode', '_sub_'));
+                return json(['code' => '1', 'data' => $data]);
+            case 'save': // 保存权限配置
+                list($post, $data) = [$this->request->post(), []];
+                foreach (isset($post['nodes']) ? $post['nodes'] : [] as $node) {
+                    $data[] = ['auth' => $auth, 'node' => $node];
+                }
+                Db::name('SystemAuthNode')->where(['auth' => $auth])->delete();
+                Db::name('SystemAuthNode')->insertAll($data);
+                return json(['code' => '1', 'info' => '节点授权更新成功！']);
             default:
                 return $this->_form($this->table, 'apply');
         }
-    }
-
-    /**
-     * 读取授权节点
-     * @param string $auth
-     */
-    private function _apply_get($auth)
-    {
-        $nodes = \app\admin\logic\Auth::get();
-        $checked = Db::name('SystemAuthNode')->where(['auth' => $auth])->column('node');
-        foreach ($nodes as &$node) {
-            $node['checked'] = in_array($node['node'], $checked);
-        }
-        $all = $this->_apply_filter(Data::arr2tree($nodes, 'node', 'pnode', '_sub_'));
-        $this->success('获取节点成功！', $all);
-    }
-
-    /**
-     * 保存授权节点
-     * @param string $auth
-     * @throws \think\Exception
-     * @throws \think\exception\PDOException
-     */
-    private function _apply_save($auth)
-    {
-        list($data, $post) = [[], $this->request->post()];
-        foreach (isset($post['nodes']) ? $post['nodes'] : [] as $node) {
-            $data[] = ['auth' => $auth, 'node' => $node];
-        }
-        Db::name('SystemAuthNode')->where(['auth' => $auth])->delete();
-        Db::name('SystemAuthNode')->insertAll($data);
-        $this->success('节点授权更新成功！', '');
     }
 
     /**
@@ -99,7 +79,7 @@ class Auth extends Controller
      * @param int $level
      * @return array
      */
-    protected function _apply_filter($nodes, $level = 1)
+    private function _apply_filter($nodes, $level = 1)
     {
         foreach ($nodes as $key => $node) {
             if (!empty($node['_sub_']) && is_array($node['_sub_'])) {
