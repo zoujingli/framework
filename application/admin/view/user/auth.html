@@ -6,7 +6,7 @@
             <label class="layui-form-label">用户账号</label>
             <div class="layui-input-block">
                 <!--{if isset($vo) and isset($vo.username)}-->
-                <input type="text" readonly="" disabled="" name="username" value='{$vo.username|default=""}' required placeholder="请输入用户名称" class="layui-input layui-bg-gray">
+                <input type="text" disabled value='{$vo.username|default=""}' class="layui-input layui-bg-gray">
                 <!--{else}-->
                 <input type="text" name="username" value='{$vo.username|default=""}' required placeholder="请输入用户名称" class="layui-input">
                 <!--{/if}-->

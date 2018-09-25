@@ -107,17 +107,17 @@
 
                 {if auth("admin/user/edit")}
                 <span class="text-explode">|</span>
-                <a data-title="编辑用户" data-modal='{:url("admin/user/edit")}?id={$vo.id}'>编辑</a>
+                <a data-title="编辑用户" data-modal='{:url("edit")}?id={$vo.id}'>编辑</a>
                 {/if}
 
                 {if auth("admin/user/auth")}
                 <span class="text-explode">|</span>
-                <a data-title="用户授权" data-modal='{:url("admin/user/auth")}?id={$vo.id}'>授权</a>
+                <a data-title="用户授权" data-modal='{:url("auth")}?id={$vo.id}'>授权</a>
                 {/if}
 
                 {if auth("admin/user/pass")}
                 <span class="text-explode">|</span>
-                <a data-title="设置密码" data-modal='{:url("admin/user/pass")}?id={$vo.id}'>密码</a>
+                <a data-title="设置密码" data-modal='{:url("pass")}?id={$vo.id}'>密码</a>
                 {/if}
 
                 {if $vo.status eq 1 and auth("admin/user/forbid")}
