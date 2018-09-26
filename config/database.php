@@ -18,13 +18,13 @@ return [
     // 数据库类型
     'type'     => 'mysql',
     // 服务器地址
-    'hostname' => 'server.cuci.cc',
+    'hostname' => 'thinkadmin.top',
     // 数据库名
     'database' => 'framework',
     // 用户名
     'username' => 'framework',
     // 密码
-    'password' => 'dmZANkYj4XdAJ7xn',
+    'password' => 'x5RDsnwX8EcLkXCN',
     // 端口
     'hostport' => '3306',
 ];
