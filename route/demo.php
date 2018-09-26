@@ -18,7 +18,7 @@ use think\facade\Route;
 Route::post('admin/user/pass', function () {
     return json(['code' => 0, 'info' => '测试环境禁修改用户密码！']);
 });
-Route::post('admin/config/index', function () {
+Route::post('admin/config/info', function () {
     return json(['code' => 0, 'info' => '测试环境禁修改系统配置操作！']);
 });
 Route::post('admin/config/file', function () {
