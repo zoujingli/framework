@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitd3dec93914e26f78ea4e96afe0bcd895
+class ComposerStaticInit8ae9c1e9e18bffed393ab8841bd7345d
 {
     public static $files = array (
         '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
@@ -295,9 +295,9 @@ class ComposerStaticInitd3dec93914e26f78ea4e96afe0bcd895
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitd3dec93914e26f78ea4e96afe0bcd895::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitd3dec93914e26f78ea4e96afe0bcd895::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitd3dec93914e26f78ea4e96afe0bcd895::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit8ae9c1e9e18bffed393ab8841bd7345d::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit8ae9c1e9e18bffed393ab8841bd7345d::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit8ae9c1e9e18bffed393ab8841bd7345d::$classMap;
 
         }, null, ClassLoader::class);
     }

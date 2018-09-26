@@ -62,6 +62,7 @@ class Login extends Controller
         empty($user['status']) && $this->error('账号已经被禁用，请联系管理!');
         Db::name('SystemUser')->where(['id' => $user['id']])->update([
             'login_at'  => Db::raw('now()'),
+            'login_ip'  => $this->request->ip(),
             'login_num' => Db::raw('login_num+1'),
         ]);
         session('user', $user);
