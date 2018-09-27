@@ -49,118 +49,6 @@
         ]
     },
     {
-        "name": "topthink/framework",
-        "version": "v5.1.24",
-        "version_normalized": "5.1.24.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/top-think/framework.git",
-            "reference": "03ee17d1ea9c432a698fa1d2411df53974420187"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/top-think/framework/zipball/03ee17d1ea9c432a698fa1d2411df53974420187",
-            "reference": "03ee17d1ea9c432a698fa1d2411df53974420187",
-            "shasum": "",
-            "mirrors": [
-                {
-                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
-                    "preferred": true
-                }
-            ]
-        },
-        "require": {
-            "php": ">=5.6.0",
-            "topthink/think-installer": "2.*"
-        },
-        "require-dev": {
-            "johnkary/phpunit-speedtrap": "^1.0",
-            "mikey179/vfsstream": "~1.6",
-            "phpdocumentor/reflection-docblock": "^2.0",
-            "phploc/phploc": "2.*",
-            "phpunit/phpunit": "^5.0|^6.0",
-            "sebastian/phpcpd": "2.*",
-            "squizlabs/php_codesniffer": "2.*"
-        },
-        "time": "2018-09-05T03:37:46+00:00",
-        "type": "think-framework",
-        "installation-source": "dist",
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "Apache-2.0"
-        ],
-        "authors": [
-            {
-                "name": "liu21st",
-                "email": "liu21st@gmail.com"
-            },
-            {
-                "name": "yunwuxin",
-                "email": "448901948@qq.com"
-            }
-        ],
-        "description": "the new thinkphp framework",
-        "homepage": "http://thinkphp.cn/",
-        "keywords": [
-            "framework",
-            "orm",
-            "thinkphp"
-        ]
-    },
-    {
-        "name": "zoujingli/think-library",
-        "version": "v1.1.0",
-        "version_normalized": "1.1.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/zoujingli/ThinkLibrary.git",
-            "reference": "74a86702b49853dfcce4b87aa6d5182dcd361eae"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/74a86702b49853dfcce4b87aa6d5182dcd361eae",
-            "reference": "74a86702b49853dfcce4b87aa6d5182dcd361eae",
-            "shasum": "",
-            "mirrors": [
-                {
-                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
-                    "preferred": true
-                }
-            ]
-        },
-        "require": {
-            "ext-curl": "*",
-            "ext-iconv": "*",
-            "ext-openssl": "*",
-            "php": ">=5.4",
-            "topthink/framework": "5.1.*"
-        },
-        "time": "2018-09-20T06:03:49+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "library\\": "library"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Anyon",
-                "email": "zoujingli@qq.com"
-            }
-        ],
-        "description": "ThinkPHP development of Library",
-        "homepage": "https://library.thinkadmin.top",
-        "keywords": [
-            "ThinkAdmin",
-            "ThinkLibrary"
-        ]
-    },
-    {
         "name": "qiniu/php-sdk",
         "version": "v7.2.6",
         "version_normalized": "7.2.6.0",
@@ -397,6 +285,122 @@
         ],
         "description": "Aliyun OSS SDK for PHP",
         "homepage": "http://www.aliyun.com/product/oss/"
+    },
+    {
+        "name": "topthink/framework",
+        "version": "v5.1.24",
+        "version_normalized": "5.1.24.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/top-think/framework.git",
+            "reference": "03ee17d1ea9c432a698fa1d2411df53974420187"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/top-think/framework/zipball/03ee17d1ea9c432a698fa1d2411df53974420187",
+            "reference": "03ee17d1ea9c432a698fa1d2411df53974420187",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "php": ">=5.6.0",
+            "topthink/think-installer": "2.*"
+        },
+        "require-dev": {
+            "johnkary/phpunit-speedtrap": "^1.0",
+            "mikey179/vfsstream": "~1.6",
+            "phpdocumentor/reflection-docblock": "^2.0",
+            "phploc/phploc": "2.*",
+            "phpunit/phpunit": "^5.0|^6.0",
+            "sebastian/phpcpd": "2.*",
+            "squizlabs/php_codesniffer": "2.*"
+        },
+        "time": "2018-09-05T03:37:46+00:00",
+        "type": "think-framework",
+        "installation-source": "dist",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "Apache-2.0"
+        ],
+        "authors": [
+            {
+                "name": "liu21st",
+                "email": "liu21st@gmail.com"
+            },
+            {
+                "name": "yunwuxin",
+                "email": "448901948@qq.com"
+            }
+        ],
+        "description": "the new thinkphp framework",
+        "homepage": "http://thinkphp.cn/",
+        "keywords": [
+            "framework",
+            "orm",
+            "thinkphp"
+        ]
+    },
+    {
+        "name": "zoujingli/think-library",
+        "version": "v1.1.1",
+        "version_normalized": "1.1.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/zoujingli/ThinkLibrary.git",
+            "reference": "bea4e7faad28ae5944418662890e689b06f557b5"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/bea4e7faad28ae5944418662890e689b06f557b5",
+            "reference": "bea4e7faad28ae5944418662890e689b06f557b5",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "ext-curl": "*",
+            "ext-iconv": "*",
+            "ext-json": "*",
+            "ext-openssl": "*",
+            "php": ">=5.4",
+            "topthink/framework": "5.1.*"
+        },
+        "time": "2018-09-27T06:26:06+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "library/common.php"
+            ],
+            "psr-4": {
+                "library\\": "library"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Anyon",
+                "email": "zoujingli@qq.com"
+            }
+        ],
+        "description": "ThinkPHP development of Library",
+        "homepage": "https://library.thinkadmin.top",
+        "keywords": [
+            "ThinkAdmin",
+            "ThinkLibrary"
+        ]
     },
     {
         "name": "zoujingli/wechat-developer",

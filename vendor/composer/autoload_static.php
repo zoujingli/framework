@@ -4,10 +4,11 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit8ae9c1e9e18bffed393ab8841bd7345d
+class ComposerStaticInit064106354affafca8e3b06b31db21e1e
 {
     public static $files = array (
         '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
+        '9333abea15077b9eda3a8c4de04aa0d4' => __DIR__ . '/..' . '/zoujingli/think-library/library/common.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -272,6 +273,7 @@ class ComposerStaticInit8ae9c1e9e18bffed393ab8841bd7345d
         'app\\admin\\logic\\driver\\Oss' => __DIR__ . '/../..' . '/application/admin/logic/driver/Oss.php',
         'app\\admin\\logic\\driver\\Qiniu' => __DIR__ . '/../..' . '/application/admin/logic/driver/Qiniu.php',
         'app\\index\\controller\\Index' => __DIR__ . '/../..' . '/application/index/controller/Index.php',
+        'app\\store\\controller\\Goods' => __DIR__ . '/../..' . '/application/store/controller/Goods.php',
         'library\\Controller' => __DIR__ . '/..' . '/zoujingli/think-library/library/Controller.php',
         'library\\logic\\Delete' => __DIR__ . '/..' . '/zoujingli/think-library/library/logic/Delete.php',
         'library\\logic\\Form' => __DIR__ . '/..' . '/zoujingli/think-library/library/logic/Form.php',
@@ -295,9 +297,9 @@ class ComposerStaticInit8ae9c1e9e18bffed393ab8841bd7345d
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit8ae9c1e9e18bffed393ab8841bd7345d::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit8ae9c1e9e18bffed393ab8841bd7345d::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit8ae9c1e9e18bffed393ab8841bd7345d::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit064106354affafca8e3b06b31db21e1e::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit064106354affafca8e3b06b31db21e1e::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit064106354affafca8e3b06b31db21e1e::$classMap;
 
         }, null, ClassLoader::class);
     }

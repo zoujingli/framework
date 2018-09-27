@@ -16,7 +16,7 @@ namespace library\logic;
 
 /**
  * 搜索条件处理器
- * Class Search
+ * Class Query
  * @package library\logic
  */
 class Query extends Logic
@@ -74,6 +74,17 @@ class Query extends Logic
         return $this;
     }
 
+    /**
+     * 设置where条件
+     * @param array $where
+     * @return $this
+     */
+    public function where($where)
+    {
+        $this->db->where($where);
+        return $this;
+    }
+    
     /**
      * 设置DateTime区间查询
      * @param string|array $fields 查询字段

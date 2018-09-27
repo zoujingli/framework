@@ -8,14 +8,14 @@
   "authors": [{"name": "Anyon", "email": "zoujingli@qq.com"}],
   "require": {
     "php": ">=5.4",
+    "ext-json":"*",
     "ext-curl": "*",
     "ext-iconv": "*",
     "ext-openssl": "*",
     "topthink/framework": "5.1.*"
   },
   "autoload": {
-    "psr-4": {
-      "library\\": "library"
-    }
+    "files":["library/common.php"],
+    "psr-4": {"library\\": "library"}
   }
 }
