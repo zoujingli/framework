@@ -1,0 +1,248 @@
+{extend name='admin@main'}
+
+{block name="content"}
+<form onsubmit="return false;" id="GoodsForm" data-auto="true" method="post" class='layui-form layui-card' autocomplete="off">
+
+    <div class="layui-card-body" style="padding-left:40px">
+
+        <div class="layui-form-item">
+            <p class="help-block">商品规格</p>
+            <div ng-repeat="x in specs" class="margin-bottom-10">
+                <div class="goods-spec-box">
+                    <span class="text-center goods-spec-title">分 组</span>
+                    <input ng-model="x.name" required placeholder="请输入分组">
+                    <a class="layui-btn layui-btn-sm" ng-click="addSpecVal(x.list)">增 加</a>
+                    <a class="layui-btn layui-btn-sm" ng-click="delSpecRow(specs,$index)">删 除</a>
+                </div>
+                <div class="inline-block" ng-if="x.list && x.list.length > 0">
+                    <label class="goods-spec-box inline-block nowrap" ng-repeat="xx in x.list">
+                        <input type="checkbox" ng-model="xx.check">
+                        <input type="text" ng-model="xx.name" required placeholder="请输入规格">
+                        <a ng-click="x.list=delSpecVal(x.list,$index)" class="layui-icon layui-icon-close font-s12 goods-spec-close"></a>
+                    </label>
+                </div>
+            </div>
+            <a class="layui-btn layui-btn-sm goods-spec-button" ng-click="addSpecRow(specs)">增加分组</a>
+            <table class="layui-table">
+                <thead>
+                <tr>
+                    <th ng-repeat="x in specsTreeNava" ng-bind="x"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="x in specsTreeData">
+                    <td ng-if="y.show" rowspan="{{y.rowspan}}" ng-repeat="y in x">{{y.name}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="layui-form-item">
+            <p class="help-block">商品规格</p>
+            <textarea name="specs" style="height:300px" class="layui-textarea">{{specsTreeData}}</textarea>
+            <textarea name="specs" style="height:300px" class="layui-textarea">{{specs}}</textarea>
+        </div>
+
+    </div>
+</form>
+
+<style>
+
+    .goods-spec-box {
+        margin: 0 10px 10px 0;
+        position: relative;
+        vertical-align: middle;
+    }
+
+    .goods-spec-title {
+        position: absolute;
+        z-index: 2;
+        width: 40px;
+        height: 28px;
+        line-height: 28px;
+        background: #2F4056;
+        color: #fff
+    }
+
+    .goods-spec-close {
+        position: absolute;
+        right: 8px;
+        line-height: 28px;
+        z-index: 2;
+        display: inline-block
+    }
+
+    .goods-spec-button {
+        height: 26px;
+        line-height: 26px;
+        margin-top: -3px;
+        background: #2F4056
+    }
+
+    .goods-spec-box .layui-btn {
+        height: 26px;
+        padding: 0 8px;
+        line-height: 26px;
+        margin-top: -3px;
+        background: #2F4056;
+        margin-left: 5px;
+    }
+
+    .goods-spec-box input {
+        z-index: 1;
+        width: 120px;
+        position: relative;
+        border: 1px solid #999;
+        padding: 5px 0 5px 45px;
+        display: inline-block !important;
+    }
+
+    .goods-spec-box input[type=checkbox] {
+        z-index: 2;
+        width: 40px;
+        height: 28px;
+        border: none;
+        cursor: pointer;
+        position: absolute;
+        appearance: none;
+        -webkit-appearance: none;
+    }
+
+    .goods-spec-box input[type=checkbox]:before {
+        top: 1px;
+        left: 1px;
+        width: 40px;
+        height: 26px;
+        content: ' ';
+        position: absolute;
+        background: #c9c9c9;
+    }
+
+    .goods-spec-box input[type=checkbox]:after {
+        top: 1px;
+        left: 1px;
+        color: #999;
+        width: 40px;
+        height: 26px;
+        content: '\1006';
+        font-size: 16px;
+        line-height: 26px;
+        position: absolute;
+        text-align: center;
+        font-family: 'layui-icon';
+    }
+
+    .goods-spec-box input[type=checkbox]:checked:after {
+        color: #fff;
+        content: '\e605';
+        background: #00B83F;
+    }
+</style>
+
+{/block}
+
+{block name='script'}
+<script>
+
+    require(['jquery', 'ckeditor', 'angular'], function () {
+
+        // window.form.render();
+        // window.createEditor('[name="goods_content"]', {height: 500});
+        let app = angular.module("GoodsForm", []).run(callback);
+        angular.bootstrap(document.getElementById(app.name), [app.name]);
+
+        function callback($rootScope) {
+            // 生成交叉表格数据
+            $rootScope.specsTreeData = [];
+            $rootScope.specsTreeNava = [];
+            // 当前商品规格发生变化时重新计算规格列表
+            $rootScope.$watch('specs', function () {
+                let list = [], nava = [], sarr = [[]];
+                let data = angular.fromJson(angular.toJson($rootScope.specs));
+                // 过滤无效记录
+                for (let o of data) {
+                    let tmp = [];
+                    for (let x of o.list) (x.check && x.name.length > 0) && tmp.push(x);
+                    if (tmp.length > 0) {
+                        for (let x of tmp) (x.group = o.name, x.rowspan = 1, x.show = true)
+                        list.push(tmp), nava.push(o.name);
+                    }
+                    $rootScope.specsTreeNava = nava;
+                }
+                // 表格交叉
+                for (let i in list) {
+                    let tarr = [];
+                    for (let j in sarr) for (let k in list[i]) tarr.push(sarr[j].concat(list[i][k]));
+                    sarr = tarr;
+                }
+                console.log(angular.toJson(sarr))
+                // 表格合并
+                list = angular.fromJson(angular.toJson(sarr));
+                for (let row in list) {
+                    for (let _row = 1 + parseInt(row); _row < list.length; _row++) {
+                        for (let td in list[row]) {
+                            if (list[row][td].name !== list[_row][td].name) {
+                                break;
+                            }
+                            console.log(new Date())
+                            list[row][td].rowspan += 1;
+                            list[_row][td].show = false;
+                        }
+                    }
+                }
+                $rootScope.specsTreeData = list;
+            }, true);
+            // 增加整行规格分组
+            $rootScope.addSpecRow = function (data) {
+                data.push({name: '', list: []})
+            };
+            // 移除整行规格分组
+            $rootScope.delSpecRow = function (data, $index) {
+                let temp = [];
+                for (let i in data) {
+                    if (parseInt(i) !== parseInt($index)) temp.push(data[i]);
+                }
+                $rootScope.specs = temp;
+            };
+            // 增加分组的属性
+            $rootScope.addSpecVal = function (list) {
+                list.push({name: '', check: false});
+            };
+            // 移除分组的属性
+            $rootScope.delSpecVal = function (data, $index) {
+                let temp = [];
+                for (let i in data) {
+                    if (parseInt(i) !== parseInt($index)) temp.push(data[i]);
+                }
+                return temp;
+            };
+
+            $rootScope.specs = [
+                {
+                    name: '颜色',
+                    list: [
+                        {name: '红色', check: true},
+                        {name: '蓝色', check: true},
+                        {name: '黑色', check: true},
+                    ]
+                },
+                {
+                    name: '尺寸',
+                    list: [
+                        {name: '小', check: true},
+                        {name: '中', check: true},
+                    ]
+                },
+                {
+                    name: '套餐',
+                    list: [
+                        {name: '一', check: true},
+                        {name: '二', check: true},
+                    ]
+                }
+            ];
+        }
+
+    })
+</script>
+{/block}

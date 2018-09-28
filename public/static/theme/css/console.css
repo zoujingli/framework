@@ -171,6 +171,7 @@ fieldset{border:1px solid #e6e6e6;margin:0;padding:10px 20px 5px 20px}
 .layui-table .list-table-sort-td input{font-size:12px;width:50px;text-align:center;line-height:18px;padding:2px;border:1px solid #e6e6e6;color:#666}
 .layui-table .list-table-check-td{width:30px!important;text-align:center}
 .layui-table .list-table-check-td input{margin:0;vertical-align:middle}
+.layui-btn{border-radius:0!important}
 .layui-btn.layui-btn-sm.layui-btn-primary{line-height:28px}
 
 /** checkbox 优化 */
