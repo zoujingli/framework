@@ -11,10 +11,13 @@
                 <div class="goods-spec-box">
                     <span class="text-center goods-spec-title">规格{{ $index+1 }}</span>
                     <input ng-model="x.name" required placeholder="请输入分组">
+                    <a class="layui-btn layui-btn-sm layui-btn-primary goods-spec-button layui-bg-gray" ng-if="x.list.length>=5">增 加</a>
                     <a class="layui-btn layui-btn-sm layui-btn-primary goods-spec-button" ng-if="x.list.length<5" ng-click="addSpecVal(x.list)">增 加</a>
                     <a class="layui-btn layui-btn-sm layui-btn-primary goods-spec-button" ng-click="delSpecRow(specs,$index)">删 除</a>
-                    <a class="layui-btn layui-btn-sm layui-btn-primary goods-spec-button" ng-click="upSpecRow(specs,$index)">上 移</a>
-                    <a class="layui-btn layui-btn-sm layui-btn-primary goods-spec-button" ng-click="dnSpecRow(specs,$index)">下 移</a>
+                    <a class="layui-btn layui-btn-sm layui-btn-primary goods-spec-button layui-bg-gray" ng-if="$index<1">上 移</a>
+                    <a class="layui-btn layui-btn-sm layui-btn-primary goods-spec-button" ng-if="$index>0" ng-click="upSpecRow(specs,$index)">上 移</a>
+                    <a class="layui-btn layui-btn-sm layui-btn-primary goods-spec-button layui-bg-gray" ng-if="$index>=specs.length-1">下 移</a>
+                    <a class="layui-btn layui-btn-sm layui-btn-primary goods-spec-button" ng-if="$index<specs.length-1" ng-click="dnSpecRow(specs,$index)">下 移</a>
                 </div>
                 <div class="inline-block" ng-if="x.list && x.list.length > 0">
                     <label class="goods-spec-box inline-block nowrap" ng-repeat="xx in x.list">
