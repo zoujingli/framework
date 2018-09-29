@@ -7,12 +7,14 @@
 
         <div class="layui-form-item">
             <p class="help-block">商品规格</p>
-            <div ng-repeat="x in specs" class="margin-bottom-10">
+            <div ng-repeat="x in specs track by $index" class="margin-bottom-10">
                 <div class="goods-spec-box">
-                    <span class="text-center goods-spec-title">分 组</span>
+                    <span class="text-center goods-spec-title">规格{{ $index+1 }}</span>
                     <input ng-model="x.name" required placeholder="请输入分组">
-                    <a class="layui-btn layui-btn-sm" ng-click="addSpecVal(x.list)">增 加</a>
-                    <a class="layui-btn layui-btn-sm" ng-click="delSpecRow(specs,$index)">删 除</a>
+                    <a class="layui-btn layui-btn-sm layui-btn-primary goods-spec-button" ng-if="x.list.length<5" ng-click="addSpecVal(x.list)">增 加</a>
+                    <a class="layui-btn layui-btn-sm layui-btn-primary goods-spec-button" ng-click="delSpecRow(specs,$index)">删 除</a>
+                    <a class="layui-btn layui-btn-sm layui-btn-primary goods-spec-button" ng-click="upSpecRow(specs,$index)">上 移</a>
+                    <a class="layui-btn layui-btn-sm layui-btn-primary goods-spec-button" ng-click="dnSpecRow(specs,$index)">下 移</a>
                 </div>
                 <div class="inline-block" ng-if="x.list && x.list.length > 0">
                     <label class="goods-spec-box inline-block nowrap" ng-repeat="xx in x.list">
@@ -22,7 +24,7 @@
                     </label>
                 </div>
             </div>
-            <a class="layui-btn layui-btn-sm goods-spec-button" ng-click="addSpecRow(specs)">增加分组</a>
+            <a ng-if="specs.length<5" class="layui-btn layui-btn-sm layui-btn-primary" ng-click="addSpecRow(specs)">增加分组</a>
             <table class="layui-table">
                 <thead>
                 <tr>
@@ -77,19 +79,10 @@
     }
 
     .goods-spec-button {
-        height: 26px;
-        line-height: 26px;
+        height: 28px;
+        line-height: 26px !important;
         margin-top: -3px;
-        background: #2F4056
-    }
-
-    .goods-spec-box .layui-btn {
-        height: 26px;
-        padding: 0 8px;
-        line-height: 26px;
-        margin-top: -3px;
-        background: #2F4056;
-        margin-left: 5px;
+        margin-left: 5px !important;
     }
 
     .goods-spec-box input {
@@ -148,8 +141,7 @@
 {block name='script'}
 <script>
 
-    require(['jquery', 'ckeditor', 'angular'], function () {
-
+    require(['ckeditor', 'angular'], function () {
         // window.form.render();
         // window.createEditor('[name="goods_content"]', {height: 500});
         let app = angular.module("GoodsForm", []).run(callback);
@@ -163,7 +155,6 @@
             $rootScope.setValue = function (key, type, value) {
                 defaultValues[key] || (defaultValues[key] = {});
                 defaultValues[key][type] = value;
-                console.log(defaultValues)
             };
             // 生成交叉表格数据
             $rootScope.specsTreeData = [];
@@ -207,6 +198,24 @@
             // 增加整行规格分组
             $rootScope.addSpecRow = function (data) {
                 data.push({name: '', list: []})
+            };
+            $rootScope.dnSpecRow = function (data, $index) {
+                let tmp = [], cur = data[$index];
+                if ($index > data.length - 2) return false;
+                for (let i in data) {
+                    (parseInt(i) !== parseInt($index)) && tmp.push(data[i]);
+                    (parseInt(i) === parseInt($index) + 1) && tmp.push(cur);
+                }
+                return $rootScope.specs = tmp;
+            };
+            $rootScope.upSpecRow = function (data, $index) {
+                let tmp = [], cur = data[$index];
+                if ($index < 1) return false;
+                for (let i in data) {
+                    (parseInt(i) === parseInt($index) - 1) && tmp.push(cur);
+                    (parseInt(i) !== parseInt($index)) && tmp.push(data[i]);
+                }
+                return $rootScope.specs = tmp;
             };
             // 移除整行规格分组
             $rootScope.delSpecRow = function (data, $index) {
