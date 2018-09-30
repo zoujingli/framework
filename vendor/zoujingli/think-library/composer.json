@@ -1,6 +1,6 @@
 {
-  "license": "MIT",
   "type": "library",
+  "license": "MIT",
   "name": "zoujingli/think-library",
   "keywords": ["ThinkAdmin", "ThinkLibrary"],
   "homepage": "https://library.thinkadmin.top",
@@ -15,7 +15,7 @@
     "topthink/framework": "5.1.*"
   },
   "autoload": {
-    "files":["library/common.php"],
+    "files": ["library/common.php"],
     "psr-4": {"library\\": "library"}
   }
 }

@@ -14,6 +14,7 @@
 
 namespace library\tools;
 
+use think\facade\Log;
 use think\facade\Session;
 
 /**
@@ -39,7 +40,7 @@ class Cors
     /**
      * 应用会话令牌
      */
-    public static function applySessionToken()
+    public static function setSessionToken()
     {
         if (PHP_SESSION_ACTIVE !== session_status()) {
             Session::init(config('session.'));
@@ -53,6 +54,7 @@ class Cors
                 session_id($value);
             }
         } catch (\Exception $e) {
+            Log::error(__METHOD__ . " : {$e->getMessage()}");
         }
     }
 
@@ -61,12 +63,12 @@ class Cors
      */
     public static function optionsHandler()
     {
-        self::applySessionToken();
+        self::setSessionToken();
         if (request()->isOptions()) {
-            header('Access-Control-Allow-Origin:*');
             header('Access-Control-Allow-Credentials:true');
             header('Access-Control-Allow-Methods:GET,POST,OPTIONS');
-            header("Access-Control-Allow-Headers:Accept,Referer,Host,Keep-Alive,User-Agent,X-Requested-With,Cache-Control,Cookie,token");
+            header('Access-Control-Allow-Origin:' . request()->header('origin', '*'));
+            header('Access-Control-Allow-Headers:Accept,Referer,Host,Keep-Alive,User-Agent,X-Requested-With,Cache-Control,Session-Token,Cookie');
             header('Content-Type:text/plain charset=UTF-8');
             header('Access-Control-Max-Age:1728000');
             header('HTTP/1.0 204 No Content');
@@ -86,8 +88,8 @@ class Cors
             'Access-Control-Allow-Credentials' => "true",
             'Access-Control-Allow-Methods'     => 'GET,POST,OPTIONS',
             'Access-Control-Allow-Origin'      => request()->header('origin', '*'),
-            'Access-Control-Allow-Headers'     => 'Accept,Referer,Host,Keep-Alive,User-Agent,X-Requested-With,Cache-Control,Cookie,token',
-            'token'                            => self::getSessionToken(),
+            'Access-Control-Allow-Headers'     => 'Accept,Referer,Host,Keep-Alive,User-Agent,X-Requested-With,Cache-Control,Session-Token,Cookie',
+            'Session-Token'                    => self::getSessionToken(),
         ];
     }
 
