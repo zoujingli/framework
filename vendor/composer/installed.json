@@ -109,17 +109,17 @@
     },
     {
         "name": "symfony/options-resolver",
-        "version": "v3.4.15",
-        "version_normalized": "3.4.15.0",
+        "version": "v3.4.17",
+        "version_normalized": "3.4.17.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/options-resolver.git",
-            "reference": "6debc476953a45969ab39afe8dee0b825f356dc7"
+            "reference": "1cf7d8e704a9cc4164c92e430f2dfa3e6983661d"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/options-resolver/zipball/6debc476953a45969ab39afe8dee0b825f356dc7",
-            "reference": "6debc476953a45969ab39afe8dee0b825f356dc7",
+            "url": "https://api.github.com/repos/symfony/options-resolver/zipball/1cf7d8e704a9cc4164c92e430f2dfa3e6983661d",
+            "reference": "1cf7d8e704a9cc4164c92e430f2dfa3e6983661d",
             "shasum": "",
             "mirrors": [
                 {
@@ -131,7 +131,7 @@
         "require": {
             "php": "^5.5.9|>=7.0.8"
         },
-        "time": "2018-07-26T08:45:46+00:00",
+        "time": "2018-09-17T17:29:18+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -293,12 +293,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/top-think/framework.git",
-            "reference": "7f1ad8defb86d9f6e81e5b83be3e9ddbc6b88605"
+            "reference": "2e684d5fa38bd2d8ee864982f3114a28992da895"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/top-think/framework/zipball/7f1ad8defb86d9f6e81e5b83be3e9ddbc6b88605",
-            "reference": "7f1ad8defb86d9f6e81e5b83be3e9ddbc6b88605",
+            "url": "https://api.github.com/repos/top-think/framework/zipball/2e684d5fa38bd2d8ee864982f3114a28992da895",
+            "reference": "2e684d5fa38bd2d8ee864982f3114a28992da895",
             "shasum": "",
             "mirrors": [
                 {
@@ -320,7 +320,7 @@
             "sebastian/phpcpd": "2.*",
             "squizlabs/php_codesniffer": "2.*"
         },
-        "time": "2018-09-29T04:22:37+00:00",
+        "time": "2018-10-04T05:04:50+00:00",
         "type": "think-framework",
         "installation-source": "dist",
         "notification-url": "https://packagist.org/downloads/",
@@ -352,12 +352,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/zoujingli/ThinkLibrary.git",
-            "reference": "3035e843e1e076bb15b44b8751525d1072d28901"
+            "reference": "baacd2915c374919aa836338e8001d1a78da1306"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/3035e843e1e076bb15b44b8751525d1072d28901",
-            "reference": "3035e843e1e076bb15b44b8751525d1072d28901",
+            "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/baacd2915c374919aa836338e8001d1a78da1306",
+            "reference": "baacd2915c374919aa836338e8001d1a78da1306",
             "shasum": "",
             "mirrors": [
                 {
@@ -374,7 +374,7 @@
             "php": ">=5.4",
             "topthink/framework": "5.1.*"
         },
-        "time": "2018-09-30T02:27:45+00:00",
+        "time": "2018-09-30T03:41:19+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

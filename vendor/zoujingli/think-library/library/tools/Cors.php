@@ -46,12 +46,11 @@ class Cors
             Session::init(config('session.'));
         }
         try {
-            $token = request()->header('token', '');
-            empty($token) && $token = request()->get('token', '');
-            empty($token) && $token = request()->post('token', '');
-            list($name, $value) = explode('=', Crypt::decode($token) . '=');
-            if (!empty($value) && session_name() === $name) {
-                session_id($value);
+            if ($token = app('request')->header('token', input('token', ''))) {
+                list($name, $value) = explode('=', Crypt::decode($token));
+                if (!empty($value) && session_name() === $name) {
+                    session_id($value);
+                }
             }
         } catch (\Exception $e) {
             Log::error(__METHOD__ . " : {$e->getMessage()}");
@@ -67,8 +66,8 @@ class Cors
         if (request()->isOptions()) {
             header('Access-Control-Allow-Credentials:true');
             header('Access-Control-Allow-Methods:GET,POST,OPTIONS');
-            header('Access-Control-Allow-Origin:' . request()->header('origin', '*'));
-            header('Access-Control-Allow-Headers:Accept,Referer,Host,Keep-Alive,User-Agent,X-Requested-With,Cache-Control,Session-Token,Cookie');
+            header('Access-Control-Allow-Origin:' . app('request')->header('origin', '*'));
+            header('Access-Control-Allow-Headers:Accept,Referer,Host,Keep-Alive,User-Agent,X-Requested-With,Cache-Control,Cookie,token');
             header('Content-Type:text/plain charset=UTF-8');
             header('Access-Control-Max-Age:1728000');
             header('HTTP/1.0 204 No Content');
@@ -87,9 +86,8 @@ class Cors
         return [
             'Access-Control-Allow-Credentials' => "true",
             'Access-Control-Allow-Methods'     => 'GET,POST,OPTIONS',
-            'Access-Control-Allow-Origin'      => request()->header('origin', '*'),
-            'Access-Control-Allow-Headers'     => 'Accept,Referer,Host,Keep-Alive,User-Agent,X-Requested-With,Cache-Control,Session-Token,Cookie',
-            'Session-Token'                    => self::getSessionToken(),
+            'Access-Control-Allow-Origin'      => app('request')->header('origin', '*'),
+            'Access-Control-Allow-Headers'     => 'Accept,Referer,Host,Keep-Alive,User-Agent,X-Requested-With,Cache-Control,Cookie,token',
         ];
     }
 

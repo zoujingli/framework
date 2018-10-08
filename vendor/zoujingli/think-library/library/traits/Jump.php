@@ -48,7 +48,7 @@ trait Jump
         $result = ['code' => $code, 'info' => $info, 'data' => $data];
         throw new HttpResponseException(json($result, 200, Cors::getRequestHeader()));
     }
-
+    
     /**
      * URL重定向
      * @param string $url 重定向跳转链接

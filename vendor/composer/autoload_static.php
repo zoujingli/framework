@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit93b922f501e31a74b6fdb23c1484e4c5
+class ComposerStaticInite66ac8ac436bc10f13ad6ac6ab87cef3
 {
     public static $files = array (
         '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
@@ -273,6 +273,7 @@ class ComposerStaticInit93b922f501e31a74b6fdb23c1484e4c5
         'app\\admin\\logic\\driver\\Oss' => __DIR__ . '/../..' . '/application/admin/logic/driver/Oss.php',
         'app\\admin\\logic\\driver\\Qiniu' => __DIR__ . '/../..' . '/application/admin/logic/driver/Qiniu.php',
         'app\\index\\controller\\Index' => __DIR__ . '/../..' . '/application/index/controller/Index.php',
+        'app\\index\\controller\\Test' => __DIR__ . '/../..' . '/application/index/controller/Test.php',
         'app\\store\\controller\\Goods' => __DIR__ . '/../..' . '/application/store/controller/Goods.php',
         'library\\Controller' => __DIR__ . '/..' . '/zoujingli/think-library/library/Controller.php',
         'library\\logic\\Delete' => __DIR__ . '/..' . '/zoujingli/think-library/library/logic/Delete.php',
@@ -297,9 +298,9 @@ class ComposerStaticInit93b922f501e31a74b6fdb23c1484e4c5
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit93b922f501e31a74b6fdb23c1484e4c5::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit93b922f501e31a74b6fdb23c1484e4c5::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit93b922f501e31a74b6fdb23c1484e4c5::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInite66ac8ac436bc10f13ad6ac6ab87cef3::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInite66ac8ac436bc10f13ad6ac6ab87cef3::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInite66ac8ac436bc10f13ad6ac6ab87cef3::$classMap;
 
         }, null, ClassLoader::class);
     }
