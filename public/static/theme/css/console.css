@@ -70,13 +70,10 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 .layui-nav .layui-nav-item .layui-nav-mored,.layui-nav .layui-nav-itemed .layui-nav-more {border:none;margin-top:0;transform:rotate(180deg);-o-transform:rotate(180deg);-ms-transform:rotate(180deg);-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg)}
 .layui-nav .layui-nav-item .layui-nav-more::before{content:"\e619"}
 
-/* 对齐 */
+/* 对齐及颜色 */
 .text-left{text-align:left!important}.text-right{text-align:right!important}.text-center{text-align:center!important}
 .text-top{vertical-align:top!important}.text-middle{vertical-align:middle!important}.text-bottom{vertical-align:bottom!important}
-
-/* 颜色 */
-.color-red{color:#ec494e!important}.color-blue{color:#2494f2!important}
-.color-desc{color:#999!important}.color-text{color:#333!important}.color-green{color:#090!important}
+.color-red{color:#ec494e!important}.color-blue{color:#2494f2!important}.color-desc{color:#999!important}.color-text{color:#333!important}.color-green{color:#090!important}
 
 .block{display:block!important}
 .pointer{cursor:pointer!important}
@@ -96,27 +93,17 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 
 .border-0{border:0!important}.border-radius-0{border-radius:0!important}
 
-.padding-0{padding:0!important}.padding-5{padding:5px!important}.padding-10{padding:10px!important}.padding-15{padding:15px!important}
-.padding-20{padding:20px!important}.padding-25{padding:25px!important}.padding-30{padding:30px!important}
-.padding-top-0{padding-top:0!important}.padding-top-5{padding-top:5px!important}.padding-top-10{padding-top:10px!important}
-.padding-top-15{padding-top:15px!important}.padding-top-20{padding-top:20px!important}
-.padding-left-0{padding-left:0!important}.padding-left-5{padding-left:5px!important}.padding-left-10{padding-left:10px!important}
-.padding-left-15{padding-left:15px!important}.padding-left-20{padding-left:20px!important}
-.padding-right-0{padding-right:0!important}.padding-right-5{padding-right:5px!important}.padding-right-10{padding-right:10px!important}
-.padding-right-15{padding-right:15px!important}.padding-right-20{padding-right:20px!important}
-.padding-bottom-0{padding-bottom:0!important}.padding-bottom-5{padding-bottom:5px!important}.padding-bottom-10{padding-bottom:10px!important}
-.padding-bottom-15{padding-bottom:15px!important}.padding-bottom-20{padding-bottom:20px!important}
+.padding-0{padding:0!important}.padding-5{padding:5px!important}.padding-10{padding:10px!important}.padding-15{padding:15px!important}.padding-20{padding:20px!important}.padding-25{padding:25px!important}.padding-30{padding:30px!important}
+.padding-top-0{padding-top:0!important}.padding-top-5{padding-top:5px!important}.padding-top-10{padding-top:10px!important}.padding-top-15{padding-top:15px!important}.padding-top-20{padding-top:20px!important}
+.padding-left-0{padding-left:0!important}.padding-left-5{padding-left:5px!important}.padding-left-10{padding-left:10px!important}.padding-left-15{padding-left:15px!important}.padding-left-20{padding-left:20px!important}
+.padding-right-0{padding-right:0!important}.padding-right-5{padding-right:5px!important}.padding-right-10{padding-right:10px!important}.padding-right-15{padding-right:15px!important}.padding-right-20{padding-right:20px!important}
+.padding-bottom-0{padding-bottom:0!important}.padding-bottom-5{padding-bottom:5px!important}.padding-bottom-10{padding-bottom:10px!important}.padding-bottom-15{padding-bottom:15px!important}.padding-bottom-20{padding-bottom:20px!important}
 
-.margin-0{margin:0!important}.margin-5{padding:5px!important}.margin-10{padding:10px!important}.margin-15{padding:15px!important}
-.margin-20{padding:20px!important}.margin-25{padding:25px!important}.margin-30{padding:30px!important}
-.margin-top-0{margin-top:0!important}.margin-top-5{margin-top:5px!important}.margin-top-10{margin-top:10px!important}
-.margin-top-15{margin-top:15px!important}.margin-top-20{margin-top:20px!important}
-.margin-left-0{margin-left:0!important}.margin-left-5{margin-left:5px!important}.margin-left-10{margin-left:10px!important}
-.margin-left-15{margin-left:15px!important}.margin-left-20{margin-left:20px!important}.margin-left-40{margin-left:40px!important;}
-.margin-right-0{margin-right:0!important}.margin-right-5{margin-right:5px!important}.margin-right-10{margin-right:10px!important}
-.margin-right-15{margin-right:15px!important}.margin-right-20{margin-right:20px!important}
-.margin-bottom-0{margin-bottom:0!important}.margin-bottom-5{margin-bottom:5px!important}.margin-bottom-10{margin-bottom:10px!important}
-.margin-bottom-15{margin-bottom:15px!important}.margin-bottom-20{margin-bottom:20px!important}
+.margin-0{margin:0!important}.margin-5{padding:5px!important}.margin-10{padding:10px!important}.margin-15{padding:15px!important}.margin-20{padding:20px!important}.margin-25{padding:25px!important}.margin-30{padding:30px!important}
+.margin-top-0{margin-top:0!important}.margin-top-5{margin-top:5px!important}.margin-top-10{margin-top:10px!important}.margin-top-15{margin-top:15px!important}.margin-top-20{margin-top:20px!important}
+.margin-left-0{margin-left:0!important}.margin-left-5{margin-left:5px!important}.margin-left-10{margin-left:10px!important}.margin-left-15{margin-left:15px!important}.margin-left-20{margin-left:20px!important}.margin-left-40{margin-left:40px!important;}
+.margin-right-0{margin-right:0!important}.margin-right-5{margin-right:5px!important}.margin-right-10{margin-right:10px!important}.margin-right-15{margin-right:15px!important}.margin-right-20{margin-right:20px!important}
+.margin-bottom-0{margin-bottom:0!important}.margin-bottom-5{margin-bottom:5px!important}.margin-bottom-10{margin-bottom:10px!important}.margin-bottom-15{margin-bottom:15px!important}.margin-bottom-20{margin-bottom:20px!important}
 
 /* 弹框层表单 */
 fieldset legend{padding:0 10px;color:#666;font-size:14px}

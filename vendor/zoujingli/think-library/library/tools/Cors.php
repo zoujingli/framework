@@ -26,6 +26,16 @@ class Cors
 {
 
     /**
+     * 配置跨域允许头部信息
+     * @var array
+     */
+    private static $allowHeader = [
+        'Host', 'Token', 'Accept', 'Cookie', 'Origin', 'Pragma', 'Expires', 'Referer',
+        'User-Agent', 'Keep-Alive', 'Content-Type', 'Cache-Control', 'Last-Event-ID',
+        'Last-Modified', 'Content-Language', 'X-Requested-With', 'If-Modified-Since',
+    ];
+
+    /**
      * 获取会话令牌
      * @return string
      */
@@ -67,7 +77,8 @@ class Cors
             header('Access-Control-Allow-Credentials:true');
             header('Access-Control-Allow-Methods:GET,POST,OPTIONS');
             header('Access-Control-Allow-Origin:' . app('request')->header('origin', '*'));
-            header('Access-Control-Allow-Headers:Accept,Referer,Host,Keep-Alive,User-Agent,X-Requested-With,Content-Type,Cache-Control,Cookie,token');
+            header('Access-Control-Allow-Headers:' . join(',', self::$allowHeader));
+            header('Access-Control-Expose-Headers:' . join(',', self::$allowHeader));
             header('Content-Type:text/plain charset=UTF-8');
             header('Access-Control-Max-Age:1728000');
             header('HTTP/1.0 204 No Content');
@@ -87,7 +98,9 @@ class Cors
             'Access-Control-Allow-Credentials' => "true",
             'Access-Control-Allow-Methods'     => 'GET,POST,OPTIONS',
             'Access-Control-Allow-Origin'      => app('request')->header('origin', '*'),
-            'Access-Control-Allow-Headers'     => 'Accept,Referer,Host,Keep-Alive,User-Agent,X-Requested-With,Content-Type,Cache-Control,Cookie,token',
+            'Access-Control-Allow-Headers'     => join(',', self::$allowHeader),
+            'Access-Control-Expose-Headers'    => join(',', self::$allowHeader),
+            'Token'                            => self::getSessionToken(),
         ];
     }
 
