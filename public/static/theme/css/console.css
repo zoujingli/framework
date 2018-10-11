@@ -44,24 +44,21 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 .layui-header .layui-nav-item .layui-nav-child dd a{color:#333;text-align:center;border-top:1px solid #eaedf1;padding:0}
 
 /* 页面布局 - 左则 */
+.layui-layout>.layui-side .layui-side-scroll{width:200px}
 .layui-layout>.layui-side .layui-nav-bar{display:none!important}
 .layui-layout>.layui-side .layui-nav-item{border-bottom:1px solid #333}
 .layui-layout>.layui-side .layui-nav-item a{height:45px;line-height:45px}
-.layui-layout>.layui-side .layui-nav-item .layui-nav-child dd{border-bottom:1px solid #222}
-.layui-layout>.layui-side .layui-nav-item .layui-nav-child dd:last-child{border-bottom:none}
+.layui-layout>.layui-side .layui-nav-item a:hover{background:rgba(0,0,0,0.1)}
 .layui-layout>.layui-side .layui-nav-tree-top a{height:28px!important;line-height:28px!important}
-
 .layui-layout.layui-layout-left-mini>.layui-body{left:50px}
 .layui-layout.layui-layout-left-hide>.layui-side{display:none}
 .layui-layout.layui-layout-left-hide>.layui-body{left:0!important}
-
 .layui-layout.layui-layout-left-mini>.layui-side,
 .layui-layout.layui-layout-left-mini>.layui-side .layui-nav-tree,
 .layui-layout.layui-layout-left-mini>.layui-side .layui-side-scroll{width:50px;text-align:center}
-.layui-layout.layui-layout-left-mini>.layui-side .layui-nav-item a{padding:0;height:45px;line-height:45px}
+.layui-layout.layui-layout-left-mini>.layui-side .layui-nav-item a{padding:0}
 .layui-layout.layui-layout-left-mini>.layui-side .layui-nav-item .nav-text{display:none}
 .layui-layout.layui-layout-left-mini>.layui-side .layui-nav-item .nav-icon{display:block!important}
-.layui-layout.layui-layout-left-mini>.layui-side .layui-nav-item .layui-nav-child{display:block!important;padding:0;background-color:rgba(0,0,0,.3)!important}
 .layui-layout.layui-layout-left-mini>.layui-side .layui-nav-tree-top i{display:inline-block;transform:rotate(180deg);-o-transform:rotate(180deg);-ms-transform:rotate(180deg);-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg)}
 .layui-layout.layui-layout-left-mini>.layui-side .layui-nav-more{display:none!important}
 
@@ -75,13 +72,8 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 .text-top{vertical-align:top!important}.text-middle{vertical-align:middle!important}.text-bottom{vertical-align:bottom!important}
 .color-red{color:#ec494e!important}.color-blue{color:#2494f2!important}.color-desc{color:#999!important}.color-text{color:#333!important}.color-green{color:#090!important}
 
-.block{display:block!important}
-.pointer{cursor:pointer!important}
-.full-width{width:100%!important}
-.full-height{height:100%!important}
-.nowrap{white-space:nowrap!important}
-.help-block{font-size:12px;color:#999}
-.inline-block{display:inline-block!important}
+.block{display:block!important}.pointer{cursor:pointer!important}.full-width{width:100%!important}.full-height{height:100%!important}
+.nowrap{white-space:nowrap!important}.help-block{font-size:12px;color:#999}.inline-block{display:inline-block!important}
 
 [data-tips-image]{cursor:zoom-in!important}
 .notselect{user-select:none;-ms-user-select:none;-moz-user-select:none;-webkit-user-select:none}
