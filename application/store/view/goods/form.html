@@ -3,32 +3,58 @@
 {block name="content"}
 <form onsubmit="return false;" id="GoodsForm" data-auto="true" method="post" class='layui-form layui-card' autocomplete="off">
 
-    <div class="layui-card-body" style="padding-left:40px">
+    <div class="layui-card-body padding-left-40">
+
+        <div class="layui-form-item block relative">
+            <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px">*</sup>商品名称</h3>
+            <input name="title" required class="layui-input" placeholder="请输入商品名称">
+        </div>
 
         <div class="layui-form-item">
-            <p class="help-block">商品规格</p>
+            <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px">*</sup>商品图片</h3>
+            <table class="layui-table">
+                <thead>
+                <tr>
+                    <th class="text-center">LOGO</th>
+                    <th class="text-left">商品图片</th>
+                </tr>
+                <tr>
+                    <td width="90px" class="text-center"><input name="logo" type="hidden" value="{$vo.logo|default=''}"></td>
+                    <td width="auto" class="text-left"><input name="image" type="hidden" value="{$vo.image|default=''}"></td>
+                </tr>
+                </thead>
+            </table>
+            <script>
+                $(function () {
+                    $('[name="logo"]').uploadOneImage();
+                    $('[name="image"]').uploadMultipleImage();
+                });
+            </script>
+        </div>
+
+        <div class="layui-form-item">
+            <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px">*</sup>商品规格</h3>
             <div ng-repeat="x in specs track by $index" class="margin-bottom-10">
                 <div class="goods-spec-box">
                     <span class="text-center goods-spec-title">规格{{ $index+1 }}</span>
                     <input ng-model="x.name" required placeholder="请输入分组">
-                    <a class="layui-btn layui-btn-sm layui-btn-primary goods-spec-button layui-bg-gray" data-tips-text="不能超过5个规格" ng-if="x.list.length>=5">增 加</a>
-                    <a class="layui-btn layui-btn-sm layui-btn-primary goods-spec-button" ng-if="x.list.length<5" ng-click="addSpecVal(x.list)">增 加</a>
                     <a class="layui-btn layui-btn-sm layui-btn-primary goods-spec-button" ng-click="delSpecRow(specs,$index)">删 除</a>
                     <a class="layui-btn layui-btn-sm layui-btn-primary goods-spec-button layui-bg-gray" data-tips-text="已经到最顶了" ng-if="$index<1">上 移</a>
                     <a class="layui-btn layui-btn-sm layui-btn-primary goods-spec-button" ng-if="$index>0" ng-click="upSpecRow(specs,$index)">上 移</a>
                     <a class="layui-btn layui-btn-sm layui-btn-primary goods-spec-button layui-bg-gray" data-tips-text="已经到最底了" ng-if="$index>=specs.length-1">下 移</a>
                     <a class="layui-btn layui-btn-sm layui-btn-primary goods-spec-button" ng-if="$index<specs.length-1" ng-click="dnSpecRow(specs,$index)">下 移</a>
                 </div>
-                <div class="inline-block" ng-if="x.list && x.list.length > 0">
+                <div class="block" ng-if="x.list && x.list.length > 0">
                     <label class="goods-spec-box inline-block nowrap" ng-repeat="xx in x.list">
                         <input type="checkbox" ng-model="xx.check">
                         <input type="text" ng-model="xx.name" required placeholder="请输入规格">
                         <a ng-click="x.list=delSpecVal(x.list,$index)" class="layui-icon layui-icon-close font-s12 goods-spec-close"></a>
                     </label>
+                    <a style="margin:-10px 0 0 0!important;" class="layui-btn layui-btn-sm layui-btn-primary goods-spec-button" ng-if="x.list.length<5" ng-click="addSpecVal(x.list)">增加</a>
                 </div>
             </div>
             <a ng-if="specs.length<5" class="layui-btn layui-btn-sm layui-btn-primary" ng-click="addSpecRow(specs)">增加分组</a>
-            <table class="layui-table">
+            <table class="layui-table margin-top-10">
                 <thead>
                 <tr>
                     <th ng-repeat="x in specsTreeNava track by $index" ng-bind="x"></th>
@@ -46,15 +72,19 @@
             </table>
         </div>
 
-        <div class="layui-form-item">
-            <p class="help-block">商品规格</p>
-            <textarea name="specs" style="height:300px" class="layui-textarea">{{specsTreeData}}</textarea>
-            <textarea name="specs" style="height:300px" class="layui-textarea">{{specs}}</textarea>
+        <div class="layui-form-item block">
+            <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px">*</sup>商品内容</h3>
+            <textarea name="content">{$vo.content|default=''|raw}</textarea>
+            <script>
+                require(['ckeditor'], function () {
+                    window.createEditor('[name="content"]', {height: '300px'});
+                })
+            </script>
         </div>
 
-        {include file='goods/spec'}
-
-        <a data-show-box>添加</a>
+        <div class="layui-form-item text-center">
+            <button class="layui-btn" type="submit">保存商品</button>
+        </div>
 
     </div>
 </form>
@@ -128,7 +158,7 @@
         color: #999;
         width: 40px;
         height: 26px;
-        content: '\1006';
+        content: '\e63f';
         font-size: 16px;
         line-height: 26px;
         position: absolute;
@@ -251,24 +281,6 @@
                     ]
                 },
                 {
-                    name: '尺寸1',
-                    list: [
-                        {name: '小', check: true},
-                        {name: '中', check: true},
-                    ]
-                }, {
-                    name: '尺寸2',
-                    list: [
-                        {name: '小', check: true},
-                        {name: '中', check: true},
-                    ]
-                }, {
-                    name: '尺寸',
-                    list: [
-                        {name: '小', check: true},
-                        {name: '中', check: true},
-                    ]
-                }, {
                     name: '尺寸',
                     list: [
                         {name: '小', check: true},
