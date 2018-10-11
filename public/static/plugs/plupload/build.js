@@ -1,9 +1,10 @@
 define(['plupload'], function (plupload) {
     window.plupload = plupload;
     return function (element) {
-        let $ele = $(element)
+        let $ele = $(element);
         let loader = new plupload.Uploader({
-            file_data_name: 'upload',
+            file_data_name: 'file',
+            multi_selection: false,
             browse_button: $ele.get(0),
             url: '?s=admin/plugs/plupload',
             runtimes: 'html5,flash,silverlight,html4',

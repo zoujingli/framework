@@ -80,7 +80,7 @@ class Plugs extends Controller
      */
     public function plupload()
     {
-        $file = $this->request->file('upload');
+        $file = $this->request->file('file');
         if (!$file->checkExt(strtolower(sysconf('storage_local_exts')))) {
             return json(['uploaded' => false, 'error' => ['message' => '文件上传类型受限']]);
         }
