@@ -1,7 +1,7 @@
 define(['plupload'], function (plupload) {
     window.plupload = plupload;
     return function (element) {
-        let $ele = $(element);
+        let $ele = $(element)
         let loader = new plupload.Uploader({
             file_data_name: 'upload',
             browse_button: $ele.get(0),
@@ -12,23 +12,20 @@ define(['plupload'], function (plupload) {
             silverlight_xap_url: baseRoot + 'plugs/plupload/plupload.silverlight.xap',
         });
         loader.bind('FilesAdded', function () {
-            loader.start()
+            loader.start();
         });
         loader.bind('FileUploaded', function (up, file, res) {
             if (parseInt(res.status) === 200) {
-                let ret = JSON.parse(res.response);
-                let field = $ele.data('field') || 'file';
+                let ret = JSON.parse(res.response), field = $ele.data('field') || 'file';
                 $('[name="' + field + '"]').val(ret.url).trigger('change');
             }
         });
         loader.bind('UploadProgress', function (up, file) {
-            $ele.html(parseInt(file.loaded * 100 / file.total) + '%');
+            $ele.html(parseFloat(file.loaded * 100 / file.total).toFixed(2) + '%');
         });
-        loader.bind('UploadComplete', function (up, file) {
+        loader.bind('UploadComplete', function () {
             $ele.html($ele.data('html'));
-            console.log('UploadComplete', arguments)
         });
-        $ele.data('html', $ele.html());
-        loader.init();
+        $ele.data('html', $ele.html()), loader.init();
     }
 });
