@@ -10,12 +10,45 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
+// 当前资源URL目录
+let baseRoot = (function () {
+    let scripts = document.scripts, src = scripts[scripts.length - 1].src;
+    return src.substring(0, src.lastIndexOf("/") + 1);
+})();
 
 var form = layui.form, layer = layui.layer, laydate = layui.laydate;
-if (typeof jQuery === 'undefined') {
-    var $ = jQuery = layui.$;
-}
+if (typeof jQuery === 'undefined') var $ = jQuery = layui.$;
 
+// require 配置参数
+require.config({
+    waitSeconds: 60,
+    baseUrl: baseRoot,
+    map: {'*': {css: baseRoot + 'plugs/require/css.js'}},
+    paths: {
+        'json': ['plugs/jquery/json2.min'],
+        'upload': ['plugs/plupload/build'],
+        'base64': ['plugs/jquery/base64.min'],
+        'angular': ['plugs/angular/angular.min'],
+        'ckeditor': ['plugs/ckeditor/ckeditor'],
+        'websocket': ['plugs/socket/websocket'],
+        'pcasunzips': ['plugs/jquery/pcasunzips'],
+        'plupload': ['plugs/plupload/plupload.min'],
+        'jquery.ztree': ['plugs/ztree/ztree.all.min'],
+        'jquery.masonry': ['plugs/jquery/masonry.min'],
+        'jquery.autocompleter': ['plugs/jquery/autocompleter.min'],
+    },
+    shim: {
+        'plupload': {deps: [baseRoot + 'plugs/plupload/moxie.min.js']},
+        'websocket': {deps: [baseRoot + 'plugs/socket/swfobject.min.js']},
+        'jquery.ztree': {deps: ['jquery', 'css!' + baseRoot + 'plugs/ztree/zTreeStyle/zTreeStyle.css']},
+        'jquery.autocompleter': {deps: ['jquery', 'css!' + baseRoot + 'plugs/jquery/autocompleter.css']},
+    }
+});
+
+// 注册jquery到require模块
+define('jquery', [], function () {
+    return layui.$;
+});
 
 $(function () {
     let $body = $('body');
@@ -69,9 +102,7 @@ $(function () {
             let msg = ret.msg || (typeof ret.info === 'string' ? ret.info : '');
             return (parseInt(ret.code) === 1) ? this.success(msg, time, function () {
                 url ? (window.location.href = url) : $.form.reload();
-                for (let i in self.dialogIndexs) {
-                    layer.close(self.dialogIndexs[i]);
-                }
+                for (let i in self.dialogIndexs) layer.close(self.dialogIndexs[i]);
                 self.dialogIndexs = [];
             }) : this.error(msg, 3, function () {
                 url ? window.location.href = url : '';
@@ -93,10 +124,10 @@ $(function () {
             $.vali.listen(this);
             $dom = $dom || $(this.targetClass);
             $dom.find('[required]').parent().prevAll('label').addClass('label-required');
-            $dom.find('[data-file=btn]').map(function () {
+            $dom.find('[data-file="btn"]').map(function () {
                 let self = this;
                 require(['upload'], function (r) {
-                    r(self);
+                    r(self)
                 });
             });
         };
@@ -107,12 +138,8 @@ $(function () {
         };
         // 以hash打开网页
         this.href = function (url, obj) {
-            if (url !== '#') {
-                window.location.href = '#' + $.menu.parseUri(url, obj);
-            } else if (obj && obj.getAttribute('data-menu-node')) {
-                let node = obj.getAttribute('data-menu-node');
-                $('[data-menu-node^="' + node + '-"][data-open!="#"]:first').trigger('click');
-            }
+            if (url !== '#') window.location.href = '#' + $.menu.parseUri(url, obj);
+            else if (obj && obj.getAttribute('data-menu-node')) $('[data-menu-node^="' + obj.getAttribute('data-menu-node') + '-"][data-open!="#"]:first').trigger('click');
         };
         // 异步加载的数据
         this.load = function (url, data, type, callback, loading, tips, time) {
@@ -123,27 +150,20 @@ $(function () {
                     typeof Pace === 'object' && Pace.restart();
                 },
                 error: function (XMLHttpRequest) {
-                    if (parseInt(XMLHttpRequest.status) === 200) {
-                        this.success(XMLHttpRequest.responseText);
-                    } else {
-                        $.msg.close(index);
-                        let error = 'E{status} - 服务器繁忙，请稍候再试！';
-                        $.msg.tips(error.replace('{status}', XMLHttpRequest.status));
-                    }
+                    if (parseInt(XMLHttpRequest.status) === 200) this.success(XMLHttpRequest.responseText);
+                    else $.msg.close(index), $.msg.tips('E' + XMLHttpRequest.status + ' - 服务器繁忙，请稍候再试！');
                 },
                 success: function (res) {
                     $.msg.close(index);
-                    if (typeof callback === 'function' && callback.call(self, res) === false) {
-                        return false;
-                    }
+                    if (typeof callback === 'function' && callback.call(self, res) === false) return false;
                     return typeof res === 'object' ? $.msg.auto(res, time || res.wait || undefined) : self.show(res);
                 }
             });
         };
         // 加载HTML到目标位置
         this.open = function (url, data, callback, loading, tips) {
-            this.load(url, data, 'get', function (res) {
-                return typeof res === 'object' ? $.msg.auto(res) : self.show(res);
+            this.load(url, data, 'get', function (ret) {
+                return typeof ret === 'object' ? $.msg.auto(ret) : self.show(ret);
             }, loading, tips);
         };
         // 打开一个iframe窗口
@@ -153,9 +173,7 @@ $(function () {
         // 加载HTML到弹出层
         this.modal = function (url, data, title, callback, loading, tips) {
             this.load(url, data, 'GET', function (res) {
-                if (typeof (res) === 'object') {
-                    return $.msg.auto(res);
-                }
+                if (typeof (res) === 'object') return $.msg.auto(res);
                 let index = layer.open({
                     type: 1, btn: false, area: "800px", content: res, title: title || '', success: function (dom, index) {
                         $(dom).find('[data-close]').off('click').on('click', function () {
@@ -222,9 +240,7 @@ $(function () {
                 });
                 //  Mini 菜单模式时TIPS文字显示
                 $('[data-target-tips]').mouseenter(function () {
-                    if ($menu.hasClass(miniClass)) {
-                        $(this).attr('index', layer.tips($(this).attr('data-target-tips') || '', this));
-                    }
+                    if ($menu.hasClass(miniClass)) $(this).attr('index', layer.tips($(this).attr('data-target-tips') || '', this));
                 }).mouseleave(function () {
                     layer.close($(this).attr('index'));
                 });
@@ -237,20 +253,14 @@ $(function () {
             this.syncOpenStatus = function (mode) {
                 $('[data-submenu-layout]').map(function () {
                     let node = $(this).attr('data-submenu-layout');
-                    if (mode === 1) {
-                        layui.data('menu', {key: node, value: $(this).hasClass('layui-nav-itemed') ? 2 : 1});
-                    } else if ((layui.data('menu')[node] || 2) === 2) {
-                        $(this).addClass('layui-nav-itemed');
-                    }
+                    if (mode === 1) layui.data('menu', {key: node, value: $(this).hasClass('layui-nav-itemed') ? 2 : 1});
+                    else if ((layui.data('menu')[node] || 2) === 2) $(this).addClass('layui-nav-itemed');
                 });
             };
             window.onhashchange = function () {
                 let hash = window.location.hash || '';
-                if (hash.length < 1) {
-                    return $('[data-menu-node][data-open!="#"]:first').trigger('click');
-                }
-                $.form.load(hash);
-                self.syncOpenStatus(2);
+                if (hash.length < 1) return $('[data-menu-node][data-open!="#"]:first').trigger('click');
+                $.form.load(hash), self.syncOpenStatus(2);
                 // 菜单选择切换
                 let node = self.queryNode(self.getUri());
                 if (/^m-/.test(node)) {
@@ -266,9 +276,7 @@ $(function () {
                         $('[data-menu-layout]').not($('[data-menu-layout="' + _node + '"]').removeClass('layui-hide')).addClass('layui-hide');
                         $('[data-menu-node="' + node + '"]').parent().parent().parent().addClass('layui-nav-itemed');
                         $('.layui-layout-admin').removeClass('layui-layout-left-hide');
-                    } else {
-                        $('.layui-layout-admin').addClass('layui-layout-left-hide');
-                    }
+                    } else $('.layui-layout-admin').addClass('layui-layout-left-hide');
                     self.syncOpenStatus(1);
                 }
             };
@@ -295,9 +303,7 @@ $(function () {
             };
             // 检测属性是否有定义
             this.hasProp = function (ele, prop) {
-                if (typeof prop !== "string") {
-                    return false;
-                }
+                if (typeof prop !== "string") return false;
                 let attrProp = ele.getAttribute(prop);
                 return (typeof attrProp !== 'undefined' && attrProp !== null && attrProp !== false);
             };
@@ -311,29 +317,18 @@ $(function () {
             this.isRegex = function (ele, regex, params) {
                 let inputValue = ele.value, dealValue = this.trim(inputValue);
                 regex = regex || ele.getAttribute('pattern');
-                if (dealValue === "" || !regex) {
-                    return true;
-                }
-                if (dealValue !== inputValue) {
-                    (ele.tagName.toLowerCase() !== "textarea") ? (ele.value = dealValue) : (ele.innerHTML = dealValue);
-                }
+                if (dealValue === "" || !regex) return true;
+                if (dealValue !== inputValue) (ele.tagName.toLowerCase() !== "textarea") ? (ele.value = dealValue) : (ele.innerHTML = dealValue);
                 return new RegExp(regex, params || 'i').test(dealValue);
             };
             // 检侧所的表单元素
             this.isAllpass = function (elements, options) {
-                if (!elements) {
-                    return true;
-                }
+                if (!elements) return true;
                 let allpass = true, self = this, params = options || {};
-                if (elements.size && elements.size() === 1 && elements.get(0).tagName.toLowerCase() === "form") {
-                    elements = $(elements).find(self.tags);
-                } else if (elements.tagName && elements.tagName.toLowerCase() === "form") {
-                    elements = $(elements).find(self.tags);
-                }
+                if (elements.size && elements.size() === 1 && elements.get(0).tagName.toLowerCase() === "form") elements = $(elements).find(self.tags);
+                else if (elements.tagName && elements.tagName.toLowerCase() === "form") elements = $(elements).find(self.tags);
                 elements.each(function () {
-                    if (self.checkInput(this, params) === false) {
-                        return $(this).focus(), (allpass = false);
-                    }
+                    if (self.checkInput(this, params) === false) return $(this).focus(), (allpass = false);
                 });
                 return allpass;
             };
@@ -345,30 +340,21 @@ $(function () {
             this.checkInput = function (input) {
                 let type = (input.getAttribute("type") + "").replace(/\W+$/, "").toLowerCase();
                 let tag = input.tagName.toLowerCase(), isRequired = this.hasProp(input, "required");
-                if (this.hasProp(input, 'data-auto-none') || input.disabled || type === 'submit' || type === 'reset' || type === 'file' || type === 'image' || !this.isVisible(input)) {
-                    return;
-                }
+                if (this.hasProp(input, 'data-auto-none') || input.disabled || type === 'submit' || type === 'reset' || type === 'file' || type === 'image' || !this.isVisible(input)) return;
                 let allpass = true;
                 if (type === "radio" && isRequired) {
                     let radiopass = false, eleRadios = input.name ? $("input[type='radio'][name='" + input.name + "']") : $(input);
                     eleRadios.each(function () {
                         (radiopass === false && $(this).is("[checked]")) && (radiopass = true);
                     });
-                    if (radiopass === false) {
-                        allpass = this.remind(eleRadios.get(0), type, tag);
-                    } else {
-                        this.hideError(input);
-                    }
-                } else if (type === "checkbox" && isRequired && !$(input).is("[checked]")) {
-                    allpass = this.remind(input, type, tag);
-                } else if (tag === "select" && isRequired && !input.value) {
-                    allpass = this.remind(input, type, tag);
-                } else if ((isRequired && this.isEmpty(input)) || !(allpass = this.isRegex(input))) {
+                    if (radiopass === false) allpass = this.remind(eleRadios.get(0), type, tag);
+                    else this.hideError(input);
+                } else if (type === "checkbox" && isRequired && !$(input).is("[checked]")) allpass = this.remind(input, type, tag);
+                else if (tag === "select" && isRequired && !input.value) allpass = this.remind(input, type, tag);
+                else if ((isRequired && this.isEmpty(input)) || !(allpass = this.isRegex(input))) {
                     allpass ? this.remind(input, type, "empty") : this.remind(input, type, tag);
                     allpass = false;
-                } else {
-                    this.hideError(input);
-                }
+                } else this.hideError(input);
                 return allpass;
             };
             // 错误消息显示
@@ -392,23 +378,16 @@ $(function () {
                 let params = $.extend({}, options || {});
                 $(form).attr("novalidate", "novalidate");
                 $(form).find(self.tags).map(function () {
+                    for (let i in self.checkEvent) if (self.checkEvent[i] === true) $(this).off(i, func).on(i, func);
+
                     function func() {
                         self.checkInput(this);
-                    }
-
-                    for (let i in self.checkEvent) {
-                        if (self.checkEvent[i] === true) {
-                            $(this).off(i, func).on(i, func);
-                        }
                     }
                 });
                 $(form).bind("submit", function (event) {
                     if (self.isAllpass($(this).find(self.tags), params) && typeof callback === 'function') {
-                        if (typeof CKEDITOR === 'object' && typeof CKEDITOR.instances === 'object') {
-                            for (let instance in CKEDITOR.instances) {
-                                CKEDITOR.instances[instance].updateElement();
-                            }
-                        }
+                        if (typeof CKEDITOR === 'object' && typeof CKEDITOR.instances === 'object')
+                            for (let instance in CKEDITOR.instances) CKEDITOR.instances[instance].updateElement();
                         callback.call(this, $(form).serialize());
                     }
                     return event.preventDefault(), false;
@@ -464,9 +443,7 @@ $(function () {
             $(this).prevAll('.uploadimage').map(function () {
                 values.push($(this).attr('data-tips-image'));
             }), $(this).prevAll('.uploadimage').remove(), values.reverse();
-            for (let i in srcs) {
-                srcs[i] && values.push(srcs[i]);
-            }
+            for (let i in srcs) srcs[i] && values.push(srcs[i]);
             this.value = values.join('|');
             for (let i in values) {
                 let tpl = '<div class="uploadimage uploadimagemtl"><a class="layui-icon">&#x1006;</a></div>';
@@ -477,9 +454,7 @@ $(function () {
                     let $cur = $(this).parent();
                     let dialogIndex = $.msg.confirm('确定要移除这张图片吗？', function () {
                         let data = $cur.data('srcs'), tmp = [];
-                        for (let i in data) {
-                            i !== $cur.data('index') && tmp.push(data[i]);
-                        }
+                        for (let i in data) i !== $cur.data('index') && tmp.push(data[i]);
                         $cur.data('input').value = tmp.join('|');
                         $cur.remove(), $.msg.close(dialogIndex);
                     });
@@ -541,13 +516,9 @@ $(function () {
             });
             return ids.length > 0 ? rule.replace('{key}', ids.join(',')) : '';
         }).call(this, $this.attr('data-rule') || '', []) || '';
-        if (rule.length < 1) {
-            return $.msg.tips('请选择需要更改的数据！');
-        }
+        if (rule.length < 1) return $.msg.tips('请选择需要更改的数据！');
         for (let o of rule.split(';')) {
-            if (o.length < 2) {
-                return $.msg.tips('异常的数据操作规则，请修改规则！');
-            }
+            if (o.length < 2) return $.msg.tips('异常的数据操作规则，请修改规则！');
             data[o.split('#')[0]] = o.split('#')[1];
         }
         $.msg.confirm($this.attr('data-confirm') || '确定要更改数据状态吗？', function () {
