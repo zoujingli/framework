@@ -75,7 +75,7 @@ class Local extends File
      */
     public function base($name = '')
     {
-        $appRoot = request()->root();
+        $appRoot = request()->root(true);
         $uriRoot = preg_match('/\.php$/', $appRoot) ? dirname($appRoot) : $appRoot;
         return "{$uriRoot}/upload/{$name}";
     }

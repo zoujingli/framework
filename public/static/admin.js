@@ -69,9 +69,9 @@ $(function () {
         // 确认对话框
         this.confirm = function (msg, ok, no) {
             let index = layer.confirm(msg, {title: '操作确认', btn: ['确认', '取消']}, function () {
-                typeof ok === 'function' && ok.call(this);
+                typeof ok === 'function' && ok.call(this, index);
             }, function () {
-                typeof no === 'function' && no.call(this);
+                typeof no === 'function' && no.call(this, index);
                 self.close(index);
             });
             return index;
