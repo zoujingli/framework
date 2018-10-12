@@ -788,16 +788,10 @@ abstract class Builder
      */
     protected function parseOrder(Query $query, $order)
     {
-        if (empty($order)) {
-            return '';
-        }
-
-        $array = [];
-
         foreach ($order as $key => $val) {
             if ($val instanceof Expression) {
                 $array[] = $val->getValue();
-            } elseif (is_array($val) && !preg_match('/\W/', $key)) {
+            } elseif (is_array($val) && preg_match('/^[\w\.]+$/', $key)) {
                 $array[] = $this->parseOrderField($query, $key, $val);
             } elseif ('[rand]' == $val) {
                 $array[] = $this->parseRand($query);
@@ -808,15 +802,17 @@ abstract class Builder
                     $sort = $val;
                 }
 
-                if (false === strpos($key, ')') && false === strpos($key, '#')) {
+                if (preg_match('/^[\w\.]+$/', $key)) {
                     $sort    = strtoupper($sort);
                     $sort    = in_array($sort, ['ASC', 'DESC'], true) ? ' ' . $sort : '';
                     $array[] = $this->parseKey($query, $key, true) . $sort;
+                } else {
+                    throw new Exception('order express error:' . $key);
                 }
             }
         }
 
-        return ' ORDER BY ' . implode(',', $array);
+        return empty($array) ? '' : ' ORDER BY ' . implode(',', $array);
     }
 
     /**
