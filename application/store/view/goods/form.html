@@ -33,53 +33,54 @@
         </div>
 
         <div class="layui-form-item">
-            <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px">*</sup>商品规格</h3>
-            <div ng-repeat="x in specs track by $index" class="margin-bottom-10">
+            <h3 class="color-green">
+                <sup class='color-red font-s14 absolute' style="margin-left:-10px">*</sup>
+                商品规格<span class="color-desc font-s10">（最多支持3个规格分组，每个分组最多支持5个规格属性）</span>
+            </h3>
+            <div ng-repeat="x in specs track by $index" style="display:none" class="margin-bottom-10" ng-class="{true:'layui-show'}[specs.length>0]">
                 <div class="goods-spec-box">
-                    <span class="text-center goods-spec-title">规格{{ $index+1 }}</span>
+                    <span class="text-center goods-spec-title">分组{{ $index+1 }}</span>
                     <input ng-model="x.name" required placeholder="请输入分组">
-                    <a class="layui-btn layui-btn-sm layui-btn-primary goods-spec-btn" ng-click="delSpecRow(specs,$index)">删 除</a>
-                    <a class="layui-btn layui-btn-sm layui-btn-primary goods-spec-btn layui-bg-gray" data-tips-text="已经到最顶了" ng-if="$index<1">上 移</a>
-                    <a class="layui-btn layui-btn-sm layui-btn-primary goods-spec-btn" ng-if="$index>0" ng-click="upSpecRow(specs,$index)">上 移</a>
-                    <a class="layui-btn layui-btn-sm layui-btn-primary goods-spec-btn layui-bg-gray" data-tips-text="已经到最底了" ng-if="$index>=specs.length-1">下 移</a>
-                    <a class="layui-btn layui-btn-sm layui-btn-primary goods-spec-btn" ng-if="$index<specs.length-1" ng-click="dnSpecRow(specs,$index)">下 移</a>
+                    <a class="layui-btn layui-btn-sm layui-btn-primary goods-spec-btn" ng-click="delSpecRow(specs,$index)">删除</a>
+                    <a class="layui-btn layui-btn-sm layui-btn-primary goods-spec-btn" ng-class="{false:'layui-bg-gray'}[$index>0]" ng-click="upSpecRow(specs,$index)">上移</a>
+                    <a class="layui-btn layui-btn-sm layui-btn-primary goods-spec-btn" ng-class="{false:'layui-bg-gray'}[$index<specs.length-1]" ng-click="dnSpecRow(specs,$index)">下移</a>
                 </div>
                 <div class="block" ng-if="x.list && x.list.length > 0">
                     <label class="goods-spec-box inline-block nowrap" ng-repeat="xx in x.list">
-                        <input type="checkbox" ng-model="xx.check">
-                        <input type="text" ng-model="xx.name" required placeholder="请输入规格">
-                        <a ng-click="x.list=delSpecVal(x.list,$index)" class="layui-icon layui-icon-close font-s12 goods-spec-close"></a>
+                        <input type="checkbox" ng-model="xx.check" ng-click="xx.check=checkListChecked(x.list,$event.target.checked)">
+                        <input type="text" ng-model="xx.name" ng-keyup="xx.name=$event.target.value" required placeholder="请输入规格">
+                        <a ng-if="x.list.length>1" ng-click="x.list=delSpecVal(x.list,$index)" class="layui-icon layui-icon-close font-s12 goods-spec-close"></a>
                     </label>
                     <a style="margin:-10px 0 0 0!important;" class="layui-btn layui-btn-sm layui-btn-primary goods-spec-btn" ng-if="x.list.length<5" ng-click="addSpecVal(x.list)">增加</a>
                 </div>
             </div>
-            <a ng-if="specs.length<5" class="layui-btn layui-btn-sm layui-btn-primary" ng-click="addSpecRow(specs)">增加分组</a>
+            <a ng-if="specs.length<3" class="layui-btn layui-btn-sm layui-btn-primary" ng-click="addSpecRow(specs)">增加分组</a>
             <table class="layui-table margin-top-10">
                 <thead>
                 <tr>
                     <th ng-repeat="x in specsTreeNava track by $index" ng-bind="x"></th>
                     <th>价格</th>
                     <th>套餐</th>
+                    <th>key</th>
+                    <th width="18px" class="nowrap">状态</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="rows in specsTreeData track by $index">
-                    <td class="text-center" ng-if="td.show" rowspan="{{td.rowspan}}" ng-repeat="td in rows" ng-bind="td.name"></td>
-                    <td><input name="price" class="layui-input" ng-keyup="setValue(rows[0].key,'price',$event.target.value)" ng-model="rows[0].price"></td>
-                    <td><input name="package" class="layui-input" ng-keyup="setValue(rows[0].key,'package',$event.target.value)" ng-model="rows[0].package"></td>
+                    <td class="text-left" ng-if="td.show" rowspan="{{td.rowspan}}" ng-repeat="td in rows" ng-bind="td.name"></td>
+                    <td class="padding-0"><input class="layui-input border-0" name="price" ng-keyup="setValue(rows[0].key,'price',$event.target.value)" ng-model="rows[0].price"></td>
+                    <td class="padding-0"><input class="layui-input border-0" name="package" ng-keyup="setValue(rows[0].key,'package',$event.target.value)" ng-model="rows[0].package"></td>
+                    <td>{{rows[0].key}}</td>
+                    <td class="text-center"><label class="think-checkbox margin-0"><input type="checkbox" ng-model="rows[0].status" value="1"></label></td>
                 </tr>
                 </tbody>
             </table>
+            <textarea class="layui-textarea" name="specs">{{specs}}</textarea>
         </div>
 
         <div class="layui-form-item block">
             <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px">*</sup>商品内容</h3>
             <textarea name="content">{$vo.content|default=''|raw}</textarea>
-            <script>
-                require(['ckeditor'], function () {
-                    window.createEditor('[name="content"]', {height: '300px'});
-                })
-            </script>
         </div>
 
         <div class="layui-form-item text-center">
@@ -92,34 +93,34 @@
 <style>
 
     .goods-spec-box {
-        margin: 0 10px 10px 0;
         position: relative;
+        margin: 0 10px 10px 0;
         vertical-align: middle;
     }
 
     .goods-spec-title {
-        position: absolute;
         z-index: 2;
         width: 40px;
+        color: #fff;
         height: 28px;
         line-height: 28px;
+        position: absolute;
         background: #2F4056;
-        color: #fff
     }
 
     .goods-spec-close {
-        position: absolute;
         right: 8px;
-        line-height: 28px;
         z-index: 2;
+        line-height: 28px;
+        position: absolute;
         display: inline-block
     }
 
     .goods-spec-btn {
         height: 28px;
-        line-height: 26px !important;
         margin-top: -3px;
         margin-left: 5px !important;
+        line-height: 26px !important;
     }
 
     .goods-spec-box input {
@@ -137,8 +138,8 @@
         height: 28px;
         border: none;
         cursor: pointer;
-        position: absolute;
         appearance: none;
+        position: absolute;
         -webkit-appearance: none;
     }
 
@@ -169,7 +170,7 @@
     .goods-spec-box input[type=checkbox]:checked:after {
         color: #fff;
         content: '\e605';
-        background: #00B83F;
+        background: #2F4056;
     }
 </style>
 
@@ -179,13 +180,13 @@
 <script>
 
     require(['ckeditor', 'angular'], function () {
-        // window.form.render();
-        // window.createEditor('[name="goods_content"]', {height: 500});
+        window.createEditor('[name="content"]', {height: 500});
         let app = angular.module("GoodsForm", []).run(callback);
         angular.bootstrap(document.getElementById(app.name), [app.name]);
 
         function callback($rootScope) {
             let defaultValues = {};
+            $rootScope.specs = angular.fromJson('{$vo.specs|raw|default="[]"}');
             $rootScope.getValue = function (key, type) {
                 return (defaultValues[key] || {type: '0.0'})[type] || '0.00';
             };
@@ -203,9 +204,9 @@
                 // 过滤无效记录
                 for (let o of data) {
                     let tmp = [];
-                    for (let x of o.list) (x.check && x.name.length > 0) && tmp.push(x);
+                    for (let x of o.list) (x.check && typeof x.name === 'string' && x.name.length > 0) && tmp.push(x);
                     if (tmp.length > 0) {
-                        for (let x of tmp) (x.group = o.name, x.rowspan = 1, x.show = true)
+                        for (let x of tmp) x.group = o.name, x.rowspan = 1, x.show = true;
                         list.push(tmp), nava.push(o.name);
                     }
                     $rootScope.specsTreeNava = nava;
@@ -220,22 +221,29 @@
                 list = angular.fromJson(angular.toJson(sarr));
                 for (let row in list) {
                     let key = [];
-                    for (let td in list[row]) key.push(list[row][td].group + '=>' + list[row][td].name);
+                    for (let td in list[row]) key.push(list[row][td].group + '::' + list[row][td].name);
                     for (let td in list[row]) {
                         list[row][0].key = key.join(';;');
                         list[row][0].price = $rootScope.getValue(list[row][0].key, 'price');
+                        list[row][0].status = !!$rootScope.getValue(list[row][0].key, 'status');
                         list[row][0].package = $rootScope.getValue(list[row][0].key, 'package');
+                        // 表格TD处理
                         for (let dow = 1 + parseInt(row); dow < list.length; dow++)
-                            if (list[row][td].name === list[dow][td].name) (list[row][td].rowspan++, list[dow][td].show = false);
-                            else break;
+                            if (list[row][td].name === list[dow][td].name) (list[row][td].rowspan++, list[dow][td].show = false); else break;
                     }
                 }
                 $rootScope.specsTreeData = list;
             }, true);
+            // 判断规则是否能取消选择
+            $rootScope.checkListChecked = function (list, check) {
+                for (let o of  list) if (o.check) return check;
+                return true;
+            };
             // 增加整行规格分组
             $rootScope.addSpecRow = function (data) {
-                data.push({name: '', list: []})
+                data.push({name: '规格分组', list: [{name: '规格属性', check: true}]})
             };
+            // 下移整行规格分组
             $rootScope.dnSpecRow = function (data, $index) {
                 let tmp = [], cur = data[$index];
                 if ($index > data.length - 2) return false;
@@ -245,6 +253,7 @@
                 }
                 return $rootScope.specs = tmp;
             };
+            // 上移整行规格分组
             $rootScope.upSpecRow = function (data, $index) {
                 let tmp = [], cur = data[$index];
                 if ($index < 1) return false;
@@ -262,39 +271,15 @@
             };
             // 增加分组的属性
             $rootScope.addSpecVal = function (list) {
-                list.push({name: '', check: false});
+                list.push({name: '规格属性', check: true});
             };
             // 移除分组的属性
             $rootScope.delSpecVal = function (data, $index) {
                 let temp = [];
                 for (let i in data) if (parseInt(i) !== parseInt($index)) temp.push(data[i]);
-                return data = temp;
+                return temp;
             };
 
-            $rootScope.specs = [
-                {
-                    name: '颜色',
-                    list: [
-                        {name: '红色', check: true},
-                        {name: '蓝色', check: true},
-                        {name: '黑色', check: true},
-                    ]
-                },
-                {
-                    name: '尺寸',
-                    list: [
-                        {name: '小', check: true},
-                        {name: '中', check: true},
-                    ]
-                },
-                {
-                    name: '套餐',
-                    list: [
-                        {name: '一', check: true},
-                        {name: '二', check: true},
-                    ]
-                }
-            ];
         }
 
     })

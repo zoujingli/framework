@@ -145,18 +145,16 @@ $(function () {
         this.load = function (url, data, type, callback, loading, tips, time) {
             let index = loading !== false ? $.msg.loading(tips) : 0;
             $.ajax({
-                type: type || 'GET', url: $.menu.parseUri(url), data: data || {},
-                beforeSend: function () {
+                type: type || 'GET', url: $.menu.parseUri(url), data: data || {}, beforeSend: function () {
                     typeof Pace === 'object' && Pace.restart();
-                },
-                error: function (XMLHttpRequest) {
+                }, error: function (XMLHttpRequest) {
                     if (parseInt(XMLHttpRequest.status) === 200) this.success(XMLHttpRequest.responseText);
-                    else $.msg.close(index), $.msg.tips('E' + XMLHttpRequest.status + ' - 服务器繁忙，请稍候再试！');
-                },
-                success: function (res) {
-                    $.msg.close(index);
+                    else $.msg.tips('E' + XMLHttpRequest.status + ' - 服务器繁忙，请稍候再试！');
+                }, success: function (res) {
                     if (typeof callback === 'function' && callback.call(self, res) === false) return false;
                     return typeof res === 'object' ? $.msg.auto(res, time || res.wait || undefined) : self.show(res);
+                }, complete: function () {
+                    $.msg.close(index);
                 }
             });
         };
@@ -347,14 +345,11 @@ $(function () {
                     eleRadios.each(function () {
                         (radiopass === false && $(this).is("[checked]")) && (radiopass = true);
                     });
-                    if (radiopass === false) allpass = this.remind(eleRadios.get(0), type, tag);
-                    else this.hideError(input);
+                    if (radiopass === false) allpass = this.remind(eleRadios.get(0), type, tag); else this.hideError(input);
                 } else if (type === "checkbox" && isRequired && !$(input).is("[checked]")) allpass = this.remind(input, type, tag);
                 else if (tag === "select" && isRequired && !input.value) allpass = this.remind(input, type, tag);
-                else if ((isRequired && this.isEmpty(input)) || !(allpass = this.isRegex(input))) {
-                    allpass ? this.remind(input, type, "empty") : this.remind(input, type, tag);
-                    allpass = false;
-                } else this.hideError(input);
+                else if ((isRequired && this.isEmpty(input)) || !(allpass = this.isRegex(input))) (allpass ? this.remind(input, type, "empty") : this.remind(input, type, tag)), allpass = false;
+                else this.hideError(input);
                 return allpass;
             };
             // 错误消息显示

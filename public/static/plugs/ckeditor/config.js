@@ -37,13 +37,12 @@ CKEDITOR.plugins.add("uimage", {
 // 自定义视频插入插件
 CKEDITOR.plugins.add('txvideo', {
     init: function (editor) {
-        editor.ui.addButton("UploadVideo", {label: "插入HTML代码", command: 'uvideo', icon: 'flash', toolbar: 'insert,10'});
+        editor.ui.addButton("UploadVideo", {label: "插入HTML代码", command: 'uvideo', icon: 'creatediv', toolbar: 'insert,10'});
         editor.addCommand('uvideo', {
             exec: function (editor) {
                 layer.prompt({title: '插入HTML代码', formType: 2, area: ['600px', '300px']}, function (html, index) {
                     let element = CKEDITOR.dom.element.createFromHtml('<div data-type="insert-html">' + html + '</div>');
-                    editor.insertElement(element);
-                    layer.close(index);
+                    editor.insertElement(element), layer.close(index);
                 });
             }
         });
