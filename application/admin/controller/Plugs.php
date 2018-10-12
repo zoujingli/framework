@@ -86,7 +86,7 @@ class Plugs extends Controller
         }
         $md5 = str_split(md5_file($file->getPathname()), 16);
         $ext = strtolower(pathinfo($file->getInfo('name'), 4));
-        $name = join($md5) . "." . (empty($ext) ? 'tmp' : $ext);
+        $name = join('/', $md5) . "." . (empty($ext) ? 'tmp' : $ext);
         $result = File::save($name, file_get_contents($file->getPathname()));
         return json(['uploaded' => true, 'url' => $result['url'], 'filename' => $file->getInfo('name')]);
     }
