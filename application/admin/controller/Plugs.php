@@ -84,9 +84,9 @@ class Plugs extends Controller
         if (!$file->checkExt(strtolower(sysconf('storage_local_exts')))) {
             return json(['uploaded' => false, 'error' => ['message' => '文件上传类型受限']]);
         }
-        $md5 = md5_file($file->getPathname());
+        $md5 = str_split(md5_file($file->getPathname()), 16);
         $ext = strtolower(pathinfo($file->getInfo('name'), 4));
-        $name = date('Ymd') . "/{$md5}." . (empty($ext) ? 'tmp' : $ext);
+        $name = join($md5) . "." . (empty($ext) ? 'tmp' : $ext);
         $result = File::save($name, file_get_contents($file->getPathname()));
         return json(['uploaded' => true, 'url' => $result['url'], 'filename' => $file->getInfo('name')]);
     }
