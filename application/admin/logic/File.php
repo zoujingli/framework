@@ -43,9 +43,7 @@ class File
     public static function __callStatic($name, $arguments)
     {
         $class = self::instance(sysconf('storage_type'));
-        if (method_exists($class, $name)) {
-            return call_user_func_array([$class, $name], $arguments);
-        }
+        if (method_exists($class, $name)) return call_user_func_array([$class, $name], $arguments);
         throw new \think\Exception("File driver method not exists: " . get_class($class) . "->{$name}");
     }
 
@@ -92,11 +90,7 @@ class File
         if (empty($mines)) {
             $content = file_get_contents('http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types');
             preg_match_all('#^([^\s]{2,}?)\s+(.+?)$#ism', $content, $matches, PREG_SET_ORDER);
-            foreach ($matches as $match) {
-                foreach (explode(" ", $match[2]) as $ext) {
-                    $mines[$ext] = $match[1];
-                }
-            }
+            foreach ($matches as $match) foreach (explode(" ", $match[2]) as $ext) $mines[$ext] = $match[1];
             cache('all_ext_mine', $mines);
         }
         return $mines;
