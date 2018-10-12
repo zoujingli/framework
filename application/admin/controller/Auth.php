@@ -55,16 +55,12 @@ class Auth extends Controller
             case 'get': // 获取权限配置
                 $nodes = \app\admin\logic\Auth::get();
                 $checked = Db::name('SystemAuthNode')->where(['auth' => $auth])->column('node');
-                foreach ($nodes as &$node) {
-                    $node['checked'] = in_array($node['node'], $checked);
-                }
+                foreach ($nodes as &$node) $node['checked'] = in_array($node['node'], $checked);
                 $data = $this->_apply_filter(Data::arr2tree($nodes, 'node', 'pnode', '_sub_'));
                 return json(['code' => '1', 'data' => $data]);
             case 'save': // 保存权限配置
                 list($post, $data) = [$this->request->post(), []];
-                foreach (isset($post['nodes']) ? $post['nodes'] : [] as $node) {
-                    $data[] = ['auth' => $auth, 'node' => $node];
-                }
+                foreach (isset($post['nodes']) ? $post['nodes'] : [] as $node) $data[] = ['auth' => $auth, 'node' => $node];
                 Db::name('SystemAuthNode')->where(['auth' => $auth])->delete();
                 Db::name('SystemAuthNode')->insertAll($data);
                 return json(['code' => '1', 'info' => '节点授权更新成功！']);
@@ -81,11 +77,8 @@ class Auth extends Controller
      */
     private function _apply_filter($nodes, $level = 1)
     {
-        foreach ($nodes as $key => $node) {
-            if (!empty($node['_sub_']) && is_array($node['_sub_'])) {
-                $node[$key]['_sub_'] = $this->_apply_filter($node['_sub_'], $level + 1);
-            }
-        }
+        foreach ($nodes as $key => $node) if (!empty($node['_sub_']) && is_array($node['_sub_']))
+            $node[$key]['_sub_'] = $this->_apply_filter($node['_sub_'], $level + 1);
         return $nodes;
     }
 
