@@ -50,7 +50,7 @@ class Menu extends Controller
     {
         foreach ($data as &$vo) {
             if ($vo['url'] !== '#') {
-                $vo['url'] = url($vo['url']) . (empty($vo['params']) ? '' : "?{$vo['params']}");
+                $vo['url'] = url($vo['url']) . empty($vo['params']) ? '' : "?{$vo['params']}";
             }
             $vo['ids'] = join(',', Data::getArrSubIds($data, $vo['id']));
         }
@@ -89,31 +89,16 @@ class Menu extends Controller
             $_menus = Db::name($this->table)->where(['status' => '1'])->order('sort asc,id asc')->select();
             $_menus[] = ['title' => '顶级菜单', 'id' => '0', 'pid' => '-1'];
             $menus = Data::arr2table($_menus);
-            foreach ($menus as $key => &$menu) {
-                if (substr_count($menu['path'], '-') > 3) {
-                    unset($menus[$key]);
-                    continue;
-                }
-                if (isset($vo['pid'])) {
-                    $current_path = "-{$vo['pid']}-{$vo['id']}";
-                    if ($vo['pid'] !== '' && (stripos("{$menu['path']}-", "{$current_path}-") !== false || $menu['path'] === $current_path)) {
-                        unset($menus[$key]);
-                        continue;
-                    }
-                }
-            }
-            // 设置上级菜单
-            if (!isset($vo['pid']) && $this->request->get('pid', '0')) {
-                $vo['pid'] = $this->request->get('pid', '0');
-            }
+            foreach ($menus as $key => &$menu) if (substr_count($menu['path'], '-') > 3) unset($menus[$key]); # 移除三级以下的菜单
+            elseif (isset($vo['pid']) && $vo['pid'] !== '' && $cur = "-{$vo['pid']}-{$vo['id']}")
+                if (stripos("{$menu['path']}-", "{$cur}-") !== false || $menu['path'] === $cur) unset($menus[$key]); # 移除与自己相关联的菜单
+            // 选择自己的上级菜单
+            if (!isset($vo['pid']) && $this->request->get('pid', '0')) $vo['pid'] = $this->request->get('pid', '0');
             // 读取系统功能节点
             $nodes = \app\admin\logic\Auth::get();
             foreach ($nodes as $key => $node) {
-                if (empty($node['is_menu'])) {
-                    unset($nodes[$key]);
-                }
-                unset($nodes[$key]['pnode'], $nodes[$key]['is_login']);
-                unset($nodes[$key]['is_menu'], $nodes[$key]['is_auth']);
+                if (empty($node['is_menu'])) unset($nodes[$key]);
+                unset($nodes[$key]['pnode'], $nodes[$key]['is_login'], $nodes[$key]['is_menu'], $nodes[$key]['is_auth']);
             }
             $this->assign(['nodes' => array_values($nodes), 'menus' => $menus]);
         }
