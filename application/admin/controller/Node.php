@@ -42,9 +42,7 @@ class Node extends Controller
         $this->nodes = Data::arr2table($nodes, 'node', 'pnode');
         foreach ($this->nodes as $node) {
             $pnode = explode('/', $node['node'])[0];
-            if ($node['node'] === $pnode) {
-                $groups[$pnode]['node'] = $node;
-            }
+            if ($node['node'] === $pnode) $groups[$pnode]['node'] = $node;
             $groups[$pnode]['list'][] = $node;
         }
         $this->groups = $groups;
