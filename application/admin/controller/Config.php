@@ -38,15 +38,10 @@ class Config extends Controller
     public function info()
     {
         $this->title = '系统参数配置';
-        if ($this->request->isGet()) {
-            return $this->fetch();
-        }
-        if ($this->request->isPost()) {
-            foreach ($this->request->post() as $key => $vo) {
-                sysconf($key, $vo);
-            }
-            $this->success('配置系统参数成功！');
-        }
+        if ($this->request->isGet()) return $this->fetch();
+        foreach ($this->request->post() as $k => $v) sysconf($k, $v);
+        $this->success('配置系统参数成功！');
+
     }
 
     /**
@@ -58,15 +53,9 @@ class Config extends Controller
     public function file()
     {
         $this->title = '文件存储配置';
-        if ($this->request->isGet()) {
-            return $this->fetch();
-        }
-        if ($this->request->isPost()) {
-            foreach ($this->request->post() as $key => $vo) {
-                sysconf($key, $vo);
-            }
-            $this->success('配置系统参数成功！');
-        }
+        if ($this->request->isGet()) return $this->fetch();
+        foreach ($this->request->post() as $k => $v) sysconf($k, $v);
+        $this->success('配置系统参数成功！');
     }
 
 }
