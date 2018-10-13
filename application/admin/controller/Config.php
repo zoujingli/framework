@@ -40,7 +40,7 @@ class Config extends Controller
         $this->title = '系统参数配置';
         if ($this->request->isGet()) return $this->fetch();
         foreach ($this->request->post() as $k => $v) sysconf($k, $v);
-        $this->success('配置系统参数成功！');
+        $this->success('系统参数配置保存成功！');
 
     }
 
@@ -55,7 +55,7 @@ class Config extends Controller
         $this->title = '文件存储配置';
         if ($this->request->isGet()) return $this->fetch();
         foreach ($this->request->post() as $k => $v) sysconf($k, $v);
-        $this->success('配置系统参数成功！');
+        $this->success('文件存储配置保存成功！');
     }
 
 }

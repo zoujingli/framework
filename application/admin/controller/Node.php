@@ -72,11 +72,9 @@ class Node extends Controller
     {
         if ($this->request->isPost()) {
             list($post, $data) = [$this->request->post(), []];
-            foreach ($post['list'] as $vo) {
-                if (!empty($vo['node'])) {
-                    $data['node'] = $vo['node'];
-                    $data[$vo['name']] = $vo['value'];
-                }
+            foreach ($post['list'] as $vo) if (!empty($vo['node'])) {
+                $data['node'] = $vo['node'];
+                $data[$vo['name']] = $vo['value'];
             }
             empty($data) || Data::save($this->table, $data, 'node');
             $this->success('参数保存成功！', '');

@@ -53,9 +53,7 @@ class Local extends File
      */
     public function url($name)
     {
-        if ($this->has($name) === false) {
-            return false;
-        }
+        if ($this->has($name) === false) return false;
         return $this->base($name);
     }
 

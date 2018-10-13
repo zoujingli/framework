@@ -51,13 +51,12 @@ class Goods extends Controller
      */
     protected function _index_page_filter(&$data)
     {
-        $where = [['status', 'eq', '1'], ['goods_id', 'in', array_unique(array_column($data, 'id'))]];
-        $list = Db::name('StoreGoodsList')->where($where)->select();
-        $data = array_map(function ($vo) use ($list) {
+        $where = [['goods_id', 'in', array_unique(array_column($data, 'id'))]];
+        $list = Db::name('StoreGoodsList')->where('status', '1')->where($where)->select();
+        foreach ($data as &$vo) {
             $vo['list'] = [];
             foreach ($list as $goods) if ($goods['goods_id'] === $vo['id']) array_push($vo['list'], $goods);
-            return $vo;
-        }, $data);
+        }
     }
 
 
@@ -88,8 +87,8 @@ class Goods extends Controller
     protected function _form_filter(&$data)
     {
         if ($this->request->isGet() && !empty($data['id'])) {
-            $defaultValues = Db::name('StoreGoodsList')->where(['goods_id' => $data['id']])
-                ->column('goods_spec,goods_id,status,price_market market,price_selling selling,number_virtual virtual');
+            $fields = 'goods_spec,goods_id,status,price_market market,price_selling selling,number_virtual virtual';
+            $defaultValues = Db::name('StoreGoodsList')->where(['goods_id' => $data['id']])->column($fields);
             $this->assign('defaultValues', json_encode($defaultValues, JSON_UNESCAPED_UNICODE));
         }
     }
@@ -106,16 +105,14 @@ class Goods extends Controller
         if ($result && $this->request->isPost()) {
             $goods_id = empty($data['id']) ? Db::name($this->table)->getLastInsID() : $data['id'];
             Db::name('StoreGoodsList')->where(['goods_id' => $goods_id])->update(['status' => '0']);
-            foreach (json_decode($data['lists'], true) as $vo) {
-                Data::save('StoreGoodsList', [
-                    'goods_id'       => $goods_id,
-                    'goods_spec'     => $vo[0]['key'],
-                    'price_market'   => $vo[0]['market'],
-                    'price_selling'  => $vo[0]['selling'],
-                    'number_virtual' => $vo[0]['virtual'],
-                    'status'         => $vo[0]['status'] ? 1 : 0,
-                ], 'goods_spec', ['goods_id' => $goods_id]);
-            }
+            foreach (json_decode($data['lists'], true) as $vo) Data::save('StoreGoodsList', [
+                'goods_id'       => $goods_id,
+                'goods_spec'     => $vo[0]['key'],
+                'price_market'   => $vo[0]['market'],
+                'price_selling'  => $vo[0]['selling'],
+                'number_virtual' => $vo[0]['virtual'],
+                'status'         => $vo[0]['status'] ? 1 : 0,
+            ], 'goods_spec', ['goods_id' => $goods_id]);
             $this->success('商品编辑成功！', 'javascript:history.back()');
         }
     }

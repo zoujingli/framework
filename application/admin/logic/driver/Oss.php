@@ -15,7 +15,6 @@
 namespace app\admin\logic\driver;
 
 use app\admin\logic\File;
-use OSS\Core\OssException;
 use OSS\OssClient;
 use think\facade\Log;
 
@@ -67,9 +66,7 @@ class Oss extends File
      */
     public function url($name)
     {
-        if ($this->has($name) === false) {
-            return false;
-        }
+        if ($this->has($name) === false) return false;
         return $this->base($name);
     }
 
@@ -112,8 +109,6 @@ class Oss extends File
      * @param string $name
      * @param string $content
      * @return array|null
-     * @throws \think\Exception
-     * @throws \think\exception\PDOException
      */
     public function save($name, $content)
     {
@@ -122,15 +117,11 @@ class Oss extends File
             $ossClient = new OssClient(sysconf('storage_oss_keyid'), sysconf('storage_oss_secret'), $endpoint, true);
             $result = $ossClient->putObject(sysconf('storage_oss_bucket'), $name, $content);
             $baseUrl = explode('://', $result['oss-request-url'])[1];
-            if (strtolower(sysconf('storage_oss_is_https')) === 'http') {
-                $site_url = "http://{$baseUrl}";
-            } elseif (strtolower(sysconf('storage_oss_is_https')) === 'https') {
-                $site_url = "https://{$baseUrl}";
-            } else {
-                $site_url = "//{$baseUrl}";
-            }
+            if (strtolower(sysconf('storage_oss_is_https')) === 'http') $site_url = "http://{$baseUrl}";
+            elseif (strtolower(sysconf('storage_oss_is_https')) === 'https') $site_url = "https://{$baseUrl}";
+            else $site_url = "//{$baseUrl}";
             return ['file' => $name, 'hash' => $result['content-md5'], 'key' => $name, 'url' => $site_url];
-        } catch (OssException $err) {
+        } catch (\Exception $err) {
             Log::error('阿里云OSS文件上传失败, ' . $err->getMessage());
         }
         return null;

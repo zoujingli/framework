@@ -48,9 +48,7 @@ function sysconf($name, $value = null)
         list($row, $data) = [['name' => $name, 'value' => $value], []];
         return \library\tools\Data::save('SystemConfig', $row, 'name');
     }
-    if (empty($data)) {
-        $data = \think\Db::name('SystemConfig')->column('name,value');
-    }
+    if (empty($data)) $data = \think\Db::name('SystemConfig')->column('name,value');
     return isset($data[$name]) ? $data[$name] : '';
 }
 

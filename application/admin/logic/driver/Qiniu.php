@@ -66,9 +66,7 @@ class Qiniu extends File
      */
     public function url($name)
     {
-        if ($this->has($name) === false) {
-            return false;
-        }
+        if ($this->has($name) === false) return false;
         return self::base($name);
     }
 
@@ -85,24 +83,16 @@ class Qiniu extends File
         $isHttps = !!sysconf('storage_qiniu_is_https');
         switch ($region) {
             case '华东':
-                if ($isHttps) {
-                    return $client ? 'https://upload.qiniup.com' : 'https://upload.qiniup.com';
-                }
+                if ($isHttps) return $client ? 'https://upload.qiniup.com' : 'https://upload.qiniup.com';
                 return $client ? 'http://upload.qiniup.com' : 'http://upload.qiniup.com';
             case '华北':
-                if ($isHttps) {
-                    return $client ? 'https://upload-z1.qiniup.com' : 'https://up-z1.qiniup.com';
-                }
+                if ($isHttps) return $client ? 'https://upload-z1.qiniup.com' : 'https://up-z1.qiniup.com';
                 return $client ? 'http://upload-z1.qiniup.com' : 'http://up-z1.qiniup.com';
             case '北美':
-                if ($isHttps) {
-                    return $client ? 'https://upload-na0.qiniup.com' : 'https://up-na0.qiniup.com';
-                }
+                if ($isHttps) return $client ? 'https://upload-na0.qiniup.com' : 'https://up-na0.qiniup.com';
                 return $client ? 'http://upload-na0.qiniup.com' : 'http://up-na0.qiniup.com';
             case '华南':
-                if ($isHttps) {
-                    return $client ? 'https://upload-z2.qiniup.com' : 'https://up-z2.qiniup.com';
-                }
+                if ($isHttps) return $client ? 'https://upload-z2.qiniup.com' : 'https://up-z2.qiniup.com';
                 return $client ? 'http://upload-z2.qiniup.com' : 'http://up-z2.qiniup.com';
         }
         throw new \think\Exception('未配置七牛云存储区域');

@@ -77,8 +77,9 @@ class Auth extends Controller
      */
     private function _apply_filter($nodes, $level = 1)
     {
-        foreach ($nodes as $key => $node) if (!empty($node['_sub_']) && is_array($node['_sub_']))
+        foreach ($nodes as $key => $node) if (!empty($node['_sub_']) && is_array($node['_sub_'])) {
             $node[$key]['_sub_'] = $this->_apply_filter($node['_sub_'], $level + 1);
+        }
         return $nodes;
     }
 
