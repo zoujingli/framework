@@ -38,20 +38,22 @@
                 商品规格<span class="color-desc font-s10">（最多支持3个规格分组，每个分组最多支持5个规格属性）</span>
             </h3>
             <div ng-repeat="x in specs track by $index" style="display:none" class="margin-bottom-10" ng-class="{true:'layui-show'}[specs.length>0]">
-                <div class="goods-spec-box">
-                    <span class="text-center goods-spec-title">分组{{ $index+1 }}</span>
+                <div class="goods-spec-box padding-10 margin-0 relative" style="background:#ddd">
+                    <span class="text-center goods-spec-title">名称</span>
                     <input ng-model="x.name" required placeholder="请输入分组">
-                    <a ng-if="mode=='add'" class="layui-btn layui-btn-sm layui-btn-primary goods-spec-btn" ng-click="delSpecRow(specs,$index)">删除</a>
-                    <a ng-if="mode=='add'" class="layui-btn layui-btn-sm layui-btn-primary goods-spec-btn" ng-class="{false:'layui-bg-gray'}[$index>0]" ng-click="upSpecRow(specs,$index)">上移</a>
-                    <a ng-if="mode=='add'" class="layui-btn layui-btn-sm layui-btn-primary goods-spec-btn" ng-class="{false:'layui-bg-gray'}[$index<specs.length-1]" ng-click="dnSpecRow(specs,$index)">下移</a>
+                    <div class="fa-pull-right">
+                        <a ng-if="mode=='add'" class="layui-btn layui-btn-sm layui-btn-primary goods-spec-btn" ng-class="{false:'layui-bg-gray'}[$index>0]" ng-click="upSpecRow(specs,$index)">上移</a>
+                        <a ng-if="mode=='add'" class="layui-btn layui-btn-sm layui-btn-primary goods-spec-btn" ng-class="{false:'layui-bg-gray'}[$index<specs.length-1]" ng-click="dnSpecRow(specs,$index)">下移</a>
+                        <a ng-if="mode=='add' && specs.length>1" class="layui-btn layui-btn-sm layui-btn-danger goods-spec-btn" ng-click="delSpecRow(specs,$index)">删除</a>
+                    </div>
                 </div>
-                <div class="block" ng-if="x.list && x.list.length > 0">
-                    <label class="goods-spec-box inline-block nowrap" ng-repeat="xx in x.list">
+                <div class="block padding-10 layui-bg-gray" ng-if="x.list && x.list.length > 0">
+                    <label class="goods-spec-box inline-block nowrap margin-bottom-0" ng-repeat="xx in x.list">
                         <input type="checkbox" ng-model="xx.check" ng-click="xx.check=checkListChecked(x.list,$event.target.checked)">
                         <input type="text" ng-model="xx.name" ng-keyup="xx.name=$event.target.value" required placeholder="请输入规格">
                         <a ng-if="x.list.length>1" ng-click="x.list=delSpecVal(x.list,$index)" class="layui-icon layui-icon-close font-s12 goods-spec-close"></a>
                     </label>
-                    <a style="margin:-10px 0 0 0!important;" class="layui-btn layui-btn-sm layui-btn-primary goods-spec-btn" ng-if="x.list.length<5" ng-click="addSpecVal(x.list)">增加</a>
+                    <a class="layui-btn layui-btn-sm layui-btn-primary goods-spec-btn" ng-if="x.list.length<5" ng-click="addSpecVal(x.list)">增加</a>
                 </div>
             </div>
             <a ng-if="mode=='add'&&specs.length<3" class="layui-btn layui-btn-sm layui-btn-primary" ng-click="addSpecRow(specs)">增加分组</a>
@@ -106,9 +108,9 @@
         width: 40px;
         color: #fff;
         height: 28px;
-        line-height: 28px;
         position: absolute;
-        background: #2F4056;
+        background: #999;
+        line-height: 28px;
     }
 
     .goods-spec-close {
@@ -186,8 +188,8 @@
         angular.bootstrap(document.getElementById(app.name), [app.name]);
 
         function callback($rootScope) {
-            $rootScope.mode = '{$vo.id?"edit":"add"}';
-            $rootScope.specs = angular.fromJson('{$vo.specs|raw|default="[]"}');
+            $rootScope.mode = '{$vo.id ? "edit" : "add"}';
+            $rootScope.specs = angular.fromJson('{$vo.specs|raw|default=0}') || [{name: '默认分组', list: [{name: '默认规格', check: true}]}];
             let defaultValues = angular.fromJson('{$defaultValues|raw|default=0}') || {};
             // 返回商品列表
             $rootScope.hsitoryBack = function () {
@@ -196,8 +198,8 @@
                 });
             };
             // 读取默认值
-            $rootScope.getValue = function (key, type, defaultValue) {
-                return (defaultValues[key] || {type: '0.0'})[type] || defaultValue;
+            let getValue = function (key, callback) {
+                if (typeof callback === 'function') return callback(defaultValues[key] || {});
             };
             // 设置默认值
             $rootScope.setValue = function (key, type, value, call) {
@@ -209,38 +211,49 @@
             $rootScope.specsTreeNava = [];
             // 当前商品规格发生变化时重新计算规格列表
             $rootScope.$watch('specs', function () {
-                let list = [], nava = [], sarr = [[]];
+                let list = [], nava = [], table = [[]];
                 let data = angular.fromJson(angular.toJson($rootScope.specs));
                 // 过滤无效记录
                 for (let o of data) {
                     let tmp = [];
                     for (let x of o.list) (x.check && typeof x.name === 'string' && x.name.length > 0) && tmp.push(x);
-                    if (tmp.length > 0) {
-                        for (let x of tmp) x.group = o.name, x.rowspan = 1, x.show = true;
-                        list.push(tmp), nava.push(o.name);
-                    }
+                    if (tmp.length > 0) for (let x of tmp) x.group = o.name, x.rowspan = 1, x.show = true;
+                    if (tmp.length > 0) list.push(tmp), nava.push(o.name);
                     $rootScope.specsTreeNava = nava;
                 }
                 // 表格交叉
                 for (let i in list) {
-                    let tarr = [];
-                    for (let j in sarr) for (let k in list[i]) tarr.push(sarr[j].concat(list[i][k]));
-                    sarr = tarr;
+                    let temp = [];
+                    for (let j in table) for (let k in list[i]) temp.push(table[j].concat(list[i][k]));
+                    table = temp;
                 }
                 // 表格合并
-                list = angular.fromJson(angular.toJson(sarr));
+                list = angular.fromJson(angular.toJson(table));
                 for (let row in list) {
-                    let key = [];
+                    let key = [], _key = '';
                     for (let td in list[row]) key.push(list[row][td].group + '::' + list[row][td].name);
                     for (let td in list[row]) {
-                        list[row][0].key = key.join(';;');
-                        list[row][0].virtual = $rootScope.getValue(list[row][0].key, 'virtual', '0');
-                        list[row][0].market = $rootScope.getValue(list[row][0].key, 'market', '0.00');
-                        list[row][0].selling = $rootScope.getValue(list[row][0].key, 'selling', '0.00');
-                        list[row][0].status = !!$rootScope.getValue(list[row][0].key, 'status', false);
+                        if (_key.length === 0) {
+                            list[row][0].key = _key = key.join(';;');
+                            list[row][0].virtual = getValue(_key, function (data) {
+                                return data.virtual || '0';
+                            });
+                            list[row][0].market = getValue(_key, function (data) {
+                                return data.market || '0.00';
+                            });
+                            list[row][0].selling = getValue(_key, function (data) {
+                                return data.selling || '0.00';
+                            });
+                            list[row][0].status = getValue(_key, function (data) {
+                                return !!(typeof data.status !== 'undefined' ? data.status : true);
+                            });
+                        }
                         // 表格TD处理
                         for (let dow = 1 + parseInt(row); dow < list.length; dow++)
-                            if (list[row][td].name === list[dow][td].name) (list[row][td].rowspan++, list[dow][td].show = false); else break;
+                            if (list[row][td].name === list[dow][td].name) {
+                                list[row][td].rowspan++;
+                                list[dow][td].show = false;
+                            } else break;
                     }
                 }
                 $rootScope.specsTreeData = list;
@@ -276,9 +289,9 @@
             };
             // 移除整行规格分组
             $rootScope.delSpecRow = function (data, $index) {
-                let temp = [];
-                for (let i in data) if (parseInt(i) !== parseInt($index)) temp.push(data[i]);
-                return $rootScope.specs = temp;
+                let tmp = [];
+                for (let i in data) if (parseInt(i) !== parseInt($index)) tmp.push(data[i]);
+                return $rootScope.specs = tmp;
             };
             // 增加分组的属性
             $rootScope.addSpecVal = function (list) {
