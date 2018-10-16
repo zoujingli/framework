@@ -1,2 +1,53 @@
-# framework
-基于ThinkPHP开发框架
+framework for ThinkPHP5.1
+--
+## 大道至简 · 悟在天成
+
+* `framework`是一个基于`ThinkPHP5.1`开发的后台管理系统，集成常用功能及封装。
+* 项目安装及二次开发可以参考`ThinkPHP`官方文档，数据库文件摆放在项目根目录下。
+> *注意：*
+>* 项目测试需要自行搭建环境并导入数据库（数据库配置文件`cofnig/database.php`）
+>* 如果操作提示“测试系统禁止操作”等字样，需要删除项目演示路由配置(`route/demo.php`)或清空路由文件。
+>* 当前版本使用`ThinkPHP5.1.x`，对PHP版本标注不低于`PHP5.6`，具体请阅读`ThinkPHP`官方文档。
+
+Documentation
+--
+开发前认真看看文档会对您的开发有帮助哦！
+
+PHP开发技术交流（QQ群 513350915）
+
+[![PHP微信开发群 (SDK)](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=ae25cf789dafbef62e50a980ffc31242f150bc61a61164458216dd98c411832a) 
+
+
+
+Repositorie
+--
+ framework 为开源项目，允许把它用于任何地方，不受任何约束，欢迎 fork 项目。
+* GitHub 托管地址：https://github.com/zoujingli/framework
+
+Environment
+---
+>1. PHP 版本不低于 PHP5.6，推荐使用 PHP7 以达到最优效果；
+>2. 需开启 PATHINFO，不再支持 ThinkPHP 的 URL 兼容模式运行（源于如何优雅的展示）。
+
+
+* Apache
+
+```xml
+<IfModule mod_rewrite.c>
+  Options +FollowSymlinks -Multiviews
+  RewriteEngine On
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]
+</IfModule>
+```
+
+Copyright
+--
+* framework 基于`MIT`协议发布，任何人可以用在任何地方，不受约束
+* framework 部分代码来自互联网，若有异议，可以联系作者进行删除
+
+
+Sponsor
+--
+![赞助](http://zoujingli.oschina.io/static/pay.png)
