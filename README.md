@@ -22,8 +22,8 @@ Repositorie
 --
  framework 为MIT协议开源项目，允许把它用于任何地方，不受任何约束，欢迎 fork 项目。
  部分代码来自互联网，若有异议可以联系作者进行删除。
- >* `Gitee`仓库地址：https://gitee.com/zoujingli/framework
- >* `GitHub`仓库地址：https://github.com/zoujingli/framework
+ >* Gitee仓库地址：https://gitee.com/zoujingli/framework
+ >* GitHub仓库地址：https://github.com/zoujingli/framework
 
 Environment
 ---
