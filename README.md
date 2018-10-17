@@ -22,7 +22,9 @@ PHP 开发技术交流（ QQ 群 513350915）
 代码仓库
 --
  framework 为 MIT 协议开源项目，安装使用或二次开发不受约束，欢迎 fork 项目。
+ 
  部分代码来自互联网，若有异议可以联系作者进行删除。
+ 
  * 在线体验地址：https://framework.thinkadmin.top
  * Gitee仓库地址：https://gitee.com/zoujingli/framework
  * GitHub仓库地址：https://github.com/zoujingli/framework
