@@ -5,6 +5,9 @@
   "autoload": {"psr-4": {"app\\": "application"}},
   "authors": [{"name": "Anyon", "email": "zoujingli@qq.com"}],
   "description": "Rapid development framework based on ThinkPHP5",
+  "repositories": {
+    "packagist": {"type": "composer", "url": "https://packagist.laravel-china.org"}
+  },
   "require": {
     "php": ">=5.6",
     "ext-curl": "*",
@@ -16,8 +19,5 @@
     "aliyuncs/oss-sdk-php": "^2.2",
     "zoujingli/think-library": "^1.1",
     "zoujingli/weopen-developer": "^1.0"
-  },
-  "repositories": {
-    "packagist": {"type": "composer", "url": "https://packagist.laravel-china.org"}
   }
 }
