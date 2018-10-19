@@ -41,9 +41,7 @@ class Cors
      */
     public static function getSessionToken()
     {
-        if (PHP_SESSION_ACTIVE !== session_status()) {
-            Session::init(config('session.'));
-        }
+        if (PHP_SESSION_ACTIVE !== session_status()) Session::init(config('session.'));
         return Crypt::encode(session_name() . '=' . session_id());
     }
 
@@ -52,15 +50,11 @@ class Cors
      */
     public static function setSessionToken()
     {
-        if (PHP_SESSION_ACTIVE !== session_status()) {
-            Session::init(config('session.'));
-        }
+        if (PHP_SESSION_ACTIVE !== session_status()) Session::init(config('session.'));
         try {
             if ($token = app('request')->header('token', input('token', ''))) {
                 list($name, $value) = explode('=', Crypt::decode($token));
-                if (!empty($value) && session_name() === $name) {
-                    session_id($value);
-                }
+                if (!empty($value) && session_name() === $name) session_id($value);
             }
         } catch (\Exception $e) {
             Log::error(__METHOD__ . " : {$e->getMessage()}");
@@ -78,7 +72,7 @@ class Cors
             header('Access-Control-Allow-Methods:GET,POST,OPTIONS');
             header('Access-Control-Allow-Origin:' . app('request')->header('origin', '*'));
             header('Access-Control-Allow-Headers:' . join(',', self::$allowHeader));
-            header('Access-Control-Expose-Headers:' . join(',', self::$allowHeader));
+            header('Access-Control-Expose-Headers:Token');
             header('Content-Type:text/plain charset=UTF-8');
             header('Access-Control-Max-Age:1728000');
             header('HTTP/1.0 204 No Content');
@@ -95,11 +89,11 @@ class Cors
     public static function getRequestHeader()
     {
         return [
-            'Access-Control-Allow-Credentials' => "true",
+            'Access-Control-Allow-Credentials' => 'true',
             'Access-Control-Allow-Methods'     => 'GET,POST,OPTIONS',
             'Access-Control-Allow-Origin'      => app('request')->header('origin', '*'),
             'Access-Control-Allow-Headers'     => join(',', self::$allowHeader),
-            'Access-Control-Expose-Headers'    => join(',', self::$allowHeader),
+            'Access-Control-Expose-Headers'    => 'Token',
             'Token'                            => self::getSessionToken(),
         ];
     }

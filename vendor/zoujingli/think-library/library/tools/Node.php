@@ -44,18 +44,12 @@ class Node
     {
         foreach (self::scanDir($dir) as $file) {
             list($matches, $filename) = [[], str_replace(DIRECTORY_SEPARATOR, '/', $file)];
-            if (!preg_match('|/(\w+)/controller/(.+)|', $filename, $matches)) {
-                continue;
-            }
+            if (!preg_match('|/(\w+)/controller/(.+)|', $filename, $matches)) continue;
             $className = env('app_namespace') . str_replace('/', '\\', substr($matches[0], 0, -4));
-            if (class_exists($className)) {
-                foreach (get_class_methods($className) as $funcName) {
-                    if (strpos($funcName, '_') === 0 || $funcName === 'initialize') {
-                        continue;
-                    }
-                    $controller = str_replace('/', '.', substr($matches[2], 0, -4));
-                    $nodes[] = self::parseString("{$matches[1]}/{$controller}") . '/' . strtolower($funcName);
-                }
+            if (class_exists($className)) foreach (get_class_methods($className) as $funcName) {
+                if (strpos($funcName, '_') === 0 || $funcName === 'initialize') continue;
+                $controller = str_replace('/', '.', substr($matches[2], 0, -4));
+                $nodes[] = self::parseString("{$matches[1]}/{$controller}") . '/' . strtolower($funcName);
             }
         }
         return $nodes;
@@ -71,9 +65,7 @@ class Node
         $nodes = [];
         foreach (explode('/', $node) as $str) {
             $dots = [];
-            foreach (explode('.', $str) as $dot) {
-                $dots[] = strtolower(trim(preg_replace("/[A-Z]/", "_\\0", $dot), "_"));
-            }
+            foreach (explode('.', $str) as $dot) $dots[] = strtolower(trim(preg_replace("/[A-Z]/", "_\\0", $dot), "_"));
             $nodes[] = join('.', $dots);
         }
         return trim(join('/', $nodes), '/');
@@ -88,15 +80,10 @@ class Node
      */
     public static function scanDir($dir, $data = [], $ext = 'php')
     {
-        foreach (scandir($dir) as $_dir) {
-            if (strpos($_dir, '.') !== 0) {
-                $tmpPath = realpath($dir . DIRECTORY_SEPARATOR . $_dir);
-                if (is_dir($tmpPath)) {
-                    $data = array_merge($data, self::scanDir($tmpPath));
-                } elseif (pathinfo($tmpPath, 4) === $ext) {
-                    $data[] = $tmpPath;
-                }
-            }
+        foreach (scandir($dir) as $_dir) if (strpos($_dir, '.') !== 0) {
+            $tmpPath = realpath($dir . DIRECTORY_SEPARATOR . $_dir);
+            if (is_dir($tmpPath)) $data = array_merge($data, self::scanDir($tmpPath));
+            elseif (pathinfo($tmpPath, 4) === $ext) $data[] = $tmpPath;
         }
         return $data;
     }

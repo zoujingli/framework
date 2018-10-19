@@ -175,6 +175,7 @@ return array(
     'app\\admin\\controller\\User' => $baseDir . '/application/admin/controller/User.php',
     'app\\admin\\logic\\Auth' => $baseDir . '/application/admin/logic/Auth.php',
     'app\\admin\\logic\\File' => $baseDir . '/application/admin/logic/File.php',
+    'app\\admin\\logic\\Logs' => $baseDir . '/application/admin/logic/Logs.php',
     'app\\admin\\logic\\driver\\Local' => $baseDir . '/application/admin/logic/driver/Local.php',
     'app\\admin\\logic\\driver\\Oss' => $baseDir . '/application/admin/logic/driver/Oss.php',
     'app\\admin\\logic\\driver\\Qiniu' => $baseDir . '/application/admin/logic/driver/Qiniu.php',

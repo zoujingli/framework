@@ -99,9 +99,7 @@ class Http
      */
     private static function build($data, $needBuild = true)
     {
-        if (!is_array($data)) {
-            return $data;
-        }
+        if (!is_array($data)) return $data;
         foreach ($data as $key => $value) {
             if (is_string($value) && class_exists('CURLFile', false) && stripos($value, '@') === 0) {
                 if (($filename = realpath(trim($value, '@'))) && file_exists($filename)) {

@@ -61,9 +61,7 @@ class Input extends Logic
      */
     private function parseData($data)
     {
-        if (is_array($data)) {
-            return $data;
-        }
+        if (is_array($data)) return $data;
         if (is_string($data)) {
             $result = [];
             foreach (explode(',', $data) as $field) {
@@ -87,9 +85,7 @@ class Input extends Logic
     public function init()
     {
         $validate = \think\Validate::make($this->rule, $this->info);
-        if ($validate->check($this->data)) {
-            return $this->data;
-        }
+        if ($validate->check($this->data)) return $this->data;
         $this->class->error($validate->getError());
     }
 

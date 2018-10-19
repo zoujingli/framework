@@ -100,9 +100,7 @@ class Form extends Logic
             if (false !== $this->class->_callback('_form_filter', $data, $this->where)) {
                 $result = Data::save($this->db, $data, $this->pkField, $this->where);
                 if (false !== $this->class->_callback('_form_result', $result, $data)) {
-                    if ($result !== false) {
-                        $this->class->success('恭喜, 数据保存成功!', '');
-                    }
+                    if ($result !== false) $this->class->success('恭喜, 数据保存成功!', '');
                     $this->class->error('数据保存失败, 请稍候再试!');
                 }
                 return $result;

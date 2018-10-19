@@ -75,9 +75,7 @@ class Save extends Logic
         // 主键限制处理
         if (!isset($this->where[$this->pkField]) && is_string($this->pkValue)) {
             $this->db->whereIn($this->pkField, explode(',', $this->pkValue));
-            if (isset($this->data)) {
-                unset($this->data[$this->pkField]);
-            }
+            if (isset($this->data)) unset($this->data[$this->pkField]);
         }
         // 前置回调处理
         if (false === $this->class->_callback('_save_filter', $this->db, $this->data)) {

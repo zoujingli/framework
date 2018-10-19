@@ -50,9 +50,7 @@ class Query extends Logic
     {
         $data = $this->request->$inputType();
         foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
-            if (isset($data[$field]) && $data[$field] !== '') {
-                $this->db->whereLike($field, "%{$data[$field]}%");
-            }
+            if (isset($data[$field]) && $data[$field] !== '') $this->db->whereLike($field, "%{$data[$field]}%");
         }
         return $this;
     }
@@ -67,8 +65,24 @@ class Query extends Logic
     {
         $data = $this->request->$inputType();
         foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
+            if (isset($data[$field]) && $data[$field] !== '') $this->db->where($field, "{$data[$field]}");
+        }
+        return $this;
+    }
+
+    /**
+     * 设置IN区间查询
+     * @param string $fields 查询字段
+     * @param string $split 输入分隔符
+     * @param string $inputType 输入类型 get|post
+     * @return $this
+     */
+    public function in($fields, $split = ',', $inputType = 'get')
+    {
+        $data = $this->request->$inputType();
+        foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
             if (isset($data[$field]) && $data[$field] !== '') {
-                $this->db->where($field, "{$data[$field]}");
+                $this->db->whereIn($field, explode($split, $data[$field]));
             }
         }
         return $this;
@@ -84,7 +98,7 @@ class Query extends Logic
         $this->db->where($where);
         return $this;
     }
-    
+
     /**
      * 设置DateTime区间查询
      * @param string|array $fields 查询字段

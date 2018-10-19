@@ -61,9 +61,7 @@ class Logic
     protected function apply($controller)
     {
         $this->class = $controller;
-        if (method_exists($this, 'init')) {
-            return $this->init();
-        }
+        if (method_exists($this, 'init')) return $this->init();
     }
 
     /**

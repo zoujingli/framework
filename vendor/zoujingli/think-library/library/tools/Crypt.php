@@ -30,9 +30,7 @@ class Crypt
     {
         $string = iconv('utf-8', 'gbk', $string);
         list($chars, $length) = ['', strlen($string)];
-        for ($i = 0; $i < $length; $i++) {
-            $chars .= str_pad(base_convert(ord($string[$i]), 10, 36), 2, 0, 0);
-        }
+        for ($i = 0; $i < $length; $i++) $chars .= str_pad(base_convert(ord($string[$i]), 10, 36), 2, 0, 0);
         return $chars;
     }
 
@@ -44,9 +42,7 @@ class Crypt
     public static function decode($string)
     {
         $chars = '';
-        foreach (str_split($string, 2) as $char) {
-            $chars .= chr(intval(base_convert($char, 36, 10)));
-        }
+        foreach (str_split($string, 2) as $char) $chars .= chr(intval(base_convert($char, 36, 10)));
         return iconv('gbk', 'utf-8', $chars);
     }
 
