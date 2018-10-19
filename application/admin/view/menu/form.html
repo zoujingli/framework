@@ -73,15 +73,8 @@
 
 {block name='style'}
 <style>
-    #icon-preview {
-        padding: 0 12px;
-        min-width: 45px
-    }
-
-    #icon-preview i {
-        margin: 0;
-        font-size: 1.2em;
-    }
+    #icon-preview{padding:0 12px;min-width:45px}
+    #icon-preview i{margin:0;font-size:1.2em}
 </style>
 {/block}
 
@@ -92,13 +85,11 @@
             limit: 6, highlightMatches: true,
             template: '{{ label }} <span> {{ title }} </span>',
             source: (function (subjects, data) {
-                for (var i in subjects) {
-                    data.push({
-                        value: subjects[i].node,
-                        label: subjects[i].node,
-                        title: subjects[i].title
-                    });
-                }
+                for (let i in subjects) data.push({
+                    value: subjects[i].node,
+                    label: subjects[i].node,
+                    title: subjects[i].title
+                });
                 return data;
             })(JSON.parse('{$nodes|raw|json_encode}'), [])
         });
