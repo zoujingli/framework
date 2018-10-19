@@ -40,6 +40,7 @@ class Plugs extends Controller
         $mode = $this->request->get('mode', 'one');
         $types = $this->request->get('type', 'jpg,png');
         $this->assign('mimes', File::mine($types));
+        $this->assign('name', $this->request->get('name', 'file'));
         $this->assign('field', $this->request->get('field', 'file'));
         return $this->fetch('', ['mode' => $mode, 'types' => $types, 'uptype' => $uptype]);
     }
@@ -52,7 +53,7 @@ class Plugs extends Controller
      */
     public function upload()
     {
-        $file = $this->request->file('file');
+        $file = $this->request->file($this->request->get('name', 'file'));
         if (!$file->checkExt(strtolower(sysconf('storage_local_exts')))) {
             return json(['code' => 'ERROR', 'msg' => '文件上传类型受限']);
         }
@@ -80,7 +81,7 @@ class Plugs extends Controller
      */
     public function plupload()
     {
-        $file = $this->request->file('file');
+        $file = $this->request->file($this->request->get('name', 'file'));
         if (!$file->checkExt(strtolower(sysconf('storage_local_exts')))) {
             return json(['uploaded' => false, 'error' => ['message' => '文件上传类型受限']]);
         }

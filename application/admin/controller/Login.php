@@ -35,10 +35,8 @@ class Login extends Controller
      */
     public function index()
     {
-        if ($this->request->isGet()) {
-            $this->title = '用户登录';
-            return $this->fetch();
-        }
+        $this->title = '用户登录';
+        if ($this->request->isGet()) return $this->fetch();
         // 数据输入处理
         $data = $this->_input([
             'username' => $this->request->post('username'),

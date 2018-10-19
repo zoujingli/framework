@@ -139,7 +139,8 @@ $(function () {
         // 以hash打开网页
         this.href = function (url, obj) {
             if (url !== '#') window.location.href = '#' + $.menu.parseUri(url, obj);
-            else if (obj && obj.getAttribute('data-menu-node')) $('[data-menu-node^="' + obj.getAttribute('data-menu-node') + '-"][data-open!="#"]:first').trigger('click');
+            else if (obj && obj.getAttribute('data-menu-node'))
+                $('[data-menu-node^="' + obj.getAttribute('data-menu-node') + '-"][data-open!="#"]:first').trigger('click');
         };
         // 异步加载的数据
         this.load = function (url, data, type, callback, loading, tips, time) {
@@ -530,13 +531,14 @@ $(function () {
     /*! 注册 data-file 事件行为 */
     $body.on('click', '[data-file]', function () {
         let mode = $(this).attr('data-file') || 'one';
+        let name = $(this).attr('data-name') || 'file';
         let field = $(this).attr('data-field') || 'file';
         let type = $(this).attr('data-type') || 'jpg,png';
         if (mode !== 'btn') {
             let uptype = $(this).attr('data-uptype') || '';
-            let title = $(this).attr('data-title') || '文件上传';
-            let url = window.ROOT_URL + '?s=admin/plugs/upfile.html&mode=' + mode + '&uptype=' + uptype + '&type=' + type + '&field=' + field;
-            $.form.iframe(url, title || '文件管理');
+            let param = $.param({name: name, mode: mode, uptype: uptype, type: type, field: field});
+            let url = window.ROOT_URL + '?s=admin/plugs/upfile.html&' + param;
+            $.form.iframe(url, $(this).attr('data-title') || '文件上传');
         }
     });
 

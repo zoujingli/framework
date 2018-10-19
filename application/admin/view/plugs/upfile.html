@@ -3,8 +3,8 @@
 <head>
     <title>{:sysconf('app_name')} {:sysconf('app_version')}</title>
     <meta charset="utf-8">
-    <link rel="icon" href="../image/favicon.ico">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="{:sysconf('site_icon')}" rel="shortcut icon">
     <meta name="viewport" content="width=device-width, initial-scale=0">
     <link href="__STATIC__/plugs/uploader/webuploader.css" rel="stylesheet" type="text/css"/>
     <link href="__STATIC__/plugs/uploader/theme/uploader.css" rel="stylesheet" type="text/css"/>
@@ -41,7 +41,7 @@
      * @type Function
      */
     function uploaded(ret, file) {
-        var url = ret.url || ret.site_url;
+        let url = ret.url || ret.site_url;
         $('#' + file.id).attr('data-md5', file.md5).attr('data-src', url);
         /*{if $mode === 'one'}*/
         top.$('[name="{$field}"]').map(function () {
@@ -51,24 +51,22 @@
         /*{/if}*/
     }
 
-    var isSuccessState = false;
+    let isSuccessState = false;
 
     function completed() {
-        var btnHTML = '完成上传';
+        let btnHTML = '完成上传';
         $('.uploadBtn').html(btnHTML).on('click', successSelected);
 
         function successSelected() {
             if (!isSuccessState && this.innerHTML === btnHTML) {
                 isSuccessState = true;
-                var srcs = [], md5s = [];
+                let srcs = [], md5s = [];
                 $('[data-md5] .success').map(function () {
-                    var $li = $(this).parents('[data-md5]');
+                    let $li = $(this).parents('[data-md5]');
                     md5s.push($li.attr('data-md5'));
                     srcs.push($li.attr('data-src'));
                 });
-                if (srcs.length < 1) {
-                    return top.$.msg.tips('还没有选择文件,请勾选需要使用的文件！');
-                }
+                if (srcs.length < 1) return top.$.msg.tips('还没有选择文件,请勾选需要使用的文件！');
                 top.$('[name="{$field}"]').map(function () {
                     top.$(this).attr('data-srcs', srcs.join('|')).attr('data-md5', md5s.join('|')).val(srcs.join('|')).trigger('change');
                 });
@@ -79,111 +77,87 @@
 
     // 当domReady的时候开始初始化
     $(function () {
-        var $wrap = $('#uploader'),
-            /*文件容器*/
-            $queue = $('<ul class="filelist"></ul>').appendTo($wrap.find('.queueList')),
-            /*状态栏，包括进度和控制按钮*/
-            $statusBar = $wrap.find('.statusBar'),
-            /*文件总体选择信息。*/
-            $info = $statusBar.find('.info'),
-            /*上传按钮*/
-            $upload = $wrap.find('.uploadBtn'),
-            /*没选择文件之前的内容。*/
-            $placeHolder = $wrap.find('.placeholder'),
-            $progress = $statusBar.find('.progress').hide(),
-            /* 添加的文件数量*/
-            fileCount = 0,
-            /*添加的文件总大小*/
-            fileSize = 0,
-            /*优化retina, 在retina下这个值是2*/
-            ratio = window.devicePixelRatio || 1,
-            /*缩略图大小*/
-            thumbnailWidth = 110 * ratio, thumbnailHeight = 110 * ratio,
-            /*可能有pedding, ready, uploading, confirm, done.*/
-            state = 'pedding',
-            /*所有文件的进度信息，key为file id*/
-            percentages = {},
-            /*判断浏览器是否支持文件的base64*/
-            isSupportBase64 = (function () {
-                var data = new Image();
-                var support = true;
-                data.onload = data.onerror = function () {
-                    if (this.width != 1 || this.height != 1) {
-                        support = false;
-                    }
-                };
-                data.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
-                return support;
-            }.call(this)),
-            /*检测是否已经安装flash，检测flash的版本*/
-            flashVersion = (function () {
-                var version;
+        let uploader;
+        let $wrap = $('#uploader');
+        /* 文件容器 */
+        let $queue = $('<ul class="filelist"></ul>').appendTo($wrap.find('.queueList'));
+        /* 状态栏，包括进度和控制按钮 */
+        let $statusBar = $wrap.find('.statusBar');
+        /* 文件总体选择信息。 */
+        let $info = $statusBar.find('.info');
+        /* 上传按钮 */
+        let $upload = $wrap.find('.uploadBtn');
+        /* 没选择文件之前的内容。*/
+        let $placeHolder = $wrap.find('.placeholder');
+        let $progress = $statusBar.find('.progress').hide();
+        /* 添加的文件数量 */
+        let fileCount = 0;
+        /* 添加的文件总大小 */
+        let fileSize = 0;
+        /* 优化retina, 在retina下这个值是2 */
+        let ratio = window.devicePixelRatio || 1;
+        /* 缩略图大小 */
+        let thumbnailWidth = 110 * ratio;
+        let thumbnailHeight = 110 * ratio;
+        /* 可能有pedding, ready, uploading, confirm, done */
+        let state = "pedding";
+        /* 所有文件的进度信息，key为file id */
+        let percentages = {};
+        /* 判断浏览器是否支持文件的base64 */
+        let isSupportBase64 = (function () {
+            let data = new Image(), support = true;
+            data.onload = data.onerror = function () {
+                if (parseInt(this.width) !== 1 || parseInt(this.height) !== 1) support = false;
+            };
+            data.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+            return support;
+        }.call(this));
+        /* 检测是否已经安装flash, 检测flash的版本 */
+        let flashVersion = (function () {
+            let version;
+            try {
+                version = navigator.plugins['Shockwave Flash'].description;
+            } catch (ex) {
                 try {
-                    version = navigator.plugins['Shockwave Flash'];
-                    version = version.description;
-                } catch (ex) {
-                    try {
-                        version = new ActiveXObject('ShockwaveFlash.ShockwaveFlash').GetVariable('$version');
-                    } catch (ex2) {
-                        version = '0.0';
-                    }
+                    version = new ActiveXObject('ShockwaveFlash.ShockwaveFlash').GetVariable('$version');
+                } catch (ex2) {
+                    version = '0.0';
                 }
-                version = version.match(/\d+/g);
-                return parseFloat(version[0] + '.' + version[1], 10);
-            })(),
-            supportTransition = (function () {
-                var s = document.createElement('p').style,
-                    r = 'transition' in s || 'WebkitTransition' in s || 'MozTransition' in s || 'msTransition' in s || 'OTransition' in s;
-                return (s = null), r;
-            })(),
-            uploader;
+            }
+            version = version.match(/\d+/g);
+            return parseFloat(version[0] + '.' + version[1], 10);
+        })();
+        let supportTransition = (function () {
+            let style = document.createElement('p').style;
+            let isTransition = 'transition' in style || 'WebkitTransition' in style || 'MozTransition' in style || 'msTransition' in style || 'OTransition' in style;
+            return (style = null), isTransition;
+        })();
+
         if (!WebUploader.Uploader.support('flash') && WebUploader.browser.ie) {
             /*flash 安装了但是版本过低*/
-            if (flashVersion) {
-                (function (container) {
-                    window['expressinstallcallback'] = function (state) {
-                        switch (state) {
-                            case 'Download.Cancelled':
-                                alert('您取消了更新！');
-                                break;
-                            case 'Download.Failed':
-                                alert('安装失败');
-                                break;
-                            default:
-                                alert('安装已成功，请刷新！');
-                                break;
-                        }
-                        delete window['expressinstallcallback'];
-                    };
-                    var swf = '__STATIC__/plugs/uploader/expressInstall.swf';
-                    var html = '<object type="application/' + 'x-shockwave-flash" data="' + swf + '" ';
-                    if (WebUploader.browser.ie) {
-                        html += 'classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" ';
-                    }
-                    html += 'width="100%" height="100%" style="outline:0">' +
-                        '<param name="movie" value="' + swf + '" />' +
-                        '<param name="wmode" value="transparent" />' +
-                        '<param name="allowscriptaccess" value="always" />' +
-                        '</object>';
-                    container.html(html);
-                })($wrap);
-            } else {
-                $wrap.html('<a href="http://www.adobe.com/go/getflashplayer" target="_blank" border="0"><img alt="get flash player" src="http://www.adobe.com/macromedia/style_guide/images/160x41_Get_Flash_Player.jpg" /></a>');
-            }
-            return;
-        } else if (!WebUploader.Uploader.support()) {
-            alert('Web Uploader 不支持您的浏览器！');
-            return;
-        }
+            if (flashVersion) return (function (container) {
+                window['expressinstallcallback'] = function (state) {
+                    if (state === 'Download.Cancelled') alert('您取消了更新！');
+                    else if (state === 'Download.Failed') alert('安装失败！');
+                    else alert('安装已成功，请刷新！');
+                    delete window['expressinstallcallback'];
+                };
+                let swf = '__STATIC__/plugs/uploader/expressInstall.swf';
+                let html = '<object type="application/' + 'x-shockwave-flash" data="' + swf + '" ';
+                if (WebUploader.browser.ie) html += 'classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" ';
+                container.html(html + 'width="100%" height="100%" style="outline:0"><param name="movie" value="' + swf + '" /><param name="wmode" value="transparent" /><param name="allowscriptaccess" value="always" /></object>');
+            })($wrap);
+            return $wrap.html('<a href="http://www.adobe.com/go/getflashplayer" target="_blank" border="0"><img alt="get flash player" src="http://www.adobe.com/macromedia/style_guide/images/160x41_Get_Flash_Player.jpg" /></a>');
+        } else if (!WebUploader.Uploader.support()) return alert('Web Uploader 不支持您的浏览器！');
         // 文件上传前的检查
         WebUploader.Uploader.register({'before-send-file': 'preupload'}, {
             preupload: function (file) {
-                var me = this, owner = this.owner, deferred = WebUploader.Deferred();
+                let me = this, owner = this.owner, deferred = WebUploader.Deferred();
                 owner.md5File(file.source).fail(function () {
                     deferred.reject();
                 }).then(function (md5) {
                     file.md5 = md5;
-                    var data = {id: file.id, md5: md5, uptype: '{$uptype}', filename: file.name};
+                    let data = {id: file.id, md5: md5, uptype: '{$uptype}', filename: file.name};
                     $.ajax("{:url('@')}?s=admin/plugs/upstate", {
                         dataType: 'json', method: 'post', data: data, success: function (ret) {
                             if (ret.code !== 'NOT_FOUND') {
@@ -231,7 +205,7 @@
             auto: false,
             fileNumLimit: 300,
             /*{/if}*/
-            server: '{:url("@")}?s=admin/plugs/upload',
+            server: '{:url("@")}?s=admin/plugs/upload&name={$name|default="file"}',
             swf: '__STATIC__/plugs/uploader/Uploader.swf',
             chunked: false,
             dnd: '#dndArea',
@@ -264,29 +238,17 @@
         /* 处理上传后的结果 */
         uploader.on('uploadAccept', function (fieldata, ret) {
             // Qiniu or Local 上传
-            if (ret.code === 'SUCCESS') {
-                uploaded.call(uploader, ret.data, fieldata.file);
-                return true;
-            }
+            if (ret.code === 'SUCCESS') return uploaded.call(uploader, ret.data, fieldata.file), true;
             // AliOSS 上传
-            if (fieldata.file.site_url) {
-                uploaded.call(uploader, {'site_url': fieldata.file.site_url}, fieldata.file);
-                return true;
-            }
-            // 接收服务器返回的错误消息
-            fieldata.file.setStatus('error', ret.msg);
-            return false;
+            if (fieldata.file.site_url) return uploaded.call(uploader, {'site_url': fieldata.file.site_url}, fieldata.file), true;
+            // 接收错误消息
+            return fieldata.file.setStatus('error', ret.msg), false;
         });
 
         // 拖拽时不接受 js, txt 文件。
         uploader.on('dndAccept', function (items) {
-            var denied = false, len = items.length, unAllowed = 'text/plain;application/javascript ';
-            for (var i = 0; i < len; i++) {
-                if (~unAllowed.indexOf(items[i].type)) {
-                    denied = true;
-                    break;
-                }
-            }
+            let denied = false, len = items.length, unAllowed = 'text/plain;application/javascript ';
+            for (let i = 0; i < len; i++) if (~unAllowed.indexOf(items[i].type)) if (denied = true) break;
             return !denied;
         });
 
@@ -298,52 +260,26 @@
 
         // 当有文件添加进来时执行，负责view的创建
         function addFile(file) {
-            var $li = $('<li id="' + file.id + '"><p class="title">' + file.name + '</p><p class="imgWrap"></p><p class="progress"><span></span></p></li>'),
+            let $li = $('<li id="' + file.id + '"><p class="title">' + file.name + '</p><p class="imgWrap"></p><p class="progress"><span></span></p></li>'),
                 $btns = $('<div class="file-panel"><span class="cancel">删除</span><span class="rotateRight">向右旋转</span><span class="rotateLeft">向左旋转</span></div>').appendTo($li),
                 $prgress = $li.find('p.progress span'), $wrap = $li.find('p.imgWrap'), $info = $('<p class="error"></p>');
-            var showError = function (code) {
-                var text = '';
-                switch (code) {
-                    case 'exceed_size':
-                        text = '文件大小超出';
-                        break;
-                    case 'interrupt':
-                        text = '上传暂停';
-                        break;
-                    case 'http':
-                    case 'server':
-                    case 'abort':
-                        text = '上传失败，请重试';
-                        break;
-                    default:
-                        text = code;
-                        break;
-                }
+            let showError = function (code) {
+                let text = '';
+                if (code === 'exceed_size') text = '文件大小超出';
+                else if (code === 'interrupt') text = '上传暂停';
+                else if (code === 'http' || code === 'server' || code === 'abort') text = '上传失败，请重试';
+                else text = code;
                 $info.text(text).appendTo($li);
             };
-            if (file.getStatus() === 'invalid') {
-                showError(file.statusText);
-            } else {
-                // @todo lazyload
+            if (file.getStatus() === 'invalid') showError(file.statusText);
+            else {
                 $wrap.text('预览中');
                 uploader.makeThumb(file, function (error, src) {
-                    if (error) {
-                        return $wrap.text('不能预览');
-                    }
-                    var img;
-                    if (isSupportBase64) {
-                        img = $('<img src="' + src + '">');
-                        $wrap.empty().append(img);
-                    } else {
-                        $.ajax('{:url("@")}?s=plugs/file/preview', {method: 'post', data: src, dataType: 'json'}).done(function (response) {
-                            if (response.result) {
-                                img = $('<img src="' + response.result + '">');
-                                $wrap.empty().append(img);
-                            } else {
-                                $wrap.text("预览出错");
-                            }
-                        });
-                    }
+                    if (error) return $wrap.text('不能预览');
+                    if (isSupportBase64) $wrap.empty().append($('<img src="' + src + '">'));
+                    else $.ajax('{:url("@")}?s=plugs/file/preview', {method: 'post', data: src, dataType: 'json'}).done(function (response) {
+                        if (response.result) $wrap.empty().append($('<img src="' + response.result + '">')); else $wrap.text("预览出错");
+                    });
                 }, thumbnailWidth, thumbnailHeight);
                 percentages[file.id] = [file.size, 0];
                 file.rotation = 0;
@@ -351,23 +287,13 @@
             }
             // 文件上传状态变化
             file.on('statuschange', function (cur, prev) {
-                if (prev === 'progress') {
-                    $prgress.hide().width(0);
-                } else if (prev === 'queued') {
-                    $li.off('mouseenter mouseleave'), $btns.remove();
-                }
-                if (cur === 'error' || cur === 'invalid') {
-                    showError(file.statusText);
-                    percentages[file.id][1] = 1;
-                } else if (cur === 'interrupt') {
-                    showError('interrupt');
-                } else if (cur === 'queued') {
-                    percentages[file.id][1] = 0;
-                } else if (cur === 'progress') {
-                    $info.remove(), $prgress.css('display', 'block');
-                } else if (cur === 'complete') {
-                    $li.append('<span class="success"></span>');
-                }
+                if (prev === 'progress') $prgress.hide().width(0);
+                else if (prev === 'queued') $li.off('mouseenter mouseleave'), $btns.remove();
+                if (cur === 'error' || cur === 'invalid') showError(file.statusText), percentages[file.id][1] = 1;
+                else if (cur === 'interrupt') showError('interrupt');
+                else if (cur === 'queued') percentages[file.id][1] = 0;
+                else if (cur === 'progress') $info.remove(), $prgress.css('display', 'block');
+                else if (cur === 'complete') $li.append('<span class="success"></span>');
                 $li.removeClass('state-' + prev).addClass('state-' + cur);
             });
             $li.on('mouseenter', function () {
@@ -376,23 +302,14 @@
                 $btns.stop().animate({height: 0});
             });
             $btns.on('click', 'span', function () {
-                switch ($(this).index()) {
-                    case 0:
-                        removeFile(file);
-                        return uploader.removeFile(file);
-                    case 1:
-                        file.rotation += 90;
-                        break;
-                    case 2:
-                        file.rotation -= 90;
-                        break;
-                }
+                let index = $(this).index();
+                if (index === 0) return removeFile(file), uploader.removeFile(file);
+                if (index === 1) file.rotation += 90;
+                if (index === 2) file.rotation -= 90;
                 if (supportTransition) {
-                    var deg = 'rotate(' + file.rotation + 'deg)';
+                    let deg = 'rotate(' + file.rotation + 'deg)';
                     $wrap.css({'-webkit-transform': deg, '-mos-transform': deg, '-o-transform': deg, 'transform': deg});
-                } else {
-                    $wrap.css('filter', 'progid:DXImageTransform.Microsoft.BasicImage(rotation=' + (~~((file.rotation / 90) % 4 + 4) % 4) + ')');
-                }
+                } else $wrap.css('filter', 'progid:DXImageTransform.Microsoft.BasicImage(rotation=' + (~~((file.rotation / 90) % 4 + 4) % 4) + ')');
             });
             $li.appendTo($queue);
         }
@@ -405,10 +322,9 @@
         }
 
         function updateTotalProgress() {
-            var loaded = 0, total = 0, spans = $progress.children(), percent;
+            let loaded = 0, total = 0, spans = $progress.children(), percent;
             $.each(percentages, function (k, v) {
-                total += v[0];
-                loaded += v[0] * v[1];
+                total += v[0], loaded += v[0] * v[1];
             });
             percent = total ? loaded / total : 0;
             spans.eq(0).text(Math.round(percent * 100) + '%');
@@ -417,128 +333,89 @@
         }
 
         function updateStatus() {
-            var text = '', stats;
-            if (state === 'ready') {
-                text = '选中' + fileCount + '个文件，共' + WebUploader.formatSize(fileSize) + '。';
-            } else if (state === 'confirm') {
+            let text = '', stats = '';
+            if (state === 'ready') text = '选中' + fileCount + '个文件，共' + WebUploader.formatSize(fileSize) + '。';
+            else if (state === 'confirm') {
                 stats = uploader.getStats();
-                if (stats.uploadFailNum) {
-                    text = '已成功上传' + stats.successNum + '个文件，' + stats.uploadFailNum + '个文件上传失败，<a class="retry" href="#">重新上传</a>失败文件'
-                }
+                if (stats.uploadFailNum) text = '已成功上传' + stats.successNum + '个文件，' + stats.uploadFailNum + '个文件上传失败，<a class="retry" href="#">重新上传</a>失败文件'
             } else {
                 stats = uploader.getStats();
                 text = '共' + fileCount + '个（' + WebUploader.formatSize(fileSize) + '），已上传' + stats.successNum + '个';
-                if (stats.uploadFailNum) {
-                    text += '，失败' + stats.uploadFailNum + '个';
-                }
+                if (stats.uploadFailNum) text += '，失败' + stats.uploadFailNum + '个';
             }
             $info.html(text);
         }
 
         function setState(val) {
-            var stats;
-            if (val === state) {
-                return;
-            }
+            if (val === state) return;
             $upload.removeClass('state-' + state);
             $upload.addClass('state-' + val);
             state = val;
             switch (state) {
                 case 'pedding':
                     $placeHolder.removeClass('element-invisible');
-                    $queue.hide();
-                    $statusBar.addClass('element-invisible');
-                    uploader.refresh();
+                    $queue.hide(), $statusBar.addClass('element-invisible'), uploader.refresh();
                     break;
                 case 'ready':
                     $placeHolder.addClass('element-invisible');
                     $('#filePicker2').removeClass('element-invisible');
-                    $queue.show();
-                    $statusBar.removeClass('element-invisible');
-                    uploader.refresh();
+                    $queue.show(), $statusBar.removeClass('element-invisible'), uploader.refresh();
                     break;
                 case 'uploading':
                     $('#filePicker2').addClass('element-invisible');
-                    $progress.show();
-                    $upload.text('暂停上传');
+                    $progress.show(), $upload.text('暂停上传');
                     break;
                 case 'paused':
-                    $progress.show();
-                    $upload.text('继续上传');
+                    $progress.show(), $upload.text('继续上传');
                     break;
                 case 'confirm':
-                    $progress.hide();
                     $('#filePicker2').removeClass('element-invisible');
-                    $upload.text('开始上传');
-                    stats = uploader.getStats();
-                    if (stats.successNum && !stats.uploadFailNum) {
-                        setState('finish');
-                        return;
-                    }
+                    $progress.hide(), $upload.text('开始上传');
+                    let stats = uploader.getStats();
+                    if (stats.successNum && !stats.uploadFailNum) return setState('finish')
                     break;
                 case 'finish':
-                    stats = uploader.getStats();
-                    if (stats.successNum) {
-                        completed.call(this);
-                    } else {
-                        state = 'done';
-                        location.reload();
-                    }
+                    if (uploader.getStats().successNum) completed.call(this);
+                    else (state = 'done'), location.reload();
                     break;
             }
             updateStatus();
         }
 
         uploader.onUploadProgress = function (file, percentage) {
-            var $li = $('#' + file.id), $percent = $li.find('.progress span');
+            let $li = $('#' + file.id), $percent = $li.find('.progress span');
             $percent.css('width', percentage * 100 + '%');
             percentages[file.id][1] = percentage;
             updateTotalProgress();
         };
 
         uploader.onFileQueued = function (file) {
-            fileCount++;
-            fileSize += file.size;
-            if (fileCount === 1) {
-                $placeHolder.addClass('element-invisible');
-                $statusBar.show();
-            }
+            fileCount++, fileSize += file.size;
+            if (fileCount === 1) $placeHolder.addClass('element-invisible'), $statusBar.show();
             addFile(file), setState('ready'), updateTotalProgress();
         };
 
         uploader.onfieldequeued = function (file) {
-            fileCount--;
-            fileSize -= file.size;
-            !fileCount && setState('pedding');
+            fileCount--, fileSize -= file.size;
+            if (!fileCount) setState('pedding');
             removeFile(file), updateTotalProgress();
         };
 
         uploader.on('all', function (type) {
-            switch (type) {
-                case 'uploadFinished':
-                    return setState('confirm');
-                case 'startUpload':
-                    return setState('uploading');
-                case 'stopUpload':
-                    return setState('paused');
-            }
+            if (type === 'uploadFinished') return setState('confirm');
+            if (type === 'startUpload') return setState('uploading');
+            if (type === 'stopUpload') return setState('paused');
         });
 
-        uploader.onError = function (code) {
-            // 000alert('Error: ' + code);
+        uploader.onError = function () {
+            console.error(JSON.stringify(arguments));
         };
 
         $upload.on('click', function () {
-            if ($(this).hasClass('disabled')) {
-                return false;
-            }
-            if (state === 'ready') {
-                uploader.upload();
-            } else if (state === 'paused') {
-                uploader.upload();
-            } else if (state === 'uploading') {
-                uploader.stop();
-            }
+            if ($(this).hasClass('disabled')) return false;
+            if (state === 'ready') uploader.upload();
+            else if (state === 'paused') uploader.upload();
+            else if (state === 'uploading') uploader.stop();
         });
 
         $info.on('click', '.retry', function () {
