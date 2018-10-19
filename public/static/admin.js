@@ -463,11 +463,9 @@ $(function () {
     /*! 注册 data-load 事件行为 */
     $body.on('click', '[data-load]', function () {
         let url = $(this).attr('data-load'), tips = $(this).attr('data-tips');
-        if ($(this).attr('data-confirm')) {
-            return $.msg.confirm($(this).attr('data-confirm'), function () {
-                $.form.load(url, {}, 'get', null, true, tips);
-            });
-        }
+        if ($(this).attr('data-confirm')) return $.msg.confirm($(this).attr('data-confirm'), function () {
+            $.form.load(url, {}, 'get', null, true, tips);
+        });
         $.form.load(url, {}, 'get', null, true, tips);
     });
 
