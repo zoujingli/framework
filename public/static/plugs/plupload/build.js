@@ -8,8 +8,8 @@ define(['plupload'], function (plupload) {
             url: '?s=admin/plugs/plupload',
             runtimes: 'html5,flash,silverlight,html4',
             file_data_name: $ele.attr('data-name') || 'file',
-            filters: [{title: 'files', extensions: $ele.attr('data-type') || '*'}],
             flash_swf_url: baseRoot + 'plugs/plupload/plupload.flash.swf',
+            filters: [{title: 'files', extensions: $ele.attr('data-type') || '*'}],
             silverlight_xap_url: baseRoot + 'plugs/plupload/plupload.silverlight.xap',
         });
         loader.bind('FilesAdded', function () {
