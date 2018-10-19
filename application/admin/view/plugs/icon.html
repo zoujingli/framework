@@ -5961,7 +5961,7 @@
 <script>
     $(function () {
         $('li').on('click', function () {
-            var className = $(this).find('i').get(0).className;
+            let className = $(this).find('i').get(0).className;
             if (className) {
                 top.$('[name="{$field}"]').val(className).trigger('change');
                 top.layer.close(top.layer.getFrameIndex(window.name));
