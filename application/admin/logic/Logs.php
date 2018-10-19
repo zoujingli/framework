@@ -38,9 +38,8 @@ class Logs
      */
     public static function db()
     {
-        $file = env('runtime_path') . 'logs.db';
         if (!empty(self::$db)) return self::$db;
-        if (!file_exists($file)) touch($file);
+        if (!file_exists($file = env('runtime_path') . 'logs.db')) touch($file);
         $db = Db::connect(['debug' => true, 'type' => 'sqlite', 'database' => $file]);
         $db->query(self::initTableSql());
         return self::$db = $db;
