@@ -3,11 +3,11 @@ define(['plupload'], function (plupload) {
     return function (element) {
         let $ele = $(element);
         let loader = new plupload.Uploader({
-            file_data_name: 'file',
             multi_selection: false,
             browse_button: $ele.get(0),
             url: '?s=admin/plugs/plupload',
             runtimes: 'html5,flash,silverlight,html4',
+            file_data_name: $ele.attr('data-name') || 'file',
             filters: [{title: 'files', extensions: $ele.attr('data-type') || '*'}],
             flash_swf_url: baseRoot + 'plugs/plupload/plupload.flash.swf',
             silverlight_xap_url: baseRoot + 'plugs/plupload/plupload.silverlight.xap',
