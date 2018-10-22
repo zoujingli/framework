@@ -78,14 +78,13 @@ class Goods extends Controller
             return $this->fetch('', ['vo' => $goods]);
         }
         list($post, $data) = [$this->request->post(), []];
-        if (isset($post['spec']) && is_array($post['spec'])) {
-            $GoodsId = $this->request->post('id');
+        if (isset($post['id']) && isset($post['spec']) && is_array($post['spec'])) {
             foreach ($post['spec'] as $k => $v) if ($v > 0) array_push($data, [
-                'goods_id' => $GoodsId, 'goods_spec' => $k, 'number_stock' => $v,
+                'goods_id' => $post['id'], 'goods_spec' => $k, 'number_stock' => $v,
             ]);
             if (!empty($data)) {
                 Db::name('StoreGoodsStock')->insertAll($data);
-                \app\store\logic\Goods::syncStock($GoodsId);
+                \app\store\logic\Goods::syncStock($post['id']);
                 $this->success('商品信息入库成功！');
             }
         }
