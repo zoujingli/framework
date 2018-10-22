@@ -59,6 +59,35 @@ class Goods extends Controller
         }
     }
 
+    /**
+     * @return mixed
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function stock()
+    {
+        if ($this->request->isGet()) {
+            $GoodsId = $this->request->get('id');
+            $goods = Db::name('StoreGoods')->where(['id' => $GoodsId])->find();
+            empty($goods) && $this->error('无效的商品信息，请稍候再试！');
+            $goods['list'] = Db::name('StoreGoodsList')->where(['goods_id' => $GoodsId])->select();
+            return $this->fetch('', ['vo' => $goods]);
+        }
+        list($post, $data) = [$this->request->post(), []];
+        if (isset($post['spec']) && is_array($post['spec'])) {
+            $GoodsId = $this->request->post('id');
+            foreach ($post['spec'] as $k => $v) if ($v > 0) array_push($data, [
+                'goods_id' => $GoodsId, 'goods_spec' => $k, 'number_stock' => $v,
+            ]);
+            if (!empty($data)) {
+                Db::name('StoreGoodsStock')->insertAll($data);
+                \app\store\logic\Goods::syncStock($GoodsId);
+                $this->success('商品信息入库成功！');
+            }
+        }
+        $this->error('没有需要商品入库的数据！');
+    }
 
     /**
      * 添加商品信息
