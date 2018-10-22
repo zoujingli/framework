@@ -58,15 +58,15 @@ class Plugs extends Controller
             return json(['code' => 'ERROR', 'msg' => '文件上传类型受限']);
         }
         $ext = strtolower(pathinfo($file->getInfo('name'), 4));
-        $names = str_split($this->request->post('md5'), 16);
-        $filename = "{$names[0]}/{$names[1]}.{$ext}";
+        $name = str_split($this->request->post('md5'), 16);
+        $file = "{$name[0]}/{$name[1]}.{$ext}";
         // 文件上传Token验证
-        if ($this->request->post('token') !== md5($filename . session_id())) {
+        if ($this->request->post('token') !== md5($file . session_id())) {
             return json(['code' => 'ERROR', 'msg' => '文件上传验证失败']);
         }
         // 文件上传处理
-        if (($info = $file->move("upload/{$names[0]}", "{$names[1]}.{$ext}", true))) {
-            if (($site_url = File::instance('local')->url($filename))) {
+        if (($info = $file->move("upload/{$name[0]}", "{$name[1]}.{$ext}", true))) {
+            if (($site_url = File::instance('local')->url($file))) {
                 return json(['data' => ['site_url' => $site_url], 'code' => 'SUCCESS', 'msg' => '文件上传成功']);
             }
         }
@@ -89,7 +89,7 @@ class Plugs extends Controller
         $ext = strtolower(pathinfo($file->getInfo('name'), 4));
         $name = join('/', $md5) . "." . (empty($ext) ? 'tmp' : $ext);
         $result = File::save($name, file_get_contents($file->getPathname()));
-        return json(['uploaded' => true, 'url' => $result['url'], 'filename' => $file->getInfo('name')]);
+        return json(['uploaded' => true, 'filename' => $file->getInfo('name'), 'url' => $result['url']]);
     }
 
     /**
@@ -100,7 +100,8 @@ class Plugs extends Controller
     public function upstate()
     {
         $post = $this->request->post();
-        $name = join('/', str_split($post['md5'], 16)) . '.' . strtolower(pathinfo($post['filename'], 4));
+        $ext = strtolower(pathinfo($post['filename'], 4));
+        $name = join('/', str_split($post['md5'], 16)) . '.' . (empty($ext) ? 'tmp' : $ext);
         // 检查文件是否已上传
         if (($site_url = File::url($name))) {
             $this->success('文件已上传', ['site_url' => $site_url], 'IS_FOUND');
@@ -112,41 +113,25 @@ class Plugs extends Controller
                 $param['token'] = md5($name . session_id());
                 break;
             case 'qiniu':
-                $param['token'] = $this->_getQiniuToken($name);
+                list($basic, $bucket, $access, $secret) = [
+                    File::instance('qiniu')->base(), sysconf('storage_qiniu_bucket'),
+                    sysconf('storage_qiniu_access_key'), sysconf('storage_qiniu_secret_key'),
+                ];
+                $data = str_replace(['+', '/'], ['-', '_'], base64_encode(json_encode([
+                    "scope"      => "{$bucket}:{$name}", "deadline" => 3600 + time(),
+                    "returnBody" => "{\"data\":{\"site_url\":\"{$basic}/$(key)\",\"file_url\":\"$(key)\"}, \"code\": \"SUCCESS\"}",
+                ])));
+                $param['token'] = "{$access}:" . str_replace(['+', '/'], ['-', '_'], base64_encode(hash_hmac('sha1', $data, $secret, true))) . ":{$data}";
                 break;
             case 'oss':
-                $time = time() + 3600;
-                $policyText = [
-                    'conditions' => [['content-length-range', 0, 1048576000]],
-                    'expiration' => date('Y-m-d', $time) . 'T' . date('H:i:s', $time) . '.000Z',
-                ];
-                $param['site_url'] = File::base($name);
-                $param['policy'] = base64_encode(json_encode($policyText));
-                $param['signature'] = base64_encode(hash_hmac('sha1', $param['policy'], sysconf('storage_oss_secret'), true));
+                $param['site_url'] = File::instance('oss')->base($name);
                 $param['OSSAccessKeyId'] = sysconf('storage_oss_keyid');
+                $param['signature'] = base64_encode(hash_hmac('sha1', $param['policy'], sysconf('storage_oss_secret'), true));
+                $param['policy'] = base64_encode(json_encode(['conditions' => [['content-length-range', 0, 1048576000]], 'expiration' => gmdate("Y-m-d\TH:i:s.000\Z", time() + 3600)]));
+                break;
+            default:
+                $this->success('文件未上传', $param, 'NOT_FOUND');
         }
-        $this->success('文件未上传', $param, 'NOT_FOUND');
-    }
-
-    /**
-     * 生成七牛文件上传Token
-     * @param string $key
-     * @return string
-     * @throws \think\Exception
-     * @throws \think\exception\PDOException
-     */
-    protected function _getQiniuToken($key)
-    {
-        $baseUrl = File::base();
-        $bucket = sysconf('storage_qiniu_bucket');
-        $accessKey = sysconf('storage_qiniu_access_key');
-        $secretKey = sysconf('storage_qiniu_secret_key');
-        $params = [
-            "scope"      => "{$bucket}:{$key}", "deadline" => 3600 + time(),
-            "returnBody" => "{\"data\":{\"site_url\":\"{$baseUrl}/$(key)\",\"file_url\":\"$(key)\"}, \"code\": \"SUCCESS\"}",
-        ];
-        $data = str_replace(['+', '/'], ['-', '_'], base64_encode(json_encode($params)));
-        return $accessKey . ':' . str_replace(['+', '/'], ['-', '_'], base64_encode(hash_hmac('sha1', $data, $secretKey, true))) . ':' . $data;
     }
 
     /**
