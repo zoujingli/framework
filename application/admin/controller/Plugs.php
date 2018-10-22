@@ -54,6 +54,7 @@ class Plugs extends Controller
     public function upload()
     {
         $file = $this->request->file($this->request->get('name', 'file'));
+        empty($file) && $this->error('文件上传异常，文件可能过大或未上传');
         if (!$file->checkExt(strtolower(sysconf('storage_local_exts')))) {
             return json(['code' => 'ERROR', 'msg' => '文件上传类型受限']);
         }
@@ -82,6 +83,7 @@ class Plugs extends Controller
     public function plupload()
     {
         $file = $this->request->file($this->request->get('name', 'file'));
+        empty($file) && $this->error('文件上传异常，文件可能过大或未上传');
         if (!$file->checkExt(strtolower(sysconf('storage_local_exts')))) {
             return json(['uploaded' => false, 'error' => ['message' => '文件上传类型受限']]);
         }
@@ -127,7 +129,7 @@ class Plugs extends Controller
                 $param['site_url'] = File::instance('oss')->base($name);
                 $param['OSSAccessKeyId'] = sysconf('storage_oss_keyid');
                 $param['signature'] = base64_encode(hash_hmac('sha1', $param['policy'], sysconf('storage_oss_secret'), true));
-                $param['policy'] = base64_encode(json_encode(['conditions' => [['content-length-range', 0, 1048576000]], 'expiration' => gmdate("Y-m-d\TH:i:s.000\Z", time() + 3600)]));
+                $param['policy'] = base64_encode(json_encode(['conditions' => [['content-length-range', 0, 1048576000]], 'expiration' => gmdate("Y-m-d\TH:i:s\Z", time() + 3600)]));
                 break;
             default:
                 $this->success('文件未上传', $param, 'NOT_FOUND');
