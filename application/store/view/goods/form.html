@@ -73,13 +73,16 @@
                         <input class="layui-input border-0 padding-left-15 layui-bg-gray" disabled ng-model="td.name">
                     </td>
                     <td class="padding-0">
-                        <input class="layui-input border-0 padding-left-0 text-center" ng-blur="rows[0].market=setValue(rows[0].key,'market',$event.target.value,'(parseFloat(_)||0).toFixed(2)')" ng-model="rows[0].market">
+                        <input ng-blur="rows[0].market=setValue(rows[0].key,'market',$event.target.value,'(parseFloat(_)||0).toFixed(2)')"
+                               class="layui-input border-0 padding-left-0 text-center" ng-model="rows[0].market">
                     </td>
                     <td class="padding-0">
-                        <input class="layui-input border-0 padding-left-0 text-center" ng-blur="rows[0].selling=setValue(rows[0].key,'selling',$event.target.value,'(parseFloat(_)||0).toFixed(2)')" ng-model="rows[0].selling">
+                        <input ng-blur="rows[0].selling=setValue(rows[0].key,'selling',$event.target.value,'(parseFloat(_)||0).toFixed(2)')"
+                               class="layui-input border-0 padding-left-0 text-center" ng-model="rows[0].selling">
                     </td>
                     <td class="padding-0">
-                        <input class="layui-input border-0 padding-left-0 text-center" ng-blur="rows[0].virtual=setValue(rows[0].key,'virtual',$event.target.value,'(parseInt(_)||0)')" ng-model="rows[0].virtual">
+                        <input ng-blur="rows[0].virtual=setValue(rows[0].key,'virtual',$event.target.value,'(parseInt(_)||0)')"
+                               class="layui-input border-0 padding-left-0 text-center" ng-model="rows[0].virtual">
                     </td>
                     <td class="text-center">
                         <label class="think-checkbox margin-0"><input type="checkbox" ng-model="rows[0].status"></label>
