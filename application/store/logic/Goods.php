@@ -34,12 +34,14 @@ class Goods
      */
     public static function syncStock($goodsId)
     {
-        // 入库信息更新
+        // 入库统计更新
         $field = "goods_id,goods_spec,concat(goods_id,'::',goods_spec) spec,sum(number_stock) stock";
         $list = Db::name('StoreGoodsStock')->field($field)->where(['goods_id' => $goodsId])->group('spec')->select();
         foreach ($list as $vo) Db::name('StoreGoodsList')->where([
             'goods_id' => $vo['goods_id'], 'goods_spec' => $vo['goods_spec'],
         ])->update(['number_stock' => $vo['stock']]);
+        // 销售统计更新
+        // @todo 销售统计更新
     }
 
 }
