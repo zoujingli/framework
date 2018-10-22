@@ -35,7 +35,7 @@
         <div class="layui-form-item">
             <h3 class="color-green">
                 <sup class='color-red font-s14 absolute' style="margin-left:-10px">*</sup>
-                商品规格<span class="color-desc font-s10">（最多支持3个规格分组，每个分组最多支持5个规格属性）</span>
+                商品规格<span class="color-desc font-s10">（最多支持3个规格分组，每个分组最多支持5个规格属性；仅添加商品时可编辑内容）</span>
             </h3>
             <div ng-repeat="x in specs track by $index" style="display:none" class="margin-bottom-10" ng-class="{true:'layui-show'}[specs.length>0&&mode=='add']">
                 <div class="goods-spec-box padding-10 margin-0 relative" style="background:#ddd">
