@@ -60,20 +60,30 @@
             <table class="layui-table margin-top-10">
                 <thead>
                 <tr>
-                    <th ng-repeat="x in specsTreeNava track by $index" ng-bind="x"></th>
-                    <th>市场价</th>
-                    <th>销售价</th>
-                    <th>虚拟销量</th>
-                    <th width="18px" class="nowrap">状态</th>
+                    <th ng-repeat="x in specsTreeNava track by $index" class="nowrap" ng-bind="x"></th>
+                    <th width="10%" class="text-center nowrap">市场价格</th>
+                    <th width="10%" class="text-center nowrap">销售价格</th>
+                    <th width="10%" class="text-center nowrap">虚拟销量</th>
+                    <th width="10%" class="text-center nowrap">销售状态</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="rows in specsTreeData track by $index">
-                    <td class="text-left" ng-if="td.show" rowspan="{{td.rowspan}}" ng-repeat="td in rows" ng-bind="td.name"></td>
-                    <td class="padding-0"><input class="layui-input border-0" ng-blur="rows[0].market=setValue(rows[0].key,'market',$event.target.value,'(parseFloat(_)||0).toFixed(2)')" ng-model="rows[0].market"></td>
-                    <td class="padding-0"><input class="layui-input border-0" ng-blur="rows[0].selling=setValue(rows[0].key,'selling',$event.target.value,'(parseFloat(_)||0).toFixed(2)')" ng-model="rows[0].selling"></td>
-                    <td class="padding-0"><input class="layui-input border-0" ng-blur="rows[0].virtual=setValue(rows[0].key,'virtual',$event.target.value,'(parseInt(_)||0)')" ng-model="rows[0].virtual"></td>
-                    <td class="text-center"><label class="think-checkbox margin-0"><input type="checkbox" ng-model="rows[0].status"></label></td>
+                    <td class="padding-0" ng-if="td.show" rowspan="{{td.rowspan}}" ng-repeat="td in rows">
+                        <input class="layui-input border-0 padding-left-15 layui-bg-gray" disabled ng-model="td.name">
+                    </td>
+                    <td class="padding-0">
+                        <input class="layui-input border-0 padding-left-0 text-center" ng-blur="rows[0].market=setValue(rows[0].key,'market',$event.target.value,'(parseFloat(_)||0).toFixed(2)')" ng-model="rows[0].market">
+                    </td>
+                    <td class="padding-0">
+                        <input class="layui-input border-0 padding-left-0 text-center" ng-blur="rows[0].selling=setValue(rows[0].key,'selling',$event.target.value,'(parseFloat(_)||0).toFixed(2)')" ng-model="rows[0].selling">
+                    </td>
+                    <td class="padding-0">
+                        <input class="layui-input border-0 padding-left-0 text-center" ng-blur="rows[0].virtual=setValue(rows[0].key,'virtual',$event.target.value,'(parseInt(_)||0)')" ng-model="rows[0].virtual">
+                    </td>
+                    <td class="text-center">
+                        <label class="think-checkbox margin-0"><input type="checkbox" ng-model="rows[0].status"></label>
+                    </td>
                 </tr>
                 </tbody>
             </table>
