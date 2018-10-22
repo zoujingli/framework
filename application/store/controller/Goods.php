@@ -60,10 +60,13 @@ class Goods extends Controller
     }
 
     /**
+     * 商品库存入库
      * @return mixed
+     * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
      */
     public function stock()
     {
