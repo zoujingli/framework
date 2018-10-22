@@ -16,6 +16,7 @@
                     <thead>
                     <tr>
                         <th class="text-left">商品规格</th>
+                        <th class="text-center">销售价格</th>
                         <th class="text-center">库存统计</th>
                         <th class="text-center">总销统计</th>
                         <th class="text-center">库存剩余</th>
@@ -24,8 +25,11 @@
                     </thead>
                     <!--{foreach $vo.list as $goods}-->
                     <tr>
-                        <td class="padding-0" width="60%">
+                        <td class="padding-0" width="50%">
                             <input class="layui-input layui-bg-gray border-0" disabled value="{$goods.goods_spec}">
+                        </td>
+                        <td class="padding-0" width="10%">
+                            <input class="layui-input text-center layui-bg-gray border-0 padding-left-0" disabled value="￥{$goods.price_selling}">
                         </td>
                         <td class="padding-0" width="10%">
                             <input class="layui-input text-center layui-bg-gray border-0 padding-left-0" disabled value="{$goods.number_stock}">
@@ -50,8 +54,8 @@
     <div class="hr-line-dashed"></div>
 
     <div class="layui-form-item text-center">
-        <button class="layui-btn" type='submit'>保存数据</button>
-        <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消编辑吗？" data-close>取消编辑</button>
+        <button class="layui-btn" type='submit'>确定入库</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消入库吗？" data-close>取消入库</button>
         <!--{notempty name='vo.id'}--><input type='hidden' value='{$vo.id}' name='id'><!--{/notempty}-->
     </div>
 
