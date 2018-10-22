@@ -37,14 +37,14 @@
                 <sup class='color-red font-s14 absolute' style="margin-left:-10px">*</sup>
                 商品规格<span class="color-desc font-s10">（最多支持3个规格分组，每个分组最多支持5个规格属性）</span>
             </h3>
-            <div ng-repeat="x in specs track by $index" style="display:none" class="margin-bottom-10" ng-class="{true:'layui-show'}[specs.length>0]">
+            <div ng-repeat="x in specs track by $index" style="display:none" class="margin-bottom-10" ng-class="{true:'layui-show'}[specs.length>0&&mode=='add']">
                 <div class="goods-spec-box padding-10 margin-0 relative" style="background:#ddd">
                     <span class="text-center goods-spec-title">名称</span>
                     <input ng-model="x.name" required placeholder="请输入分组">
                     <div class="fa-pull-right">
-                        <a ng-if="mode=='add'" class="layui-btn layui-btn-sm layui-btn-primary goods-spec-btn" ng-class="{false:'layui-bg-gray'}[$index>0]" ng-click="upSpecRow(specs,$index)">上移</a>
-                        <a ng-if="mode=='add'" class="layui-btn layui-btn-sm layui-btn-primary goods-spec-btn" ng-class="{false:'layui-bg-gray'}[$index<specs.length-1]" ng-click="dnSpecRow(specs,$index)">下移</a>
-                        <a ng-if="mode=='add' && specs.length>1" class="layui-btn layui-btn-sm layui-btn-danger goods-spec-btn" ng-click="delSpecRow(specs,$index)">删除</a>
+                        <a class="layui-btn layui-btn-sm layui-btn-primary goods-spec-btn" ng-class="{false:'layui-bg-gray'}[$index>0]" ng-click="upSpecRow(specs,$index)">上移</a>
+                        <a class="layui-btn layui-btn-sm layui-btn-primary goods-spec-btn" ng-class="{false:'layui-bg-gray'}[$index<specs.length-1]" ng-click="dnSpecRow(specs,$index)">下移</a>
+                        <a ng-if="specs.length>1" class="layui-btn layui-btn-sm layui-btn-danger goods-spec-btn" ng-click="delSpecRow(specs,$index)">删除</a>
                     </div>
                 </div>
                 <div class="block padding-10 layui-bg-gray" ng-if="x.list && x.list.length > 0">
