@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit6957fa8fff5482416dc1112c0e74c781
+class ComposerStaticInitf8f17886a5d85c1f5feff35b847a88e6
 {
     public static $files = array (
         '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
@@ -274,6 +274,7 @@ class ComposerStaticInit6957fa8fff5482416dc1112c0e74c781
         'app\\admin\\logic\\driver\\Qiniu' => __DIR__ . '/../..' . '/application/admin/logic/driver/Qiniu.php',
         'app\\index\\controller\\Index' => __DIR__ . '/../..' . '/application/index/controller/Index.php',
         'app\\store\\controller\\Goods' => __DIR__ . '/../..' . '/application/store/controller/Goods.php',
+        'app\\store\\logic\\Goods' => __DIR__ . '/../..' . '/application/store/logic/Goods.php',
         'library\\Controller' => __DIR__ . '/..' . '/zoujingli/think-library/library/Controller.php',
         'library\\logic\\Delete' => __DIR__ . '/..' . '/zoujingli/think-library/library/logic/Delete.php',
         'library\\logic\\Form' => __DIR__ . '/..' . '/zoujingli/think-library/library/logic/Form.php',
@@ -297,9 +298,9 @@ class ComposerStaticInit6957fa8fff5482416dc1112c0e74c781
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit6957fa8fff5482416dc1112c0e74c781::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit6957fa8fff5482416dc1112c0e74c781::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit6957fa8fff5482416dc1112c0e74c781::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitf8f17886a5d85c1f5feff35b847a88e6::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitf8f17886a5d85c1f5feff35b847a88e6::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitf8f17886a5d85c1f5feff35b847a88e6::$classMap;
 
         }, null, ClassLoader::class);
     }

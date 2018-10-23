@@ -28,7 +28,7 @@ class Crypt
      */
     public static function encode($string)
     {
-        $string = iconv('utf-8', 'gbk', $string);
+        $string = iconv('UTF-8', 'GBK//TRANSLIT', $string);
         list($chars, $length) = ['', strlen($string)];
         for ($i = 0; $i < $length; $i++) $chars .= str_pad(base_convert(ord($string[$i]), 10, 36), 2, 0, 0);
         return $chars;
@@ -43,7 +43,7 @@ class Crypt
     {
         $chars = '';
         foreach (str_split($string, 2) as $char) $chars .= chr(intval(base_convert($char, 36, 10)));
-        return iconv('gbk', 'utf-8', $chars);
+        return iconv('GBK//TRANSLIT', 'UTF-8', $chars);
     }
 
     /**
