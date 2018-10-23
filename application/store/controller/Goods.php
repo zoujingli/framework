@@ -39,7 +39,7 @@ class Goods extends Controller
     {
         $this->title = '商品管理';
         $query = $this->_query($this->table)->like('title')->equal('status');
-        return $this->_page($query->db()->where(['is_deleted' => '0'])->order('id desc'));
+        return $this->_page($query->db()->where(['is_deleted' => '0'])->order('sort asc,id desc'));
     }
 
     /**
