@@ -69,7 +69,7 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="rows in specsTreeData track by $index">
-                    <td class="layui-bg-gray" ng-if="td.show" rowspan="{{td.rowspan}}" ng-repeat="td in rows" ng-bind="td.name"></td>
+                    <td class="layui-bg-gray" ng-if="td.show" rowspan="{{td.span}}" ng-repeat="td in rows" ng-bind="td.name"></td>
                     <td class="padding-0">
                         <label class="padding-0 margin-0">
                             <input ng-blur="rows[0].market=setValue(rows[0].key,'market',$event.target.value,'(parseFloat(_)||0).toFixed(2)')" class="layui-input border-0 padding-left-0 text-center" ng-model="rows[0].market">
@@ -230,7 +230,7 @@
                 for (let o of data) {
                     let tmp = [];
                     for (let x of o.list) (x.check && typeof x.name === 'string' && x.name.length > 0) && tmp.push(x);
-                    if (tmp.length > 0) for (let x of tmp) x.group = o.name, x.rowspan = 1, x.show = true;
+                    if (tmp.length > 0) for (let x of tmp) x.group = o.name, x.span = 1, x.show = true;
                     if (tmp.length > 0) list.push(tmp), nava.push(o.name);
                     $rootScope.specsTreeNava = nava;
                 }
@@ -264,7 +264,7 @@
                         // 表格TD处理
                         for (let dow = 1 + parseInt(row); dow < list.length; dow++)
                             if (list[row][td].name === list[dow][td].name) {
-                                list[row][td].rowspan++;
+                                list[row][td].span++;
                                 list[dow][td].show = false;
                             } else break;
                     }
