@@ -37,7 +37,7 @@
                 <sup class='color-red font-s14 absolute' style="margin-left:-10px">*</sup>
                 商品规格<span class="color-desc font-s10">（最多支持3个规格分组，每个分组最多支持5个规格属性；仅添加商品时可编辑内容）</span>
             </h3>
-            <div ng-repeat="x in specs track by $index" style="display:none" class="margin-bottom-10" ng-class="{true:'layui-show'}[specs.length>0&&mode=='add']">
+            <div ng-repeat="x in specs track by $index" style="display:none" class="margin-bottom-10" ng-class="{true:'layui-show'}[isAddMode&&specs.length>0]">
                 <div class="goods-spec-box padding-10 margin-0 relative" style="background:#ddd">
                     <span class="text-center goods-spec-title">名称</span>
                     <input ng-model="x.name" required placeholder="请输入分组">
@@ -56,7 +56,7 @@
                     <a class="layui-btn layui-btn-sm layui-btn-primary goods-spec-btn" ng-if="x.list.length<5" ng-click="addSpecVal(x.list)">增加</a>
                 </div>
             </div>
-            <a ng-if="mode=='add'&&specs.length<3" class="layui-btn layui-btn-sm layui-btn-primary" ng-click="addSpecRow(specs)">增加分组</a>
+            <a ng-if="isAddMode&&specs.length<3" class="layui-btn layui-btn-sm layui-btn-primary" ng-click="addSpecRow(specs)">增加分组</a>
             <table class="layui-table margin-top-10">
                 <thead>
                 <tr>
@@ -69,20 +69,25 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="rows in specsTreeData track by $index">
-                    <td ng-if="td.show" rowspan="{{td.rowspan}}" ng-repeat="td in rows" ng-bind="td.name"></td>
+                    <td class="layui-bg-gray" ng-if="td.show" rowspan="{{td.rowspan}}" ng-repeat="td in rows" ng-bind="td.name"></td>
                     <td class="padding-0">
-                        <input ng-blur="rows[0].market=setValue(rows[0].key,'market',$event.target.value,'(parseFloat(_)||0).toFixed(2)')"
-                               class="layui-input border-0 padding-left-0 text-center" ng-model="rows[0].market">
+                        <label class="padding-0 margin-0">
+                            <input ng-blur="rows[0].market=setValue(rows[0].key,'market',$event.target.value,'(parseFloat(_)||0).toFixed(2)')" class="layui-input border-0 padding-left-0 text-center" ng-model="rows[0].market">
+                        </label>
                     </td>
                     <td class="padding-0">
-                        <input ng-blur="rows[0].selling=setValue(rows[0].key,'selling',$event.target.value,'(parseFloat(_)||0).toFixed(2)')"
-                               class="layui-input border-0 padding-left-0 text-center" ng-model="rows[0].selling">
+                        <label class="padding-0 margin-0">
+                            <input ng-blur="rows[0].selling=setValue(rows[0].key,'selling',$event.target.value,'(parseFloat(_)||0).toFixed(2)')" class="layui-input border-0 padding-left-0 text-center" ng-model="rows[0].selling">
+                        </label>
                     </td>
                     <td class="padding-0">
-                        <input ng-blur="rows[0].virtual=setValue(rows[0].key,'virtual',$event.target.value,'(parseInt(_)||0)')"
-                               class="layui-input border-0 padding-left-0 text-center" ng-model="rows[0].virtual">
+                        <label class="padding-0 margin-0">
+                            <input ng-blur="rows[0].virtual=setValue(rows[0].key,'virtual',$event.target.value,'(parseInt(_)||0)')" class="layui-input border-0 padding-left-0 text-center" ng-model="rows[0].virtual">
+                        </label>
                     </td>
-                    <td class="text-center"><label class="think-checkbox margin-0"><input type="checkbox" ng-model="rows[0].status"></label></td>
+                    <td class="text-center layui-bg-gray">
+                        <label class="think-checkbox margin-0 full-width full-height block"><input type="checkbox" ng-model="rows[0].status"></label>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -196,23 +201,23 @@
         angular.bootstrap(document.getElementById(app.name), [app.name]);
 
         function callback($rootScope) {
-            $rootScope.mode = '{$vo.id ? "edit" : "add"}';
-            $rootScope.specs = angular.fromJson('{$vo.specs|raw|default=0}') || [{name: '默认分组', list: [{name: '默认规格', check: true}]}];
+            $rootScope.isAddMode = eval('{$vo.id?false:true}');
             let defaultValues = angular.fromJson('{$defaultValues|raw|default=0}') || {};
+            $rootScope.specs = angular.fromJson('{$vo.specs|raw|default=0}') || [{name: '默认分组', list: [{name: '默认规格', check: true}]}];
             // 返回商品列表
             $rootScope.hsitoryBack = function () {
                 $.msg.confirm('确定要取消编辑吗？', function (index) {
                     history.back(), $.msg.close(index);
                 });
             };
-            // 读取默认值
-            let getValue = function (key, callback) {
-                if (typeof callback === 'function') return callback(defaultValues[key] || {});
-            };
             // 设置默认值
             $rootScope.setValue = function (key, type, value, call) {
                 defaultValues[key] || (defaultValues[key] = {});
                 return defaultValues[key][type] = eval(call.replace('_', "'" + value + "'"));
+            };
+            // 读取默认值
+            let getValue = function (key, callback) {
+                if (typeof callback === 'function') return callback(defaultValues[key] || {});
             };
             // 生成交叉表格数据
             $rootScope.specsTreeData = [];
