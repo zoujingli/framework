@@ -46,13 +46,15 @@ class Logs
     }
 
     /**
+     * 写入日志
      * @param string $type
      * @param string $content
+     * @return integer
      * @throws \think\Exception
      */
     public static function write($type, $content)
     {
-        self::db()->name('logs')->insert([
+        return self::db()->name('logs')->insert([
             'type'      => $type,
             'geoip'     => Request::ip(),
             'action'    => Request::path(),
