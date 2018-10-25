@@ -102,7 +102,7 @@ class Local extends File
      */
     public function path($name)
     {
-        return env('root_path') . "public/upload/{$name}";
+        return str_replace('\\', '/', env('root_path') . "public/upload/{$name}");
     }
 
     /**
