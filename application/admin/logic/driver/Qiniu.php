@@ -16,6 +16,7 @@ namespace app\admin\logic\driver;
 
 use app\admin\logic\File;
 use Qiniu\Auth;
+use Qiniu\Config;
 use Qiniu\Storage\BucketManager;
 use Qiniu\Storage\UploadManager;
 use think\facade\Log;
@@ -131,15 +132,34 @@ class Qiniu extends File
     {
         $auth = new Auth(sysconf('storage_qiniu_access_key'), sysconf('storage_qiniu_secret_key'));
         $token = $auth->uploadToken(sysconf('storage_qiniu_bucket'));
-        $uploadMgr = new UploadManager();
-        list($result, $err) = $uploadMgr->put($token, $name, $content);
-        if ($err !== null) {
-            Log::error('七牛云文件上传失败');
-            return null;
-        }
-        $result['file'] = $name;
-        $result['url'] = $this->base($name);
-        return $result;
+        list($ret, $err) = (new UploadManager())->put($token, $name, $content);
+        if ($err !== null) Log::error(__METHOD__ . '七牛云文件上传失败');
+        return $this->info($name);
+    }
+
+    /**
+     * 获取文件路径
+     * @param string $name
+     * @return string
+     */
+    public function path($name)
+    {
+        return $name;
+    }
+
+    /**
+     * 获取文件信息
+     * @param string $name
+     * @return array|null
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     */
+    public function info($name)
+    {
+        $auth = new Auth(sysconf('storage_qiniu_access_key'), sysconf('storage_qiniu_secret_key'));
+        list($ret, $err) = (new BucketManager($auth))->stat(sysconf('storage_qiniu_bucket'), $name);
+        if ($err !== null) return null;
+        return ['file' => $name, 'hash' => $ret['hash'], 'key' => $name, 'url' => $this->base($name)];
     }
 
 }

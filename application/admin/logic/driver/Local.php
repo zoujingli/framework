@@ -15,7 +15,6 @@
 namespace app\admin\logic\driver;
 
 use app\admin\logic\File;
-use think\facade\Log;
 
 /**
  * 本地文件上传驱动
@@ -32,7 +31,7 @@ class Local extends File
      */
     public function has($name)
     {
-        return file_exists(env('root_path') . "public/upload/{$name}");
+        return file_exists($this->path($name));
     }
 
     /**
@@ -42,7 +41,7 @@ class Local extends File
      */
     public function get($name)
     {
-        $file = env('root_path') . "public/upload/{$name}";
+        $file = $this->path($name);
         return file_exists($file) ? file_get_contents($file) : '';
     }
 
@@ -87,13 +86,35 @@ class Local extends File
     public function save($name, $content)
     {
         try {
-            $file = env('root_path') . "public/upload/{$name}";
+            $file = $this->path($name);
             file_exists(dirname($file)) || mkdir(dirname($file), 0755, true);
-            if (file_put_contents($file, $content)) {
-                return ['file' => $file, 'hash' => md5_file($file), 'key' => "upload/{$name}", 'url' => $this->base($name)];
-            }
+            if (file_put_contents($file, $content)) return $this->info($name);
         } catch (\Exception $err) {
-            Log::error('本地文件存储失败, ' . $err->getMessage());
+            \think\facade\Log::error('本地文件存储失败, ' . $err->getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * 获取文件路径
+     * @param string $name
+     * @return string
+     */
+    public function path($name)
+    {
+        return env('root_path') . "public/upload/{$name}";
+    }
+
+    /**
+     * 获取文件信息
+     * @param string $name
+     * @return array|null
+     */
+    public function info($name)
+    {
+        if ($this->has($name)) {
+            $file = $this->path($name);
+            return ['file' => $file, 'key' => "upload/{$name}", 'hash' => md5_file($file), 'url' => $this->base($name)];
         }
         return null;
     }

@@ -18,7 +18,6 @@ use app\admin\logic\File;
 use OSS\Model\CorsConfig;
 use OSS\Model\CorsRule;
 use OSS\OssClient;
-use think\facade\Log;
 
 /**
  * AliOss文件存储
@@ -80,9 +79,8 @@ class Oss extends File
      */
     public function upload()
     {
-        $domain = sysconf('storage_oss_domain');
         $protocol = request()->isSsl() ? 'https' : 'http';
-        return "{$protocol}://{$domain}";
+        return "{$protocol}://" . sysconf('storage_oss_domain');
     }
 
     /**
@@ -118,15 +116,11 @@ class Oss extends File
             $endpoint = 'http://' . sysconf('storage_oss_domain');
             $ossClient = new OssClient(sysconf('storage_oss_keyid'), sysconf('storage_oss_secret'), $endpoint, true);
             $result = $ossClient->putObject(sysconf('storage_oss_bucket'), $name, $content);
-            $baseUrl = explode('://', $result['oss-request-url'])[1];
-            if (strtolower(sysconf('storage_oss_is_https')) === 'http') $site_url = "http://{$baseUrl}";
-            elseif (strtolower(sysconf('storage_oss_is_https')) === 'https') $site_url = "https://{$baseUrl}";
-            else $site_url = "//{$baseUrl}";
-            return ['file' => $name, 'hash' => $result['content-md5'], 'key' => $name, 'url' => $site_url];
+            return ['file' => $name, 'hash' => $result['content-md5'], 'key' => $name, 'url' => $this->base($name)];
         } catch (\Exception $err) {
-            Log::error('阿里云OSS文件上传失败, ' . $err->getMessage());
+            \think\facade\Log::error('阿里云OSS文件上传失败, ' . $err->getMessage());
+            return null;
         }
-        return null;
     }
 
     /**
@@ -176,14 +170,42 @@ class Oss extends File
      */
     public function getBucketList()
     {
-        $data = [];
-        $endpoint = 'http://' . sysconf('storage_oss_endpoint');
+        list($endpoint, $data) = ['http://' . sysconf('storage_oss_endpoint'), []];
         $client = new OssClient(sysconf('storage_oss_keyid'), sysconf('storage_oss_secret'), $endpoint);
         foreach ($client->listBuckets()->getBucketList() as $bucket) array_push($data, [
             'bucket'    => $bucket->getName(), 'location' => $bucket->getLocation(),
             'create_at' => date('Y-m-d H:i:s', strtotime($bucket->getCreateDate())),
         ]);
         return $data;
+    }
+
+    /**
+     * 获取文件路径
+     * @param string $name
+     * @return string
+     */
+    public function path($name)
+    {
+        return $name;
+    }
+
+    /**
+     * 获取文件信息
+     * @param string $name
+     * @return array|null
+     * @throws \OSS\Core\OssException
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     */
+    public function info($name)
+    {
+        if ($this->has($name)) {
+            $endpoint = 'http://' . sysconf('storage_oss_endpoint');
+            $client = new OssClient(sysconf('storage_oss_keyid'), sysconf('storage_oss_secret'), $endpoint);
+            $result = $client->getObjectMeta(sysconf('storage_oss_bucket'), $name);
+            return ['file' => $name, 'hash' => $result['content-md5'], 'key' => $name, 'url' => $this->base($name)];
+        }
+        return null;
     }
 
 }

@@ -120,19 +120,13 @@ class File
     public static function down($url, $force = false)
     {
         try {
-            $class = self::instance('local');
+            $local = self::instance('local');
             $name = self::name($url, '', 'download/');
-            if (false === $force && ($siteUrl = $class->url($name))) {
-                $file = env('root_path') . "public/upload/{$name}";
-                return [
-                    'file' => $file, 'key' => "upload/{$name}",
-                    'hash' => md5_file($file), 'url' => $siteUrl,
-                ];
-            }
-            return $class->save($name, file_get_contents($url));
+            if (!$force && $local->has($name)) return $local->info($name);
+            return $local->save($name, file_get_contents($url));
         } catch (\Exception $e) {
             \think\facade\Log::error("FileService 文件下载失败 [ {$url} ] {$e->getMessage()}");
+            return ['url' => $url];
         }
-        return ['url' => $url];
     }
 }
