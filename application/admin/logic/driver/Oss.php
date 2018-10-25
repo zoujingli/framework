@@ -15,6 +15,8 @@
 namespace app\admin\logic\driver;
 
 use app\admin\logic\File;
+use OSS\Model\CorsConfig;
+use OSS\Model\CorsRule;
 use OSS\OssClient;
 use think\facade\Log;
 
@@ -125,6 +127,63 @@ class Oss extends File
             Log::error('阿里云OSS文件上传失败, ' . $err->getMessage());
         }
         return null;
+    }
+
+    /**
+     * 创建OSS空间名称
+     * @param string $bucket OSS空间名称
+     * @return string 返回新创建的域名
+     * @throws \OSS\Core\OssException
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     */
+    public function setBucket($bucket)
+    {
+        $acl = OssClient::OSS_ACL_TYPE_PUBLIC_READ_WRITE;
+        $endpoint = 'http://' . sysconf('storage_oss_endpoint');
+        $client = new OssClient(sysconf('storage_oss_keyid'), sysconf('storage_oss_secret'), $endpoint);
+        // 空间及权限处理
+        if ($client->doesBucketExist($bucket)) {
+            $result = $client->getBucketMeta($bucket);
+            if ($client->getBucketAcl($bucket) !== $acl) {
+                $client->putBucketAcl($bucket, $acl);
+            }
+        } else {
+            $result = $client->createBucket($bucket, $acl);
+        }
+        // CORS 跨域处理
+        $corsRule = new CorsRule();
+        $corsRule->addAllowedHeader('*');
+        $corsRule->addAllowedOrigin('*');
+        $corsRule->addAllowedMethod('GET');
+        $corsRule->addAllowedMethod('POST');
+        $corsRule->setMaxAgeSeconds(36000);
+        $corsConfig = new CorsConfig();
+        $corsConfig->addRule($corsRule);
+        $client->putBucketCors($bucket, $corsConfig);
+        $domain = pathinfo($result['oss-request-url'], 2);
+        sysconf('storage_oss_bucket', $bucket);
+        sysconf('storage_oss_domain', $domain);
+        return $domain;
+    }
+
+    /**
+     * 获取空间列表
+     * @return array
+     * @throws \OSS\Core\OssException
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     */
+    public function getBucketList()
+    {
+        $data = [];
+        $endpoint = 'http://' . sysconf('storage_oss_endpoint');
+        $client = new OssClient(sysconf('storage_oss_keyid'), sysconf('storage_oss_secret'), $endpoint);
+        foreach ($client->listBuckets()->getBucketList() as $bucket) array_push($data, [
+            'bucket'    => $bucket->getName(), 'location' => $bucket->getLocation(),
+            'create_at' => date('Y-m-d H:i:s', strtotime($bucket->getCreateDate())),
+        ]);
+        return $data;
     }
 
 }

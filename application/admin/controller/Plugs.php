@@ -128,12 +128,14 @@ class Plugs extends Controller
             case 'oss':
                 $param['site_url'] = File::instance('oss')->base($name);
                 $param['OSSAccessKeyId'] = sysconf('storage_oss_keyid');
+                $param['policy'] = base64_encode(json_encode([
+                    'conditions' => [['content-length-range', 0, 1048576000]],
+                    'expiration' => gmdate("Y-m-d\TH:i:s\Z", time() + 3600),
+                ]));
                 $param['signature'] = base64_encode(hash_hmac('sha1', $param['policy'], sysconf('storage_oss_secret'), true));
-                $param['policy'] = base64_encode(json_encode(['conditions' => [['content-length-range', 0, 1048576000]], 'expiration' => gmdate("Y-m-d\TH:i:s\Z", time() + 3600)]));
                 break;
-            default:
-                $this->success('文件未上传', $param, 'NOT_FOUND');
         }
+        $this->success('文件未上传', $param, 'NOT_FOUND');
     }
 
     /**

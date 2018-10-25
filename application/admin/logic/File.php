@@ -24,6 +24,7 @@ namespace app\admin\logic;
  * @method string base($name = '') static 获取文件存储基础目录
  * @method string upload($client = false) static 获取文件上传推送地址
  * @method boolean has($name) static 判断文件上否已经上传
+ * @method string setBucket($name) static 动态创建指定bucket
  */
 class File
 {
