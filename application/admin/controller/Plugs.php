@@ -52,7 +52,11 @@ class Plugs extends Controller
      */
     public function upload()
     {
-        $file = $this->request->file($this->request->get('name', 'file'));
+        try {
+            $file = $this->request->file($this->request->get('name', 'file'));
+        } catch (\Exception $e) {
+            return json(['code' => 'ERROR', 'msg' => lang($e->getMessage())]);
+        }
         empty($file) && $this->error('文件上传异常，文件可能过大或未上传');
         if (!$file->checkExt(strtolower(sysconf('storage_local_exts')))) {
             return json(['code' => 'ERROR', 'msg' => '文件上传类型受限']);
@@ -79,7 +83,11 @@ class Plugs extends Controller
      */
     public function plupload()
     {
-        $file = $this->request->file($this->request->get('name', 'file'));
+        try {
+            $file = $this->request->file($this->request->get('name', 'file'));
+        } catch (\Exception $e) {
+            return json(['code' => 'ERROR', 'msg' => lang($e->getMessage())]);
+        }
         empty($file) && $this->error('文件上传异常，文件可能过大或未上传');
         if (!$file->checkExt(strtolower(sysconf('storage_local_exts')))) {
             return json(['uploaded' => false, 'error' => ['message' => '文件上传类型受限']]);
