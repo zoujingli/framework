@@ -180,6 +180,7 @@ return array(
     'app\\admin\\logic\\driver\\Oss' => $baseDir . '/application/admin/logic/driver/Oss.php',
     'app\\admin\\logic\\driver\\Qiniu' => $baseDir . '/application/admin/logic/driver/Qiniu.php',
     'app\\index\\controller\\Index' => $baseDir . '/application/index/controller/Index.php',
+    'app\\index\\controller\\Test' => $baseDir . '/application/index/controller/Test.php',
     'app\\store\\controller\\Goods' => $baseDir . '/application/store/controller/Goods.php',
     'app\\store\\logic\\Goods' => $baseDir . '/application/store/logic/Goods.php',
     'library\\Controller' => $vendorDir . '/zoujingli/think-library/library/Controller.php',
