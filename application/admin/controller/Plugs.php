@@ -33,13 +33,16 @@ class Plugs extends Controller
      */
     public function upfile()
     {
-        $mode = $this->request->get('mode', 'one');
-        $types = $this->request->get('type', 'jpg,png');
-        $this->assign('mimes', File::mine($types));
-        $this->assign('name', $this->request->get('name', 'file'));
-        $this->assign('field', $this->request->get('field', 'file'));
-        $uptype = $this->request->get('uptype', sysconf('storage_type'));
-        return $this->fetch('', ['mode' => $mode, 'types' => $types, 'uptype' => $uptype]);
+        $this->mode = $this->request->get('mode', 'one');
+        $this->name = $this->request->get('name', 'file');
+        $this->field = $this->request->get('field', 'file');
+        $this->types = $this->request->get('type', 'jpg,png');
+        $this->mimes = File::mine($this->types);
+        $this->uptype = $this->request->get('uptype', sysconf('storage_type'));
+        if (!in_array($this->uptype, ['local', 'qiniu', 'oss'])) {
+            $this->uptype = sysconf('storage_type');
+        }
+        return $this->fetch();
     }
 
     /**
