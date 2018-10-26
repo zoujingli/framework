@@ -45,7 +45,7 @@ class Goods
         $smap = [['goods_id', 'eq', $goodsId], ['status', 'in', ['0', '1']]];
         Db::name('StoreGoods')->where(['id' => $goodsId])->update([
             'number_stock' => (int)array_sum(array_column($stockList, 'stock')),
-            'number_sales' => (int)Db::name('StoreOrderList')->where($smap)->sum('goods_number'),
+            'number_sales' => 0//(int)Db::name('StoreOrderList')->where($smap)->sum('goods_number'),
         ]);
     }
 
