@@ -46,10 +46,12 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 /* 页面布局 - 左则 */
 .layui-layout>.layui-side .layui-nav-bar{display:none!important}
 .layui-layout>.layui-side .layui-side-scroll{width:200px!important}
-.layui-layout>.layui-side .layui-this{background:rgba(0,0,0,0.10)!important}
+.layui-layout>.layui-side .layui-this{background:rgba(0,0,0,0.15)!important}
 .layui-layout>.layui-side .layui-this a{background:none!important}
 .layui-layout>.layui-side .layui-nav-item a{height:45px;line-height:45px;color:#333!important}
 .layui-layout>.layui-side .layui-nav-item a:hover{background:rgba(0,0,0,0.05)}
+.layui-layout>.layui-side .layui-nav-item .nav-icon{width:16px!important}
+
 .layui-layout>.layui-side .layui-nav-item .layui-nav-child{background:none!important}
 .layui-layout>.layui-side .layui-nav-tree-top a{height:28px!important;line-height:28px!important}
 
@@ -64,7 +66,7 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 .layui-layout.layui-layout-left-mini>.layui-side .layui-nav-child{display:block!important;padding:0!important}
 .layui-layout.layui-layout-left-mini>.layui-side .layui-nav-item a{padding:0}
 .layui-layout.layui-layout-left-mini>.layui-side .layui-nav-item .nav-text{display:none}
-.layui-layout.layui-layout-left-mini>.layui-side .layui-nav-item .nav-icon{display:inline-block!important;padding-left:0!important}
+.layui-layout.layui-layout-left-mini>.layui-side .layui-nav-item .nav-icon{display:inline-block!important;padding-left:0!important;width:16px!important}
 .layui-layout.layui-layout-left-mini>.layui-side .layui-nav-tree-top i{display:inline-block;transform:rotate(180deg);-o-transform:rotate(180deg);-ms-transform:rotate(180deg);-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg)}
 
 /* 下拉 */
