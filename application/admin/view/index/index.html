@@ -81,7 +81,7 @@
                 <!--{empty name='twoMenu.sub'}-->
                 <li class="layui-nav-item">
                     <a data-target-tips="{$twoMenu.title}" data-menu-node="m-{$oneMenu.id}-{$twoMenu.id}" data-open="{$twoMenu.url}">
-                        <span class='nav-icon {$twoMenu.icon|default="layui-icon layui-icon-link"}'></span>
+                        <span class='{$twoMenu.icon|default="layui-icon layui-icon-link"}'></span>
                         <span class="nav-text">{$twoMenu.title}</span>
                     </a>
                 </li>
@@ -95,7 +95,7 @@
                         <!--{foreach $twoMenu.sub as $thrMenu}-->
                         <dd>
                             <a data-target-tips="{$thrMenu.title}" data-open="{$thrMenu.url}" data-menu-node="m-{$oneMenu.id}-{$twoMenu.id}-{$thrMenu.id}">
-                                <span class='{$thrMenu.icon|default="layui-icon layui-icon-link"}'></span>
+                                <span class='nav-icon padding-left-10 {$thrMenu.icon|default="layui-icon layui-icon-link"}'></span>
                                 <span class="nav-text">{$thrMenu.title}</span>
                             </a>
                         </dd>
