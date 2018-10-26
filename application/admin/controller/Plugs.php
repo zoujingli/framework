@@ -38,10 +38,9 @@ class Plugs extends Controller
         $this->field = $this->request->get('field', 'file');
         $this->types = $this->request->get('type', 'jpg,png');
         $this->mimes = File::mine($this->types);
-        $this->uptype = $this->request->get('uptype', sysconf('storage_type'));
-        if (!in_array($this->uptype, ['local', 'qiniu', 'oss'])) {
-            $this->uptype = sysconf('storage_type');
-        }
+        if (in_array($this->request->get('uptype'), ['local', 'qiniu', 'oss'])) {
+            $this->uptype = $this->request->get('uptype');
+        } else $this->uptype = sysconf('storage_type');
         return $this->fetch();
     }
 
