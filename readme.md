@@ -31,15 +31,17 @@ PHP 开发技术交流（ QQ 群 513350915）
  
 特别感谢
 --
-* Layui UI组件库
-* Ckeditor 富文件编辑器
-* PluPloader 文件上传工具1
-* WebUploader 文件上传工具2
-* Font-Awesome 字体图标库
-* ThinkPHP 5.1 PHP基础框架
-* ThinkLibrary ThinkPHP扩展组件
-* WeChatDeveloper 微信公众号组件
-* WeOpenDeveloper 微信开放平台组件
+|名称|版本|描述|
+|---|---|---|
+|Layui|2.4.3|UI组件库|
+|Ckeditor|4.10.1|富文件编辑器|
+|PluPloader|3.1.2|文件上传工具1|
+|WebUploader|0.1.5|文件上传工具2|
+|Font-Awesome|5.3.1|字体图标库|
+|ThinkPHP|5.1.27|PHP基础框架|
+|ThinkLibrary|1.1.6|ThinkPHP扩展组件|
+|WeChatDeveloper|1.1.16|微信公众号组件|
+|WeOpenDeveloper|1.1.3|微信开放平台组件|
 
 赞助打赏
 --
