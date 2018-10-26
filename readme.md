@@ -29,6 +29,17 @@ PHP 开发技术交流（ QQ 群 513350915）
  * Gitee仓库地址：https://gitee.com/zoujingli/framework
  * GitHub仓库地址：https://github.com/zoujingli/framework
  
+特别感谢
+--
+* Layui UI组件库
+* Ckeditor 富文件编辑器
+* PluPloader 文件上传工具1
+* WebUploader 文件上传工具2
+* Font-Awesome 字体图标库
+* ThinkPHP 5.1 PHP基础框架
+* ThinkLibrary ThinkPHP扩展组件
+* WeChatDeveloper 微信公众号组件
+* WeOpenDeveloper 微信开放平台组件
 
 赞助打赏
 --
