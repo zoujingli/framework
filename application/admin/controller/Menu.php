@@ -50,7 +50,7 @@ class Menu extends Controller
     {
         foreach ($data as &$vo) {
             if ($vo['url'] !== '#') {
-                $vo['url'] = url($vo['url']) . empty($vo['params']) ? '' : "?{$vo['params']}";
+                $vo['url'] = url($vo['url']) . (empty($vo['params']) ? '' : "?{$vo['params']}");
             }
             $vo['ids'] = join(',', Data::getArrSubIds($data, $vo['id']));
         }
@@ -100,7 +100,7 @@ class Menu extends Controller
                 if (empty($node['is_menu'])) unset($nodes[$key]);
                 unset($nodes[$key]['pnode'], $nodes[$key]['is_login'], $nodes[$key]['is_menu'], $nodes[$key]['is_auth']);
             }
-            $this->assign(['nodes' => array_values($nodes), 'menus' => $menus]);
+            list($this->menus, $this->nodes) = [$menus, array_values($nodes)];
         }
     }
 
