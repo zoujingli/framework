@@ -68,9 +68,11 @@ class Plugs extends Controller
         if ($this->request->post('token') !== md5($name . session_id())) {
             return json(['code' => 'ERROR', 'msg' => '文件上传验证失败']);
         }
-        $info = File::instance('local')->save($name, file_get_contents($file->getRealPath()));
-        if (is_array($info) && isset($info['url'])) {
-            return json(['data' => ['site_url' => $info['url']], 'code' => 'SUCCESS', 'msg' => '文件上传成功']);
+        $path = pathinfo(File::instance('local')->path($name));
+        if ($file->move($path['dirname'], $path['basename'], true)) {
+            if (is_array($info = File::instance('local')->info($name)) && isset($info['url'])) {
+                return json(['data' => ['site_url' => $info['url']], 'code' => 'SUCCESS', 'msg' => '文件上传成功']);
+            }
         }
         return json(['code' => 'ERROR', 'msg' => '文件上传失败']);
     }
@@ -94,8 +96,13 @@ class Plugs extends Controller
         }
         $ext = strtolower(pathinfo($file->getInfo('name'), 4));
         $name = join('/', str_split(md5_file($file->getPathname()), 16)) . "." . (empty($ext) ? 'tmp' : $ext);
-        $result = File::instance('local')->save($name, file_get_contents($file->getPathname()));
-        return json(['uploaded' => true, 'filename' => $file->getInfo('name'), 'url' => $result['url']]);
+        $path = pathinfo(File::instance('local')->path($name));
+        if ($file->move($path['dirname'], $path['basename'], true)) {
+            if (is_array($info = File::instance('local')->info($name)) && isset($info['url'])) {
+                return json(['uploaded' => true, 'filename' => $file->getInfo('name'), 'url' => $info['url']]);
+            }
+        }
+        return json(['uploaded' => false, 'error' => ['message' => '文件处理失败，请稍候再试！']]);
     }
 
     /**
