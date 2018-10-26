@@ -57,13 +57,13 @@ class Plugs extends Controller
         if (!$file->checkExt(strtolower(sysconf('storage_local_exts')))) {
             return json(['code' => 'ERROR', 'msg' => '文件上传类型受限']);
         }
-        // 文件上传Token验证
-        if ($this->request->post('token') !== md5($file . session_id())) {
-            return json(['code' => 'ERROR', 'msg' => '文件上传验证失败']);
-        }
         // 文件本身处理
         $ext = strtolower(pathinfo($file->getInfo('name'), 4));
         $name = join('/', str_split($this->request->post('md5'), 16)) . '.' . (empty($ext) ? 'tmp' : $ext);
+        // 文件上传Token验证
+        if ($this->request->post('token') !== md5($name . session_id())) {
+            return json(['code' => 'ERROR', 'msg' => '文件上传验证失败']);
+        }
         $info = File::instance('local')->save($name, file_get_contents($file->getRealPath()));
         if (is_array($info) && isset($info['url'])) {
             return json(['data' => ['site_url' => $info['url']], 'code' => 'SUCCESS', 'msg' => '文件上传成功']);
