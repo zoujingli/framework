@@ -8,7 +8,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">Storage<br><span class="nowrap color-desc">存储引擎</span></label>
             <div class="layui-input-block">
-                {foreach ['local'=>'本地服务器存储','qiniu'=>'七牛云存储','oss'=>'阿里云OSS存储'] as $k=>$v}
+                {foreach ['local'=>'本地服务器存储','oss'=>'阿里云OSS存储','qiniu'=>'七牛云存储'] as $k=>$v}
                 <label class="think-radio">
                     <!--{if sysconf('storage_type') eq $k}-->
                     <input checked type="radio" name="storage_type" value="{$k}" title="{$v}" lay-ignore>
