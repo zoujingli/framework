@@ -61,7 +61,7 @@ CKEDITOR.plugins.add('uvideo', {
                 let field = '_editor_upload_' + Math.floor(Math.random() * 100000);
                 let url = window.ROOT_URL + '?s=admin/plugs/upfile.html&mode=one&type=mp4&field=' + field;
                 $('<input type="hidden">').attr('name', field).appendTo(editor.element.$).on('change', function () {
-                    let element = CKEDITOR.dom.element.createFromHtml('<video controls="controls"><source src="' + this.value + '" type="audio/mp4"></video>');
+                    let element = CKEDITOR.dom.element.createFromHtml('<video width="100%" controls="controls"><source src="' + this.value + '" type="audio/mp4"></video>');
                     editor.insertElement(element), $(this).remove();
                 });
                 $.form.iframe(url, '上传MP4音频');
