@@ -24,7 +24,7 @@
 <div class="layui-layout layui-layout-admin layui-layout-left-hide">
 
     <!-- 顶部菜单 开始 -->
-    <div class="layui-header notselect">
+    <div class="layui-header notselect layui-bg-cyan">
         <a href="{:url('@')}" class="layui-logo layui-elip">{:sysconf('app_name')} <sup>{:sysconf('app_version')}</sup></a>
         <ul class="layui-nav layui-layout-left">
             <!--{foreach $menus as $oneMenu}-->
@@ -67,38 +67,36 @@
     <!-- 顶部菜单 结束 -->
 
     <!-- 左则菜单 开始 -->
-    <div class="layui-side layui-bg-black notselect">
+    <div class="layui-side layui-bg-gray notselect">
         <div class="layui-side-scroll">
-            <ul class="layui-nav layui-nav-tree layui-nav-tree-top">
+            <ul class="layui-nav layui-bg-gray layui-nav-tree layui-nav-tree-top">
                 <li class="layui-nav-item" lay-unselect>
-                    <a class="text-center" data-target-menu-type>
-                        <i class="layui-icon layui-icon-spread-left"></i>
-                    </a>
+                    <a class="text-center" data-target-menu-type><i class="layui-icon layui-icon-spread-left"></i></a>
                 </li>
             </ul>
             <!--{foreach $menus as $oneMenu}-->
             <!--{notempty name='oneMenu.sub'}-->
-            <ul class="layui-nav layui-nav-tree layui-hide" data-menu-layout="m-{$oneMenu.id}">
+            <ul class="layui-nav layui-nav-tree layui-hide layui-bg-gray" data-menu-layout="m-{$oneMenu.id}">
                 <!--{foreach $oneMenu.sub as $twoMenu}-->
                 <!--{empty name='twoMenu.sub'}-->
                 <li class="layui-nav-item">
                     <a data-target-tips="{$twoMenu.title}" data-menu-node="m-{$oneMenu.id}-{$twoMenu.id}" data-open="{$twoMenu.url}">
                         <span class='nav-icon {$twoMenu.icon|default="layui-icon layui-icon-link"}'></span>
-                        <span class="nav-text">&nbsp;{$twoMenu.title}</span>
+                        <span class="nav-text">{$twoMenu.title}</span>
                     </a>
                 </li>
                 <!--{else}-->
                 <li class="layui-nav-item" data-submenu-layout='m-{$oneMenu.id}-{$twoMenu.id}'>
                     <a data-target-tips="{$twoMenu.title}">
                         <span class='nav-icon layui-hide {$twoMenu.icon|default="layui-icon layui-icon-triangle-d"}'></span>
-                        <span class="nav-text">&nbsp;{$twoMenu.title}</span>
+                        <span class="nav-text">{$twoMenu.title}</span>
                     </a>
                     <dl class="layui-nav-child">
                         <!--{foreach $twoMenu.sub as $thrMenu}-->
                         <dd>
                             <a data-target-tips="{$thrMenu.title}" data-open="{$thrMenu.url}" data-menu-node="m-{$oneMenu.id}-{$twoMenu.id}-{$thrMenu.id}">
                                 <span class='{$thrMenu.icon|default="layui-icon layui-icon-link"}'></span>
-                                <span class="nav-text">&nbsp;{$thrMenu.title}</span>
+                                <span class="nav-text">{$thrMenu.title}</span>
                             </a>
                         </dd>
                         <!--{/foreach}-->
