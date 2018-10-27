@@ -14,7 +14,7 @@
 
 html,body{height:100%;width:100%;overflow:hidden!important;min-width:0}
 
-.login-container{height:100%;background-color:#2494F2;overflow:hidden;font-size:9pt}
+.login-container{height:100%;overflow:hidden;font-size:9pt}
 .login-container ul{display:block;margin:0;padding:0;list-style:none}
 .login-container ul li{display:block;margin:0;padding:0;list-style:none}
 .login-container .clouds-container{position:absolute;overflow:hidden;height:100%;width:100%}
@@ -54,4 +54,5 @@ html,body{height:100%;width:100%;overflow:hidden!important;min-width:0}
 /* 底部版权 */
 .login-container .footer{height:50px;line-height:50px;text-align:center;position:absolute;bottom:0;width:100%;color:#fff;letter-spacing:1px}
 .login-container .footer span{display:inline-block;height:10px;overflow:hidden;line-height:10px;padding-left:1px;padding-right:1px}
-.login-container .footer a{color:#fff}.login-container .footer a:hover{color:#fff}
+.login-container .footer a{color:#fff}
+.login-container .footer a:hover{color:#fff}
