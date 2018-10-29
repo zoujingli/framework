@@ -35,11 +35,11 @@
             });
             return childrens;
         };
-        this.getData = function (self) {
+        this.getData = function (that) {
             let index = $.msg.loading();
             $.form.load('{:url()}', {id: '{$vo.id}', action: 'get'}, 'post', function (ret) {
-                self.data = self.renderChildren(ret.data, 1);
-                return $.msg.close(index), self.showTree(), false;
+                that.data = that.renderChildren(ret.data, 1);
+                return $.msg.close(index), that.showTree(), false;
             });
         };
         this.showTree = function () {
