@@ -26,7 +26,7 @@ require.config({
     map: {'*': {css: baseRoot + 'plugs/require/css.js'}},
     paths: {
         'md5': ['plugs/jquery/md5.min'],
-        'json': ['plugs/jquery/json2.min'],
+        'json': ['plugs/jquery/json.min'],
         'upload': ['plugs/plupload/build'],
         'base64': ['plugs/jquery/base64.min'],
         'angular': ['plugs/angular/angular.min'],
