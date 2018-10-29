@@ -37,10 +37,9 @@ class Goods
         // 入库统计更新
         $fields = "goods_id,goods_spec,concat(goods_id,'::',goods_spec) spec,sum(number_stock) stock";
         $stockList = Db::name('StoreGoodsStock')->field($fields)->where(['goods_id' => $goodsId])->group('spec')->select();
-        foreach ($stockList as $vo) {
-            $where = ['goods_id' => $goodsId, 'goods_spec' => $vo['goods_spec']];
-            Db::name('StoreGoodsList')->where($where)->update(['number_stock' => $vo['stock']]);
-        }
+        foreach ($stockList as $vo) Db::name('StoreGoodsList')->where([
+            'goods_id' => $goodsId, 'goods_spec' => $vo['goods_spec'],
+        ])->update(['number_stock' => $vo['stock']]);
         // 销售统计更新
         $smap = [['goods_id', 'eq', $goodsId], ['status', 'in', ['0', '1']]];
         Db::name('StoreGoods')->where(['id' => $goodsId])->update([
