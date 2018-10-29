@@ -10,14 +10,14 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
+if (typeof jQuery === 'undefined') window.$ = window.jQuery = layui.$;
+window.form = layui.form, window.layer = layui.layer, window.laydate = layui.laydate;
+
 // 当前资源URL目录
 let baseRoot = (function () {
     let scripts = document.scripts, src = scripts[scripts.length - 1].src;
     return src.substring(0, src.lastIndexOf("/") + 1);
 })();
-
-var form = layui.form, layer = layui.layer, laydate = layui.laydate;
-if (typeof jQuery === 'undefined') var $ = jQuery = layui.$;
 
 // require 配置参数
 require.config({

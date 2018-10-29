@@ -162,24 +162,6 @@ class Oss extends File
     }
 
     /**
-     * 获取空间列表
-     * @return array
-     * @throws \OSS\Core\OssException
-     * @throws \think\Exception
-     * @throws \think\exception\PDOException
-     */
-    public function getBucketList()
-    {
-        list($endpoint, $data) = ['http://' . sysconf('storage_oss_endpoint'), []];
-        $client = new OssClient(sysconf('storage_oss_keyid'), sysconf('storage_oss_secret'), $endpoint);
-        foreach ($client->listBuckets()->getBucketList() as $bucket) array_push($data, [
-            'bucket'    => $bucket->getName(), 'location' => $bucket->getLocation(),
-            'create_at' => date('Y-m-d H:i:s', strtotime($bucket->getCreateDate())),
-        ]);
-        return $data;
-    }
-
-    /**
      * 获取文件路径
      * @param string $name
      * @return string
