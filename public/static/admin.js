@@ -341,18 +341,18 @@ $(function () {
                 let type = (input.getAttribute("type") + "").replace(/\W+$/, "").toLowerCase();
                 let tag = input.tagName.toLowerCase(), isRequired = this.hasProp(input, "required");
                 if (this.hasProp(input, 'data-auto-none') || input.disabled || type === 'submit' || type === 'reset' || type === 'file' || type === 'image' || !this.isVisible(input)) return;
-                let allpass = true;
+                let allPass = true;
                 if (type === "radio" && isRequired) {
-                    let radiopass = false, eleRadios = input.name ? $("input[type='radio'][name='" + input.name + "']") : $(input);
+                    let radioPass = false, eleRadios = input.name ? $("input[type='radio'][name='" + input.name + "']") : $(input);
                     eleRadios.each(function () {
-                        (radiopass === false && $(this).is("[checked]")) && (radiopass = true);
+                        (radioPass === false && $(this).is("[checked]")) && (radioPass = true);
                     });
-                    if (radiopass === false) allpass = this.remind(eleRadios.get(0), type, tag); else this.hideError(input);
-                } else if (type === "checkbox" && isRequired && !$(input).is("[checked]")) allpass = this.remind(input, type, tag);
-                else if (tag === "select" && isRequired && !input.value) allpass = this.remind(input, type, tag);
-                else if ((isRequired && this.isEmpty(input)) || !(allpass = this.isRegex(input))) (allpass ? this.remind(input, type, "empty") : this.remind(input, type, tag)), allpass = false;
+                    if (radioPass === false) allPass = this.remind(eleRadios.get(0), type, tag); else this.hideError(input);
+                } else if (type === "checkbox" && isRequired && !$(input).is("[checked]")) allPass = this.remind(input, type, tag);
+                else if (tag === "select" && isRequired && !input.value) allPass = this.remind(input, type, tag);
+                else if ((isRequired && this.isEmpty(input)) || !(allPass = this.isRegex(input))) (allPass ? this.remind(input, type, "empty") : this.remind(input, type, tag)), allPass = false;
                 else this.hideError(input);
-                return allpass;
+                return allPass;
             };
             // 错误消息显示
             this.showError = function (ele, content) {
