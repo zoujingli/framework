@@ -33,10 +33,10 @@
     <div class="layui-input-block">
         <select required name="storage_oss_endpoint" class="layui-select">
             {foreach $ossEndpoints as $k=>$p}
-            <!--{if sysconf('storage_oss_endpoint') eq $p}-->
-            <option selected value="{$p}">{$k} <span class="font-s10 color-desc">({$p})</span></option>
+            <!--{if sysconf('storage_oss_endpoint') eq $k}-->
+            <option selected value="{$k}">{$p} <span class="font-s10 color-desc">({$k})</span></option>
             <!--{else}-->
-            <option value="{$p}">{$k} <span class="font-s10 color-desc">({$p})</span></option>
+            <option value="{$k}">{$p} <span class="font-s10 color-desc">({$k})</span></option>
             <!--{/if}-->
             {/foreach}
         </select>

@@ -55,24 +55,34 @@ class Config extends Controller
     {
         if ($this->request->isGet()) {
             $this->title = '文件存储配置';
-            $this->ossEndpoints = [
-                '青岛节点'    => 'oss-cn-qingdao.aliyuncs.com',
-                '北京节点'    => 'oss-cn-beijing.aliyuncs.com',
-                '杭州节点'    => 'oss-cn-hangzhou.aliyuncs.com',
-                '香港节点'    => 'oss-cn-hongkong.aliyuncs.com',
-                '华南节点'    => 'oss-cn-shenzhen.aliyuncs.com',
-                '上海节点'    => 'oss-cn-shanghai.aliyuncs.com',
-                '美国硅谷节点'  => 'oss-us-west-1.aliyuncs.com',
-                '亚太新加坡节点' => 'oss-ap-southeast-1.aliyuncs.com',
-            ];
-            return $this->fetch();
+            return $this->fetch('file', [
+                'ossEndpoints' => [
+                    'oss-cn-hangzhou.aliyuncs.com'    => '华东 1 杭州',
+                    'oss-cn-shanghai.aliyuncs.com'    => '华东 2 上海',
+                    'oss-cn-qingdao.aliyuncs.com'     => '华北 1 青岛',
+                    'oss-cn-beijing.aliyuncs.com'     => '华北 2 北京',
+                    'oss-cn-zhangjiakou.aliyuncs.com' => '华北 3 张家口',
+                    'oss-cn-huhehaote.aliyuncs.com'   => '华北 5 呼和浩特',
+                    'oss-cn-shenzhen.aliyuncs.com'    => '华南 1 深圳',
+                    'oss-cn-hongkong.aliyuncs.com'    => '香港 1',
+                    'oss-us-west-1.aliyuncs.com'      => '美国西部 1 硅谷',
+                    'oss-us-east-1.aliyuncs.com'      => '美国东部 1 弗吉尼亚',
+                    'oss-ap-southeast-1.aliyuncs.com' => '亚太东南 1 新加坡',
+                    'oss-ap-southeast-2.aliyuncs.com' => '亚太东南 2 悉尼',
+                    'oss-ap-southeast-3.aliyuncs.com' => '亚太东南 3 吉隆坡',
+                    'oss-ap-southeast-5.aliyuncs.com' => '亚太东南 5 雅加达',
+                    'oss-ap-northeast-1.aliyuncs.com' => '亚太东北 1 日本',
+                    'oss-ap-south-1.aliyuncs.com'     => '亚太南部 1 孟买',
+                    'oss-eu-central-1.aliyuncs.com'   => '欧洲中部 1 法兰克福',
+                    'oss-eu-west-1.aliyuncs.com'      => '英国 1 伦敦',
+                    'oss-me-east-1.aliyuncs.com'      => '中东东部 1 迪拜',
+                ],
+            ]);
         }
         foreach ($this->request->post() as $k => $v) sysconf($k, $v);
-        // 阿里云OSS动态配置
         if ($this->request->post('storage_type') === 'oss') {
             try {
-                $bucket = $this->request->post('storage_oss_bucket');
-                File::instance('oss')->setBucket($bucket);
+                File::instance('oss')->setBucket($this->request->post('storage_oss_bucket'));
             } catch (\Exception $e) {
                 $this->error('阿里云OSS存储配置失效，' . $e->getMessage());
             }

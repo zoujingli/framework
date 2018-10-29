@@ -25,6 +25,7 @@ require.config({
     baseUrl: baseRoot,
     map: {'*': {css: baseRoot + 'plugs/require/css.js'}},
     paths: {
+        'md5': ['plugs/jquery/md5.min'],
         'json': ['plugs/jquery/json2.min'],
         'upload': ['plugs/plupload/build'],
         'base64': ['plugs/jquery/base64.min'],
@@ -397,14 +398,13 @@ $(function () {
     $.vali.listen = function () {
         $('form[data-auto]').map(function () {
             if ($(this).attr('data-listen') !== 'true') {
-                let callbackname = $(this).attr('data-callback');
                 $(this).attr('data-listen', 'true').vali(function (data) {
-                    let method = this.getAttribute('method') || 'POST';
+                    let type = this.getAttribute('method') || 'POST';
                     let tips = this.getAttribute('data-tips') || undefined;
                     let time = this.getAttribute('data-time') || undefined;
-                    let url = this.getAttribute('action') || window.location.href;
-                    let callback = window[callbackname || '_default_callback'] || undefined;
-                    $.form.load(url, data, method, callback, true, tips, time);
+                    let href = this.getAttribute('action') || window.location.href;
+                    let call = $(this).attr('data-callback') || '_default_callback';
+                    $.form.load(href, data, type, window[call] || undefined, true, tips, time);
                 });
                 $(this).find('[data-form-loaded]').map(function () {
                     $(this).html(this.getAttribute('data-form-loaded') || this.innerHTML);
