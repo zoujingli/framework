@@ -12,6 +12,23 @@
 // | github开源项目：https://github.com/zoujingli/ThinkLibrary
 // +----------------------------------------------------------------------
 
+if (!function_exists('data_save')) {
+    /**
+     * 数据增量保存
+     * @param \think\db\Query|string $dbQuery 数据查询对象
+     * @param array $data 需要保存或更新的数据
+     * @param string $key 条件主键限制
+     * @param array $where 其它的where条件
+     * @return bool
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     */
+    function data_save($dbQuery, $data, $key = 'id', $where = [])
+    {
+        return \library\tools\Data::save($dbQuery, $data, $key, $where);
+    }
+}
+
 if (!function_exists('encode')) {
     /**
      * UTF8 字符串加密
