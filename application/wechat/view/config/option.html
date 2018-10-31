@@ -40,7 +40,7 @@
                 EnAesKey<br><span class="nowrap color-desc">消息加密密钥</span>
             </label>
             <div class="layui-input-block">
-                <input name="wechat_encodingaeskey" placeholder="请输入43位消息加密密钥，若开启了消息加密时必需填写（可选）" value="{:sysconf('wechat_encodingaeskey')}" maxlength="43" class="layui-input">
+                <input name="wechat_encodingaeskey" placeholder="请输入43位消息加密密钥，若开启了消息加密时必需填写（可选）" value="{:sysconf('wechat_encodingaeskey')}" maxlength="43" pattern="^.{43}$" class="layui-input">
                 <p class="help-block">公众号平台接口设置为加密模式，消息加密密钥必需填写并保持与公众号平台一致。</p>
             </div>
         </div>
