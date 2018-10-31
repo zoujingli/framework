@@ -12,31 +12,36 @@
 // | github开源项目：https://github.com/zoujingli/WeChatDeveloper
 // +----------------------------------------------------------------------
 
-try {
+namespace AliPay;
 
-    // 1. 手动加载入口文件
-    include "../include.php";
+use WeChat\Contracts\BasicAliPay;
 
-    // 2. 准备公众号配置参数
-    $config = include "./config.php";
+/**
+ * 支付宝转账到账户
+ * Class Transfer
+ * @package AliPay
+ */
+class Transfer extends BasicAliPay
+{
 
-    // 3. 创建接口实例
-    $wechat = new \WeChat\Pay($config);
+    /**
+     * Transfer constructor.
+     * @param array $options
+     */
+    public function __construct(array $options)
+    {
+        parent::__construct($options);
+        $this->options->set('method', 'alipay.fund.trans.toaccount.transfer');
+    }
 
-    // 4. 组装参数，可以参考官方商户文档
-    $options = [
-        'transaction_id' => '1008450740201411110005820873',
-        'out_refund_no'  => '商户退款单号',
-        'total_fee'      => '1',
-        'refund_fee'     => '1',
-    ];
-    $result = $wechat->createRefund($options);
-
-    var_export($result);
-
-} catch (Exception $e) {
-
-    // 出错啦，处理下吧
-    echo $e->getMessage() . PHP_EOL;
-
+    /**
+     * 创建数据操作
+     * @param array $options
+     * @return mixed
+     * @throws \WeChat\Exceptions\InvalidResponseException
+     */
+    public function apply($options)
+    {
+        return $this->getResult($options);
+    }
 }

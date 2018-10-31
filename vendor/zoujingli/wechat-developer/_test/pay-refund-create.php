@@ -12,13 +12,31 @@
 // | github开源项目：https://github.com/zoujingli/WeChatDeveloper
 // +----------------------------------------------------------------------
 
-spl_autoload_register(function ($classname) {
-    $filename = __DIR__ . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $classname) . '.php';
-    if (file_exists($filename)) {
-        if (stripos($classname, 'WeChat') === 0) include $filename;
-        elseif (stripos($classname, 'WeMini') === 0) include $filename;
-        elseif (stripos($classname, 'AliPay') === 0) include $filename;
-        elseif (stripos($classname, 'WePay') === 0) include $filename;
-        elseif ($classname === 'We') include $filename;
-    }
-});
+try {
+
+    // 1. 手动加载入口文件
+    include "../include.php";
+
+    // 2. 准备公众号配置参数
+    $config = include "./config.php";
+
+    // 3. 创建接口实例
+    $wechat = new \WeChat\WePay($config);
+
+    // 4. 组装参数，可以参考官方商户文档
+    $options = [
+        'transaction_id' => '1008450740201411110005820873',
+        'out_refund_no'  => '商户退款单号',
+        'total_fee'      => '1',
+        'refund_fee'     => '1',
+    ];
+    $result = $wechat->createRefund($options);
+
+    var_export($result);
+
+} catch (Exception $e) {
+
+    // 出错啦，处理下吧
+    echo $e->getMessage() . PHP_EOL;
+
+}
