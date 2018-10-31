@@ -11,12 +11,12 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
     <link rel="shortcut icon" href="{:sysconf('site_icon')}">
-    <link rel="stylesheet" href="__STATIC__/plugs/awesome/fonts.css?v={:date('ym')}">
-    <link rel="stylesheet" href="__STATIC__/plugs/layui/css/layui.css?v={:date('ym')}">
-    <link rel="stylesheet" href="__STATIC__/theme/css/console.css?v={:date('ym')}">
+    <link rel="stylesheet" href="__ROOT__/static/plugs/awesome/fonts.css?v={:date('ym')}">
+    <link rel="stylesheet" href="__ROOT__/static/plugs/layui/css/layui.css?v={:date('ym')}">
+    <link rel="stylesheet" href="__ROOT__/static/theme/css/console.css?v={:date('ym')}">
     {block name="style"}{/block}
     <script>window.ROOT_URL = '__ROOT__';</script>
-    <script src="__STATIC__/plugs/jquery/pace.min.js"></script>
+    <script src="__ROOT__/static/plugs/jquery/pace.min.js"></script>
 </head>
 
 <body class="layui-layout-body">
@@ -86,21 +86,21 @@
                 <li class="layui-nav-item">
                     <a data-target-tips="{$twoMenu.title}" data-menu-node="m-{$oneMenu.id}-{$twoMenu.id}" data-open="{$twoMenu.url}">
                         <span class='{$twoMenu.icon|default="layui-icon layui-icon-link"}'></span>
-                        <span class="nav-text">{$twoMenu.title}</span>
+                        <span class="nav-text padding-left-5">{$twoMenu.title}</span>
                     </a>
                 </li>
                 <!--{else}-->
                 <li class="layui-nav-item" data-submenu-layout='m-{$oneMenu.id}-{$twoMenu.id}'>
                     <a data-target-tips="{$twoMenu.title}" style="background:#393D49">
                         <span class='nav-icon layui-hide {$twoMenu.icon|default="layui-icon layui-icon-triangle-d"}'></span>
-                        <span class="nav-text">{$twoMenu.title}</span>
+                        <span class="nav-text padding-left-5">{$twoMenu.title}</span>
                     </a>
                     <dl class="layui-nav-child">
                         <!--{foreach $twoMenu.sub as $thrMenu}-->
                         <dd>
                             <a data-target-tips="{$thrMenu.title}" data-open="{$thrMenu.url}" data-menu-node="m-{$oneMenu.id}-{$twoMenu.id}-{$thrMenu.id}">
                                 <span class='nav-icon padding-left-10 {$thrMenu.icon|default="layui-icon layui-icon-link"}'></span>
-                                <span class="nav-text">{$thrMenu.title}</span>
+                                <span class="nav-text padding-left-5">{$thrMenu.title}</span>
                             </a>
                         </dd>
                         <!--{/foreach}-->
@@ -121,9 +121,9 @@
 
 </div>
 {/block}
-<script src="__STATIC__/plugs/layui/layui.all.js"></script>
-<script src="__STATIC__/plugs/require/require.js"></script>
-<script src="__STATIC__/admin.js"></script>
+<script src="__ROOT__/static/plugs/layui/layui.all.js"></script>
+<script src="__ROOT__/static/plugs/require/require.js"></script>
+<script src="__ROOT__/static/admin.js"></script>
 {block name='script'}{/block}
 </body>
 

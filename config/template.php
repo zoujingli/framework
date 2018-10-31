@@ -12,14 +12,10 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-$appRoot = app('request')->root();
-$uriRoot = rtrim(preg_match('/\.php$/', $appRoot) ? dirname($appRoot) : $appRoot, '\\/');
-
 return [
     // 定义模板替换字符串
     'tpl_replace_string' => [
-        '__APP__'    => $appRoot,
-        '__ROOT__'   => $uriRoot,
-        '__STATIC__' => $uriRoot . "/static",
+        '__APP__'  => rtrim(url('@'), '/'),
+        '__ROOT__' => pathinfo(app('request')->basefile(), PATHINFO_DIRNAME),
     ],
 ];
