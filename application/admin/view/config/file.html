@@ -55,7 +55,7 @@
 {block name="script"}
 <script>
     (function () {
-        form.render();
+        window.form.render();
         buildForm('{:sysconf("storage_type")}');
         $('[name=storage_type]').on('click', function () {
             buildForm($('[name=storage_type]:checked').val())
@@ -63,7 +63,7 @@
 
         // 表单显示编译
         function buildForm(value) {
-            var $tips = $("[data-storage-type='" + value + "']");
+            let $tips = $("[data-storage-type='" + value + "']");
             $("[data-storage-type]").not($tips.show()).hide();
         }
     })();
