@@ -552,6 +552,19 @@ $(function () {
         $.form.iframe(url, '图标选择');
     });
 
+    /*! 注册 data-copy 事件行为 */
+    $body.on('click', '[data-copy]', function () {
+        let input = document.createElement('textarea');
+        input.style.width = '1px', input.style.height = '1px';
+        input.style.position = 'absolute', input.style.left = '-100000px';
+        input.innerText = this.getAttribute('data-copy') || this.innerHTML;
+        document.body.appendChild(input), input.select(), setTimeout(function () {
+            if (document.execCommand('Copy')) $.msg.tips('复制成功');
+            else $.msg.tips('复制失败，请使用鼠标操作复制！');
+            document.body.removeChild(input);
+        }, 100);
+    });
+
     /*! 注册 data-tips-image 事件行为 */
     $body.on('click', '[data-tips-image]', function () {
         let img = new Image(), index = $.msg.loading();
