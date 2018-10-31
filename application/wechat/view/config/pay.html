@@ -1,0 +1,99 @@
+{extend name="admin@main"}
+
+{block name="content"}
+<form onsubmit="return false;" data-auto="true" method="post" class='layui-form layui-card' autocomplete="off">
+
+    <div class="layui-card-body">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                mch_id<br><span class="nowrap color-desc">微信商户ID</span>
+            </label>
+            <div class="layui-input-block">
+                <input name="wechat_mch_id" required placeholder="请输入微信商户ID（必填）" value="{:sysconf('wechat_mch_id')}" class="layui-input">
+                <p class="help-block">微信商户ID，可以在微信商户平台或开通时的邮件中获取到。</p>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                mch_key<br><span class="nowrap color-desc">微信商户KEY</span>
+            </label>
+            <div class="layui-input-block">
+                <input name="wechat_mch_key" placeholder="请输入微信商户密钥（必填）" maxlength="32" required value="{:sysconf('wechat_mch_key')}" class="layui-input">
+                <p class="help-block">微信商户密钥，需要在微信商户平台操作设置密码并获取。</p>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                mch_cert<br><span class="nowrap color-desc">微信商户证书</span>
+            </label>
+            <div class="layui-input-block">
+                <div class="layui-tab layui-tab-card">
+                    <ul class="layui-tab-title">
+                        {foreach ['p12','pem'] as $v}
+                        <li data-mch-type="{$v}">
+                            <label class="think-radio">
+                                <input data-auto-none name="wechat_mch_ssl_type" value="{$v}" type="radio"> 上传{$v}证书
+                            </label>
+                        </li>
+                        {/foreach}
+                    </ul>
+                    <script>
+                        $('li[data-mch-type]').map(function () {
+                            let type = "{:sysconf('wechat_mch_ssl_type')}" || 'p12';
+                            if ($(this).attr('data-mch-type') === type) {
+                                $(this).trigger('click');
+                                $(this).find('input').get(0).checked = true;
+                            } else {
+                                $(this).find('input').get(0).checked = false;
+                            }
+                        });
+                    </script>
+                    <div class="layui-tab-content">
+                        <div class="layui-tab-item">
+                            <input name="wechat_mch_ssl_p12" value="{:sysconf('wechat_mch_ssl_p12')}" type="hidden">
+                            <button data-file="btn" data-safe="true" data-type="p12" data-field="wechat_mch_ssl_p12" type="button" class="layui-btn layui-btn-primary">
+                                <i class="layui-icon"></i> 上传p12证书
+                            </button>
+                        </div>
+                        <div class="layui-tab-item">
+                            <input name="wechat_mch_ssl_key" value="{:sysconf('wechat_mch_ssl_key')}" type="hidden">
+                            <button data-file="btn" data-safe="true" data-type="pem" data-field="wechat_mch_ssl_key" type="button" class="layui-btn layui-btn-primary">
+                                <i class="layui-icon "></i> 上传key证书
+                            </button>
+                            <input name="wechat_mch_ssl_cer" value="{:sysconf('wechat_mch_ssl_cer')}" type="hidden">
+                            <button data-file="btn" data-safe="true" data-type="pem" data-field="wechat_mch_ssl_cer" type="button" class="layui-btn layui-btn-primary">
+                                <i class="layui-icon"></i> 上传cert证书
+                            </button>
+                            <script>
+                                for (let o of ['wechat_mch_ssl_p12', 'wechat_mch_ssl_key', 'wechat_mch_ssl_cer']) {
+                                    $('input[name="' + o + '"]').on('change', function () {
+                                        let input = this, $button = $(this).next('button');
+                                        setTimeout(function () {
+                                            if (typeof input.value === 'string' && input.value.length > 5) {
+                                                $button.find('i').addClass('layui-icon-vercode font-s14 color-green');
+                                            } else {
+                                                $button.find('i').removeClass('layui-icon-vercode font-s14 color-green');
+                                            }
+                                        }, 500);
+                                    }).trigger('change');
+                                }
+                            </script>
+                        </div>
+                    </div>
+                </div>
+                <p class="help-block">公众号应用密钥是所有接口必要参数，可以在公众号平台 [ 开发 > 基本配置 ] 页面授权后获取。</p>
+            </div>
+        </div>
+
+        <div class="hr-line-dashed"></div>
+
+        <div class="layui-form-item text-center">
+            <button class="layui-btn" type="submit">保存配置</button>
+        </div>
+    </div>
+
+</form>
+{/block}
