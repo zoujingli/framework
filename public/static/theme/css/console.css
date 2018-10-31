@@ -49,7 +49,7 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 .layui-layout.layui-layout-left-hide>.layui-side{display:none}
 .layui-layout.layui-layout-left-hide>.layui-body{left:0!important}
 
-.layui-layout>.layui-side .layui-this{background:#1E9FFF!important}
+.layui-layout>.layui-side .layui-this{background:#009688!important}
 .layui-layout>.layui-side .layui-this a{background:none!important}
 .layui-layout>.layui-side .layui-nav-bar{display:none!important}
 .layui-layout>.layui-side .layui-nav-item{border-bottom:1px solid #333}
