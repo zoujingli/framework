@@ -528,13 +528,14 @@ $(function () {
 
     /*! 注册 data-file 事件行为 */
     $body.on('click', '[data-file]', function () {
+        let safe = $(this).attr('data-safe') || '';
         let mode = $(this).attr('data-file') || 'one';
         let name = $(this).attr('data-name') || 'file';
         let field = $(this).attr('data-field') || 'file';
         let type = $(this).attr('data-type') || 'jpg,png';
         if (mode !== 'btn') {
             let uptype = $(this).attr('data-uptype') || '';
-            let param = $.param({name: name, mode: mode, uptype: uptype, type: type, field: field});
+            let param = $.param({name: name, mode: mode, uptype: uptype, type: type, field: field, safe: safe});
             let url = window.ROOT_URL + '?s=admin/plugs/upfile.html&' + param;
             $.form.iframe(url, $(this).attr('data-title') || '文件上传');
         }

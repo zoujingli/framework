@@ -54,17 +54,17 @@
                     <div class="layui-tab-content">
                         <div class="layui-tab-item">
                             <input name="wechat_mch_ssl_p12" value="{:sysconf('wechat_mch_ssl_p12')}" type="hidden">
-                            <button data-file="btn" data-safe="true" data-type="p12" data-field="wechat_mch_ssl_p12" type="button" class="layui-btn layui-btn-primary">
+                            <button data-file="btn" data-uptype="local" data-safe="true" data-type="p12" data-field="wechat_mch_ssl_p12" type="button" class="layui-btn layui-btn-primary">
                                 <i class="layui-icon"></i> 上传p12证书
                             </button>
                         </div>
                         <div class="layui-tab-item">
                             <input name="wechat_mch_ssl_key" value="{:sysconf('wechat_mch_ssl_key')}" type="hidden">
-                            <button data-file="btn" data-safe="true" data-type="pem" data-field="wechat_mch_ssl_key" type="button" class="layui-btn layui-btn-primary">
+                            <button data-file="btn" data-uptype="local" data-safe="true" data-type="pem" data-field="wechat_mch_ssl_key" type="button" class="layui-btn layui-btn-primary">
                                 <i class="layui-icon "></i> 上传key证书
                             </button>
                             <input name="wechat_mch_ssl_cer" value="{:sysconf('wechat_mch_ssl_cer')}" type="hidden">
-                            <button data-file="btn" data-safe="true" data-type="pem" data-field="wechat_mch_ssl_cer" type="button" class="layui-btn layui-btn-primary">
+                            <button data-file="btn" data-uptype="local" data-safe="true" data-type="pem" data-field="wechat_mch_ssl_cer" type="button" class="layui-btn layui-btn-primary">
                                 <i class="layui-icon"></i> 上传cert证书
                             </button>
                             <script>

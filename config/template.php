@@ -11,11 +11,10 @@
 // +----------------------------------------------------------------------
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
-
 return [
     // 定义模板替换字符串
     'tpl_replace_string' => [
         '__APP__'  => rtrim(url('@'), '/'),
-        '__ROOT__' => pathinfo(app('request')->basefile(), PATHINFO_DIRNAME),
+        '__ROOT__' => rtrim(str_replace('\\', '/', pathinfo(app('request')->basefile(), 1)), '/'),
     ],
 ];

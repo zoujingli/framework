@@ -27,21 +27,23 @@ class Local extends File
     /**
      * 检查文件是否已经存在
      * @param string $name
+     * @param boolean $safe
      * @return boolean
      */
-    public function has($name)
+    public function has($name, $safe = false)
     {
-        return file_exists($this->path($name));
+        return file_exists($this->path($name, $safe));
     }
 
     /**
      * 根据Key读取文件内容
      * @param string $name
+     * @param boolean $safe
      * @return string
      */
-    public function get($name)
+    public function get($name, $safe = false)
     {
-        $file = $this->path($name);
+        $file = $this->path($name, $safe);
         return file_exists($file) ? file_get_contents($file) : '';
     }
 
@@ -81,12 +83,13 @@ class Local extends File
      * 文件储存在本地
      * @param string $name
      * @param string $content
+     * @param boolean $safe
      * @return array|null
      */
-    public function save($name, $content)
+    public function save($name, $content, $safe = false)
     {
         try {
-            $file = $this->path($name);
+            $file = $this->path($name, $safe);
             file_exists(dirname($file)) || mkdir(dirname($file), 0755, true);
             if (file_put_contents($file, $content)) return $this->info($name);
         } catch (\Exception $err) {
@@ -98,22 +101,25 @@ class Local extends File
     /**
      * 获取文件路径
      * @param string $name
+     * @param boolean $safe
      * @return string
      */
-    public function path($name)
+    public function path($name, $safe = false)
     {
-        return str_replace('\\', '/', env('root_path') . "public/upload/{$name}");
+        $path = $safe ? 'safefile' : 'public/upload';
+        return str_replace('\\', '/', env('root_path') . "{$path}/{$name}");
     }
 
     /**
      * 获取文件信息
      * @param string $name
+     * @param boolean $safe
      * @return array|null
      */
-    public function info($name)
+    public function info($name, $safe = false)
     {
-        if ($this->has($name)) {
-            $file = $this->path($name);
+        if ($this->has($name, $safe)) {
+            $file = $this->path($name, $safe);
             return ['file' => $file, 'key' => "upload/{$name}", 'hash' => md5_file($file), 'url' => $this->base($name)];
         }
         return null;

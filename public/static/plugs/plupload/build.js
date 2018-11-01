@@ -4,6 +4,9 @@ define(['plupload'], function (plupload) {
         let $ele = $(element);
         let loader = new plupload.Uploader({
             multi_selection: false,
+            multipart_params: {
+                safe: $ele.attr('data-safe') || ''
+            },
             browse_button: $ele.get(0),
             url: '?s=admin/plugs/plupload',
             runtimes: 'html5,flash,silverlight,html4',
