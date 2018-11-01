@@ -242,7 +242,7 @@ class Push extends Controller
     /**
      * 同步粉丝状态
      * @param boolean $subscribe 关注状态
-     * @return string
+     * @return boolean
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
@@ -251,14 +251,14 @@ class Push extends Controller
         if ($subscribe) {
             try {
                 $user = \We::WeChatUser(Wechat::config())->getUserInfo($this->openid);
-                Fans::set(array_merge($user, ['subscribe' => '1']));
+                return Fans::set(array_merge($user, ['subscribe' => '1']));
             } catch (\Exception $e) {
                 Log::error(__METHOD__ . " {$this->openid} 粉丝信息获取失败，{$e->getMessage()}");
+                return false;
             }
-        } else {
-            $fans = ['subscribe' => '0', 'openid' => $this->openid, 'appid' => $this->appid];
-            data_save('WechatFans', $fans, 'openid', ['appid' => $this->appid]);
         }
+        $user = ['subscribe' => '0', 'openid' => $this->openid, 'appid' => $this->appid];
+        return data_save('WechatFans', $user, 'openid', ['appid' => $this->appid]);
     }
 
 }
