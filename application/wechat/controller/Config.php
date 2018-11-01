@@ -31,10 +31,8 @@ class Config extends Controller
      */
     public function options()
     {
-        if ($this->request->isGet()) {
-            $this->title = '公众号授权绑定';
-            return $this->fetch();
-        }
+        $this->title = '公众号授权绑定';
+        if ($this->request->isGet()) return $this->fetch();
         foreach ($this->request->post() as $k => $v) sysconf($k, $v);
         $this->success('公众号参数获取成功！');
     }
@@ -47,10 +45,8 @@ class Config extends Controller
      */
     public function payment()
     {
-        if ($this->request->isGet()) {
-            $this->title = '公众号支付配置';
-            return $this->fetch();
-        }
+        $this->title = '公众号支付配置';
+        if ($this->request->isGet()) return $this->fetch();
         foreach ($this->request->post() as $k => $v) sysconf($k, $v);
         $this->success('公众号支付配置成功！');
     }
