@@ -39,10 +39,8 @@ class Media
         list($data['articles'], $articleIds) = [[], explode(',', $data['article_id'])];
         $articles = Db::name('WechatNewsArticle')->whereIn('id', $articleIds)->select();
         foreach ($articleIds as $article_id) foreach ($articles as $article) {
-            if (intval($article['id']) === intval($article_id)) {
-                unset($article['create_by'], $article['create_at']);
-                array_push($data['articles'], $article);
-            }
+            if (intval($article['id']) === intval($article_id)) array_push($data['articles'], $article);
+            unset($article['create_by'], $article['create_at']);
         }
         return $data;
     }
