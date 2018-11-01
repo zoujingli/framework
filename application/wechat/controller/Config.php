@@ -14,6 +14,7 @@
 
 namespace app\wechat\controller;
 
+use app\admin\logic\File;
 use library\Controller;
 
 /**
@@ -47,6 +48,14 @@ class Config extends Controller
     {
         $this->title = '公众号支付配置';
         if ($this->request->isGet()) return $this->fetch();
+        if ($this->request->post('wechat_mch_ssl_type') === 'p12') {
+            $mchid = $this->request->post('wechat_mch_id');
+            $sslp12 = $this->request->post('wechat_mch_ssl_p12');
+            $content = File::instance('local')->get($sslp12, true);
+            if (!openssl_pkcs12_read($content, $certs, $mchid)) {
+                $this->error('商户MCH_ID与支付P12证书不匹配！');
+            }
+        }
         foreach ($this->request->post() as $k => $v) sysconf($k, $v);
         $this->success('公众号支付配置成功！');
     }

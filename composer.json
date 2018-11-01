@@ -11,6 +11,7 @@
     "ext-curl": "*",
     "ext-json": "*",
     "ext-iconv": "*",
+    "ext-openssl": "*",
     "qiniu/php-sdk": "^7.2",
     "endroid/qr-code": "^1.9",
     "topthink/framework": "5.1.*",
