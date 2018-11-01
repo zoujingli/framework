@@ -47,8 +47,8 @@ class Node
             if (!preg_match('|/(\w+)/controller/(.+)|', $filename, $matches)) continue;
             $className = env('app_namespace') . str_replace('/', '\\', substr($matches[0], 0, -4));
             if (class_exists($className)) foreach (get_class_methods($className) as $funcName) {
-                if (strpos($funcName, '_') === 0 || $funcName === 'initialize') continue;
-                $controller = str_replace('/', '.', substr($matches[2], 0, -4));
+                if (stripos($funcName, '_') === 0 || $funcName === 'initialize') continue;
+                if (stripos($controller = str_replace('/', '.', substr($matches[2], 0, -4)), 'api.') !== false) continue;
                 $nodes[] = self::parseString("{$matches[1]}/{$controller}") . '/' . strtolower($funcName);
             }
         }
@@ -65,7 +65,7 @@ class Node
         $nodes = [];
         foreach (explode('/', $node) as $str) {
             $dots = [];
-            foreach (explode('.', $str) as $dot) $dots[] = strtolower(trim(preg_replace("/[A-Z]/", "_\\0", $dot), "_"));
+            foreach (explode('.', $str) as $dot) array_push($dots, strtolower(trim(preg_replace("/[A-Z]/", "_\\0", $dot), "_")));
             $nodes[] = join('.', $dots);
         }
         return trim(join('/', $nodes), '/');

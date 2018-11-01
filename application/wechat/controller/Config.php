@@ -29,7 +29,7 @@ class Config extends Controller
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
-    public function option()
+    public function options()
     {
         if ($this->request->isGet()) {
             $this->title = '公众号授权绑定';
@@ -45,7 +45,7 @@ class Config extends Controller
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
-    public function pay()
+    public function payment()
     {
         if ($this->request->isGet()) {
             $this->title = '公众号支付配置';

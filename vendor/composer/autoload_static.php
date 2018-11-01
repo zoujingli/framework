@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit12deacce37954d30bc9c55811d14cc39
+class ComposerStaticInit2bc0fcb8ede3a64400c3be2dec89a5e8
 {
     public static $files = array (
         '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
@@ -292,6 +292,11 @@ class ComposerStaticInit12deacce37954d30bc9c55811d14cc39
         'app\\index\\controller\\Test' => __DIR__ . '/../..' . '/application/index/controller/Test.php',
         'app\\store\\controller\\Goods' => __DIR__ . '/../..' . '/application/store/controller/Goods.php',
         'app\\store\\logic\\Goods' => __DIR__ . '/../..' . '/application/store/logic/Goods.php',
+        'app\\wechat\\controller\\Config' => __DIR__ . '/../..' . '/application/wechat/controller/Config.php',
+        'app\\wechat\\controller\\api\\Push' => __DIR__ . '/../..' . '/application/wechat/controller/api/Push.php',
+        'app\\wechat\\logic\\Fans' => __DIR__ . '/../..' . '/application/wechat/logic/Fans.php',
+        'app\\wechat\\logic\\Media' => __DIR__ . '/../..' . '/application/wechat/logic/Media.php',
+        'app\\wechat\\logic\\Wechat' => __DIR__ . '/../..' . '/application/wechat/logic/Wechat.php',
         'library\\Controller' => __DIR__ . '/..' . '/zoujingli/think-library/library/Controller.php',
         'library\\logic\\Delete' => __DIR__ . '/..' . '/zoujingli/think-library/library/logic/Delete.php',
         'library\\logic\\Form' => __DIR__ . '/..' . '/zoujingli/think-library/library/logic/Form.php',
@@ -315,9 +320,9 @@ class ComposerStaticInit12deacce37954d30bc9c55811d14cc39
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit12deacce37954d30bc9c55811d14cc39::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit12deacce37954d30bc9c55811d14cc39::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit12deacce37954d30bc9c55811d14cc39::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit2bc0fcb8ede3a64400c3be2dec89a5e8::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit2bc0fcb8ede3a64400c3be2dec89a5e8::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit2bc0fcb8ede3a64400c3be2dec89a5e8::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -347,17 +347,17 @@
     },
     {
         "name": "zoujingli/think-library",
-        "version": "v1.1.7",
-        "version_normalized": "1.1.7.0",
+        "version": "v1.1.8",
+        "version_normalized": "1.1.8.0",
         "source": {
             "type": "git",
             "url": "https://github.com/zoujingli/ThinkLibrary.git",
-            "reference": "37991325802a669489b80f15874dfa3c3f6c9cdb"
+            "reference": "ad2fdbe5198712ec460e952e82fd1299a0ec1fc7"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/37991325802a669489b80f15874dfa3c3f6c9cdb",
-            "reference": "37991325802a669489b80f15874dfa3c3f6c9cdb",
+            "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/ad2fdbe5198712ec460e952e82fd1299a0ec1fc7",
+            "reference": "ad2fdbe5198712ec460e952e82fd1299a0ec1fc7",
             "shasum": "",
             "mirrors": [
                 {
@@ -374,7 +374,7 @@
             "php": ">=5.4",
             "topthink/framework": "5.1.*"
         },
-        "time": "2018-10-30T03:49:59+00:00",
+        "time": "2018-11-01T03:24:05+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

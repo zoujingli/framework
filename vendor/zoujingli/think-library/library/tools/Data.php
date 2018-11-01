@@ -29,7 +29,7 @@ class Data
      * @param array $data 需要保存或更新的数据
      * @param string $key 条件主键限制
      * @param array $where 其它的where条件
-     * @return bool
+     * @return boolean
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
@@ -105,10 +105,8 @@ class Data
     public static function getArrSubIds($list, $id = 0, $key = 'id', $pkey = 'pid')
     {
         $ids = [intval($id)];
-        foreach ($list as $vo) {
-            if (intval($vo[$pkey]) > 0 && intval($vo[$pkey]) === intval($id)) {
-                $ids = array_merge($ids, self::getArrSubIds($list, intval($vo[$key]), $key, $pkey));
-            }
+        foreach ($list as $vo) if (intval($vo[$pkey]) > 0 && intval($vo[$pkey]) === intval($id)) {
+            $ids = array_merge($ids, self::getArrSubIds($list, intval($vo[$key]), $key, $pkey));
         }
         return $ids;
     }
