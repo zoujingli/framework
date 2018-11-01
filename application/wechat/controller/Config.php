@@ -16,6 +16,7 @@ namespace app\wechat\controller;
 
 use app\admin\logic\File;
 use library\Controller;
+use library\tools\Http;
 
 /**
  * 模板配置
@@ -33,6 +34,7 @@ class Config extends Controller
     public function options()
     {
         $this->title = '公众号授权绑定';
+        $this->geoip = preg_replace(['|\s*|', '|^.*\[(.*?)\].*$|'], ['', '$1'], Http::get('http://2018.ip138.com/ic.asp'));
         if ($this->request->isGet()) return $this->fetch();
         foreach ($this->request->post() as $k => $v) sysconf($k, $v);
         $this->success('公众号参数获取成功！');

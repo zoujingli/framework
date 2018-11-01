@@ -18,6 +18,7 @@ use app\wechat\logic\Fans;
 use app\wechat\logic\Media;
 use app\wechat\logic\Wechat;
 use library\Controller;
+use library\tools\Http;
 use think\Db;
 use think\facade\Log;
 
@@ -45,6 +46,15 @@ class Push extends Controller
      * @var \WeChat\Receive
      */
     protected $wechat;
+
+    /**
+     * 获取当前出口IP
+     * @return mixed
+     */
+    public function geoip()
+    {
+        return $this->request->ip();
+    }
 
     /**
      * 微信消息推送入口
