@@ -3,6 +3,7 @@
 /.gitattributes
 /upload
 /runtime
+/safefile
 /nbproject
 /composer.lock
 /public/upload
