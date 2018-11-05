@@ -54,7 +54,7 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 .layui-layout>.layui-side .layui-nav-bar{display:none!important}
 .layui-layout>.layui-side .layui-nav-item{border-bottom:1px solid #333}
 .layui-layout>.layui-side .layui-nav-item a{height:45px;line-height:45px;color:#fff!important}
-.layui-layout>.layui-side .layui-nav-item a:hover{background:rgba(100,100,100,0.1)!important;}
+.layui-layout>.layui-side .layui-nav-item a:hover{background:rgba(100,100,100,0.1)!important}
 .layui-layout>.layui-side .layui-nav-item .layui-nav-child dd{border-bottom:1px solid #222}
 .layui-layout>.layui-side .layui-nav-item .layui-nav-child dd:last-child{border-bottom:none}
 .layui-layout>.layui-side .layui-nav-tree-top a{height:28px!important;line-height:28px!important}
@@ -101,7 +101,7 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 
 .margin-0{margin:0!important}.margin-5{padding:5px!important}.margin-10{padding:10px!important}.margin-15{padding:15px!important}.margin-20{padding:20px!important}.margin-25{padding:25px!important}.margin-30{padding:30px!important}
 .margin-top-0{margin-top:0!important}.margin-top-5{margin-top:5px!important}.margin-top-10{margin-top:10px!important}.margin-top-15{margin-top:15px!important}.margin-top-20{margin-top:20px!important}
-.margin-left-0{margin-left:0!important}.margin-left-5{margin-left:5px!important}.margin-left-10{margin-left:10px!important}.margin-left-15{margin-left:15px!important}.margin-left-20{margin-left:20px!important}.margin-left-40{margin-left:40px!important;}
+.margin-left-0{margin-left:0!important}.margin-left-5{margin-left:5px!important}.margin-left-10{margin-left:10px!important}.margin-left-15{margin-left:15px!important}.margin-left-20{margin-left:20px!important}.margin-left-40{margin-left:40px!important}
 .margin-right-0{margin-right:0!important}.margin-right-5{margin-right:5px!important}.margin-right-10{margin-right:10px!important}.margin-right-15{margin-right:15px!important}.margin-right-20{margin-right:20px!important}
 .margin-bottom-0{margin-bottom:0!important}.margin-bottom-5{margin-bottom:5px!important}.margin-bottom-10{margin-bottom:10px!important}.margin-bottom-15{margin-bottom:15px!important}.margin-bottom-20{margin-bottom:20px!important}
 
@@ -128,7 +128,7 @@ fieldset{border:1px solid #e6e6e6;margin:0;padding:10px 20px 5px 20px}
 .label-required:after{content:'*';color:red;position:absolute;margin-left:4px;font-weight:bold;line-height:1.8em;top:6px;right:5px}
 
 /* 分页 */
-.pagination-container{line-height:40px;}
+.pagination-container{line-height:40px}
 .pagination-container>span{color:#666;font-size:12px}
 .pagination-container>ul{display:inline-block;margin:0;padding:0;float:right}
 .pagination-container>ul>li{display:inline-block;z-index:1}
@@ -161,7 +161,7 @@ fieldset{border:1px solid #e6e6e6;margin:0;padding:10px 20px 5px 20px}
 .layui-btn.layui-btn-sm.layui-btn-primary{line-height:28px}
 
 /** checkbox 优化 */
-label.think-radio,label.think-checkbox{margin-right:10px;display:inline-block;}
+label.think-radio,label.think-checkbox{margin-right:10px;display:inline-block}
 .think-radio, .think-checkbox{cursor:pointer;margin-top:10px;line-height:18px;font-weight:normal}
 .think-checkbox input[type=checkbox], .think-radio input[type=radio]{appearance:none;-webkit-appearance:none;display:inline-block!important;margin:0;width:18px;height:18px;cursor:pointer;background:#fff;border-radius:1px;position:relative;vertical-align:bottom;-moz-border-radius:1px;border:1px solid #dcdcdc;-webkit-border-radius:1px;box-sizing:border-box!important;-moz-box-sizing:border-box!important;-webkit-box-sizing:border-box!important}
 .think-checkbox input[type=checkbox]:active, .think-radio input[type=radio]:active{background:#ebebeb;border-color:#c6c6c6}
