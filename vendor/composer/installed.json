@@ -109,8 +109,8 @@
     },
     {
         "name": "symfony/options-resolver",
-        "version": "v3.4.17",
-        "version_normalized": "3.4.17.0",
+        "version": "v3.4.18",
+        "version_normalized": "3.4.18.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/options-resolver.git",
@@ -404,17 +404,17 @@
     },
     {
         "name": "zoujingli/wechat-developer",
-        "version": "v1.2.1",
-        "version_normalized": "1.2.1.0",
+        "version": "v1.2.2",
+        "version_normalized": "1.2.2.0",
         "source": {
             "type": "git",
             "url": "https://github.com/zoujingli/WeChatDeveloper.git",
-            "reference": "7a46d4f27153773de35cd98a87c356b15082b358"
+            "reference": "7e89f110da89e44e32b1abf5a15b2d107e3b30d5"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zoujingli/WeChatDeveloper/zipball/7a46d4f27153773de35cd98a87c356b15082b358",
-            "reference": "7a46d4f27153773de35cd98a87c356b15082b358",
+            "url": "https://api.github.com/repos/zoujingli/WeChatDeveloper/zipball/7e89f110da89e44e32b1abf5a15b2d107e3b30d5",
+            "reference": "7e89f110da89e44e32b1abf5a15b2d107e3b30d5",
             "shasum": "",
             "mirrors": [
                 {
@@ -429,7 +429,7 @@
             "ext-openssl": "*",
             "php": ">=5.4"
         },
-        "time": "2018-10-30T11:07:00+00:00",
+        "time": "2018-11-03T01:01:29+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -439,8 +439,8 @@
             "psr-4": {
                 "WePay\\": "WePay",
                 "WeMini\\": "WeMini",
-                "AliPay\\": "AliPay",
-                "WeChat\\": "WeChat"
+                "WeChat\\": "WeChat",
+                "AliPay\\": "AliPay"
             }
         },
         "notification-url": "https://packagist.org/downloads/",
@@ -459,6 +459,7 @@
         "keywords": [
             "WeChatDeveloper",
             "WeMini",
+            "alipay",
             "wechat",
             "wechatpay",
             "wepay"
