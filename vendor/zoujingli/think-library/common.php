@@ -61,32 +61,6 @@ if (!function_exists('sysconf')) {
     }
 }
 
-if (!function_exists('_log_db')) {
-    /**
-     * 获取日志Query对象
-     * @return \think\db\Query
-     * @throws \think\Exception
-     */
-    function _log_db()
-    {
-        return \logic\Log::db();
-    }
-}
-
-if (!function_exists('_log_write')) {
-    /**
-     * 写入日志
-     * @param string $type
-     * @param string $content
-     * @return integer
-     * @throws \think\Exception
-     */
-    function _log_write($type, $content)
-    {
-        return \logic\Log::write($type, $content);
-    }
-}
-
 if (!function_exists('http_get')) {
     /**
      * 以get模拟网络请求

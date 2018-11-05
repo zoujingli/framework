@@ -207,7 +207,6 @@ return array(
     'library\\tools\\Options' => $vendorDir . '/zoujingli/think-library/library/tools/Options.php',
     'library\\traits\\Jump' => $vendorDir . '/zoujingli/think-library/library/traits/Jump.php',
     'logic\\File' => $vendorDir . '/zoujingli/think-library/logic/File.php',
-    'logic\\Log' => $vendorDir . '/zoujingli/think-library/logic/Log.php',
     'logic\\driver\\Local' => $vendorDir . '/zoujingli/think-library/logic/driver/Local.php',
     'logic\\driver\\Oss' => $vendorDir . '/zoujingli/think-library/logic/driver/Oss.php',
     'think\\composer\\Plugin' => $vendorDir . '/topthink/think-installer/src/Plugin.php',
