@@ -9,14 +9,13 @@
 // +----------------------------------------------------------------------
 // | 开源协议 ( https://mit-license.org )
 // +----------------------------------------------------------------------
-// | gitee 仓库地址 ：https://gitee.com/zoujingli/ThinkLibrary
 // | github 仓库地址 ：https://github.com/zoujingli/ThinkLibrary
 // +----------------------------------------------------------------------
 
 namespace library\tools;
 
 /**
- * 数据ArrayAccess访问对象
+ * 数据访问对象
  * Class Object
  * @package library\tools
  */

@@ -14,7 +14,7 @@
 
 namespace app\wechat\logic;
 
-use app\admin\logic\File;
+use library\File;
 use think\Db;
 
 /**

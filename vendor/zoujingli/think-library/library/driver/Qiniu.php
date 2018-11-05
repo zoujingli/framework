@@ -9,13 +9,12 @@
 // +----------------------------------------------------------------------
 // | 开源协议 ( https://mit-license.org )
 // +----------------------------------------------------------------------
-// | gitee 仓库地址 ：https://gitee.com/zoujingli/ThinkLibrary
 // | github 仓库地址 ：https://github.com/zoujingli/ThinkLibrary
 // +----------------------------------------------------------------------
 
-namespace app\admin\logic\driver;
+namespace library\driver;
 
-use logic\File;
+use library\File;
 use Qiniu\Storage\BucketManager;
 use Qiniu\Storage\UploadManager;
 use think\facade\Log;

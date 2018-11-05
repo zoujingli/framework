@@ -15,7 +15,7 @@
 namespace app\admin\controller;
 
 use library\Controller;
-use logic\File;
+use library\File;
 
 /**
  * 系统配置

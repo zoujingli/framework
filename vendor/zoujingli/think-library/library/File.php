@@ -9,18 +9,17 @@
 // +----------------------------------------------------------------------
 // | 开源协议 ( https://mit-license.org )
 // +----------------------------------------------------------------------
-// | gitee 仓库地址 ：https://gitee.com/zoujingli/ThinkLibrary
 // | github 仓库地址 ：https://github.com/zoujingli/ThinkLibrary
 // +----------------------------------------------------------------------
 
-namespace logic;
+namespace library;
 
 use library\tools\Options;
 
 /**
  * 文件管理逻辑
  * Class File
- * @package logic
+ * @package library
  * @method bool has($name) static 判断文件上否已经上传
  * @method array save($name, $content) static 保存二进制文件
  * @method string url($name) static 获取文件对应地址
@@ -85,13 +84,12 @@ class File
     /**
      * 设置文件驱动名称
      * @param string $name
-     * @return \logic\driver\Local
+     * @return \library\driver\Local
      * @throws \think\Exception
      */
     public static function instance($name)
     {
-        $class = ucfirst(strtolower($name));
-        if (!isset(self::$object[$class])) {
+        if (!isset(self::$object[$class = ucfirst(strtolower($name))])) {
             if (class_exists($object = __NAMESPACE__ . "\\driver\\{$class}")) {
                 return self::$object[$class] = new $object;
             }
@@ -180,13 +178,13 @@ class File
         if (empty(self::$config) && function_exists('sysconf')) {
             foreach (self::$params as $arr) foreach (array_keys($arr) as $key) $data[$key] = sysconf($key);
         }
-        File::$config = new Options($data);
+        self::$config = new Options($data);
     }
 }
 
 
-// 初始化文件存储
 try {
+    // 初始化存储
     File::init();
 } catch (\Exception $e) {
     \think\facade\Log::error(__METHOD__ . ' 文件存储初始化异常， ' . $e->getMessage());

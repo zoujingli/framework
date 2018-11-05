@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit10f15474eb061c0c3381ce965b16a736
+class ComposerStaticInitf643b771cd2cdec197cf58c504d7b020
 {
     public static $files = array (
         '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
@@ -18,7 +18,6 @@ class ComposerStaticInit10f15474eb061c0c3381ce965b16a736
         ),
         'l' => 
         array (
-            'logic\\' => 6,
             'library\\' => 8,
         ),
         'a' => 
@@ -58,10 +57,6 @@ class ComposerStaticInit10f15474eb061c0c3381ce965b16a736
         'think\\composer\\' => 
         array (
             0 => __DIR__ . '/..' . '/topthink/think-installer/src',
-        ),
-        'logic\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/zoujingli/think-library/logic',
         ),
         'library\\' => 
         array (
@@ -298,6 +293,10 @@ class ComposerStaticInit10f15474eb061c0c3381ce965b16a736
         'app\\wechat\\logic\\Media' => __DIR__ . '/../..' . '/application/wechat/logic/Media.php',
         'app\\wechat\\logic\\Wechat' => __DIR__ . '/../..' . '/application/wechat/logic/Wechat.php',
         'library\\Controller' => __DIR__ . '/..' . '/zoujingli/think-library/library/Controller.php',
+        'library\\File' => __DIR__ . '/..' . '/zoujingli/think-library/library/File.php',
+        'library\\driver\\Local' => __DIR__ . '/..' . '/zoujingli/think-library/library/driver/Local.php',
+        'library\\driver\\Oss' => __DIR__ . '/..' . '/zoujingli/think-library/library/driver/Oss.php',
+        'library\\driver\\Qiniu' => __DIR__ . '/..' . '/zoujingli/think-library/library/driver/Qiniu.php',
         'library\\logic\\Delete' => __DIR__ . '/..' . '/zoujingli/think-library/library/logic/Delete.php',
         'library\\logic\\Form' => __DIR__ . '/..' . '/zoujingli/think-library/library/logic/Form.php',
         'library\\logic\\Input' => __DIR__ . '/..' . '/zoujingli/think-library/library/logic/Input.php',
@@ -312,9 +311,6 @@ class ComposerStaticInit10f15474eb061c0c3381ce965b16a736
         'library\\tools\\Node' => __DIR__ . '/..' . '/zoujingli/think-library/library/tools/Node.php',
         'library\\tools\\Options' => __DIR__ . '/..' . '/zoujingli/think-library/library/tools/Options.php',
         'library\\traits\\Jump' => __DIR__ . '/..' . '/zoujingli/think-library/library/traits/Jump.php',
-        'logic\\File' => __DIR__ . '/..' . '/zoujingli/think-library/logic/File.php',
-        'logic\\driver\\Local' => __DIR__ . '/..' . '/zoujingli/think-library/logic/driver/Local.php',
-        'logic\\driver\\Oss' => __DIR__ . '/..' . '/zoujingli/think-library/logic/driver/Oss.php',
         'think\\composer\\Plugin' => __DIR__ . '/..' . '/topthink/think-installer/src/Plugin.php',
         'think\\composer\\ThinkExtend' => __DIR__ . '/..' . '/topthink/think-installer/src/ThinkExtend.php',
         'think\\composer\\ThinkFramework' => __DIR__ . '/..' . '/topthink/think-installer/src/ThinkFramework.php',
@@ -324,9 +320,9 @@ class ComposerStaticInit10f15474eb061c0c3381ce965b16a736
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit10f15474eb061c0c3381ce965b16a736::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit10f15474eb061c0c3381ce965b16a736::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit10f15474eb061c0c3381ce965b16a736::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitf643b771cd2cdec197cf58c504d7b020::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitf643b771cd2cdec197cf58c504d7b020::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitf643b771cd2cdec197cf58c504d7b020::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -30,7 +30,6 @@
       "common.php"
     ],
     "psr-4": {
-      "logic\\": "logic",
       "library\\": "library"
     }
   }

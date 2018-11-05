@@ -15,7 +15,7 @@
 namespace app\wechat\controller;
 
 use library\Controller;
-use logic\File;
+use library\File;
 
 /**
  * 模板配置
