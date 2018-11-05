@@ -9,7 +9,8 @@
 // +----------------------------------------------------------------------
 // | 开源协议 ( https://mit-license.org )
 // +----------------------------------------------------------------------
-// | github开源项目：https://github.com/zoujingli/ThinkLibrary
+// | gitee 仓库地址 ：https://gitee.com/zoujingli/ThinkLibrary
+// | github 仓库地址 ：https://github.com/zoujingli/ThinkLibrary
 // +----------------------------------------------------------------------
 
 namespace library\tools;
@@ -26,7 +27,7 @@ class Http
      * @param string $url HTTP请求URL地址
      * @param array $query GET请求参数
      * @param array $options CURL参数
-     * @return bool|string
+     * @return boolean|string
      */
     public static function get($url, $query = [], $options = [])
     {
@@ -39,7 +40,7 @@ class Http
      * @param string $url HTTP请求URL地址
      * @param array $data POST请求数据
      * @param array $options CURL参数
-     * @return bool|string
+     * @return boolean|string
      */
     public static function post($url, $data = [], $options = [])
     {
@@ -52,7 +53,7 @@ class Http
      * @param string $method 请求方法
      * @param string $url 请求方法
      * @param array $options 请求参数[header,data,ssl_cer,ssl_key]
-     * @return bool|string
+     * @return boolean|string
      */
     public static function request($method, $url, $options = [])
     {
@@ -94,7 +95,7 @@ class Http
     /**
      * POST数据过滤处理
      * @param array $data
-     * @param bool $needBuild
+     * @param boolean $needBuild
      * @return array
      */
     private static function build($data, $needBuild = true)

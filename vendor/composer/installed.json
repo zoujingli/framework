@@ -49,65 +49,6 @@
         ]
     },
     {
-        "name": "qiniu/php-sdk",
-        "version": "v7.2.6",
-        "version_normalized": "7.2.6.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/qiniu/php-sdk.git",
-            "reference": "305ce1c1c0c71f794661fe45a96facf61ef96c5d"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/qiniu/php-sdk/zipball/305ce1c1c0c71f794661fe45a96facf61ef96c5d",
-            "reference": "305ce1c1c0c71f794661fe45a96facf61ef96c5d",
-            "shasum": "",
-            "mirrors": [
-                {
-                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
-                    "preferred": true
-                }
-            ]
-        },
-        "require": {
-            "php": ">=5.3.3"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "~4.0",
-            "squizlabs/php_codesniffer": "~2.3"
-        },
-        "time": "2018-05-18T04:37:29+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Qiniu\\": "src/Qiniu"
-            },
-            "files": [
-                "src/Qiniu/functions.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Qiniu",
-                "email": "sdk@qiniu.com",
-                "homepage": "http://www.qiniu.com"
-            }
-        ],
-        "description": "Qiniu Resource (Cloud) Storage SDK for PHP",
-        "homepage": "http://developer.qiniu.com/",
-        "keywords": [
-            "cloud",
-            "qiniu",
-            "sdk",
-            "storage"
-        ]
-    },
-    {
         "name": "symfony/options-resolver",
         "version": "v3.4.18",
         "version_normalized": "3.4.18.0",
@@ -346,18 +287,18 @@
         ]
     },
     {
-        "name": "zoujingli/think-library",
-        "version": "v1.1.8",
-        "version_normalized": "1.1.8.0",
+        "name": "qiniu/php-sdk",
+        "version": "v7.2.6",
+        "version_normalized": "7.2.6.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/zoujingli/ThinkLibrary.git",
-            "reference": "ad2fdbe5198712ec460e952e82fd1299a0ec1fc7"
+            "url": "https://github.com/qiniu/php-sdk.git",
+            "reference": "305ce1c1c0c71f794661fe45a96facf61ef96c5d"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/ad2fdbe5198712ec460e952e82fd1299a0ec1fc7",
-            "reference": "ad2fdbe5198712ec460e952e82fd1299a0ec1fc7",
+            "url": "https://api.github.com/repos/qiniu/php-sdk/zipball/305ce1c1c0c71f794661fe45a96facf61ef96c5d",
+            "reference": "305ce1c1c0c71f794661fe45a96facf61ef96c5d",
             "shasum": "",
             "mirrors": [
                 {
@@ -367,21 +308,83 @@
             ]
         },
         "require": {
+            "php": ">=5.3.3"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "~4.0",
+            "squizlabs/php_codesniffer": "~2.3"
+        },
+        "time": "2018-05-18T04:37:29+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Qiniu\\": "src/Qiniu"
+            },
+            "files": [
+                "src/Qiniu/functions.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Qiniu",
+                "email": "sdk@qiniu.com",
+                "homepage": "http://www.qiniu.com"
+            }
+        ],
+        "description": "Qiniu Resource (Cloud) Storage SDK for PHP",
+        "homepage": "http://developer.qiniu.com/",
+        "keywords": [
+            "cloud",
+            "qiniu",
+            "sdk",
+            "storage"
+        ]
+    },
+    {
+        "name": "zoujingli/think-library",
+        "version": "v1.1.9",
+        "version_normalized": "1.1.9.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/zoujingli/ThinkLibrary.git",
+            "reference": "9c4742bb3a0feb0269587c8b3967a88ca5247317"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/9c4742bb3a0feb0269587c8b3967a88ca5247317",
+            "reference": "9c4742bb3a0feb0269587c8b3967a88ca5247317",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "aliyuncs/oss-sdk-php": "^2.2",
             "ext-curl": "*",
             "ext-iconv": "*",
             "ext-json": "*",
             "ext-openssl": "*",
             "php": ">=5.4",
+            "qiniu/php-sdk": "^7.2",
             "topthink/framework": "5.1.*"
         },
-        "time": "2018-11-01T03:24:05+00:00",
+        "time": "2018-11-05T02:21:04+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
             "files": [
-                "library/common.php"
+                "common.php"
             ],
             "psr-4": {
+                "logic\\": "logic",
                 "library\\": "library"
             }
         },
@@ -399,7 +402,8 @@
         "homepage": "https://library.thinkadmin.top",
         "keywords": [
             "ThinkAdmin",
-            "ThinkLibrary"
+            "ThinkLibrary",
+            "framework"
         ]
     },
     {

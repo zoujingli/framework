@@ -14,7 +14,7 @@
 
 namespace app\admin\controller;
 
-use app\admin\logic\File;
+use logic\File;
 use library\Controller;
 
 /**

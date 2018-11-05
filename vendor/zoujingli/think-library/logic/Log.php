@@ -1,29 +1,30 @@
 <?php
 
 // +----------------------------------------------------------------------
-// | framework
+// | Library for ThinkAdmin
 // +----------------------------------------------------------------------
 // | 版权所有 2014~2018 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
 // +----------------------------------------------------------------------
-// | 官方网站: http://framework.thinkadmin.top
+// | 官方网站: http://library.thinkadmin.top
 // +----------------------------------------------------------------------
 // | 开源协议 ( https://mit-license.org )
 // +----------------------------------------------------------------------
-// | github开源项目：https://github.com/zoujingli/framework
+// | gitee 仓库地址 ：https://gitee.com/zoujingli/ThinkLibrary
+// | github 仓库地址 ：https://github.com/zoujingli/ThinkLibrary
 // +----------------------------------------------------------------------
 
-namespace app\admin\logic;
+namespace logic;
 
 use think\Db;
 use think\db\Query;
 use think\facade\Request;
 
 /**
- * Sqlite日志管理器
+ * Sqlite 日志管理器
  * Class Logs
- * @package app\admin\logic
+ * @package logic
  */
-class Logs
+class Log
 {
     /**
      * 当前数据对象
