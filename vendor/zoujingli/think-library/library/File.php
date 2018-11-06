@@ -48,7 +48,7 @@ class File
      */
     protected static $params = [
         'local' => [],
-        'coust' => [
+        'const' => [
             'storage_type' => '文件存储类型',
         ],
         'oss'   => [

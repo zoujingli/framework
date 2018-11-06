@@ -1,21 +1,25 @@
 {
   "type": "project",
   "name": "zoujingli/framework",
-  "keywords": ["framework","ThinkAdmin"],
-  "autoload": {"psr-4": {"app\\": "application"}},
-  "authors": [{"name": "Anyon", "email": "zoujingli@qq.com"}],
-  "description": "Rapid development framework based on ThinkPHP5",
-  "repositories": {"packagist": {"type": "composer", "url": "https://packagist.phpcomposer.com"}},
+  "authors": [
+    {
+      "name": "Anyon",
+      "email": "zoujingli@qq.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "app\\": "application"
+    }
+  },
   "require": {
     "php": ">=5.6",
     "ext-curl": "*",
     "ext-json": "*",
     "ext-iconv": "*",
     "ext-openssl": "*",
-    "qiniu/php-sdk": "^7.2",
     "endroid/qr-code": "^1.9",
     "topthink/framework": "5.1.*",
-    "aliyuncs/oss-sdk-php": "^2.2",
     "zoujingli/think-library": "^1.1",
     "zoujingli/weopen-developer": "^1.0"
   }
