@@ -18,7 +18,6 @@ use app\wechat\logic\Fans;
 use app\wechat\logic\Media;
 use app\wechat\logic\Wechat;
 use library\Controller;
-use library\tools\Http;
 use think\Db;
 use think\facade\Log;
 
