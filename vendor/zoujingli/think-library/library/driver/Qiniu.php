@@ -120,7 +120,7 @@ class Qiniu extends File
         $bucket = self::$config->get('storage_qiniu_bucket');
         $token = $this->getAuth()->uploadToken($bucket);
         list($ret, $err) = (new UploadManager())->put($token, $name, $content);
-        if ($err !== null) Log::error(__METHOD__ . ' 七牛云文件上传失败');
+        if ($err !== null) Log::error(__METHOD__ . " 七牛云文件上传失败，{$err->message()}");
         return $this->info($name);
     }
 

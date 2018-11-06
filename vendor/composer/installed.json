@@ -12,13 +12,7 @@
             "type": "zip",
             "url": "https://api.github.com/repos/top-think/think-installer/zipball/f5400a12c60e513911aef41fe443fa6920952675",
             "reference": "f5400a12c60e513911aef41fe443fa6920952675",
-            "shasum": "",
-            "mirrors": [
-                {
-                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
-                    "preferred": true
-                }
-            ]
+            "shasum": ""
         },
         "require": {
             "composer-plugin-api": "^1.0"
@@ -61,13 +55,7 @@
             "type": "zip",
             "url": "https://api.github.com/repos/symfony/options-resolver/zipball/1cf7d8e704a9cc4164c92e430f2dfa3e6983661d",
             "reference": "1cf7d8e704a9cc4164c92e430f2dfa3e6983661d",
-            "shasum": "",
-            "mirrors": [
-                {
-                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
-                    "preferred": true
-                }
-            ]
+            "shasum": ""
         },
         "require": {
             "php": "^5.5.9|>=7.0.8"
@@ -123,13 +111,7 @@
             "type": "zip",
             "url": "https://api.github.com/repos/endroid/qr-code/zipball/c9644bec2a9cc9318e98d1437de3c628dcd1ef93",
             "reference": "c9644bec2a9cc9318e98d1437de3c628dcd1ef93",
-            "shasum": "",
-            "mirrors": [
-                {
-                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
-                    "preferred": true
-                }
-            ]
+            "shasum": ""
         },
         "require": {
             "ext-gd": "*",
@@ -191,13 +173,7 @@
             "type": "zip",
             "url": "https://api.github.com/repos/aliyun/aliyun-oss-php-sdk/zipball/e69f57916678458642ac9d2fd341ae78a56996c8",
             "reference": "e69f57916678458642ac9d2fd341ae78a56996c8",
-            "shasum": "",
-            "mirrors": [
-                {
-                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
-                    "preferred": true
-                }
-            ]
+            "shasum": ""
         },
         "require": {
             "php": ">=5.3"
@@ -240,13 +216,7 @@
             "type": "zip",
             "url": "https://api.github.com/repos/top-think/framework/zipball/b5077520855a1f406205687c73cdeaee1ed618c2",
             "reference": "b5077520855a1f406205687c73cdeaee1ed618c2",
-            "shasum": "",
-            "mirrors": [
-                {
-                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
-                    "preferred": true
-                }
-            ]
+            "shasum": ""
         },
         "require": {
             "php": ">=5.6.0",
@@ -299,13 +269,7 @@
             "type": "zip",
             "url": "https://api.github.com/repos/qiniu/php-sdk/zipball/305ce1c1c0c71f794661fe45a96facf61ef96c5d",
             "reference": "305ce1c1c0c71f794661fe45a96facf61ef96c5d",
-            "shasum": "",
-            "mirrors": [
-                {
-                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
-                    "preferred": true
-                }
-            ]
+            "shasum": ""
         },
         "require": {
             "php": ">=5.3.3"
@@ -347,24 +311,18 @@
     },
     {
         "name": "zoujingli/think-library",
-        "version": "v1.2.2",
-        "version_normalized": "1.2.2.0",
+        "version": "v1.2.3",
+        "version_normalized": "1.2.3.0",
         "source": {
             "type": "git",
             "url": "https://github.com/zoujingli/ThinkLibrary.git",
-            "reference": "ef71b240933343eef211402d0b9528a7ce2f8ff2"
+            "reference": "e8778c50f8ca27525d97dfc82436e67515e70843"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/ef71b240933343eef211402d0b9528a7ce2f8ff2",
-            "reference": "ef71b240933343eef211402d0b9528a7ce2f8ff2",
-            "shasum": "",
-            "mirrors": [
-                {
-                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
-                    "preferred": true
-                }
-            ]
+            "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/e8778c50f8ca27525d97dfc82436e67515e70843",
+            "reference": "e8778c50f8ca27525d97dfc82436e67515e70843",
+            "shasum": ""
         },
         "require": {
             "aliyuncs/oss-sdk-php": "^2.2",
@@ -376,7 +334,7 @@
             "qiniu/php-sdk": "^7.2",
             "topthink/framework": "5.1.*"
         },
-        "time": "2018-11-05T06:57:16+00:00",
+        "time": "2018-11-06T06:44:32+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -418,13 +376,7 @@
             "type": "zip",
             "url": "https://api.github.com/repos/zoujingli/WeChatDeveloper/zipball/7e89f110da89e44e32b1abf5a15b2d107e3b30d5",
             "reference": "7e89f110da89e44e32b1abf5a15b2d107e3b30d5",
-            "shasum": "",
-            "mirrors": [
-                {
-                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
-                    "preferred": true
-                }
-            ]
+            "shasum": ""
         },
         "require": {
             "ext-curl": "*",
@@ -481,13 +433,7 @@
             "type": "zip",
             "url": "https://api.github.com/repos/zoujingli/WeOpenDeveloper/zipball/32aa04ad346790cd6ac7672c888e22e15cb007fe",
             "reference": "32aa04ad346790cd6ac7672c888e22e15cb007fe",
-            "shasum": "",
-            "mirrors": [
-                {
-                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
-                    "preferred": true
-                }
-            ]
+            "shasum": ""
         },
         "require": {
             "ext-curl": "*",

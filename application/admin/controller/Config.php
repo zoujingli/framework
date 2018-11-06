@@ -54,9 +54,9 @@ class Config extends Controller
     public function file()
     {
         if ($this->request->isGet()) {
-            $this->title = '文件存储配置';
             return $this->fetch('file', [
-                'ossEndpoints' => [
+                'title' => '文件存储配置',
+                'point' => [
                     'oss-cn-hangzhou.aliyuncs.com'    => '华东 1 杭州',
                     'oss-cn-shanghai.aliyuncs.com'    => '华东 2 上海',
                     'oss-cn-qingdao.aliyuncs.com'     => '华北 1 青岛',

@@ -48,6 +48,9 @@ class File
      */
     protected static $params = [
         'local' => [],
+        'coust' => [
+            'storage_type' => '文件存储类型',
+        ],
         'oss'   => [
             'storage_oss_domain'   => '文件访问域名',
             'storage_oss_keyid'    => '接口授权AppId',
@@ -186,6 +189,7 @@ class File
 try {
     // 初始化存储
     File::init();
+    \think\facade\Log::info(__METHOD__ . ' File storage initialization success');
 } catch (\Exception $e) {
-    \think\facade\Log::error(__METHOD__ . ' 文件存储初始化异常， ' . $e->getMessage());
+    \think\facade\Log::error(__METHOD__ . "File storage initialization exception. [{$e->getMessage()}]");
 }

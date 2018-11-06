@@ -105,8 +105,8 @@ class Oss extends File
             $bucket = self::$config->get('storage_oss_bucket');
             $result = $this->getOssClient()->putObject($bucket, $name, $content);
             return ['file' => $name, 'hash' => $result['content-md5'], 'key' => $name, 'url' => $this->base($name)];
-        } catch (\Exception $err) {
-            \think\facade\Log::error('阿里云OSS文件上传失败, ' . $err->getMessage());
+        } catch (\Exception $e) {
+            \think\facade\Log::error("阿里云OSS文件上传失败，{$e->getMessage()}");
             return null;
         }
     }
@@ -123,9 +123,9 @@ class Oss extends File
     {
         $client = $this->getOssClient();
         // 空间及权限处理
+        $aclType = OssClient::OSS_ACL_TYPE_PUBLIC_READ_WRITE;
         if ($client->doesBucketExist($bucket)) {
             $result = $client->getBucketMeta($bucket);
-            $aclType = OssClient::OSS_ACL_TYPE_PUBLIC_READ_WRITE;
             if ($client->getBucketAcl($bucket) !== $aclType) {
                 $client->putBucketAcl($bucket, $aclType);
             }

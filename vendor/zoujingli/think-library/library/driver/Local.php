@@ -106,8 +106,8 @@ class Local extends File
             $file = $this->path($name, $safe);
             file_exists(dirname($file)) || mkdir(dirname($file), 0755, true);
             if (file_put_contents($file, $content)) return $this->info($name, $safe);
-        } catch (\Exception $err) {
-            \think\facade\Log::error(__METHOD__ . " 本地文件存储失败，" . $err->getMessage());
+        } catch (\Exception $e) {
+            \think\facade\Log::error(__METHOD__ . " 本地文件存储失败，{$e->getMessage()}");
         }
         return null;
     }
