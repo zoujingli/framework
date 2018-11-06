@@ -136,18 +136,13 @@ class Push extends Controller
                 return $this->keys($this->receive['EventKey']);
             case 'scancode_push':
             case 'scancode_waitmsg':
-                if (isset($this->receive['ScanCodeInfo'])) {
-                    $this->receive['ScanCodeInfo'] = (array)$this->receive['ScanCodeInfo'];
-                    if (!empty($this->receive['ScanCodeInfo']['ScanResult'])) {
-                        return $this->keys("wechat_keys#keys#{$this->receive['ScanCodeInfo']['ScanResult']}");
-                    }
-                }
-                return false;
+                if (empty($this->receive['ScanCodeInfo'])) return false;
+                $this->receive['ScanCodeInfo'] = (array)$this->receive['ScanCodeInfo'];
+                if (empty($this->receive['ScanCodeInfo']['ScanResult'])) return false;
+                return $this->keys("wechat_keys#keys#{$this->receive['ScanCodeInfo']['ScanResult']}");
             case 'scan':
-                if (!empty($this->receive['EventKey'])) {
-                    return $this->keys("wechat_keys#keys#{$this->receive['EventKey']}");
-                }
-                return false;
+                if (empty($this->receive['EventKey'])) return false;
+                return $this->keys("wechat_keys#keys#{$this->receive['EventKey']}");
         }
         return false;
     }
