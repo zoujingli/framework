@@ -143,8 +143,9 @@ class Push extends Controller
             case 'scan':
                 if (empty($this->receive['EventKey'])) return false;
                 return $this->keys("wechat_keys#keys#{$this->receive['EventKey']}");
+            default:
+                return false;
         }
-        return false;
     }
 
     /**
