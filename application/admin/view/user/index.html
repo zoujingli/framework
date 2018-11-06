@@ -87,21 +87,17 @@
             <td class='list-table-check-td think-checkbox'>
                 <input class="list-check-box" value='{$vo.id}' type='checkbox'>
             </td>
-            <td class='text-left nowrap'>
-                {$vo.username}
-            </td>
-            <td class='text-left nowrap'>
-                {$vo.phone|default="<span class='color-desc'>还没有设置手机号</span>"|raw}
-            </td>
-            <td class='text-left nowrap'>
-                {$vo.mail|default="<span class='color-desc'>还没有设置邮箱</span>"|raw}
-            </td>
+            <td class='text-left nowrap'>{$vo.username}</td>
+            <td class='text-left nowrap'>{$vo.phone|default="<span class='color-desc'>还没有设置手机号</span>"|raw}</td>
+            <td class='text-left nowrap'>{$vo.mail|default="<span class='color-desc'>还没有设置邮箱</span>"|raw}</td>
             <td class='text-left nowrap'>{$vo.login_num|default=0}</td>
+            <td class='text-left nowrap'>{$vo.login_at|format_datetime|default="<span class='color-desc'>从未登录</span>"|raw}</td>
             <td class='text-left nowrap'>
-                {$vo.login_at|format_datetime|default="<span class='color-desc'>从未登录</span>"|raw}
-            </td>
-            <td class='text-left nowrap'>
-                {if $vo.status eq 0}<span class="color-red">已禁用</span>{elseif $vo.status eq 1}<span class="color-green">使用中</span>{/if}
+                {eq name='vo.status' value='0'}
+                <span class="layui-badge">已禁用</span>
+                {else}
+                <span class="layui-badge layui-bg-green">使用中</span>
+                {/eq}
             </td>
             <td class='text-left nowrap'>
 
