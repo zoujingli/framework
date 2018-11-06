@@ -83,7 +83,9 @@ class Push extends Controller
     {
         // text, event, image, location
         if (method_exists($this, ($method = $this->receive['MsgType']))) {
-            if (is_string(($result = $this->$method()))) return $result;
+            if (is_string(($result = $this->$method()))) {
+                return $result;
+            }
         }
         return 'success';
     }
