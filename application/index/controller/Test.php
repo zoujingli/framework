@@ -23,36 +23,50 @@ use library\Controller;
  */
 class Test extends Controller
 {
+
     /**
      * 文件测试
      */
     public function file()
     {
 
+        echo PHP_EOL . PHP_EOL;
         echo '<br>- down -<br>';
         $info = File::down('http://static.ctolog.com/test.txt');
         dump($info);
 
-        echo '<br>- local -<br>';
-        $oss = File::instance('local');
-        $info = $oss->save('test.txt', 'tqwtqwteqwtq');
-        dump($info);
-        $info = $oss->info('test.txt');
-        dump($info);
+        try {
+            echo '<br>- local -<br>';
+            $oss = File::instance('local');
+            $info = $oss->save('test.txt', 'tqwtqwteqwtq');
+            dump($info);
+            $info = $oss->info('test.txt');
+            dump($info);
+        } catch (\Exception $e) {
+            echo $e->getMessage() . PHP_EOL;
+        }
 
-        echo '<br>- qiniu -<br>';
-        $oss = File::instance('qiniu');
-        $info = $oss->save('test.txt', 'tqwtqwteqwtq');
-        dump($info);
-        $info = $oss->info('test.txt');
-        dump($info);
+        try {
+            echo '<br>- qiniu -<br>';
+            $oss = File::instance('qiniu');
+            $info = $oss->save('test.txt', 'tqwtqwteqwtq');
+            dump($info);
+            $info = $oss->info('test.txt');
+            dump($info);
+        } catch (\Exception $e) {
+            echo $e->getMessage() . PHP_EOL;
+        }
 
-        echo '<br>- oss -<br>';
-        $oss = File::instance('oss');
-        $info = $oss->save('test.txt', 'tqwtqwteqwtq');
-        dump($info);
-        $info = $oss->info('test.txt');
-        dump($info);
+        try {
+            echo '<br>- oss -<br>';
+            $oss = File::instance('oss');
+            $info = $oss->save('test.txt', 'tqwtqwteqwtq');
+            dump($info);
+            $info = $oss->info('test.txt');
+            dump($info);
+        } catch (\Exception $e) {
+            echo $e->getMessage() . PHP_EOL;
+        }
     }
 
 }
