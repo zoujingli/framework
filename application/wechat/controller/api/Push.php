@@ -47,6 +47,12 @@ class Push extends Controller
     protected $wechat;
 
     /**
+     * 公众号APPID
+     * @var string
+     */
+    protected $appid;
+
+    /**
      * 获取当前出口IP
      * @return mixed
      */
@@ -62,6 +68,7 @@ class Push extends Controller
      */
     public function index()
     {
+        $this->appid = Wechat::getAppid();
         $this->wechat = \We::WeChatReceive(Wechat::config());
         $this->openid = $this->wechat->getOpenid();
         $this->receive = $this->wechat->getReceive();
