@@ -33,14 +33,14 @@ PHP 开发技术交流（ QQ 群 513350915）
 --
 |名称|版本|描述|链接|
 |---|---|---|---|
-|Layui|2.4.3|UI组件库|https://github.com/sentsin/layui|
+|Layui|2.4.5|UI组件库|https://github.com/sentsin/layui|
 |Ckeditor|4.10.1|富文件编辑器|https://github.com/ckeditor/ckeditor-dev|
 |PluPloader|3.1.2|文件上传工具1|https://github.com/fex-team/webuploader|
 |WebUploader|0.1.5|文件上传工具2|https://github.com/fex-team/webuploader|
-|Font-Awesome|5.3.1|字体图标库|https://github.com/FortAwesome/Font-Awesome|
-|ThinkPHP|5.1.27|PHP基础框架|https://github.com/top-think/framework|
-|ThinkLibrary|1.1.6|ThinkPHP扩展组件|https://github.com/zoujingli/ThinkLibrary|
-|WeChatDeveloper|1.1.16|微信公众号组件|https://github.com/zoujingli/WeChatDeveloper|
+|Font-Awesome|4.7.0|字体图标库|https://github.com/FortAwesome/Font-Awesome|
+|ThinkPHP|5.1.28|PHP基础框架|https://github.com/top-think/framework|
+|ThinkLibrary|1.2.2|ThinkPHP扩展组件|https://github.com/zoujingli/ThinkLibrary|
+|WeChatDeveloper|1.2.2|微信公众号组件|https://github.com/zoujingli/WeChatDeveloper|
 |WeOpenDeveloper|1.1.3|微信开放平台组件|https://github.com/zoujingli/WeOpenDeveloper|
 
 赞助打赏
