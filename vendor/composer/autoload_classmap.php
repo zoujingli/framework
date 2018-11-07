@@ -103,6 +103,7 @@ return array(
     'Qiniu\\Processing\\Operation' => $vendorDir . '/qiniu/php-sdk/src/Qiniu/Processing/Operation.php',
     'Qiniu\\Processing\\PersistentFop' => $vendorDir . '/qiniu/php-sdk/src/Qiniu/Processing/PersistentFop.php',
     'Qiniu\\Rtc\\AppClient' => $vendorDir . '/qiniu/php-sdk/src/Qiniu/Rtc/AppClient.php',
+    'Qiniu\\Storage\\ArgusManager' => $vendorDir . '/qiniu/php-sdk/src/Qiniu/Storage/ArgusManager.php',
     'Qiniu\\Storage\\BucketManager' => $vendorDir . '/qiniu/php-sdk/src/Qiniu/Storage/BucketManager.php',
     'Qiniu\\Storage\\FormUploader' => $vendorDir . '/qiniu/php-sdk/src/Qiniu/Storage/FormUploader.php',
     'Qiniu\\Storage\\ResumeUploader' => $vendorDir . '/qiniu/php-sdk/src/Qiniu/Storage/ResumeUploader.php',

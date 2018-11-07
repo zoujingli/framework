@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInite88e1b1584c45c818f75733c58b35e27
+class ComposerStaticInita9ce34343f3f7675dc4368faecaaf6bb
 {
     public static $files = array (
         '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
@@ -204,6 +204,7 @@ class ComposerStaticInite88e1b1584c45c818f75733c58b35e27
         'Qiniu\\Processing\\Operation' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/Processing/Operation.php',
         'Qiniu\\Processing\\PersistentFop' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/Processing/PersistentFop.php',
         'Qiniu\\Rtc\\AppClient' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/Rtc/AppClient.php',
+        'Qiniu\\Storage\\ArgusManager' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/Storage/ArgusManager.php',
         'Qiniu\\Storage\\BucketManager' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/Storage/BucketManager.php',
         'Qiniu\\Storage\\FormUploader' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/Storage/FormUploader.php',
         'Qiniu\\Storage\\ResumeUploader' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/Storage/ResumeUploader.php',
@@ -320,9 +321,9 @@ class ComposerStaticInite88e1b1584c45c818f75733c58b35e27
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInite88e1b1584c45c818f75733c58b35e27::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInite88e1b1584c45c818f75733c58b35e27::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInite88e1b1584c45c818f75733c58b35e27::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInita9ce34343f3f7675dc4368faecaaf6bb::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInita9ce34343f3f7675dc4368faecaaf6bb::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInita9ce34343f3f7675dc4368faecaaf6bb::$classMap;
 
         }, null, ClassLoader::class);
     }
