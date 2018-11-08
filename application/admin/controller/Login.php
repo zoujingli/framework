@@ -53,11 +53,11 @@ class Login extends Controller
         // 用户信息验证
         $map = ['is_deleted' => '0', 'username' => $data['username']];
         $user = Db::name('SystemUser')->where($map)->find();
-        empty($user) && $this->error('登录账号不存在，请重新输入!');
+        if (empty($user)) $this->error('登录账号不存在，请重新输入!');
         if ($user['password'] !== md5($data['password'])) {
             $this->error('登录密码与账号不匹配，请重新输入!');
         }
-        empty($user['status']) && $this->error('账号已经被禁用，请联系管理!');
+        if (empty($user['status'])) $this->error('账号已经被禁用，请联系管理!');
         Db::name('SystemUser')->where(['id' => $user['id']])->update([
             'login_at'  => Db::raw('now()'),
             'login_ip'  => $this->request->ip(),

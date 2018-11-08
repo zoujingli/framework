@@ -1,80 +1,45 @@
 {extend name="admin@index/index"}
 
 {block name="body"}
-<div class="login-container layui-bg-blue">
-
-    <!-- 动态云层动画 开始 -->
-    <div class="clouds-container">
-        <div class="clouds clouds-footer"></div>
-        <div class="clouds"></div>
-        <div class="clouds clouds-fast"></div>
-    </div>
-    <!-- 动态云层动画 结束 -->
-
-    <!-- 顶部导航条 开始 -->
-    <div class="header notselect">
-        <span class="title notselect">{:sysconf('app_name')} <span class="font-s10">{:sysconf('app_version')}</span></span>
+<div class="login-container" data-supersized="__ROOT__/static/theme/img/login/bg1.jpg,__ROOT__/static/theme/img/login/bg2.jpg">
+    <div class="header notselect layui-hide-xs">
+        <a href="{:url('@')}" class="title">{:sysconf('app_name')} <span class="padding-left-5 font-s10">{:sysconf('app_version')}</span></a>
         <ul>
-            <li><a target="_blank" href="http://document.framework.thinkadmin.top">在线帮助</a></li>
+            <li class="layui-hide"><a target="_blank" href="http://document.framework.thinkadmin.top">在线帮助</a></li>
             <li><a target="_blank" href="http://soft.ftsm-shop.com/19/3911.html">推荐使用谷歌浏览器</a></li>
         </ul>
     </div>
-    <!-- 顶部导航条 结束 -->
-
-    <!-- 页面表单主体 开始 -->
-    <div class="container">
-        <form onsubmit="return false;" data-time="0.001" data-auto="true" method="post" class="content layui-form layui-anim layui-anim-upbit">
-            <div class="people">
-                <div class="tou"></div>
-                <div id="left-hander" class="initial-left-hand transition"></div>
-                <div id="right-hander" class="initial-right-hand transition"></div>
-            </div>
-            <ul>
-                <li class="username">
-                    <i class="layui-icon layui-icon-username"></i>
-                    <input autocomplete="off" required pattern="^\S{4,}$" name="username" value="admin" autofocus placeholder="请输入用户名">
-                </li>
-                <li class="password">
-                    <i class="layui-icon layui-icon-password"></i>
-                    <input autocomplete="off" required pattern="^\S{4,}$" name="password" value="admin" type="password" placeholder="请输入密码">
-                </li>
-                <li class="text-center">
-                    <button type="submit" class="layui-btn layui-btn-primary layui-disabled" data-form-loaded="立 即 登 入">正 在 载 入</button>
-                </li>
-            </ul>
-        </form>
-    </div>
-    <!-- 页面表单主体 结束 -->
-
-    <!-- 底部版权信息 开始 -->
-    <!--{if sysconf('site_copy')}-->
-    <div class="footer notselect">
+    <form onsubmit="return false;" data-time="0.001" data-auto="true" method="post" class="layui-anim layui-anim-upbit">
+        <label class="layui-hide"><input type="text" name="username"></label>
+        <label class="layui-hide"><input type="password" name="password"></label>
+        <h2 class="padding-bottom-20 padding-top-20 notselect">管理登录</h2>
+        <ul>
+            <li class="username">
+                <i class="layui-icon layui-icon-username"></i>
+                <input value="admin" class="layui-input" autocomplete="off" required pattern="^\S{4,}$" name="username" autofocus placeholder="请输入账号">
+            </li>
+            <li class="password">
+                <i class="layui-icon layui-icon-password"></i>
+                <input value="admin" class="layui-input" autocomplete="off" required pattern="^\S{4,}$" name="password" type="password" placeholder="请输入密码">
+            </li>
+            <li class="text-center padding-top-20">
+                <button type="submit" class="layui-btn layui-disabled full-width" data-form-loaded="立即登入">正在载入</button>
+            </li>
+        </ul>
+    </form>
+    <footer class="footer notselect">
         {:sysconf('site_copy')}
-        {if sysconf('miitbeian')} <span>|</span> <a target="_blank" href="http://www.miitbeian.gov.cn">{:sysconf('miitbeian')}</a>{/if}
-    </div>
-    <!--{/if}-->
-    <!-- 底部版本信息 结束 -->
-
+        {if sysconf('miitbeian')}<span>|</span> <a target="_blank" href="http://www.miitbeian.gov.cn">{:sysconf('miitbeian')}</a>{/if}
+    </footer>
 </div>
 {/block}
 
-{block name="style"}
-<link href="__ROOT__/static/theme/css/login.css" rel="stylesheet">
+{block name='style'}
+<link rel="stylesheet" href="__ROOT__/static/theme/css/login.css">
 {/block}
 
-{block name="script"}
-<script>
-    if (window.location.href.indexOf('#') > -1) {
-        window.location.href = window.location.href.split('#')[0];
-    }
-    $(function () {
-        $('[name="password"]').on('focus', function () {
-            $('#left-hander').removeClass('initial-left-hand').addClass('left-hand');
-            $('#right-hander').removeClass('initial-right-hand').addClass('right-hand')
-        }).on('blur', function () {
-            $('#left-hander').addClass('initial-left-hand').removeClass('left-hand');
-            $('#right-hander').addClass('initial-right-hand').removeClass('right-hand')
-        });
-    });
-</script>
+{block name='script'}
+<script src="__ROOT__/static/plugs/supersized/supersized.3.2.7.min.js"></script>
+
 {/block}
+
