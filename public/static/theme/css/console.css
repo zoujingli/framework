@@ -157,16 +157,14 @@ fieldset{border:1px solid #e6e6e6;margin:0;padding:10px 20px 5px 20px}
 .layui-btn.layui-btn-sm.layui-btn-primary{line-height:28px}
 
 /** checkbox 优化 */
-label.think-checkbox,label.think-radio{display:inline-block;margin-right:10px}
-.think-checkbox,.think-radio{margin-top:10px;font-weight:400;line-height:18px;cursor:pointer}
-.think-checkbox input[type=checkbox],.think-radio input[type=radio]{position:relative;display:inline-block!important;box-sizing:border-box!important;margin:0 5px 0 0;width:18px;height:18px;border:1px solid #dcdcdc;border-radius:1px;background:#fff;vertical-align:bottom;cursor:pointer;appearance:none;-webkit-appearance:none}
-.think-checkbox input[type=checkbox]:active,.think-radio input[type=radio]:active{border-color:#c6c6c6;background:#ebebeb}
-.think-checkbox input[type=checkbox]:hover{border-color:#c6c6c6;box-shadow:inset 0 1px 1px rgba(0,0,0,.1)}
-.think-radio input[type=radio]{width:18px;height:18px;border-radius:1em}
-.think-checkbox input[type=checkbox]:checked,.think-radio input[type=radio]:checked{background:#fff}
+label.think-checkbox{display:inline-block;margin-right:10px}
+.think-checkbox{margin-top:10px;font-weight:400;line-height:16px;cursor:pointer}
+.think-checkbox input[type=checkbox]{position:relative;display:inline-block!important;box-sizing:border-box!important;margin:0 5px 0 0;width:18px;height:18px;border:1px solid #dcdcdc;border-radius:1px;background:#fff;vertical-align:bottom;cursor:pointer;appearance:none;-webkit-appearance:none}
+.think-checkbox input[type=checkbox]:checked:after{position:absolute;display:block;content:"\e605";font-family:layui-icon!important;font-size:12px;font-style:normal;padding:2px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;color:#666;font-weight:bold}
+label.think-radio{display:inline-block;margin-right:10px}
+.think-radio{margin-top:10px;font-weight:400;line-height:16px;cursor:pointer}
+.think-radio input[type=radio]{position:relative;display:inline-block!important;box-sizing:border-box!important;margin:0 5px 0 0;width:18px;height:18px;border:1px solid #dcdcdc;border-radius:1em;background:#fff;vertical-align:bottom;cursor:pointer;appearance:none;-webkit-appearance:none}
 .think-radio input[type=radio]:checked:after{position:relative;top:4px;left:4px;display:block;width:8px;height:8px;border-radius:1em;background:#666;content:''}
-.think-checkbox input[type=checkbox]:checked:after{position:absolute;top:-2px;left:-4px;display:block;content:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACpF6WWAAAAtklEQVQ4y2P4//8/A7Ux1Q0cxoaCADIbCUgCMTvVXAoE5kA8CYidyXYpGrAH4iVAHIXiCwoMDQTimUBcBsRMlBrKCsTpUANzkC0j11BuIK6EGlgKsoAkQ4FgChD7AzELVI8YEDdDDawDYk6YQaQY6gg1oAqILYC4D8oHGcyLbBAphoJAKtQgGO4EYiHk2CLHUJAXm6AG9gCxNHoSIMdQEJCFGqiALaGSayjMxQwUGzq0S6nhZygA2ojsbh6J67kAAAAASUVORK5CYII=)}
-.think-checkbox input[type=checkbox]:focus,.think-radio input[type=radio]:focus{outline:0}
 
 /** 手机盒子及微信菜单 */
 .mobile-preview{position:relative;width:317px;height:580px;background:url(../img/wechat/mobile_head.png) no-repeat 0 0}
