@@ -32,43 +32,38 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 .layui-layout>.layui-body>.layui-card>.layui-card-header{height:50px;line-height:50px;border:none;box-shadow:0 2px 3px 0 rgba(0,0,0,.1)}
 
 /* 页面布局 - 头部 */
-.layui-header{height:50px;background:#009688!important;}
+.layui-header{height:50px;background:#009688!important}
 .layui-header .layui-layout-left,.layui-header .layui-layout-right{padding:0}
-.layui-header .layui-logo{color:#fff;font-size:18px;line-height:50px;box-shadow:0 1px 3px 0 rgba(0, 0, 0, 0.15)}
+.layui-header .layui-logo{box-shadow:0 1px 3px 0 rgba(0,0,0,.15);color:#fff;font-size:18px;line-height:50px}
 .layui-header .layui-logo sup{font-size:9px;line-height:9px}
 .layui-header .layui-nav-item{line-height:50px}
 .layui-header .layui-nav-item>a{color:#fff!important}
-.layui-header .layui-nav-item.layui-this{background:rgba(0,0,0,0.1)}
-.layui-header .layui-nav-bar, .layui-header .layui-nav-item:after{display:none!important}
-.layui-header .layui-nav-item .layui-nav-child{top:49px;padding:0;border-radius:0;border:none;line-height:45px;box-shadow:0 1px 2px 0 rgba(0, 0, 0, 0.2)}
+.layui-header .layui-nav-item.layui-this{background:rgba(0,0,0,.1)}
+.layui-header .layui-nav-bar,.layui-header .layui-nav-item:after{display:none!important}
+.layui-header .layui-nav-item .layui-nav-child{top:49px;padding:0;border:none;border-radius:0;box-shadow:0 1px 2px 0 rgba(0,0,0,.2);line-height:45px}
 .layui-header .layui-nav-item .layui-nav-child+a{padding-right:35px}
 .layui-header .layui-nav-item .layui-nav-child.layui-show+a{background:#fff}
 .layui-header .layui-nav-item .layui-nav-child.layui-show+a span{color:#333}
-.layui-header .layui-nav-item .layui-nav-child dd a{color:#333;text-align:center;border-top:1px solid #eaedf1;padding:0}
+.layui-header .layui-nav-item .layui-nav-child dd a{padding:0;border-top:1px solid #eaedf1;color:#333;text-align:center}
 
 /* 页面布局 - 左则 */
 .layui-layout.layui-layout-left-mini>.layui-body{left:50px}
 .layui-layout.layui-layout-left-hide>.layui-side{display:none}
 .layui-layout.layui-layout-left-hide>.layui-body{left:0!important}
 
-.layui-layout>.layui-side .layui-this{background:#009688!important}
-.layui-layout>.layui-side .layui-this a{background:none!important}
-.layui-layout>.layui-side .layui-nav-bar{display:none!important}
 .layui-layout>.layui-side .layui-nav-item{border-bottom:1px solid #333}
-.layui-layout>.layui-side .layui-nav-item a{height:45px;line-height:45px;color:#fff!important}
-.layui-layout>.layui-side .layui-nav-item a:hover{background:rgba(100,100,100,0.2)!important}
+.layui-layout>.layui-side .layui-nav-item a{height:45px;color:#fff!important;line-height:45px}
+.layui-layout>.layui-side .layui-nav-item a:hover{background:rgba(100,100,100,.2)!important}
 .layui-layout>.layui-side .layui-nav-item .layui-nav-child dd{border-bottom:1px solid #222}
 .layui-layout>.layui-side .layui-nav-item .layui-nav-child dd:last-child{border-bottom:none}
 .layui-layout>.layui-side .layui-nav-tree-top a{height:28px!important;line-height:28px!important}
 
-.layui-layout.layui-layout-left-mini>.layui-side,
-.layui-layout.layui-layout-left-mini>.layui-side .layui-nav-tree,
-.layui-layout.layui-layout-left-mini>.layui-side .layui-side-scroll{width:50px;text-align:center}
+.layui-layout.layui-layout-left-mini>.layui-side,.layui-layout.layui-layout-left-mini>.layui-side .layui-nav-tree,.layui-layout.layui-layout-left-mini>.layui-side .layui-side-scroll{width:50px;text-align:center}
 .layui-layout.layui-layout-left-mini>.layui-side .layui-nav-item a{padding:0;height:45px;line-height:45px}
 .layui-layout.layui-layout-left-mini>.layui-side .layui-nav-item .nav-text{display:none}
 .layui-layout.layui-layout-left-mini>.layui-side .layui-nav-item .nav-icon{display:inline-block!important;padding:0!important}
 .layui-layout.layui-layout-left-mini>.layui-side .layui-nav-item .layui-nav-child{display:block!important;padding:0;background-color:rgba(0,0,0,.3)!important}
-.layui-layout.layui-layout-left-mini>.layui-side .layui-nav-tree-top i{display:inline-block;transform:rotate(180deg);-o-transform:rotate(180deg);-ms-transform:rotate(180deg);-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg)}
+.layui-layout.layui-layout-left-mini>.layui-side .layui-nav-tree-top i{display:inline-block;-webkit-transform:rotate(180deg);transform:rotate(180deg);-ms-transform:rotate(180deg)}
 .layui-layout.layui-layout-left-mini>.layui-side .layui-nav-more{display:none!important}
 
 /* 下拉 */
@@ -131,65 +126,65 @@ fieldset{border:1px solid #e6e6e6;margin:0;padding:10px 20px 5px 20px}
 
 /* 分页 */
 .pagination-container{line-height:40px}
-.pagination-container>span{color:#666;font-size:12px}
-.pagination-container>ul{display:inline-block;margin:0;padding:0;float:right}
-.pagination-container>ul>li{display:inline-block;z-index:1}
-.pagination-container>ul>li>span,
-.pagination-container>ul>li>a{width:33px;text-align:center;height:30px;line-height:28px;display:inline-block;border:1px solid gainsboro;margin-left:-1px;color:#333}
-.pagination-container>ul>li>span{background:gainsboro;cursor:default}
-.pagination-container>ul>li>a:hover{background:gainsboro;border-color:gainsboro}
+.pagination-container>span{color:#666;font-size:9pt}
+.pagination-container>ul{float:right;display:inline-block;margin:0;padding:0}
+.pagination-container>ul>li{z-index:1;display:inline-block}
+.pagination-container>ul>li>a,.pagination-container>ul>li>span{display:inline-block;margin-left:-1px;width:33px;height:30px;border:1px solid #dcdcdc;color:#333;text-align:center;line-height:28px}
+.pagination-container>ul>li>span{background:#dcdcdc;cursor:default}
+.pagination-container>ul>li>a:hover{border-color:#dcdcdc;background:#dcdcdc}
 .pagination-container>ul>li.active{z-index:2}
-.pagination-container>ul>li.active>span{background:#009688!important;border-color:#009688;color:#fff}
+.pagination-container>ul>li.active>span{border-color:#009688;background:#009688!important;color:#fff}
 
 /* 图片上传 */
-.uploadimage{display:inline-block;width:80px;height:80px;background:url('../img/image.png') no-repeat center center;background-size:cover;cursor:pointer}
+.uploadimage{display:inline-block;width:5pc;height:5pc;background:url(../img/image.png) no-repeat center center;background-size:cover;cursor:pointer}
 .uploadimagemtl{margin-right:8px}
-.uploadimagemtl a{color:#fff;width:20px;height:20px;float:right;display:none;line-height:22px;text-align:center;background:rgba(0,0,0,0.5)}
+.uploadimagemtl a{float:right;display:none;width:20px;height:20px;background:rgba(0,0,0,.5);color:#fff;text-align:center;line-height:22px}
 .uploadimagemtl:hover a{display:inline-block;cursor:pointer}
 .uploadimagemtl:hover a:hover{color:#fff;text-decoration:none}
 
 /** Layui样式调整 */
 .layui-input,.layui-select{line-height:38px}
-.layui-table th,.layui-table td{font-size:12px}
-.layui-table td .text-explode{color:#ccc!important;margin:0 4px!important}
-.layui-table td .text-explode:first-child{opacity:0;display:none}
+.layui-table td,.layui-table th{font-size:9pt}
+.layui-table td .text-explode{margin:0 4px!important;color:#ccc!important}
+.layui-table td .text-explode:first-child{display:none;opacity:0}
 .layui-table .list-table-image{width:22px;cursor:pointer}
 .layui-table .list-table-sort-td{width:60px!important;text-align:center!important}
 .layui-table .list-table-sort-td button{width:56px;background:#009688}
-.layui-table .list-table-sort-td input{font-size:12px;width:50px;text-align:center;line-height:18px;padding:2px;border:1px solid #e6e6e6;color:#666}
+.layui-table .list-table-sort-td input{padding:2px;width:50px;border:1px solid #e6e6e6;color:#666;text-align:center;font-size:9pt;line-height:18px}
 .layui-table .list-table-check-td{width:30px!important;text-align:center}
 .layui-table .list-table-check-td input{margin:0;vertical-align:middle}
 .layui-btn{border-radius:0!important}
 .layui-btn.layui-btn-sm.layui-btn-primary{line-height:28px}
 
 /** checkbox 优化 */
-label.think-radio,label.think-checkbox{margin-right:10px;display:inline-block}
-.think-radio, .think-checkbox{cursor:pointer;margin-top:10px;line-height:18px;font-weight:normal}
-.think-checkbox input[type=checkbox], .think-radio input[type=radio]{appearance:none;-webkit-appearance:none;display:inline-block!important;margin:0;width:18px;height:18px;cursor:pointer;background:#fff;border-radius:1px;position:relative;vertical-align:bottom;-moz-border-radius:1px;border:1px solid #dcdcdc;-webkit-border-radius:1px;box-sizing:border-box!important;-moz-box-sizing:border-box!important;-webkit-box-sizing:border-box!important}
-.think-checkbox input[type=checkbox]:active, .think-radio input[type=radio]:active{background:#ebebeb;border-color:#c6c6c6}
-.think-checkbox input[type=checkbox]:hover{border-color:#c6c6c6;box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.1);-moz-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.1);-webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.1)}
-.think-radio input[type=radio]{width:18px;height:18px;border-radius:1em;-moz-border-radius:1em;-webkit-border-radius:1em}
-.think-checkbox input[type=checkbox]:checked, .think-radio input[type=radio]:checked{background:#fff}
-.think-radio input[type=radio]:checked::after{top:4px;left:4px;width:8px;height:8px;content:'';display:block;background:#666;position:relative;border-radius:1em;-moz-border-radius:1em;-webkit-border-radius:1em}
-.think-checkbox input[type=checkbox]:checked::after{top:-2px;left:-4px;display:block;position:absolute;content:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACpF6WWAAAAtklEQVQ4y2P4//8/A7Ux1Q0cxoaCADIbCUgCMTvVXAoE5kA8CYidyXYpGrAH4iVAHIXiCwoMDQTimUBcBsRMlBrKCsTpUANzkC0j11BuIK6EGlgKsoAkQ4FgChD7AzELVI8YEDdDDawDYk6YQaQY6gg1oAqILYC4D8oHGcyLbBAphoJAKtQgGO4EYiHk2CLHUJAXm6AG9gCxNHoSIMdQEJCFGqiALaGSayjMxQwUGzq0S6nhZygA2ojsbh6J67kAAAAASUVORK5CYII=')}
-.think-checkbox input[type=checkbox]:focus, .think-radio input[type=radio]:focus{outline:none}
+label.think-checkbox,label.think-radio{display:inline-block;margin-right:10px}
+.think-checkbox,.think-radio{margin-top:10px;font-weight:400;line-height:18px;cursor:pointer}
+.think-checkbox input[type=checkbox],.think-radio input[type=radio]{position:relative;display:inline-block!important;box-sizing:border-box!important;margin:0 5px 0 0;width:18px;height:18px;border:1px solid #dcdcdc;border-radius:1px;background:#fff;vertical-align:bottom;cursor:pointer;appearance:none;-webkit-appearance:none}
+.think-checkbox input[type=checkbox]:active,.think-radio input[type=radio]:active{border-color:#c6c6c6;background:#ebebeb}
+.think-checkbox input[type=checkbox]:hover{border-color:#c6c6c6;box-shadow:inset 0 1px 1px rgba(0,0,0,.1)}
+.think-radio input[type=radio]{width:18px;height:18px;border-radius:1em}
+.think-checkbox input[type=checkbox]:checked,.think-radio input[type=radio]:checked{background:#fff}
+.think-radio input[type=radio]:checked:after{position:relative;top:4px;left:4px;display:block;width:8px;height:8px;border-radius:1em;background:#666;content:''}
+.think-checkbox input[type=checkbox]:checked:after{position:absolute;top:-2px;left:-4px;display:block;content:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACpF6WWAAAAtklEQVQ4y2P4//8/A7Ux1Q0cxoaCADIbCUgCMTvVXAoE5kA8CYidyXYpGrAH4iVAHIXiCwoMDQTimUBcBsRMlBrKCsTpUANzkC0j11BuIK6EGlgKsoAkQ4FgChD7AzELVI8YEDdDDawDYk6YQaQY6gg1oAqILYC4D8oHGcyLbBAphoJAKtQgGO4EYiHk2CLHUJAXm6AG9gCxNHoSIMdQEJCFGqiALaGSayjMxQwUGzq0S6nhZygA2ojsbh6J67kAAAAASUVORK5CYII=)}
+.think-checkbox input[type=checkbox]:focus,.think-radio input[type=radio]:focus{outline:0}
 
 /** 手机盒子及微信菜单 */
-.mobile-preview{position:relative;width:317px;height:580px;background:url('../img/wechat/mobile_head.png') no-repeat 0 0}
-.mobile-preview .mobile-header{color:#fff;text-align:center;padding-top:30px;font-size:15px;width:auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;word-wrap:normal;margin:0 30px;-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}
-.mobile-body{width:100%;position:absolute;bottom:0;top:60px;border:1px solid #e7e7eb;border-top-style:none;background:#f5f5f5}
+.mobile-preview{position:relative;width:317px;height:580px;background:url(../img/wechat/mobile_head.png) no-repeat 0 0}
+.mobile-preview .mobile-header{overflow:hidden;margin:0 30px;padding-top:30px;width:auto;color:#fff;text-align:center;text-overflow:ellipsis;white-space:nowrap;word-wrap:normal;font-size:15px;-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}
+.mobile-body{position:absolute;top:60px;bottom:0;width:100%;border:1px solid #e7e7eb;background:#f5f5f5;border-top-style:none}
 .mobile-body iframe{width:100%;height:100%}
-.mobile-footer{list-style-type:none;margin:0;position:absolute;bottom:0;left:0;right:0;border:1px solid #e7e7eb;background:url('../img/wechat/mobile_foot.png') no-repeat 0 0;padding-left:43px}
-.mobile-footer li{width:33.33%;line-height:50px;position:relative;float:left;text-align:center}
-.mobile-footer li a{display:block;border:1px solid rgba(255, 255, 255, 0);border-left:1px solid #e7e7eb;width:auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;word-wrap:normal;color:#616161;text-decoration:none}
-.mobile-footer li a.active{background-color:#fff;border:1px solid #44b549!important}
-.mobile-footer .icon-add{background:url('../img/wechat/index.png') 0 0 no-repeat;width:14px;height:14px;vertical-align:middle;display:inline-block;margin-top:-2px;border-bottom:none!important}
-.mobile-footer .icon-sub{background:url('../img/wechat/index.png') 0 -48px no-repeat;width:7px;height:7px;vertical-align:middle;display:inline-block;margin-right:2px;margin-top:-2px}
-.mobile-footer .sub-menu{position:absolute;border-radius:3px;border:1px solid #d0d0d0;display:block;bottom:60px;width:100%;background-color:#fafafa}
-.mobile-footer .sub-menu ul, .mobile-footer .sub-menu ul li{padding:0;display:block;width:100%;float:none;z-index:11}
+.mobile-footer{position:absolute;right:0;bottom:0;left:0;margin:0;padding-left:43px;border:1px solid #e7e7eb;background:url(../img/wechat/mobile_foot.png) no-repeat 0 0;list-style-type:none}
+.mobile-footer li{position:relative;float:left;width:33.33%;text-align:center;line-height:50px}
+.mobile-footer li a{display:block;overflow:hidden;width:auto;border:1px solid hsla(0,0%,100%,0);border-left:1px solid #e7e7eb;color:#616161;text-decoration:none;text-overflow:ellipsis;white-space:nowrap;word-wrap:normal}
+.mobile-footer li a.active{border:1px solid #44b549!important;background-color:#fff}
+.mobile-footer .icon-add{width:14px;height:14px;border-bottom:none!important;background:url(../img/wechat/index.png) 0 0 no-repeat}
+.mobile-footer .icon-add,.mobile-footer .icon-sub{display:inline-block;margin-top:-2px;vertical-align:middle}
+.mobile-footer .icon-sub{margin-right:2px;width:7px;height:7px;background:url(../img/wechat/index.png) 0 -3pc no-repeat}
+.mobile-footer .sub-menu{position:absolute;bottom:60px;display:block;width:100%;border:1px solid #d0d0d0;border-radius:3px;background-color:#fafafa}
+.mobile-footer .sub-menu ul,.mobile-footer .sub-menu ul li{z-index:11;float:none;display:block;padding:0;width:100%}
 .mobile-footer .sub-menu ul li a{border:1px solid #fff}
 .mobile-footer .sub-menu ul li a.bottom-border{border-bottom:1px solid #e7e7eb}
 .mobile-footer .arrow{position:absolute;left:50%;margin-left:-6px}
-.mobile-footer .arrow_in, .mobile-footer .arrow_out{z-index:10;width:0;height:0;display:inline-block;border-width:6px;border-style:dashed;border-color:transparent;border-bottom-width:0;border-top-style:solid}
+.mobile-footer .arrow_in,.mobile-footer .arrow_out{z-index:10;display:inline-block;width:0;height:0;border:6px dashed transparent;border-bottom-width:0;border-top-style:solid}
 .mobile-footer .arrow_in{bottom:-5px;border-top-color:#fafafa}
 .mobile-footer .arrow_out{bottom:-6px;border-top-color:#d0d0d0}
