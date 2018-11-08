@@ -9,9 +9,7 @@
             <li><a target="_blank" href="http://soft.ftsm-shop.com/19/3911.html">推荐使用谷歌浏览器</a></li>
         </ul>
     </div>
-    <form onsubmit="return false;" data-time="0.001" data-auto="true" method="post" class="layui-anim layui-anim-upbit">
-        <label class="layui-hide"><input type="text" name="username"></label>
-        <label class="layui-hide"><input type="password" name="password"></label>
+    <form onsubmit="return false;" data-time="0.001" data-auto="true" method="post" class="layui-anim layui-anim-upbit" autocomplete="off">
         <h2 class="padding-bottom-20 padding-top-20 notselect">系统管理</h2>
         <ul>
             <li class="username">
@@ -29,7 +27,7 @@
     </form>
     <footer class="footer notselect">
         {:sysconf('site_copy')}
-        {if sysconf('miitbeian')}<span>|</span> <a target="_blank" href="http://www.miitbeian.gov.cn">{:sysconf('miitbeian')}</a>{/if}
+        {if sysconf('miitbeian')}<span> | </span><a target="_blank" href="http://www.miitbeian.gov.cn">{:sysconf('miitbeian')}</a>{/if}
     </footer>
 </div>
 {/block}
@@ -40,6 +38,5 @@
 
 {block name='script'}
 <script src="__ROOT__/static/plugs/supersized/supersized.3.2.7.min.js"></script>
-
 {/block}
 

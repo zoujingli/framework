@@ -11,8 +11,13 @@
 // +----------------------------------------------------------------------
 // | github开源项目：https://github.com/zoujingli/framework
 // +--------------------------------------------------------------------*/
+:-webkit-autofill,
+:-webkit-autofill:active,
+:-webkit-autofill:focus,
+:-webkit-autofill:hover{-webkit-box-shadow:none!important;box-shadow:0 2px 3px 0 rgba(0,0,0,.1) inset!important;-webkit-transition:color 9999s ease-out,background-color 9999s ease-out!important;-webkit-transition-delay:9999s!important;-webkit-text-fill-color:#fff!important}
+
 body,html{height:100%}
-body{background:url("../img/login/bg1.jpg") no-repeat center center;background-size:cover}
+body{background:url(../img/login/bg1.jpg) no-repeat center center;background-size:cover}
 .login-container .header{position:absolute;top:0;left:0;width:100%;height:47px;text-shadow:#000 .1em .1em .2em}
 .login-container .header a,.login-container .header a:focus,.login-container .header a:hover{color:#fff;text-decoration:none}
 .login-container .header .title{float:left;color:#fff;text-indent:40px;letter-spacing:1px;font-size:18px;line-height:47px}
@@ -20,9 +25,10 @@ body{background:url("../img/login/bg1.jpg") no-repeat center center;background-s
 .login-container .header ul li{float:left;margin-left:20px;line-height:47px}
 .login-container form{position:absolute;top:50%;left:50%;margin-top:-250px;margin-left:-150px;width:300px}
 .login-container form h2{color:#fff;text-align:center;text-shadow:#000 .1em .1em .2em;letter-spacing:3px;font-weight:700;font-size:25px}
-.login-container form ul li{position:relative;margin-top:20px}
-.login-container form ul li .layui-icon{position:absolute;padding:15px 15px 15px 20px;color:#fff;font-size:15px}
-.login-container form ul li input{padding:0 15px;height:45px;border:1px solid hsla(0,0%,100%,.15);border-radius:6px;background:rgba(45,45,45,.2);box-shadow:0 2px 3px 0 rgba(0,0,0,.1) inset;color:#fff;text-indent:30px;text-shadow:0 1px 2px rgba(0,0,0,.1);letter-spacing:1px;font-size:14px;line-height:42px;-webkit-transition:all .2s;-moz-transition:all .2s;-o-transition:all .2s;-ms-transition:all .2s}
+.login-container form ul li{position:relative;margin-top:20px;text-shadow:#000 .1em .1em .2em}
+.login-container form ul li .layui-icon{position:absolute;padding:13px 15px 13px 20px;color:#fff;font-size:18px}
+.login-container form ul li input{padding:0 15px;height:45px;border:1px solid #fff!important;border-radius:6px;background:rgba(45,45,45,.2);box-shadow:0 2px 3px 0 rgba(0,0,0,.1) inset;color:#fff;text-indent:35px;font-size:14px;line-height:42px;-webkit-transition:all .2s;-moz-transition:all .2s;-o-transition:all .2s;-ms-transition:all .2s;text-shadow:#000 .1em .1em .2em}
+.login-container form ul li input:focus,.login-container form ul li input:hover{border:1px solid #fff!important}
 .login-container form ul li input::placeholder{color:hsla(0,0%,100%,.8)!important}
 .login-container form ul li span{color:#dc0000!important}
 .login-container form ul li button{height:45px!important;border-radius:4px!important;background:#fff!important;box-shadow:0 15px 30px 0 hsla(0,0%,100%,.25) inset,0 2px 7px 0 rgba(0,0,0,.2);color:#333!important;text-shadow:0 1px 2px rgba(0,0,0,.1);letter-spacing:1px!important;-webkit-transition:all .2s;-moz-transition:all .2s;-o-transition:all .2s;-ms-transition:all .2s}
