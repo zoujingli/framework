@@ -1,52 +1,56 @@
 {extend name="main"}
 
 {block name="content"}
-<form onsubmit="return false;" data-auto="true" method="post" class='layui-form layui-card' autocomplete="off">
+<form onsubmit="return false;" data-auto="true" method="post" class='layui-form' autocomplete="off">
 
-    <div class="layui-card-body">
 
-        <div class="layui-form-item">
-            <label class="layui-form-label">Storage<br><span class="nowrap color-desc">存储引擎</span></label>
-            <div class="layui-input-block">
-                {foreach ['local'=>'本地服务器存储','oss'=>'阿里云OSS存储','qiniu'=>'七牛云存储'] as $k=>$v}
-                <label class="think-radio">
-                    <!--{if sysconf('storage_type') eq $k}-->
-                    <input checked type="radio" name="storage_type" value="{$k}" title="{$v}" lay-ignore>
-                    <!--{else}-->
-                    <input type="radio" name="storage_type" value="{$k}" title="{$v}" lay-ignore>
-                    <!--{/if}-->
-                    {$v}
+    <div class="layui-tab layui-tab-card">
+        <ul class="layui-tab-title">
+            {foreach ['local'=>'本地服务器存储','oss'=>'阿里云OSS存储','qiniu'=>'七牛云存储'] as $k => $v}
+            <li data-storagetype="{$k}" class="padding-0">
+                <label class="margin-0 padding-left-15 padding-right-15 inline-block pointer" style="height:40px">
+                        <span class="think-radio inline-block">
+                            <input lay-ignore data-auto-none name="storage_type" value="{$k}" type="radio">{$v}
+                        </span>
                 </label>
-                {/foreach}
-                <div class="help-block" data-storage-type="local">
-                    文件存储在本地服务器，请确保服务器的 public/upload 目录有写入权限
+            </li>
+            {/foreach}
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                文件存储在本地服务器，请确保服务器的 public/upload 目录有写入权限
+                <!-- 本地文件配置 -->
+                {include file='config/file_local'}
+
+                <div class="hr-line-dashed margin-left-40"></div>
+
+                <div class="layui-form-item text-center">
+                    <button class="layui-btn" type="submit">保存配置</button>
                 </div>
-                <div class="help-block" data-storage-type="qiniu">
-                    若还没有七牛云帐号，可<a target="_blank" href="https://portal.qiniu.com/signup?code=3lhz6nmnwbple">免费申请10G存储</a>，申请成功后添加公开bucket。
+            </div>
+            <div class="layui-tab-item">
+                若还没有七牛云帐号，可<a target="_blank" href="https://portal.qiniu.com/signup?code=3lhz6nmnwbple">免费申请10G存储</a>，申请成功后添加公开bucket。
+                <!-- 七牛云文件配置 -->
+                {include file='config/file_qiniu'}
+
+                <div class="hr-line-dashed margin-left-40"></div>
+
+                <div class="layui-form-item text-center">
+                    <button class="layui-btn" type="submit">保存配置</button>
                 </div>
-                <div class="help-block" data-storage-type="oss">
-                    若还没有OSS存储账号, 可<a target="_blank" href="https://oss.console.aliyun.com">创建阿里云OSS存储</a>，需要配置OSS公开访问及跨域策略（已实现自动创建）。
+            </div>
+            <div class="layui-tab-item">
+                若还没有OSS存储账号, 可<a target="_blank" href="https://oss.console.aliyun.com">创建阿里云OSS存储</a>，需要配置OSS公开访问及跨域策略（已实现自动创建）。
+                <!-- 阿里云OSS文件配置 -->
+                {include file='config/file_oss'}
+
+                <div class="hr-line-dashed margin-left-40"></div>
+
+                <div class="layui-form-item text-center">
+                    <button class="layui-btn" type="submit">保存配置</button>
                 </div>
             </div>
         </div>
-
-        <div class="hr-line-dashed margin-left-40"></div>
-
-        <!-- 本地文件配置 -->
-        {include file='config/file_local'}
-
-        <!-- 七牛云文件配置 -->
-        {include file='config/file_qiniu'}
-
-        <!-- 阿里云OSS文件配置 -->
-        {include file='config/file_oss'}
-
-        <div class="hr-line-dashed margin-left-40"></div>
-
-        <div class="layui-form-item text-center">
-            <button class="layui-btn" type="submit">保存配置</button>
-        </div>
-
     </div>
 
 </form>
@@ -64,7 +68,7 @@
         // 表单显示编译
         function buildForm(value) {
             let $tips = $("[data-storage-type='" + value + "']");
-            $("[data-storage-type]").not($tips.show()).hide();
+            //$("[data-storage-type]").not($tips.show()).hide();
         }
     })();
 </script>
