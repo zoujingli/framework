@@ -25,9 +25,9 @@ body{background:url(../img/login/bg1.jpg) no-repeat center center;background-siz
 .login-container .header ul li{float:left;margin-left:20px;line-height:47px}
 .login-container form{position:absolute;top:50%;left:50%;margin-top:-250px;margin-left:-150px;width:300px}
 .login-container form h2{color:#fff;text-align:center;text-shadow:#000 .1em .1em .2em;letter-spacing:3px;font-weight:700;font-size:25px}
-.login-container form ul li{position:relative;margin-top:20px;text-shadow:#000 .1em .1em .2em}
+.login-container form ul li{position:relative;margin-top:20px;text-shadow:#000 .1em .1em .1em}
 .login-container form ul li .layui-icon{position:absolute;padding:13px 15px 13px 20px;color:#fff;font-size:18px}
-.login-container form ul li input{padding:0 15px;letter-spacing:1px;height:45px;border:1px solid #fff!important;border-radius:6px;background:rgba(45,45,45,.2);box-shadow:0 2px 3px 0 rgba(0,0,0,.1) inset;color:#fff;text-indent:35px;font-size:14px;line-height:42px;-webkit-transition:all .2s;-moz-transition:all .2s;-o-transition:all .2s;-ms-transition:all .2s;text-shadow:#000 .1em .1em .2em}
+.login-container form ul li input{padding:0 15px;letter-spacing:1px;height:45px;border:1px solid #fff!important;border-radius:6px;background:rgba(45,45,45,.2);box-shadow:0 2px 3px 0 rgba(0,0,0,.1) inset;color:#fff;text-indent:35px;font-size:14px;line-height:42px;-webkit-transition:all .2s;-moz-transition:all .2s;-o-transition:all .2s;-ms-transition:all .2s;text-shadow:#000 .1em .1em .1em}
 .login-container form ul li input:focus,.login-container form ul li input:hover{border:1px solid #fff!important}
 .login-container form ul li input::placeholder{color:hsla(0,0%,100%,.8)!important;letter-spacing:1px}
 .login-container form ul li span{color:yellow!important;;letter-spacing:1px}
