@@ -185,7 +185,7 @@ class Oss extends File
         $keyid = self::$config->get('storage_oss_keyid');
         $secret = self::$config->get('storage_oss_secret');
         $endpoint = 'http://' . self::$config->get('storage_oss_endpoint');
-        return new OssClient($keyid, $secret, $endpoint, true);
+        return new OssClient($keyid, $secret, $endpoint);
     }
 
 }

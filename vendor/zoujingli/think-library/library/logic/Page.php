@@ -100,7 +100,7 @@ class Page extends Logic
             }
             $select = "<select onchange='location.href=this.options[this.selectedIndex].value' data-auto-none>" . join('', $rows) . "</select>";
             $html = "<div class='pagination-container nowrap'><span>共 {$page->total()} 条记录，每页显示 {$select} 条，共 {$page->lastPage()} 页当前显示第 {$page->currentPage()} 页。</span>{$page->render()}</div>";
-            $this->class->assign('pagehtml', preg_replace('|href="(.*?)"|', 'data-open="$1"', $html));
+            $this->class->assign('pagehtml', preg_replace('|href="(.*?)"|', 'data-open="$1" onclick="return false" href="$1"', $html));
             $result = ['page' => ['limit' => intval($limit), 'total' => intval($page->total()), 'pages' => intval($page->lastPage()), 'current' => intval($page->currentPage())], 'list' => $page->items()];
         } else $result = ['list' => $this->db->select()];
         if (false !== $this->class->_callback('_page_filter', $result['list']) && $this->isDisplay) {

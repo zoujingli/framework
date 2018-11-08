@@ -189,7 +189,7 @@ class File
 try {
     // 初始化存储
     File::init();
-    \think\facade\Log::info(__METHOD__ . ' File storage initialization success');
+    // \think\facade\Log::info(__METHOD__ . ' File storage initialization success');
 } catch (\Exception $e) {
-    \think\facade\Log::error(__METHOD__ . "File storage initialization exception. [{$e->getMessage()}]");
+    \think\facade\Log::error(__METHOD__ . " File storage initialization exception. [{$e->getMessage()}]");
 }
