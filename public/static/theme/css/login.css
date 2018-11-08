@@ -11,10 +11,18 @@
 // +----------------------------------------------------------------------
 // | github开源项目：https://github.com/zoujingli/framework
 // +--------------------------------------------------------------------*/
-:-webkit-autofill,
-:-webkit-autofill:active,
-:-webkit-autofill:focus,
-:-webkit-autofill:hover{-webkit-box-shadow:none!important;box-shadow:0 2px 3px 0 rgba(0,0,0,.1) inset!important;-webkit-transition:color 9999s ease-out,background-color 9999s ease-out!important;-webkit-transition-delay:9999s!important;-webkit-text-fill-color:#fff!important}
+
+.login-container form input,
+.login-container form input:-webkit-autofill,
+.login-container form input:-webkit-autofill:focus,
+.login-container form input:-webkit-autofill:active,
+.login-container form input:-webkit-autofill:hover {
+    -webkit-box-shadow: none !important;
+    -webkit-text-fill-color: #fff !important;
+    -webkit-transition-delay: 9999s !important;
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .1) inset !important;
+    -webkit-transition: color 9999s ease-out, background-color 9999s ease-out !important;
+}
 
 body,html{height:100%}
 body{background:url(../img/login/bg1.jpg) no-repeat center center;background-size:cover}
