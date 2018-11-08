@@ -78,17 +78,17 @@
                 <input name="_{$vo.id}" value="{$vo.sort}" class="list-sort-input">
             </td>
             <td class='text-left nowrap'>
-                <a class="layui-icon layui-icon-picture" data-tips-image="{$vo.logo}"></a> {$vo.title}
+                <a class="layui-icon layui-icon-picture" data-tips-image="{$vo.logo}"></a>&nbsp;{$vo.title}
             </td>
             <td class='text-left nowrap padding-0'>
                 <table class="trim-bottom-border">
                     <!--{foreach $vo.list as $goods}-->
                     <tr>
                         <td>{:str_replace(['::',';;'],[':',';'],$goods.goods_spec)}</td>
-                        <td><span class="color-desc font-s10">市价</span> <span class="color-blue">{$goods.price_market}</span></td>
-                        <td><span class="color-desc font-s10">销价</span> <span class="color-blue">{$goods.price_selling}</span></td>
-                        <td><span class="color-desc font-s10">库存</span> <span class="color-blue">{$goods.number_stock}</span></td>
-                        <td><span class="color-desc font-s10">销量</span> <span class="color-blue">{$goods.number_sales}</span></td>
+                        <td><span class="color-desc font-s10">市价</span>&nbsp;<span class="color-blue">{$goods.price_market}</span></td>
+                        <td><span class="color-desc font-s10">销价</span>&nbsp;<span class="color-blue">{$goods.price_selling}</span></td>
+                        <td><span class="color-desc font-s10">库存</span>&nbsp;<span class="color-blue">{$goods.number_stock}</span></td>
+                        <td><span class="color-desc font-s10">销量</span>&nbsp;<span class="color-blue">{$goods.number_sales}</span></td>
                     </tr>
                     <!--{/foreach}-->
                 </table>
