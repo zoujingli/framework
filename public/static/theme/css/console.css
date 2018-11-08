@@ -32,7 +32,7 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 .layui-layout>.layui-body>.layui-card>.layui-card-header{height:50px;line-height:50px;border:none;box-shadow:0 2px 3px 0 rgba(0,0,0,.1)}
 
 /* 页面布局 - 头部 */
-.layui-header{height:50px}
+.layui-header{height:50px;background:#009688!important;}
 .layui-header .layui-layout-left,.layui-header .layui-layout-right{padding:0}
 .layui-header .layui-logo{color:#fff;font-size:18px;line-height:50px;box-shadow:0 1px 3px 0 rgba(0, 0, 0, 0.15)}
 .layui-header .layui-logo sup{font-size:9px;line-height:9px}
@@ -56,7 +56,7 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 .layui-layout>.layui-side .layui-nav-bar{display:none!important}
 .layui-layout>.layui-side .layui-nav-item{border-bottom:1px solid #333}
 .layui-layout>.layui-side .layui-nav-item a{height:45px;line-height:45px;color:#fff!important}
-.layui-layout>.layui-side .layui-nav-item a:hover{background:rgba(100,100,100,0.1)!important}
+.layui-layout>.layui-side .layui-nav-item a:hover{background:rgba(100,100,100,0.2)!important}
 .layui-layout>.layui-side .layui-nav-item .layui-nav-child dd{border-bottom:1px solid #222}
 .layui-layout>.layui-side .layui-nav-item .layui-nav-child dd:last-child{border-bottom:none}
 .layui-layout>.layui-side .layui-nav-tree-top a{height:28px!important;line-height:28px!important}
@@ -155,7 +155,7 @@ fieldset{border:1px solid #e6e6e6;margin:0;padding:10px 20px 5px 20px}
 .layui-table td .text-explode:first-child{opacity:0;display:none}
 .layui-table .list-table-image{width:22px;cursor:pointer}
 .layui-table .list-table-sort-td{width:60px!important;text-align:center!important}
-.layui-table .list-table-sort-td button{width:56px}
+.layui-table .list-table-sort-td button{width:56px;background:#7061f9}
 .layui-table .list-table-sort-td input{font-size:12px;width:50px;text-align:center;line-height:18px;padding:2px;border:1px solid #e6e6e6;color:#666}
 .layui-table .list-table-check-td{width:30px!important;text-align:center}
 .layui-table .list-table-check-td input{margin:0;vertical-align:middle}
