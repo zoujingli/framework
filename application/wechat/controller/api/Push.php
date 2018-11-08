@@ -63,16 +63,19 @@ class Push extends Controller
 
     /**
      * 微信消息推送入口
-     * @throws \think\Exception
-     * @throws \think\exception\PDOException
+     * @return string
      */
     public function index()
     {
-        $this->appid = Wechat::getAppid();
-        $this->wechat = \We::WeChatReceive(Wechat::config());
-        $this->openid = $this->wechat->getOpenid();
-        $this->receive = $this->wechat->getReceive();
-        return $this->init();
+        try {
+            $this->appid = Wechat::getAppid();
+            $this->wechat = \We::WeChatReceive(Wechat::config());
+            $this->openid = $this->wechat->getOpenid();
+            $this->receive = $this->wechat->getReceive();
+            return $this->init();
+        } catch (\Exception $e) {
+            $this->error("[{$e->getCode()}]{$e->getMessage()}");
+        }
     }
 
     /**
