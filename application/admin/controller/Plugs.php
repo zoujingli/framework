@@ -68,7 +68,7 @@ class Plugs extends Controller
         $safe = boolval($this->request->post('safe', ''));
         // 唯一名称
         $ext = strtolower(pathinfo($file->getInfo('name'), 4));
-        $name = File::name($file->getPathname(), $ext, '', 'md5_file');
+        $name = File::name($this->request->post('md5'), $ext, '', 'strtolower');
         // Token验证
         if ($this->request->post('token') !== md5($name . session_id())) {
             return json(['code' => 'ERROR', 'msg' => '文件上传验证失败']);
