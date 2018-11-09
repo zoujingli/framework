@@ -38,12 +38,12 @@ class Plugs extends Controller
         $this->name = $this->request->get('name', 'file');
         $this->field = $this->request->get('field', 'file');
         $this->types = $this->request->get('type', 'jpg,png');
-        $this->mimes = File::mine($this->types);
         if (in_array($this->request->get('uptype'), ['local', 'qiniu', 'oss'])) {
             $this->uptype = $this->request->get('uptype');
         } else {
             $this->uptype = sysconf('storage_type');
         }
+        $this->mimes = File::mine($this->types);
         return $this->fetch();
     }
 
@@ -66,13 +66,14 @@ class Plugs extends Controller
         }
         // 安全模式
         $safe = boolval($this->request->post('safe', ''));
-        // 文件处理
+        // 唯一名称
         $ext = strtolower(pathinfo($file->getInfo('name'), 4));
         $name = File::name($file->getPathname(), $ext, '', 'md5_file');
         // Token验证
         if ($this->request->post('token') !== md5($name . session_id())) {
             return json(['code' => 'ERROR', 'msg' => '文件上传验证失败']);
         }
+        // 文件处理
         $path = pathinfo(File::instance('local')->path($name, $safe));
         if ($file->move($path['dirname'], $path['basename'], true)) {
             if (is_array($info = File::instance('local')->info($name, $safe)) && isset($info['url'])) {
@@ -107,9 +108,10 @@ class Plugs extends Controller
         }
         // 安全模式
         $safe = boolval($this->request->post('safe', ''));
-        // 文件处理
+        // 唯一名称
         $ext = strtolower(pathinfo($file->getInfo('name'), 4));
         $name = File::name($file->getPathname(), $ext, '', 'md5_file');
+        // 文件处理
         $info = File::instance($this->uptype)->save($name, file_get_contents($file->getRealPath()));
         if (is_array($info) && isset($info['url'])) {
             return json(['uploaded' => true, 'filename' => $name, 'url' => $safe ? $name : $info['url']]);
@@ -124,23 +126,29 @@ class Plugs extends Controller
      */
     public function upstate()
     {
-        $post = $this->request->post();
+        // 安全模式
         $safe = boolval($this->request->post('safe', ''));
-        $ext = strtolower(pathinfo($post['filename'], 4));
-        $name = File::name($post['md5'], $ext, '', 'strtolower');
+        // 上传类型
+        $uptype = $this->request->post('uptype', 'local');
+        if (!in_array($uptype, ['local', 'oss', 'qiniu'])) $uptype = 'local';
+        // 唯一名称
+        $ext = strtolower(pathinfo($this->request->post('filename', ''), 4));
+        $name = File::name($this->request->post('md5'), $ext, '', 'strtolower');
         // 检查文件是否已上传
         if (($site_url = File::url($name))) {
             $this->success('文件已存在可秒传！', ['site_url' => $safe ? $name : $site_url], 'IS_FOUND');
         }
+        // 文件上传驱动
+        $uploader = File::instance($uptype);
         // 需要上传文件，生成上传配置参数
-        $param = ['uptype' => $post['uptype'], 'file_url' => $name, 'server' => File::upload(), 'safe' => $safe];
-        switch (strtolower($post['uptype'])) {
+        $param = ['safe' => $safe, 'uptype' => $uptype, 'server' => $uploader->upload(), 'file_url' => $name, 'site_url' => $uploader->base($name)];
+        switch (strtolower($uptype)) {
             case 'local':
                 $param['token'] = md5($name . session_id());
                 break;
             case 'qiniu':
                 list($basic, $bucket, $access, $secret) = [
-                    File::instance('qiniu')->base(), sysconf('storage_qiniu_bucket'),
+                    $uploader->base(), sysconf('storage_qiniu_bucket'),
                     sysconf('storage_qiniu_access_key'), sysconf('storage_qiniu_secret_key'),
                 ];
                 $data = str_replace(['+', '/'], ['-', '_'], base64_encode(json_encode([
@@ -150,7 +158,6 @@ class Plugs extends Controller
                 $param['token'] = "{$access}:" . str_replace(['+', '/'], ['-', '_'], base64_encode(hash_hmac('sha1', $data, $secret, true))) . ":{$data}";
                 break;
             case 'oss':
-                $param['site_url'] = File::instance('oss')->base($name);
                 $param['OSSAccessKeyId'] = sysconf('storage_oss_keyid');
                 $param['policy'] = base64_encode(json_encode([
                     'conditions' => [['content-length-range', 0, 1048576000]], 'expiration' => gmdate("Y-m-d\TH:i:s\Z", time() + 3600),
