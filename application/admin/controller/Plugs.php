@@ -148,20 +148,17 @@ class Plugs extends Controller
                 break;
             case 'qiniu':
                 list($basic, $bucket, $access, $secret) = [
-                    $uploader->base(), sysconf('storage_qiniu_bucket'),
-                    sysconf('storage_qiniu_access_key'), sysconf('storage_qiniu_secret_key'),
+                    $uploader->base(), sysconf('storage_qiniu_bucket'), sysconf('storage_qiniu_access_key'), sysconf('storage_qiniu_secret_key'),
                 ];
                 $data = str_replace(['+', '/'], ['-', '_'], base64_encode(json_encode([
                     "scope"      => "{$bucket}:{$name}", "deadline" => 3600 + time(),
-                    "returnBody" => "{\"data\":{\"site_url\":\"{$basic}/$(key)\",\"file_url\":\"$(key)\"}, \"code\": \"SUCCESS\"}",
+                    "returnBody" => "{\"data\":{\"site_url\":\"{$basic}/$(key)\",\"file_url\":\"$(key)\"},\"code\":\"SUCCESS\"}",
                 ])));
                 $param['token'] = "{$access}:" . str_replace(['+', '/'], ['-', '_'], base64_encode(hash_hmac('sha1', $data, $secret, true))) . ":{$data}";
                 break;
             case 'oss':
                 $param['OSSAccessKeyId'] = sysconf('storage_oss_keyid');
-                $param['policy'] = base64_encode(json_encode([
-                    'conditions' => [['content-length-range', 0, 1048576000]], 'expiration' => gmdate("Y-m-d\TH:i:s\Z", time() + 3600),
-                ]));
+                $param['policy'] = base64_encode(json_encode(['conditions' => [['content-length-range', 0, 1048576000]], 'expiration' => gmdate("Y-m-d\TH:i:s\Z", time() + 3600)]));
                 $param['signature'] = base64_encode(hash_hmac('sha1', $param['policy'], sysconf('storage_oss_secret'), true));
                 break;
         }

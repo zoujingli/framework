@@ -25,10 +25,10 @@
             <th class='list-table-sort-td'>
                 <button type="submit" class="layui-btn layui-btn-xs">排 序</button>
             </th>
-            <th class='text-left'>权限名称</th>
-            <th class='text-left'>权限描述</th>
-            <th class='text-left'>创建时间</th>
-            <th class='text-center'>权限状态</th>
+            <th class='text-left'>名称</th>
+            <th class='text-left'>描述</th>
+            <th class='text-left'>时间</th>
+            <th></th>
             <th></th>
         </tr>
         </thead>
@@ -45,7 +45,11 @@
             <td class='text-left'>{$vo.desc|default="<span class='color-desc'>没有写描述哦！</span>"}</td>
             <td class="text-left nowrap">{$vo.create_at|format_datetime}</td>
             <td class='text-center'>
-                {eq name='vo.status' value='0'}<span class="layui-badge">已禁用</span>{else}<span class="layui-badge layui-bg-green">使用中</span>{/eq}
+                {eq name='vo.status' value='0'}
+                <span class="layui-badge">已禁用</span>
+                {else}
+                <span class="layui-badge layui-bg-green">使用中</span>
+                {/eq}
             </td>
             <td class='text-center nowrap'>
 
