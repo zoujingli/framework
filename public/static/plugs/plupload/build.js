@@ -5,7 +5,9 @@ define(['plupload'], function (plupload) {
         let loader = new plupload.Uploader({
             multi_selection: false,
             multipart_params: {
-                safe: $ele.attr('data-safe') || ''
+                safe: $ele.attr('data-safe') || '',
+                name: $ele.attr('data-name') || 'file',
+                uptype: $ele.attr('data-uptype') || 'local',
             },
             browse_button: $ele.get(0),
             url: '?s=admin/plugs/plupload',

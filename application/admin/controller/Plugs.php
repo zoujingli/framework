@@ -14,8 +14,8 @@
 
 namespace app\admin\controller;
 
-use library\File;
 use library\Controller;
+use library\File;
 
 /**
  * 后台插件管理
@@ -41,7 +41,9 @@ class Plugs extends Controller
         $this->mimes = File::mine($this->types);
         if (in_array($this->request->get('uptype'), ['local', 'qiniu', 'oss'])) {
             $this->uptype = $this->request->get('uptype');
-        } else $this->uptype = sysconf('storage_type');
+        } else {
+            $this->uptype = sysconf('storage_type');
+        }
         return $this->fetch();
     }
 
@@ -63,17 +65,19 @@ class Plugs extends Controller
             return json(['code' => 'ERROR', 'msg' => '文件上传类型受限']);
         }
         // 安全模式
-        $isSafe = boolval($this->request->post('safe', ''));
-        // 文件本身处理
+        $safe = boolval($this->request->post('safe', ''));
+        // 文件处理
         $ext = strtolower(pathinfo($file->getInfo('name'), 4));
-        $name = join('/', str_split($this->request->post('md5'), 16)) . '.' . (empty($ext) ? 'tmp' : $ext);
-        // 文件上传Token验证
+        $name = File::name($file->getPathname(), $ext, '', 'md5_file');
+        // Token验证
         if ($this->request->post('token') !== md5($name . session_id())) {
             return json(['code' => 'ERROR', 'msg' => '文件上传验证失败']);
         }
-        $path = pathinfo(File::instance('local')->path($name, $isSafe));
-        if ($file->move($path['dirname'], $path['basename'], true) && is_array($info = File::instance('local')->info($name, $isSafe)) && isset($info['url'])) {
-            return json(['data' => ['site_url' => $isSafe ? $name : $info['url']], 'code' => 'SUCCESS', 'msg' => '文件上传成功']);
+        $path = pathinfo(File::instance('local')->path($name, $safe));
+        if ($file->move($path['dirname'], $path['basename'], true)) {
+            if (is_array($info = File::instance('local')->info($name, $safe)) && isset($info['url'])) {
+                return json(['data' => ['site_url' => $safe ? $name : $info['url']], 'code' => 'SUCCESS', 'msg' => '文件上传成功']);
+            }
         }
         return json(['code' => 'ERROR', 'msg' => '文件上传失败']);
     }
@@ -87,20 +91,28 @@ class Plugs extends Controller
     public function plupload()
     {
         try {
-            $file = $this->request->file($this->request->get('name', 'file'));
+            $file = $this->request->file($this->request->post('name', 'file'));
         } catch (\Exception $e) {
             return json(['code' => 'ERROR', 'msg' => lang($e->getMessage())]);
         }
+        // 文件接收
         empty($file) && $this->error('文件上传异常，文件可能过大或未上传');
         if (!$file->checkExt(strtolower(sysconf('storage_local_exts')))) {
             return json(['uploaded' => false, 'error' => ['message' => '文件上传类型受限']]);
         }
-        $isSafe = boolval($this->request->post('safe', ''));
+        // 上传类型
+        $this->uptype = sysconf('storage_type');
+        if (in_array($this->request->post('uptype'), ['local', 'qiniu', 'oss'])) {
+            $this->uptype = $this->request->post('uptype');
+        }
+        // 安全模式
+        $safe = boolval($this->request->post('safe', ''));
+        // 文件处理
         $ext = strtolower(pathinfo($file->getInfo('name'), 4));
-        $name = join('/', str_split(md5_file($file->getPathname()), 16)) . "." . (empty($ext) ? 'tmp' : $ext);
-        $path = pathinfo(File::instance('local')->path($name, $isSafe));
-        if ($file->move($path['dirname'], $path['basename'], true) && is_array($info = File::instance('local')->info($name, $isSafe)) && isset($info['url'])) {
-            return json(['uploaded' => true, 'filename' => $name, 'url' => $isSafe ? $name : $info['url']]);
+        $name = File::name($file->getPathname(), $ext, '', 'md5_file');
+        $info = File::instance($this->uptype)->save($name, file_get_contents($file->getRealPath()));
+        if (is_array($info) && isset($info['url'])) {
+            return json(['uploaded' => true, 'filename' => $name, 'url' => $safe ? $name : $info['url']]);
         }
         return json(['uploaded' => false, 'error' => ['message' => '文件处理失败，请稍候再试！']]);
     }
@@ -113,15 +125,15 @@ class Plugs extends Controller
     public function upstate()
     {
         $post = $this->request->post();
+        $safe = boolval($this->request->post('safe', ''));
         $ext = strtolower(pathinfo($post['filename'], 4));
-        $isSafe = boolval($this->request->post('safe', ''));
-        $name = join('/', str_split($post['md5'], 16)) . '.' . (empty($ext) ? 'tmp' : $ext);
+        $name = File::name($post['md5'], $ext, '', 'strtolower');
         // 检查文件是否已上传
         if (($site_url = File::url($name))) {
-            $this->success('文件已存在可秒传！', ['site_url' => $isSafe ? $name : $site_url], 'IS_FOUND');
+            $this->success('文件已存在可秒传！', ['site_url' => $safe ? $name : $site_url], 'IS_FOUND');
         }
         // 需要上传文件，生成上传配置参数
-        $param = ['uptype' => $post['uptype'], 'file_url' => $name, 'server' => File::upload(), 'safe' => $isSafe];
+        $param = ['uptype' => $post['uptype'], 'file_url' => $name, 'server' => File::upload(), 'safe' => $safe];
         switch (strtolower($post['uptype'])) {
             case 'local':
                 $param['token'] = md5($name . session_id());
