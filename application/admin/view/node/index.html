@@ -6,18 +6,30 @@
 <!--{/if}-->
 {/block}
 
-{block name="content"}
-
+{block name='style'}
 <style>
-    .layui-table tr:last-child td{border:none}
-    .layui-table label{margin-top:0;cursor:pointer}
-    .layui-table .title-input{width:auto;height:28px;line-height:28px}
-</style>
+    .layui-table tr:last-child td {
+        border: none
+    }
 
+    .layui-table label {
+        margin-top: 0;
+        cursor: pointer
+    }
+
+    .layui-table .title-input {
+        width: auto;
+        height: 28px;
+        line-height: 28px
+    }
+</style>
+{/block}
+
+{block name="content"}
 <div class="layui-tab layui-tab-card layui-box">
     <ul class="layui-tab-title">
         <!--{foreach $groups as $key=>$group}-->
-        <li>{$group.node.title|default='<span class="color-desc">未配置名称</span>'|raw}（{$key}）</li>
+        <li data-type='{$key}' data-open="{:url('index')}?type={$key}">{$group.node.title|default='<span class="color-desc">未配置名称</span>'|raw}（{$key}）</li>
         <!--{/foreach}-->
     </ul>
     <div class="layui-tab-content">
@@ -90,15 +102,19 @@
 <!--{if auth("admin/node/save")}-->
 <script>
     $(function () {
-        $('.layui-tab ul.layui-tab-title li:first').trigger('click');
+
+        let $tabType = $('.layui-tab ul.layui-tab-title li[data-type="{$Think.get.type}"]');
+        if ($tabType.size() < 1) $tabType = $('.layui-tab ul.layui-tab-title li:first');
+        $tabType.trigger('click');
+
         syncLoginGroup.call(this);
         $('[data-login-group]').on('click', function () {
-            var twoNode = this.getAttribute('data-login-group');
+            let twoNode = this.getAttribute('data-login-group');
             if (!checkRequestStatus(twoNode)) {
                 this.checked = !this.checked;
                 return $.msg.tips('正在处理中, 请稍候...');
             }
-            var checked = !!this.checked;
+            let checked = !!this.checked;
             $('[data-login-filter="' + twoNode + '"]').map(function () {
                 if (!(this.checked = checked)) {
                     $('[data-auth-filter="' + twoNode + '"]').map(function () {
@@ -111,12 +127,12 @@
 
         syncAuthGroup.call(this);
         $('[data-auth-group]').on('click', function () {
-            var twoNode = this.getAttribute('data-auth-group');
+            let twoNode = this.getAttribute('data-auth-group');
             if (!checkRequestStatus(twoNode)) {
                 this.checked = !this.checked;
                 return $.msg.tips('正在处理中, 请稍候...');
             }
-            var checked = !!this.checked;
+            let checked = !!this.checked;
             $('[data-auth-filter="' + twoNode + '"]').map(function () {
                 if ((this.checked = checked)) {
                     $('[data-login-filter="' + twoNode + '"]').map(function () {
@@ -129,12 +145,12 @@
 
         syncMenuGroup.call(this);
         $('[data-menu-group]').on('click', function () {
-            var twoNode = this.getAttribute('data-menu-group');
+            let twoNode = this.getAttribute('data-menu-group');
             if (!checkRequestStatus(twoNode)) {
                 this.checked = !this.checked;
                 return $.msg.tips('正在处理中, 请稍候...');
             }
-            var checked = !!this.checked;
+            let checked = !!this.checked;
             $('[data-menu-filter="' + twoNode + '"]').map(function () {
                 this.checked = checked;
                 update(this);
@@ -152,15 +168,15 @@
 
         // 数据自动更新
         function update(self) {
-            var $item = $(self).parents('tr'), data = {list: []};
+            let $item = $(self).parents('tr'), data = {list: []};
             $item.find('input').map(function () {
-                var value = this.type === 'text' ? this.value : (this.checked ? 1 : 0);
+                let value = this.type === 'text' ? this.value : (this.checked ? 1 : 0);
                 data.list.push({name: this.name, value: value, node: this.getAttribute('data-node')});
             });
             $item.find('.loading-tips').html('<p class="color-green"><i class="fa fa-spinner fa-spin"></i> 更新数据...</p>');
             $.form.load('{:url("save")}', data, 'post', function (ret) {
                 if (ret.code === 0) {
-                    var tips = '<p class="color-red"><i class="fa fa-close"></i> 更新异常</p>';
+                    let tips = '<p class="color-red"><i class="fa fa-close"></i> 更新异常</p>';
                     return $item.find('.loading-tips').html(tips), false;
                 }
                 return $item.find('.loading-tips').html(''), false;
@@ -170,7 +186,7 @@
 
         // 状态网络处理状态
         function checkRequestStatus(twoNode) {
-            var status = true;
+            let status = true;
             $('.loading-tips[data-tips-filter="' + twoNode + '"]').map(function () {
                 $(this).html() && (status = false);
             });
@@ -180,7 +196,7 @@
         // 同步登录分组状态
         function syncLoginGroup() {
             $('[data-login-group]').map(function () {
-                var node = this.getAttribute('data-login-group'), checked = true;
+                let node = this.getAttribute('data-login-group'), checked = true;
                 $('[data-login-filter="' + node + '"]').map(function () {
                     this.checked || (checked = false);
                 });
@@ -191,7 +207,7 @@
         // 同步权限分组状态
         function syncAuthGroup() {
             $('[data-auth-group]').map(function () {
-                var node = this.getAttribute('data-auth-group'), checked = true;
+                let node = this.getAttribute('data-auth-group'), checked = true;
                 $('[data-auth-filter="' + node + '"]').map(function () {
                     this.checked || (checked = false);
                 });
@@ -202,7 +218,7 @@
         // 同步菜单分组状态
         function syncMenuGroup() {
             $('[data-menu-group]').map(function () {
-                var node = this.getAttribute('data-menu-group'), checked = true;
+                let node = this.getAttribute('data-menu-group'), checked = true;
                 $('[data-menu-filter="' + node + '"]').map(function () {
                     this.checked || (checked = false);
                 });
