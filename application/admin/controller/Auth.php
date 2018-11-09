@@ -38,7 +38,8 @@ class Auth extends Controller
     public function index()
     {
         $this->title = '系统权限管理';
-        return $this->_page($this->table);
+        $query = $this->_query($this->table)->like('title,desc')->dateBetween('create_at');
+        return $this->_page($query->db()->order('sort asc,id desc'));
     }
 
     /**
