@@ -57,7 +57,7 @@
                             <!--{/notempty}-->
                             加入登录控制
                         </label>
-                        <span class="color-desc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─&nbsp;</span>
+                        <span class="color-desc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─&nbsp;</span>
                         <label class="notselect margin-right-15 think-checkbox">
                             <!--{notempty name='vo.is_auth'}-->
                             <input data-auth-filter="{$vo.pnode}" name='is_auth' data-node="{$vo.node}" checked='checked' class="check-box auth_{$key}" type='checkbox' onclick="this.checked && ($('.login_{$key}')[0].checked = !!this.checked)" value='1'>
@@ -66,7 +66,7 @@
                             <!--{/notempty}-->
                             加入权限控制
                         </label>
-                        <span class="color-desc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─&nbsp;</span>
+                        <span class="color-desc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─&nbsp;</span>
                         <label class="notselect think-checkbox">
                             <!--{notempty name='vo.is_menu'}-->
                             <input data-menu-filter="{$vo.pnode}" name='is_menu' data-node="{$vo.node}" checked='checked' class='check-box menu_{$key}' type='checkbox' value='1'>
