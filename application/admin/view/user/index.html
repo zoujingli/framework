@@ -3,7 +3,7 @@
 {block name="button"}
 
 <!--{if auth("admin/user/add")}-->
-<button data-modal='{:url("add")}' data-title="添加用户" class='layui-btn layui-btn-sm layui-btn-primary'>添加用户</button>
+<button data-modal='{:url("add")}' data-title="添加用户" class='layui-btn layui-btn-sm layui-btn-primary' xmlns="http://www.w3.org/1999/html">添加用户</button>
 <!--{/if}-->
 
 <!--{if auth("admin/user/del")}-->
@@ -39,6 +39,22 @@
             </div>
         </div>
 
+
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label">使用状态</label>
+            <div class="layui-input-inline">
+                <select class="layui-select" name="status">
+                    {foreach [''=>'-- 全部 --','0'=>'已禁用的账号','1'=>'使用中的账号'] as $k=>$v}
+                    {eq name='Think.get.status' value='$k.""'}
+                    <option selected value="{$k}">{$v}</option>
+                    {else}
+                    <option value="{$k}">{$v}</option>
+                    {/eq}
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+
         <div class="layui-form-item layui-inline">
             <label class="layui-form-label">登录时间</label>
             <div class="layui-input-inline">
@@ -54,6 +70,7 @@
 </fieldset>
 
 <script>
+    window.form.render();
     window.laydate.render({range: true, elem: '[name="login_at"]'});
 </script>
 <!-- 表单搜索 结束 -->
