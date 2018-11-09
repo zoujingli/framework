@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitc145b7c90b01799a7cc6627df52d2385
+class ComposerStaticInitd3e77c2e93daa007d1a04c04c3967fc3
 {
     public static $files = array (
         '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
@@ -311,7 +311,6 @@ class ComposerStaticInitc145b7c90b01799a7cc6627df52d2385
         'library\\tools\\Http' => __DIR__ . '/..' . '/zoujingli/think-library/library/tools/Http.php',
         'library\\tools\\Node' => __DIR__ . '/..' . '/zoujingli/think-library/library/tools/Node.php',
         'library\\tools\\Options' => __DIR__ . '/..' . '/zoujingli/think-library/library/tools/Options.php',
-        'library\\traits\\Jump' => __DIR__ . '/..' . '/zoujingli/think-library/library/traits/Jump.php',
         'think\\composer\\Plugin' => __DIR__ . '/..' . '/topthink/think-installer/src/Plugin.php',
         'think\\composer\\ThinkExtend' => __DIR__ . '/..' . '/topthink/think-installer/src/ThinkExtend.php',
         'think\\composer\\ThinkFramework' => __DIR__ . '/..' . '/topthink/think-installer/src/ThinkFramework.php',
@@ -321,9 +320,9 @@ class ComposerStaticInitc145b7c90b01799a7cc6627df52d2385
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitc145b7c90b01799a7cc6627df52d2385::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitc145b7c90b01799a7cc6627df52d2385::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitc145b7c90b01799a7cc6627df52d2385::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitd3e77c2e93daa007d1a04c04c3967fc3::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitd3e77c2e93daa007d1a04c04c3967fc3::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitd3e77c2e93daa007d1a04c04c3967fc3::$classMap;
 
         }, null, ClassLoader::class);
     }

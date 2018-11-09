@@ -15,8 +15,8 @@
 namespace library;
 
 use library\tools\Cors;
-use library\traits\Jump;
 use think\Exception;
+use think\exception\HttpResponseException;
 
 /**
  * 标准控制器基类
@@ -37,8 +37,6 @@ use think\Exception;
 class Controller extends \stdClass
 {
 
-    use Jump;
-
     /**
      * 当前请求对象
      * @var \think\Request
@@ -49,7 +47,7 @@ class Controller extends \stdClass
      * 当前数据对象
      * @var array
      */
-    protected $data = [];
+    protected $_data = [];
 
     /**
      * Controller constructor.
@@ -87,18 +85,17 @@ class Controller extends \stdClass
      */
     public function __set($name, $value)
     {
-        $this->data[$name] = $value;
-        $this->assign($name, $value);
+        $this->_data[$name] = $value;
     }
 
     /**
      * 获取赋值数据
      * @param string $name
-     * @return mixed|null
+     * @return mixed
      */
     public function __get($name)
     {
-        return isset($this->data[$name]) ? $this->data[$name] : null;
+        return isset($this->_data[$name]) ? $this->_data[$name] : null;
     }
 
     /**
@@ -111,12 +108,70 @@ class Controller extends \stdClass
     public function _callback($name, &$one, &$two = [])
     {
         $action = $this->request->action();
-        foreach ([$name, "_{$action}{$name}"] as $method) {
-            if (method_exists($this, $method) && false === $this->$method($one, $two)) {
-                return false;
-            }
+        $methods = [$name, "_{$action}{$name}"];
+        foreach ($methods as $method) if (method_exists($this, $method)) {
+            if (false === $this->$method($one, $two)) return false;
         }
         return true;
+    }
+
+    /**
+     * 返回成功的操作
+     * @param mixed $info 消息内容
+     * @param array $data 返回数据
+     * @param integer $code 返回代码
+     */
+    protected function success($info, $data = [], $code = 1)
+    {
+        $result = ['code' => $code, 'info' => $info, 'data' => $data];
+        throw new HttpResponseException(json($result, 200, Cors::getRequestHeader()));
+    }
+
+    /**
+     * 返回失败的请求
+     * @param mixed $info 消息内容
+     * @param array $data 返回数据
+     * @param integer $code 返回代码
+     */
+    protected function error($info, $data = [], $code = 0)
+    {
+        $result = ['code' => $code, 'info' => $info, 'data' => $data];
+        throw new HttpResponseException(json($result, 200, Cors::getRequestHeader()));
+    }
+
+    /**
+     * URL重定向
+     * @param string $url 重定向跳转链接
+     * @param array $params 重定向链接参数
+     * @param integer $code 重定向跳转代码
+     */
+    protected function redirect($url, $params = [], $code = 301)
+    {
+        throw new HttpResponseException(redirect($url, $params, $code));
+    }
+
+    /**
+     * 返回视图内容
+     * @param string $tpl 模板名称
+     * @param array $vars 模板变量
+     * @param array $config 引擎配置
+     * @return mixed
+     */
+    protected function fetch($tpl = '', $vars = [], $config = [])
+    {
+        empty($this->_data) || $this->assign($this->_data);
+        return app('view')->fetch($tpl, $vars, $config);
+    }
+
+    /**
+     * 模板变量赋值
+     * @access protected
+     * @param  mixed $name 要显示的模板变量
+     * @param  mixed $value 变量的值
+     */
+    protected function assign($name, $value = '')
+    {
+        app('view')->assign($name, $value);
     }
 
 }
