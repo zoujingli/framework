@@ -25,7 +25,7 @@ CKEDITOR.plugins.add("uimage", {
                 let field = '_editor_upload_' + Math.floor(Math.random() * 100000);
                 let url = window.ROOT_URL + '?s=admin/plugs/upfile.html&mode=one&type=png,jpg,gif,jpeg&field=' + field;
                 $('<input type="hidden">').attr('name', field).appendTo(editor.element.$).on('change', function () {
-                    let element = CKEDITOR.dom.element.createFromHtml('<img src="' + this.value + '" border="0" title="image" />');
+                    let element = CKEDITOR.dom.element.createFromHtml('<img style="max-width:100%" src="' + this.value + '" border="0" title="image" />');
                     editor.insertElement(element), $(this).remove();
                 });
                 $.form.iframe(url, '插入图片');
