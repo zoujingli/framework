@@ -127,7 +127,7 @@ fieldset{border:1px solid #e6e6e6;margin:0;padding:10px 20px 5px 20px}
 
 /* 分页 */
 .pagination-container{line-height:40px}
-.pagination-container>span{color:#666;font-size:9pt}
+.pagination-container>span{color:#666;font-size:12px}
 .pagination-container>ul{float:right;display:inline-block;margin:0;padding:0}
 .pagination-container>ul>li{z-index:1;display:inline-block}
 .pagination-container>ul>li>a,.pagination-container>ul>li>span{display:inline-block;margin-left:-1px;width:33px;height:30px;border:1px solid #dcdcdc;color:#333;text-align:center;line-height:28px}
@@ -145,7 +145,7 @@ fieldset{border:1px solid #e6e6e6;margin:0;padding:10px 20px 5px 20px}
 
 /** Layui样式调整 */
 .layui-input,.layui-select{line-height:38px}
-.layui-table td,.layui-table th{font-size:9pt}
+.layui-table td,.layui-table th{font-size:12px}
 .layui-table td .text-explode{margin:0 4px!important;color:#ccc!important}
 .layui-table td .text-explode:first-child{display:none;opacity:0}
 .layui-table .list-table-image{width:22px;cursor:pointer}
