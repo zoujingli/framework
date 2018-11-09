@@ -28,9 +28,11 @@
 {block name="content"}
 <div class="layui-tab layui-tab-card layui-box">
     <ul class="layui-tab-title">
-        <!--{foreach $groups as $key=>$group}-->
-        <li data-type='{$key}' data-open="{:url('index')}?type={$key}">{$group.node.title|default='<span class="color-desc">未配置名称</span>'|raw}（{$key}）</li>
-        <!--{/foreach}-->
+        {foreach $groups as $key=>$group}
+        <li data-type='{$key}' data-open="{:url('index')}?type={$key}">
+            {$group.node.title|default='<span class="color-desc">未配置名称</span>'|raw}（{$key}）
+        </li>
+        {/foreach}
     </ul>
     <div class="layui-tab-content">
         {foreach $groups as $key=>$group}
