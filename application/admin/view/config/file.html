@@ -4,10 +4,8 @@
 <div class="layui-tab layui-tab-card">
     <ul class="layui-tab-title">
         <!--{foreach ['local'=>'本地服务器存储','oss'=>'阿里云OSS存储','qiniu'=>'七牛云存储'] as $k => $v}-->
-        <li data-storagetype="{$k}" class="padding-0">
-            <label class="margin-0 padding-left-15 padding-right-15 inline-block pointer" style="height:40px">
-                <span class="think-radio inline-block"><input lay-ignore data-auto-none name="storage_type" value="{$k}" type="radio">{$v}</span>
-            </label>
+        <li data-storagetype="{$k}">
+            {$v}
         </li>
         <!--{/foreach}-->
     </ul>
@@ -26,7 +24,7 @@
         let value = '{:sysconf("storage_type")}';
         let $active = $("[data-storagetype='" + value + "']");
         if ($active.size() < 1) $active = $("[data-storagetype]:first");
-        $active.find('input').trigger('click')
+        $active.trigger('click')
     });
 </script>
 {/block}
