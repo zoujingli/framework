@@ -96,6 +96,13 @@ class Fans
             if (in_array($result['next_openid'], $result['data']['openid'])) break;
             else $next = $result['next_openid'];
         }
+        // 同步粉丝标签列表
+        $wechat = \We::WeChatTags(Wechat::config());
+        if (is_array($list = $wechat->getTags()) && !empty($list['tags'])) {
+            foreach ($list['tags'] as &$tag) $tag['appid'] = $appid;
+            Db::name('WechatFans')->whereRaw('1=1')->delete();
+            Db::name('WechatFansTags')->insertAll($list['tags']);
+        }
         return true;
     }
 
