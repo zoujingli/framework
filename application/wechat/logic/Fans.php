@@ -26,12 +26,13 @@ class Fans
 
     /**
      * 增加或更新粉丝信息
-     * @param array $user
+     * @param array $user 粉丝信息
+     * @param string $appid 公众号APPID
      * @return boolean
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
-    public static function set(array $user)
+    public static function set(array $user, $appid = '')
     {
         if (!empty($user['subscribe_time'])) {
             $user['subscribe_at'] = date('Y-m-d H:i:s', $user['subscribe_time']);
@@ -42,6 +43,7 @@ class Fans
         foreach (['country', 'province', 'city', 'nickname', 'remark'] as $field) {
             isset($user[$field]) && $user[$field] = emoji_encode($user[$field]);
         }
+        if ($appid !== '') $user['appid'] = $appid;
         unset($user['privilege'], $user['groupid']);
         return data_save('WechatFans', $user, 'openid');
     }
@@ -61,6 +63,43 @@ class Fans
             isset($user[$k]) && $user[$k] = emoji_decode($user[$k]);
         }
         return $user;
+    }
+
+    /**
+     * 同步粉丝列表成功
+     * @return boolean
+     * @throws \WeChat\Exceptions\InvalidResponseException
+     * @throws \WeChat\Exceptions\LocalCacheException
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     */
+    public static function sync()
+    {
+        $appid = Wechat::getAppid();
+        $wechat = \We::WeChatUser(Wechat::config());
+        $next = ''; // 获取远程粉丝
+        while (true) if (is_array($result = $wechat->getUserList($next)) && !empty($result['data']['openid'])) {
+            foreach (array_chunk($result['data']['openid'], 100) as $chunk) {
+                if (is_array($list = $wechat->getBatchUserInfo($chunk)) && !empty($list['user_info_list'])) {
+                    foreach ($list['user_info_list'] as $user) {
+                        $user['is_black'] = '0';
+                        self::set($user, $appid);
+                    }
+                }
+            }
+            if (in_array($result['next_openid'], $result['data']['openid'])) break;
+            else $next = $result['next_openid'];
+        }
+        $next = ''; // 同步粉丝黑名单
+        while (true) if (is_array($result = $wechat->getBlackList($next)) && !empty($result['data']['openid'])) {
+            foreach (array_chunk($result['data']['openid'], 100) as $chunk) {
+                $where = [['is_black', 'eq', '0'], ['openid', 'in', $chunk]];
+                Db::name('WechatFans')->failException(true)->where($where)->update(['is_black' => '1']);
+            }
+            if (in_array($result['next_openid'], $result['data']['openid'])) break;
+            else $next = $result['next_openid'];
+        }
+        return true;
     }
 
 }
