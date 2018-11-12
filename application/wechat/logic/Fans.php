@@ -40,8 +40,8 @@ class Fans
         if (isset($user['tagid_list']) && is_array($user['tagid_list'])) {
             $user['tagid_list'] = join(',', $user['tagid_list']);
         }
-        foreach (['country', 'province', 'city', 'nickname', 'remark'] as $field) {
-            isset($user[$field]) && $user[$field] = emoji_encode($user[$field]);
+        foreach (['country', 'province', 'city', 'nickname', 'remark'] as $k) {
+            isset($user[$k]) && $user[$k] = emoji_encode($user[$k]);
         }
         if ($appid !== '') $user['appid'] = $appid;
         unset($user['privilege'], $user['groupid']);
