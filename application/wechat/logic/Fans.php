@@ -81,10 +81,7 @@ class Fans
         while (true) if (is_array($result = $wechat->getUserList($next)) && !empty($result['data']['openid'])) {
             foreach (array_chunk($result['data']['openid'], 100) as $chunk) {
                 if (is_array($list = $wechat->getBatchUserInfo($chunk)) && !empty($list['user_info_list'])) {
-                    foreach ($list['user_info_list'] as $user) {
-                        $user['is_black'] = '0';
-                        self::set($user, $appid);
-                    }
+                    foreach ($list['user_info_list'] as $user) self::set($user, $appid);
                 }
             }
             if (in_array($result['next_openid'], $result['data']['openid'])) break;
