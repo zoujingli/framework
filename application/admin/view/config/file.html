@@ -4,9 +4,7 @@
 <div class="layui-tab layui-tab-card">
     <ul class="layui-tab-title">
         <!--{foreach ['local'=>'本地服务器存储','oss'=>'阿里云OSS存储','qiniu'=>'七牛云存储'] as $k => $v}-->
-        <li data-storagetype="{$k}">
-            {$v}
-        </li>
+        <li data-storagetype="{$k}">{$v}</li>
         <!--{/foreach}-->
     </ul>
     <div class="layui-tab-content">
@@ -22,9 +20,8 @@
     $(function () {
         window.form.render();
         let value = '{:sysconf("storage_type")}';
-        let $active = $("[data-storagetype='" + value + "']");
-        if ($active.size() < 1) $active = $("[data-storagetype]:first");
-        $active.trigger('click')
+        let $active = $("[data-storagetype='" + value + "']").trigger('click');
+        if ($active.size() < 1) $("[data-storagetype]:first").trigger('click');
     });
 </script>
 {/block}
