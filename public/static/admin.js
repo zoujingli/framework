@@ -288,7 +288,7 @@ $(function () {
     /*! 注册对象到Jq */
     $.vali = function (form, callback, options) {
         return (new function () {
-            let self = this;
+            let that = this;
             // 表单元素
             this.tags = 'input,textarea,select';
             // 检测元素事件
@@ -315,44 +315,36 @@ $(function () {
             };
             // 正则验证表单元素
             this.isRegex = function (ele, regex, params) {
-                let inputValue = ele.value, dealValue = this.trim(inputValue);
+                let inputValue = $(ele).val();
+                let dealValue = this.trim(inputValue);
                 regex = regex || ele.getAttribute('pattern');
                 if (dealValue === "" || !regex) return true;
-                if (dealValue !== inputValue) (ele.tagName.toLowerCase() !== "textarea") ? (ele.value = dealValue) : (ele.innerHTML = dealValue);
                 return new RegExp(regex, params || 'i').test(dealValue);
             };
             // 检侧所的表单元素
-            this.isAllpass = function (elements, options) {
-                if (!elements) return true;
-                let allpass = true, self = this, params = options || {};
-                if (elements.size && elements.size() === 1 && elements.get(0).tagName.toLowerCase() === "form") elements = $(elements).find(self.tags);
-                else if (elements.tagName && elements.tagName.toLowerCase() === "form") elements = $(elements).find(self.tags);
-                elements.each(function () {
-                    if (self.checkInput(this, params) === false) return $(this).focus(), (allpass = false);
+            this.checkAllInput = function () {
+                let $eles = $(form).find(this.tags), isPass = true;
+                $eles.each(function () {
+                    if (that.checkInput(this) === false) return $(this).focus(), isPass = false;
                 });
-                return allpass;
-            };
-            // 验证标志
-            this.remind = function (input) {
-                return this.isVisible(input) ? this.showError(input, input.getAttribute('title') || input.getAttribute('placeholder') || '输入错误') : false;
+                return isPass;
             };
             // 检测表单单元
             this.checkInput = function (input) {
-                let type = (input.getAttribute("type") + "").replace(/\W+$/, "").toLowerCase();
-                let tag = input.tagName.toLowerCase(), isRequired = this.hasProp(input, "required");
-                if (this.hasProp(input, 'data-auto-none') || input.disabled || type === 'submit' || type === 'reset' || type === 'file' || type === 'image' || !this.isVisible(input)) return;
-                let allPass = true;
-                if (type === "radio" && isRequired) {
-                    let radioPass = false, eleRadios = input.name ? $("input[type='radio'][name='" + input.name + "']") : $(input);
-                    eleRadios.each(function () {
-                        (radioPass === false && $(this).is("[checked]")) && (radioPass = true);
-                    });
-                    if (radioPass === false) allPass = this.remind(eleRadios.get(0), type, tag); else this.hideError(input);
-                } else if (type === "checkbox" && isRequired && !$(input).is("[checked]")) allPass = this.remind(input, type, tag);
-                else if (tag === "select" && isRequired && !input.value) allPass = this.remind(input, type, tag);
-                else if ((isRequired && this.isEmpty(input)) || !(allPass = this.isRegex(input))) (allPass ? this.remind(input, type, "empty") : this.remind(input, type, tag)), allPass = false;
-                else this.hideError(input);
-                return allPass;
+                let tag = input.tagName.toLowerCase();
+                let need = this.hasProp(input, "required");
+                let type = (input.getAttribute("type") || '').replace(/\W+/, "").toLowerCase();
+                if (this.hasProp(input, 'data-auto-none')) return true;
+                for (let _tag of ['select']) if (tag === _tag) return true;
+                for (let _type of ['radio', 'checkbox', 'submit', 'reset', 'image', 'file', 'hidden']) if (type === _type) return true;
+                if (need && this.isEmpty(input)) return this.remind(input);
+                return this.isRegex(input) ? (this.hideError(input), true) : this.remind(input);
+            };
+            // 验证标志
+            this.remind = function (input) {
+                if (!this.isVisible(input)) return true;
+                this.showError(input, input.getAttribute('title') || input.getAttribute('placeholder') || '输入错误');
+                return false;
             };
             // 错误消息显示
             this.showError = function (ele, content) {
@@ -371,20 +363,20 @@ $(function () {
                 $(ele).data('input-info') || $(ele).data('input-info', $html.insertAfter(ele));
             };
             // 表单验证入口
-            this.check = function (form, callback, options) {
-                let params = $.extend({}, options || {});
+            this.check = function (form, callback) {
                 $(form).attr("novalidate", "novalidate");
-                $(form).find(self.tags).map(function () {
-                    for (let i in self.checkEvent) if (self.checkEvent[i] === true) $(this).off(i, func).on(i, func);
-
-                    function func() {
-                        self.checkInput(this);
+                $(form).find(that.tags).map(function () {
+                    this.bindEventMethod = function () {
+                        that.checkInput(this);
+                    };
+                    for (let e in that.checkEvent) if (that.checkEvent[e] === true) {
+                        $(this).off(e, this.bindEventMethod).on(e, this.bindEventMethod);
                     }
                 });
                 $(form).bind("submit", function (event) {
-                    if (self.isAllpass($(this).find(self.tags), params) && typeof callback === 'function') {
+                    if (that.checkAllInput() && typeof callback === 'function') {
                         if (typeof CKEDITOR === 'object' && typeof CKEDITOR.instances === 'object')
-                            for (let instance in CKEDITOR.instances) CKEDITOR.instances[instance].updateElement();
+                            for (let i in CKEDITOR.instances) CKEDITOR.instances[i].updateElement();
                         callback.call(this, $(form).serialize());
                     }
                     return event.preventDefault(), false;
