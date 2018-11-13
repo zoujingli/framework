@@ -74,7 +74,7 @@
 
                 <label class="layui-form-item relative block">
                     <span class="help-block">原文链接 <span class="color-blue">选填</span>，填写之后在图文左下方会出现此链接</span>
-                    <input ng-model="item.content_source_url" maxlength="200" name='content_source_url' class="layui-input">
+                    <input pattern="^(http:\/\/|^https:\/\/|^\/\/)((\w|=|\?|\.|\/|&|-)+)" placeholder="请输入跳转链接地址" ng-model="item.content_source_url" maxlength="200" name='content_source_url' class="layui-input">
                 </label>
 
                 <div class="layui-form-item text-center">
