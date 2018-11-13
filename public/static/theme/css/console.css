@@ -27,7 +27,7 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 
 /* 页面布局 - 全局 */
 .layui-layout>.layui-side,
-.layui-layout>.layui-body{top:50px;bottom:0}
+.layui-layout>.layui-body{top:50px;bottom:0;overflow:auto;}
 .layui-layout>.layui-body>.layui-card{box-shadow:none}
 .layui-layout>.layui-body>.layui-card>.layui-card-header{height:50px;line-height:50px;border:none;box-shadow:0 2px 3px 0 rgba(0,0,0,.1)}
 
