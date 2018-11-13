@@ -1,0 +1,52 @@
+{extend name='wechat@api/review/main'}
+
+{block name='content'}
+<div class="container">
+    {notempty name='info'}
+    <h2>{$info.title}</h2>
+    <h3>
+        <span style="color:#666">{$info.author}</span>
+        <span style="margin-left:1vw;color:#666">{:date('Y年m月d日',strtotime($info.create_at))}</span>
+    </h3>
+    {if $info.show_cover_pic and $info.local_url}<img src="{$info.local_url}" style="width:100%">{/if}
+    <div class='content'>{$info.content|raw}</div>
+    {else}
+    <div class="info"><h3>404</h3> 访问资源不存在哦！</div>
+    {/notempty}
+</div>
+{/block}
+
+{block name='style'}
+
+
+<style>
+
+    .container {
+        width: 90%;
+        color: #333;
+        display: block;
+        margin: 5vw auto;
+        position: relative;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .container h2 {
+        overflow: hidden;
+        font-size: 4vw;
+        white-space: normal;
+        text-overflow: ellipsis;
+    }
+
+    .container h3 {
+        font-size: 2vw;
+    }
+
+    .container .content {
+        font-size: 2vw;
+    }
+
+
+</style>
+
+{/block}

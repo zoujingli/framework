@@ -1,120 +1,116 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body id="news-box">
-<div class="news-item">
-    <div class='news-tools layui-hide'>
-        <a data-phone-view="{:url('@wechat/api.review/news/'.$news.id)}" href='javascript:void(0)'>预览</a>
-        <a data-open='{:url("edit")}?id={$news.id}' href='javascript:void(0)'>编辑</a>
-        <a data-news-del="{$news.id}" href='javascript:void(0)'>删除</a>
-    </div>
+{extend name='wechat@api/review/main'}
+
+{block name='content'}
+<div class="container">
+    {notempty name='news.articles'}
     {foreach $news.articles as $k => $v}
     {if $k < 1}
-    <div data-tips-image='{$v.local_url}' class='news-articel-item' style='background-image:url("{$v.local_url}")'>
-        {if $v.title}<p>{$v.title}</p>{/if}
-    </div>
+    <a href="{:url('@wechat/api.review/view/'.$v.id)}" style='background-image:url("{$v.local_url}")'>
+        {if $v.title}<span>{$v.title}</span>{/if}
+    </a>
     <div class="hr-line-dashed"></div>
     {else}
-    <div class='news-articel-item other'>
+    <a href="{:url('@wechat/api.review/view/'.$v.id)}" class='other'>
         <span>{$v.title}</span>
-        <div data-tips-image='{$v.local_url}' style='background-image:url("{$v.local_url}");'></div>
-    </div>
+        <span style='background-image:url("{$v.local_url}");'></span>
+    </a>
     <div class="hr-line-dashed"></div>
     {/if}
     {/foreach}
+    {else}
+    <div class="info"><h3>404</h3> 访问资源不存在哦！</div>
+    {/notempty}
 </div>
+{/block}
+
+{block name='style'}
+
+
 <style>
 
-    #news-box {
-        position: relative;
-    }
-
-    #news-box .news-item {
-        top: 0;
-        left: 0;
-        padding: 5px;
-        margin: 10px;
-        width: 300px;
+    .container {
+        width: 90%;
+        display: block;
+        margin: 5vw auto;
         position: relative;
         border: 1px solid #ccc;
-        box-sizing: content-box;
     }
 
-    #news-box .news-item .news-articel-item {
-        width: 100%;
-        height: 150px;
-        overflow: hidden;
+    .container a {
+        height: 50vw;
+        display: block;
+        background: no-repeat center center;
+        background-size: cover;
         position: relative;
-        background-size: 100%;
-        background-position: center center;
     }
 
-    #news-box .news-item .news-articel-item p {
+    .container a span {
+        left: 0;
+        right: 0;
         bottom: 0;
-        width: 100%;
         color: #fff;
-        padding: 5px;
+        padding: 2vw;
+        font-size: 2vw;
         max-height: 5em;
-        font-size: 12px;
-        overflow: hidden;
         position: absolute;
+        margin: 0 -1px 0 -1px;
+        line-height: 1.5em;
+        overflow: hidden;
         text-overflow: ellipsis;
         background: rgba(0, 0, 0, 0.7);
     }
 
-    #news-box .news-item .news-articel-item.other {
-        height: 50px;
-        padding: 5px 0;
+    .container a.other {
+        height: 15vw;
+        display: block;
+        padding: 1vw 2vw;
+        position: relative;
     }
 
-    #news-box .news-item .news-articel-item span {
-        width: 245px;
+    .container a.other span:first-child {
+        color: #333;
+        float: left;
+        width: 60vw;
+        height: 10vw;
         overflow: hidden;
-        line-height: 50px;
-        white-space: nowrap;
-        display: inline-block;
+        max-height: none;
+        position: relative;
+        background: none;
         text-overflow: ellipsis;
     }
 
-    #news-box .news-item .news-articel-item div {
-        width: 50px;
-        height: 50px;
+    .container a.other span:last-child {
+        width: 16vw;
+        height: 10vw;
+        max-height: none;
         float: right;
-        overflow: hidden;
         position: relative;
-        background-size: 100%;
+        background-size: cover;
         background-position: center center;
     }
 
-    #news-box .hr-line-dashed {
+    .info h3 {
+        color: #333;
+        font-size: 5vw;
+    }
+
+    .info {
+        color: #666;
+        padding: 3vw;
+        font-size: 2vw;
+        text-align: center;
+        letter-spacing: 2px;
+        text-shadow: #000 .05em .05em .05em;
+    }
+
+    .hr-line-dashed {
         margin: 6px 0 1px 0
     }
 
-    #news-box .news-item .hr-line-dashed:last-child {
+    .hr-line-dashed:last-child {
         display: none
     }
 
-    #news-box .news-tools {
-        top: 0;
-        z-index: 80;
-        color: #fff;
-        width: 302px;
-        padding: 0 5px;
-        margin-left: -6px;
-        line-height: 38px;
-        text-align: right;
-        position: absolute;
-        background: rgba(0, 0, 0, 0.7);
-    }
-
-    #news-box .news-tools a {
-        color: #fff;
-        margin-left: 10px
-    }
-
 </style>
-</body>
-</html>
+
+{/block}
