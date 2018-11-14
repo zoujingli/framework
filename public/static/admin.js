@@ -224,7 +224,7 @@ $(function () {
             delete params[""];
             uri = this.getUri(uri);
             params.spm = obj && obj.getAttribute('data-menu-node') || this.queryNode(uri);
-            params.spm === '' && delete params.spm;
+            if (params.spm === '' || typeof params.spm !== 'string') delete params.spm;
             let query = '?' + $.param(params);
             return uri + (query === '?' ? '' : query);
         };
