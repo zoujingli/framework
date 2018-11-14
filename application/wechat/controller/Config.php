@@ -33,7 +33,11 @@ class Config extends Controller
     public function options()
     {
         $this->title = '公众号授权绑定';
-        $this->geoip = http_get('https://framework.thinkadmin.top/wechat/api.push/geoip');
+        if (!($this->geoip = cache('mygeoip'))) {
+            $geo = http_get('http://www.ip168.com/json.do?view=myipaddress');
+            $this->geoip = preg_replace(['/\s+/', '/^.*?\[(.*?)\].*?$/'], ['', '$1'], $geo);
+            cache('mygeoip', $this->geoip, 60);
+        }
         if ($this->request->isGet()) return $this->fetch();
         foreach ($this->request->post() as $k => $v) sysconf($k, $v);
         $this->success('公众号参数获取成功！');
