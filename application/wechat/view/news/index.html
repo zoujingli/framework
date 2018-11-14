@@ -49,8 +49,8 @@
     });
 
     require(['jquery.masonry'], function (Masonry) {
-        let news-item = document.querySelector('#news-box');
-        let msnry = new Masonry(news-item, {itemSelector: '.news-item', columnWidth: 0});
+        let item = document.querySelector('#news-box');
+        let msnry = new Masonry(item, {itemSelector: '.news-item', columnWidth: 0});
         msnry.layout();
         $('body').on('click', '[data-news-del]', function () {
             let that = this;
