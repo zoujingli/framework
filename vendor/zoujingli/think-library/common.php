@@ -96,13 +96,31 @@ if (!function_exists('data_save')) {
      * @param array $data 需要保存或更新的数据
      * @param string $key 条件主键限制
      * @param array $where 其它的where条件
-     * @return bool
+     * @return boolean
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
     function data_save($dbQuery, $data, $key = 'id', $where = [])
     {
         return \library\tools\Data::save($dbQuery, $data, $key, $where);
+    }
+}
+
+
+if (!function_exists('data_batch_save')) {
+    /**
+     * 批量更新数据
+     * @param \think\db\Query|string $dbQuery 数据查询对象
+     * @param array $data 需要保存或更新的数据
+     * @param string $key 条件主键限制
+     * @param array $where 其它的where条件
+     * @return boolean
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     */
+    function data_batch_save($dbQuery, $data, $key = 'id', $where = [])
+    {
+        return \library\tools\Data::batchSave($dbQuery, $data, $key, $where);
     }
 }
 

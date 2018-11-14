@@ -45,6 +45,26 @@ class Data
     }
 
     /**
+     * 批量更新数据
+     * @param Query|string $dbQuery 数据查询对象
+     * @param array $data 需要更新的数据(二维数组)
+     * @param string $key 条件主键限制
+     * @param array $where 其它的where条件
+     * @return boolean
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     */
+    public static function batchSave($dbQuery, $data, $key = 'id', $where = [])
+    {
+        list($case, $_data) = [[], []];
+        $db = is_string($dbQuery) ? Db::name($dbQuery) : $dbQuery;
+        foreach ($data as $row) foreach ($row as $k => $v) $case[$k][] = "WHEN '{$row[$key]}' THEN '{$v}'";
+        if (isset($case[$key])) unset($case[$key]);
+        foreach ($case as $k => $v) $_data[$k] = Db::raw("CASE `{$key}` " . join(' ', $v) . ' END');
+        return $db->whereIn($key, array_unique(array_column($data, $key)))->where($where)->update($_data) !== false;
+    }
+
+    /**
      * 一维数据数组生成数据树
      * @param array $list 数据列表
      * @param string $id 父ID Key
@@ -56,13 +76,9 @@ class Data
     {
         list($tree, $map) = [[], []];
         foreach ($list as $item) $map[$item[$id]] = $item;
-        foreach ($list as $item) {
-            if (isset($item[$pid]) && isset($map[$item[$pid]])) {
-                $map[$item[$pid]][$son][] = &$map[$item[$id]];
-            } else {
-                $tree[] = &$map[$item[$id]];
-            }
-        }
+        foreach ($list as $item) if (isset($item[$pid]) && isset($map[$item[$pid]])) {
+            $map[$item[$pid]][$son][] = &$map[$item[$id]];
+        } else $tree[] = &$map[$item[$id]];
         unset($map);
         return $tree;
     }

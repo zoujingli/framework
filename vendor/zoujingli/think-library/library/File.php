@@ -165,7 +165,7 @@ class File
             if (!$force && $file->has($name)) return $file->info($name);
             return $file->save($name, file_get_contents($url));
         } catch (\Exception $e) {
-            \think\facade\Log::error(__METHOD__ . " 文件下载失败 [ {$url} ] {$e->getMessage()}");
+            \think\facade\Log::error(__METHOD__ . " File download failed [ {$url} ] {$e->getMessage()}");
             return ['url' => $url, 'hash' => md5($url), 'key' => $url, 'file' => $url];
         }
     }
