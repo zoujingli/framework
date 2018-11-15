@@ -148,6 +148,7 @@ fieldset{border:1px solid #e6e6e6;margin:0;padding:10px 20px 5px 20px}
 .layui-table td,.layui-table th{font-size:12px}
 .layui-table td .text-explode{margin:0 4px!important;color:#ccc!important}
 .layui-table td .text-explode:first-child{display:none;opacity:0}
+.layui-table td .think-bgimage{display:inline-block;vertical-align:middle;width:16px;height:16px;background:no-repeat center center;background-size:cover;margin-right:5px}
 .layui-table .list-table-image{width:22px;cursor:pointer}
 .layui-table .list-table-sort-td{width:60px!important;text-align:center!important}
 .layui-table .list-table-sort-td button{width:56px;background:#009688}
