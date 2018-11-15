@@ -84,7 +84,8 @@ class News extends Controller
     public function image()
     {
         $this->field = $this->request->get('field', 'local_url');
-        return $this->_page(Db::name('WechatNewsImage'), true, true, false, 24);
+        $db = Db::name('WechatNewsImage')->order('id desc');
+        return $this->_page($db, true, true, false, 24);
     }
 
     /**
