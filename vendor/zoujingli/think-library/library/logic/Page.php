@@ -30,6 +30,12 @@ class Page extends Logic
     protected $total;
 
     /**
+     * 集合每页记录数
+     * @var integer
+     */
+    protected $limit;
+
+    /**
      * 是否启用分页
      * @var boolean
      */
@@ -47,10 +53,12 @@ class Page extends Logic
      * @param boolean $isPage 是否启用分页
      * @param boolean $isDisplay 是否渲染模板
      * @param boolean $total 集合分页记录数
+     * @param integer $limit 集合每页记录数
      */
-    public function __construct($dbQuery, $isPage = true, $isDisplay = true, $total = false)
+    public function __construct($dbQuery, $isPage = true, $isDisplay = true, $total = false, $limit = 0)
     {
         $this->total = $total;
+        $this->limit = $limit;
         $this->isPage = $isPage;
         $this->isDisplay = $isDisplay;
         parent::__construct($dbQuery);
@@ -91,6 +99,7 @@ class Page extends Logic
             // 分页每页显示记录数
             $limit = intval($this->request->get('limit', cookie('page-limit')));
             cookie('page-limit', $limit = $limit >= 10 ? $limit : 20);
+            if ($this->limit > 0) $limit = $this->limit;
             list($rows, $query) = [[], $this->request->get()];
             $page = $this->db->paginate($limit, $this->total, ['query' => $query]);
             foreach ([10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200] as $num) {

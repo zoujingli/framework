@@ -83,9 +83,8 @@ class News extends Controller
      */
     public function image()
     {
-        $_GET['rows'] = 18;
         $this->field = $this->request->get('field', 'local_url');
-        return $this->_page(Db::name('WechatNewsMedia')->where('type', 'image'));
+        return $this->_page(Db::name('WechatNewsImage'), true, true, false, 24);
     }
 
     /**
