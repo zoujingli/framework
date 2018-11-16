@@ -1,7 +1,9 @@
 {extend name='admin@main'}
 
 {block name="button"}
-
+<!--{if auth("wechat/fans/del")}-->
+<button data-load='{:url("sync")}' class='layui-btn layui-btn-sm layui-btn-primary'>同步粉丝</button>
+<!--{/if}-->
 {/block}
 
 {block name="content"}

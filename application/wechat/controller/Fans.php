@@ -51,4 +51,17 @@ class Fans extends Controller
         }
     }
 
+    /**
+     * 同步粉丝列表
+     */
+    public function sync()
+    {
+        try {
+            \app\wechat\logic\Fans::sync();
+        } catch (\Exception $e) {
+            $this->error('同步粉丝列表失败，请稍候再试！' . $e->getMessage());
+        }
+        $this->success('同步粉丝列表成功！');
+    }
+
 }
