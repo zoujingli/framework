@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitdff303c29a9d841a0a7928b60e00ef30
+class ComposerStaticInit7bc64983f8c3df6266846a135a20d779
 {
     public static $files = array (
         '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
@@ -285,7 +285,6 @@ class ComposerStaticInitdff303c29a9d841a0a7928b60e00ef30
         'app\\admin\\controller\\User' => __DIR__ . '/../..' . '/application/admin/controller/User.php',
         'app\\admin\\logic\\Auth' => __DIR__ . '/../..' . '/application/admin/logic/Auth.php',
         'app\\index\\controller\\Index' => __DIR__ . '/../..' . '/application/index/controller/Index.php',
-        'app\\index\\controller\\Test' => __DIR__ . '/../..' . '/application/index/controller/Test.php',
         'app\\store\\controller\\Goods' => __DIR__ . '/../..' . '/application/store/controller/Goods.php',
         'app\\store\\logic\\Goods' => __DIR__ . '/../..' . '/application/store/logic/Goods.php',
         'app\\wechat\\controller\\Config' => __DIR__ . '/../..' . '/application/wechat/controller/Config.php',
@@ -293,6 +292,7 @@ class ComposerStaticInitdff303c29a9d841a0a7928b60e00ef30
         'app\\wechat\\controller\\News' => __DIR__ . '/../..' . '/application/wechat/controller/News.php',
         'app\\wechat\\controller\\api\\Push' => __DIR__ . '/../..' . '/application/wechat/controller/api/Push.php',
         'app\\wechat\\controller\\api\\Review' => __DIR__ . '/../..' . '/application/wechat/controller/api/Review.php',
+        'app\\wechat\\controller\\api\\Sync' => __DIR__ . '/../..' . '/application/wechat/controller/api/Sync.php',
         'app\\wechat\\logic\\Fans' => __DIR__ . '/../..' . '/application/wechat/logic/Fans.php',
         'app\\wechat\\logic\\Media' => __DIR__ . '/../..' . '/application/wechat/logic/Media.php',
         'app\\wechat\\logic\\Wechat' => __DIR__ . '/../..' . '/application/wechat/logic/Wechat.php',
@@ -323,9 +323,9 @@ class ComposerStaticInitdff303c29a9d841a0a7928b60e00ef30
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitdff303c29a9d841a0a7928b60e00ef30::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitdff303c29a9d841a0a7928b60e00ef30::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitdff303c29a9d841a0a7928b60e00ef30::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit7bc64983f8c3df6266846a135a20d779::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit7bc64983f8c3df6266846a135a20d779::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit7bc64983f8c3df6266846a135a20d779::$classMap;
 
         }, null, ClassLoader::class);
     }

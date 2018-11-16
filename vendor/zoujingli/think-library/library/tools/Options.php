@@ -53,8 +53,7 @@ class Options
      */
     public function set($name, $value)
     {
-        if (is_null($name)) $this->data[] = $value;
-        else $this->data[$name] = $value;
+        $this->data[$name] = $value;
     }
 
     /**
@@ -82,8 +81,19 @@ class Options
      */
     public function clear()
     {
-        unset($this->data);
         $this->data = [];
+    }
+
+    /**
+     * 增加合并数据
+     * @param array $data
+     * @param boolean $append
+     * @return array
+     */
+    public function merge($data, $append = false)
+    {
+        $result = array_merge($this->data, $data);
+        return $append ? ($this->data = $result) : $result;
     }
 
 }

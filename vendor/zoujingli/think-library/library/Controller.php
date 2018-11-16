@@ -44,12 +44,6 @@ class Controller extends \stdClass
     protected $request;
 
     /**
-     * 当前数据对象
-     * @var array
-     */
-    protected $_data = [];
-
-    /**
      * Controller constructor.
      */
     public function __construct()
@@ -79,26 +73,6 @@ class Controller extends \stdClass
     }
 
     /**
-     * 模板数据赋值
-     * @param string $name
-     * @param mixed $value
-     */
-    public function __set($name, $value)
-    {
-        $this->_data[$name] = $value;
-    }
-
-    /**
-     * 获取赋值数据
-     * @param string $name
-     * @return mixed
-     */
-    public function __get($name)
-    {
-        return isset($this->_data[$name]) ? $this->_data[$name] : null;
-    }
-
-    /**
      * 数据回调处理机制
      * @param string $name 回调方法名称
      * @param mixed $one 回调引用参数1
@@ -107,8 +81,7 @@ class Controller extends \stdClass
      */
     public function _callback($name, &$one, &$two = [])
     {
-        $action = $this->request->action();
-        $methods = [$name, "_{$action}{$name}"];
+        $methods = [$name, "_{$this->request->action()}{$name}"];
         foreach ($methods as $method) if (method_exists($this, $method)) {
             if (false === $this->$method($one, $two)) return false;
         }
@@ -117,6 +90,7 @@ class Controller extends \stdClass
 
     /**
      * 返回成功的操作
+     * @access protected
      * @param mixed $info 消息内容
      * @param array $data 返回数据
      * @param integer $code 返回代码
@@ -129,6 +103,7 @@ class Controller extends \stdClass
 
     /**
      * 返回失败的请求
+     * @access protected
      * @param mixed $info 消息内容
      * @param array $data 返回数据
      * @param integer $code 返回代码
@@ -141,6 +116,7 @@ class Controller extends \stdClass
 
     /**
      * URL重定向
+     * @access protected
      * @param string $url 重定向跳转链接
      * @param array $params 重定向链接参数
      * @param integer $code 重定向跳转代码
@@ -152,6 +128,7 @@ class Controller extends \stdClass
 
     /**
      * 返回视图内容
+     * @access protected
      * @param string $tpl 模板名称
      * @param array $vars 模板变量
      * @param array $config 引擎配置
@@ -159,8 +136,7 @@ class Controller extends \stdClass
      */
     protected function fetch($tpl = '', $vars = [], $config = [])
     {
-        empty($this->_data) || $this->assign($this->_data);
-        return app('view')->fetch($tpl, $vars, $config);
+        return app('view')->assign((array)$this)->fetch($tpl, $vars, $config);
     }
 
     /**

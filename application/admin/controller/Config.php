@@ -81,7 +81,10 @@ class Config extends Controller
         foreach ($this->request->post() as $k => $v) sysconf($k, $v);
         if ($this->request->post('storage_type') === 'oss') {
             try {
-                File::instance('oss')->setBucket($this->request->post('storage_oss_bucket'));
+                $domain = File::instance('oss')->setBucket($this->request->post('storage_oss_bucket'));
+                if (stripos('.aliyuncs.com', sysconf('storage_oss_domain')) === false) {
+                    sysconf('storage_oss_domain', $domain);
+                }
             } catch (\Exception $e) {
                 $this->error('阿里云OSS存储配置失效，' . $e->getMessage());
             }

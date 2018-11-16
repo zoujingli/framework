@@ -80,9 +80,9 @@ class Node
     public static function scanDir($dir, $data = [], $ext = 'php')
     {
         foreach (scandir($dir) as $_dir) if (strpos($_dir, '.') !== 0) {
-            $tmpPath = realpath($dir . DIRECTORY_SEPARATOR . $_dir);
-            if (is_dir($tmpPath)) $data = array_merge($data, self::scanDir($tmpPath));
-            elseif (pathinfo($tmpPath, 4) === $ext) $data[] = $tmpPath;
+            $path = realpath($dir . DIRECTORY_SEPARATOR . $_dir);
+            if (is_dir($path)) $data = array_merge($data, self::scanDir($path));
+            elseif (pathinfo($path, 4) === $ext) $data[] = $path;
         }
         return $data;
     }

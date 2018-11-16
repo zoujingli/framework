@@ -116,8 +116,6 @@ class Oss extends File
      * @param string $bucket OSS空间名称
      * @return string 返回新创建的域名
      * @throws \OSS\Core\OssException
-     * @throws \think\Exception
-     * @throws \think\exception\PDOException
      */
     public function setBucket($bucket)
     {
@@ -142,12 +140,7 @@ class Oss extends File
         $corsConfig = new CorsConfig();
         $corsConfig->addRule($corsRule);
         $client->putBucketCors($bucket, $corsConfig);
-        $domain = pathinfo($result['oss-request-url'], 2);
-        if (function_exists('sysconf')) {
-            sysconf('storage_oss_bucket', $bucket);
-            sysconf('storage_oss_domain', $domain);
-        }
-        return $domain;
+        return pathinfo($result['oss-request-url'], 2);
     }
 
     /**
