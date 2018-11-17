@@ -15,7 +15,7 @@ window.form = layui.form, window.layer = layui.layer, window.laydate = layui.lay
 
 // 当前资源URL目录
 let baseRoot = (function () {
-    let scripts = document.scripts, src = scripts[scripts.length - 1].src;
+    let src = document.scripts[document.scripts.length - 1].src;
     return src.substring(0, src.lastIndexOf("/") + 1);
 })();
 
@@ -140,8 +140,9 @@ $(function () {
         // 以hash打开网页
         this.href = function (url, obj) {
             if (url !== '#') window.location.href = '#' + $.menu.parseUri(url, obj);
-            else if (obj && obj.getAttribute('data-menu-node'))
+            else if (obj && obj.getAttribute('data-menu-node')) {
                 $('[data-menu-node^="' + obj.getAttribute('data-menu-node') + '-"][data-open!="#"]:first').trigger('click');
+            }
         };
         // 异步加载的数据
         this.load = function (url, data, type, callback, loading, tips, time) {
