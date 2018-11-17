@@ -191,7 +191,6 @@ return array(
     'app\\wechat\\controller\\News' => $baseDir . '/application/wechat/controller/News.php',
     'app\\wechat\\controller\\api\\Push' => $baseDir . '/application/wechat/controller/api/Push.php',
     'app\\wechat\\controller\\api\\Review' => $baseDir . '/application/wechat/controller/api/Review.php',
-    'app\\wechat\\controller\\api\\Sync' => $baseDir . '/application/wechat/controller/api/Sync.php',
     'app\\wechat\\logic\\Fans' => $baseDir . '/application/wechat/logic/Fans.php',
     'app\\wechat\\logic\\Media' => $baseDir . '/application/wechat/logic/Media.php',
     'app\\wechat\\logic\\Wechat' => $baseDir . '/application/wechat/logic/Wechat.php',

@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit7bc64983f8c3df6266846a135a20d779
+class ComposerStaticInit5b63c01a1b2d4ed667921b20a65a307b
 {
     public static $files = array (
         '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
@@ -292,7 +292,6 @@ class ComposerStaticInit7bc64983f8c3df6266846a135a20d779
         'app\\wechat\\controller\\News' => __DIR__ . '/../..' . '/application/wechat/controller/News.php',
         'app\\wechat\\controller\\api\\Push' => __DIR__ . '/../..' . '/application/wechat/controller/api/Push.php',
         'app\\wechat\\controller\\api\\Review' => __DIR__ . '/../..' . '/application/wechat/controller/api/Review.php',
-        'app\\wechat\\controller\\api\\Sync' => __DIR__ . '/../..' . '/application/wechat/controller/api/Sync.php',
         'app\\wechat\\logic\\Fans' => __DIR__ . '/../..' . '/application/wechat/logic/Fans.php',
         'app\\wechat\\logic\\Media' => __DIR__ . '/../..' . '/application/wechat/logic/Media.php',
         'app\\wechat\\logic\\Wechat' => __DIR__ . '/../..' . '/application/wechat/logic/Wechat.php',
@@ -323,9 +322,9 @@ class ComposerStaticInit7bc64983f8c3df6266846a135a20d779
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit7bc64983f8c3df6266846a135a20d779::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit7bc64983f8c3df6266846a135a20d779::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit7bc64983f8c3df6266846a135a20d779::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit5b63c01a1b2d4ed667921b20a65a307b::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit5b63c01a1b2d4ed667921b20a65a307b::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit5b63c01a1b2d4ed667921b20a65a307b::$classMap;
 
         }, null, ClassLoader::class);
     }
