@@ -7,7 +7,7 @@ define(['plupload'], function (plupload) {
             multipart_params: {
                 safe: $ele.attr('data-safe') || '',
                 name: $ele.attr('data-name') || 'file',
-                uptype: $ele.attr('data-uptype') || 'local',
+                uptype: $ele.attr('data-uptype') || '',
             },
             browse_button: $ele.get(0),
             url: '?s=admin/plugs/plupload',

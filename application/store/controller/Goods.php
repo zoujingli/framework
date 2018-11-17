@@ -120,7 +120,7 @@ class Goods extends Controller
         if ($this->request->isGet() && !empty($data['id'])) {
             $fields = 'goods_spec,goods_id,status,price_market market,price_selling selling,number_virtual virtual';
             $defaultValues = Db::name('StoreGoodsList')->where(['goods_id' => $data['id']])->column($fields);
-            $this->assign('defaultValues', json_encode($defaultValues, JSON_UNESCAPED_UNICODE));
+            $this->defaultValues = json_encode($defaultValues, JSON_UNESCAPED_UNICODE);
         }
     }
 
