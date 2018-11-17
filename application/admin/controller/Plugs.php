@@ -159,7 +159,7 @@ class Plugs extends Controller
 
     /**
      * 获取本地文件对象
-     * @return array|mixed|null|\think\File
+     * @return \think\File
      */
     private function getUploadFile()
     {
