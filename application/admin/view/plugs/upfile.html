@@ -160,7 +160,7 @@
                     let data = {id: file.id, md5: md5, uptype: '{$uptype}', filename: file.name, safe: '{$safe}'};
                     $.ajax("{:url('@')}?s=admin/plugs/upstate", {
                         dataType: 'json', method: 'post', data: data, success: function (ret) {
-                            if (ret.code !== 'NOT_FOUND') {
+                            if (parseInt(ret.code) === 1) {
                                 owner.skipFile(file);
                                 uploaded.call(uploader, ret.data, file);
                                 percentages[file.id] = [file.size, 1];
@@ -240,7 +240,7 @@
         /* 处理上传后的结果 */
         uploader.on('uploadAccept', function (fieldata, ret) {
             // Qiniu or Local 上传
-            if (ret.code === 'SUCCESS') return uploaded.call(uploader, ret.data, fieldata.file), true;
+            if (parseInt(ret.code) === 1) return uploaded.call(uploader, ret.data, fieldata.file), true;
             // AliOSS 上传
             if (fieldata.file.site_url) return uploaded.call(uploader, {'site_url': fieldata.file.site_url}, fieldata.file), true;
             // 接收错误消息

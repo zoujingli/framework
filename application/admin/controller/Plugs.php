@@ -33,54 +33,45 @@ class Plugs extends Controller
      */
     public function upfile()
     {
-        $this->safe = $this->request->get('safe', '');
+        $this->safe = $this->getUploadSafe();
+        $this->uptype = $this->getUploadType();
         $this->mode = $this->request->get('mode', 'one');
         $this->name = $this->request->get('name', 'file');
         $this->field = $this->request->get('field', 'file');
         $this->types = $this->request->get('type', 'jpg,png');
-        if (in_array($this->request->get('uptype'), ['local', 'qiniu', 'oss'])) {
-            $this->uptype = $this->request->get('uptype');
-        } else {
-            $this->uptype = sysconf('storage_type');
-        }
         $this->mimes = File::mine($this->types);
         return $this->fetch();
     }
 
     /**
      * WebUpload文件上传
-     * @return \think\response\Json
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
     public function upload()
     {
-        try {
-            $file = $this->request->file($this->request->get('name', 'file'));
-        } catch (\Exception $e) {
-            return json(['code' => 'ERROR', 'msg' => lang($e->getMessage())]);
+        // 文件接收
+        if (!($file = $this->getUploadFile()) || empty($file)) {
+            $this->error('文件上传异常，文件可能过大或未上传！');
         }
-        empty($file) && $this->error('文件上传异常，文件可能过大或未上传');
         if (!$file->checkExt(strtolower(sysconf('storage_local_exts')))) {
-            return json(['code' => 'ERROR', 'msg' => '文件上传类型受限']);
+            $this->error('文件上传类型受限，请在后台配置！');
         }
-        // 安全模式
-        $safe = boolval($this->request->post('safe', ''));
         // 唯一名称
         $ext = strtolower(pathinfo($file->getInfo('name'), 4));
         $name = File::name($this->request->post('md5'), $ext, '', 'strtolower');
         // Token验证
         if ($this->request->post('token') !== md5($name . session_id())) {
-            return json(['code' => 'ERROR', 'msg' => '文件上传验证失败']);
+            $this->error('文件上传验证失败，请刷新页面重新上传！');
         }
-        // 文件处理
-        $path = pathinfo(File::instance('local')->path($name, $safe));
-        if ($file->move($path['dirname'], $path['basename'], true)) {
-            if (is_array($info = File::instance('local')->info($name, $safe)) && isset($info['url'])) {
-                return json(['data' => ['site_url' => $safe ? $name : $info['url']], 'code' => 'SUCCESS', 'msg' => '文件上传成功']);
+        $this->safe = $this->getUploadSafe();
+        $pathinfo = pathinfo(File::instance('local')->path($name, $this->safe));
+        if ($file->move($pathinfo['dirname'], $pathinfo['basename'], true)) {
+            if (is_array($info = File::instance('local')->info($name, $this->safe)) && isset($info['url'])) {
+                $this->success('文件上传成功！', ['site_url' => $this->safe ? $name : $info['url']]);
             }
         }
-        return json(['code' => 'ERROR', 'msg' => '文件上传失败']);
+        $this->error('文件上传失败，请稍候再试！');
     }
 
     /**
@@ -91,30 +82,19 @@ class Plugs extends Controller
      */
     public function plupload()
     {
-        try {
-            $file = $this->request->file($this->request->post('name', 'file'));
-        } catch (\Exception $e) {
-            return json(['code' => 'ERROR', 'msg' => lang($e->getMessage())]);
-        }
         // 文件接收
-        empty($file) && $this->error('文件上传异常，文件可能过大或未上传');
+        if (!($file = $this->getUploadFile()) || empty($file)) {
+            return json(['uploaded' => false, 'error' => ['message' => '文件上传异常，文件可能过大或未上传']]);
+        }
         if (!$file->checkExt(strtolower(sysconf('storage_local_exts')))) {
-            return json(['uploaded' => false, 'error' => ['message' => '文件上传类型受限']]);
+            return json(['uploaded' => false, 'error' => ['message' => '文件上传类型受限，请在后台配置']]);
         }
-        // 上传类型
-        $this->uptype = sysconf('storage_type');
-        if (in_array($this->request->post('uptype'), ['local', 'qiniu', 'oss'])) {
-            $this->uptype = $this->request->post('uptype');
-        }
-        // 安全模式
-        $safe = boolval($this->request->post('safe', ''));
-        // 唯一名称
-        $ext = strtolower(pathinfo($file->getInfo('name'), 4));
-        $name = File::name($file->getPathname(), $ext, '', 'md5_file');
-        // 文件处理
+        $this->safe = $this->getUploadSafe();
+        $this->uptype = $this->getUploadType();
+        $name = File::name($file->getPathname(), pathinfo($file->getInfo('name'), 4), '', 'md5_file');
         $info = File::instance($this->uptype)->save($name, file_get_contents($file->getRealPath()));
         if (is_array($info) && isset($info['url'])) {
-            return json(['uploaded' => true, 'filename' => $name, 'url' => $safe ? $name : $info['url']]);
+            return json(['uploaded' => true, 'filename' => $name, 'url' => $this->safe ? $name : $info['url']]);
         }
         return json(['uploaded' => false, 'error' => ['message' => '文件处理失败，请稍候再试！']]);
     }
@@ -126,43 +106,68 @@ class Plugs extends Controller
      */
     public function upstate()
     {
-        // 安全模式
-        $safe = boolval($this->request->post('safe', ''));
-        // 上传类型
-        $uptype = $this->request->post('uptype', 'local');
-        if (!in_array($uptype, ['local', 'oss', 'qiniu'])) $uptype = 'local';
-        // 唯一名称
         $ext = strtolower(pathinfo($this->request->post('filename', ''), 4));
         $name = File::name($this->request->post('md5'), $ext, '', 'strtolower');
         // 检查文件是否已上传
-        if (($site_url = File::url($name))) {
-            $this->success('文件已存在可秒传！', ['site_url' => $safe ? $name : $site_url], 'IS_FOUND');
+        $this->safe = $this->getUploadSafe();
+        if (is_string($site_url = File::url($name))) {
+            $this->success('检测到该文件已经存在，无需再次上传！', ['site_url' => $this->safe ? $name : $site_url]);
         }
-        // 文件上传驱动
-        $uploader = File::instance($uptype);
-        // 需要上传文件，生成上传配置参数
-        $param = ['safe' => $safe, 'uptype' => $uptype, 'server' => $uploader->upload(), 'file_url' => $name, 'site_url' => $uploader->base($name)];
-        switch (strtolower($uptype)) {
-            case 'local':
-                $param['token'] = md5($name . session_id());
-                break;
-            case 'qiniu':
-                list($basic, $bucket, $access, $secret) = [
-                    $uploader->base(), sysconf('storage_qiniu_bucket'), sysconf('storage_qiniu_access_key'), sysconf('storage_qiniu_secret_key'),
-                ];
-                $data = str_replace(['+', '/'], ['-', '_'], base64_encode(json_encode([
-                    "scope"      => "{$bucket}:{$name}", "deadline" => 3600 + time(),
-                    "returnBody" => "{\"data\":{\"site_url\":\"{$basic}/$(key)\",\"file_url\":\"$(key)\"},\"code\":\"SUCCESS\"}",
-                ])));
-                $param['token'] = "{$access}:" . str_replace(['+', '/'], ['-', '_'], base64_encode(hash_hmac('sha1', $data, $secret, true))) . ":{$data}";
-                break;
-            case 'oss':
-                $param['OSSAccessKeyId'] = sysconf('storage_oss_keyid');
-                $param['policy'] = base64_encode(json_encode(['conditions' => [['content-length-range', 0, 1048576000]], 'expiration' => gmdate("Y-m-d\TH:i:s\Z", time() + 3600)]));
-                $param['signature'] = base64_encode(hash_hmac('sha1', $param['policy'], sysconf('storage_oss_secret'), true));
-                break;
+        // 文件驱动
+        $file = File::instance($this->getUploadType());
+        // 生成上传授权参数
+        $param = [
+            'file_url' => $name, 'uptype' => $this->uptype, 'token' => md5($name . session_id()),
+            'site_url' => $file->base($name), 'server' => $file->upload(), 'safe' => $this->safe,
+        ];
+        if (strtolower($this->uptype) === 'qiniu') {
+            $auth = new \Qiniu\Auth(sysconf('storage_qiniu_access_key'), sysconf('storage_qiniu_secret_key'));
+            $param['token'] = $auth->uploadToken(sysconf('storage_qiniu_bucket'), $name, 3600, [
+                'returnBody' => json_encode(['code' => 1, 'data' => ['site_url' => $file->base($name)]], JSON_UNESCAPED_UNICODE)
+            ]);
+        } elseif (strtolower($this->uptype) === 'oss') {
+            $param['OSSAccessKeyId'] = sysconf('storage_oss_keyid');
+            $param['policy'] = base64_encode(json_encode(['conditions' => [['content-length-range', 0, 1048576000]], 'expiration' => gmdate("Y-m-d\TH:i:s\Z", time() + 3600)]));
+            $param['signature'] = base64_encode(hash_hmac('sha1', $param['policy'], sysconf('storage_oss_secret'), true));
         }
-        $this->success('文件未上传', $param, 'NOT_FOUND');
+        $this->error('未检测到文件，需要上传完整的文件！', $param);
+    }
+
+    /**
+     * 获取文件上传方式
+     * @return string
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     */
+    private function getUploadType()
+    {
+        $this->uptype = input('uptype');
+        if (!in_array($this->uptype, ['local', 'oss', 'qiniu'])) {
+            $this->uptype = sysconf('storage_type');
+        }
+        return $this->uptype;
+    }
+
+    /**
+     * 获取上传安全模式
+     * @return boolean
+     */
+    private function getUploadSafe()
+    {
+        return $this->safe = boolval(input('safe', ''));
+    }
+
+    /**
+     * 获取本地文件对象
+     * @return array|mixed|null|\think\File
+     */
+    private function getUploadFile()
+    {
+        try {
+            return $this->request->file($this->request->post('name', 'file'));
+        } catch (\Exception $e) {
+            $this->error(lang($e->getMessage()));
+        }
     }
 
     /**
