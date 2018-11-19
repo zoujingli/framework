@@ -592,10 +592,10 @@ $(function () {
 
     /*! 注册 data-phone-view 事件行为 */
     $body.on('click', '[data-phone-view]', function () {
-        let $container = $('<div class="mobile-preview pull-left"><div class="mobile-header">公众号</div><div class="mobile-body"><iframe id="phone-preview" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe></div></div>').appendTo('body');
+        let $container = $('<div class="mobile-preview pull-left"><div class="mobile-header">公众号</div><div class="mobile-body"><iframe id="phone-preview" frameborder="0" marginheight="0" marginwidth="0"></iframe></div></div>').appendTo('body');
         $container.find('iframe').attr('src', this.getAttribute('data-phone-view') || this.href);
         layer.style(layer.open({
-            type: true, scrollbar: false, area: ['335px', '600px'], title: false,
+            type: true, scrollbar: false, area: ['320px', '600px'], title: false,
             closeBtn: true, skin: 'layui-layer-nobg', shadeClose: false, content: $container,
             end: function () {
                 $container.remove();

@@ -13,6 +13,13 @@
     <link rel="shortcut icon" href="{:sysconf('site_icon')}">
     <link rel="stylesheet" href="__ROOT__/static/theme/css/normalize.css">
     {block name='style'}{/block}
+    <style>
+        ::-webkit-scrollbar{width:3px;height:3px}
+        ::-webkit-scrollbar-track{background:#ccc!important}
+        ::-webkit-scrollbar-thumb{background-color:#666!important}
+        ::selection{background-color:#ec494e!important;color:#fff!important}
+        ::-moz-selection{background-color:#ec494e!important;color:#fff!important}
+    </style>
     <script src="__ROOT__/static/plugs/jquery/pace.min.js"></script>
 </head>
 <body>{block name='content'}{/block}</body>
