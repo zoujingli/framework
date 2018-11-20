@@ -63,7 +63,7 @@ class Controller extends \stdClass
     {
         $className = "library\\logic\\" . ucfirst(ltrim($method, '_'));
         if (class_exists($className)) {
-            $app = app($className, $arguments);
+            $app = app($className, $arguments, true);
             return method_exists($app, 'apply') ? $app->apply($this) : $app;
         }
         if (method_exists($this, $method)) {
