@@ -463,7 +463,7 @@ $(function () {
 
     /*! 注册 data-serach 表单搜索行为 */
     $body.on('submit', 'form.form-search', function () {
-        let url = $(this).attr('action').replace(/\&?page\=\d+/g, ''), split = url.indexOf('?') === -1 ? '?' : '&';
+        let url = $(this).attr('action').replace(/&?page=\d+/g, ''), split = url.indexOf('?') === -1 ? '?' : '&';
         if ((this.method || 'get').toLowerCase() === 'get') {
             return window.location.href = '#' + $.menu.parseUri(url + split + $(this).serialize());
         }
