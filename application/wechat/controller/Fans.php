@@ -42,12 +42,12 @@ class Fans extends Controller
 
     /**
      * 微信粉丝列表处理
-     * @param $data
+     * @param array $data
      */
-    protected function _index_page_filter(&$data)
+    protected function _index_page_filter(array &$data)
     {
         foreach ($data as &$user) foreach (['country', 'province', 'city', 'nickname', 'remark'] as $k) {
-            isset($user[$k]) && $user[$k] = emoji_decode($user[$k]);
+            if (isset($user[$k])) $user[$k] = emoji_decode($user[$k]);
         }
     }
 
@@ -59,7 +59,7 @@ class Fans extends Controller
         try {
             \app\wechat\logic\Fans::sync();
         } catch (\Exception $e) {
-            $this->error('同步粉丝列表失败，请稍候再试！' . $e->getMessage());
+            $this->error("同步粉丝列表失败，请稍候再试！{$e->getMessage()}");
         }
         $this->success('同步粉丝列表成功！');
     }

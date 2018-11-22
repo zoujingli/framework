@@ -125,16 +125,12 @@ class News extends Controller
             if ($this->request->get('output') === 'json') {
                 $this->success('获取数据成功', Media::news($id));
             }
-            $this->title = '编辑图文';
-            return $this->fetch('form');
+            return $this->fetch('form', ['title' => '编辑图文']);
         }
-        $data = $this->request->post();
-        $ids = $this->_apply_news_article($data['data']);
-        if (!empty($ids)) {
-            $post = ['id' => $id, 'article_id' => $ids, 'create_by' => session('user.id')];
-            if (false !== data_save('wechat_news', $post, 'id')) {
-                $url = url('@admin') . '#' . url('@wechat/news/index') . '?spm=' . $this->request->get('spm');
-                $this->success('图文更新成功!', $url);
+        $post = $this->request->post();
+        if (isset($post['data']) && ($ids = $this->_apply_news_article($post['data']))) {
+            if (data_save('wechat_news', ['id' => $id, 'article_id' => $ids], 'id')) {
+                $this->success('图文更新成功!', url('@admin') . '#' . url('@wechat/news/index'));
             }
         }
         $this->error('图文更新失败，请稍候再试！');
@@ -151,7 +147,6 @@ class News extends Controller
     private function _apply_news_article($data, $ids = [])
     {
         foreach ($data as &$vo) {
-            $vo['create_by'] = session('user.id');
             $vo['create_at'] = date('Y-m-d H:i:s');
             if (empty($vo['digest'])) {
                 $vo['digest'] = mb_substr(strip_tags(str_replace(["\s", '　'], '', $vo['content'])), 0, 120);

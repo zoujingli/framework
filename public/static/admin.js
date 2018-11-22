@@ -234,7 +234,7 @@ $(function () {
             // 菜单模式切换
             (function ($menu, miniClass) {
                 // Mini 菜单模式切换及显示
-                (layui.data('menu')['type-min']) && $menu.addClass(miniClass);
+                if (layui.data('menu')['type-min']) $menu.addClass(miniClass);
                 $body.on('click', '[data-target-menu-type]', function () {
                     $menu.toggleClass(miniClass);
                     layui.data('menu', {key: 'type-min', value: $menu.hasClass(miniClass)});
@@ -324,8 +324,8 @@ $(function () {
             };
             // 检侧所的表单元素
             this.checkAllInput = function () {
-                let $eles = $(form).find(this.tags), isPass = true;
-                $eles.each(function () {
+                let isPass = true;
+                $(form).find(this.tags).each(function () {
                     if (that.checkInput(this) === false) return $(this).focus(), isPass = false;
                 });
                 return isPass;
@@ -437,14 +437,13 @@ $(function () {
             for (let i in values) {
                 let tpl = '<div class="uploadimage uploadimagemtl"><a class="layui-icon">&#x1006;</a></div>';
                 let $tpl = $(tpl).attr('data-tips-image', values[i]).css('backgroundImage', 'url(' + values[i] + ')');
-                $tpl.data('input', input).data('srcs', values).data('index', i);
-                $tpl.on('click', 'a', function (e) {
+                $tpl.data('input', input).data('srcs', values).data('index', i).on('click', 'a', function (e) {
                     e.stopPropagation();
                     let $cur = $(this).parent();
                     let dialogIndex = $.msg.confirm('确定要移除这张图片吗？', function () {
-                        let data = $cur.data('srcs'), tmp = [];
-                        for (let i in data) i !== $cur.data('index') && tmp.push(data[i]);
-                        $cur.data('input').value = tmp.join('|');
+                        let data = $cur.data('srcs'), temp = [];
+                        for (let i in data) i !== $cur.data('index') && temp.push(data[i]);
+                        $cur.data('input').value = temp.join('|');
                         $cur.remove(), $.msg.close(dialogIndex);
                     });
                 });
@@ -516,7 +515,7 @@ $(function () {
     /*! 注册 data-href 事件行为 */
     $body.on('click', '[data-href]', function () {
         let href = $(this).attr('data-href');
-        (href && href.indexOf('#') !== 0) && (window.location.href = href);
+        if (href && href.indexOf('#') !== 0) window.location.href = href;
     });
 
     /*! 注册 data-file 事件行为 */
@@ -524,13 +523,13 @@ $(function () {
         let safe = $(this).attr('data-safe') || '';
         let mode = $(this).attr('data-file') || 'one';
         let name = $(this).attr('data-name') || 'file';
-        let field = $(this).attr('data-field') || 'file';
         let type = $(this).attr('data-type') || 'jpg,png';
+        let field = $(this).attr('data-field') || 'file';
         if (mode !== 'btn') {
             let uptype = $(this).attr('data-uptype') || '';
-            let param = $.param({name: name, mode: mode, uptype: uptype, type: type, field: field, safe: safe});
-            let url = window.ROOT_URL + '?s=admin/plugs/upfile.html&' + param;
-            $.form.iframe(url, $(this).attr('data-title') || '文件上传');
+            let params = $.param({name: name, mode: mode, uptype: uptype, type: type, field: field, safe: safe});
+            let location = window.ROOT_URL + '?s=admin/plugs/upfile.html&' + params;
+            $.form.iframe(location, $(this).attr('data-title') || '文件上传');
         }
     });
 
@@ -542,8 +541,8 @@ $(function () {
     /*! 注册 data-icon 事件行为 */
     $body.on('click', '[data-icon]', function () {
         let field = $(this).attr('data-icon') || $(this).attr('data-field') || 'icon';
-        let url = window.ROOT_URL + '?s=admin/plugs/icon.html&field=' + field;
-        $.form.iframe(url, '图标选择');
+        let location = window.ROOT_URL + '?s=admin/plugs/icon.html&field=' + field;
+        $.form.iframe(location, '图标选择');
     });
 
     /*! 注册 data-copy 事件行为 */

@@ -5,7 +5,7 @@
     <!--左侧图文列表 开始-->
     <div class="layui-card news-left">
         <div class="layui-card-header">图文列表</div>
-        <div class="layui-card-body news-box">
+        <div class="layui-card-body layui-hide">
             <div ng-if="list.length > 0" ng-repeat="x in list">
                 <div class="news-item transition" ng-click="setItem($index,$event)" style="{{x.style}}" ng-class="x.active?'active':''">
                     <a ng-click="delItem($index, $event)" class="transition layui-icon layui-hide">&#x1006;</a>
@@ -13,18 +13,16 @@
                     <a ng-click="upItem($index, $event)" class="transition layui-icon layui-hide">&#xe619;</a>
                     <span class="news-title" ng-bind="x.title"></span>
                 </div>
-                <hr/>
+                <hr>
             </div>
             <div ng-if="list.length<1" class="news-item transition active">
                 <a ng-click="delItem($index, $event)" class="transition layui-icon layui-hide">&#x1006;</a>
                 <a ng-click="dnItem($index, $event)" class="transition layui-icon layui-hide">&#xe61a;</a>
                 <a ng-click="upItem($index, $event)" class="transition layui-icon layui-hide">&#xe619;</a>
                 <span class="news-title"></span>
-                <hr/>
+                <hr>
             </div>
-            <a class='article-add transition' ng-click="addItem()" data-text-tip="添加图文">
-                <i class="fa fa-plus"></i>
-            </a>
+            <a class='article-add transition' ng-click="addItem()" data-text-tip="添加图文"><i class="fa fa-plus"></i></a>
         </div>
     </div>
     <!--左侧图文列表 结束-->
@@ -125,8 +123,9 @@
                 $rootScope.item = $rootScope.list[0];
                 $rootScope.setItemValue('active', true);
                 setTimeout(function () {
-                    editor.setData($rootScope.item.content);
                     $vali.checkAllInput();
+                    editor.setData($rootScope.item.content);
+                    $('.layui-card-body.layui-hide').removeClass('layui-hide');
                 }, 100);
             }
 

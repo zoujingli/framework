@@ -45,7 +45,6 @@ class Node extends Controller
             if ($node['node'] === $pnode) $groups[$pnode]['node'] = $node;
             $groups[$pnode]['list'][] = $node;
         }
-        $this->groups = $groups;
         return $this->fetch();
     }
 
@@ -56,7 +55,7 @@ class Node extends Controller
      */
     public function clear()
     {
-        $nodes = array_column(\app\admin\logic\Auth::get(), 'node');
+        $nodes = array_unique(array_column(\app\admin\logic\Auth::get(), 'node'));
         if (false !== Db::name($this->table)->whereNotIn('node', $nodes)->delete()) {
             $this->success('清理无效节点记录成功！', '');
         }
@@ -76,7 +75,7 @@ class Node extends Controller
                 $data['node'] = $vo['node'];
                 $data[$vo['name']] = $vo['value'];
             }
-            empty($data) || Data::save($this->table, $data, 'node');
+            empty($data) || data_save($this->table, $data, 'node');
             $this->success('参数保存成功！', '');
         }
         $this->error('访问异常，请重新进入...');

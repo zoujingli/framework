@@ -28,6 +28,13 @@ use think\facade\Log;
  */
 class Push extends Controller
 {
+
+    /**
+     * 公众号APPID
+     * @var string
+     */
+    protected $appid;
+
     /**
      * 微信用户OPENID
      * @var string
@@ -45,12 +52,6 @@ class Push extends Controller
      * @var \WeChat\Receive
      */
     protected $wechat;
-
-    /**
-     * 公众号APPID
-     * @var string
-     */
-    protected $appid;
 
     /**
      * 获取当前出口IP
@@ -173,7 +174,7 @@ class Push extends Controller
         if (empty($data['type']) || (array_key_exists('status', $data) && empty($data['status']))) {
             return $isLast ? false : $this->keys('wechat_keys#keys#default', true, $isCustom);
         }
-        switch ($data['type']) {
+        switch (strtolower($data['type'])) {
             case 'keys':
                 $content = empty($data['content']) ? $data['name'] : $data['content'];
                 return $this->keys("wechat_keys#keys#{$content}", $isLast, $isCustom);
@@ -241,16 +242,13 @@ class Push extends Controller
                 return $this->wechat->video($data['media_id'], $data['title'], $data['description'])->reply([], true);
             case 'music': // 发送音乐消息
                 return $this->wechat->music($data['title'], $data['description'], $data['musicurl'], $data['hqmusicurl'], $data['thumb_media_id'])->reply([], true);
-            case 'news': // 发送图文消息
-                $articles = [];
-                foreach ($data['articles'] as $article) array_push($articles, [
-                    'PicUrl'      => $article['picurl'], 'Title' => $article['title'],
-                    'Description' => $article['description'], 'Url' => $article['url'],
-                ]);
-                return $this->wechat->news($articles)->reply([], true);
             case 'customservice': // 转交客服消息
                 if ($data['content']) $this->sendMessage('text', $data['content'], true);
                 return $this->wechat->transferCustomerService()->reply([], true);
+            case 'news': // 发送图文消息
+                $articles = [];
+                foreach ($data['articles'] as $article) array_push($articles, ['PicUrl' => $article['picurl'], 'Title' => $article['title'], 'Description' => $article['description'], 'Url' => $article['url']]);
+                return $this->wechat->news($articles)->reply([], true);
             default:
                 return 'success';
         }
