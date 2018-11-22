@@ -57,7 +57,7 @@ $(function () {
     $.msg = new function () {
         let self = this;
         this.shade = [0.02, '#000'];
-        this.dialogIndexs = [];
+        this.indexs = [];
         // 关闭消息框
         this.close = function (index) {
             return layer.close(index);
@@ -65,7 +65,7 @@ $(function () {
         // 弹出警告消息框
         this.alert = function (msg, callback) {
             let index = layer.alert(msg, {end: callback, scrollbar: false});
-            return this.dialogIndexs.push(index), index;
+            return this.indexs.push(index), index;
         };
         // 确认对话框
         this.confirm = function (msg, ok, no) {
@@ -80,22 +80,22 @@ $(function () {
         // 显示成功类型的消息
         this.success = function (msg, time, callback) {
             let index = layer.msg(msg, {icon: 1, shade: this.shade, scrollbar: false, end: callback, time: (time || 2) * 1000, shadeClose: true});
-            return this.dialogIndexs.push(index), index;
+            return this.indexs.push(index), index;
         };
         // 显示失败类型的消息
         this.error = function (msg, time, callback) {
             let index = layer.msg(msg, {icon: 2, shade: this.shade, scrollbar: false, time: (time || 3) * 1000, end: callback, shadeClose: true});
-            return this.dialogIndexs.push(index), index;
+            return this.indexs.push(index), index;
         };
         // 状态消息提示
         this.tips = function (msg, time, callback) {
             let index = layer.msg(msg, {time: (time || 3) * 1000, shade: this.shade, end: callback, shadeClose: true});
-            return this.dialogIndexs.push(index), index;
+            return this.indexs.push(index), index;
         };
         // 显示正在加载中的提示
         this.loading = function (msg, callback) {
             let index = msg ? layer.msg(msg, {icon: 16, scrollbar: false, shade: this.shade, time: 0, end: callback}) : layer.load(2, {time: 0, scrollbar: false, shade: this.shade, end: callback});
-            return this.dialogIndexs.push(index), index;
+            return this.indexs.push(index), index;
         };
         // 自动处理显示Think返回的Json数据
         this.auto = function (ret, time) {
@@ -103,8 +103,8 @@ $(function () {
             let msg = ret.msg || (typeof ret.info === 'string' ? ret.info : '');
             return (parseInt(ret.code) === 1) ? this.success(msg, time, function () {
                 url ? (window.location.href = url) : $.form.reload();
-                for (let i in self.dialogIndexs) layer.close(self.dialogIndexs[i]);
-                self.dialogIndexs = [];
+                for (let i in self.indexs) layer.close(self.indexs[i]);
+                self.indexs = [];
             }) : this.error(msg, 3, function () {
                 url ? window.location.href = url : '';
             });
@@ -113,7 +113,7 @@ $(function () {
 
     /*! 表单自动化组件 */
     $.form = new function () {
-        let self = this;
+        let that = this;
         // 内容区选择器
         this.targetClass = '.layui-layout-admin>.layui-body';
         // 刷新当前页面
@@ -127,8 +127,8 @@ $(function () {
             $dom.find('[required]').parent().prevAll('label').addClass('label-required');
             $dom.find('[data-file="btn"]').map(function () {
                 let self = this;
-                require(['upload'], function (r) {
-                    r(self)
+                require(['upload'], function (apply) {
+                    apply(self)
                 });
             });
         };
@@ -141,21 +141,22 @@ $(function () {
         this.href = function (url, obj) {
             if (url !== '#') window.location.href = '#' + $.menu.parseUri(url, obj);
             else if (obj && obj.getAttribute('data-menu-node')) {
-                $('[data-menu-node^="' + obj.getAttribute('data-menu-node') + '-"][data-open!="#"]:first').trigger('click');
+                let node = obj.getAttribute('data-menu-node');
+                $('[data-menu-node^="' + node + '-"][data-open!="#"]:first').trigger('click');
             }
         };
         // 异步加载的数据
-        this.load = function (url, data, type, callback, loading, tips, time) {
+        this.load = function (url, data, method, callback, loading, tips, time) {
             let index = loading !== false ? $.msg.loading(tips) : 0;
             $.ajax({
-                type: type || 'GET', url: $.menu.parseUri(url), data: data || {}, beforeSend: function () {
+                type: method || 'GET', url: $.menu.parseUri(url), data: data || {}, beforeSend: function () {
                     typeof Pace === 'object' && Pace.restart();
                 }, error: function (XMLHttpRequest) {
                     if (parseInt(XMLHttpRequest.status) === 200) this.success(XMLHttpRequest.responseText);
                     else $.msg.tips('E' + XMLHttpRequest.status + ' - 服务器繁忙，请稍候再试！');
-                }, success: function (res) {
-                    if (typeof callback === 'function' && callback.call(self, res) === false) return false;
-                    return typeof res === 'object' ? $.msg.auto(res, time || res.wait || undefined) : self.show(res);
+                }, success: function (ret) {
+                    if (typeof callback === 'function' && callback.call(that, ret) === false) return false;
+                    return typeof ret === 'object' ? $.msg.auto(ret, time || ret.wait || undefined) : that.show(ret);
                 }, complete: function () {
                     $.msg.close(index);
                 }
@@ -164,7 +165,7 @@ $(function () {
         // 加载HTML到目标位置
         this.open = function (url, data, callback, loading, tips) {
             this.load(url, data, 'get', function (ret) {
-                return typeof ret === 'object' ? $.msg.auto(ret) : self.show(ret);
+                return typeof ret === 'object' ? $.msg.auto(ret) : that.show(ret);
             }, loading, tips);
         };
         // 打开一个iframe窗口
@@ -178,18 +179,15 @@ $(function () {
                 let index = layer.open({
                     type: 1, btn: false, area: "800px", content: res, title: title || '', success: function (dom, index) {
                         $(dom).find('[data-close]').off('click').on('click', function () {
-                            if ($(this).attr('data-confirm')) {
-                                let confirmIndex = $.msg.confirm($(this).attr('data-confirm'), function () {
-                                    layer.close(confirmIndex), layer.close(index);
-                                });
-                                return false;
-                            }
+                            if ($(this).attr('data-confirm')) return $.msg.confirm($(this).attr('data-confirm'), function (_index) {
+                                layer.close(_index), layer.close(index);
+                            }), false;
                             layer.close(index);
                         });
                         $.form.reInit($(dom));
                     }
                 });
-                $.msg.dialogIndexs.push(index);
+                $.msg.indexs.push(index);
                 return (typeof callback === 'function') && callback.call(this);
             }, loading, tips);
         };
@@ -440,11 +438,11 @@ $(function () {
                 $tpl.data('input', input).data('srcs', values).data('index', i).on('click', 'a', function (e) {
                     e.stopPropagation();
                     let $cur = $(this).parent();
-                    let dialogIndex = $.msg.confirm('确定要移除这张图片吗？', function () {
+                    $.msg.confirm('确定要移除这张图片吗？', function (index) {
                         let data = $cur.data('srcs'), temp = [];
                         for (let i in data) i !== $cur.data('index') && temp.push(data[i]);
                         $cur.data('input').value = temp.join('|');
-                        $cur.remove(), $.msg.close(dialogIndex);
+                        $cur.remove(), $.msg.close(index);
                     });
                 });
                 $(this).before($tpl);
