@@ -43,14 +43,17 @@ class Review extends Controller
      * 显示图文内容
      * @param integer $id
      * @return mixed
+     * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
      */
     public function view($id)
     {
-        $this->info = Db::name('WechatNewsArticle')->where(['id' => $id])->find();
-        return $this->fetch();
+        $where = ['id' => $id];
+        Db::name('WechatNewsArticle')->where($where)->update(['read_num' => Db::raw('read_num+1')]);
+        return $this->fetch('', ['info' => Db::name('WechatNewsArticle')->where($where)->find()]);
     }
 
     public function text()

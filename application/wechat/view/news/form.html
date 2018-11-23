@@ -76,6 +76,7 @@
                 </label>
 
                 <div class="layui-form-item text-center">
+                    <input ng-model="x.read_num" type="hidden">
                     <button ng-click="submit()" type="button" class="layui-btn">保存图文</button>
                 </div>
 
@@ -113,6 +114,7 @@
                     title: '新建图文',
                     author: '管理员',
                     content: '文章内容',
+                    read_num: 0,
                     local_url: '__ROOT__/static/plugs/uploader/theme/image.png',
                 });
                 for (let i in list) {
@@ -186,6 +188,7 @@
                     title: '新建图文',
                     author: '管理员',
                     content: '文章内容',
+                    read_num: 0,
                     local_url: '__ROOT__/static/plugs/uploader/theme/image.png',
                     style: "background-image:url('__ROOT__/static/plugs/uploader/theme/image.png')"
                 });
@@ -204,6 +207,7 @@
                     author: $rootScope.list[i].author,
                     digest: $rootScope.list[i].digest,
                     content: $rootScope.list[i].content,
+                    read_num: $rootScope.list[i].read_num,
                     local_url: $rootScope.list[i].local_url,
                     show_cover_pic: $rootScope.list[i].show_cover_pic ? 1 : 0,
                     content_source_url: $rootScope.list[i].content_source_url,
