@@ -87,8 +87,8 @@ class Http
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        list($content, $status) = [curl_exec($curl), curl_getinfo($curl), curl_close($curl)];
-        return (intval($status["http_code"]) === 200) ? $content : false;
+        list($content) = [curl_exec($curl), curl_close($curl)];
+        return $content;
     }
 
     /**

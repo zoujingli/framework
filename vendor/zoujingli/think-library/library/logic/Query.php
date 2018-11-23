@@ -14,6 +14,8 @@
 
 namespace library\logic;
 
+use library\Controller;
+
 /**
  * 搜索条件处理器
  * Class Query
@@ -24,10 +26,12 @@ class Query extends Logic
 
     /**
      * 应用初始化
+     * @param Controller $controller
      * @return $this
      */
-    protected function init()
+    protected function init(Controller $controller)
     {
+        $this->controller = $controller;
         return $this;
     }
 

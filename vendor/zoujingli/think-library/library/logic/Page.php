@@ -14,6 +14,7 @@
 
 namespace library\logic;
 
+use library\Controller;
 use think\Db;
 
 /**
@@ -66,6 +67,7 @@ class Page extends Logic
 
     /**
      * 应用初始化
+     * @param Controller $controller
      * @return mixed
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
@@ -73,8 +75,9 @@ class Page extends Logic
      * @throws \think\exception\DbException
      * @throws \think\exception\PDOException
      */
-    protected function init()
+    protected function init(Controller $controller)
     {
+        $this->controller = $controller;
         if ($this->request->isPost()) {
             $this->_sort();
         }
@@ -109,11 +112,11 @@ class Page extends Logic
             }
             $select = "<select onchange='location.href=this.options[this.selectedIndex].value' data-auto-none>" . join('', $rows) . "</select>";
             $html = "<div class='pagination-container nowrap'><span>共 {$page->total()} 条记录，每页显示 {$select} 条，共 {$page->lastPage()} 页当前显示第 {$page->currentPage()} 页。</span>{$page->render()}</div>";
-            $this->class->assign('pagehtml', preg_replace('|href="(.*?)"|', 'data-open="$1" onclick="return false" href="$1"', $html));
+            $this->controller->assign('pagehtml', preg_replace('|href="(.*?)"|', 'data-open="$1" onclick="return false" href="$1"', $html));
             $result = ['page' => ['limit' => intval($limit), 'total' => intval($page->total()), 'pages' => intval($page->lastPage()), 'current' => intval($page->currentPage())], 'list' => $page->items()];
         } else $result = ['list' => $this->db->select()];
-        if (false !== $this->class->_callback('_page_filter', $result['list']) && $this->isDisplay) {
-            return $this->class->fetch('', $result);
+        if (false !== $this->controller->_callback('_page_filter', $result['list']) && $this->isDisplay) {
+            return $this->controller->fetch('', $result);
         }
         return $result;
     }
@@ -130,11 +133,11 @@ class Page extends Logic
                 if (preg_match('/^_\d{1,}$/', $key) && preg_match('/^\d{1,}$/', $value)) {
                     list($where, $update) = [['id' => trim($key, '_')], ['sort' => $value]];
                     if (false === Db::table($this->db->getTable())->where($where)->update($update)) {
-                        $this->class->error('排序失败, 请稍候再试！');
+                        $this->controller->error('排序失败, 请稍候再试！');
                     }
                 }
             }
-            $this->class->success('排序成功, 正在刷新页面！', '');
+            $this->controller->success('排序成功, 正在刷新页面！', '');
         }
     }
 

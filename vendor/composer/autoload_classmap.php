@@ -188,6 +188,7 @@ return array(
     'app\\store\\logic\\Goods' => $baseDir . '/application/store/logic/Goods.php',
     'app\\wechat\\controller\\Config' => $baseDir . '/application/wechat/controller/Config.php',
     'app\\wechat\\controller\\Fans' => $baseDir . '/application/wechat/controller/Fans.php',
+    'app\\wechat\\controller\\Keys' => $baseDir . '/application/wechat/controller/Keys.php',
     'app\\wechat\\controller\\News' => $baseDir . '/application/wechat/controller/News.php',
     'app\\wechat\\controller\\api\\Push' => $baseDir . '/application/wechat/controller/api/Push.php',
     'app\\wechat\\controller\\api\\Review' => $baseDir . '/application/wechat/controller/api/Review.php',

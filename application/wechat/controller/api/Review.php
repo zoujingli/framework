@@ -49,4 +49,29 @@ class Review extends Controller
         return $this->fetch();
     }
 
+    public function image()
+    {
+        return __METHOD__;
+    }
+
+    public function text()
+    {
+        return __METHOD__;
+    }
+
+    public function video()
+    {
+        return __METHOD__;
+    }
+
+    public function voice()
+    {
+        return __METHOD__;
+    }
+
+    public function music()
+    {
+        return __METHOD__;
+    }
+
 }

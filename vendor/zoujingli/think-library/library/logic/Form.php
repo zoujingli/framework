@@ -14,6 +14,7 @@
 
 namespace library\logic;
 
+use library\Controller;
 use think\db\Query;
 use library\tools\Data;
 
@@ -72,6 +73,7 @@ class Form extends Logic
 
     /**
      * 应用初始化
+     * @param Controller $controller
      * @param array $data
      * @return array|boolean
      * @throws \think\Exception
@@ -80,8 +82,9 @@ class Form extends Logic
      * @throws \think\exception\DbException
      * @throws \think\exception\PDOException
      */
-    protected function init($data = [])
+    protected function init(Controller $controller, $data = [])
     {
+        $this->controller = $controller;
         // GET请求, 获取数据并显示表单页面
         if ($this->request->isGet()) {
             if ($this->pkValue !== null) {
@@ -89,19 +92,19 @@ class Form extends Logic
                 $data = (array)$this->db->where($where)->where($this->where)->find();
             }
             $data = array_merge($data, $this->data);
-            if (false !== $this->class->_callback('_form_filter', $data)) {
-                return $this->class->fetch($this->tpl, ['vo' => $data]);
+            if (false !== $this->controller->_callback('_form_filter', $data)) {
+                return $this->controller->fetch($this->tpl, ['vo' => $data]);
             }
             return $data;
         }
         // POST请求, 数据自动存库处理
         if ($this->request->isPost()) {
             $data = array_merge($this->request->post(), $this->data);
-            if (false !== $this->class->_callback('_form_filter', $data, $this->where)) {
+            if (false !== $this->controller->_callback('_form_filter', $data, $this->where)) {
                 $result = Data::save($this->db, $data, $this->pkField, $this->where);
-                if (false !== $this->class->_callback('_form_result', $result, $data)) {
-                    if ($result !== false) $this->class->success('恭喜, 数据保存成功!', '');
-                    $this->class->error('数据保存失败, 请稍候再试!');
+                if (false !== $this->controller->_callback('_form_result', $result, $data)) {
+                    if ($result !== false) $this->controller->success('恭喜, 数据保存成功!', '');
+                    $this->controller->error('数据保存失败, 请稍候再试!');
                 }
                 return $result;
             }

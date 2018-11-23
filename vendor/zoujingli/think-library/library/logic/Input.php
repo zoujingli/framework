@@ -14,6 +14,8 @@
 
 namespace library\logic;
 
+use library\Controller;
+
 /**
  * 输入管理器
  * Class Input
@@ -57,13 +59,13 @@ class Input extends Logic
     /**
      * 解析输入数据
      * @param array|string $data
+     * @param array $result
      * @return array
      */
-    private function parseData($data)
+    private function parseData($data, $result = [])
     {
         if (is_array($data)) return $data;
         if (is_string($data)) {
-            $result = [];
             foreach (explode(',', $data) as $field) {
                 if (strpos($field, '|') === false) {
                     $arr = explode('.', $field);
@@ -80,13 +82,15 @@ class Input extends Logic
 
     /**
      * 应用初始化
+     * @param Controller $controller
      * @return array
      */
-    public function init()
+    public function init(Controller $controller)
     {
+        $this->controller = $controller;
         $validate = \think\Validate::make($this->rule, $this->info);
         if ($validate->check($this->data)) return $this->data;
-        $this->class->error($validate->getError());
+        $this->controller->error($validate->getError());
     }
 
 }

@@ -14,6 +14,7 @@
 
 namespace library\logic;
 
+use library\Controller;
 use think\db\Query;
 
 /**
@@ -65,32 +66,34 @@ class Save extends Logic
 
     /**
      * 组件应用器
+     * @param Controller $controller
      * @return boolean
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
-    protected function init()
+    protected function init(Controller $controller)
     {
+        $this->controller = $controller;
         // 主键限制处理
         if (!isset($this->where[$this->pkField]) && is_string($this->pkValue)) {
             $this->db->whereIn($this->pkField, explode(',', $this->pkValue));
             if (isset($this->data)) unset($this->data[$this->pkField]);
         }
         // 前置回调处理
-        if (false === $this->class->_callback('_save_filter', $this->db, $this->data)) {
+        if (false === $this->controller->_callback('_save_filter', $this->db, $this->data)) {
             return false;
         }
         // 执行更新操作
         $result = $this->db->where($this->where)->update($this->data) !== false;
         // 结果回调处理
-        if (false === $this->class->_callback('_save_result', $result)) {
+        if (false === $this->controller->_callback('_save_result', $result)) {
             return $result;
         }
         // 回复前端结果
         if ($result !== false) {
-            $this->class->success('数据记录保存成功!', '');
+            $this->controller->success('数据记录保存成功!', '');
         }
-        $this->class->error('数据保存失败, 请稍候再试!');
+        $this->controller->error('数据保存失败, 请稍候再试!');
     }
 
 }

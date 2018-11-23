@@ -47,9 +47,11 @@ class File
      * @var array
      */
     protected static $params = [
-        'local' => [],
         'const' => [
             'storage_type' => '文件存储类型',
+        ],
+        'local' => [
+            'storage_local_exts' => '文件上传允许类型后缀',
         ],
         'oss'   => [
             'storage_oss_domain'   => '文件访问域名',

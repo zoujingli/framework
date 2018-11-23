@@ -28,21 +28,20 @@ class Crypt
      */
     public static function encode($string)
     {
-        $string = iconv('UTF-8', 'GBK//TRANSLIT', $string);
-        list($chars, $length) = ['', strlen($string)];
-        for ($i = 0; $i < $length; $i++) $chars .= str_pad(base_convert(ord($string[$i]), 10, 36), 2, 0, 0);
+        list($chars, $length) = ['', strlen($content = iconv('UTF-8', 'GBK//TRANSLIT', $string))];
+        for ($i = 0; $i < $length; $i++) $chars .= str_pad(base_convert(ord($content[$i]), 10, 36), 2, 0, 0);
         return $chars;
     }
 
     /**
      * UTF8字符串解密
-     * @param string $string
+     * @param string $encode
      * @return string
      */
-    public static function decode($string)
+    public static function decode($encode)
     {
         $chars = '';
-        foreach (str_split($string, 2) as $char) $chars .= chr(intval(base_convert($char, 36, 10)));
+        foreach (str_split($encode, 2) as $char) $chars .= chr(intval(base_convert($char, 36, 10)));
         return iconv('GBK//TRANSLIT', 'UTF-8', $chars);
     }
 
@@ -53,8 +52,8 @@ class Crypt
      */
     public static function emojiEncode($content)
     {
-        return json_decode(preg_replace_callback("/(\\\u[ed][0-9a-f]{3})/i", function ($str) {
-            return addslashes($str[0]);
+        return json_decode(preg_replace_callback("/(\\\u[ed][0-9a-f]{3})/i", function ($string) {
+            return addslashes($string[0]);
         }, json_encode($content)));
     }
 

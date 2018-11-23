@@ -41,7 +41,7 @@ class Cors
      */
     public static function getSessionToken()
     {
-        if (PHP_SESSION_ACTIVE !== session_status()) Session::init(config('session.'));
+        if (2 !== session_status()) Session::init(config('session.'));
         return Crypt::encode(session_name() . '=' . session_id());
     }
 
@@ -50,10 +50,10 @@ class Cors
      */
     public static function setSessionToken()
     {
-        if (PHP_SESSION_ACTIVE !== session_status()) Session::init(config('session.'));
         try {
             if ($token = app('request')->header('token', input('token', ''))) {
                 list($name, $value) = explode('=', Crypt::decode($token));
+                if (2 !== session_status()) Session::init(config('session.'));
                 if (!empty($value) && session_name() === $name) session_id($value);
             }
         } catch (\Exception $e) {
@@ -70,7 +70,7 @@ class Cors
         if (request()->isOptions()) {
             header('Access-Control-Allow-Credentials:true');
             header('Access-Control-Allow-Methods:GET,POST,OPTIONS');
-            header('Access-Control-Allow-Origin:' . app('request')->header('origin', '*'));
+            header('Access-Control-Allow-Origin:' . request()->header('origin', '*'));
             header('Access-Control-Allow-Headers:' . join(',', self::$allowHeader));
             header('Access-Control-Expose-Headers:Token');
             header('Content-Type:text/plain charset=UTF-8');
@@ -91,7 +91,7 @@ class Cors
         return [
             'Access-Control-Allow-Credentials' => 'true',
             'Access-Control-Allow-Methods'     => 'GET,POST,OPTIONS',
-            'Access-Control-Allow-Origin'      => app('request')->header('origin', '*'),
+            'Access-Control-Allow-Origin'      => request()->header('origin', '*'),
             'Access-Control-Allow-Headers'     => join(',', self::$allowHeader),
             'Access-Control-Expose-Headers'    => 'Token',
             'Token'                            => self::getSessionToken(),

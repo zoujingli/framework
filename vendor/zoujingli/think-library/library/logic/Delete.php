@@ -14,6 +14,7 @@
 
 namespace library\logic;
 
+use library\Controller;
 use think\db\Query;
 
 /**
@@ -58,18 +59,20 @@ class Delete extends Logic
 
     /**
      * 组件初始化
+     * @param Controller $controller
+     * @return boolean|null
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @return boolean|null
      */
-    protected function init()
+    protected function init(Controller $controller)
     {
+        $this->controller = $controller;
         // 主键限制处理
         if (!isset($this->where[$this->pkField]) && is_string($this->pkValue)) {
             $this->db->whereIn($this->pkField, explode(',', $this->pkValue));
         }
         // 前置回调处理
-        if (false === $this->class->_callback('_delete_filter', $this->db, $where)) {
+        if (false === $this->controller->_callback('_delete_filter', $this->db, $where)) {
             return null;
         }
         // 执行删除操作
@@ -79,14 +82,14 @@ class Delete extends Logic
             $result = $this->db->where($this->where)->delete();
         }
         // 结果回调处理
-        if (false === $this->class->_callback('_delete_result', $result)) {
+        if (false === $this->controller->_callback('_delete_result', $result)) {
             return $result;
         }
         // 回复前端结果
         if ($result !== false) {
-            $this->class->success('数据删除成功！', '');
+            $this->controller->success('数据删除成功！', '');
         }
-        $this->class->error('数据删除失败, 请稍候再试！');
+        $this->controller->error('数据删除失败, 请稍候再试！');
     }
 
 }

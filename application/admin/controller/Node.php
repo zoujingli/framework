@@ -45,6 +45,7 @@ class Node extends Controller
             if ($node['node'] === $pnode) $groups[$pnode]['node'] = $node;
             $groups[$pnode]['list'][] = $node;
         }
+        $this->groups = $groups;
         return $this->fetch();
     }
 

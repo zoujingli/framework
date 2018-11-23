@@ -23,7 +23,7 @@ use library\Controller;
  * Class Logic
  * @package library\view
  */
-class Logic
+abstract class Logic
 {
     /**
      * 数据库操作对象
@@ -32,16 +32,16 @@ class Logic
     protected $db;
 
     /**
-     * 当前操作控制器引用
-     * @var \library\Controller
-     */
-    protected $class;
-
-    /**
      * 当前请求对象
      * @var \think\Request
      */
     protected $request;
+
+    /**
+     * 当前操作控制器引用
+     * @var \library\Controller
+     */
+    protected $controller;
 
     /**
      * View constructor.
@@ -51,17 +51,6 @@ class Logic
     {
         $this->request = app('request');
         $this->db = is_string($dbQuery) ? Db::name($dbQuery) : $dbQuery;
-    }
-
-    /**
-     * 应用初始化
-     * @param Controller $controller
-     * @return mixed
-     */
-    protected function apply($controller)
-    {
-        $this->class = $controller;
-        if (method_exists($this, 'init')) return $this->init();
     }
 
     /**
@@ -76,5 +65,7 @@ class Logic
             return call_user_func_array([$this, $name], $arguments);
         }
     }
+
+    abstract protected function init(Controller $controller);
 
 }

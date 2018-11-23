@@ -140,7 +140,7 @@ class Oss extends File
         $corsConfig = new CorsConfig();
         $corsConfig->addRule($corsRule);
         $client->putBucketCors($bucket, $corsConfig);
-        return pathinfo($result['oss-request-url'], 2);
+        return pathinfo($result['oss-request-url'], PATHINFO_BASENAME);
     }
 
     /**
