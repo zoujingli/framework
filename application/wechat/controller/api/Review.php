@@ -18,6 +18,10 @@ use app\wechat\logic\Media;
 use library\Controller;
 use think\Db;
 
+/**
+ * Class Review
+ * @package app\wechat\controller\api
+ */
 class Review extends Controller
 {
 
