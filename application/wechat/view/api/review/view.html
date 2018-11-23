@@ -10,6 +10,7 @@
     </h3>
     {if $info.show_cover_pic and $info.local_url}<img src="{$info.local_url}" style="width:100%">{/if}
     <div class='content'>{$info.content|raw}</div>
+    <div style="font-size:12px;color:#ccc">阅读 {$info.read_num}</div>
     {else}
     <div class="info"><h3>404</h3> 访问资源不存在哦！</div>
     {/notempty}
@@ -20,7 +21,7 @@
 
 
 <style>
-    
+
     .container {
         width: 90%;
         color: #333;
