@@ -53,14 +53,14 @@ class Review extends Controller
         return $this->fetch();
     }
 
-    public function image()
-    {
-        return __METHOD__;
-    }
-
     public function text()
     {
-        return __METHOD__;
+        return $this->fetch();
+    }
+
+    public function image()
+    {
+        return $this->fetch();
     }
 
     public function video()
@@ -75,7 +75,7 @@ class Review extends Controller
 
     public function music()
     {
-        return __METHOD__;
+        return $this->fetch();
     }
 
 }

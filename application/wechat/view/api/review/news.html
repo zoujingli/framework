@@ -1,6 +1,7 @@
 {extend name='wechat@api/review/main'}
 
 {block name='content'}
+<div class="header"><span>{:date('H:i:s')}</span></div>
 <div class="container">
     {notempty name='news.articles'}
     {foreach $news.articles as $k => $v}
@@ -27,6 +28,17 @@
 
 
 <style>
+    .header {
+        text-align: center;
+        margin-top: 15px
+    }
+
+    .header span {
+        font-size: 8px;
+        background: #ccc;
+        padding: 5px;
+        border-radius: 10%
+    }
 
     .container {
         width: 90%;

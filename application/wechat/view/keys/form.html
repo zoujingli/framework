@@ -49,7 +49,7 @@
     <div class='mobile-preview inline-block margin-top-15'>
         <div class='mobile-header'>公众号</div>
         <div class='mobile-body'>
-            <iframe id="phone-preview" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+            <iframe id="phone-preview" frameborder="0" marginheight="0" marginwidth="0"></iframe>
         </div>
     </div>
     <div class="keys-container inline-block">
@@ -161,7 +161,7 @@
                     <div class="layui-form-item" data-keys-type='music'>
                         <label class="layui-form-label">音乐图片</label>
                         <div class="layui-input-block">
-                            <input class="layui-input" value="{$vo.music_image|default='__ROOT__/static/theme/img/image.png'}" name="music_image" required placeholder="请上传音乐图片或输入音乐图片URL地址　　　">
+                            <input class="layui-input" value="{$vo.music_image|default='__ROOT__/static/theme/img/image.png'}" name="music_image" required title="请上传音乐图片或输入音乐图片URL地址　　　">
                             <a data-file="btn" data-type="jpg,png" data-field="music_image" class="input-group-addon"><i class="layui-icon layui-icon-upload"></i></a>
                             <p class="help-block">文件最大64KB，只支持JPG格式</p>
                         </div>
