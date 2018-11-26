@@ -61,10 +61,8 @@ class Controller extends \stdClass
      */
     public function __call($method, $arguments = [])
     {
-        $name = "library\\logic\\" . ucfirst(ltrim($method, '_'));
-        if (class_exists($name)) {
-            $reflect = new \ReflectionClass($name);
-            return $reflect->newInstanceArgs($arguments)->init($this);
+        if (class_exists($name = "library\\logic\\" . ucfirst(ltrim($method, '_')))) {
+            return (new \ReflectionClass($name))->newInstanceArgs($arguments)->init($this);
         }
         if (method_exists($this, $method)) {
             return call_user_func_array([$this, $method], $arguments);

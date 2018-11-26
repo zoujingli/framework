@@ -25,12 +25,22 @@ class Query extends Logic
 {
 
     /**
+     * Query constructor.
+     * @param \think\db\Query|string $dbQuery
+     */
+    public function __construct($dbQuery)
+    {
+        $this->query = scheme_db($dbQuery);
+    }
+
+    /**
      * 逻辑器初始化
      * @param Controller $controller
      * @return $this
      */
     public function init(Controller $controller)
     {
+        $this->request = request();
         $this->controller = $controller;
         return $this;
     }
@@ -41,7 +51,7 @@ class Query extends Logic
      */
     public function db()
     {
-        return $this->db;
+        return $this->query;
     }
 
     /**
@@ -54,7 +64,7 @@ class Query extends Logic
     {
         $data = $this->request->$inputType();
         foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
-            if (isset($data[$field]) && $data[$field] !== '') $this->db->whereLike($field, "%{$data[$field]}%");
+            if (isset($data[$field]) && $data[$field] !== '') $this->query->whereLike($field, "%{$data[$field]}%");
         }
         return $this;
     }
@@ -69,7 +79,7 @@ class Query extends Logic
     {
         $data = $this->request->$inputType();
         foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
-            if (isset($data[$field]) && $data[$field] !== '') $this->db->where($field, "{$data[$field]}");
+            if (isset($data[$field]) && $data[$field] !== '') $this->query->where($field, "{$data[$field]}");
         }
         return $this;
     }
@@ -86,7 +96,7 @@ class Query extends Logic
         $data = $this->request->$inputType();
         foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
             if (isset($data[$field]) && $data[$field] !== '') {
-                $this->db->whereIn($field, explode($split, $data[$field]));
+                $this->query->whereIn($field, explode($split, $data[$field]));
             }
         }
         return $this;
@@ -99,7 +109,7 @@ class Query extends Logic
      */
     public function where($where)
     {
-        $this->db->where($where);
+        $this->query->where($where);
         return $this;
     }
 
@@ -116,7 +126,7 @@ class Query extends Logic
         foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
             if (isset($data[$field]) && $data[$field] !== '') {
                 list($start, $end) = explode($split, $data[$field]);
-                $this->db->whereBetween($field, ["{$start} 00:00:00", "{$end} 23:59:59"]);
+                $this->query->whereBetween($field, ["{$start} 00:00:00", "{$end} 23:59:59"]);
             }
         }
         return $this;
@@ -135,7 +145,7 @@ class Query extends Logic
         foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
             if (isset($data[$field]) && $data[$field] !== '') {
                 list($start, $end) = explode($split, $data[$field]);
-                $this->db->whereBetween($field, ["{$start}", "{$end}"]);
+                $this->query->whereBetween($field, ["{$start}", "{$end}"]);
             }
         }
         return $this;

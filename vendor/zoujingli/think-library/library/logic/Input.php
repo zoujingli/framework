@@ -87,6 +87,7 @@ class Input extends Logic
      */
     public function init(Controller $controller)
     {
+        $this->request = request();
         $this->controller = $controller;
         $validate = \think\Validate::make($this->rule, $this->info);
         if ($validate->check($this->data)) return $this->data;

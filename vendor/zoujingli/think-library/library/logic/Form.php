@@ -65,9 +65,9 @@ class Form extends Logic
      */
     public function __construct($dbQuery, $tpl = '', $pkField = '', $where = [], $data = [])
     {
-        parent::__construct($dbQuery);
+        $this->query = scheme_db($dbQuery);
         list($this->tpl, $this->where, $this->data) = [$tpl, $where, $data];
-        $this->pkField = empty($pkField) ? ($this->db->getPk() ? $this->db->getPk() : 'id') : $pkField;;
+        $this->pkField = empty($pkField) ? ($this->query->getPk() ? $this->query->getPk() : 'id') : $pkField;;
         $this->pkValue = input($this->pkField, isset($data[$this->pkField]) ? $data[$this->pkField] : null);
     }
 
@@ -84,12 +84,13 @@ class Form extends Logic
      */
     public function init(Controller $controller, $data = [])
     {
+        $this->request = request();
         $this->controller = $controller;
         // GET请求, 获取数据并显示表单页面
         if ($this->request->isGet()) {
             if ($this->pkValue !== null) {
                 $where = [$this->pkField => $this->pkValue];
-                $data = (array)$this->db->where($where)->where($this->where)->find();
+                $data = (array)$this->query->where($where)->where($this->where)->find();
             }
             $data = array_merge($data, $this->data);
             if (false !== $this->controller->_callback('_form_filter', $data)) {
@@ -101,7 +102,7 @@ class Form extends Logic
         if ($this->request->isPost()) {
             $data = array_merge($this->request->post(), $this->data);
             if (false !== $this->controller->_callback('_form_filter', $data, $this->where)) {
-                $result = Data::save($this->db, $data, $this->pkField, $this->where);
+                $result = Data::save($this->query, $data, $this->pkField, $this->where);
                 if (false !== $this->controller->_callback('_form_result', $result, $data)) {
                     if ($result !== false) $this->controller->success('恭喜, 数据保存成功!', '');
                     $this->controller->error('数据保存失败, 请稍候再试!');

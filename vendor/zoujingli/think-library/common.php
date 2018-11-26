@@ -33,16 +33,17 @@ if (!function_exists('scheme_db')) {
      * @param \think\db\Query|string $dbQuery
      * @param string $method
      * @return \think\db\Query
+     * @throws \think\Exception
      */
     function scheme_db($dbQuery, $method = 'name')
     {
-        if (is_string($dbQuery)) {
-            if (class_exists('think\facade\Db')) {
-                return \think\facade\Db::$method($dbQuery);
+        if (is_object($dbQuery)) return $dbQuery;
+        foreach (['\think\facade\Db', '\think\Db'] as $class) {
+            if (class_exists(trim($class, '\\'))) {
+                return $class::$method($dbQuery);
             }
-            return \think\Db::$method($dbQuery);
         }
-        return $dbQuery;
+        throw new \think\Exception("Not Found Db Class {$dbQuery}");
     }
 }
 

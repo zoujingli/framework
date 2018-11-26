@@ -28,7 +28,7 @@ abstract class Logic
      * 数据库操作对象
      * @var \think\db\Query
      */
-    protected $db;
+    protected $query;
 
     /**
      * 当前请求对象
@@ -41,16 +41,6 @@ abstract class Logic
      * @var \library\Controller
      */
     protected $controller;
-
-    /**
-     * View constructor.
-     * @param string|Query $dbQuery
-     */
-    public function __construct($dbQuery)
-    {
-        $this->request = request();
-        $this->db = scheme_db($dbQuery);
-    }
 
     /**
      * 逻辑器初始化
