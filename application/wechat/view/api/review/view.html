@@ -6,11 +6,11 @@
     <h2>{$info.title}</h2>
     <h3>
         <span style="color:#666">{$info.author}</span>
-        <span style="margin-left:1vw;color:#666">{:date('Y年m月d日',strtotime($info.create_at))}</span>
+        <span style="margin-left:1vw">{:date('Y年m月d日',strtotime($info.create_at))}</span>
     </h3>
     {if $info.show_cover_pic and $info.local_url}<img src="{$info.local_url}" style="width:100%">{/if}
     <div class='content'>{$info.content|raw}</div>
-    <div style="font-size:12px;color:#ccc">阅读 {$info.read_num}</div>
+    <div style="font-size:12px;color:#999">阅读 {$info.read_num}</div>
     {else}
     <div class="info"><h3>404</h3> 访问资源不存在哦！</div>
     {/notempty}
@@ -33,14 +33,18 @@
     }
 
     .container h2 {
-        overflow: hidden;
         font-size: 4vw;
+        overflow: hidden;
+        font-weight: 400;
         white-space: normal;
         text-overflow: ellipsis;
     }
 
     .container h3 {
+        color: #999;
         font-size: 2vw;
+        font-weight: 400;
+        line-height: 1.2em;
     }
 
     .container .content {
