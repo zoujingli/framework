@@ -27,6 +27,25 @@ if (!function_exists('p')) {
     }
 }
 
+if (!function_exists('scheme_db')) {
+    /**
+     * 获取兼容Db方法
+     * @param \think\db\Query|string $dbQuery
+     * @param string $method
+     * @return \think\db\Query
+     */
+    function scheme_db($dbQuery, $method = 'name')
+    {
+        if (is_string($dbQuery)) {
+            if (class_exists('think\facade\Db')) {
+                return \think\facade\Db::$method($dbQuery);
+            }
+            return \think\Db::$method($dbQuery);
+        }
+        return $dbQuery;
+    }
+}
+
 if (!function_exists('format_datetime')) {
     /**
      * 日期格式标准输出
@@ -56,7 +75,7 @@ if (!function_exists('sysconf')) {
             list($row, $data) = [['name' => $name, 'value' => $value], []];
             return \library\tools\Data::save('SystemConfig', $row, 'name');
         }
-        if (empty($data)) $data = \think\Db::name('SystemConfig')->column('name,value');
+        if (empty($data)) $data = scheme_db('SystemConfig')->column('name,value');
         return isset($data[$name]) ? $data[$name] : '';
     }
 }

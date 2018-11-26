@@ -25,11 +25,11 @@ class Query extends Logic
 {
 
     /**
-     * 应用初始化
+     * 逻辑器初始化
      * @param Controller $controller
      * @return $this
      */
-    protected function init(Controller $controller)
+    public function init(Controller $controller)
     {
         $this->controller = $controller;
         return $this;

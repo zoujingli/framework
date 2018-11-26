@@ -57,21 +57,21 @@ class Save extends Logic
      */
     public function __construct($dbQuery, $data = [], $pkField = '', $where = [])
     {
-        parent::__construct($dbQuery);
         $this->where = $where;
+        parent::__construct($dbQuery);
         $this->data = empty($data) ? $this->request->post() : $data;
         $this->pkField = empty($pkField) ? $this->db->getPk() : $pkField;
         $this->pkValue = $this->request->post($this->pkField, null);
     }
 
     /**
-     * 组件应用器
+     * 逻辑器初始化
      * @param Controller $controller
      * @return boolean
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
-    protected function init(Controller $controller)
+    public function init(Controller $controller)
     {
         $this->controller = $controller;
         // 主键限制处理

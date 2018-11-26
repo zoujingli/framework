@@ -41,7 +41,7 @@ class Cors
      */
     public static function getSessionToken()
     {
-        if (2 !== session_status()) Session::init(config('session.'));
+        if (PHP_SESSION_ACTIVE !== session_status()) Session::init(config('session.'));
         return Crypt::encode(session_name() . '=' . session_id());
     }
 
@@ -51,10 +51,14 @@ class Cors
     public static function setSessionToken()
     {
         try {
-            if ($token = app('request')->header('token', input('token', ''))) {
-                list($name, $value) = explode('=', Crypt::decode($token));
-                if (2 !== session_status()) Session::init(config('session.'));
-                if (!empty($value) && session_name() === $name) session_id($value);
+            if (PHP_SESSION_ACTIVE !== session_status()) Session::init(config('session.'));
+            if ($token = request()->header('token', input('token', cookie('token')))) {
+                list($name, $value) = explode('=', Crypt::decode($token) . '=');
+                if (!empty($value) && session_name() === $name && session_id() !== $value) {
+                    Session::destroy(); # 注销原来的会话
+                    session_id($value); # 切换到指定的会话
+                    Session::init(config('session.')); # 刷新重启会话
+                }
             }
         } catch (\Exception $e) {
             Log::error(__METHOD__ . " : {$e->getMessage()}");

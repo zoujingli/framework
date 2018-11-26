@@ -66,7 +66,7 @@ class Page extends Logic
     }
 
     /**
-     * 应用初始化
+     * 逻辑器初始化
      * @param Controller $controller
      * @return mixed
      * @throws \think\Exception
@@ -75,24 +75,12 @@ class Page extends Logic
      * @throws \think\exception\DbException
      * @throws \think\exception\PDOException
      */
-    protected function init(Controller $controller)
+    public function init(Controller $controller)
     {
         $this->controller = $controller;
         if ($this->request->isPost()) {
             $this->_sort();
         }
-        return $this->_page();
-    }
-
-    /**
-     * 列表集成处理方法
-     * @return mixed
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     */
-    protected function _page()
-    {
         // 未配置 order 规则时自动按 sort 字段排序
         if (!$this->db->getOptions('order') && method_exists($this->db, 'getTableFields')) {
             if (in_array('sort', $this->db->getTableFields())) $this->db->order('sort asc');
@@ -103,12 +91,12 @@ class Page extends Logic
             $limit = intval($this->request->get('limit', cookie('page-limit')));
             cookie('page-limit', $limit = $limit >= 10 ? $limit : 20);
             if ($this->limit > 0) $limit = $this->limit;
-            list($rows, $query) = [[], $this->request->get()];
-            $page = $this->db->paginate($limit, $this->total, ['query' => $query]);
+            $rows = [];
+            $page = $this->db->paginate($limit, $this->total, ['query' => ($query = $this->request->get())]);
             foreach ([10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200] as $num) {
                 list($query['limit'], $query['page'], $selected) = [$num, '1', $limit === $num ? 'selected' : ''];
                 $url = url('@admin') . '#' . $this->request->baseUrl() . '?' . urldecode(http_build_query($query));
-                $rows[] = "<option data-num='{$num}' value='{$url}' {$selected}>{$num}</option>";
+                array_push($rows, "<option data-num='{$num}' value='{$url}' {$selected}>{$num}</option>");
             }
             $select = "<select onchange='location.href=this.options[this.selectedIndex].value' data-auto-none>" . join('', $rows) . "</select>";
             $html = "<div class='pagination-container nowrap'><span>共 {$page->total()} 条记录，每页显示 {$select} 条，共 {$page->lastPage()} 页当前显示第 {$page->currentPage()} 页。</span>{$page->render()}</div>";

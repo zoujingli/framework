@@ -94,13 +94,13 @@ class File
      */
     public static function instance($name)
     {
-        if (!isset(self::$object[$class = ucfirst(strtolower($name))])) {
-            if (class_exists($object = __NAMESPACE__ . "\\driver\\{$class}")) {
-                return self::$object[$class] = new $object;
-            }
-            throw new \think\Exception("File driver [{$class}] does not exist.");
+        if (isset(self::$object[$class = ucfirst(strtolower($name))])) {
+            return self::$object[$class];
         }
-        return self::$object[$class];
+        if (class_exists($object = __NAMESPACE__ . "\\driver\\{$class}")) {
+            return self::$object[$class] = new $object;
+        }
+        throw new \think\Exception("File driver [{$class}] does not exist.");
     }
 
     /**
@@ -145,12 +145,11 @@ class File
      */
     public static function name($url, $ext = '', $pre = '', $fun = 'md5')
     {
-
         empty($ext) && $ext = pathinfo($url, 4);
         empty($ext) || $ext = trim($ext, '.\\/');
         empty($pre) || $pre = trim($pre, '.\\/');
         $splits = array_merge([$pre], str_split($fun($url), 16));
-        return trim(join('/', $splits), '/') . '.' . ($ext ? $ext : 'tmp');
+        return trim(join('/', $splits), '/') . '.' . strtolower($ext ? $ext : 'tmp');
     }
 
     /**
@@ -164,7 +163,7 @@ class File
         try {
             $file = self::instance('local');
             $name = self::name($url, '', 'down/');
-            if (!$force && $file->has($name)) return $file->info($name);
+            if (empty($force) && $file->has($name)) return $file->info($name);
             return $file->save($name, file_get_contents($url));
         } catch (\Exception $e) {
             \think\facade\Log::error(__METHOD__ . " File download failed [ {$url} ] {$e->getMessage()}");

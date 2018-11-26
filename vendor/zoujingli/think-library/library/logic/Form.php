@@ -72,7 +72,7 @@ class Form extends Logic
     }
 
     /**
-     * 应用初始化
+     * 逻辑器初始化
      * @param Controller $controller
      * @param array $data
      * @return array|boolean
@@ -82,7 +82,7 @@ class Form extends Logic
      * @throws \think\exception\DbException
      * @throws \think\exception\PDOException
      */
-    protected function init(Controller $controller, $data = [])
+    public function init(Controller $controller, $data = [])
     {
         $this->controller = $controller;
         // GET请求, 获取数据并显示表单页面
