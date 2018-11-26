@@ -5,17 +5,64 @@
 <div class="container">
     <div class="logo"></div>
     <div class="text">
-        <div class="left">
-            <div>{:input('title')}</div>
-            <div>{:input('desc')}</div>
+        <div style="display:table">
+            <div style="display:table-cell;width:100%">
+                <div style="font-size:2vw;height:2em;overflow:hidden">{:input('title')}</div>
+                <div style="font-size:1vw;height:2em;overflow:hidden;color:#ccc">{:input('desc')}</div>
+            </div>
+            <div style="display:table-cell;vertical-align:middle;padding-left:10px">
+                <a href="javascript:void(0)" id="audio_btn" class="icon icon-pause"></a>
+                <audio id="audio">
+                    <source src="{:input('url')}">
+                </audio>
+                <script>
+                    let audio = document.getElementById('audio');
+                    let button = document.getElementById('audio_btn');
+                    setInterval(function () {
+                        button.className = audio.paused ? 'icon icon-pause' : 'icon icon-play';
+                    }, 500);
+                    button.onclick = function () {
+                        audio.paused ? audio.play() : audio.pause()
+                    }
+                </script>
+            </div>
         </div>
-        <div class="right"></div>
     </div>
 </div>
 {/block}
 
 {block name='style'}
 <style>
+
+    .icon {
+        color: white;
+        width: 20px;
+        height: 20px;
+        padding: 5px;
+        border: 1px solid white;
+        text-align: center;
+        border-radius: 50%;
+        display: inline-block;
+        position: relative;
+        text-decoration: none !important;
+    }
+
+    .icon-play:after {
+        top: 4px;
+        left: 8px;
+        content: '〓';
+        position: absolute;
+        transform: rotate(90deg);
+        -ms-transform: rotate(90deg)
+    }
+
+    .icon-pause:before {
+        top: 3px;
+        left: 10px;
+        content: '▶';
+        position: absolute;
+    }
+
     .header {
         text-align: center;
         margin-top: 15px
@@ -59,18 +106,19 @@
     .container .text {
         padding: 13px;
         position: relative;
+        background: #080;
         line-height: 1.5em;
         border-radius: 5px;
+        width: 100%;
         border: 1px solid #ccc;
-        background: #080;
     }
 
-    .container .text:before {
-        left: -12px;
+    .container .text:after {
+        top: 0.3em;
         color: #080;
-        width: 10px;
-        height: 10px;
-        content: "◀";
+        left: -0.29em;
+        content: "◆";
+        font-size: 35px;
         position: absolute;
     }
 
@@ -78,23 +126,6 @@
         color: white;
     }
 
-    .container .text .left div:first-child {
-        font-size: 14px;
-        line-height: 18px;
-    }
-
-    .container .text .left div:last-child {
-        font-size: 12px;
-        line-height: 18px;
-    }
-
-    .container .text .right {
-        float: right;
-    }
-
-    .container .text .right:after {
-        content: '>';
-    }
 
 </style>
 

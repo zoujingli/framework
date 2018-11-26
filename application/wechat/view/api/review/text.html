@@ -62,14 +62,18 @@
         border: 1px solid #ccc;
     }
 
-    .container .text:before {
-        left: -11px;
+    .container .text:after, .container .text:before {
+        top: 0.3em;
+        left: -0.28em;
         color: white;
-        width: 10px;
-        height: 10px;
-        content: "◀";
+        content: "◆";
+        font-size: 35px;
         position: absolute;
-        text-shadow: -2px 0 0 #ccc;
+    }
+
+    .container .text:before {
+        color: #ccc;
+        left: -0.33em;
     }
 
 </style>
