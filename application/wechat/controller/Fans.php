@@ -14,7 +14,10 @@
 
 namespace app\wechat\controller;
 
+use app\wechat\logic\Wechat;
 use library\Controller;
+use think\Db;
+use think\exception\HttpResponseException;
 
 /**
  * 微信粉丝管理
@@ -48,6 +51,40 @@ class Fans extends Controller
     {
         foreach ($data as &$user) foreach (['country', 'province', 'city', 'nickname', 'remark'] as $k) {
             if (isset($user[$k])) $user[$k] = emoji_decode($user[$k]);
+        }
+    }
+
+    /**
+     * 批量拉黑粉丝
+     */
+    public function setBlack()
+    {
+        try {
+            $openid = explode(',', $this->request->post('openid'));
+            \We::WeChatUser(Wechat::config())->batchBlackList($openid);
+            Db::name('WechatFans')->whereIn('openid', $openid)->update(['is_black' => '1']);
+            $this->success('拉黑粉丝信息成功！');
+        } catch (HttpResponseException $exception) {
+            throw  $exception;
+        } catch (\Exception $e) {
+            $this->error("拉黑粉丝信息失败，请稍候再试！{$e->getMessage()}");
+        }
+    }
+
+    /**
+     *批量取消拉黑粉丝
+     */
+    public function delBlack()
+    {
+        try {
+            $openid = explode(',', $this->request->post('openid'));
+            \We::WeChatUser(Wechat::config())->batchUnblackList($openid);
+            Db::name('WechatFans')->whereIn('openid', $openid)->update(['is_black' => '0']);
+            $this->success('取消拉黑粉丝信息成功！');
+        } catch (HttpResponseException $exception) {
+            throw  $exception;
+        } catch (\Exception $e) {
+            $this->error("取消拉黑粉丝信息失败，请稍候再试！{$e->getMessage()}");
         }
     }
 
