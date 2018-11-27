@@ -45,7 +45,7 @@
                 <tr>
                     <td class='text-left nowrap'>
                         <span class="color-desc">{$vo.spl|raw}</span> {$vo.node}
-                        {if auth("admin/node/save")}&nbsp;<input class='layui-input inline-block title-input' name='title' data-node="{$vo.node}" value="{$vo.title}">{/if}
+                        {if auth("admin/node/save")}&nbsp;<input autocomplete="off" class='layui-input inline-block title-input' name='title' data-node="{$vo.node}" value="{$vo.title}">{/if}
                     </td>
                     <td class='text-left nowrap text-middle'>
                         {if auth("admin/node/save") and $vo.spt eq 1}
