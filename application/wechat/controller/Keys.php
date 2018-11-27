@@ -20,6 +20,7 @@ use think\Db;
 
 
 /**
+ * 回复规则管理
  * Class Keys
  * @package app\wechat\controller
  */
@@ -50,7 +51,7 @@ class Keys extends Controller
             }
         }
         // 关键字列表显示
-        $this->title = '微信关键字管理';
+        $this->title = '回复规则管理';
         $db = Db::name($this->table)->whereNotIn('keys', ['subscribe', 'default']);
         return $this->_page($db->order('sort asc,id desc'));
     }
@@ -62,7 +63,10 @@ class Keys extends Controller
     protected function _index_page_filter(&$data)
     {
         try {
-            $types = ['keys' => '关键字', 'image' => '图片', 'news' => '图文', 'music' => '音乐', 'text' => '文字', 'video' => '视频', 'voice' => '语音'];
+            $types = [
+                'keys' => '关键字', 'image' => '图片', 'news' => '图文', 'music' => '音乐',
+                'text' => '文字', 'video' => '视频', 'voice' => '语音',
+            ];
             foreach ($data as &$vo) {
                 $vo['qrc'] = url('@wechat/keys/index') . "?action=qrc&keys={$vo['keys']}";
                 $vo['type'] = isset($types[$vo['type']]) ? $types[$vo['type']] : $vo['type'];
