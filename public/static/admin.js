@@ -582,14 +582,6 @@ $(function () {
         img.src = src;
     };
 
-    /*! 注册 data-tips-text 事件行为 */
-    $body.on('mouseenter', '[data-tips-text]', function () {
-        let text = $(this).attr('data-tips-text'), type = $(this).attr('data-tips-type');
-        $(this).attr('index', layer.tips(text, this, {tips: [type || 3, '#78BA32']}));
-    }).on('mouseleave', '[data-tips-text]', function () {
-        layer.close($(this).attr('index'));
-    });
-
     /*! 注册 data-phone-view 事件行为 */
     $body.on('click', '[data-phone-view]', function () {
         $.previewPhonePage(this.getAttribute('data-phone-view') || this.href);
@@ -605,6 +597,14 @@ $(function () {
             }
         }), {boxShadow: 'none'});
     };
+
+    /*! 注册 data-tips-text 事件行为 */
+    $body.on('mouseenter', '[data-tips-text]', function () {
+        let text = $(this).attr('data-tips-text'), type = $(this).attr('data-tips-type');
+        $(this).attr('index', layer.tips(text, this, {tips: [type || 3, '#78BA32']}));
+    }).on('mouseleave', '[data-tips-text]', function () {
+        layer.close($(this).attr('index'));
+    });
 
     /*! 初始化 */
     $.menu.listen();
