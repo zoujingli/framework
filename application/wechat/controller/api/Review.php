@@ -68,12 +68,12 @@ class Review extends Controller
 
     public function video()
     {
-        return __METHOD__;
+        return $this->fetch();
     }
 
     public function voice()
     {
-        return __METHOD__;
+        return $this->fetch();
     }
 
     public function music()

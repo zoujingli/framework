@@ -1,0 +1,129 @@
+{extend name='wechat@api/review/main'}
+
+{block name='content'}
+<div class="header"><span>{:date('H:i')}</span></div>
+<div class="container">
+    <div class="logo"></div>
+    <div class="text">
+        <a>♪ ♫ ♩ ♬ ♭</a>
+        <a href="javascript:void(0)" id="audio_btn" class="icon icon-pause"></a>
+        <audio id="audio">
+            <source src="{:input('url')}">
+        </audio>
+        <script>
+            let audio = document.getElementById('audio');
+            let button = document.getElementById('audio_btn');
+            setInterval(function () {
+                button.className = audio.paused ? 'icon icon-pause' : 'icon icon-play';
+            }, 500);
+            button.onclick = function () {
+                audio.paused ? audio.play() : audio.pause()
+            }
+        </script>
+    </div>
+</div>
+{/block}
+
+{block name='style'}
+<style>
+
+    .header {
+        text-align: center;
+        margin-top: 15px
+    }
+
+    .header span {
+        font-size: 8px;
+        background: #ccc;
+        padding: 5px;
+        border-radius: 10%
+    }
+
+    .icon {
+        color: #333;
+        width: 20px;
+        height: 20px;
+        border: 1px solid white;
+        border-radius: 50%;
+        display: inline-block;
+        position: relative;
+        text-align: right;
+        float: right;
+        text-decoration: none !important;
+    }
+
+    .icon-play:after {
+        top: 0;
+        left: 3px;
+        content: '〓';
+        position: absolute;
+        transform: rotate(90deg);
+        -ms-transform: rotate(90deg)
+    }
+
+    .icon-pause:before {
+        top: -1px;
+        left: 5px;
+        content: '▶';
+        position: absolute;
+    }
+
+    .container {
+        width: 90%;
+        color: #333;
+        margin: 5vw auto;
+        display: block;
+        overflow: hidden;
+        position: relative;
+        text-overflow: ellipsis;
+    }
+
+    .container .logo {
+        color: #fff;
+        float: left;
+        background: #f5f5f5;
+        padding-right: 15px;
+    }
+
+    .container .logo:after {
+        width: 50px;
+        height: 50px;
+        content: 'A';
+        line-height: 50px;
+        text-align: center;
+        background: #009688;
+        border-radius: 50%;
+        display: inline-block;
+    }
+
+    .container .text {
+        width: 50%;
+        color: #999;
+        text-align: left;
+        float: left;
+        padding: 13px;
+        max-width: 192px;
+        position: relative;
+        line-height: 1.5em;
+        border-radius: 5px;
+        background: white;
+        border: 1px solid #ccc;
+    }
+
+    .container .text:after, .container .text:before {
+        top: 0.3em;
+        left: -0.28em;
+        color: white;
+        content: "◆";
+        font-size: 35px;
+        position: absolute;
+    }
+
+    .container .text:before {
+        color: #ccc;
+        left: -0.33em;
+    }
+
+</style>
+
+{/block}

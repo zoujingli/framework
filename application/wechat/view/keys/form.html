@@ -247,6 +247,11 @@
             showReview({type: 'image', content: this.value});
         });
 
+        // 图片显示预览
+        $body.off('change', '[name="voice_url"]').on('change', '[name="voice_url"]', function () {
+            showReview({type: 'voice', content: this.value});
+        });
+
         // 音乐显示预览
         let musicSelector = '[name="music_url"],[name="music_title"],[name="music_desc"],[name="music_image"]';
         $body.off('change', musicSelector).on('change', musicSelector, function () {
