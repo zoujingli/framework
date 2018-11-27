@@ -2,6 +2,14 @@
 
 {block name="button"}
 
+<!--{if auth("wechat/keys/subscribe")}-->
+<button data-open="{:url('subscribe')}?spm={:input('spm')}" class='layui-btn layui-btn-sm layui-btn-primary'>关注回复</button>
+<!--{/if}-->
+
+<!--{if auth("wechat/keys/defaults")}-->
+<button data-open="{:url('defaults')}?spm={:input('spm')}" class='layui-btn layui-btn-sm layui-btn-primary'>默认回复</button>
+<!--{/if}-->
+
 <!--{if auth("wechat/keys/add")}-->
 <button data-open="{:url('add')}" class='layui-btn layui-btn-sm layui-btn-primary'>添加规则</button>
 <!--{/if}-->
