@@ -33,9 +33,9 @@ class Review extends Controller
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      */
-    public function news($id)
+    public function news($id = 0)
     {
-        $this->news = Media::news($id);
+        $this->news = Media::news(empty($id) ? input('id') : $id);
         return $this->fetch();
     }
 
@@ -49,9 +49,9 @@ class Review extends Controller
      * @throws \think\exception\DbException
      * @throws \think\exception\PDOException
      */
-    public function view($id)
+    public function view($id = 0)
     {
-        $where = ['id' => $id];
+        $where = ['id' => empty($id) ? input('id') : $id];
         Db::name('WechatNewsArticle')->where($where)->update(['read_num' => Db::raw('read_num+1')]);
         return $this->fetch('', ['info' => Db::name('WechatNewsArticle')->where($where)->find()]);
     }

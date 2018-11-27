@@ -44,19 +44,19 @@
                 <input name="_{$vo.id}" value="{$vo.sort}" class="list-sort-input"/>
             </td>
             <td class="text-left nowrap">
-                {if !empty($vo.qrc)}<i class="fa fa-qrcode fa-lg pointer" data-tips-image="{$vo.qrc}" data-tips-text="关键字二维码"></i>{/if}
+                {notempty name='vo.qrc'}<i class="fa fa-qrcode fa-lg pointer margin-right-5" data-load="{$vo.qrc}" data-time="0.01" data-tips-text="生成关键字二维码"></i>{/notempty}
                 {$vo.keys}
             </td>
             <td class="text-left nowrap">{$vo.type}</td>
             <td class="text-left nowrap">
                 {if $vo.type eq '音乐'}
-                <a data-phone-view='{:url("@wechat/review")}?type=music&title={$vo.music_title|urlencode}&desc={$vo.music_desc|urlencode}'>预览 <i class="fa fa-eye"></i></a>
+                <a data-phone-view='{:url("@wechat/api.review/music")}?title={$vo.music_title|urlencode}&desc={$vo.music_desc|urlencode}'>预览 <i class="fa fa-eye"></i></a>
                 {elseif $vo.type eq '文字'}
-                <a data-phone-view='{:url("@wechat/review")}?type=text&content={$vo.content|urlencode}'>预览 <i class="fa fa-eye"></i></a>
+                <a data-phone-view='{:url("@wechat/api.review/text")}?content={$vo.content|urlencode}'>预览 <i class="fa fa-eye"></i></a>
                 {elseif $vo.type eq '图片'}
-                <a data-phone-view='{:url("@wechat/review")}?type=image&content={$vo.image_url|urlencode}'>预览 <i class="fa fa-eye"></i></a>
+                <a data-phone-view='{:url("@wechat/api.review/image")}?content={$vo.image_url|urlencode}'>预览 <i class="fa fa-eye"></i></a>
                 {elseif $vo.type eq '图文'}
-                <a data-phone-view='{:url("@wechat/review")}?type=news&content={$vo.news_id}'>预览 <i class="fa fa-eye"></i></a>
+                <a data-phone-view='{:url("@wechat/api.review/news/".$vo.news_id)}'>预览 <i class="fa fa-eye"></i></a>
                 {elseif $vo.type eq '视频'}
                 <a data-phone-view='{:url("@wechat/review")}?type=video&title={$vo.video_title|urlencode}&desc={$vo.video_desc|urlencode}&url={$vo.video_url|urlencode}'>预览 <i class="fa fa-eye"></i></a>
                 {else}

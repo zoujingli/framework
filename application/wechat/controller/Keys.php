@@ -14,8 +14,10 @@
 
 namespace app\wechat\controller;
 
+use app\wechat\logic\Wechat;
 use library\Controller;
 use think\Db;
+
 
 /**
  * Class Keys
@@ -35,6 +37,19 @@ class Keys extends Controller
      */
     public function index()
     {
+        // 关键字二维码生成
+        if ($this->request->get('action') === 'qrc') {
+            try {
+                $wechat = \We::WeChatQrcode(Wechat::config());
+                $result = $wechat->create($this->request->get('keys', ''));
+                $this->success('生成二维码成功！', "javascript:$.previewImage('{$wechat->url($result['ticket'])}')");
+            } catch (\think\exception\HttpResponseException $exception) {
+                throw  $exception;
+            } catch (\Exception $e) {
+                $this->error("生成二维码失败，请稍候再试！<br> {$e->getMessage()}");
+            }
+        }
+        // 关键字列表显示
         $this->title = '微信关键字管理';
         $db = Db::name($this->table)->whereNotIn('keys', ['subscribe', 'default']);
         return $this->_page($db->order('sort asc,id desc'));
@@ -44,7 +59,7 @@ class Keys extends Controller
      * 列表数据处理
      * @param array $data
      */
-    protected function _index_data_filter(&$data)
+    protected function _index_page_filter(&$data)
     {
         try {
             $types = ['keys' => '关键字', 'image' => '图片', 'news' => '图文', 'music' => '音乐', 'text' => '文字', 'video' => '视频', 'voice' => '语音'];

@@ -452,11 +452,11 @@ $(function () {
 
     /*! 注册 data-load 事件行为 */
     $body.on('click', '[data-load]', function () {
-        let url = $(this).attr('data-load'), tips = $(this).attr('data-tips');
+        let url = $(this).attr('data-load'), tips = $(this).attr('data-tips'), time = $(this).attr('data-time');
         if ($(this).attr('data-confirm')) return $.msg.confirm($(this).attr('data-confirm'), function () {
-            $.form.load(url, {}, 'get', null, true, tips);
+            $.form.load(url, {}, 'get', null, true, tips, time);
         });
-        $.form.load(url, {}, 'get', null, true, tips);
+        $.form.load(url, {}, 'get', null, true, tips, time);
     });
 
     /*! 注册 data-serach 表单搜索行为 */
@@ -545,39 +545,42 @@ $(function () {
 
     /*! 注册 data-copy 事件行为 */
     $body.on('click', '[data-copy]', function () {
+        $.copyToClipboard(this.getAttribute('data-copy'));
+    });
+    $.copyToClipboard = function (content) {
         let input = document.createElement('textarea');
-        input.style.width = '1px', input.style.height = '1px';
         input.style.position = 'absolute', input.style.left = '-100000px';
-        input.innerText = this.getAttribute('data-copy') || this.innerHTML;
+        input.style.width = '1px', input.style.height = '1px', input.innerText = content;
         document.body.appendChild(input), input.select(), setTimeout(function () {
             if (document.execCommand('Copy')) $.msg.tips('复制成功');
             else $.msg.tips('复制失败，请使用鼠标操作复制！');
             document.body.removeChild(input);
         }, 100);
-    });
+    };
 
     /*! 注册 data-tips-image 事件行为 */
     $body.on('click', '[data-tips-image]', function () {
-        let img = new Image(), index = $.msg.loading();
-        let width = this.getAttribute('data-width') || '480px';
+        $.previewImage(this.getAttribute('data-tips-image') || this.src, this.getAttribute('data-width'));
+    });
+    $.previewImage = function (src, width) {
+        let img = new Image(), index = $.msg.loading(), _width = width || '480px';
         img.onerror = function () {
             $.msg.close(index);
         };
         img.onload = function () {
-            let $content = $(img).appendTo('body').css({background: '#fff', width: width, height: 'auto'});
             layer.open({
-                type: 1, area: width, title: false, closeBtn: 1,
-                skin: 'layui-layer-nobg', shadeClose: true, content: $content,
+                type: 1, area: _width, title: false, closeBtn: 1, skin: 'layui-layer-nobg', shadeClose: true,
+                content: $(img).appendTo('body').css({background: '#fff', width: _width, height: 'auto'}),
                 end: function () {
-                    $(img).remove();
+                    $(img).remove()
                 },
                 success: function () {
                     $.msg.close(index);
                 }
             });
         };
-        img.src = this.getAttribute('data-tips-image') || this.src;
-    });
+        img.src = src;
+    };
 
     /*! 注册 data-tips-text 事件行为 */
     $body.on('mouseenter', '[data-tips-text]', function () {
@@ -589,8 +592,11 @@ $(function () {
 
     /*! 注册 data-phone-view 事件行为 */
     $body.on('click', '[data-phone-view]', function () {
-        let $container = $('<div class="mobile-preview pull-left"><div class="mobile-header">公众号</div><div class="mobile-body"><iframe id="phone-preview" frameborder="0" marginheight="0" marginwidth="0"></iframe></div></div>').appendTo('body');
-        $container.find('iframe').attr('src', this.getAttribute('data-phone-view') || this.href);
+        $.previewPhonePage(this.getAttribute('data-phone-view') || this.href);
+    });
+    $.previewPhonePage = function (href, title) {
+        let template = '<div class="mobile-preview pull-left"><div class="mobile-header">_TITLE_</div><div class="mobile-body"><iframe id="phone-preview" src="_URL_" frameborder="0" marginheight="0" marginwidth="0"></iframe></div></div>';
+        let $container = $(template.replace('_TITLE_', title || '公众号').replace('_URL_', href)).appendTo('body');
         layer.style(layer.open({
             type: true, scrollbar: false, area: ['320px', '600px'], title: false,
             closeBtn: true, skin: 'layui-layer-nobg', shadeClose: false, content: $container,
@@ -598,7 +604,7 @@ $(function () {
                 $container.remove();
             }
         }), {boxShadow: 'none'});
-    });
+    };
 
     /*! 初始化 */
     $.menu.listen();
