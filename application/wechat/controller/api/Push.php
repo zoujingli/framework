@@ -85,7 +85,7 @@ class Push extends Controller
     }
 
     /**
-     * 数据key管理
+     * 数组KEY全部转小写
      * @param array $data
      * @return array
      */
@@ -145,7 +145,6 @@ class Push extends Controller
             case 'scancode_push':
             case 'scancode_waitmsg':
                 if (empty($this->receive['scancodeinfo'])) return false;
-                $this->receive['scancodeinfo'] = (array)$this->receive['scancodeinfo'];
                 if (empty($this->receive['scancodeinfo']['scanresult'])) return false;
                 return $this->keys("wechat_keys#keys#{$this->receive['scancodeinfo']['scanresult']}");
             case 'scan':
