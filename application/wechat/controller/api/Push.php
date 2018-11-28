@@ -114,6 +114,7 @@ class Push extends Controller
      */
     protected function event()
     {
+        p($this->receive);
         switch (strtolower($this->receive['Event'])) {
             case 'subscribe':
                 $this->updateFansinfo(true);
