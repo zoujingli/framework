@@ -73,9 +73,8 @@ class Push extends Controller
             $this->wechat = \We::WeChatReceive(Wechat::config());
             $this->openid = $this->wechat->getOpenid();
             $this->receive = array_change_key_case($this->wechat->getReceive(), CASE_LOWER);
-            p($this->receive);
             // text, event, image, location
-            if (method_exists($this, ($method = $this->receive['MsgType']))) {
+            if (method_exists($this, ($method = $this->receive['msgtype']))) {
                 if (is_string(($result = $this->$method()))) return $result;
             }
             return 'success';
@@ -98,7 +97,7 @@ class Push extends Controller
      */
     protected function text()
     {
-        return $this->keys("wechat_keys#keys#{$this->receive['Content']}");
+        return $this->keys("wechat_keys#keys#{$this->receive['content']}");
     }
 
     /**
@@ -115,12 +114,11 @@ class Push extends Controller
      */
     protected function event()
     {
-        p($this->receive);
-        switch (strtolower($this->receive['Event'])) {
+        switch (strtolower($this->receive['event'])) {
             case 'subscribe':
                 $this->updateFansinfo(true);
-                if (isset($this->receive['EventKey']) && is_string($this->receive['EventKey'])) {
-                    if (($key = preg_replace('/^qrscene_/i', '', $this->receive['EventKey']))) {
+                if (isset($this->receive['eventkey']) && is_string($this->receive['eventkey'])) {
+                    if (($key = preg_replace('/^qrscene_/i', '', $this->receive['eventkey']))) {
                         return $this->keys("wechat_keys#keys#{$key}", false, true);
                     }
                 }
@@ -128,16 +126,16 @@ class Push extends Controller
             case 'unsubscribe':
                 return $this->updateFansinfo(false);
             case 'click':
-                return $this->keys($this->receive['EventKey']);
+                return $this->keys($this->receive['eventkey']);
             case 'scancode_push':
             case 'scancode_waitmsg':
-                if (empty($this->receive['ScanCodeInfo'])) return false;
-                $this->receive['ScanCodeInfo'] = (array)$this->receive['ScanCodeInfo'];
-                if (empty($this->receive['ScanCodeInfo']['ScanResult'])) return false;
-                return $this->keys("wechat_keys#keys#{$this->receive['ScanCodeInfo']['ScanResult']}");
+                if (empty($this->receive['scancodeinfo'])) return false;
+                $this->receive['scancodeinfo'] = (array)$this->receive['scancodeinfo'];
+                if (empty($this->receive['scancodeinfo']['scanresult'])) return false;
+                return $this->keys("wechat_keys#keys#{$this->receive['scancodeinfo']['scanresult']}");
             case 'scan':
-                if (empty($this->receive['EventKey'])) return false;
-                return $this->keys("wechat_keys#keys#{$this->receive['EventKey']}");
+                if (empty($this->receive['eventkey'])) return false;
+                return $this->keys("wechat_keys#keys#{$this->receive['eventkey']}");
             default:
                 return false;
         }
