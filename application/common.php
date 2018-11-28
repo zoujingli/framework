@@ -23,3 +23,22 @@ if (!function_exists('auth')) {
         return \app\admin\logic\Auth::checkAuthNode($node);
     }
 }
+
+if (!function_exists('sysdata')) {
+    /**
+     * JSON 数据读取与存储
+     * @param string $name
+     * @param array|null $value
+     * @return array|null|boolean
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     */
+    function sysdata($name, array $value = null)
+    {
+        if (is_null($value)) {
+            $json = json_decode(\think\Db::name('SystemObject')->where('name', $name)->value('value'), true);
+            return empty($json) ? null : $json;
+        }
+        return data_save('SystemObject', ['name' => $name, 'value' => json_encode($value, 256)]);
+    }
+}

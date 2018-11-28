@@ -176,16 +176,17 @@ label.think-radio{display:inline-block;margin-right:10px}
 .mobile-body iframe{width:100%;height:100%}
 .mobile-footer{position:absolute;right:0;bottom:0;left:0;margin:0;padding-left:43px;border:1px solid #e7e7eb;background:url(../img/wechat/mobile_foot.png) no-repeat 0 0;list-style-type:none}
 .mobile-footer li{position:relative;float:left;width:33.33%;text-align:center;line-height:50px}
-.mobile-footer li a{display:block;overflow:hidden;width:auto;border:1px solid hsla(0,0%,100%,0);border-left:1px solid #e7e7eb;color:#616161;text-decoration:none;text-overflow:ellipsis;white-space:nowrap;word-wrap:normal}
-.mobile-footer li a.active{border:1px solid #44b549!important;background-color:#fff}
+.mobile-footer li a{display:block;overflow:hidden;width:auto;border:1px solid rgba(255,255,255,0);border-left:1px solid #e7e7eb;color:#616161;text-decoration:none;text-overflow:ellipsis;white-space:nowrap;word-wrap:normal}
+.mobile-footer li a.active{border:1px solid #44b549!important;box-shadow:0 0 1px #44b549}
 .mobile-footer .icon-add{width:14px;height:14px;border-bottom:none!important;background:url(../img/wechat/index.png) 0 0 no-repeat}
 .mobile-footer .icon-add,.mobile-footer .icon-sub{display:inline-block;margin-top:-2px;vertical-align:middle}
 .mobile-footer .icon-sub{margin-right:2px;width:7px;height:7px;background:url(../img/wechat/index.png) 0 -3pc no-repeat}
-.mobile-footer .sub-menu{position:absolute;bottom:60px;display:block;width:100%;border:1px solid #d0d0d0;border-radius:3px;background-color:#fafafa}
+.mobile-footer .sub-menu{position:absolute;bottom:60px;display:block;width:100%;border:1px solid #d0d0d0;background-color:#fafafa}
 .mobile-footer .sub-menu ul,.mobile-footer .sub-menu ul li{z-index:11;float:none;display:block;padding:0;width:100%}
-.mobile-footer .sub-menu ul li a{border:1px solid #fff}
-.mobile-footer .sub-menu ul li a.bottom-border{border-bottom:1px solid #e7e7eb}
+.mobile-footer .sub-menu ul li a{border:1px solid rgba(255,255,255,0);padding:0 5px}
+.mobile-footer .sub-menu ul li a.bottom-border{border-bottom:1px solid #e7e7eb;margin:-1px -1px 0 -1px}
+.mobile-footer .sub-menu ul li:last-child a.bottom-border{border-bottom-color:white;}
 .mobile-footer .arrow{position:absolute;left:50%;margin-left:-6px}
-.mobile-footer .arrow_in,.mobile-footer .arrow_out{z-index:10;display:inline-block;width:0;height:0;border:6px dashed transparent;border-bottom-width:0;border-top-style:solid}
-.mobile-footer .arrow_in{bottom:-5px;border-top-color:#fafafa}
-.mobile-footer .arrow_out{bottom:-6px;border-top-color:#d0d0d0}
+.mobile-footer .arrow_in, .mobile-footer .arrow_out{z-index:10;display:inline-block;width:0;height:0;border:6px dashed transparent;border-bottom-width:0;border-top-style:solid}
+.mobile-footer .arrow_in{bottom:-5px;border-top-color:#fafafa;z-index:3}
+.mobile-footer .arrow_out{bottom:-6px;border-top-color:#d0d0d0;z-index:2}
