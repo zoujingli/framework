@@ -162,6 +162,7 @@ class Push extends Controller
      */
     private function keys($rule, $isLast = false, $isCustom = false)
     {
+        p($rule);
         list($table, $field, $value) = explode('#', $rule . '##');
         $data = Db::name($table)->where([$field => $value])->find();
         if (empty($data['type']) || (array_key_exists('status', $data) && empty($data['status']))) {
