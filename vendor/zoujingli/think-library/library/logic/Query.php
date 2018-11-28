@@ -27,9 +27,11 @@ class Query extends Logic
     /**
      * Query constructor.
      * @param \think\db\Query|string $dbQuery
+     * @throws \think\Exception
      */
     public function __construct($dbQuery)
     {
+        $this->request = request();
         $this->query = scheme_db($dbQuery);
     }
 
@@ -40,7 +42,6 @@ class Query extends Logic
      */
     public function init(Controller $controller)
     {
-        $this->request = request();
         $this->controller = $controller;
         return $this;
     }

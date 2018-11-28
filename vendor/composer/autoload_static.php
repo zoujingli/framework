@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit739e7e2a00c94d49942c94caf695a56c
+class ComposerStaticInit7fc3202cd67be77db67e47e963df6950
 {
     public static $files = array (
         '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
@@ -290,6 +290,7 @@ class ComposerStaticInit739e7e2a00c94d49942c94caf695a56c
         'app\\wechat\\controller\\Config' => __DIR__ . '/../..' . '/application/wechat/controller/Config.php',
         'app\\wechat\\controller\\Fans' => __DIR__ . '/../..' . '/application/wechat/controller/Fans.php',
         'app\\wechat\\controller\\Keys' => __DIR__ . '/../..' . '/application/wechat/controller/Keys.php',
+        'app\\wechat\\controller\\Menu' => __DIR__ . '/../..' . '/application/wechat/controller/Menu.php',
         'app\\wechat\\controller\\News' => __DIR__ . '/../..' . '/application/wechat/controller/News.php',
         'app\\wechat\\controller\\api\\Push' => __DIR__ . '/../..' . '/application/wechat/controller/api/Push.php',
         'app\\wechat\\controller\\api\\Review' => __DIR__ . '/../..' . '/application/wechat/controller/api/Review.php',
@@ -323,9 +324,9 @@ class ComposerStaticInit739e7e2a00c94d49942c94caf695a56c
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit739e7e2a00c94d49942c94caf695a56c::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit739e7e2a00c94d49942c94caf695a56c::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit739e7e2a00c94d49942c94caf695a56c::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit7fc3202cd67be77db67e47e963df6950::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit7fc3202cd67be77db67e47e963df6950::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit7fc3202cd67be77db67e47e963df6950::$classMap;
 
         }, null, ClassLoader::class);
     }

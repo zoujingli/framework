@@ -53,7 +53,7 @@ class Input extends Logic
         $this->rule = $rule;
         $this->info = $info;
         $this->request = request();
-        $this->data = $this->parseData($data);
+        $this->data = $this->parse($data);
     }
 
     /**
@@ -62,7 +62,7 @@ class Input extends Logic
      * @param array $result
      * @return array
      */
-    private function parseData($data, $result = [])
+    private function parse($data, $result = [])
     {
         if (is_array($data)) return $data;
         if (is_string($data)) {
@@ -87,7 +87,6 @@ class Input extends Logic
      */
     public function init(Controller $controller)
     {
-        $this->request = request();
         $this->controller = $controller;
         $validate = \think\Validate::make($this->rule, $this->info);
         if ($validate->check($this->data)) return $this->data;

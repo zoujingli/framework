@@ -55,6 +55,7 @@ class Page extends Logic
      * @param boolean $isDisplay 是否渲染模板
      * @param boolean $total 集合分页记录数
      * @param integer $limit 集合每页记录数
+     * @throws \think\Exception
      */
     public function __construct($dbQuery, $isPage = true, $isDisplay = true, $total = false, $limit = 0)
     {
@@ -62,6 +63,7 @@ class Page extends Logic
         $this->limit = $limit;
         $this->isPage = $isPage;
         $this->isDisplay = $isDisplay;
+        $this->request = request();
         $this->query = scheme_db($dbQuery);
     }
 
@@ -77,7 +79,6 @@ class Page extends Logic
      */
     public function init(Controller $controller)
     {
-        $this->request = request();
         $this->controller = $controller;
         if ($this->request->isPost()) {
             $this->_sort();

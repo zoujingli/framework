@@ -15,8 +15,8 @@
 namespace library\logic;
 
 use library\Controller;
-use think\db\Query;
 use library\tools\Data;
+use think\db\Query;
 
 /**
  * 表单视图管理器
@@ -62,9 +62,11 @@ class Form extends Logic
      * @param string $pkField 指定数据对象主键
      * @param array $where 额外更新条件
      * @param array $data 表单扩展数据
+     * @throws \think\Exception
      */
     public function __construct($dbQuery, $tpl = '', $pkField = '', $where = [], $data = [])
     {
+        $this->request = request();
         $this->query = scheme_db($dbQuery);
         list($this->tpl, $this->where, $this->data) = [$tpl, $where, $data];
         $this->pkField = empty($pkField) ? ($this->query->getPk() ? $this->query->getPk() : 'id') : $pkField;;
@@ -84,7 +86,6 @@ class Form extends Logic
      */
     public function init(Controller $controller, $data = [])
     {
-        $this->request = request();
         $this->controller = $controller;
         // GET请求, 获取数据并显示表单页面
         if ($this->request->isGet()) {

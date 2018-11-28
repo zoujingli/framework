@@ -15,7 +15,6 @@
 namespace library\logic;
 
 use library\Controller;
-use think\db\Query;
 
 /**
  * 基础视图管理器
@@ -34,13 +33,13 @@ abstract class Logic
      * 当前请求对象
      * @var \think\Request
      */
-    protected $request;
+    public $request;
 
     /**
      * 当前操作控制器引用
      * @var \library\Controller
      */
-    protected $controller;
+    public $controller;
 
     /**
      * 逻辑器初始化

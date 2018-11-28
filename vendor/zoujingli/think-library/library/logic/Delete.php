@@ -48,10 +48,12 @@ class Delete extends Logic
      * @param string|Query $dbQuery
      * @param string $pkField 指定数据对象主键
      * @param array $where 额外更新条件
+     * @throws \think\Exception
      */
     public function __construct($dbQuery, $pkField = '', $where = [])
     {
         $this->where = $where;
+        $this->request = request();
         $this->query = scheme_db($dbQuery);
         $this->pkField = empty($pkField) ? $this->query->getPk() : $pkField;
         $this->pkValue = $this->request->post($this->pkField, null);
@@ -66,7 +68,6 @@ class Delete extends Logic
      */
     public function init(Controller $controller)
     {
-        $this->request = request();
         $this->controller = $controller;
         // 主键限制处理
         if (!isset($this->where[$this->pkField]) && is_string($this->pkValue)) {
