@@ -86,6 +86,7 @@ class Menu extends Controller
             }
             try {
                 sysdata('menudata', $this->build_menu($menudata = json_decode($data, true)));
+                p(['button' => sysdata('menudata')]);
                 \We::WeChatMenu(Wechat::config())->create(['button' => sysdata('menudata')]);
             } catch (\Exception $e) {
                 $this->error("微信菜单发布失败，请稍候再试！<br> {$e->getMessage()}");
