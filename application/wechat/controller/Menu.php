@@ -123,7 +123,7 @@ class Menu extends Controller
             case 'location_select':
             case 'scancode_waitmsg':
             case 'pic_photo_or_album':
-                return ['name' => $item['name']];
+                return ['name' => $item['name'], 'type' => $item['type']];
             case 'click':
                 return ['name' => $item['name'], 'type' => $item['type'], 'key' => $item['key']];
             case 'view':
