@@ -72,9 +72,9 @@ class Push extends Controller
             $this->appid = Wechat::getAppid();
             $this->wechat = \We::WeChatReceive(Wechat::config());
             $this->openid = $this->wechat->getOpenid();
-            $this->receive = array_change_key_case($this->wechat->getReceive(), CASE_LOWER);
-            // text, event, image, location
+            $this->receive = $this->toLower($this->wechat->getReceive());
             p($this->receive);
+            // text, event, image, location
             if (method_exists($this, ($method = $this->receive['msgtype']))) {
                 if (is_string(($result = $this->$method()))) return $result;
             }
@@ -82,6 +82,20 @@ class Push extends Controller
             $this->error(__METHOD__ . "[{$e->getCode()}]{$e->getMessage()}");
         }
         return 'success';
+    }
+
+    /**
+     * 数据key管理
+     * @param array $data
+     * @return array
+     */
+    private function toLower(array $data)
+    {
+        $data = array_change_key_case($data, CASE_LOWER);
+        foreach ($data as $key => $vo) if (is_array($vo)) {
+            $data[$key] = $this->toLower($vo);
+        }
+        return $data;
     }
 
     /**
