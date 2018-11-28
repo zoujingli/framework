@@ -73,18 +73,14 @@ class Push extends Controller
             $this->wechat = \We::WeChatReceive(Wechat::config());
             $this->openid = $this->wechat->getOpenid();
             $this->receive = array_change_key_case($this->wechat->getReceive(), CASE_LOWER);
-            p($this->receive);
             // text, event, image, location
             if (method_exists($this, ($method = $this->receive['msgtype']))) {
-                if (is_string(($result = $this->$method()))) {
-                    p($result);
-                    return $result;
-                }
+                if (is_string(($result = $this->$method()))) return $result;
             }
-            return 'success';
         } catch (\Exception $e) {
-            $this->error("[{$e->getCode()}]{$e->getMessage()}");
+            $this->error(__METHOD__ . "[{$e->getCode()}]{$e->getMessage()}");
         }
+        return 'success';
     }
 
     /**
@@ -162,7 +158,6 @@ class Push extends Controller
      */
     private function keys($rule, $isLast = false, $isCustom = false)
     {
-        p($rule);
         list($table, $field, $value) = explode('#', $rule . '##');
         $data = Db::name($table)->where([$field => $value])->find();
         if (empty($data['type']) || (array_key_exists('status', $data) && empty($data['status']))) {
