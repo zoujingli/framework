@@ -131,9 +131,8 @@ class Menu extends Controller
             case 'location_select':
             case 'scancode_waitmsg':
             case 'pic_photo_or_album':
-                return ['name' => $item['name'], 'type' => $item['type']];
+                return ['name' => $item['name'], 'type' => $item['type'], 'key' => isset($item['key']) ? $item['key'] : $item['type']];
             case 'click':
-                p($item);
                 return ['name' => $item['name'], 'type' => $item['type'], 'key' => $item['key']];
             case 'view':
                 return ['name' => $item['name'], 'type' => $item['type'], 'url' => $item['url']];
