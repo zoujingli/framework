@@ -72,7 +72,7 @@ class Push extends Controller
             $this->appid = Wechat::getAppid();
             $this->wechat = \We::WeChatReceive(Wechat::config());
             $this->openid = $this->wechat->getOpenid();
-            $this->receive = $this->wechat->getReceive();
+            $this->receive = array_change_key_case($this->wechat->getReceive(), CASE_LOWER);
             // text, event, image, location
             if (method_exists($this, ($method = $this->receive['MsgType']))) {
                 if (is_string(($result = $this->$method()))) return $result;
