@@ -73,7 +73,9 @@ class Push extends Controller
             $this->wechat = \We::WeChatReceive(Wechat::config());
             $this->openid = $this->wechat->getOpenid();
             $this->receive = $this->wechat->getReceive();
-            return $this->init();
+            $result = $this->init();
+            p($result);
+            return $result;
         } catch (\Exception $e) {
             $this->error("[{$e->getCode()}]{$e->getMessage()}");
         }
