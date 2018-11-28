@@ -130,7 +130,7 @@ class Push extends Controller
             case 'unsubscribe':
                 return $this->updateFansinfo(false);
             case 'click':
-                return $this->keys($this->receive['eventkey']);
+                return $this->keys("wechat_keys#keys#{$this->receive['eventkey']}");
             case 'scancode_push':
             case 'scancode_waitmsg':
                 if (empty($this->receive['scancodeinfo'])) return false;
