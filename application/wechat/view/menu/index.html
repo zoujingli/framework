@@ -60,7 +60,9 @@
                 <div class="layui-form-item margin-top-20" ng-if="item.type==='click'">
                     <label class="layui-form-label">匹配规则</label>
                     <div class="layui-input-block">
-                        <select required ng-model="item.keys" ng-options="value.keys for value in keys" class="layui-select block full-width"></select>
+                        <select required ng-model="item.key" class="layui-select block full-width">
+                            <option value="{{x.keys}}" ng-selected="x.keys===item.key" ng-repeat="x in keys" ng-bind="x.keys"></option>
+                        </select>
                     </div>
                 </div>
 
@@ -112,8 +114,8 @@
 
         let $form = $('.menu-form').vali();
         let $vali = $form.vali().data('validate');
-
         $('#MenuEditor.layui-hide').removeClass('layui-hide');
+
         let app = angular.module("MenuEditor", []).run(callback);
         angular.bootstrap(document.getElementById(app.name), [app.name]);
 
@@ -126,6 +128,7 @@
                 $rootScope.$apply(function () {
                     $rootScope.keys = ret.data.keysdata || [];
                     $rootScope.list = ret.data.menudata || [{name: '请输入名称', type: 'click', sub_button: []}];
+                    for (let i in $rootScope.list) $rootScope.list[i].sub_button = $rootScope.list[i].sub_button || [];
                     $rootScope.list[0].show = true;
                     $rootScope.list[0].active = true;
                     $rootScope.item = $rootScope.list[0];
@@ -150,7 +153,7 @@
                 list.push(item);
             };
 
-            // 切换当前选择状态
+            // 切换选择菜单
             $rootScope.setActiveItem = function (one, two) {
                 for (let i in $rootScope.list) {
                     $rootScope.list[i].show = ($rootScope.list[i] === one);
@@ -165,9 +168,7 @@
             // 提交数据
             $rootScope.submit = function () {
                 $vali.checkAllInput();
-                if ($form.find('.validate-error').size() > 0) {
-                    return $.msg.tips('表单验证不成功，请输入需要的内容！');
-                }
+                if ($form.find('.validate-error').size() > 0) return false;
                 $.form.load('{:url("edit")}', {data: angular.toJson($rootScope.list)}, 'post');
             }
         }

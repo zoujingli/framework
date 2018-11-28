@@ -85,12 +85,54 @@ class Menu extends Controller
                 $this->success('删除并取消微信菜单成功！', '');
             }
             try {
-                sysdata('menudata', json_decode($data, true));
+                sysdata('menudata', $this->build_menu($menudata = json_decode($data, true)));
                 \We::WeChatMenu(Wechat::config())->create(['button' => sysdata('menudata')]);
             } catch (\Exception $e) {
                 $this->error("微信菜单发布失败，请稍候再试！<br> {$e->getMessage()}");
             }
             $this->success('保存发布菜单成功！', '');
+        }
+    }
+
+    private function build_menu($list)
+    {
+        foreach ($list as &$vo) {
+            unset($vo['active'], $vo['show']);
+            if (empty($vo['sub_button'])) {
+                $vo = $this->build_menu_item($vo);
+            } else {
+                $item = ['name' => $vo['name'], 'sub_button' => []];
+                foreach ($vo['sub_button'] as $sub) array_push($item['sub_button'], $this->build_menu_item($sub));
+                $vo = $item;
+            }
+        }
+        return $list;
+    }
+
+    /**
+     * 单个微信菜单数据过滤处理
+     * @param array $item
+     * @return array
+     */
+    private function build_menu_item(array $item)
+    {
+        switch (strtolower($item['type'])) {
+            case 'pic_weixin':
+            case 'pic_sysphoto':
+            case 'scancode_push':
+            case 'location_select':
+            case 'scancode_waitmsg':
+            case 'pic_photo_or_album':
+                return ['name' => $item['name']];
+            case 'click':
+                return ['name' => $item['name'], 'type' => $item['type'], 'key' => $item['key']];
+            case 'view':
+                return ['name' => $item['name'], 'type' => $item['type'], 'url' => $item['url']];
+            case 'miniprogram':
+                return [
+                    'name'  => $item['name'], 'type' => $item['type'], 'url' => $item['url'],
+                    'appid' => $item['appid'], 'pagepath' => $item['pagepath'],
+                ];
         }
     }
 
