@@ -94,7 +94,11 @@ class Menu extends Controller
         }
     }
 
-    private function build_menu($list)
+    /**
+     * @param array $list
+     * @return mixed
+     */
+    private function build_menu(array $list)
     {
         foreach ($list as &$vo) {
             unset($vo['active'], $vo['show']);
@@ -102,7 +106,10 @@ class Menu extends Controller
                 $vo = $this->build_menu_item($vo);
             } else {
                 $item = ['name' => $vo['name'], 'sub_button' => []];
-                foreach ($vo['sub_button'] as $sub) array_push($item['sub_button'], $this->build_menu_item($sub));
+                foreach ($vo['sub_button'] as &$sub) {
+                    unset($sub['active'], $sub['show']);
+                    array_push($item['sub_button'], $this->build_menu_item($sub));
+                }
                 $vo = $item;
             }
         }
