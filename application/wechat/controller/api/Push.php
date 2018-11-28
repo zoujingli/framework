@@ -75,9 +75,7 @@ class Push extends Controller
             $this->receive = $this->wechat->getReceive();
             // text, event, image, location
             if (method_exists($this, ($method = $this->receive['MsgType']))) {
-                if (is_string(($result = $this->$method()))) {
-                    return $result;
-                }
+                if (is_string(($result = $this->$method()))) return $result;
             }
             return 'success';
         } catch (\Exception $e) {
@@ -174,9 +172,7 @@ class Push extends Controller
             case 'customservice':
                 return $this->sendMessage('customservice', ['content' => $data['content']], $isCustom);
             case 'voice':
-                p($data);
                 if (empty($data['voice_url']) || !($media_id = Media::upload($data['voice_url'], 'voice'))) return false;
-                p($media_id);
                 return $this->sendMessage('voice', ['media_id' => $media_id], $isCustom);
             case 'image':
                 if (empty($data['image_url']) || !($media_id = Media::upload($data['image_url'], 'image'))) return false;
