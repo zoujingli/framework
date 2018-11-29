@@ -35,7 +35,7 @@ class Queue extends Controller
     public function index()
     {
         $this->title = '系统任务管理';
-        $query = $this->_query($this->table)->like('title');
+        $query = $this->_query($this->table)->like('title,uri')->equal('status')->dateBetween('create_at');
         return $this->_page($query->db()->order('id desc'));
     }
 

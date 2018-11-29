@@ -14,7 +14,9 @@
 
 namespace app\admin\logic;
 
+use think\console\Output;
 use think\Db;
+use think\queue\Job;
 
 /**
  * 任务管理器
@@ -42,6 +44,30 @@ class Queue
      * 处理失败
      */
     const JOBS_FAIL = 4;
+
+    /**
+     * 任务ID
+     * @var integer
+     */
+    protected $id;
+
+    /**
+     * 任务数据
+     * @var array
+     */
+    protected $data;
+
+    /**
+     * 任务名称
+     * @var string
+     */
+    protected $title;
+
+    /**
+     * 命令输出对象
+     * @var Output
+     */
+    protected $output;
 
     /**
      * 创建任务并记录日志
@@ -104,14 +130,41 @@ class Queue
     }
 
     /**
-     * 从数据中获取任务ID
+     * 启动任务处理
+     * @param Job $job
      * @param array $data
-     * @return integer
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
      */
-    public static function getIdByData(array $data)
+    public function fire(Job $job, $data)
     {
-        return isset($data['_job_id_']) ? $data['_job_id_'] : 0;
+        $this->data = $data;
+        $this->output = new Output();
+        $this->id = isset($data['_job_id_']) ? $data['_job_id_'] : '';
+        $this->title = isset($data['_job_title_']) ? $data['_job_title_'] : '';
+        // 标记任务处理中
+        Queue::status($this->id, Queue::JOBS_COMPLETE);
+        $this->output->writeln("【{$this->title}】执行任务完成！");
+        //
+        if ($this->execute()) {
+            $job->delete();
+            Queue::status($this->id, Queue::JOBS_COMPLETE);
+            $this->output->writeln("【{$this->title}】执行任务完成！");
+        }
+        if ($job->attempts() > 3) {
+            $job->delete();
+            Queue::status($this->id, Queue::JOBS_FAIL);
+            $this->output->error("【{$this->title}】执行任务失败！");
+        }
     }
 
+    /**
+     * 执行任务
+     * @return boolean
+     */
+    protected function execute()
+    {
+        return true;
+    }
 
 }

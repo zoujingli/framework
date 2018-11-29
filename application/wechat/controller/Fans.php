@@ -14,6 +14,8 @@
 
 namespace app\wechat\controller;
 
+use app\admin\logic\Queue;
+use app\wechat\Jobs;
 use app\wechat\logic\Wechat;
 use library\Controller;
 use think\Db;
@@ -93,12 +95,11 @@ class Fans extends Controller
      */
     public function sync()
     {
-        try {
-            \app\wechat\logic\Fans::sync();
-        } catch (\Exception $e) {
-            $this->error("同步粉丝列表失败，请稍候再试！{$e->getMessage()}");
+        if (Queue::exists('同步粉丝列表')) {
+            $this->success('任务正在处理...', '');
         }
-        $this->success('同步粉丝列表成功！');
+        Queue::add('同步粉丝列表', Jobs::URI, 0, []);
+        $this->success('同步粉丝任务创建成功！');
     }
 
 }
