@@ -85,17 +85,21 @@
     <!--{else}-->
     <input type="hidden" value="resort" name="action">
     <table class="layui-table" lay-skin="line">
+        <colgroup>
+            <col width="30px">
+            <col width="150px">
+            <col width="150px">
+            <col width="150px">
+        </colgroup>
         <thead>
         <tr>
             <th class='list-table-check-td think-checkbox'>
                 <input data-auto-none data-check-target='.list-check-box' type='checkbox'>
             </th>
             <th class='text-left nowrap'>微信昵称</th>
-            <th class='text-center nowrap'>性别</th>
-            <th class='text-left nowrap'>语言</th>
-            <th class='text-left nowrap'>所处位置</th>
+            <th class='text-left nowrap'>性别语音</th>
             <th class='text-left nowrap'>关注时间</th>
-            <th class='text-center nowrap'>状态</th>
+            <th class='text-left nowrap'>状态</th>
         </tr>
         </thead>
         <tbody>
@@ -104,15 +108,21 @@
             <td class='list-table-check-td think-checkbox'>
                 <input class="list-check-box" value='{$vo.openid}' type='checkbox'>
             </td>
-            <td class='text-left nowrap'>
-                <div class="background-image" data-tips-image="{$vo.headimgurl}" style="background-image:url('{$vo.headimgurl}')"></div>
-                {$vo.nickname}
+            <td class='text-left nowrap relative layui-elip'>
+                <div class="background-image pull-left" data-tips-image="{$vo.headimgurl}" style="background-image:url('{$vo.headimgurl}')"></div>
+                昵称：{$vo.nickname}
+                <br>
+                区域：{$vo.country} {$vo.province} {$vo.city}
             </td>
-            <td class='text-center nowrap'>{switch name='vo.sex'}{case value='1'}男{/case}{case value='2'}女{/case}{default}未知{/switch}</td>
-            <td class='text-left nowrap'>{$vo.language|raw}</td>
-            <td class='text-left nowrap'>{$vo.country} {$vo.province} {$vo.city}</td>
-            <td class='text-left nowrap'>{$vo.subscribe_at|format_datetime|default="<span class='color-desc'>从未登录</span>"|raw}</td>
-            <td class='text-center nowrap'>
+            <td class='text-left nowrap'>
+                性别：{switch name='vo.sex'}{case value='1'}男{/case}{case value='2'}女{/case}{default}未知{/switch}
+                <br>
+                语言：{$vo.language|raw}
+            </td>
+            <td class='text-left nowrap'>
+                日期：{$vo.subscribe_at|format_datetime|str_replace=' ','<br>时间：',###|raw}
+            </td>
+            <td class='text-left nowrap'>
 
                 {eq name='vo.subscribe' value='0'}
                 <span class="layui-badge margin-right-10">未关注</span>
@@ -120,10 +130,18 @@
                 <span class="layui-badge layui-bg-green margin-right-10">已关注</span>
                 {/eq}
 
+                <br>
+
                 {eq name='vo.is_black' value='0'}
                 <span class="layui-badge layui-bg-green">未拉黑</span>
+                <!--{if auth("wechat/fans/setblack")}-->
+                <a class="margin-left-10" data-action="{:url('setblack')}" data-value="openid#{$vo.openid}">立即拉黑</a>
+                <!--{/if}-->
                 {else}
                 <span class="layui-badge">已拉黑</span>
+                <!--{if auth("wechat/fans/delblack")}-->
+                <a class="margin-left-10" data-action="{:url('delblack')}" data-value="openid#{$vo.openid}">取消拉黑</a>
+                <!--{/if}-->
                 {/eq}
 
             </td>
