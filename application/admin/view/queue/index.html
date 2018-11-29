@@ -96,6 +96,7 @@
                 <span class="layui-badge layui-bg-blue">处理完成</span>
                 {elseif $vo.status eq 4}
                 <span class="layui-badge layui-bg-red">处理失败</span>
+                <a class="layui-badge layui-bg-green margin-left-10" data-action="{:url('redo')}" data-value="id#{$vo.id}">重置</a>
                 {/eq}
                 <br>
                 状态描述：<span class="layui-badge layui-bg-gray">{$vo.status_desc|raw|default="<span class='color-desc'>还没有描述</span>"}</span>
