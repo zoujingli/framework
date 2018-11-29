@@ -46,8 +46,8 @@ class Jobs extends Queue
                 foreach (array_chunk($result['data']['openid'], 100) as $chunk)
                     if (is_array($list = $wechat->getBatchUserInfo($chunk)) && !empty($list['user_info_list']))
                         foreach ($list['user_info_list'] as $user) Fans::set($user, $appid);
-                $next = $result['next_openid'];
                 if (in_array($result['next_openid'], $result['data']['openid'])) break;
+                $next = $result['next_openid'];
             }
             $next = ''; // 同步粉丝黑名单
             $this->writeln('准备同步粉丝黑名单列表...');
@@ -56,8 +56,8 @@ class Jobs extends Queue
                     $where = [['is_black', 'eq', '0'], ['openid', 'in', $chunk]];
                     Db::name('WechatFans')->where($where)->update(['is_black' => '1']);
                 }
-                $next = $result['next_openid'];
                 if (in_array($result['next_openid'], $result['data']['openid'])) break;
+                $next = $result['next_openid'];
             }
             // 同步粉丝标签列表
             $this->writeln('准备同步粉丝标签列表...');
