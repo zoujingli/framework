@@ -144,13 +144,13 @@ class Queue
         $this->id = isset($data['_job_id_']) ? $data['_job_id_'] : '';
         $this->title = isset($data['_job_title_']) ? $data['_job_title_'] : '';
         // 标记任务处理中
-        $this->writeln('执行任务开始');
+        $this->writeln('执行任务开始...');
         Queue::status($this->id, Queue::STATUS_PENDING, $this->statusDesc);
         if ($this->execute()) {
-            $this->writeln('执行任务完成');
+            $this->writeln('执行任务完成！');
             $this->status = Queue::STATUS_COMPLETE;
         } else {
-            $this->writeln('执行任务失败');
+            $this->writeln('执行任务失败！');
             $this->status = Queue::STATUS_FAIL;
         }
         Queue::status($this->id, $this->status, $this->statusDesc);
