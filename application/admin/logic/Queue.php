@@ -86,8 +86,8 @@ class Queue
     public static function add($title, $uri, $later, array $data, $desc = '')
     {
         $job_id = Db::name('SystemJobsLog')->insertGetId([
-            'title' => $title, 'later' => $later, 'uri' => $uri,
-            'data'  => json_encode($data, 256), 'desc' => $desc,
+            'title' => $title, 'later' => $later, 'uri' => $uri, 'desc' => $desc,
+            'data'  => json_encode($data, 256), 'status_at' => date('Y-m-d H:i:s'),
         ]);
         $data['_job_id_'] = $job_id;
         $data['_job_title_'] = $title;
