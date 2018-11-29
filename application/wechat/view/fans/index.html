@@ -135,7 +135,7 @@
                 {eq name='vo.is_black' value='0'}
                 <span class="layui-badge layui-bg-green">未拉黑</span>
                 <!--{if auth("wechat/fans/setblack")}-->
-                <a style="top:15px" class="margin-left-10 absolute layui-btn layui-btn-primary" data-action="{:url('setblack')}" data-value="openid#{$vo.openid}">立即拉黑</a>
+                <a style="top:15px" class="margin-left-10 absolute layui-btn layui-btn-primary layui-btn-sm" data-action="{:url('setblack')}" data-value="openid#{$vo.openid}">立即拉黑</a>
                 <!--{/if}-->
                 {else}
                 <span class="layui-badge">已拉黑</span>
