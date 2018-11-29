@@ -106,7 +106,7 @@ class Queue
     public static function status($jobId, $status = self::JOBS_PENDING, $statusDesc = '')
     {
         $result = Db::name('SystemJobsLog')->where(['id' => $jobId])->update([
-            'status' => $status, 'status_desc' => $statusDesc,
+            'status' => $status, 'status_desc' => $statusDesc, 'status_at' => date('Y-m-d H:i:s'),
         ]);
         return $result !== false;
     }
@@ -166,10 +166,11 @@ class Queue
     /**
      * 输出消息
      * @param string $text
+     * @param string $method
      */
-    protected function writeln($text)
+    protected function writeln($text, $method = 'writeln')
     {
-        $this->output->writeln("【{$this->title}】{$text}");
+        $this->output->$method("【{$this->title}】{$text}");
     }
 
     /**
