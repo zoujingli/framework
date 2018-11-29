@@ -34,9 +34,9 @@ class Config extends Controller
     {
         $this->title = '公众号授权绑定';
         if (!($this->geoip = cache('mygeoip'))) {
-            $geo = http_get('http://www.ip168.com/json.do?view=myipaddress');
-            $this->geoip = preg_replace(['/\s+/', '/^.*?\[(.*?)\].*?$/'], ['', '$1'], $geo);
-            cache('mygeoip', $this->geoip, 60);
+//            $geo = http_get('http://www.ip168.com/json.do?view=myipaddress');
+//            $this->geoip = preg_replace(['/\s+/', '/^.*?\[(.*?)\].*?$/'], ['', '$1'], $geo);
+//            cache('mygeoip', $this->geoip, 60);
         }
         if ($this->request->isGet()) return $this->fetch();
         foreach ($this->request->post() as $k => $v) sysconf($k, $v);
