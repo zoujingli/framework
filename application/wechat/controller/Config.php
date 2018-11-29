@@ -35,7 +35,7 @@ class Config extends Controller
         if ($this->request->isGet()) {
             if (!($this->geoip = cache('mygeoip'))) {
                 $this->geoip = http_get('https://framework.thinkadmin.top/wechat/api.push/geoip');
-                cache('mygeoip', $this->geoip, 60);
+                cache('mygeoip', $this->geoip, 360);
             }
             $this->title = '公众号授权绑定';
             return $this->fetch();
