@@ -70,6 +70,12 @@ class Queue
     protected $output;
 
     /**
+     * 状态描述
+     * @var string
+     */
+    protected $statusDesc = '';
+
+    /**
      * 创建任务并记录日志
      * @param string $title 任务名称
      * @param string $uri 任务命令
@@ -143,19 +149,27 @@ class Queue
         $this->id = isset($data['_job_id_']) ? $data['_job_id_'] : '';
         $this->title = isset($data['_job_title_']) ? $data['_job_title_'] : '';
         // 标记任务处理中
-        Queue::status($this->id, Queue::JOBS_COMPLETE);
-        $this->output->writeln("【{$this->title}】执行任务完成！");
-        //
+        $this->writeln('执行任务开始');
+        Queue::status($this->id, Queue::JOBS_COMPLETE, $this->statusDesc);
         if ($this->execute()) {
             $job->delete();
-            Queue::status($this->id, Queue::JOBS_COMPLETE);
-            $this->output->writeln("【{$this->title}】执行任务完成！");
+            $this->writeln('执行任务完成');
+            Queue::status($this->id, Queue::JOBS_COMPLETE, $this->statusDesc);
         }
         if ($job->attempts() > 3) {
             $job->delete();
-            Queue::status($this->id, Queue::JOBS_FAIL);
-            $this->output->error("【{$this->title}】执行任务失败！");
+            $this->writeln('执行任务失败');
+            Queue::status($this->id, Queue::JOBS_FAIL, $this->statusDesc);
         }
+    }
+
+    /**
+     * 输出消息
+     * @param string $text
+     */
+    protected function writeln($text)
+    {
+        $this->output->writeln("【{$this->title}】{$text}");
     }
 
     /**
