@@ -76,7 +76,7 @@ class Queue
         $result = Db::name('SystemJobsLog')->where(['id' => $jobId])->update([
             'status' => $status, 'status_desc' => $statusDesc,
         ]);
-        return ($result !== false);
+        return $result !== false;
     }
 
     /**
