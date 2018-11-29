@@ -145,7 +145,7 @@ class Queue
         $this->title = isset($data['_job_title_']) ? $data['_job_title_'] : '';
         // 标记任务处理中
         $this->writeln('执行任务开始...');
-        Queue::status($this->id, Queue::STATUS_PENDING, $this->statusDesc);
+        Queue::status($this->id, Queue::STATUS_PROCESSING, $this->statusDesc);
         if ($this->execute()) {
             $this->writeln('执行任务完成！');
             $this->status = Queue::STATUS_COMPLETE;
