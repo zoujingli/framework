@@ -506,7 +506,7 @@ $(function () {
             data[o.split('#')[0]] = o.split('#')[1];
         }
         if (!$this.attr('data-confirm')) $.form.load(action, data, 'post');
-        else $.msg.confirm(content, function () {
+        else $.msg.confirm($this.attr('data-confirm'), function () {
             $.form.load(action, data, 'post');
         });
     });
