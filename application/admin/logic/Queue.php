@@ -70,7 +70,13 @@ class Queue
     protected $output;
 
     /**
-     * 状态描述
+     * 任务状态
+     * @var integer
+     */
+    protected $status;
+
+    /**
+     * 任务状态描述
      * @var string
      */
     protected $statusDesc = '';
@@ -152,15 +158,14 @@ class Queue
         $this->writeln('执行任务开始');
         Queue::status($this->id, Queue::JOBS_PENDING, $this->statusDesc);
         if ($this->execute()) {
-            $job->delete();
             $this->writeln('执行任务完成');
-            Queue::status($this->id, Queue::JOBS_COMPLETE, $this->statusDesc);
-        }
-        if ($job->attempts() > 3) {
-            $job->delete();
+            $this->status = Queue::JOBS_COMPLETE;
+        } else {
             $this->writeln('执行任务失败');
-            Queue::status($this->id, Queue::JOBS_FAIL, $this->statusDesc);
+            $this->status = Queue::JOBS_FAIL;
         }
+        Queue::status($this->id, $this->status, $this->statusDesc);
+        $job->delete();
     }
 
     /**
