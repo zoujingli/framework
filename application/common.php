@@ -36,9 +36,10 @@ if (!function_exists('sysdata')) {
     function sysdata($name, array $value = null)
     {
         if (is_null($value)) {
-            $json = json_decode(\think\Db::name('SystemData')->where('name', $name)->value('value'), true);
+            $value = \think\Db::name('SystemData')->where('name', $name)->value('value');
+            $json = json_decode(emoji_decode($value), true);
             return empty($json) ? null : $json;
         }
-        return data_save('SystemData', ['name' => $name, 'value' => json_encode($value, 256)], 'name');
+        return data_save('SystemData', ['name' => $name, 'value' => emoji_encode(json_encode($value, 256))], 'name');
     }
 }
