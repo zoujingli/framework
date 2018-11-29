@@ -175,7 +175,7 @@ class Queue
      */
     protected function writeln($text, $method = 'writeln')
     {
-        $this->output->$method("【{$this->title}】{$text}");
+        $this->output->$method("【({$this->id}){$this->title}】{$text}");
     }
 
     /**
