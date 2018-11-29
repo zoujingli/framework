@@ -62,9 +62,10 @@ class Fans extends Controller
     public function setBlack()
     {
         try {
-            $openid = explode(',', $this->request->post('openid'));
-            \We::WeChatUser(Wechat::config())->batchBlackList($openid);
-            Db::name('WechatFans')->whereIn('openid', $openid)->update(['is_black' => '1']);
+            foreach (array_chunk(explode(',', $this->request->post('openid')), 20) as $openids) {
+                \We::WeChatUser(Wechat::config())->batchBlackList($openids);
+                Db::name('WechatFans')->whereIn('openid', $openids)->update(['is_black' => '0']);
+            }
             $this->success('拉黑粉丝信息成功！');
         } catch (HttpResponseException $exception) {
             throw  $exception;
@@ -79,9 +80,10 @@ class Fans extends Controller
     public function delBlack()
     {
         try {
-            $openid = explode(',', $this->request->post('openid'));
-            \We::WeChatUser(Wechat::config())->batchUnblackList($openid);
-            Db::name('WechatFans')->whereIn('openid', $openid)->update(['is_black' => '0']);
+            foreach (array_chunk(explode(',', $this->request->post('openid')), 20) as $openids) {
+                \We::WeChatUser(Wechat::config())->batchUnblackList($openids);
+                Db::name('WechatFans')->whereIn('openid', $openids)->update(['is_black' => '0']);
+            }
             $this->success('取消拉黑粉丝信息成功！');
         } catch (HttpResponseException $exception) {
             throw  $exception;
