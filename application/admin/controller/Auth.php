@@ -38,8 +38,8 @@ class Auth extends Controller
     public function index()
     {
         $this->title = '系统权限管理';
-        $query = $this->_query($this->table)->like('title,desc')->dateBetween('create_at');
-        return $this->_page($query->equal('status')->db()->order('sort asc,id desc'));
+        $query = $this->_query($this->table)->like('title,desc')->equal('status')->dateBetween('create_at');
+        return $this->_page($query->db()->order('sort asc,id desc'));
     }
 
     /**
@@ -52,7 +52,7 @@ class Auth extends Controller
     {
         $this->title = '权限授权节点';
         $auth = $this->request->post('id', '0');
-        switch ($this->request->post('action')) {
+        switch (strtolower($this->request->post('action'))) {
             case 'get': // 获取权限配置
                 $nodes = \app\admin\logic\Auth::get();
                 $checked = Db::name('SystemAuthNode')->where(['auth' => $auth])->column('node');

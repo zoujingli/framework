@@ -6,7 +6,9 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'think\\helper\\' => array($vendorDir . '/topthink/think-helper/src'),
     'think\\composer\\' => array($vendorDir . '/topthink/think-installer/src'),
+    'think\\' => array($vendorDir . '/topthink/think-queue/src'),
     'library\\' => array($vendorDir . '/zoujingli/think-library/library'),
     'app\\' => array($baseDir . '/application'),
     'WePay\\' => array($vendorDir . '/zoujingli/wechat-developer/WePay'),
