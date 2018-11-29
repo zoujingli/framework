@@ -25,25 +25,14 @@ use think\queue\Job;
  */
 class Queue
 {
-    /**
-     * 待处理
-     */
-    const JOBS_PENDING = 1;
-
-    /**
-     * 处理中
-     */
-    const JOBS_PROCESSING = 2;
-
-    /**
-     * 处理完成
-     */
-    const JOBS_COMPLETE = 3;
-
-    /**
-     * 处理失败
-     */
-    const JOBS_FAIL = 4;
+    // 待处理
+    const STATUS_PENDING = 1;
+    // 处理中
+    const STATUS_PROCESSING = 2;
+    // 处理完成
+    const STATUS_COMPLETE = 3;
+    // 处理失败
+    const STATUS_FAIL = 4;
 
     /**
      * 任务ID
@@ -109,7 +98,7 @@ class Queue
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
-    public static function status($jobId, $status = self::JOBS_PENDING, $statusDesc = '')
+    public static function status($jobId, $status = self::STATUS_PENDING, $statusDesc = '')
     {
         $result = Db::name('SystemJobsLog')->where(['id' => $jobId])->update([
             'status' => $status, 'status_desc' => $statusDesc, 'status_at' => date('Y-m-d H:i:s'),
@@ -156,13 +145,13 @@ class Queue
         $this->title = isset($data['_job_title_']) ? $data['_job_title_'] : '';
         // 标记任务处理中
         $this->writeln('执行任务开始');
-        Queue::status($this->id, Queue::JOBS_PENDING, $this->statusDesc);
+        Queue::status($this->id, Queue::STATUS_PENDING, $this->statusDesc);
         if ($this->execute()) {
             $this->writeln('执行任务完成');
-            $this->status = Queue::JOBS_COMPLETE;
+            $this->status = Queue::STATUS_COMPLETE;
         } else {
             $this->writeln('执行任务失败');
-            $this->status = Queue::JOBS_FAIL;
+            $this->status = Queue::STATUS_FAIL;
         }
         Queue::status($this->id, $this->status, $this->statusDesc);
         $job->delete();
@@ -175,7 +164,7 @@ class Queue
      */
     protected function writeln($text, $method = 'writeln')
     {
-        $this->output->$method("【({$this->id}){$this->title}】{$text}");
+        $this->output->$method("【({$this->id}){$this->title}】{$text} {$this->statusDesc}");
     }
 
     /**
