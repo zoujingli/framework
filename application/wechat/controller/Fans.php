@@ -64,7 +64,7 @@ class Fans extends Controller
         try {
             foreach (array_chunk(explode(',', $this->request->post('openid')), 20) as $openids) {
                 \We::WeChatUser(Wechat::config())->batchBlackList($openids);
-                Db::name('WechatFans')->whereIn('openid', $openids)->update(['is_black' => '0']);
+                Db::name('WechatFans')->whereIn('openid', $openids)->update(['is_black' => '1']);
             }
             $this->success('拉黑粉丝信息成功！');
         } catch (HttpResponseException $exception) {
