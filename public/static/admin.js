@@ -505,7 +505,8 @@ $(function () {
             if (o.length < 2) return $.msg.tips('异常的数据操作规则，请修改规则！');
             data[o.split('#')[0]] = o.split('#')[1];
         }
-        $.msg.confirm($this.attr('data-confirm') || '确定要更改数据状态吗？', function () {
+        if (!$this.attr('data-confirm')) $.form.load(action, data, 'post');
+        else $.msg.confirm(content, function () {
             $.form.load(action, data, 'post');
         });
     });
