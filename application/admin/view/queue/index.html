@@ -1,0 +1,153 @@
+{extend name='main'}
+
+{block name="button"}
+
+<!--{if auth("admin/user/add")}-->
+<button data-modal='{:url("add")}' data-title="添加用户" class='layui-btn layui-btn-sm layui-btn-primary'>添加用户</button>
+<!--{/if}-->
+
+<!--{if auth("admin/user/del")}-->
+<button data-action='{:url("del")}' data-rule="id#{key}" class='layui-btn layui-btn-sm layui-btn-primary'>删除用户</button>
+<!--{/if}-->
+
+{/block}
+
+{block name="content"}
+<!-- 表单搜索 开始 -->
+<fieldset>
+    <legend>列表搜索</legend>
+    <form class="layui-form layui-form-pane form-search" action="{:request()->url()}" onsubmit="return false" method="get" autocomplete="off">
+
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label">用户账号</label>
+            <div class="layui-input-inline">
+                <input name="username" value="{$Think.get.username|default=''}" placeholder="请输入用户名" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label">联系手机</label>
+            <div class="layui-input-inline">
+                <input name="phone" value="{$Think.get.phone|default=''}" placeholder="请输入联系手机" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label">电子邮箱</label>
+            <div class="layui-input-inline">
+                <input name="mail" value="{$Think.get.mail|default=''}" placeholder="请输入电子邮箱" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label">使用状态</label>
+            <div class="layui-input-inline">
+                <select class="layui-select" name="status">
+                    {foreach [''=>'-- 全部 --','0'=>'已禁用的账号','1'=>'使用中的账号'] as $k=>$v}
+                    {eq name='Think.get.status' value='$k.""'}
+                    <option selected value="{$k}">{$v}</option>
+                    {else}
+                    <option value="{$k}">{$v}</option>
+                    {/eq}
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label">登录时间</label>
+            <div class="layui-input-inline">
+                <input name="login_at" value="{$Think.get.login_at|default=''}" placeholder="请选择登录时间" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-inline">
+            <button class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe615;</i> 搜 索</button>
+        </div>
+    </form>
+
+</fieldset>
+
+<script>
+    window.form.render();
+    window.laydate.render({range: true, elem: '[name="login_at"]'});
+</script>
+<!-- 表单搜索 结束 -->
+
+<form onsubmit="return false;" data-auto="true" method="post" autocomplete="off">
+    <!--{empty name='list'}-->
+    <blockquote class="layui-elem-quote">没 有 记 录 哦！</blockquote>
+    <!--{else}-->
+    <input type="hidden" value="resort" name="action">
+    <table class="layui-table" lay-skin="line">
+        <thead>
+        <tr>
+            <th class='list-table-check-td think-checkbox'>
+                <input data-auto-none="" data-check-target='.list-check-box' type='checkbox'>
+            </th>
+            <th class='text-left nowrap'>用户名</th>
+            <th class='text-left nowrap'>手机号</th>
+            <th class='text-left nowrap'>电子邮箱</th>
+            <th class='text-left nowrap'>登录次数</th>
+            <th class='text-left nowrap'>最后登录</th>
+            <th class='text-left nowrap'>状态</th>
+            <th class='text-left nowrap'></th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--{foreach $list as $key=>$vo}-->
+        <tr>
+            <td class='list-table-check-td think-checkbox'>
+                <input class="list-check-box" value='{$vo.id}' type='checkbox'>
+            </td>
+            <td class='text-left nowrap'>{$vo.username}</td>
+            <td class='text-left nowrap'>{$vo.phone|default="<span class='color-desc'>还没有设置手机号</span>"|raw}</td>
+            <td class='text-left nowrap'>{$vo.mail|default="<span class='color-desc'>还没有设置邮箱</span>"|raw}</td>
+            <td class='text-left nowrap'>{$vo.login_num|default=0}</td>
+            <td class='text-left nowrap'>{$vo.login_at|format_datetime|default="<span class='color-desc'>从未登录</span>"|raw}</td>
+            <td class='text-left nowrap'>
+                {eq name='vo.status' value='0'}
+                <span class="layui-badge">已禁用</span>
+                {else}
+                <span class="layui-badge layui-bg-green">使用中</span>
+                {/eq}
+            </td>
+            <td class='text-left nowrap'>
+
+                {if auth("admin/user/edit")}
+                <span class="text-explode">|</span>
+                <a data-title="编辑用户" data-modal='{:url("edit")}?id={$vo.id}'>编辑</a>
+                {/if}
+
+                {if auth("admin/user/auth")}
+                <span class="text-explode">|</span>
+                <a data-title="用户授权" data-modal='{:url("auth")}?id={$vo.id}'>授权</a>
+                {/if}
+
+                {if auth("admin/user/pass")}
+                <span class="text-explode">|</span>
+                <a data-title="设置密码" data-modal='{:url("pass")}?id={$vo.id}'>密码</a>
+                {/if}
+
+                {if $vo.status eq 1 and auth("admin/user/forbid")}
+                <span class="text-explode">|</span>
+                <a data-action="{:url('forbid')}" data-value="id#{$vo.id};status#0">禁用</a>
+                {elseif auth("admin/user/resume")}
+                <span class="text-explode">|</span>
+                <a data-action="{:url('resume')}" data-value="id#{$vo.id};status#1">启用</a>
+                {/if}
+
+                {if auth("admin/user/del")}
+                <span class="text-explode">|</span>
+                <a data-confirm="确定要删除数据吗?" data-action="{:url('del')}" data-value="id#{$vo.id}">删除</a>
+                {/if}
+
+            </td>
+        </tr>
+        <!--{/foreach}-->
+        </tbody>
+    </table>
+    {$pagehtml|raw|default=''}
+    <!--{/empty}-->
+</form>
+{/block}
