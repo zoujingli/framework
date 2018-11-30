@@ -97,11 +97,14 @@ class Fans extends Controller
      */
     public function sync()
     {
-        if (Queue::exists('同步粉丝列表')) {
-            $this->success('任务正在处理...', '');
+        try {
+            Queue::add('同步粉丝列表', Jobs::URI, 0, [], 0);
+            $this->success('创建同步粉丝任务成功，需要时间来完成。<br>请到系统任务管理查看进度！');
+        } catch (HttpResponseException $exception) {
+            throw $exception;
+        } catch (\Exception $e) {
+            $this->error("创建同步粉丝任务失败，请稍候再试！<br> {$e->getMessage()}");
         }
-        Queue::add('同步粉丝列表', Jobs::URI, 0, []);
-        $this->success('同步粉丝任务创建成功！');
     }
 
 }

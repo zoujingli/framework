@@ -44,18 +44,21 @@ class Queue extends Controller
 
     /**
      * 重置已经失败的任务
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
      */
     public function redo()
     {
-        $where = ['id' => $this->request->post('id')];
-        $info = Db::name($this->table)->where($where)->find();
-        if (empty($info)) $this->error('需要重置的任务获取异常！');
-        $data = isset($info['data']) ? json_decode($info['data'], true) : '[]';
-        \app\admin\logic\Queue::add($info['title'], $info['uri'], $info['later'], $data);
-        $this->success('任务重置成功！', url('@admin') . '#' . url('@admin/queue/index'));
+        try {
+            $where = ['id' => $this->request->post('id')];
+            $info = Db::name($this->table)->where($where)->find();
+            if (empty($info)) $this->error('需要重置的任务获取异常！');
+            $data = isset($info['data']) ? json_decode($info['data'], true) : '[]';
+            \app\admin\logic\Queue::add($info['title'], $info['uri'], $info['later'], $data, $info['double'], $info['desc']);
+            $this->success('任务重置成功！', url('@admin') . '#' . url('@admin/queue/index'));
+        } catch (\think\exception\HttpResponseException $exception) {
+            throw $exception;
+        } catch (\Exception $e) {
+            $this->error("任务重置失败，请稍候再试！<br> {$e->getMessage()}");
+        }
     }
 
 }

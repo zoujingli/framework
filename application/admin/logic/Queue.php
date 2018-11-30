@@ -26,11 +26,11 @@ use think\queue\Job;
 class Queue
 {
     // 待处理
-    const STATUS_PENDING = 1;
+    const STATUS_PEND = 1;
     // 处理中
-    const STATUS_PROCESSING = 2;
+    const STATUS_PROC = 2;
     // 处理完成
-    const STATUS_COMPLETE = 3;
+    const STATUS_COMP = 3;
     // 处理失败
     const STATUS_FAIL = 4;
 
@@ -76,13 +76,18 @@ class Queue
      * @param string $uri 任务命令
      * @param integer $later 延时时间
      * @param array $data 任务附加数据
+     * @param integer $double 任务多开
      * @param string $desc 任务描述
+     * @throws \think\Exception
      */
-    public static function add($title, $uri, $later, array $data, $desc = '')
+    public static function add($title, $uri, $later, array $data, $double = 1, $desc = '')
     {
+        if (empty($double) && self::exists($title)) {
+            throw new \think\Exception('该任务已经创建，请耐心等待处理完成！');
+        }
         $job_id = Db::name('SystemJobsLog')->insertGetId([
-            'title' => $title, 'later' => $later, 'uri' => $uri, 'desc' => $desc,
-            'data'  => json_encode($data, 256), 'status_at' => date('Y-m-d H:i:s'),
+            'title' => $title, 'later' => $later, 'uri' => $uri, 'double' => intval($double),
+            'data'  => json_encode($data, 256), 'desc' => $desc, 'status_at' => date('Y-m-d H:i:s'),
         ]);
         $data['_job_id_'] = $job_id;
         $data['_job_title_'] = $title;
@@ -98,7 +103,7 @@ class Queue
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
-    public static function status($jobId, $status = self::STATUS_PENDING, $statusDesc = '')
+    public static function status($jobId, $status = self::STATUS_PEND, $statusDesc = '')
     {
         $result = Db::name('SystemJobsLog')->where(['id' => $jobId])->update([
             'status' => $status, 'status_desc' => $statusDesc, 'status_at' => date('Y-m-d H:i:s'),
@@ -145,10 +150,10 @@ class Queue
         $this->title = isset($data['_job_title_']) ? $data['_job_title_'] : '';
         // 标记任务处理中
         $this->writeln('执行任务开始...');
-        Queue::status($this->id, Queue::STATUS_PROCESSING, $this->statusDesc);
+        Queue::status($this->id, Queue::STATUS_PROC, $this->statusDesc);
         if ($this->execute()) {
             $this->writeln('执行任务完成！');
-            $this->status = Queue::STATUS_COMPLETE;
+            $this->status = Queue::STATUS_COMP;
         } else {
             $this->writeln('执行任务失败！');
             $this->status = Queue::STATUS_FAIL;
