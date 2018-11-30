@@ -76,7 +76,10 @@ class Push extends Controller
             p($this->receive);
             // text, event, image, location
             if (method_exists($this, ($method = $this->receive['msgtype']))) {
-                if (is_string(($result = $this->$method()))) return $result;
+                if (is_string(($result = $this->$method()))) {
+                    p($result);
+                    return $result;
+                }
             }
         } catch (\Exception $e) {
             $this->error(__METHOD__ . "[{$e->getCode()}]{$e->getMessage()}");
@@ -232,8 +235,6 @@ class Push extends Controller
     {
         if ($isCustom) {
             $info = ['touser' => $this->openid, 'msgtype' => $type, "{$type}" => $data];
-            p('customservice');
-            p($info);
             \We::WeChatCustom(Wechat::config())->send($info);
         } else switch (strtolower($type)) {
             case 'text': // 发送文本消息
