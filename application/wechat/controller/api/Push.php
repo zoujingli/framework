@@ -18,6 +18,7 @@ use app\wechat\logic\Fans;
 use app\wechat\logic\Media;
 use app\wechat\logic\Wechat;
 use library\Controller;
+use think\console\Output;
 use think\Db;
 use think\facade\Log;
 
@@ -82,8 +83,11 @@ class Push extends Controller
                     p($result);
                     return $result;
                 }
+                p('===== 无需要回复内容 =====');
             }
         } catch (\Exception $e) {
+            p('===== 回复内容消息异常 =====');
+            p(__METHOD__ . "[{$e->getCode()}]{$e->getMessage()}");
             $this->error(__METHOD__ . "[{$e->getCode()}]{$e->getMessage()}");
         }
         return 'success';
