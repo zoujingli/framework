@@ -85,12 +85,11 @@
             <th class='list-table-check-td think-checkbox'>
                 <input data-auto-none="" data-check-target='.list-check-box' type='checkbox'>
             </th>
-            <th class='text-left nowrap'>用户名</th>
-            <th class='text-left nowrap'>手机号</th>
-            <th class='text-left nowrap'>电子邮箱</th>
-            <th class='text-left nowrap'>登录次数</th>
-            <th class='text-left nowrap'>最后登录</th>
-            <th class='text-left nowrap'>状态</th>
+            <th class='text-left nowrap' style="width:120px">用户名</th>
+            <th class='text-left nowrap' style="width:180px">联系方式</th>
+            <th class='text-left nowrap' style="width:150px">创建时间</th>
+            <th class='text-left nowrap' style="width:120px">账号状态</th>
+            <th class='text-left nowrap' style="width:150px">最后登录</th>
             <th class='text-left nowrap'></th>
         </tr>
         </thead>
@@ -101,16 +100,29 @@
                 <input class="list-check-box" value='{$vo.id}' type='checkbox'>
             </td>
             <td class='text-left nowrap'>{$vo.username}</td>
-            <td class='text-left nowrap'>{$vo.phone|default="<span class='color-desc'>还没有设置手机号</span>"|raw}</td>
-            <td class='text-left nowrap'>{$vo.mail|default="<span class='color-desc'>还没有设置邮箱</span>"|raw}</td>
-            <td class='text-left nowrap'>{$vo.login_num|default=0}</td>
-            <td class='text-left nowrap'>{$vo.login_at|format_datetime|default="<span class='color-desc'>从未登录</span>"|raw}</td>
             <td class='text-left nowrap'>
-                {eq name='vo.status' value='0'}
+                联系手机：{$vo.phone|default="<span class='color-desc'>还没有设置手机号</span>"|raw}
+                <br>
+                联系邮箱：{$vo.mail|default="<span class='color-desc'>还没有设置邮箱</span>"|raw}
+            </td>
+            <td class='text-left nowrap'>
+                日期：{$vo.create_at|format_datetime|str_replace=' ','<br>时间：',###|raw}
+            </td>
+            <td class='text-left nowrap'>
+                状态：{eq name='vo.status' value='0'}
                 <span class="layui-badge">已禁用</span>
                 {else}
                 <span class="layui-badge layui-bg-green">使用中</span>
                 {/eq}
+                <br>
+                次数：{$vo.login_num|default=0}
+            </td>
+            <td class='text-left nowrap'>
+                {if $vo.login_num > 0}
+                日期：{$vo.login_at|format_datetime|str_replace=' ','<br>时间：',###|raw}
+                {else}
+                <span class="color-desc">没有登录记录</span>
+                {/if}
             </td>
             <td class='text-left nowrap'>
 
