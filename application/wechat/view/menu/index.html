@@ -2,7 +2,9 @@
 
 {block name='content'}
 <div id="MenuEditor" class="layui-hide" style="width:1000px">
-
+    <style>
+        .mobile-preview ul > li:hover .layui
+    </style>
     <div class='mobile-preview pull-left notselect'>
         <div class='mobile-header'>公众号</div>
         <div class='mobile-body'></div>
@@ -11,10 +13,12 @@
                 <a ng-click="setActiveItem(one)" ng-class="{true:'active'}[one.active]">
                     <i class="icon-sub" ng-if="one.sub_button.length>0"></i> <span ng-bind="one.name"></span>
                 </a>
+                <i class="close layui-bg-gray layui-icon" ng-click="delItem(one)">&#x1006;</i>
                 <div class="sub-menu text-center" ng-if="one.active||one.show">
                     <ul>
                         <li ng-repeat="two in one.sub_button">
                             <a class="bottom-border" ng-click="setActiveItem(one,two)" ng-class="{true:'active'}[two.active]"><span ng-bind="two.name"></span></a>
+                            <i class="close layui-bg-gray layui-icon" ng-click="delItem(one,two)">&#x1006;</i>
                         </li>
                         <li class="menu-add" ng-if="one.sub_button.length<5"><a ng-click="addItem(one.sub_button,false)"><i class="icon-add"></i></a></li>
                     </ul>
@@ -24,6 +28,7 @@
             </li>
             <li class="parent-menu menu-add" style="{{getItemStyle(list)}}" ng-if="list.length<3">
                 <a ng-click="addItem(list,true)"><i class="icon-add"></i></a>
+
             </li>
         </ul>
     </div>
@@ -150,6 +155,27 @@
                 let item = {name: '请输入名称', type: 'click'};
                 if (isSubMenu) item.sub_button = [];
                 list.push(item);
+            };
+
+            // 移除菜单
+            $rootScope.delItem = function (one, two) {
+                let tmp = [];
+                if (two) {
+                    let _two = null;
+                    for (let i in one.sub_button) {
+                        if (!two.active && one.sub_button[i].active) _two = one.sub_button[i];
+                        if (one.sub_button[i] !== two) {
+                            if (two.active && one.sub_button.length > 1) _two = one.sub_button[i - 1] || one.sub_button[i + 1];
+                            tmp.push(one.sub_button[i]);
+                        }
+                    }
+                    one.sub_button = tmp;
+                    if (_two) $rootScope.setActiveItem(one, _two);
+                    if (one.sub_button.length < 1) $rootScope.setActiveItem(one);
+                } else {
+                    for (let i in $rootScope.list) if (one !== $rootScope.list[i]) tmp.push($rootScope.list[i]);
+                    $rootScope.list = tmp;
+                }
             };
 
             // 切换选择菜单
