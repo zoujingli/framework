@@ -6,7 +6,7 @@
 <!--{/if}-->
 
 <!--{if auth("admin/auth/del")}-->
-<button data-action='{:url("del")}' data-rule="id#{key}" class='layui-btn layui-btn-sm layui-btn-primary'>删除权限</button>
+<button data-action='{:url("del")}' data-rule="id#{key}" data-confirm="确定要删除这些权限吗？" class='layui-btn layui-btn-sm layui-btn-primary'>删除权限</button>
 <!--{/if}-->
 {/block}
 

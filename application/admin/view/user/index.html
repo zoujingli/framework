@@ -7,7 +7,7 @@
 <!--{/if}-->
 
 <!--{if auth("admin/user/del")}-->
-<button data-action='{:url("del")}' data-rule="id#{key}" class='layui-btn layui-btn-sm layui-btn-primary'>删除用户</button>
+<button data-action='{:url("del")}' data-rule="id#{key}" data-confirm="确定要删除这些用户吗？" class='layui-btn layui-btn-sm layui-btn-primary'>删除用户</button>
 <!--{/if}-->
 
 {/block}
@@ -151,7 +151,7 @@
 
                 {if auth("admin/user/del")}
                 <span class="text-explode">|</span>
-                <a data-confirm="确定要删除数据吗?" data-action="{:url('del')}" data-value="id#{$vo.id}">删除</a>
+                <a data-confirm="确定要删除该用户吗？" data-action="{:url('del')}" data-value="id#{$vo.id}">删除</a>
                 {/if}
 
             </td>

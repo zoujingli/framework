@@ -15,7 +15,7 @@
 <!--{/if}-->
 
 <!--{if auth("wechat/keys/del")}-->
-<button data-action='{:url("del")}' data-rule="id#{key}" class='layui-btn layui-btn-sm layui-btn-primary'>删除规则</button>
+<button data-action='{:url("del")}' data-rule="id#{key}" data-confirm="确定要删除这些规则吗？" class='layui-btn layui-btn-sm layui-btn-primary'>删除规则</button>
 <!--{/if}-->
 
 {/block}
@@ -87,15 +87,15 @@
 
                 {if $vo.status eq 1 and auth("wechat/keys/forbid")}
                 <span class="text-explode">|</span>
-                <a data-update="{$vo.id}" data-field='status' data-value='0' data-action='{:url("wechat/keys/forbid")}'>禁用</a>
+                <a data-action="{:url('forbid')}" data-value="id#{$vo.id};status#0">禁用</a>
                 {elseif auth("wechat/keys/resume")}
                 <span class="text-explode">|</span>
-                <a data-update="{$vo.id}" data-field='status' data-value='1' data-action='{:url("wechat/keys/resume")}'>启用</a>
+                <a data-action="{:url('resume')}" data-value="id#{$vo.id};status#1">启用</a>
                 {/if}
 
                 {if auth("wechat/keys/del")}
                 <span class="text-explode">|</span>
-                <a data-update="{$vo.id}" data-field='delete' data-action='{:url("del")}'>删除</a>
+                <a data-confirm="确定要删除该规则吗？" data-action="{:url('del')}" data-value="id#{$vo.id}">删除</a>
                 {/if}
 
             </td>

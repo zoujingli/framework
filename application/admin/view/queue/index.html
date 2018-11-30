@@ -3,7 +3,7 @@
 {block name="button"}
 
 <!--{if auth("admin/queue/del")}-->
-<button data-action='{:url("del")}' data-rule="id#{key}" class='layui-btn layui-btn-sm layui-btn-primary'>删除任务</button>
+<button data-action='{:url("del")}' data-confirm="确定要删除这些任务吗？" data-rule="id#{key}" class='layui-btn layui-btn-sm layui-btn-primary'>删除任务</button>
 <!--{/if}-->
 
 {/block}
@@ -131,7 +131,7 @@
             </a>
             {/eq}
             <!--{if auth("admin/queue/del") and in_array($vo.status,[1,3,4])}-->
-            <a data-action='{:url("del")}' data-value="id#{$vo.id}" data-tips-text="删除该任务" class='layui-badge layui-bg-red margin-left-5'>
+            <a data-action='{:url("del")}' data-confirm="确定要删除该任务吗？" data-value="id#{$vo.id}" data-tips-text="删除该任务" class='layui-badge layui-bg-red margin-left-5'>
                 <i class="layui-icon">&#xe640;</i>
             </a>
             <!--{/if}-->
