@@ -106,15 +106,23 @@
                 跟进时间：<span class="layui-badge layui-bg-gray">{$vo.status_at|format_datetime|raw}</span>
             </td>
             <td class='text-left nowrap'>
-                任务状态：{eq name='vo.status' value='1'}
+                任务状态：
+                {eq name='vo.double' value='1'}
+                <span class="layui-badge layui-bg-green margin-right-5">复</span>
+                {else}
+                <span class="layui-badge layui-bg-blue margin-right-5">单</span>
+                {/eq}
+                {eq name='vo.status' value='1'}
                 <span class="layui-badge layui-bg-black">待处理</span>
                 {elseif $vo.status eq 2}
                 <span class="layui-badge layui-bg-green">处理中</span>
                 {elseif $vo.status eq 3}
                 <span class="layui-badge layui-bg-blue">处理完成</span>
                 {elseif $vo.status eq 4}
-                <span class="layui-badge layui-bg-red">处理失败</span>
-                <a class="layui-badge layui-bg-green margin-left-10" data-tips-text="重置该任务" data-action="{:url('redo')}" data-value="id#{$vo.id}"><i class="layui-icon font-s12">&#xe669;</i></a>
+                <span class="layui-badge layui-bg-red margin-right-5">处理失败</span>
+                <a class="layui-badge layui-bg-green" data-tips-text="重置该任务" data-action="{:url('redo')}" data-value="id#{$vo.id}">
+                    <i class="layui-icon font-s12">&#xe669;</i>
+                </a>
                 {/eq}
                 <br>
                 状态描述：<span class="layui-badge layui-bg-gray">{$vo.status_desc|raw|default="<span class='color-desc'>没有获取到状态描述</span>"}</span>
