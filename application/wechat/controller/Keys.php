@@ -157,6 +157,9 @@ class Keys extends Controller
             empty($data['id']) || $db->where('id', 'neq', $data['id']);
             if ($db->count() > 0) $this->error('关键字已经存在，请使用其它关键字！');
         }
+        if ($this->request->isGet()) {
+            $this->defaultImage = rtrim(dirname(request()->basefile(true)), '\\/') . '/static/theme/img/image.png';
+        }
     }
 
     /**

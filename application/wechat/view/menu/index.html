@@ -14,9 +14,7 @@
                 <div class="sub-menu text-center" ng-if="one.active||one.show">
                     <ul>
                         <li ng-repeat="two in one.sub_button">
-                            <a class="bottom-border" ng-click="setActiveItem(one,two)" ng-class="{true:'active'}[two.active]">
-                                <span ng-bind="two.name"></span>
-                            </a>
+                            <a class="bottom-border" ng-click="setActiveItem(one,two)" ng-class="{true:'active'}[two.active]"><span ng-bind="two.name"></span></a>
                         </li>
                         <li class="menu-add" ng-if="one.sub_button.length<5"><a ng-click="addItem(one.sub_button,false)"><i class="icon-add"></i></a></li>
                     </ul>
@@ -30,7 +28,7 @@
         </ul>
     </div>
 
-    <div class="pull-left layui-card margin-left-10" style="border:1px solid #ccc;height:580px">
+    <div class="pull-left layui-card margin-left-10" style="border:1px solid #ccc;height:578px">
         <div class="layui-card-header layui-bg-gray text-center">菜单编辑</div>
         <div class="layui-card-body" style="padding-right: 80px!important;;width:500px">
             <form class="layui-form menu-form" autocomplete="off">
@@ -60,7 +58,8 @@
                 <div class="layui-form-item margin-top-20" ng-if="item.type==='click'">
                     <label class="layui-form-label">匹配规则</label>
                     <div class="layui-input-block">
-                        <select required ng-model="item.key" class="layui-select block full-width">
+                        <select required ng-model="item.key" class="layui-select" lay-filter="key" lay-search>
+                            <option value=""> -- 请选择规则 --</option>
                             <option value="{{x.keys}}" ng-selected="x.keys===item.key" ng-repeat="x in keys" ng-bind="x.keys"></option>
                         </select>
                     </div>
@@ -164,6 +163,16 @@
                 }
                 $rootScope.item = two || one || {};
             };
+
+            // 下拉列表处理
+            $rootScope.$watch('item', function () {
+                setTimeout(function () {
+                    form.render('select');
+                }, 10)
+            }, true);
+            form.on('select(key)', function (data) {
+                $rootScope.item.key = data.value;
+            });
 
             // 提交数据
             $rootScope.submit = function () {
