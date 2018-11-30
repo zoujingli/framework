@@ -43,7 +43,7 @@ class Queue extends Controller
     }
 
     /**
-     * 重置已经失败的任务
+     * 重置失败的任务
      */
     public function redo()
     {
@@ -58,6 +58,24 @@ class Queue extends Controller
             throw $exception;
         } catch (\Exception $e) {
             $this->error("任务重置失败，请稍候再试！<br> {$e->getMessage()}");
+        }
+    }
+
+    /**
+     * 删除系统任务
+     */
+    public function del()
+    {
+        try {
+            $isNot = false;
+            foreach (explode(',', $this->request->post('id', '0')) as $id) {
+                if (!\app\admin\logic\Queue::del($id)) $isNot = true;
+            }
+            $this->success($isNot ? '部分任务删除成功！' : '任务删除成功！');
+        } catch (\think\exception\HttpResponseException $exception) {
+            throw $exception;
+        } catch (\Exception $e) {
+            $this->error("任务删除失败，请稍候再试！<br> {$e->getMessage()}");
         }
     }
 

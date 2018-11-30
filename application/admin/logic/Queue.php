@@ -136,6 +136,23 @@ class Queue
     }
 
     /**
+     * 删除任务数据
+     * @param integer $jobId
+     * @return boolean
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     */
+    public static function del($jobId)
+    {
+        $where = [['id', 'eq', $jobId], ['status', 'in', [1, 3, 4]]];
+        if (Db::name('SystemJobsLog')->where($where)->delete() > 0) {
+            Db::name('SystemJobs')->whereLike('payload', '%"_job_id_":"' . $jobId . '"%')->delete();
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * 启动任务处理
      * @param Job $job
      * @param array $data
