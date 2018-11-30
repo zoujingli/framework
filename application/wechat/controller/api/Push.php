@@ -73,7 +73,7 @@ class Push extends Controller
             $this->wechat = \We::WeChatReceive(Wechat::config());
             $this->openid = $this->wechat->getOpenid();
             $this->receive = $this->toLower($this->wechat->getReceive());
-            p('===== 消息接口获取的内容 =====');
+            p(PHP_EOL . '===== 消息接口获取的内容 =====');
             p($this->receive);
             // text, event, image, location
             if (method_exists($this, ($method = $this->receive['msgtype']))) {
