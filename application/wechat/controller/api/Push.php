@@ -254,7 +254,7 @@ class Push extends Controller
             case 'music': // 发送音乐消息
                 return $this->wechat->music($data['title'], $data['description'], $data['musicurl'], $data['hqmusicurl'], $data['thumb_media_id'])->reply([], true);
             case 'customservice': // 转交客服消息
-                if ($data['content']) $this->sendMessage('text', $data['content'], true);
+                if ($data['content']) $this->sendMessage('text', $data, true);
                 return $this->wechat->transferCustomerService()->reply([], true);
             case 'news': // 发送图文消息
                 $articles = [];
