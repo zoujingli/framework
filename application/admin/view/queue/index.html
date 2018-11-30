@@ -82,6 +82,7 @@
 
         </fieldset>
     </caption>
+    <!--{notempty name='list'}-->
     <thead>
     <tr>
         <th class='list-table-check-td think-checkbox'>
@@ -92,6 +93,7 @@
         <th class='text-left nowrap'>任务状态</th>
     </tr>
     </thead>
+    <!--{/notempty}-->
     <tbody>
     <!--{foreach $list as $key=>$vo}-->
     <tr>
@@ -134,12 +136,18 @@
             </a>
             <!--{/if}-->
             <br>
-            状态描述：<span class="layui-badge layui-bg-gray">{$vo.status_desc|raw|default="<span class='color-desc'>没有获取到状态描述</span>"}</span>
+            状态描述：
+            <span class="layui-badge layui-bg-gray">{$vo.status_desc|raw|default="<span class='color-desc'>没有获取到状态描述</span>"}</span>
         </td>
     </tr>
     <!--{/foreach}-->
     </tbody>
 </table>
+
+{empty name='list'}
+<blockquote class="layui-elem-quote border-0 text-center">没 有 记 录 哦！</blockquote>
+{else}
 {$pagehtml|raw|default=''}
+{/empty}
 
 {/block}
