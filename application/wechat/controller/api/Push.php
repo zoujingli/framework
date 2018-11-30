@@ -18,9 +18,7 @@ use app\wechat\logic\Fans;
 use app\wechat\logic\Media;
 use app\wechat\logic\Wechat;
 use library\Controller;
-use think\console\Output;
 use think\Db;
-use think\facade\Log;
 
 /**
  * 公众号消息推送处理
@@ -81,6 +79,7 @@ class Push extends Controller
                 if (is_string(($result = $this->$method()))) {
                     p('===== 消息接口返回的内容 =====');
                     p($result);
+                    p(\WeChat\Contracts\Tools::xml2arr($result));
                     return $result;
                 }
                 p('===== 无需要回复内容 =====');
@@ -88,7 +87,7 @@ class Push extends Controller
         } catch (\Exception $e) {
             p('===== 回复内容消息异常 =====');
             p(__METHOD__ . "[{$e->getCode()}]{$e->getMessage()}");
-            $this->error(__METHOD__ . "[{$e->getCode()}]{$e->getMessage()}");
+            \think\facade\Log::error(__METHOD__ . "[{$e->getCode()}]{$e->getMessage()}");
         }
         return 'success';
     }
@@ -279,7 +278,7 @@ class Push extends Controller
                 $user = \We::WeChatUser(Wechat::config())->getUserInfo($this->openid);
                 return Fans::set(array_merge($user, ['subscribe' => '1']));
             } catch (\Exception $e) {
-                Log::error(__METHOD__ . " {$this->openid} 粉丝信息获取失败，{$e->getMessage()}");
+                \think\facade\Log::error(__METHOD__ . " {$this->openid} 粉丝信息获取失败，{$e->getMessage()}");
                 return false;
             }
         }
