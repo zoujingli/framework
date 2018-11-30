@@ -184,7 +184,6 @@ class Push extends Controller
             case 'text':
                 return $this->sendMessage('text', ['content' => $data['content']], $isCustom);
             case 'customservice':
-                p($data);
                 return $this->sendMessage('customservice', ['content' => $data['content']], $isCustom);
             case 'voice':
                 if (empty($data['voice_url']) || !($media_id = Media::upload($data['voice_url'], 'voice'))) return false;
@@ -233,9 +232,10 @@ class Push extends Controller
     {
         if ($isCustom) {
             $info = ['touser' => $this->openid, 'msgtype' => $type, "{$type}" => $data];
-            return \We::WeChatCustom(Wechat::config())->send($info);
-        }
-        switch (strtolower($type)) {
+            p('customservice');
+            p($info);
+            \We::WeChatCustom(Wechat::config())->send($info);
+        } else switch (strtolower($type)) {
             case 'text': // 发送文本消息
                 return $this->wechat->text($data['content'])->reply([], true);
             case 'image': // 发送图片消息
