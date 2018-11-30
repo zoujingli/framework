@@ -158,7 +158,8 @@ class Keys extends Controller
             if ($db->count() > 0) $this->error('关键字已经存在，请使用其它关键字！');
         }
         if ($this->request->isGet()) {
-            $this->defaultImage = rtrim(dirname(request()->basefile(true)), '\\/') . '/static/theme/img/image.png';
+            $root = rtrim(dirname(request()->basefile(true)), '\\/');
+            $this->defaultImage = "{$root}/static/theme/img/image.png";
         }
     }
 
