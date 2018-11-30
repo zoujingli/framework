@@ -37,8 +37,8 @@ class Keys extends Controller
      * @var array
      */
     protected $types = [
-        'keys'  => '关键字', 'image' => '图片', 'news' => '图文',
-        'music' => '音乐', 'text' => '文字', 'video' => '视频', 'voice' => '语音',
+        'text'  => '文字', 'news' => '图文', 'image' => '图片', 'music' => '音乐',
+        'video' => '视频', 'voice' => '语音', 'customservice' => '转客服',
     ];
 
     /**
@@ -158,6 +158,7 @@ class Keys extends Controller
             if ($db->count() > 0) $this->error('关键字已经存在，请使用其它关键字！');
         }
         if ($this->request->isGet()) {
+            $this->msgTypes = $this->types;
             $root = rtrim(dirname(request()->basefile(true)), '\\/');
             $this->defaultImage = "{$root}/static/theme/img/image.png";
         }
