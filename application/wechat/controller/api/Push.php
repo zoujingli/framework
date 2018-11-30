@@ -237,7 +237,11 @@ class Push extends Controller
             $info = ['touser' => $this->openid, 'msgtype' => $type, "{$type}" => $data];
             p('准备发送客服消息');
             p($info);
-            p(\We::WeChatCustom(Wechat::config())->send($info));
+            try {
+                p(\We::WeChatCustom(Wechat::config())->send($info));
+            } catch (\Exception $e) {
+                p($e->getMessage());
+            }
         } else switch (strtolower($type)) {
             case 'text': // 发送文本消息
                 return $this->wechat->text($data['content'])->reply([], true);
