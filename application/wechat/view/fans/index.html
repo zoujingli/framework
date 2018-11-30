@@ -17,139 +17,72 @@
 {/block}
 
 {block name="content"}
-<!-- 表单搜索 开始 -->
-<fieldset>
-    <legend>列表搜索</legend>
-    <form class="layui-form layui-form-pane form-search" action="{:request()->url()}" onsubmit="return false" method="get" autocomplete="off">
 
-        <div class="layui-form-item layui-inline">
-            <label class="layui-form-label">微信昵称</label>
-            <div class="layui-input-inline">
-                <input name="nickname" value="{$Think.get.nickname|default=''}" placeholder="请输入微信昵称" class="layui-input">
-            </div>
-        </div>
+<table class="layui-table" lay-skin="line">
+    <caption class="margin-bottom-10 text-left">{include file='fans/index_search'}</caption>
+    <!--{notempty name='list'}-->
+    <thead>
+    <tr>
+        <th width="30px" class='list-table-check-td think-checkbox'><input data-auto-none data-check-target='.list-check-box' type='checkbox'></th>
+        <th width="150px" class='text-left nowrap'>微信昵称</th>
+        <th width="150px" class='text-left nowrap'>性别语音</th>
+        <th width="180px" class='text-left nowrap'>关注时间</th>
+        <th class='text-left nowrap'>状态</th>
+    </tr>
+    </thead>
+    <!--{/notempty}-->
+    <tbody>
+    <!--{foreach $list as $key=>$vo}-->
+    <tr>
+        <td class='list-table-check-td think-checkbox'>
+            <input class="list-check-box" value='{$vo.openid}' type='checkbox'>
+        </td>
+        <td class='text-left nowrap relative layui-elip'>
+            <div class="background-image pull-left" data-tips-image="{$vo.headimgurl}" style="background-image:url('{$vo.headimgurl}')"></div>
+            昵称：{$vo.nickname}
+            <br>
+            区域：{$vo.country} {$vo.province} {$vo.city}
+        </td>
+        <td class='text-left nowrap'>
+            性别：{switch name='vo.sex'}{case value='1'}男{/case}{case value='2'}女{/case}{default}未知{/switch}
+            <br>
+            语言：{$vo.language|raw}
+        </td>
+        <td class='text-left nowrap'>
+            日期：{$vo.subscribe_at|format_datetime|str_replace=' ','<br>时间：',###|raw}
+        </td>
+        <td class='text-left nowrap'>
 
-        <div class="layui-form-item layui-inline">
-            <label class="layui-form-label">关注状态</label>
-            <div class="layui-input-inline">
-                <select class="layui-select" name="subscribe">
-                    {foreach [''=>'-- 全部 --','0'=>'显示未关注的粉丝','1'=>'显示已关注的粉丝'] as $k=>$v}
-                    {eq name='Think.get.subscribe' value='$k.""'}
-                    <option selected value="{$k}">{$v}</option>
-                    {else}
-                    <option value="{$k}">{$v}</option>
-                    {/eq}
-                    {/foreach}
-                </select>
-            </div>
-        </div>
+            {eq name='vo.subscribe' value='0'}
+            <span class="layui-badge margin-right-10">未关注</span>
+            {else}
+            <span class="layui-badge layui-bg-green margin-right-10">已关注</span>
+            {/eq}
 
-        <div class="layui-form-item layui-inline">
-            <label class="layui-form-label">拉黑状态</label>
-            <div class="layui-input-inline">
-                <select class="layui-select" name="is_black">
-                    {foreach [''=>'-- 全部 --','0'=>'显示未拉黑的粉丝','1'=>'显示已拉黑的粉丝'] as $k=>$v}
-                    {eq name='Think.get.is_black' value='$k.""'}
-                    <option selected value="{$k}">{$v}</option>
-                    {else}
-                    <option value="{$k}">{$v}</option>
-                    {/eq}
-                    {/foreach}
-                </select>
-            </div>
-        </div>
+            <br>
 
-        <div class="layui-form-item layui-inline">
-            <label class="layui-form-label">关注时间</label>
-            <div class="layui-input-inline">
-                <input name="subscribe_at" value="{$Think.get.subscribe_at|default=''}" placeholder="请选择关注时间" class="layui-input">
-            </div>
-        </div>
+            {eq name='vo.is_black' value='0'}
+            <span class="layui-badge layui-bg-green">未拉黑</span>
+            <!--{if auth("wechat/fans/setblack")}-->
+            <a style="top:15px" class="margin-left-10 absolute layui-btn layui-btn-primary layui-btn-sm" data-action="{:url('setblack')}" data-value="openid#{$vo.openid}">立即拉黑</a>
+            <!--{/if}-->
+            {else}
+            <span class="layui-badge">已拉黑</span>
+            <!--{if auth("wechat/fans/delblack")}-->
+            <a style="top:15px" class="margin-left-10 absolute layui-btn layui-btn-primary layui-btn-sm" data-action="{:url('delblack')}" data-value="openid#{$vo.openid}">取消拉黑</a>
+            <!--{/if}-->
+            {/eq}
 
-        <div class="layui-form-item layui-inline">
-            <button class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe615;</i> 搜 索</button>
-        </div>
-    </form>
+        </td>
+    </tr>
+    <!--{/foreach}-->
+    </tbody>
+</table>
 
-</fieldset>
+<!--{empty name='list'}-->
+<blockquote class="layui-elem-quote border-0 text-center">没 有 记 录 哦！</blockquote>
+<!--{else}-->
+{$pagehtml|raw|default=''}
+<!--{/empty}-->
 
-<script>
-    window.form.render();
-    window.laydate.render({range: true, elem: '[name="subscribe_at"]'});
-</script>
-<!-- 表单搜索 结束 -->
-
-<form onsubmit="return false;" data-auto="true" method="post" autocomplete="off">
-    <!--{empty name='list'}-->
-    <blockquote class="layui-elem-quote">没 有 记 录 哦！</blockquote>
-    <!--{else}-->
-    <input type="hidden" value="resort" name="action">
-    <table class="layui-table" lay-skin="line">
-        <colgroup>
-            <col width="30px">
-            <col width="150px">
-            <col width="150px">
-            <col width="180px">
-        </colgroup>
-        <thead>
-        <tr>
-            <th class='list-table-check-td think-checkbox'>
-                <input data-auto-none data-check-target='.list-check-box' type='checkbox'>
-            </th>
-            <th class='text-left nowrap'>微信昵称</th>
-            <th class='text-left nowrap'>性别语音</th>
-            <th class='text-left nowrap'>关注时间</th>
-            <th class='text-left nowrap'>状态</th>
-        </tr>
-        </thead>
-        <tbody>
-        <!--{foreach $list as $key=>$vo}-->
-        <tr>
-            <td class='list-table-check-td think-checkbox'>
-                <input class="list-check-box" value='{$vo.openid}' type='checkbox'>
-            </td>
-            <td class='text-left nowrap relative layui-elip'>
-                <div class="background-image pull-left" data-tips-image="{$vo.headimgurl}" style="background-image:url('{$vo.headimgurl}')"></div>
-                昵称：{$vo.nickname}
-                <br>
-                区域：{$vo.country} {$vo.province} {$vo.city}
-            </td>
-            <td class='text-left nowrap'>
-                性别：{switch name='vo.sex'}{case value='1'}男{/case}{case value='2'}女{/case}{default}未知{/switch}
-                <br>
-                语言：{$vo.language|raw}
-            </td>
-            <td class='text-left nowrap'>
-                日期：{$vo.subscribe_at|format_datetime|str_replace=' ','<br>时间：',###|raw}
-            </td>
-            <td class='text-left nowrap'>
-
-                {eq name='vo.subscribe' value='0'}
-                <span class="layui-badge margin-right-10">未关注</span>
-                {else}
-                <span class="layui-badge layui-bg-green margin-right-10">已关注</span>
-                {/eq}
-
-                <br>
-
-                {eq name='vo.is_black' value='0'}
-                <span class="layui-badge layui-bg-green">未拉黑</span>
-                <!--{if auth("wechat/fans/setblack")}-->
-                <a style="top:15px" class="margin-left-10 absolute layui-btn layui-btn-primary layui-btn-sm" data-action="{:url('setblack')}" data-value="openid#{$vo.openid}">立即拉黑</a>
-                <!--{/if}-->
-                {else}
-                <span class="layui-badge">已拉黑</span>
-                <!--{if auth("wechat/fans/delblack")}-->
-                <a style="top:15px" class="margin-left-10 absolute layui-btn layui-btn-primary layui-btn-sm" data-action="{:url('delblack')}" data-value="openid#{$vo.openid}">取消拉黑</a>
-                <!--{/if}-->
-                {/eq}
-
-            </td>
-        </tr>
-        <!--{/foreach}-->
-        </tbody>
-    </table>
-    {$pagehtml|raw|default=''}
-    <!--{/empty}-->
-</form>
 {/block}

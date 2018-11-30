@@ -118,16 +118,25 @@ class Page extends Logic
      */
     protected function _sort()
     {
-        if ($this->request->post('action') === 'resort') {
-            foreach ($this->request->post() as $key => $value) {
-                if (preg_match('/^_\d{1,}$/', $key) && preg_match('/^\d{1,}$/', $value)) {
-                    list($where, $update) = [['id' => trim($key, '_')], ['sort' => $value]];
-                    if (false === Db::table($this->query->getTable())->where($where)->update($update)) {
-                        $this->controller->error('排序失败, 请稍候再试！');
+        switch (strtolower($this->request->post('action', ''))) {
+            case 'resort':
+                foreach ($this->request->post() as $key => $value) {
+                    if (preg_match('/^_\d{1,}$/', $key) && preg_match('/^\d{1,}$/', $value)) {
+                        list($where, $update) = [['id' => trim($key, '_')], ['sort' => $value]];
+                        if (false === Db::table($this->query->getTable())->where($where)->update($update)) {
+                            return $this->controller->error('排序失败, 请稍候再试！');
+                        }
                     }
                 }
-            }
-            $this->controller->success('排序成功, 正在刷新页面！', '');
+                return $this->controller->success('排序成功, 正在刷新页面！', '');
+            case 'sort':
+                $where = $this->request->post();
+                $sort = intval($this->request->post('sort'));
+                unset($where['action'], $where['sort']);
+                if (Db::table($this->query->getTable())->where($where)->update(['sort' => $sort]) !== false) {
+                    return $this->controller->success('排序参数修改成功！', '');
+                }
+                return $this->controller->error('排序参数修改失败，请稍候再试！');
         }
     }
 

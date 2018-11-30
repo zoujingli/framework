@@ -1,138 +1,95 @@
 {extend name='admin@main'}
 
 {block name="button"}
-
 <!--{if auth("store/goods/add")}-->
 <button data-open='{:url("add")}' data-title="添加商品" class='layui-btn layui-btn-sm layui-btn-primary'>添加商品</button>
 <!--{/if}-->
-
 <!--{if auth("store/goods/del")}-->
 <button data-action='{:url("del")}' data-rule="id#{key}" class='layui-btn layui-btn-sm layui-btn-primary'>删除商品</button>
 <!--{/if}-->
-
 {/block}
 
 {block name="content"}
+<table class="layui-table" lay-skin="line">
+    <caption class="margin-bottom-10 text-left">{include file='goods/index_search'}</caption>
+    <!--{notempty name='list'}-->
+    <thead>
+    <tr>
+        <th class='list-table-check-td think-checkbox'>
+            <input data-auto-none="" data-check-target='.list-check-box' type='checkbox'>
+        </th>
+        <th class='list-table-sort-td'>
+            <button type="button" data-reload class="layui-btn layui-btn-xs">刷 新</button>
+        </th>
+        <th class='text-left nowrap'>商品名称</th>
+        <th class='text-left nowrap'>商品信息</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <!--{/notempty}-->
+    <tbody>
+    <!--{foreach $list as $key=>$vo}-->
+    <tr>
+        <td class='list-table-check-td think-checkbox'><input class="list-check-box" value='{$vo.id}' type='checkbox'></td>
+        <td class='list-table-sort-td'><input data-action-blur="{:request()->url()}" data-value="id#{$vo.id};action#sort;sort#{value}" data-loading="false" value="{$vo.sort}" class="list-sort-input"></td>
+        <td class='text-left nowrap'><a class="layui-icon font-s12 layui-icon-picture" data-tips-image="{$vo.logo}"></a>&nbsp;{$vo.title}</td>
+        <td class='text-left nowrap padding-0'>
+            <table class="trim-bottom-border">
+                <!--{foreach $vo.list as $goods}-->
+                <tr>
+                    <td>{:str_replace(['::',';;'],[':',';'],$goods.goods_spec)}</td>
+                    <td><span class="color-desc font-s10">市价</span>&nbsp;<span class="color-blue">{$goods.price_market}</span></td>
+                    <td><span class="color-desc font-s10">销价</span>&nbsp;<span class="color-blue">{$goods.price_selling}</span></td>
+                    <td><span class="color-desc font-s10">库存</span>&nbsp;<span class="color-blue">{$goods.number_stock}</span></td>
+                    <td><span class="color-desc font-s10">销量</span>&nbsp;<span class="color-blue">{$goods.number_sales}</span></td>
+                </tr>
+                <!--{/foreach}-->
+            </table>
+            <style>
+                table.trim-bottom-border tr:last-child td {
+                    border: none !important;
+                }
+            </style>
+        </td>
+        <td class='text-left nowrap'>
+            {eq name='vo.status' value='0'}<span class="layui-badge">已下架</span>{else}<span class="layui-badge layui-bg-green">销售中</span>{/eq}
+        </td>
+        <td class='text-left nowrap'>
 
-<fieldset>
-    <legend>列表搜索</legend>
-    <form class="layui-form layui-form-pane form-search" action="{:request()->url()}" onsubmit="return false" method="get" autocomplete="off">
+            {if auth("store/goods/edit")}
+            <span class="text-explode">|</span>
+            <a data-open='{:url("edit")}?id={$vo.id}'>编辑</a>
+            {/if}
 
-        <div class="layui-form-item layui-inline">
-            <label class="layui-form-label">商品名称</label>
-            <div class="layui-input-inline">
-                <input name="title" value="{$Think.get.title|default=''}" placeholder="请输入商品名称" class="layui-input">
-            </div>
-        </div>
+            {if $vo.status eq 1 and auth("store/goods/forbid")}
+            <span class="text-explode">|</span>
+            <a data-action="{:url('forbid')}" data-value="id#{$vo.id};status#0">下架</a>
+            {elseif auth("store/goods/resume")}
+            <span class="text-explode">|</span>
+            <a data-action="{:url('resume')}" data-value="id#{$vo.id};status#1">上架</a>
+            {/if}
 
-        <div class="layui-form-item layui-inline">
-            <label class="layui-form-label">销售状态</label>
-            <div class="layui-input-inline">
-                <select class="layui-select" name="status">
-                    {foreach [''=>'- 全部商品 -','1'=>'销售中商品','0'=>'已下架商品'] as $k=>$v}
-                    <!--{eq name='Think.get.status' value='$k.""'}-->
-                    <option selected value="{$k}">{$v}</option>
-                    <!--{else}-->
-                    <option value="{$k}">{$v}</option>
-                    <!--{/eq}-->
-                    {/foreach}
-                </select>
-            </div>
-        </div>
+            {if auth("store/goods/stock")}
+            <span class="text-explode">|</span>
+            <a data-title="商品入库" data-modal='{:url("stock")}?id={$vo.id}'>入库</a>
+            {/if}
 
-        <div class="layui-form-item layui-inline">
-            <button class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe615;</i> 搜 索</button>
-        </div>
+            {if auth("store/goods/del")}
+            <span class="text-explode">|</span>
+            <a data-confirm="确定要删除数据吗?" data-action="{:url('del')}" data-value="id#{$vo.id}">删除</a>
+            {/if}
 
-    </form>
-    <script>form.render()</script>
-</fieldset>
+        </td>
+    </tr>
+    <!--{/foreach}-->
+    </tbody>
+</table>
 
-<form onsubmit="return false;" data-auto="true" method="post" autocomplete="off">
-    <!--{empty name='list'}-->
-    <blockquote class="layui-elem-quote">没 有 记 录 哦！</blockquote>
-    <!--{else}-->
-    <input type="hidden" value="resort" name="action">
-    <table class="layui-table" lay-skin="line">
-        <thead>
-        <tr>
-            <th class='list-table-check-td think-checkbox'>
-                <input data-auto-none="" data-check-target='.list-check-box' type='checkbox'>
-            </th>
-            <th class='list-table-sort-td'>
-                <button type="submit" class="layui-btn layui-btn-xs">排 序</button>
-            </th>
-            <th class='text-left nowrap'>商品名称</th>
-            <th class='text-left nowrap'>商品信息</th>
-            <th class='text-left nowrap'></th>
-            <th class='text-left nowrap'></th>
-        </tr>
-        </thead>
-        <tbody>
-        <!--{foreach $list as $key=>$vo}-->
-        <tr>
-            <td class='list-table-check-td think-checkbox'>
-                <input class="list-check-box" value='{$vo.id}' type='checkbox'>
-            </td>
-            <td class='list-table-sort-td'>
-                <input name="_{$vo.id}" value="{$vo.sort}" class="list-sort-input">
-            </td>
-            <td class='text-left nowrap'>
-                <a class="layui-icon font-s12 layui-icon-picture" data-tips-image="{$vo.logo}"></a>&nbsp;{$vo.title}
-            </td>
-            <td class='text-left nowrap padding-0'>
-                <table class="trim-bottom-border">
-                    <!--{foreach $vo.list as $goods}-->
-                    <tr>
-                        <td>{:str_replace(['::',';;'],[':',';'],$goods.goods_spec)}</td>
-                        <td><span class="color-desc font-s10">市价</span>&nbsp;<span class="color-blue">{$goods.price_market}</span></td>
-                        <td><span class="color-desc font-s10">销价</span>&nbsp;<span class="color-blue">{$goods.price_selling}</span></td>
-                        <td><span class="color-desc font-s10">库存</span>&nbsp;<span class="color-blue">{$goods.number_stock}</span></td>
-                        <td><span class="color-desc font-s10">销量</span>&nbsp;<span class="color-blue">{$goods.number_sales}</span></td>
-                    </tr>
-                    <!--{/foreach}-->
-                </table>
-                <style>
-                    table.trim-bottom-border tr:last-child td {
-                        border: none !important;
-                    }
-                </style>
-            </td>
-            <td class='text-left nowrap'>
-                {eq name='vo.status' value='0'}<span class="layui-badge">已下架</span>{else}<span class="layui-badge layui-bg-green">销售中</span>{/eq}
-            </td>
-            <td class='text-left nowrap'>
-
-                {if auth("store/goods/edit")}
-                <span class="text-explode">|</span>
-                <a data-open='{:url("edit")}?id={$vo.id}'>编辑</a>
-                {/if}
-
-                {if $vo.status eq 1 and auth("store/goods/forbid")}
-                <span class="text-explode">|</span>
-                <a data-action="{:url('forbid')}" data-value="id#{$vo.id};status#0">下架</a>
-                {elseif auth("store/goods/resume")}
-                <span class="text-explode">|</span>
-                <a data-action="{:url('resume')}" data-value="id#{$vo.id};status#1">上架</a>
-                {/if}
-
-                {if auth("store/goods/stock")}
-                <span class="text-explode">|</span>
-                <a data-title="商品入库" data-modal='{:url("stock")}?id={$vo.id}'>入库</a>
-                {/if}
-
-                {if auth("store/goods/del")}
-                <span class="text-explode">|</span>
-                <a data-confirm="确定要删除数据吗?" data-action="{:url('del')}" data-value="id#{$vo.id}">删除</a>
-                {/if}
-
-            </td>
-        </tr>
-        <!--{/foreach}-->
-        </tbody>
-    </table>
-    {$pagehtml|default=''|raw}
-    <!--{/empty}-->
-</form>
+<!--{empty name='list'}-->
+<blockquote class="layui-elem-quote border-0 text-center">没 有 记 录 哦！</blockquote>
+<!--{else}-->
+{$pagehtml|raw|default=''}
+<!--{/empty}-->
 
 {/block}

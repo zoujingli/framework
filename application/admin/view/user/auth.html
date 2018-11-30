@@ -1,7 +1,5 @@
 <form class="layui-form layui-card" action="{:request()->url()}" data-auto="true" method="post" autocomplete="off">
-
     <div class="layui-card-body">
-
         <div class="layui-form-item">
             <label class="layui-form-label">用户账号</label>
             <div class="layui-input-block">
@@ -12,7 +10,6 @@
                 <!--{/if}-->
             </div>
         </div>
-
         <div class="layui-form-item">
             <label class="layui-form-label">访问授权</label>
             <div class="layui-input-block">
@@ -28,11 +25,8 @@
                 {if empty($authorizes)}<span class="color-desc" style="line-height:36px">未配置权限</span>{/if}
             </div>
         </div>
-
     </div>
-
     <div class="hr-line-dashed"></div>
-
     <div class="layui-form-item text-center">
         <!--{notempty name='vo.id'}-->
         <input type='hidden' value='{$vo.id}' name='id'>
@@ -40,6 +34,5 @@
         <button class="layui-btn" type='submit'>保存数据</button>
         <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消编辑吗？" data-close>取消编辑</button>
     </div>
-
     <script>window.form.render();</script>
 </form>

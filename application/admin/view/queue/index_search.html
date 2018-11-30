@@ -1,0 +1,70 @@
+<fieldset>
+    <legend>列表搜索</legend>
+    <form class="layui-form layui-form-pane form-search" action="{:request()->url()}" onsubmit="return false" method="get" autocomplete="off">
+
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label">任务名称</label>
+            <div class="layui-input-inline">
+                <select class="layui-select" name="title" lay-search>
+                    <option value="">-- 全部 --</option>
+                    {foreach $titles as $title}
+                    <!--{eq name='Think.get.title' value='$title'}-->
+                    <option selected value="{$title}">{$title}</option>
+                    <!--{else}-->
+                    <option value="{$title}">{$title}</option>
+                    <!--{/eq}-->
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label">任务指令</label>
+            <div class="layui-input-inline">
+                <select class="layui-select" name="uri" lay-search>
+                    <option value="">-- 全部 --</option>
+                    {foreach $uris as $uri}
+                    <!--{eq name='Think.get.uri' value='$uri'}-->
+                    <option selected value="{$uri}">{$uri}</option>
+                    <!--{else}-->
+                    <option value="{$uri}">{$uri}</option>
+                    <!--{/eq}-->
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label">创建时间</label>
+            <div class="layui-input-inline">
+                <input name="create_at" value="{$Think.get.create_at|default=''}" placeholder="请选择创建时间" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label">任务状态</label>
+            <div class="layui-input-inline">
+                <select name="status" class="layui-select">
+                    {foreach [''=>'-- 全部 --','1'=>'待处理','2'=>'处理中','3'=>'处理完成','4'=>'处理失败'] as $k=>$v}
+                    <!--{if $Think.get.status eq $k}-->
+                    <option selected value="{$k}">{$v}</option>
+                    <!--{else}-->
+                    <option value="{$k}">{$v}</option>
+                    <!--{/if}-->
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-inline">
+            <button class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe615;</i> 搜 索</button>
+        </div>
+
+        <script>
+            window.form.render();
+            window.laydate.render({range: true, elem: '[name="create_at"]'});
+        </script>
+
+    </form>
+
+</fieldset>

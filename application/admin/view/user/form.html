@@ -1,7 +1,5 @@
 <form class="layui-form layui-card" action="{:request()->url()}" data-auto="true" method="post" autocomplete="off">
-
     <div class="layui-card-body">
-
         <div class="layui-form-item">
             <label class="layui-form-label">用户账号</label>
             <div class="layui-input-block">
@@ -12,22 +10,19 @@
                 <!--{/if}-->
             </div>
         </div>
-
         <div class="layui-form-item">
             <label class="layui-form-label">联系手机</label>
             <div class="layui-input-block">
                 <input type="tel" maxlength="11" autofocus name="phone" value='{$vo.phone|default=""}' pattern="^1[3-9][0-9]{9}$" placeholder="请输入联系手机" class="layui-input">
             </div>
         </div>
-
         <div class="layui-form-item">
             <label class="layui-form-label">联系邮箱</label>
             <div class="layui-input-block">
                 <input name="mail" pattern="^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$" value='{$vo.mail|default=""}' placeholder="请输入联系邮箱" class="layui-input">
             </div>
         </div>
-
-        {if isset($authorizes)}
+        <!--{if isset($authorizes)}-->
         <div class="layui-form-item">
             <label class="layui-form-label">访问授权</label>
             <div class="layui-input-block">
@@ -43,19 +38,15 @@
                 {if empty($authorizes)}<span class="color-desc" style="line-height:36px">未配置权限</span>{/if}
             </div>
         </div>
-        {/if}
-
+        <!--{/if}-->
         <div class="layui-form-item">
             <label class="layui-form-label">用户描述</label>
             <div class="layui-input-block">
                 <textarea placeholder="请输入用户描述" class="layui-textarea" name="desc">{$vo.desc|default=""}</textarea>
             </div>
         </div>
-
     </div>
-
     <div class="hr-line-dashed"></div>
-
     <div class="layui-form-item text-center">
         <!--{notempty name='vo.id'}-->
         <input type='hidden' value='{$vo.id}' name='id'>
@@ -63,7 +54,5 @@
         <button class="layui-btn" type='submit'>保存数据</button>
         <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消编辑吗？" data-close>取消编辑</button>
     </div>
-
     <script>window.form.render();</script>
-
 </form>

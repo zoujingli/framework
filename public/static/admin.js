@@ -494,6 +494,8 @@ $(function () {
     /*! 注册 data-action 事件行为 */
     $body.on('click', '[data-action]', function () {
         let data = {}, $this = $(this), action = $this.attr('data-action');
+        let time = $this.attr('data-time'), loading = $this.attr('data-loading') || false;
+        let method = $this.attr('data-method') || 'post';
         let rule = $this.attr('data-value') || (function (rule, ids) {
             $($this.attr('data-target') || 'input[type=checkbox].list-check-box').map(function () {
                 (this.checked) && ids.push(this.value);
@@ -505,9 +507,30 @@ $(function () {
             if (o.length < 2) return $.msg.tips('异常的数据操作规则，请修改规则！');
             data[o.split('#')[0]] = o.split('#')[1];
         }
-        if (!$this.attr('data-confirm')) $.form.load(action, data, 'post');
+        let load = loading !== 'false', tips = typeof loading === 'string' ? loading : undefined;
+        if (!$this.attr('data-confirm')) $.form.load(action, data, method, false, load, tips, time);
         else $.msg.confirm($this.attr('data-confirm'), function () {
-            $.form.load(action, data, 'post');
+            $.form.load(action, data, method, false, load, tips, time);
+        });
+    });
+
+    /*! 输入框失焦提交 */
+    $body.on('blur', '[data-action-blur]', function () {
+        let that = this, data = {}, $this = $(this), action = $this.attr('data-action-blur');
+        let time = $this.attr('data-time'), loading = $this.attr('data-loading') || false;
+        let load = loading !== 'false', tips = typeof loading === 'string' ? loading : undefined;
+        let method = $this.attr('data-method') || 'post', confirm = $this.attr('data-confirm');
+        for (let o of $this.attr('data-value').replace('{value}', $this.val()).split(';')) {
+            if (o.length < 2) return $.msg.tips('异常的数据操作规则，请修改规则！');
+            data[o.split('#')[0]] = o.split('#')[1];
+        }
+        that.callback = function (ret) {
+            $this.css('border', (ret && ret.code) ? '1px solid #e6e6e6' : '1px solid red');
+            return false;
+        };
+        if (!confirm) return $.form.load(action, data, method, that.callback, load, tips, time);
+        $.msg.confirm(confirm, function () {
+            $.form.load(action, data, method, that.callback, load, tips, time);
         });
     });
 
