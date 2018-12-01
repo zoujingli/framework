@@ -2,9 +2,6 @@
 
 {block name='content'}
 <div id="MenuEditor" class="layui-hide" style="width:1000px">
-    <style>
-        .mobile-preview ul > li:hover .layui
-    </style>
     <div class='mobile-preview pull-left notselect'>
         <div class='mobile-header'>公众号</div>
         <div class='mobile-body'></div>
@@ -20,23 +17,25 @@
                             <a class="bottom-border" ng-click="setActiveItem(one,two)" ng-class="{true:'active'}[two.active]"><span ng-bind="two.name"></span></a>
                             <i class="close layui-bg-gray layui-icon" ng-click="delItem(one,two)">&#x1006;</i>
                         </li>
-                        <li class="menu-add" ng-if="one.sub_button.length<5"><a ng-click="addItem(one.sub_button,false)"><i class="icon-add"></i></a></li>
+                        <li class="menu-add" ng-if="one.sub_button.length<5"><a ng-click="addItem(one.sub_button)"><i class="icon-add"></i></a></li>
                     </ul>
                     <i class="arrow arrow_out"></i>
                     <i class="arrow arrow_in"></i>
                 </div>
             </li>
             <li class="parent-menu menu-add" style="{{getItemStyle(list)}}" ng-if="list.length<3">
-                <a ng-click="addItem(list,true)"><i class="icon-add"></i></a>
-
+                <a ng-click="addItem(list)"><i class="icon-add"></i></a>
             </li>
         </ul>
     </div>
 
     <div class="pull-left layui-card margin-left-10" style="border:1px solid #ccc;height:578px">
         <div class="layui-card-header layui-bg-gray text-center">菜单编辑</div>
-        <div class="layui-card-body" style="padding-right: 80px!important;;width:500px">
-            <form class="layui-form menu-form" autocomplete="off">
+        <div class="layui-card-body" ng-if="list.length<1" style="width:500px">
+            <blockquote class="layui-elem-quote border-0 text-center">请在左侧创建菜单...</blockquote>
+        </div>
+        <div class="layui-card-body" ng-if="list.length>0" style="width:500px">
+            <form class="layui-form menu-form" autocomplete="off" style="padding-right:80px;">
                 <div class="layui-form-item margin-top-20">
                     <label class="layui-form-label">菜单名称</label>
                     <div class="layui-input-block">
@@ -52,31 +51,26 @@
                         {/foreach}
                     </div>
                 </div>
-
                 <div class="layui-form-item margin-top-20" ng-if="item.type==='customservice'">
                     <label class="layui-form-label">提示文字</label>
                     <div class="layui-input-block">
                         <textarea required class="layui-textarea" ng-model="item.content"></textarea>
                     </div>
                 </div>
-
-                <div class="layui-form-item margin-top-20" ng-if="item.type==='click'">
+                <div class="layui-form-item margin-top-20" ng-if="item.sub_button.length<1 && item.type==='click'">
                     <label class="layui-form-label">匹配规则</label>
                     <div class="layui-input-block">
                         <select required ng-model="item.key" class="layui-select" lay-filter="key" lay-search>
-                            <option value=""> -- 请选择规则 --</option>
                             <option value="{{x.keys}}" ng-selected="x.keys===item.key" ng-repeat="x in keys" ng-bind="x.keys"></option>
                         </select>
                     </div>
                 </div>
-
                 <div class="layui-form-item margin-top-20" ng-if="item.type==='view'">
                     <label class="layui-form-label">跳转链接</label>
                     <div class="layui-input-block">
                         <textarea required class="layui-textarea" ng-model="item.url" placeholder="请输入跳转链接"></textarea>
                     </div>
                 </div>
-
                 <div ng-if="item.type==='miniprogram'">
                     <div class="layui-form-item margin-top-20">
                         <label class="layui-form-label">小程序链接</label>
@@ -97,7 +91,6 @@
                         </div>
                     </div>
                 </div>
-
             </form>
         </div>
     </div>
@@ -129,53 +122,41 @@
             $rootScope.keys = [];
 
             $.form.load('{:url("index")}', {output: 'json'}, 'get', function (ret) {
-                $rootScope.$apply(function () {
+                return $rootScope.$apply(function () {
                     $rootScope.keys = ret.data.keysdata || [];
                     $rootScope.list = ret.data.menudata || [{name: '请输入名称', type: 'click', sub_button: []}];
                     for (let i in $rootScope.list) $rootScope.list[i].sub_button = $rootScope.list[i].sub_button || [];
                     $rootScope.list[0].show = true;
                     $rootScope.list[0].active = true;
                     $rootScope.item = $rootScope.list[0];
-                });
-                return false;
+                }), false;
             });
 
             // 动态计算宽度
             $rootScope.getItemStyle = function (list) {
-                let count = list.length >= 3 ? 3 : (list.length + 1);
-                return 'width:' + (100 / count) + '%';
+                return 'width:' + (100 / (list.length >= 3 ? 3 : (list.length + 1))) + '%';
             };
 
             // 增加菜单选项
-            $rootScope.addItem = function (list, isSubMenu) {
+            $rootScope.addItem = function (list) {
                 $vali.checkAllInput();
                 if ($form.find('.validate-error').size() > 0) {
                     return $.msg.tips('表单验证不成功，请输入需要的内容！');
                 }
-                let item = {name: '请输入名称', type: 'click'};
-                if (isSubMenu) item.sub_button = [];
-                list.push(item);
+                list.push({name: '请输入名称', type: 'click', sub_button: []});
             };
 
             // 移除菜单
             $rootScope.delItem = function (one, two) {
                 let tmp = [];
                 if (two) {
-                    let _two = null;
-                    for (let i in one.sub_button) {
-                        if (!two.active && one.sub_button[i].active) _two = one.sub_button[i];
-                        if (one.sub_button[i] !== two) {
-                            if (two.active && one.sub_button.length > 1) _two = one.sub_button[i - 1] || one.sub_button[i + 1];
-                            tmp.push(one.sub_button[i]);
-                        }
-                    }
+                    for (let i in one.sub_button) if (one.sub_button[i] !== two) tmp.push(one.sub_button[i]);
                     one.sub_button = tmp;
-                    if (_two) $rootScope.setActiveItem(one, _two);
-                    if (one.sub_button.length < 1) $rootScope.setActiveItem(one);
-                } else {
-                    for (let i in $rootScope.list) if (one !== $rootScope.list[i]) tmp.push($rootScope.list[i]);
-                    $rootScope.list = tmp;
+                    return $rootScope.setActiveItem(one);
                 }
+                for (let i in $rootScope.list) if (one !== $rootScope.list[i]) tmp.push($rootScope.list[i]);
+                $rootScope.list = tmp;
+                if ($rootScope.list.length > 1) $rootScope.setActiveItem($rootScope.list[$rootScope.list.length - 1])
             };
 
             // 切换选择菜单
