@@ -586,21 +586,15 @@ $(function () {
     $body.on('click', '[data-tips-image]', function () {
         $.previewImage(this.getAttribute('data-tips-image') || this.src, this.getAttribute('data-width'));
     });
-    $.previewImage = function (src, width) {
-        let img = new Image(), index = $.msg.loading(), _width = width || '480px';
+    $.previewImage = function (src, area) {
+        let img = new Image(), index = $.msg.loading();
         img.onerror = function () {
             $.msg.close(index);
         };
         img.onload = function () {
             layer.open({
-                type: 1, area: _width, title: false, closeBtn: 1, skin: 'layui-layer-nobg', shadeClose: true,
-                content: $(img).appendTo('body').css({background: '#fff', width: _width, height: 'auto'}),
-                end: function () {
-                    $(img).remove()
-                },
-                success: function () {
-                    $.msg.close(index);
-                }
+                type: 1, area: area || '480px', title: false, closeBtn: 1, skin: 'layui-layer-nobg', shadeClose: true,
+                success: img.onerror, content: $(img).css({width: area || '480px', height: 'auto'}).get(0).outerHTML,
             });
         };
         img.src = src;
@@ -611,14 +605,10 @@ $(function () {
         $.previewPhonePage(this.getAttribute('data-phone-view') || this.href);
     });
     $.previewPhonePage = function (href, title) {
-        let template = '<div class="mobile-preview pull-left"><div class="mobile-header">_TITLE_</div><div class="mobile-body"><iframe id="phone-preview" src="_URL_" frameborder="0" marginheight="0" marginwidth="0"></iframe></div></div>';
-        let $container = $(template.replace('_TITLE_', title || '公众号').replace('_URL_', href)).appendTo('body');
+        let tpl = '<div><div class="mobile-preview pull-left"><div class="mobile-header">_TITLE_</div><div class="mobile-body"><iframe id="phone-preview" src="_URL_" frameborder="0" marginheight="0" marginwidth="0"></iframe></div></div></div>';
         layer.style(layer.open({
-            type: true, scrollbar: false, area: ['320px', '600px'], title: false,
-            closeBtn: true, skin: 'layui-layer-nobg', shadeClose: false, content: $container,
-            end: function () {
-                $container.remove();
-            }
+            type: true, scrollbar: false, area: ['320px', '600px'], title: false, closeBtn: true, shadeClose: false,
+            skin: 'layui-layer-nobg', content: $(tpl.replace('_TITLE_', title || '公众号').replace('_URL_', href)).html(),
         }), {boxShadow: 'none'});
     };
 
