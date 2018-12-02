@@ -169,6 +169,7 @@
                     $rootScope.list[i].sub_button[j].active = ($rootScope.list[i].sub_button[j] === two)
                 }
                 $rootScope.item = two || one || {};
+                $rootScope.item.type = $rootScope.item.type || 'click';
                 if ($rootScope.item.type === 'click') setTimeout(function () {
                     form.render('select');
                     $rootScope.item.key = $('[lay-filter="key"]').val();
