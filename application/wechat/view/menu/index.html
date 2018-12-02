@@ -1,7 +1,7 @@
 {extend name="admin@main"}
 
 {block name='content'}
-<div id="MenuEditor" class="layui-hide" style="width:1000px">
+<div id="MenuEditor" class="layui-hide" style="width:900px">
     <div class='mobile-preview pull-left notselect'>
         <div class='mobile-header'>公众号</div>
         <div class='mobile-body'></div>
@@ -29,12 +29,12 @@
         </ul>
     </div>
 
-    <div class="pull-left layui-card margin-left-10" style="border:1px solid #ccc;height:578px">
+    <div class="pull-left layui-card margin-left-10" style="border:1px solid #ccc;height:578px;width:570px">
         <div class="layui-card-header layui-bg-gray text-center">菜单编辑</div>
-        <div class="layui-card-body" ng-if="list.length<1" style="width:500px">
+        <div class="layui-card-body" ng-if="list.length<1">
             <blockquote class="layui-elem-quote border-0 text-center">请在左侧创建菜单...</blockquote>
         </div>
-        <div class="layui-card-body" ng-if="list.length>0" style="width:500px">
+        <div class="layui-card-body" ng-if="list.length>0">
             <form class="layui-form menu-form" autocomplete="off" style="padding-right:80px;">
                 <div class="layui-form-item margin-top-20">
                     <label class="layui-form-label">菜单名称</label>
@@ -57,10 +57,10 @@
                         <textarea required class="layui-textarea" ng-model="item.content"></textarea>
                     </div>
                 </div>
-                <div class="layui-form-item margin-top-20" ng-if="item.sub_button.length<1 && item.type==='click'">
+                <div class="layui-form-item margin-top-20" ng-if="item.type==='click'">
                     <label class="layui-form-label">匹配规则</label>
                     <div class="layui-input-block">
-                        <select required ng-model="item.key" class="layui-select" lay-filter="key" lay-search>
+                        <select required class="layui-select" lay-filter="key" lay-search>
                             <option value="{{x.keys}}" ng-selected="x.keys===item.key" ng-repeat="x in keys" ng-bind="x.keys"></option>
                         </select>
                     </div>
@@ -169,14 +169,19 @@
                     $rootScope.list[i].sub_button[j].active = ($rootScope.list[i].sub_button[j] === two)
                 }
                 $rootScope.item = two || one || {};
+                if ($rootScope.item.type === 'click') setTimeout(function () {
+                    form.render('select');
+                    $rootScope.item.key = $('[lay-filter="key"]').val();
+                }, 50);
             };
 
             // 下拉列表处理
             $rootScope.$watch('item', function () {
-                setTimeout(function () {
+                if ($rootScope.item.type === 'click') setTimeout(function () {
                     form.render('select');
-                }, 10)
+                }, 50)
             }, true);
+
             form.on('select(key)', function (data) {
                 $rootScope.item.key = data.value;
             });
