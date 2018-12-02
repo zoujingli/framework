@@ -148,11 +148,14 @@
 
             // 移除菜单
             $rootScope.delItem = function (one, two) {
-                let tmp = [];
+                let tmp = [], _two = null;
                 if (two) {
-                    for (let i in one.sub_button) if (one.sub_button[i] !== two) tmp.push(one.sub_button[i]);
+                    for (let i in one.sub_button) if (one.sub_button[i] !== two) {
+                        tmp.push(one.sub_button[i]);
+                        if (one.sub_button[i].active) _two = one.sub_button[i];
+                    }
                     one.sub_button = tmp;
-                    return $rootScope.setActiveItem(one);
+                    return $rootScope.setActiveItem(one, _two);
                 }
                 for (let i in $rootScope.list) if (one !== $rootScope.list[i]) tmp.push($rootScope.list[i]);
                 $rootScope.list = tmp;
