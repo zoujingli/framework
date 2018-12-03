@@ -5,7 +5,7 @@
 <div class="container">
     <div class="logo">A</div>
     <div class="content arrow">
-        <a>♪ ♫ ♩ ♬ ♭</a>
+        <a class="icon icon-volume left-text"></a>
         <a href="javascript:void(0)" id="audio_btn" class="icon icon-pause"></a>
         <audio id="audio">
             <source src="{:input('url')}">
@@ -14,7 +14,7 @@
             let audio = document.getElementById('audio');
             let button = document.getElementById('audio_btn');
             setInterval(function () {
-                button.className = audio.paused ? 'icon icon-pause' : 'icon icon-play';
+                button.className = audio.paused ? 'icon icon-play' : 'icon icon-pause';
             }, 500);
             button.onclick = function () {
                 audio.paused ? audio.play() : audio.pause()
@@ -26,35 +26,17 @@
 
 {block name='style'}
 <style>
+    .left-text {
+        margin: 0 !important;
+        color: #ccc !important;
+        /*font-size: 1rem !important;*/
+    }
+
     .icon {
         color: #666;
-        width: 1.5rem;
-        height: 1.5rem;
-        border: 1px solid #666;
-        display: inline-block;
-        position: relative;
-        text-align: center;
-        border-radius: 50%;
-        margin-left: 1rem;
-    }
-
-    .icon-play:after, .icon-pause:before {
-        position: absolute;
-        font-size: 1rem;
-    }
-
-    .icon-play:after {
-        top: 0.2rem;
-        left: 0.3rem;
-        content: '〓';
-        transform: rotate(90deg);
-        -ms-transform: rotate(90deg)
-    }
-
-    .icon-pause:before {
-        top: 0.08rem;
-        left: 0.45rem;
-        content: '▶';
+        font-size: 1.5rem;
+        margin-left: 2.5rem;
+        line-height: 1.5rem;
     }
 </style>
 

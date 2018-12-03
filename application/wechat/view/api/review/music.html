@@ -11,7 +11,7 @@
                 <div style="font-size:1vw;height:2em;overflow:hidden;color:#ccc">{:input('desc')}</div>
             </div>
             <div style="display:table-cell;vertical-align:middle;padding-left:10px">
-                <a href="javascript:void(0)" id="audio_btn" class="icon icon-pause"></a>
+                <a href="javascript:void(0)" id="audio_btn" class="icon icon-play"></a>
                 <audio id="audio">
                     <source src="{:input('url')}">
                 </audio>
@@ -19,7 +19,7 @@
                     let audio = document.getElementById('audio');
                     let button = document.getElementById('audio_btn');
                     setInterval(function () {
-                        button.className = audio.paused ? 'icon icon-pause' : 'icon icon-play';
+                        button.className = audio.paused ? 'icon icon-play' : 'icon icon-pause';
                     }, 500);
                     button.onclick = function () {
                         audio.paused ? audio.play() : audio.pause()
@@ -36,39 +36,13 @@
 
     .icon {
         color: white;
-        width: 1.5rem;
-        height: 1.5rem;
-        border: 1px solid white;
-        display: inline-block;
-        position: relative;
-        text-align: center;
-        border-radius: 50%;
-    }
-
-    .icon-play:after, .icon-pause:before {
-        position: absolute;
-        font-size: 1rem;
-    }
-
-    .icon-play:after {
-        top: 0.2rem;
-        left: 0.3rem;
-        content: '〓';
-        transform: rotate(90deg);
-        -ms-transform: rotate(90deg)
-    }
-
-    .icon-pause:before {
-        top: 0.08rem;
-        left: 0.45rem;
-        content: '▶';
+        font-size: 1.5rem;
     }
 
     .container .content {
-        max-width: 60vw;
         border: none !important;
+        max-width: 50vw !important;
         background: #080 !important;
-        border-radius: 5px;
     }
 
     .container .content:after, .container .content:before {
