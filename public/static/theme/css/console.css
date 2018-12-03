@@ -181,6 +181,7 @@ label.think-radio{display:inline-block;margin-right:10px}
 .mobile-footer li a.active{border:1px solid #44b549!important;box-shadow:0 0 1px #44b549}
 .mobile-footer li>.close{display:none;top:1px;right:1px;width:18px;height:18px;line-height:18px;position:absolute;text-align:center;cursor:pointer}
 .mobile-footer li:hover>.close{display:inline-block}
+.mobile-footer li:hover>.close:hover{background:#999!important;color:#fff!important;}
 .mobile-footer .icon-add{width:14px;height:14px;border-bottom:none!important;background:url(../img/wechat/index.png) 0 0 no-repeat}
 .mobile-footer .icon-add,.mobile-footer .icon-sub{display:inline-block;vertical-align:middle}
 .mobile-footer .icon-sub{margin-right:2px;width:7px;height:7px;background:url(../img/wechat/index.png) 0 -3pc no-repeat}
