@@ -3,8 +3,8 @@
 {block name='content'}
 <div class="header"><span>{:date('H:i')}</span></div>
 <div class="container">
-    <div class="logo"></div>
-    <div class="text">
+    <div class="logo">A</div>
+    <div class="content">
         <a>♪ ♫ ♩ ♬ ♭</a>
         <a href="javascript:void(0)" id="audio_btn" class="icon icon-pause"></a>
         <audio id="audio">
@@ -26,18 +26,6 @@
 
 {block name='style'}
 <style>
-
-    .header {
-        text-align: center;
-        margin-top: 15px
-    }
-
-    .header span {
-        font-size: 8px;
-        background: #ccc;
-        padding: 5px;
-        border-radius: 10%
-    }
 
     .icon {
         color: #333;
@@ -68,36 +56,8 @@
         position: absolute;
     }
 
-    .container {
-        width: 90%;
-        color: #333;
-        margin: 5vw auto;
-        display: block;
-        overflow: hidden;
-        position: relative;
-        text-overflow: ellipsis;
-    }
-
-    .container .logo {
-        color: #fff;
-        float: left;
-        background: #f5f5f5;
-        padding-right: 15px;
-    }
-
-    .container .logo:after {
-        width: 50px;
-        height: 50px;
-        content: 'A';
-        line-height: 50px;
-        text-align: center;
-        background: #009688;
-        border-radius: 50%;
-        display: inline-block;
-    }
-
-    .container .text {
-        width: 50%;
+    .container .content {
+        left: 15.5vw;
         color: #999;
         text-align: left;
         float: left;
@@ -110,7 +70,7 @@
         border: 1px solid #ccc;
     }
 
-    .container .text:after, .container .text:before {
+    .container .content:after, .container .content:before {
         top: 0.3em;
         left: -0.28em;
         color: white;
@@ -119,7 +79,7 @@
         position: absolute;
     }
 
-    .container .text:before {
+    .container .content:before {
         color: #ccc;
         left: -0.33em;
     }

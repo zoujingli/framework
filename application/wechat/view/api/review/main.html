@@ -9,7 +9,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
     <link rel="shortcut icon" href="{:sysconf('site_icon')}">
     <link rel="stylesheet" href="__ROOT__/static/theme/css/normalize.css">
     {block name='style'}{/block}
@@ -19,6 +19,14 @@
         ::-webkit-scrollbar-thumb{background-color:#666!important}
         ::selection{background-color:#ec494e!important;color:#fff!important}
         ::-moz-selection{background-color:#ec494e!important;color:#fff!important}
+        @media screen and (max-width:320px) {html{font-size:12px}}
+        @media screen and (min-width:321px) and (max-width:750px) {html{font-size:14px}}
+        @media screen and (min-width:751px) {html{font-size:16px}}
+        .header {margin-top:15px;text-align:center}
+        .header span {padding:5px;font-size:8px;background:#ccc;border-radius:10%}
+        .container {width:90vw;color:#333;margin:5vw auto;display:block;overflow:hidden;position:relative;text-overflow:ellipsis}
+        .container .logo {top:0;color:#fff;width:12vw;height:12vw;content:'A';line-height:12vw;position:absolute;display:inline-block;font-size:4vw;background:#098;text-align:center;border-radius:50%;}
+        .container .content{left:15.5vw;position:relative;display:inline-block}
     </style>
     <script src="__ROOT__/static/plugs/jquery/pace.min.js"></script>
 </head>
