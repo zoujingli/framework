@@ -49,7 +49,7 @@
         <td class="text-left nowrap">
             {if $vo.type eq '音乐'}
             <a data-phone-view='{:url("@wechat/api.review/music")}?title={$vo.music_title|urlencode}&desc={$vo.music_desc|urlencode}'>预览 <i class="fa fa-eye"></i></a>
-            {elseif $vo.type eq '文字'}
+            {elseif in_array($vo.type,['文字','转客服'])}
             <a data-phone-view='{:url("@wechat/api.review/text")}?content={$vo.content|urlencode}'>预览 <i class="fa fa-eye"></i></a>
             {elseif $vo.type eq '图片'}
             <a data-phone-view='{:url("@wechat/api.review/image")}?content={$vo.image_url|urlencode}'>预览 <i class="fa fa-eye"></i></a>

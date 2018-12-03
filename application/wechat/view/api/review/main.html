@@ -17,16 +17,23 @@
         ::-webkit-scrollbar{width:3px;height:3px}
         ::-webkit-scrollbar-track{background:#ccc!important}
         ::-webkit-scrollbar-thumb{background-color:#666!important}
-        ::selection{background-color:#ec494e!important;color:#fff!important}
-        ::-moz-selection{background-color:#ec494e!important;color:#fff!important}
-        @media screen and (max-width:320px) {html{font-size:12px}}
-        @media screen and (min-width:321px) and (max-width:750px) {html{font-size:14px}}
-        @media screen and (min-width:751px) {html{font-size:16px}}
+        *{margin:0;padding:0;outline:0}
+        body,html{font-size:20px;font-family:'Microsoft YaHei,微软雅黑'}
+        a{text-decoration:none}
+        @media only screen and (min-width:320px) and (min-height:480px){html{font-size:20px!important}}
+        @media only screen and (min-width:320px) and (min-height:568px){html{font-size:20px!important}}
+        @media only screen and (min-width:360px) and (min-height:640px){html{font-size:22.5px!important}}
+        @media only screen and (min-width:375px) and (min-height:667px){html{font-size:23.5px!important}}
+        @media only screen and (min-width:414px) and (min-height:736px){html{font-size:25.9px!important}}
+        @media only screen and (min-width:736px){html{font-size:46px!important}}
         .header {margin-top:15px;text-align:center}
         .header span {padding:5px;font-size:8px;background:#ccc;border-radius:10%}
-        .container {width:90vw;color:#333;margin:5vw auto;display:block;overflow:hidden;position:relative;text-overflow:ellipsis}
-        .container .logo {top:0;color:#fff;width:12vw;height:12vw;content:'A';line-height:12vw;position:absolute;display:inline-block;font-size:4vw;background:#098;text-align:center;border-radius:50%;}
-        .container .content{left:15.5vw;position:relative;display:inline-block}
+        .container {width:90vw;color:#333;margin:5vw auto;display:block;overflow:hidden;position:relative;text-overflow:ellipsis;padding-bottom:1rem}
+        .container .logo {top:0;color:#fff;width:2.5rem;height:2.5rem;content:'A';line-height:2.5rem;position:absolute;display:inline-block;font-size:0.8rem;background:#098;text-align:center;border-radius:50%;}
+        .container .content{left:3.4rem;position:relative;display:inline-block}
+        .container .arrow:after,
+        .container .arrow:before {top:0.5rem;left:-0.27em;color:white;content:"◆";font-size:2rem;position:absolute}
+        .container .arrow:before {color:#ccc;margin-left:-2px}
     </style>
     <script src="__ROOT__/static/plugs/jquery/pace.min.js"></script>
 </head>

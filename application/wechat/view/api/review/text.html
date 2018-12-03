@@ -4,7 +4,7 @@
 <div class="header"><span>{:date('H:i')}</span></div>
 <div class="container">
     <div class="logo">A</div>
-    <div class="content">{:input('content')}</div>
+    <div class="content arrow">{:input('content')}</div>
 </div>
 {/block}
 
@@ -12,29 +12,13 @@
 <style>
     .container .content {
         border: 1px solid #ccc;
-        padding: 3vw;
-        font-size: 4vw;
+        padding: 0.6rem;
+        font-size: 0.8rem;
         max-width: 68vw;
         background: white;
         line-height: 1.5em;
-        border-radius: 0.5rem;
+        border-radius: 0.25rem;
     }
-
-    .container .content:after,
-    .container .content:before {
-        top: 3vw;
-        left: -0.27em;
-        color: white;
-        content: "◆";
-        font-size: 10vw;
-        position: absolute;
-    }
-
-    .container .content:before {
-        color: #ccc;
-        margin-left: -2px
-    }
-
 </style>
 
 {/block}
