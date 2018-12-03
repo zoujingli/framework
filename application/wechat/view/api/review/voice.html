@@ -4,7 +4,7 @@
 <div class="header"><span>{:date('H:i')}</span></div>
 <div class="container">
     <div class="logo">A</div>
-    <div class="content">
+    <div class="content arrow">
         <a>♪ ♫ ♩ ♬ ♭</a>
         <a href="javascript:void(0)" id="audio_btn" class="icon icon-pause"></a>
         <audio id="audio">
@@ -26,64 +26,36 @@
 
 {block name='style'}
 <style>
-
     .icon {
-        color: #333;
-        width: 20px;
-        height: 20px;
-        border: 1px solid white;
-        border-radius: 50%;
+        color: #666;
+        width: 1.5rem;
+        height: 1.5rem;
+        border: 1px solid #666;
         display: inline-block;
         position: relative;
-        text-align: right;
-        float: right;
-        text-decoration: none !important;
+        text-align: center;
+        border-radius: 50%;
+        margin-left: 1rem;
+    }
+
+    .icon-play:after, .icon-pause:before {
+        position: absolute;
+        font-size: 1rem;
     }
 
     .icon-play:after {
-        top: 0;
-        left: 3px;
+        top: 0.2rem;
+        left: 0.3rem;
         content: '〓';
-        position: absolute;
         transform: rotate(90deg);
         -ms-transform: rotate(90deg)
     }
 
     .icon-pause:before {
-        top: -1px;
-        left: 5px;
+        top: 0.08rem;
+        left: 0.45rem;
         content: '▶';
-        position: absolute;
     }
-
-    .container .content {
-        left: 15.5vw;
-        color: #999;
-        text-align: left;
-        float: left;
-        padding: 13px;
-        max-width: 192px;
-        position: relative;
-        line-height: 1.5em;
-        border-radius: 5px;
-        background: white;
-        border: 1px solid #ccc;
-    }
-
-    .container .content:after, .container .content:before {
-        top: 0.3em;
-        left: -0.28em;
-        color: white;
-        content: "◆";
-        font-size: 35px;
-        position: absolute;
-    }
-
-    .container .content:before {
-        color: #ccc;
-        left: -0.33em;
-    }
-
 </style>
 
 {/block}

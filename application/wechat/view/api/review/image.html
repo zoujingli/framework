@@ -4,18 +4,18 @@
 <div class="header"><span>{:date('H:i')}</span></div>
 <div class="container">
     <div class="logo">A</div>
-    <div class="content"><img style="max-width:100%" src="{:input('content')}"></div>
+    <div class="content arrow">
+        <img style="max-width:100%" src="{:input('content')}">
+    </div>
 </div>
 {/block}
 
 {block name='style'}
 <style>
-    .container .content {
-        left: 15.5vw;
-        display: inline-block;
-        position: relative;
-        max-width: 68vw;
-        border-radius: 5px;
-    }
+    /*.container .content {*/
+        /*position: relative;*/
+        /*border-radius: 5px;*/
+        /*display: inline-block;*/
+    /*}*/
 </style>
 {/block}

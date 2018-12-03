@@ -4,7 +4,7 @@
 <div class="header"><span>{:date('H:i')}</span></div>
 <div class="container">
     <div class="logo">A</div>
-    <div class="content">
+    <div class="content arrow">
         <div style="display:table">
             <div style="display:table-cell;width:100%">
                 <div style="font-size:2vw;height:2em;overflow:hidden">{:input('title')}</div>
@@ -36,49 +36,43 @@
 
     .icon {
         color: white;
-        width: 20px;
-        height: 20px;
-        padding: 5px;
+        width: 1.5rem;
+        height: 1.5rem;
         border: 1px solid white;
-        text-align: center;
-        border-radius: 50%;
         display: inline-block;
         position: relative;
+        text-align: center;
+        border-radius: 50%;
+    }
+
+    .icon-play:after, .icon-pause:before {
+        position: absolute;
         font-size: 1rem;
-        text-decoration: none !important;
     }
 
     .icon-play:after {
-        top: 1px;
-        left: 10px;
+        top: 0.2rem;
+        left: 0.3rem;
         content: '〓';
-        position: absolute;
         transform: rotate(90deg);
         -ms-transform: rotate(90deg)
     }
 
     .icon-pause:before {
-        top: -0.05rem;
-        left: 0.5rem;
+        top: 0.08rem;
+        left: 0.45rem;
         content: '▶';
-        position: absolute;
     }
 
     .container .content {
-        padding: 13px;
         max-width: 60vw;
-        background: #080;
-        line-height: 1.5em;
+        border: none !important;
+        background: #080 !important;
         border-radius: 5px;
     }
 
-    .container .content:after {
-        top: 5px;
-        left: -10px;
-        color: #080;
-        content: "◆";
-        font-size: 35px;
-        position: absolute;
+    .container .content:after, .container .content:before {
+        border-color: transparent #080 transparent transparent !important;
     }
 
     .container .content {
