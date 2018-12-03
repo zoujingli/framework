@@ -6,11 +6,11 @@
     <h2>{$info.title}</h2>
     <h3>
         <span style="color:#666">{$info.author}</span>
-        <span style="margin-left:1vw">{:date('Y年m月d日',strtotime($info.create_at))}</span>
+        <span style="margin-left:0.4rem">{:date('Y年m月d日',strtotime($info.create_at))}</span>
     </h3>
     {if $info.show_cover_pic and $info.local_url}<img src="{$info.local_url}" style="width:100%">{/if}
-    <div class='content'>{$info.content|raw}</div>
-    <div style="font-size:12px;color:#999">阅读 {$info.read_num}</div>
+    <div class='content-text'>{$info.content|raw}</div>
+    <div style="font-size:0.6rem;color:#999;line-height:1rem;text-align:right;margin-top:0.5rem">阅读 {$info.read_num}</div>
     {else}
     <div class="info"><h3>404</h3> 访问资源不存在哦！</div>
     {/notempty}
@@ -26,29 +26,31 @@
         width: 90%;
         color: #333;
         display: block;
-        margin: 5vw auto;
+        margin: 0 auto;
         position: relative;
         overflow: hidden;
         text-overflow: ellipsis;
     }
 
     .container h2 {
-        font-size: 4vw;
-        overflow: hidden;
+        font-size: 1rem;
+        text-align: center;
         font-weight: 400;
-        white-space: normal;
-        text-overflow: ellipsis;
+        line-height: 1.5rem;
     }
 
     .container h3 {
         color: #999;
-        font-size: 2vw;
+        font-size: 0.6rem;
+        text-align: center;
         font-weight: 400;
-        line-height: 1.2em;
+        line-height: 1.5rem;
+        margin-bottom: 0.3rem;
     }
 
-    .container .content {
-        font-size: 2vw;
+    .container .content-text {
+        font-size: 0.6rem;
+        line-height: 1rem;
     }
 
 
