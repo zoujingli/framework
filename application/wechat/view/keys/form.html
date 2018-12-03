@@ -4,9 +4,6 @@
 <style>
     .keys-container {
         top: 10px;
-        position: absolute;
-        min-width: 800px;
-        margin-left: 15px;
     }
 
     .keys-container .input-group-addon {
@@ -48,7 +45,7 @@
             <iframe id="phone-preview" frameborder="0" marginheight="0" marginwidth="0"></iframe>
         </div>
     </div>
-    <div class="keys-container inline-block">
+    <div class="keys-container inline-block absolute margin-left-10">
         <form class="layui-form" onsubmit="return false" autocomplete="off" data-auto="true" action="{:request()->url()}" method="post">
             <div class="layui-card">
                 <div class="layui-card-header layui-bg-gray text-center">编辑关键字</div>

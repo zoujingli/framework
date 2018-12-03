@@ -1,8 +1,8 @@
 {extend name="admin@main"}
 
 {block name='content'}
-<div id="MenuEditor" class="layui-hide" style="width:900px">
-    <div class='mobile-preview pull-left notselect'>
+<div id="MenuEditor" class="layui-hide nowrap" style="width:900px">
+    <div class='mobile-preview inline-block'>
         <div class='mobile-header'>公众号</div>
         <div class='mobile-body'></div>
         <ul class='mobile-footer'>
@@ -29,7 +29,7 @@
         </ul>
     </div>
 
-    <div class="pull-left layui-card margin-left-10" style="border:1px solid #ccc;height:578px;width:570px">
+    <div class="absolute inline-block layui-card margin-left-10" style="border:1px solid #ccc;height:578px;width:570px;top:10px">
         <div class="layui-card-header layui-bg-gray text-center">菜单编辑</div>
         <div class="layui-card-body" ng-if="list.length<1">
             <blockquote class="layui-elem-quote border-0 text-center">请在左侧创建菜单...</blockquote>
@@ -94,8 +94,7 @@
             </form>
         </div>
     </div>
-
-    <div style="clear:both"></div>
+    
     <div class="text-center margin-top-20">
         <!--{if auth("wechat/menu/edit")}-->
         <button class="layui-btn menu-submit" ng-click="submit()">保存发布</button>
