@@ -63,7 +63,7 @@ class Fans extends Controller
     {
         try {
             foreach (array_chunk(explode(',', $this->request->post('openid')), 20) as $openids) {
-                \We::WeChatUser(Wechat::config())->batchBlackList($openids);
+                Wechat::WeChatUser()->batchBlackList($openids);
                 Db::name('WechatFans')->whereIn('openid', $openids)->update(['is_black' => '1']);
             }
             $this->success('拉黑粉丝信息成功！');
@@ -81,7 +81,7 @@ class Fans extends Controller
     {
         try {
             foreach (array_chunk(explode(',', $this->request->post('openid')), 20) as $openids) {
-                \We::WeChatUser(Wechat::config())->batchUnblackList($openids);
+                Wechat::WeChatUser()->batchUnblackList($openids);
                 Db::name('WechatFans')->whereIn('openid', $openids)->update(['is_black' => '0']);
             }
             $this->success('取消拉黑粉丝信息成功！');

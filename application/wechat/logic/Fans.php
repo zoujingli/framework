@@ -76,7 +76,7 @@ class Fans
     public static function sync()
     {
         $appid = Wechat::getAppid();
-        $wechat = \We::WeChatUser(Wechat::config());
+        $wechat = Wechat::WeChatUser();
         $next = ''; // 获取远程粉丝
         while (true) if (is_array($result = $wechat->getUserList($next)) && !empty($result['data']['openid'])) {
             foreach (array_chunk($result['data']['openid'], 100) as $chunk) {
@@ -97,7 +97,7 @@ class Fans
             else $next = $result['next_openid'];
         }
         // 同步粉丝标签列表
-        $wechat = \We::WeChatTags(Wechat::config());
+        $wechat = Wechat::WeChatTags();
         if (is_array($list = $wechat->getTags()) && !empty($list['tags'])) {
             foreach ($list['tags'] as &$tag) $tag['appid'] = $appid;
             Db::name('WechatFansTags')->where('1=1')->delete();

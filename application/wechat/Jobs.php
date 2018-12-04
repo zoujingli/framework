@@ -39,7 +39,7 @@ class Jobs extends Queue
     {
         try {
             $appid = Wechat::getAppid();
-            $wechat = \We::WeChatUser(Wechat::config());
+            $wechat = Wechat::WeChatUser();
             $next = ''; // 获取远程粉丝
             $this->writeln('准备同步粉丝列表...');
             while (is_array($result = $wechat->getUserList($next)) && !empty($result['data']['openid'])) {
@@ -61,7 +61,7 @@ class Jobs extends Queue
             }
             // 同步粉丝标签列表
             $this->writeln('准备同步粉丝标签列表...');
-            if (is_array($list = \We::WeChatTags(Wechat::config())->getTags()) && !empty($list['tags'])) {
+            if (is_array($list = Wechat::WeChatTags()->getTags()) && !empty($list['tags'])) {
                 foreach ($list['tags'] as &$tag) $tag['appid'] = $appid;
                 Db::name('WechatFansTags')->where('1=1')->delete();
                 Db::name('WechatFansTags')->insertAll($list['tags']);

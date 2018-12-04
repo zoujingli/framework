@@ -60,7 +60,7 @@ class Media
         if (($media_url = Db::name('WechatNewsImage')->where($map)->value('media_url'))) {
             return $media_url;
         }
-        $info = \We::WeChatMedia(Wechat::config())->uploadImg(self::getServerPath($local_url));
+        $info = Wechat::WeChatMedia()->uploadImg(self::getServerPath($local_url));
         data_save('WechatNewsImage', ['local_url' => $local_url, 'media_url' => $info['url'], 'md5' => $map['md5']], 'md5');
         return $info['url'];
     }
@@ -80,11 +80,10 @@ class Media
     {
         $where = ['md5' => md5($local_url), 'appid' => Wechat::getAppid()];
         if (($mediaId = Db::name('WechatNewsMedia')->where($where)->value('media_id'))) return $mediaId;
-        $result = \We::WeChatMedia(Wechat::config())->addMaterial(self::getServerPath($local_url), $type, $videoInfo);
+        $result = Wechat::WeChatMedia()->addMaterial(self::getServerPath($local_url), $type, $videoInfo);
         data_save('WechatNewsMedia', [
-            'md5'       => $where['md5'], 'type' => $type, 'appid' => Wechat::getAppid(),
-            'media_id'  => $result['media_id'], 'local_url' => $local_url,
-            'media_url' => isset($result['url']) ? $result['url'] : '',
+            'local_url' => $local_url, 'md5' => $where['md5'], 'appid' => Wechat::getAppid(), 'type' => $type,
+            'media_url' => isset($result['url']) ? $result['url'] : '', 'media_id' => $result['media_id'],
         ], 'type', $where);
         return $result['media_id'];
     }

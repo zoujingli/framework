@@ -69,7 +69,7 @@ class Push extends Controller
     {
         try {
             $this->appid = Wechat::getAppid();
-            $this->wechat = \We::WeChatReceive(Wechat::config());
+            $this->wechat = Wechat::WeChatReceive();
             $this->openid = $this->wechat->getOpenid();
             $this->receive = $this->toLower($this->wechat->getReceive());
             p(PHP_EOL . '===== 消息接口获取的内容 =====');
@@ -240,7 +240,7 @@ class Push extends Controller
     {
         if ($isCustom) {
             $info = ['touser' => $this->openid, 'msgtype' => $type, "{$type}" => $data];
-            \We::WeChatCustom(Wechat::config())->send($info);
+            Wechat::WeChatCustom()->send($info);
         } else switch (strtolower($type)) {
             case 'text': // 发送文本消息
                 return $this->wechat->text($data['content'])->reply([], true);
@@ -275,7 +275,7 @@ class Push extends Controller
     {
         if ($subscribe) {
             try {
-                $user = \We::WeChatUser(Wechat::config())->getUserInfo($this->openid);
+                $user = Wechat::WeChatUser()->getUserInfo($this->openid);
                 return Fans::set(array_merge($user, ['subscribe' => '1']));
             } catch (\Exception $e) {
                 \think\facade\Log::error(__METHOD__ . " {$this->openid} 粉丝信息获取失败，{$e->getMessage()}");

@@ -78,7 +78,7 @@ class Menu extends Controller
             $data = $this->request->post('data');
             if (empty($data)) { // 删除菜单
                 try {
-                    \We::WeChatMenu(Wechat::config())->delete();
+                    Wechat::WeChatMenu()->delete();
                 } catch (\Exception $e) {
                     $this->error('删除取消微信菜单失败，请稍候再试！' . $e->getMessage());
                 }
@@ -87,7 +87,7 @@ class Menu extends Controller
             try {
                 sysdata('menudata', $this->build_menu($menudata = json_decode($data, true)));
                 p(['button' => sysdata('menudata')]);
-                \We::WeChatMenu(Wechat::config())->create(['button' => sysdata('menudata')]);
+                Wechat::WeChatMenu()->create(['button' => sysdata('menudata')]);
             } catch (\Exception $e) {
                 $this->error("微信菜单发布失败，请稍候再试！<br> {$e->getMessage()}");
             }
@@ -151,7 +151,7 @@ class Menu extends Controller
     public function cancel()
     {
         try {
-            \We::WeChatMenu(Wechat::config())->delete();
+            Wechat::WeChatMenu()->delete();
         } catch (\Exception $e) {
             $this->error("菜单取消失败，请稍候再试！<br> {$e->getMessage()}");
         }
