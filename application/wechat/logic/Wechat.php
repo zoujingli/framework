@@ -57,7 +57,7 @@ class Wechat extends \We
      */
     private static function _parseCertPath($path)
     {
-        if (preg_match('|^[a-z0-9]{16,16}\/[a-z0-9]{16,16}|i', $path)) {
+        if (preg_match('|^[a-z0-9]{16,16}\/[a-z0-9]{16,16}\.|i', $path)) {
             return \library\File::instance('local')->path($path, true);
         }
         return $path;
