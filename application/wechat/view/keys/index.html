@@ -42,7 +42,7 @@
             <input data-action-blur="{:request()->url()}" data-value="id#{$vo.id};action#sort;sort#{value}" data-loading="false" value="{$vo.sort}" class="list-sort-input">
         </td>
         <td class="text-left nowrap">
-            {notempty name='vo.qrc'}<i class="fa fa-qrcode fa-lg pointer margin-right-5" data-load="{$vo.qrc}" data-time="0.01" data-tips-text="生成关键字二维码"></i>{/notempty}
+            {notempty name='vo.qrc'}<i class="fa fa-qrcode fa-lg pointer margin-right-5" data-load="{$vo.qrc}" data-time="0.001" data-tips-text="生成关键字二维码"></i>{/notempty}
             {$vo.keys}
         </td>
         <td class="text-left nowrap">{$vo.type}</td>
