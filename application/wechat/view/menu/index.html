@@ -57,7 +57,7 @@
                         <textarea required class="layui-textarea" ng-model="item.content"></textarea>
                     </div>
                 </div>
-                <div class="layui-form-item margin-top-20" ng-if="(!item.sub_button || item.sub_button.length<1) && item.type==='click'">
+                <div class="layui-form-item margin-top-20" ng-if="(!item.sub_button||item.sub_button.length<1)&&item.type==='click'">
                     <label class="layui-form-label">匹配规则</label>
                     <div class="layui-input-block">
                         <select required class="layui-select" lay-filter="key" lay-search>
