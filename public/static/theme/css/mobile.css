@@ -27,7 +27,7 @@ a{text-decoration:none}
     url('./icon/iconfont.ttf?t=1543820027953') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
     url('./icon/iconfont.svg?t=1543820027953#iconfont') format('svg'); /* iOS 4.1- */
 }
-.icon{font-family:"iconfont" !important;font-size:16px;font-style:normal;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+.icon{font-family:"iconfont"!important;font-size:16px;font-style:normal;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 .icon-play:before{content:"\e650"}
 .icon-pause:before{content:"\e629"}
 .icon-volume:before{content:"\e87a"}
