@@ -68,9 +68,9 @@ class Wechat extends \We
      * @param string $name 静态类名
      * @param array $arguments 参数集合
      * @return mixed
-     * @throws \WeChat\Exceptions\InvalidInstanceException
      * @throws \think\Exception
      * @throws \think\exception\PDOException
+     * @throws \WeChat\Exceptions\InvalidInstanceException
      */
     public static function __callStatic($name, $arguments)
     {
