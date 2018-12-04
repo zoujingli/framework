@@ -4,7 +4,8 @@ html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:b
 ::-webkit-scrollbar-track{background:#ccc!important}
 ::-webkit-scrollbar-thumb{background-color:#666!important}
 a{text-decoration:none}
-*{margin:0;padding:0;outline:0}
+
+*{margin:0;padding:0;outline:0;box-sizing:content-box}
 body,html{font-size:20px;font-family:Microsoft YaHei,微软雅黑,serif}
 @media only screen and (min-width:320px) and (min-height:480px){html{font-size:20px!important}}
 @media only screen and (min-width:320px) and (min-height:568px){html{font-size:20px!important}}
