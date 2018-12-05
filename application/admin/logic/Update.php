@@ -61,10 +61,10 @@ class Update
         foreach ($one as $t) $_one[$t['local_name']] = $t;
         // 数据差异计算
         foreach ($one as $k => $o) {
-            if (isset($_two[$o['name']])) {
+            if (isset($_two[$o['local_name']])) {
                 $one[$k]['serve_name'] = $_two[$o['local_name']]['local_name'];
-                $one[$k]['serve_hash'] = $_two[$o['local_name']]['local_name'];
-                $one[$k]['serve_size'] = $_two[$o['local_name']]['local_name'];
+                $one[$k]['serve_hash'] = $_two[$o['local_name']]['serve_hash'];
+                $one[$k]['serve_size'] = $_two[$o['local_name']]['serve_size'];
                 if ($o['local_name'] === $_two[$o['local_name']]['local_name']) {
                     $one[$k]['type'] = null;
                 } else {
