@@ -60,13 +60,13 @@ class Update
         foreach ($serve as $t) $_serve[$t['name']] = $t;
         foreach ($local as $t) $_local[$t['name']] = $t;
         unset($serve, $local);
-        // 数据差异计算
+        // 线上数据差异计算
         foreach ($_serve as $t) if (isset($_local[$t['name']])) array_push($_new, [
             'type' => $t['hash'] === $_local[$t['name']]['hash'] ? null : 'mod',
             'name' => $t['name'], 'serve_hash' => $t['hash'], 'local_hash' => $_local[$t['name']]['hash'],
         ]);
         else array_push($_new, ['type' => 'add', 'name' => $t['name'], 'serve_hash' => $t['hash']]);
-        // 数据增量计算
+        // 本地数据增量计算
         foreach ($_local as $t) if (!isset($_serve[$t['name']])) array_push($_new, [
             'type' => 'del', 'name' => $t['name'], 'local_hash' => $t['hash']
         ]);
