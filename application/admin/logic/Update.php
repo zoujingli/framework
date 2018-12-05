@@ -52,15 +52,16 @@ class Update
      */
     public static function contrast(array $one = [], array $two = [])
     {
-        $_two = [];
+        // 数据扁平化
+        list($_one, $_two) = [[], []];
         foreach ($two as $t) $_two[$t['name']] = $t;
         foreach ($one as $t) $_one[$t['name']] = $t;
+        // 数据差异计算
         foreach ($one as $k => $o) {
             $one[$k]['type'] = 'delete';
-            if (isset($_two[$o['name']])) {
-                $one[$k]['type'] = $o['hash'] === $_two[$o['name']]['hash'] ? null : 'modify';
-            }
+            if (isset($_two[$o['name']])) $one[$k]['type'] = $o['hash'] === $_two[$o['name']]['hash'] ? null : 'modify';
         }
+        // 数据增量计算
         foreach ($two as $o) if (!isset($_one[$o['name']])) $one[] = array_merge($o, ['type' => 'add']);
         return $one;
     }
