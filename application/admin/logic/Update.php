@@ -128,7 +128,7 @@ class Update
         $rs = fopen($file, 'rb');
         $content = fread($rs, filesize($file));
         fclose($rs);
-        return md5($content);
+        return md5(str_replace('/\s{1,}/', '', $content));
     }
 
 }
