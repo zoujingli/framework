@@ -58,7 +58,7 @@ class Update
         foreach ($one as $k => $o) {
             $one[$k]['type'] = 'delete';
             if (isset($_two[$o['name']])) {
-                $one[$k]['type'] = $o['hash'] === $_two[$o['name']]['hash'] ? 'null' : 'modify';
+                $one[$k]['type'] = $o['hash'] === $_two[$o['name']]['hash'] ? null : 'modify';
             }
         }
         foreach ($two as $o) if (!isset($_one[$o['name']])) $one[] = array_merge($o, ['type' => 'add']);

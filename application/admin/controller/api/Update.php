@@ -22,6 +22,7 @@ class Update extends Controller
         ], [
             'application/index/controller/Index.php',
         ]);
+        $result = \app\admin\logic\Update::contrast($result['list'], $result['list']);
         dump($result);
 
     }
