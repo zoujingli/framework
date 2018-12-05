@@ -17,11 +17,8 @@ class Update extends Controller
     public function get()
     {
         $result = \app\admin\logic\Update::get([
-            'application/admin',
-            'application/wechat',
-        ], [
-            'application/index/controller/Index.php',
-        ]);
+            'application/admin', 'application/wechat', 'public/static',
+        ], ['application/index/controller/Index.php'], ['application/admin/view/login/index.html']);
         $result = \app\admin\logic\Update::contrast($result['list'], $result['list']);
         dump($result);
 

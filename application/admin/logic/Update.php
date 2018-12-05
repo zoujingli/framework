@@ -63,6 +63,9 @@ class Update
         }
         // 数据增量计算
         foreach ($two as $o) if (!isset($_one[$o['name']])) $one[] = array_merge($o, ['type' => 'add']);
+        usort($one, function ($a, $b) {
+            return $a['name'] <> $b['name'] ? ($a['name'] > $b['name'] ? 1 : -1) : 0;
+        });
         return $one;
     }
 
