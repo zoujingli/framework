@@ -35,11 +35,11 @@ class Update
         $root = str_replace('\\', '/', env('root_path'));
         foreach ($dirs as $key => $dir) {
             $dirs[$key] = str_replace('\\', '/', $dir);
-            $maps = array_merge($maps, self::scanDir("{$root}{$dirs[$key]}", [], $root));
+            $maps = array_merge($maps, self::scanDir("{$root}{$dirs[$key]}", $root));
         }
         foreach ($files as $key => $file) {
             $files[$key] = str_replace('\\', '/', $file);
-            $maps = array_merge($maps, self::scanFile("{$root}{$files[$key]}", [], $root));
+            $maps = array_merge($maps, self::scanFile("{$root}{$files[$key]}", $root));
         }
         // 清除忽略文件
         foreach ($ignores as &$file) unset($maps[$file]);
@@ -63,7 +63,6 @@ class Update
             if (isset($_two[$o['name']])) {
                 $one[$k]['local_name'] = $_two[$o['name']]['name'];
                 $one[$k]['local_hash'] = $_two[$o['name']]['hash'];
-                $one[$k]['local_time'] = $_two[$o['name']]['time'];
                 $one[$k]['local_size'] = $_two[$o['name']]['size'];
                 if ($o['hash'] === $_two[$o['name']]['hash']) {
                     $one[$k]['type'] = null;
@@ -85,18 +84,17 @@ class Update
     /**
      * 获取目录文件列表
      * @param string $dir 待扫描的目录
-     * @param array $data 扫描的结果
      * @param string $root 应用根目录
      * @return array
      */
-    private static function scanDir($dir, $data = [], $root = '')
+    private static function scanDir($dir, $root = '')
     {
+        $data = [];
         foreach (scandir($dir) as $sub) if (strpos($sub, '.') !== 0) {
-            if (is_dir($temp = str_replace('\\', '/', $dir . DIRECTORY_SEPARATOR . $sub))) {
-                $data = array_merge($data, self::scanDir($temp, [], $root));
+            if (is_dir($temp = "{$dir}/{$sub}")) {
+                $data = array_merge($data, self::scanDir($temp, $root));
             } else {
-                $name = str_replace($root, '', $temp);
-                $data[$name] = ['hash' => self::hash($temp), 'name' => $name, 'time' => filemtime($temp), 'size' => filesize($temp)];
+                $data = array_merge($data, self::getFileInfo($temp, $root));
             }
         }
         return $data;
@@ -105,28 +103,25 @@ class Update
     /**
      * 扫描文件信息
      * @param string $file 待处理的文件
-     * @param array $data 扫描的结果
      * @param string $root 应用根目录
      * @return array
      */
-    private static function scanFile($file, $data = [], $root = '')
+    private static function scanFile($file, $root)
     {
-        if (file_exists($file)) {
-            $name = str_replace($root, '', str_replace('\\', '/', $file));
-            $data[$name] = ['hash' => self::hash($file), 'name' => $name, 'time' => filemtime($file), 'size' => filesize($file)];
-        }
-        return $data;
+        return file_exists($file) ? self::getFileInfo($file, $root) : [];
     }
 
     /**
-     * 计算文件hash值
-     * @param string $file
-     * @return string
+     * 获取指定文件信息
+     * @param string $file 绝对文件名
+     * @param string $root
+     * @return array
      */
-    private static function hash($file)
+    private static function getFileInfo($file, $root)
     {
-        $content = preg_replace('/\s{1,}/', '', file_get_contents($file));
-        return md5($content);
+        $name = str_replace($root, '', str_replace('\\', '/', realpath($file)));
+        $hash = md5(preg_replace('/\s{1,}/', '', file_get_contents($file)));
+        return [$name => ['name' => $name, 'hash' => $hash, 'size' => filesize($file)]];
     }
 
 }
