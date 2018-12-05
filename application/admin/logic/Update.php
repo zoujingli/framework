@@ -31,13 +31,15 @@ class Update
      */
     public static function get(array $dirs, array $files = [], $ignores = [], $maps = [])
     {
-        foreach ($dirs as &$dir) {
-            $dir = self::swp($dir);
-            $maps = array_merge($maps, self::scanDir($dir));
+
+        $root = str_replace('\\', '/', env('root_path'));
+        foreach ($dirs as $key => $dir) {
+            $dirs[$key] = str_replace('\\', '/', $dir);
+            $maps = array_merge($maps, self::scanDir("{$root}{$dirs[$key]}"));
         }
-        foreach ($files as &$file) {
-            $file = self::swp($file);
-            $maps = array_merge($maps, self::scanFile($file));
+        foreach ($files as $key => $file) {
+            $files[$key] = str_replace('\\', '/', $file);
+            $maps = array_merge($maps, self::scanFile("{$root}{$files[$key]}"));
         }
         // 清除忽略文件
         foreach ($ignores as &$file) unset($maps[$file]);
@@ -79,7 +81,7 @@ class Update
     {
         foreach (scandir($dir) as $sub) if (strpos($sub, '.') !== 0) {
             if (is_dir($temp = self::swp($dir . DIRECTORY_SEPARATOR . $sub))) {
-                $data = array_merge($data, self::scanDir($temp));
+                $data = array_merge($data, self::scanDir($dir . DIRECTORY_SEPARATOR . $sub));
             } else $data[$temp] = ['name' => $temp, 'hash' => md5_file($temp), 'time' => (string)filemtime($temp)];
         }
         return $data;
