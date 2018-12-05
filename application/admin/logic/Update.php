@@ -49,37 +49,30 @@ class Update
 
     /**
      * 两二维数组对比
-     * @param array $one
-     * @param array $two
+     * @param array $serve 线上文件列表信息
+     * @param array $local 本地文件列表信息
      * @return array
      */
-    public static function contrast(array $one = [], array $two = [])
+    public static function contrast(array $serve = [], array $local = [])
     {
         // 数据扁平化
-        list($_one, $_two) = [[], []];
-        foreach ($two as $t) $_two[$t['local_name']] = $t;
-        foreach ($one as $t) $_one[$t['local_name']] = $t;
+        list($_serve, $_local, $_new) = [[], [], []];
+        foreach ($serve as $t) $_serve[$t['name']] = $t;
+        foreach ($local as $t) $_local[$t['name']] = $t;
         // 数据差异计算
-        foreach ($one as $k => $o) {
-            if (isset($_two[$o['local_name']])) {
-                $one[$k]['serve_name'] = $_two[$o['local_name']]['local_name'];
-                $one[$k]['serve_hash'] = $_two[$o['local_name']]['local_hash'];
-                $one[$k]['serve_size'] = $_two[$o['local_name']]['local_size'];
-                if ($o['local_name'] === $_two[$o['local_name']]['local_name']) {
-                    $one[$k]['type'] = null;
-                } else {
-                    $one[$k]['type'] = 'modify';
-                }
-            } else {
-                $one[$k]['type'] = 'delete';
-            }
-        }
+        foreach ($serve as $s) if (isset($_local[$s['name']])) array_push($_new, [
+            'type' => $s['hash'] === $_local[$s['name']]['hash'] ? null : 'mod',
+            'name' => $s['name'], 'serve_hash' => $s['hash'], 'local_hash' => $_local[$s['name']]['hash'],
+        ]);
+        else array_push($_new, ['type' => 'add', 'name' => $s['name'], 'serve_hash' => $s['hash']]);
         // 数据增量计算
-        foreach ($two as $o) if (!isset($_one[$o['local_name']])) $one[] = array_merge($o, ['type' => 'add']);
-        usort($one, function ($a, $b) {
-            return $a['local_name'] <> $b['local_name'] ? ($a['local_name'] > $b['local_name'] ? 1 : -1) : 0;
+        foreach ($local as $l) if (!isset($_serve[$l['name']])) array_push($_new, [
+            'type' => 'del', 'name' => $l['name'], 'local_hash' => $l['hash']
+        ]);
+        usort($serve, function ($a, $b) {
+            return $a['name'] <> $b['name'] ? ($a['name'] > $b['name'] ? 1 : -1) : 0;
         });
-        return $one;
+        return $serve;
     }
 
     /**
@@ -122,7 +115,7 @@ class Update
     {
         $hash = md5(preg_replace('/\s{1,}/', '', file_get_contents($file)));
         $name = str_replace($root, '', str_replace('\\', '/', realpath($file)));
-        return [$name => ['local_name' => $name, 'local_hash' => $hash, 'local_size' => filesize($file)]];
+        return [$name => ['name' => $name, 'hash' => $hash]];
     }
 
 }
