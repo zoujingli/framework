@@ -69,10 +69,11 @@ class Update
         foreach ($local as $l) if (!isset($_serve[$l['name']])) array_push($_new, [
             'type' => 'del', 'name' => $l['name'], 'local_hash' => $l['hash']
         ]);
-        usort($serve, function ($a, $b) {
+        unset($_serve, $_local, $serve, $local);
+        usort($_new, function ($a, $b) {
             return $a['name'] <> $b['name'] ? ($a['name'] > $b['name'] ? 1 : -1) : 0;
         });
-        return $serve;
+        return $_new;
     }
 
     /**
