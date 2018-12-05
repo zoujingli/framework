@@ -96,7 +96,10 @@ class Update
                 $data = array_merge($data, self::scanDir($temp, [], $root));
             } else {
                 $name = str_replace($root, '', $temp);
-                $data[$name] = ['name' => $name, 'hash' => md5_file($temp), 'time' => filemtime($temp), 'size' => filesize($temp)];
+                $data[$name] = [
+                    'hash' => md5(file_get_contents($temp)), 'name' => $name,
+                    'time' => filemtime($temp), 'size' => filesize($temp)
+                ];
             }
         }
         return $data;
@@ -113,7 +116,10 @@ class Update
     {
         if (file_exists($file)) {
             $name = str_replace($root, '', str_replace('\\', '/', $file));
-            $data[$name] = ['name' => $name, 'hash' => md5_file($file), 'time' => filemtime($file), 'size' => filesize($file)];
+            $data[$name] = [
+                'hash' => md5(file_get_contents($file)), 'name' => $name,
+                'time' => filemtime($file), 'size' => filesize($file)
+            ];
         }
         return $data;
     }
