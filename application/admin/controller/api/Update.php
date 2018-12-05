@@ -46,8 +46,9 @@ class Update extends Controller
     public function diff()
     {
         $result = http_get('https://framework.thinktop.top/admin/api.update/get');
-        $newResult = \app\admin\logic\Update::get($result['dirs'], $result['files'], $result['ignores']);
-        dump([$result, $newResult]);
+        $data = $result['data'];
+        $newResult = \app\admin\logic\Update::get($data['dirs'], $data['files'], $data['ignores']);
+        dump([$data, $newResult]);
     }
 
 
