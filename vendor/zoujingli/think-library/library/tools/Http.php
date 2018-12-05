@@ -51,7 +51,7 @@ class Http
      * CURL模拟网络请求
      * @param string $method 请求方法
      * @param string $url 请求方法
-     * @param array $options 请求参数[header,data,ssl_cer,ssl_key]
+     * @param array $options 请求参数[headers,data]
      * @return boolean|string
      */
     public static function request($method, $url, $options = [])
@@ -59,56 +59,44 @@ class Http
         $curl = curl_init();
         // GET参数设置
         if (!empty($options['query'])) {
-            $url .= stripos($url, '?') !== false ? '&' : '?' . http_build_query($options['query']);
+            $url .= (stripos($url, '?') !== false ? '&' : '?') . http_build_query($options['query']);
+        }
+        // CURL头信息设置
+        if (!empty($options['headers'])) {
+            curl_setopt($curl, CURLOPT_HTTPHEADER, $options['headers']);
         }
         // POST数据设置
         if (strtolower($method) === 'post') {
             curl_setopt($curl, CURLOPT_POST, true);
-            curl_setopt($curl, CURLOPT_POSTFIELDS, self::build($options['data']));
-        }
-        // 请求超时设置
-        $options['timeout'] = isset($options['timeout']) ? $options['timeout'] : 60;
-        curl_setopt($curl, CURLOPT_TIMEOUT, $options['timeout']);
-        // CURL头信息设置
-        if (!empty($options['header'])) {
-            curl_setopt($curl, CURLOPT_HTTPHEADER, $options['header']);
-        }
-        // 证书文件设置
-        if (!empty($options['ssl_cer']) && file_exists($options['ssl_cer'])) {
-            curl_setopt($curl, CURLOPT_SSLCERTTYPE, 'PEM');
-            curl_setopt($curl, CURLOPT_SSLCERT, $options['ssl_cer']);
-        }
-        if (!empty($options['ssl_key']) && file_exists($options['ssl_key'])) {
-            curl_setopt($curl, CURLOPT_SSLKEYTYPE, 'PEM');
-            curl_setopt($curl, CURLOPT_SSLKEY, $options['ssl_key']);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, self::_buildHttpData($options['data']));
         }
         curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_TIMEOUT, 60);
         curl_setopt($curl, CURLOPT_HEADER, false);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         list($content) = [curl_exec($curl), curl_close($curl)];
         return $content;
     }
 
     /**
      * POST数据过滤处理
-     * @param array $data
-     * @param boolean $needBuild
-     * @return array
+     * @param array $data 需要处理的数据
+     * @param boolean $build 是否编译数据
+     * @return array|string
      */
-    private static function build($data, $needBuild = true)
+    private static function _buildHttpData($data, $build = true)
     {
         if (!is_array($data)) return $data;
-        foreach ($data as $key => $value) {
-            if (is_string($value) && class_exists('CURLFile', false) && stripos($value, '@') === 0) {
-                if (($filename = realpath(trim($value, '@'))) && file_exists($filename)) {
-                    list($needBuild, $data[$key]) = [false, new \CURLFile($filename)];
-                }
+        foreach ($data as $key => $value) if (is_object($value) && $value instanceof \CURLFile) {
+            $build = false;
+        } elseif (is_string($value) && class_exists('CURLFile', false) && stripos($value, '@') === 0) {
+            if (($filename = realpath(trim($value, '@'))) && file_exists($filename)) {
+                list($build, $data[$key]) = [false, new \CURLFile($filename)];
             }
         }
-        return $needBuild ? http_build_query($data) : $data;
+        return $build ? http_build_query($data) : $data;
     }
-
 
 }
