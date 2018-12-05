@@ -64,6 +64,7 @@ class Update
                 $one[$k]['local_name'] = $_two[$o['name']]['name'];
                 $one[$k]['local_hash'] = $_two[$o['name']]['hash'];
                 $one[$k]['local_time'] = $_two[$o['name']]['time'];
+                $one[$k]['local_size'] = $_two[$o['name']]['size'];
                 if ($o['hash'] === $_two[$o['name']]['hash']) {
                     $one[$k]['type'] = null;
                 } else {
