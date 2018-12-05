@@ -59,17 +59,18 @@ class Update
         list($_serve, $_local, $_new) = [[], [], []];
         foreach ($serve as $t) $_serve[$t['name']] = $t;
         foreach ($local as $t) $_local[$t['name']] = $t;
+        unset($serve, $local);
         // 数据差异计算
-        foreach ($serve as $s) if (isset($_local[$s['name']])) array_push($_new, [
+        foreach ($_serve as $s) if (isset($_local[$s['name']])) array_push($_new, [
             'type' => $s['hash'] === $_local[$s['name']]['hash'] ? null : 'mod',
             'name' => $s['name'], 'serve_hash' => $s['hash'], 'local_hash' => $_local[$s['name']]['hash'],
         ]);
         else array_push($_new, ['type' => 'add', 'name' => $s['name'], 'serve_hash' => $s['hash']]);
         // 数据增量计算
-        foreach ($local as $l) if (!isset($_serve[$l['name']])) array_push($_new, [
-            'type' => 'del', 'name' => $l['name'], 'local_hash' => $l['hash']
+        foreach ($_local as $t) if (!isset($_serve[$t['name']])) array_push($_new, [
+            'type' => 'del', 'name' => $t['name'], 'local_hash' => $t['hash']
         ]);
-        unset($_serve, $_local, $serve, $local);
+        unset($_serve, $_local);
         usort($_new, function ($a, $b) {
             return $a['name'] <> $b['name'] ? ($a['name'] > $b['name'] ? 1 : -1) : 0;
         });
