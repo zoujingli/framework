@@ -125,10 +125,10 @@ class Update
      */
     private static function hash($file)
     {
-        $rs = fopen($file, 'rb');
-        $content = fread($rs, filesize($file));
-        fclose($rs);
-        return md5(str_replace('/\s{1,}/', '', $content));
+        $content = str_replace('/\s{1,}/', '', file_get_contents($file));
+        p($content);
+        exit;
+        return md5($content);
     }
 
 }
