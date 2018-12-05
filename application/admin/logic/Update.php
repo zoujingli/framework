@@ -125,7 +125,10 @@ class Update
      */
     private static function hash($file)
     {
-        return md5(file_get_contents($file));
+        $rs = fopen($file, 'rb');
+        $content = fread($rs, filesize($file));
+        fclose($rs);
+        return md5($content);
     }
 
 }
