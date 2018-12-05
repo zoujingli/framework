@@ -57,15 +57,15 @@ class Update
     {
         // 数据扁平化
         list($_one, $_two) = [[], []];
-        foreach ($two as $t) $_two[$t['name']] = $t;
-        foreach ($one as $t) $_one[$t['name']] = $t;
+        foreach ($two as $t) $_two[$t['local_name']] = $t;
+        foreach ($one as $t) $_one[$t['local_name']] = $t;
         // 数据差异计算
         foreach ($one as $k => $o) {
             if (isset($_two[$o['name']])) {
-                $one[$k]['local_name'] = $_two[$o['name']]['name'];
-                $one[$k]['local_hash'] = $_two[$o['name']]['hash'];
-                $one[$k]['local_size'] = $_two[$o['name']]['size'];
-                if ($o['hash'] === $_two[$o['name']]['hash']) {
+                $one[$k]['serve_name'] = $_two[$o['local_name']]['local_name'];
+                $one[$k]['serve_hash'] = $_two[$o['local_name']]['local_name'];
+                $one[$k]['serve_size'] = $_two[$o['local_name']]['local_name'];
+                if ($o['local_name'] === $_two[$o['local_name']]['local_name']) {
                     $one[$k]['type'] = null;
                 } else {
                     $one[$k]['type'] = 'modify';
@@ -75,9 +75,9 @@ class Update
             }
         }
         // 数据增量计算
-        foreach ($two as $o) if (!isset($_one[$o['name']])) $one[] = array_merge($o, ['type' => 'add']);
+        foreach ($two as $o) if (!isset($_one[$o['local_name']])) $one[] = array_merge($o, ['type' => 'add']);
         usort($one, function ($a, $b) {
-            return $a['name'] <> $b['name'] ? ($a['name'] > $b['name'] ? 1 : -1) : 0;
+            return $a['local_name'] <> $b['local_name'] ? ($a['local_name'] > $b['local_name'] ? 1 : -1) : 0;
         });
         return $one;
     }
@@ -122,7 +122,7 @@ class Update
     {
         $hash = md5(preg_replace('/\s{1,}/', '', file_get_contents($file)));
         $name = str_replace($root, '', str_replace('\\', '/', realpath($file)));
-        return [$name => ['name' => $name, 'hash' => $hash, 'size' => filesize($file)]];
+        return [$name => ['local_name' => $name, 'local_hash' => $hash, 'local_size' => filesize($file)]];
     }
 
 }
