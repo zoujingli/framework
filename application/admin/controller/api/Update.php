@@ -47,11 +47,9 @@ class Update extends Controller
     {
         $result = json_decode(http_get('https://framework.thinkadmin.top/admin/api.update/get'), true);
         $data = $result['data'];
-        $newResult = \app\admin\logic\Update::get($data['dirs'], $data['files'], $data['ignores']);
-        $diff = \app\admin\logic\Update::contrast($result['data']['list'], $newResult['list']);
-
-        dump($diff);
+        $new = \app\admin\logic\Update::get($data['dirs'], $data['files'], $data['ignores']);
+        $diff = \app\admin\logic\Update::contrast($result['data']['list'], $new['list']);
+        $this->success('获取更新文件差异成功！', $diff);
     }
-
 
 }
