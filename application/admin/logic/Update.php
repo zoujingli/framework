@@ -63,8 +63,8 @@ class Update
         foreach ($one as $k => $o) {
             if (isset($_two[$o['local_name']])) {
                 $one[$k]['serve_name'] = $_two[$o['local_name']]['local_name'];
-                $one[$k]['serve_hash'] = $_two[$o['local_name']]['serve_hash'];
-                $one[$k]['serve_size'] = $_two[$o['local_name']]['serve_size'];
+                $one[$k]['serve_hash'] = $_two[$o['local_name']]['local_hash'];
+                $one[$k]['serve_size'] = $_two[$o['local_name']]['local_size'];
                 if ($o['local_name'] === $_two[$o['local_name']]['local_name']) {
                     $one[$k]['type'] = null;
                 } else {
