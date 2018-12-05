@@ -21,9 +21,9 @@
     "ext-openssl": "*",
     "endroid/qr-code": "^1.9",
     "topthink/framework": "5.1.*",
+    "topthink/think-queue": "^2.0",
     "zoujingli/think-library": "dev-master",
-    "zoujingli/weopen-developer": "^1.0",
-    "topthink/think-queue": "^2.0"
+    "zoujingli/weopen-developer": "dev-master"
   },
   "repositories": {
     "packagist": {
