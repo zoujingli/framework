@@ -125,9 +125,7 @@ class Update
      */
     private static function hash($file)
     {
-        $content = str_replace('/\s{1,}/', '', file_get_contents($file));
-        p($content);
-        exit;
+        $content = preg_replace('/\s{1,}/', '', file_get_contents($file));
         return md5($content);
     }
 
