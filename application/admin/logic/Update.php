@@ -60,8 +60,18 @@ class Update
         foreach ($one as $t) $_one[$t['name']] = $t;
         // 数据差异计算
         foreach ($one as $k => $o) {
-            $one[$k]['type'] = 'delete';
-            if (isset($_two[$o['name']])) $one[$k]['type'] = $o['hash'] === $_two[$o['name']]['hash'] ? null : 'modify';
+            if (isset($_two[$o['name']])) {
+                $one[$k]['local_name'] = $_two[$o['name']]['name'];
+                $one[$k]['local_hash'] = $_two[$o['name']]['hash'];
+                $one[$k]['local_time'] = $_two[$o['name']]['time'];
+                if ($o['hash'] === $_two[$o['name']]['hash']) {
+                    $one[$k]['type'] = null;
+                } else {
+                    $one[$k]['type'] = 'modify';
+                }
+            } else {
+                $one[$k]['type'] = 'delete';
+            }
         }
         // 数据增量计算
         foreach ($two as $o) if (!isset($_one[$o['name']])) $one[] = array_merge($o, ['type' => 'add']);
@@ -85,7 +95,7 @@ class Update
                 $data = array_merge($data, self::scanDir($temp, [], $root));
             } else {
                 $name = str_replace($root, '', $temp);
-                $data[$name] = ['name' => $name, 'hash' => md5_file($temp), 'time' => filemtime($temp)];
+                $data[$name] = ['name' => $name, 'hash' => md5_file($temp), 'time' => filemtime($temp), 'size' => filesize($temp)];
             }
         }
         return $data;
@@ -102,9 +112,9 @@ class Update
     {
         if (file_exists($file)) {
             $name = str_replace($root, '', str_replace('\\', '/', $file));
-            $data[$name] = ['name' => $name, 'hash' => md5_file($file), 'time' => filemtime($file)];
+            $data[$name] = ['name' => $name, 'hash' => md5_file($file), 'time' => filemtime($file), 'size' => filesize($file)];
         }
         return $data;
     }
-    
+
 }

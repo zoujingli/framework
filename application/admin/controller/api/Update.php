@@ -49,6 +49,7 @@ class Update extends Controller
         $data = $result['data'];
         $newResult = \app\admin\logic\Update::get($data['dirs'], $data['files'], $data['ignores']);
         $diff = \app\admin\logic\Update::contrast($result['data']['list'], $newResult['list']);
+
         dump($diff);
     }
 
