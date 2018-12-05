@@ -35,11 +35,11 @@ class Update
         $root = str_replace('\\', '/', env('root_path'));
         foreach ($dirs as $key => $dir) {
             $dirs[$key] = str_replace('\\', '/', $dir);
-            $maps = array_merge($maps, self::scanDir("{$root}{$dirs[$key]}"));
+            $maps = array_merge($maps, self::scanDir("{$root}{$dirs[$key]}", [], $root));
         }
         foreach ($files as $key => $file) {
             $files[$key] = str_replace('\\', '/', $file);
-            $maps = array_merge($maps, self::scanFile("{$root}{$files[$key]}"));
+            $maps = array_merge($maps, self::scanFile("{$root}{$files[$key]}", [], $root));
         }
         // 清除忽略文件
         foreach ($ignores as &$file) unset($maps[$file]);
@@ -75,14 +75,18 @@ class Update
      * 获取目录文件列表
      * @param string $dir 待扫描的目录
      * @param array $data 扫描的结果
+     * @param string $root 应用根目录
      * @return array
      */
-    private static function scanDir($dir, $data = [])
+    private static function scanDir($dir, $data = [], $root = '')
     {
         foreach (scandir($dir) as $sub) if (strpos($sub, '.') !== 0) {
-            if (is_dir($temp = self::swp($dir . DIRECTORY_SEPARATOR . $sub))) {
-                $data = array_merge($data, self::scanDir($dir . DIRECTORY_SEPARATOR . $sub));
-            } else $data[$temp] = ['name' => $temp, 'hash' => md5_file($temp), 'time' => (string)filemtime($temp)];
+            if (is_dir($temp = str_replace('\\', '/', $dir . DIRECTORY_SEPARATOR . $sub))) {
+                $data = array_merge($data, self::scanDir($temp, [], $root));
+            } else {
+                $name = str_replace($root, '', $temp);
+                $data[$name] = ['name' => $name, 'hash' => md5_file($temp), 'time' => filemtime($temp)];
+            }
         }
         return $data;
     }
@@ -91,25 +95,16 @@ class Update
      * 扫描文件信息
      * @param string $file 待处理的文件
      * @param array $data 扫描的结果
+     * @param string $root 应用根目录
      * @return array
      */
-    private static function scanFile($file, $data = [])
+    private static function scanFile($file, $data = [], $root = '')
     {
-        if (file_exists($temp = self::swp($file))) {
-            $data[$temp] = ['name' => $temp, 'hash' => md5_file($temp), 'time' => (string)filemtime($temp)];
+        if (file_exists($file)) {
+            $name = str_replace($root, '', str_replace('\\', '/', $file));
+            $data[$name] = ['name' => $name, 'hash' => md5_file($file), 'time' => filemtime($file)];
         }
         return $data;
     }
-
-    /**
-     * 目录切割
-     * @param string $file
-     * @return string
-     */
-    private static function swp($file)
-    {
-        $root = str_replace('\\', '/', env('root_path'));
-        return str_replace($root, '', str_replace('\\', '/', $file));
-    }
-
+    
 }
