@@ -588,14 +588,12 @@ $(function () {
     });
     $.previewImage = function (src, area) {
         let img = new Image(), index = $.msg.loading();
+        img.style.height = 'auto', img.style.width = area || '480px';
         img.onerror = function () {
             $.msg.close(index);
         };
         img.onload = function () {
-            layer.open({
-                type: 1, area: area || '480px', title: false, closeBtn: 1, skin: 'layui-layer-nobg', shadeClose: true,
-                success: img.onerror, content: $(img).css({width: area || '480px', height: 'auto'}).get(0).outerHTML,
-            });
+            layer.open({type: 1, area: area || '480px', title: false, closeBtn: 1, skin: 'layui-layer-nobg', shadeClose: true, success: img.onerror, content: img.outerHTML});
         };
         img.src = src;
     };
