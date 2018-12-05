@@ -96,10 +96,7 @@ class Update
                 $data = array_merge($data, self::scanDir($temp, [], $root));
             } else {
                 $name = str_replace($root, '', $temp);
-                $data[$name] = [
-                    'hash' => md5(file_get_contents($temp)), 'name' => $name,
-                    'time' => filemtime($temp), 'size' => filesize($temp)
-                ];
+                $data[$name] = ['hash' => self::hash($temp), 'name' => $name, 'time' => filemtime($temp), 'size' => filesize($temp)];
             }
         }
         return $data;
@@ -116,12 +113,19 @@ class Update
     {
         if (file_exists($file)) {
             $name = str_replace($root, '', str_replace('\\', '/', $file));
-            $data[$name] = [
-                'hash' => md5(file_get_contents($file)), 'name' => $name,
-                'time' => filemtime($file), 'size' => filesize($file)
-            ];
+            $data[$name] = ['hash' => self::hash($file), 'name' => $name, 'time' => filemtime($file), 'size' => filesize($file)];
         }
         return $data;
+    }
+
+    /**
+     * 计算文件hash值
+     * @param string $file
+     * @return string
+     */
+    private static function hash($file)
+    {
+        return md5(file_get_contents($file));
     }
 
 }
