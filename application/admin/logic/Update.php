@@ -15,6 +15,7 @@
 namespace app\admin\logic;
 
 /**
+ * 文件比对支持
  * Class Update
  * @package app\admin\logic
  */
@@ -85,11 +86,11 @@ class Update
      * 获取目录文件列表
      * @param string $dir 待扫描的目录
      * @param string $root 应用根目录
+     * @param array $data 扫描结果
      * @return array
      */
-    private static function scanDir($dir, $root = '')
+    private static function scanDir($dir, $root = '', $data = [])
     {
-        $data = [];
         foreach (scandir($dir) as $sub) if (strpos($sub, '.') !== 0) {
             if (is_dir($temp = "{$dir}/{$sub}")) {
                 $data = array_merge($data, self::scanDir($temp, $root));
@@ -119,8 +120,8 @@ class Update
      */
     private static function getFileInfo($file, $root)
     {
-        $name = str_replace($root, '', str_replace('\\', '/', realpath($file)));
         $hash = md5(preg_replace('/\s{1,}/', '', file_get_contents($file)));
+        $name = str_replace($root, '', str_replace('\\', '/', realpath($file)));
         return [$name => ['name' => $name, 'hash' => $hash, 'size' => filesize($file)]];
     }
 
