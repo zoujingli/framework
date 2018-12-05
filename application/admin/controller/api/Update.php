@@ -1,27 +1,53 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Anyon
- * Date: 2018/12/5
- * Time: 17:39
- */
+
+// +----------------------------------------------------------------------
+// | framework
+// +----------------------------------------------------------------------
+// | 版权所有 2014~2018 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
+// +----------------------------------------------------------------------
+// | 官方网站: http://framework.thinkadmin.top
+// +----------------------------------------------------------------------
+// | 开源协议 ( https://mit-license.org )
+// +----------------------------------------------------------------------
+// | github开源项目：https://github.com/zoujingli/framework
+// +----------------------------------------------------------------------
 
 namespace app\admin\controller\api;
 
-
 use library\Controller;
 
+/**
+ * 系统更新接口
+ * Class Update
+ * @package app\admin\controller\api
+ */
 class Update extends Controller
 {
 
+    /**
+     * 获取文件列表
+     */
     public function get()
     {
         $result = \app\admin\logic\Update::get([
-            'application/admin', 'application/wechat', 'public/static',
-        ], ['application/index/controller/Index.php'], ['application/admin/view/login/index.html']);
-        $result = \app\admin\logic\Update::contrast($result['list'], $result['list']);
-        dump($result);
+            'application/admin',
+            'application/wechat',
+            'public/static',
+        ], [
+        ], [
+            'application/admin/view/login/index.html'
+        ]);
+        $this->success('获取当前文件列表成功！', $result);
+    }
 
+    /**
+     * 获取文件差异
+     */
+    public function diff()
+    {
+        $result = http_get('https://framework.thinktop.top/admin/api.update/get');
+        $newResult = \app\admin\logic\Update::get($result['dirs'], $result['files'], $result['ignores']);
+        dump([$result, $newResult]);
     }
 
 
