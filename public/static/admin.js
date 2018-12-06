@@ -422,8 +422,7 @@ $(function () {
 
     /*! 上传多个图片 */
     $.fn.uploadMultipleImage = function () {
-        let type = $(this).data('type') || 'png,jpg';
-        let name = $(this).attr('name') || 'umt-image';
+        let type = $(this).data('type') || 'png,jpg', name = $(this).attr('name') || 'umt-image';
         let $tpl = $('<a data-file="mut" data-field="' + name + '" data-type="' + type + '" class="uploadimage"></a>');
         $(this).attr('name', name).after($tpl).on('change', function () {
             let input = this, values = [], srcs = this.value.split('|');
@@ -440,7 +439,7 @@ $(function () {
                     let $cur = $(this).parent();
                     $.msg.confirm('确定要移除这张图片吗？', function (index) {
                         let data = $cur.data('srcs'), temp = [];
-                        for (let i in data) i !== $cur.data('index') && temp.push(data[i]);
+                        for (let i in data) if (i !== $cur.data('index')) temp.push(data[i]);
                         $cur.data('input').value = temp.join('|');
                         $cur.remove(), $.msg.close(index);
                     });
@@ -493,9 +492,9 @@ $(function () {
 
     /*! 注册 data-action 事件行为 */
     $body.on('click', '[data-action]', function () {
-        let data = {}, $this = $(this), action = $this.attr('data-action');
+        let $this = $(this), action = $this.attr('data-action');
+        let data = {}, meth = $this.attr('data-method') || 'post';
         let time = $this.attr('data-time'), loading = $this.attr('data-loading') || false;
-        let method = $this.attr('data-method') || 'post';
         let rule = $this.attr('data-value') || (function (rule, ids) {
             $($this.attr('data-target') || 'input[type=checkbox].list-check-box').map(function () {
                 (this.checked) && ids.push(this.value);
@@ -508,9 +507,9 @@ $(function () {
             data[o.split('#')[0]] = o.split('#')[1];
         }
         let load = loading !== 'false', tips = typeof loading === 'string' ? loading : undefined;
-        if (!$this.attr('data-confirm')) $.form.load(action, data, method, false, load, tips, time);
+        if (!$this.attr('data-confirm')) $.form.load(action, data, meth, false, load, tips, time);
         else $.msg.confirm($this.attr('data-confirm'), function () {
-            $.form.load(action, data, method, false, load, tips, time);
+            $.form.load(action, data, meth, false, load, tips, time);
         });
     });
 
@@ -576,8 +575,7 @@ $(function () {
         input.style.position = 'absolute', input.style.left = '-100000px';
         input.style.width = '1px', input.style.height = '1px', input.innerText = content;
         document.body.appendChild(input), input.select(), setTimeout(function () {
-            if (document.execCommand('Copy')) $.msg.tips('复制成功');
-            else $.msg.tips('复制失败，请使用鼠标操作复制！');
+            document.execCommand('Copy') ? $.msg.tips('复制成功') : $.msg.tips('复制失败，请使用鼠标操作复制！');
             document.body.removeChild(input);
         }, 100);
     };
@@ -604,16 +602,12 @@ $(function () {
     });
     $.previewPhonePage = function (href, title) {
         let tpl = '<div><div class="mobile-preview pull-left"><div class="mobile-header">_TITLE_</div><div class="mobile-body"><iframe id="phone-preview" src="_URL_" frameborder="0" marginheight="0" marginwidth="0"></iframe></div></div></div>';
-        layer.style(layer.open({
-            type: true, scrollbar: false, area: ['320px', '600px'], title: false, closeBtn: true, shadeClose: false,
-            skin: 'layui-layer-nobg', content: $(tpl.replace('_TITLE_', title || '公众号').replace('_URL_', href)).html(),
-        }), {boxShadow: 'none'});
+        layer.style(layer.open({type: true, scrollbar: false, area: ['320px', '600px'], title: false, closeBtn: true, shadeClose: false, skin: 'layui-layer-nobg', content: $(tpl.replace('_TITLE_', title || '公众号').replace('_URL_', href)).html(),}), {boxShadow: 'none'});
     };
 
     /*! 注册 data-tips-text 事件行为 */
     $body.on('mouseenter', '[data-tips-text]', function () {
-        let text = $(this).attr('data-tips-text'), type = $(this).attr('data-tips-type');
-        $(this).attr('index', layer.tips(text, this, {tips: [type || 3, '#78BA32']}));
+        $(this).attr('index', layer.tips($(this).attr('data-tips-text'), this, {tips: [$(this).attr('data-tips-type') || 3, '#78BA32']}));
     }).on('mouseleave', '[data-tips-text]', function () {
         layer.close($(this).attr('index'));
     });
