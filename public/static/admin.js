@@ -236,7 +236,10 @@ $(function () {
                 $body.on('click', '[data-target-menu-type]', function () {
                     $menu.toggleClass(miniClass);
                     layui.data('menu', {key: 'type-min', value: $menu.hasClass(miniClass)});
-                });
+                }).on('resize', function () {
+                    let isMini = $('.layui-layout-left-mini').size() > 0;
+                    $body.width() > 1000 ? isMini && $menu.toggleClass(miniClass) : isMini || $menu.toggleClass(miniClass);
+                }).trigger('resize');
                 //  Mini 菜单模式时TIPS文字显示
                 $('[data-target-tips]').mouseenter(function () {
                     if ($menu.hasClass(miniClass)) $(this).attr('index', layer.tips($(this).attr('data-target-tips') || '', this));
