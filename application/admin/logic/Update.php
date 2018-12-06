@@ -24,27 +24,21 @@ class Update
 
     /**
      * 获取文件信息列表
-     * @param array $dirs 需要扫描的目录
-     * @param array $files 需要扫描的文件
+     * @param array $paths 需要扫描的目录
      * @param array $ignores 忽略扫描的文件
      * @param array $maps 扫描结果列表
      * @return array
      */
-    public static function get(array $dirs, array $files = [], $ignores = [], $maps = [])
+    public static function get(array $paths, $ignores = [], $maps = [])
     {
-
         $root = str_replace('\\', '/', env('root_path'));
-        foreach ($dirs as $key => $dir) {
-            $dirs[$key] = str_replace('\\', '/', $dir);
-            $maps = array_merge($maps, self::scanDir("{$root}{$dirs[$key]}", $root));
-        }
-        foreach ($files as $key => $file) {
-            $files[$key] = str_replace('\\', '/', $file);
-            $maps = array_merge($maps, self::scanFile("{$root}{$files[$key]}", $root));
+        foreach ($paths as $key => $dir) {
+            $paths[$key] = str_replace('\\', '/', $dir);
+            $maps = array_merge($maps, self::scanDir("{$root}{$paths[$key]}", $root));
         }
         // 清除忽略文件
         foreach ($ignores as &$file) unset($maps[$file]);
-        return ['dirs' => $dirs, 'files' => $files, 'ignores' => $ignores, 'list' => array_values($maps)];
+        return ['paths' => $paths, 'ignores' => $ignores, 'list' => array_values($maps)];
     }
 
     /**
@@ -68,7 +62,7 @@ class Update
         else array_push($_new, ['type' => 'add', 'name' => $t['name'], 'serve_hash' => $t['hash']]);
         // 本地数据增量计算
         foreach ($_local as $t) if (!isset($_serve[$t['name']])) array_push($_new, [
-            'type' => 'del', 'name' => $t['name'], 'local_hash' => $t['hash']
+            'type' => 'del', 'name' => $t['name'], 'local_hash' => $t['hash'],
         ]);
         unset($_serve, $_local);
         usort($_new, function ($a, $b) {
@@ -86,7 +80,10 @@ class Update
      */
     private static function scanDir($dir, $root = '', $data = [])
     {
-        foreach (scandir($dir) as $sub) if (strpos($sub, '.') !== 0) {
+        if (file_exists($dir) && is_file($dir)) {
+            return self::getFileInfo($dir, $root);
+        }
+        if (file_exists($dir)) foreach (scandir($dir) as $sub) if (strpos($sub, '.') !== 0) {
             if (is_dir($temp = "{$dir}/{$sub}")) {
                 $data = array_merge($data, self::scanDir($temp, $root));
             } else {

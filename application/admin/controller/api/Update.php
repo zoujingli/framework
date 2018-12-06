@@ -29,15 +29,15 @@ class Update extends Controller
      */
     public function get()
     {
-        $result = \app\admin\logic\Update::get([
-            'application/admin',
+        $this->success('获取当前文件列表成功！', \app\admin\logic\Update::get([
             'application/wechat',
-            'public/static',
+            'application/admin',
+            'public/static/plugs',
+            'public/static/theme',
+            'public/static/admin.js',
         ], [
-        ], [
-            'application/admin/view/login/index.html'
-        ]);
-        $this->success('获取当前文件列表成功！', $result);
+            'application/admin/view/login/index.html',
+        ]));
     }
 
     /**
@@ -47,7 +47,7 @@ class Update extends Controller
     {
         $result = json_decode(http_get('https://framework.thinkadmin.top/admin/api.update/get'), true);
         $data = $result['data'];
-        $new = \app\admin\logic\Update::get($data['dirs'], $data['files'], $data['ignores']);
+        $new = \app\admin\logic\Update::get($data['paths'], $data['ignores']);
         $diff = \app\admin\logic\Update::contrast($result['data']['list'], $new['list']);
         $this->success('获取更新文件差异成功！', $diff);
     }
