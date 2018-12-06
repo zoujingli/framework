@@ -89,7 +89,7 @@ $(function () {
         };
         // 状态消息提示
         this.tips = function (msg, time, callback) {
-            let index = layer.msg(msg, {time: (time || 3) * 1000, shade: this.shade, end: callback, shadeClose: true});
+            let index = layer.msg(msg, {time: (time || 3) * 1000, shade: this.shade, end: callback, shadeClose: true, anim: 6});
             return this.indexs.push(index), index;
         };
         // 显示正在加载中的提示
