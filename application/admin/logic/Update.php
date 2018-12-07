@@ -38,7 +38,7 @@ class Update extends Command
     protected function configure()
     {
         // 指令配置
-        $this->setName('update')->setDescription('Sync Update Code from THINKADMIN.TOP');
+        $this->setName('update')->setDescription('Sync Update Code for ThinkAdmin');
     }
 
     /**
