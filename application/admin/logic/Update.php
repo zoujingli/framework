@@ -49,23 +49,23 @@ class Update extends Command
      */
     protected function execute(Input $input, Output $output)
     {
-        $output->writeln('准备更新代码...');
+        $output->highlight('准备更新代码...');
         foreach (self::diff() as $file) switch ($file['type']) {
             case 'add':
             case 'mod':
                 if (self::down(encode($file['name'])))
-                    $output->writeln("更新文件 {$file['name']} 成功！");
+                    $output->info("更新文件 {$file['name']} 成功！");
                 else
                     $output->error("更新文件 {$file['name']} 失败！");
                 break;
             case 'del':
                 if (unlink(realpath(env('root_path') . $file['name'])))
-                    $output->writeln("移除文件 {$file['name']} 成功！");
+                    $output->info("移除文件 {$file['name']} 成功！");
                 else
                     $output->error("移除文件 {$file['name']} 失败！");
                 break;
         }
-        $output->writeln('代码更新完成！');
+        $output->highlight('代码更新完成！');
     }
 
     /**
