@@ -75,12 +75,16 @@ class Update extends Controller
                 case 'add':
                 case 'mod':
                     if ($this->_down(encode($file['name']))) {
-                        echo "同步文件 $path 成功！" . PHP_EOL;
+                        echo "同步文件 {$file['name']} 成功！" . PHP_EOL;
+                    } else {
+                        echo "同步文件 {$file['name']} 失败！" . PHP_EOL;
                     }
                     break;
                 case 'del':
                     if (unlink($path)) {
-                        echo "移除文件 $path 成功！" . PHP_EOL;
+                        echo "移除文件 {$file['name']} 成功！" . PHP_EOL;
+                    } else {
+                        echo "移除文件 {$file['name']} 失败！" . PHP_EOL;
                     }
                     break;
             }
