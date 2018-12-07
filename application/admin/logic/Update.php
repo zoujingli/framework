@@ -49,7 +49,7 @@ class Update extends Command
      */
     protected function execute(Input $input, Output $output)
     {
-        $output->writeln('准备更新指定规则的文件...');
+        $output->writeln('准备更新指定规则的代码文件...');
         foreach (self::diff() as $file) switch ($file['type']) {
             case 'add':
             case 'mod':
@@ -65,7 +65,7 @@ class Update extends Command
                     $output->error("移除文件 {$file['name']} 失败！");
                 break;
         }
-        $output->writeln('指定规则的文件更新完成！');
+        $output->writeln('指定规则的代码文件更新完成！');
     }
 
     /**
@@ -88,6 +88,21 @@ class Update extends Command
                     echo "移除文件 {$file['name']} 失败！" . PHP_EOL;
                 break;
         }
+    }
+
+    /**
+     * 获取当前系统文件列表
+     * @return array
+     */
+    public static function build()
+    {
+        return self::tree([
+            'application/wechat',
+            'application/admin',
+            'public/static/plugs',
+            'public/static/theme',
+            'public/static/admin.js',
+        ], ['application/admin/view/login/index.html']);
     }
 
     /**
