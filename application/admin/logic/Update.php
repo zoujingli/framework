@@ -29,7 +29,7 @@ class Update
      * @param array $maps 扫描结果列表
      * @return array
      */
-    public static function get(array $paths, $ignores = [], $maps = [])
+    public static function get(array $paths, array $ignores = [], array $maps = [])
     {
         $root = str_replace('\\', '/', env('root_path'));
         foreach ($paths as $key => $dir) {
@@ -37,8 +37,10 @@ class Update
             $maps = array_merge($maps, self::scanDir("{$root}{$paths[$key]}", $root));
         }
         // 清除忽略文件
-        foreach ($ignores as &$file) unset($maps[$file]);
-        return ['paths' => $paths, 'ignores' => $ignores, 'list' => array_values($maps)];
+        foreach ($maps as $key => $map) foreach ($ignores as $ingore) {
+            if (stripos($map['name'], $ingore) === 0) unset($maps[$key]);
+        }
+        return ['paths' => $paths, 'ignores' => $ignores, 'list' => $maps];
     }
 
     /**
@@ -81,27 +83,14 @@ class Update
     private static function scanDir($dir, $root = '', $data = [])
     {
         if (file_exists($dir) && is_file($dir)) {
-            return self::getFileInfo($dir, $root);
+            return [self::getFileInfo($dir, $root)];
         }
         if (file_exists($dir)) foreach (scandir($dir) as $sub) if (strpos($sub, '.') !== 0) {
             if (is_dir($temp = "{$dir}/{$sub}")) {
                 $data = array_merge($data, self::scanDir($temp, $root));
-            } else {
-                $data = array_merge($data, self::getFileInfo($temp, $root));
-            }
+            } else array_push($data, self::getFileInfo($temp, $root));
         }
         return $data;
-    }
-
-    /**
-     * 扫描文件信息
-     * @param string $file 待处理的文件
-     * @param string $root 应用根目录
-     * @return array
-     */
-    private static function scanFile($file, $root)
-    {
-        return file_exists($file) ? self::getFileInfo($file, $root) : [];
     }
 
     /**
@@ -114,7 +103,7 @@ class Update
     {
         $hash = md5(preg_replace('/\s{1,}/', '', file_get_contents($file)));
         $name = str_replace($root, '', str_replace('\\', '/', realpath($file)));
-        return [$name => ['name' => $name, 'hash' => $hash]];
+        return ['name' => $name, 'hash' => $hash];
     }
 
 }

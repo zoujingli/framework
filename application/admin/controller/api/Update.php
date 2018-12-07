@@ -14,6 +14,7 @@
 
 namespace app\admin\controller\api;
 
+use app\admin\logic\Update as UpdateLogic;
 use library\Controller;
 
 /**
@@ -29,7 +30,7 @@ class Update extends Controller
      */
     public function get()
     {
-        $this->success('获取当前文件列表成功！', \app\admin\logic\Update::get([
+        $this->success('获取当前文件列表成功！', UpdateLogic::get([
             'application/wechat',
             'application/admin',
             'public/static/plugs',
@@ -38,6 +39,17 @@ class Update extends Controller
         ], [
             'application/admin/view/login/index.html',
         ]));
+    }
+
+    /**
+     * 读取线上文件数据
+     * @param string $encode
+     */
+    public function read($encode)
+    {
+        $file = env('root_path') . decode($encode);
+        if (file_exists($file)) $this->error('获取文件内容失败！');
+        $this->success('获取文件内容成功！', ['format' => 'base64', 'content' => base64_encode(file_get_contents($file))]);
     }
 
     /**
