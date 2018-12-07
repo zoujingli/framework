@@ -67,27 +67,25 @@ class Update extends Controller
         return file_put_contents($path, base64_decode($result['data']['content']));
     }
 
+    /**
+     * 同步所有差异文件
+     */
     public function sync()
     {
-        foreach ($this->_diff() as $file) {
-            $path = realpath(env('root_path') . $file['name']);
-            switch ($file['type']) {
-                case 'add':
-                case 'mod':
-                    if ($this->_down(encode($file['name']))) {
-                        echo "同步文件 {$file['name']} 成功！" . PHP_EOL;
-                    } else {
-                        echo "同步文件 {$file['name']} 失败！" . PHP_EOL;
-                    }
-                    break;
-                case 'del':
-                    if (unlink($path)) {
-                        echo "移除文件 {$file['name']} 成功！" . PHP_EOL;
-                    } else {
-                        echo "移除文件 {$file['name']} 失败！" . PHP_EOL;
-                    }
-                    break;
-            }
+        foreach ($this->_diff() as $file) switch ($file['type']) {
+            case 'add':
+            case 'mod':
+                if ($this->_down(encode($file['name'])))
+                    echo "同步文件 {$file['name']} 成功！" . PHP_EOL;
+                else
+                    echo "同步文件 {$file['name']} 失败！" . PHP_EOL;
+                break;
+            case 'del':
+                if (unlink(realpath(env('root_path') . $file['name'])))
+                    echo "移除文件 {$file['name']} 成功！" . PHP_EOL;
+                else
+                    echo "移除文件 {$file['name']} 失败！" . PHP_EOL;
+                break;
         }
     }
 
