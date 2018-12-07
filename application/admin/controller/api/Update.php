@@ -49,7 +49,8 @@ class Update extends Controller
     {
         $file = env('root_path') . decode($encode);
         if (file_exists($file)) $this->error('获取文件内容失败！');
-        $this->success('获取文件内容成功！', ['format' => 'base64', 'content' => base64_encode(file_get_contents($file))]);
+        $content = base64_encode(file_get_contents($file));
+        $this->success('获取文件内容成功！', ['format' => 'base64', 'content' => $content]);
     }
 
     /**
