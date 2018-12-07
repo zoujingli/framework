@@ -54,13 +54,13 @@ class Update extends Command
             case 'add':
             case 'mod':
                 if (self::down(encode($file['name'])))
-                    $output->writeln("更新文件 {$file['name']} 成功！");
+                    $output->info("更新文件 {$file['name']} 成功！");
                 else
                     $output->error("更新文件 {$file['name']} 失败！");
                 break;
             case 'del':
                 if (unlink(realpath(env('root_path') . $file['name'])))
-                    $output->writeln("移除文件 {$file['name']} 成功！");
+                    $output->info("移除文件 {$file['name']} 成功！");
                 else
                     $output->error("移除文件 {$file['name']} 失败！");
                 break;
