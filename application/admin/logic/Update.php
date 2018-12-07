@@ -49,13 +49,14 @@ class Update extends Command
      */
     protected function execute(Input $input, Output $output)
     {
+        $output->writeln('准备更新代码...');
         foreach (self::diff() as $file) switch ($file['type']) {
             case 'add':
             case 'mod':
                 if (self::down(encode($file['name'])))
-                    $output->writeln("同步文件 {$file['name']} 成功！");
+                    $output->writeln("更新文件 {$file['name']} 成功！");
                 else
-                    $output->error("同步文件 {$file['name']} 失败！");
+                    $output->error("更新文件 {$file['name']} 失败！");
                 break;
             case 'del':
                 if (unlink(realpath(env('root_path') . $file['name'])))
@@ -64,6 +65,7 @@ class Update extends Command
                     $output->error("移除文件 {$file['name']} 失败！");
                 break;
         }
+        $output->writeln('代码更新完成！');
     }
 
     /**
