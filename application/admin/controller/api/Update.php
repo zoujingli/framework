@@ -53,14 +53,40 @@ class Update extends Controller
     public function read($encode)
     {
         $file = env('root_path') . decode($encode);
+        dump($file);
         if (file_exists($file)) $this->error('获取文件内容失败！');
         $content = base64_encode(file_get_contents($file));
         $this->success('获取文件内容成功！', ['format' => 'base64', 'content' => $content]);
     }
 
-    public function down()
+    public function down($encode)
     {
-        $list = $this->_diff();
+        dump("{$this->baseUri}?s=admin/api.update/read/{$encode}");
+        $result = http_get("{$this->baseUri}?s=admin/api.update/read/{$encode}");
+        dump($result);
+    }
+
+    public function sync()
+    {
+        foreach ($this->_diff() as $file) {
+
+            $this->down(encode($file['name']));
+            exit;
+//            $path = realpath(env('root_path') . $file['name']);
+//            switch ($file['type']) {
+//                case 'add':
+//                    $aa = $this->read(encode($file['name']));
+//                    dump($aa);
+//                    break;
+//                case 'mod':
+//                    break;
+//                case 'del':
+//
+//                    break;
+//
+//            }
+
+        }
     }
 
     /**
