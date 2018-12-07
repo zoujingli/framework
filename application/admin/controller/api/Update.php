@@ -28,9 +28,9 @@ class Update extends Controller
     /**
      * 获取文件列表
      */
-    public function get()
+    public function tree()
     {
-        $this->success('获取当前文件列表成功！', UpdateLogic::get([
+        $this->success('获取当前文件列表成功！', UpdateLogic::tree([
             'application/wechat',
             'application/admin',
             'public/static/plugs',
