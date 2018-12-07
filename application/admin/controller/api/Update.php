@@ -53,16 +53,21 @@ class Update extends Controller
         $this->success('获取文件内容成功！', ['format' => 'base64', 'content' => $content]);
     }
 
+    public function down()
+    {
+
+    }
+
     /**
      * 获取文件差异
      */
     public function diff()
     {
-        $result = json_decode(http_get('https://framework.thinkadmin.top/admin/api.update/get'), true);
-        $data = $result['data'];
-        $new = \app\admin\logic\Update::get($data['paths'], $data['ignores']);
-        $diff = \app\admin\logic\Update::contrast($result['data']['list'], $new['list']);
-        $this->success('获取更新文件差异成功！', $diff);
+        $result = json_decode(http_get('https://framework.thinkadmin.top/admin/api.update/tree'), true);
+        if (empty($result['code'])) $this->error('获取比对文件差异失败！');
+        $new = UpdateLogic::tree($result['data']['paths'], $result['data']['ignores']);
+        $diff = UpdateLogic::contrast($result['data']['list'], $new['list']);
+        $this->success('获取文件比对差异成功！', $diff);
     }
 
 }
