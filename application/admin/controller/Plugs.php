@@ -123,7 +123,7 @@ class Plugs extends Controller
         if (strtolower($this->uptype) === 'qiniu') {
             $auth = new \Qiniu\Auth(sysconf('storage_qiniu_access_key'), sysconf('storage_qiniu_secret_key'));
             $param['token'] = $auth->uploadToken(sysconf('storage_qiniu_bucket'), $name, 3600, [
-                'returnBody' => json_encode(['code' => 1, 'data' => ['site_url' => $file->base($name)]], JSON_UNESCAPED_UNICODE)
+                'returnBody' => json_encode(['code' => 1, 'data' => ['site_url' => $file->base($name)]], JSON_UNESCAPED_UNICODE),
             ]);
         } elseif (strtolower($this->uptype) === 'oss') {
             $param['OSSAccessKeyId'] = sysconf('storage_oss_keyid');
@@ -164,7 +164,7 @@ class Plugs extends Controller
     private function getUploadFile()
     {
         try {
-            return $this->request->file($this->request->post('name', 'file'));
+            return $this->request->file(input('name', 'file'));
         } catch (\Exception $e) {
             $this->error(lang($e->getMessage()));
         }
