@@ -24,6 +24,11 @@ use library\Controller;
  */
 class Update extends Controller
 {
+    /**
+     * 基础URL地址
+     * @var string
+     */
+    protected $baseUri = 'https://framework.thinkadmin.top';
 
     /**
      * 获取文件列表
@@ -55,7 +60,7 @@ class Update extends Controller
 
     public function down()
     {
-
+        $list = $this->_diff();
     }
 
     /**
@@ -63,11 +68,19 @@ class Update extends Controller
      */
     public function diff()
     {
-        $result = json_decode(http_get('https://framework.thinkadmin.top/admin/api.update/tree'), true);
+        $this->success('获取文件比对差异成功！', $this->_diff());
+    }
+
+    /**
+     * 获取文件差异数据
+     * @return array
+     */
+    private function _diff()
+    {
+        $result = json_decode(http_get("{$this->baseUri}?s=/admin/api.update/tree"), true);
         if (empty($result['code'])) $this->error('获取比对文件差异失败！');
         $new = UpdateLogic::tree($result['data']['paths'], $result['data']['ignores']);
-        $diff = UpdateLogic::contrast($result['data']['list'], $new['list']);
-        $this->success('获取文件比对差异成功！', $diff);
+        return UpdateLogic::contrast($result['data']['list'], $new['list']);
     }
 
 }
