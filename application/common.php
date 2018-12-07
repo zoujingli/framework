@@ -12,6 +12,10 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
+\think\Console::addDefaultCommands([
+    app\admin\logic\Update::class,
+]);
+
 if (!function_exists('auth')) {
     /**
      * 节点访问权限检查

@@ -14,13 +14,16 @@
 
 namespace app\admin\logic;
 
+use think\console\Command;
+use think\console\Input;
+use think\console\Output;
 
 /**
  * 文件比对支持
  * Class Update
  * @package app\admin\logic
  */
-class Update
+class Update extends Command
 {
 
     /**
@@ -28,6 +31,62 @@ class Update
      * @var string
      */
     protected static $baseUri = 'https://framework.thinkadmin.top';
+
+    /**
+     * 指令初始化配置
+     */
+    protected function configure()
+    {
+        // 指令配置
+        $this->setName('update')->setDescription('Sync Update Code from THINKADMIN.TOP');
+    }
+
+    /**
+     * 执行指令
+     * @param Input $input
+     * @param Output $output
+     * @return int|void|null
+     */
+    protected function execute(Input $input, Output $output)
+    {
+        foreach (self::diff() as $file) switch ($file['type']) {
+            case 'add':
+            case 'mod':
+                if (self::down(encode($file['name'])))
+                    $output->writeln("同步文件 {$file['name']} 成功！");
+                else
+                    $output->error("同步文件 {$file['name']} 失败！");
+                break;
+            case 'del':
+                if (unlink(realpath(env('root_path') . $file['name'])))
+                    $output->writeln("移除文件 {$file['name']} 成功！");
+                else
+                    $output->error("移除文件 {$file['name']} 失败！");
+                break;
+        }
+    }
+
+    /**
+     * 同步所有差异文件
+     */
+    public static function sync()
+    {
+        foreach (self::diff() as $file) switch ($file['type']) {
+            case 'add':
+            case 'mod':
+                if (UpdateLogic::down(encode($file['name'])))
+                    echo "同步文件 {$file['name']} 成功！" . PHP_EOL;
+                else
+                    echo "同步文件 {$file['name']} 失败！" . PHP_EOL;
+                break;
+            case 'del':
+                if (unlink(realpath(env('root_path') . $file['name'])))
+                    echo "移除文件 {$file['name']} 成功！" . PHP_EOL;
+                else
+                    echo "移除文件 {$file['name']} 失败！" . PHP_EOL;
+                break;
+        }
+    }
 
     /**
      * 获取文件信息列表
