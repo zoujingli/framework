@@ -59,28 +59,14 @@ class Update extends Controller
     }
 
     /**
-     * 下载并更新指定文件
-     * @param string $encode
-     * @return boolean|integer
-     */
-    private function _down($encode)
-    {
-        $result = json_decode(http_get("{$this->baseUri}?s=admin/api.update/read/{$encode}"), true);
-        if (empty($result['code'])) return false;
-        $path = realpath(env('root_path') . decode($encode));
-        file_exists(dirname($path)) || mkdir(dirname($path), 0755, true);
-        return file_put_contents($path, base64_decode($result['data']['content']));
-    }
-
-    /**
      * 同步所有差异文件
      */
     public function sync()
     {
-        foreach ($this->_diff() as $file) switch ($file['type']) {
+        foreach (UpdateLogic::diff() as $file) switch ($file['type']) {
             case 'add':
             case 'mod':
-                if ($this->_down(encode($file['name'])))
+                if (UpdateLogic::down(encode($file['name'])))
                     echo "同步文件 {$file['name']} 成功！" . PHP_EOL;
                 else
                     echo "同步文件 {$file['name']} 失败！" . PHP_EOL;
@@ -99,19 +85,8 @@ class Update extends Controller
      */
     public function diff()
     {
-        $this->success('获取文件比对差异成功！', $this->_diff());
+        $this->success('获取文件比对差异成功！', UpdateLogic::diff());
     }
 
-    /**
-     * 获取文件差异数据
-     * @return array
-     */
-    private function _diff()
-    {
-        $result = json_decode(http_get("{$this->baseUri}?s=/admin/api.update/tree"), true);
-        if (empty($result['code'])) $this->error('获取比对文件差异失败！');
-        $new = UpdateLogic::tree($result['data']['paths'], $result['data']['ignores']);
-        return UpdateLogic::contrast($result['data']['list'], $new['list']);
-    }
 
 }

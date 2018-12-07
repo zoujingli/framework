@@ -14,6 +14,7 @@
 
 namespace app\admin\logic;
 
+
 /**
  * 文件比对支持
  * Class Update
@@ -21,6 +22,12 @@ namespace app\admin\logic;
  */
 class Update
 {
+
+    /**
+     * 基础URL地址
+     * @var string
+     */
+    protected static $baseUri = 'https://framework.thinkadmin.top';
 
     /**
      * 获取文件信息列表
@@ -68,6 +75,32 @@ class Update
             return $a['name'] <> $b['name'] ? ($a['name'] > $b['name'] ? 1 : -1) : 0;
         });
         return $_new;
+    }
+
+    /**
+     * 下载更新文件内容
+     * @param string $encode
+     * @return boolean|integer
+     */
+    public static function down($encode)
+    {
+        $result = json_decode(http_get(self::$baseUri . "?s=admin/api.update/read/{$encode}"), true);
+        if (empty($result['code'])) return false;
+        $path = realpath(env('root_path') . decode($encode));
+        file_exists(dirname($path)) || mkdir(dirname($path), 0755, true);
+        return file_put_contents($path, base64_decode($result['data']['content']));
+    }
+
+    /**
+     * 获取文件差异数据
+     * @return array
+     */
+    public static function diff()
+    {
+        $result = json_decode(http_get(self::$baseUri . "?s=/admin/api.update/tree"), true);
+        if (empty($result['code'])) return [];
+        $new = self::tree($result['data']['paths'], $result['data']['ignores']);
+        return self::contrast($result['data']['list'], $new['list']);
     }
 
     /**
