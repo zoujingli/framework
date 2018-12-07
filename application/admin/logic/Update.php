@@ -29,7 +29,7 @@ class Update
      * @param array $maps 扫描结果列表
      * @return array
      */
-    public static function get(array $paths, array $ignores = [], array $maps = [])
+    public static function tree(array $paths, array $ignores = [], array $maps = [])
     {
         $root = str_replace('\\', '/', env('root_path'));
         foreach ($paths as $key => $dir) {
