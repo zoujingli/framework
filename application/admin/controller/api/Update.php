@@ -58,33 +58,32 @@ class Update extends Controller
         $this->success('获取文件内容成功！', ['format' => 'base64', 'content' => $content]);
     }
 
-    public function down($encode)
+    private function _down($encode)
     {
-        dump("{$this->baseUri}?s=admin/api.update/read/{$encode}");
-        $result = http_get("{$this->baseUri}?s=admin/api.update/read/{$encode}");
-        dump($result);
+        $result = json_decode(http_get("{$this->baseUri}?s=admin/api.update/read/{$encode}"), true);
+        if (empty($result['code'])) return false;
+        $path = realpath(env('root_path') . decode($encode));
+        file_exists(dirname($path)) || mkdir(dirname($path), 0755, true);
+        return file_put_contents($path, base64_decode($result['data']['content']));
     }
 
     public function sync()
     {
         foreach ($this->_diff() as $file) {
-
-            $this->down(encode($file['name']));
-            exit;
-//            $path = realpath(env('root_path') . $file['name']);
-//            switch ($file['type']) {
-//                case 'add':
-//                    $aa = $this->read(encode($file['name']));
-//                    dump($aa);
-//                    break;
-//                case 'mod':
-//                    break;
-//                case 'del':
-//
-//                    break;
-//
-//            }
-
+            $path = realpath(env('root_path') . $file['name']);
+            switch ($file['type']) {
+                case 'add':
+                case 'mod':
+                    if ($this->_down(encode($file['name']))) {
+                        echo "同步文件 $path 成功！" . PHP_EOL;
+                    }
+                    break;
+                case 'del':
+                    if (unlink($path)) {
+                        echo "移除文件 $path 成功！" . PHP_EOL;
+                    }
+                    break;
+            }
         }
     }
 
