@@ -58,35 +58,4 @@ class Update extends Controller
         $this->success('获取文件内容成功！', ['format' => 'base64', 'content' => $content]);
     }
 
-    /**
-     * 同步所有差异文件
-     */
-    public function sync()
-    {
-        foreach (UpdateLogic::diff() as $file) switch ($file['type']) {
-            case 'add':
-            case 'mod':
-                if (UpdateLogic::down(encode($file['name'])))
-                    echo "同步文件 {$file['name']} 成功！" . PHP_EOL;
-                else
-                    echo "同步文件 {$file['name']} 失败！" . PHP_EOL;
-                break;
-            case 'del':
-                if (unlink(realpath(env('root_path') . $file['name'])))
-                    echo "移除文件 {$file['name']} 成功！" . PHP_EOL;
-                else
-                    echo "移除文件 {$file['name']} 失败！" . PHP_EOL;
-                break;
-        }
-    }
-
-    /**
-     * 获取文件差异
-     */
-    public function diff()
-    {
-        $this->success('获取文件比对差异成功！', UpdateLogic::diff());
-    }
-
-
 }
