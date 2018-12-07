@@ -58,6 +58,11 @@ class Update extends Controller
         $this->success('获取文件内容成功！', ['format' => 'base64', 'content' => $content]);
     }
 
+    /**
+     * 下载并更新指定文件
+     * @param string $encode
+     * @return boolean|integer
+     */
     private function _down($encode)
     {
         $result = json_decode(http_get("{$this->baseUri}?s=admin/api.update/read/{$encode}"), true);
