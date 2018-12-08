@@ -5,7 +5,7 @@
     <div class='mobile-preview inline-block'>
         <div class='mobile-header'>公众号</div>
         <div class='mobile-body'></div>
-        <ul class='mobile-footer'>
+        <ul class='mobile-footer notselect'>
             <li class="parent-menu" style="{{getItemStyle(list)}}" ng-repeat="one in list">
                 <a ng-click="setActiveItem(one)" ng-class="{true:'active'}[one.active]">
                     <i class="icon-sub" ng-if="one.sub_button.length>0"></i> <span ng-bind="one.name"></span>
