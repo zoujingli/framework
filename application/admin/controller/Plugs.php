@@ -177,7 +177,8 @@ class Plugs extends Controller
     public function icon()
     {
         $this->title = '图标选择器';
-        $this->field = $this->request->get('field', 'icon');
+        $this->field = input('field', 'icon');
         return $this->fetch();
     }
+
 }
