@@ -76,7 +76,7 @@ class Update extends Command
         foreach (self::diff() as $file) switch ($file['type']) {
             case 'add':
             case 'mod':
-                if (UpdateLogic::down(encode($file['name'])))
+                if (self::down(encode($file['name'])))
                     echo "同步文件 {$file['name']} 成功！" . PHP_EOL;
                 else
                     echo "同步文件 {$file['name']} 失败！" . PHP_EOL;
