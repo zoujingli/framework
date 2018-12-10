@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit4ba724fa0a1590f0de58bdf73493fd0e
+class ComposerStaticInitde29a8641fa36ce1e4910c2e195f40dd
 {
     public static $files = array (
         '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
@@ -297,8 +297,10 @@ class ComposerStaticInit4ba724fa0a1590f0de58bdf73493fd0e
         'app\\admin\\controller\\Plugs' => __DIR__ . '/../..' . '/application/admin/controller/Plugs.php',
         'app\\admin\\controller\\Queue' => __DIR__ . '/../..' . '/application/admin/controller/Queue.php',
         'app\\admin\\controller\\User' => __DIR__ . '/../..' . '/application/admin/controller/User.php',
+        'app\\admin\\controller\\api\\Update' => __DIR__ . '/../..' . '/application/admin/controller/api/Update.php',
         'app\\admin\\logic\\Auth' => __DIR__ . '/../..' . '/application/admin/logic/Auth.php',
         'app\\admin\\logic\\Queue' => __DIR__ . '/../..' . '/application/admin/logic/Queue.php',
+        'app\\admin\\logic\\Update' => __DIR__ . '/../..' . '/application/admin/logic/Update.php',
         'app\\index\\controller\\Index' => __DIR__ . '/../..' . '/application/index/controller/Index.php',
         'app\\store\\controller\\Goods' => __DIR__ . '/../..' . '/application/store/controller/Goods.php',
         'app\\store\\logic\\Goods' => __DIR__ . '/../..' . '/application/store/logic/Goods.php',
@@ -366,9 +368,9 @@ class ComposerStaticInit4ba724fa0a1590f0de58bdf73493fd0e
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit4ba724fa0a1590f0de58bdf73493fd0e::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit4ba724fa0a1590f0de58bdf73493fd0e::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit4ba724fa0a1590f0de58bdf73493fd0e::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitde29a8641fa36ce1e4910c2e195f40dd::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitde29a8641fa36ce1e4910c2e195f40dd::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitde29a8641fa36ce1e4910c2e195f40dd::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -161,7 +161,7 @@ class Update extends Command
     {
         $result = json_decode(http_get(self::$baseUri . "?s=admin/api.update/read/{$encode}"), true);
         if (empty($result['code'])) return false;
-        $path = realpath(env('root_path') . decode($encode));
+        $path = env('root_path') . decode($encode);
         file_exists(dirname($path)) || mkdir(dirname($path), 0755, true);
         return file_put_contents($path, base64_decode($result['data']['content']));
     }
