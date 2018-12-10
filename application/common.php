@@ -12,9 +12,8 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-\think\Console::addDefaultCommands([
-    app\admin\logic\Update::class,
-]);
+// 注册系统更新指令
+\think\Console::addDefaultCommands(['app\admin\logic\Update']);
 
 if (!function_exists('auth')) {
     /**
