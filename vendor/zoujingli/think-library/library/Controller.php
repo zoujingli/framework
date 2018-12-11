@@ -134,7 +134,7 @@ class Controller extends \stdClass
      */
     protected function fetch($tpl = '', $vars = [])
     {
-        throw new HttpResponseException(view($tpl, $vars)->assign((array)$this));
+        throw new HttpResponseException(view($tpl, array_merge($vars, (array)$this)));
     }
 
     /**
@@ -146,7 +146,8 @@ class Controller extends \stdClass
      */
     protected function assign($name, $value = '')
     {
-        app('view')->assign($name, $value);
+        if (is_string($name)) $this->{$name} = $value;
+        if (is_array($name)) foreach ($name as $k => $v) if (is_string($k)) $this->{$k} = $v;
         return $this;
     }
 

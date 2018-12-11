@@ -15,6 +15,23 @@
 // 注册系统更新指令
 \think\Console::addDefaultCommands(['app\admin\logic\Update']);
 
+// 系统权限中间键
+\think\facade\Middleware::add(function (\think\Request $request, \Closure $next) {
+    $map = ['node' => ($node = \library\tools\Node::current())];
+    $auth = \think\Db::name('SystemNode')->cache(true, 30)->field('is_auth,is_login')->where($map)->find();
+    $access = ['is_auth' => $auth['is_auth'], 'is_login' => $auth['is_auth'] ? 1 : $auth['is_login']];
+    // 登录状态检查
+    if (!empty($access['is_login']) && !\app\admin\logic\Auth::isLogin()) {
+        $message = ['code' => 0, 'msg' => '抱歉，您还没有登录获取访问权限！', 'url' => url('@admin/login')];
+        return $request->isAjax() ? json($message) : redirect($message['url']);
+    }
+    // 访问权限检查
+    if (!empty($access['is_auth']) && !\app\admin\logic\Auth::checkAuthNode($node)) {
+        return json(['code' => 0, 'msg' => '抱歉，您没有访问该模块的权限！']);
+    }
+    return $next($request);
+});
+
 if (!function_exists('auth')) {
     /**
      * 节点访问权限检查
@@ -39,8 +56,7 @@ if (!function_exists('sysdata')) {
     function sysdata($name, array $value = null)
     {
         if (is_null($value)) {
-            $value = \think\Db::name('SystemData')->where('name', $name)->value('value');
-            $json = json_decode(emoji_decode($value), true);
+            $json = json_decode(emoji_decode(\think\Db::name('SystemData')->where('name', $name)->value('value')), true);
             return empty($json) ? null : $json;
         }
         return data_save('SystemData', ['name' => $name, 'value' => emoji_encode(json_encode($value, 256))], 'name');
