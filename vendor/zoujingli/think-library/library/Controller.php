@@ -130,12 +130,11 @@ class Controller extends \stdClass
      * @access protected
      * @param string $tpl 模板名称
      * @param array $vars 模板变量
-     * @param array $config 引擎配置
      * @return mixed
      */
-    protected function fetch($tpl = '', $vars = [], $config = [])
+    protected function fetch($tpl = '', $vars = [])
     {
-        return app('view')->assign((array)$this)->fetch($tpl, $vars, $config);
+        throw new HttpResponseException(view($tpl, $vars)->assign((array)$this));
     }
 
     /**
@@ -143,10 +142,12 @@ class Controller extends \stdClass
      * @access protected
      * @param  mixed $name 要显示的模板变量
      * @param  mixed $value 变量的值
+     * @return $this
      */
     protected function assign($name, $value = '')
     {
         app('view')->assign($name, $value);
+        return $this;
     }
 
 }
