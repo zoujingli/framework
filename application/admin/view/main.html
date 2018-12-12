@@ -1,5 +1,5 @@
-{block name='style'}{/block}
 <div class="layui-card">
+    {block name='style'}{/block}
     {notempty name='title'}
     <div class="layui-card-header notselect">
         <span class="layui-icon font-s10 color-desc margin-right-5">&#xe65b;</span>{$title|default=''}
@@ -7,5 +7,5 @@
     </div>
     {/notempty}
     <div class="layui-card-body">{block name='content'}{/block}</div>
+    {block name='script'}{/block}
 </div>
-{block name='script'}{/block}
