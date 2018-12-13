@@ -62,7 +62,7 @@
                         </label>
                         {/if}
                         {if auth("admin/node/save") and $vo.spt eq 2}
-                        <span class="color-desc">&nbsp;&nbsp;├─&nbsp;</span>
+                        <span class="color-desc">&nbsp;├&nbsp;&nbsp;&nbsp;</span>
                         <label class="notselect margin-right-15 think-checkbox">
                             <!--{notempty name='vo.is_login'}-->
                             <input data-login-filter="{$vo.pnode}" checked='checked' class="check-box login_{$key}" type='checkbox' value='1' name='is_login' data-node="{$vo.node}" onclick="!this.checked && ($('.auth_{$key}')[0].checked = !!this.checked)">
@@ -71,7 +71,7 @@
                             <!--{/notempty}-->
                             加入登录控制
                         </label>
-                        <span class="color-desc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─&nbsp;</span>
+                        <span class="color-desc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├&nbsp;&nbsp;&nbsp;</span>
                         <label class="notselect margin-right-15 think-checkbox">
                             <!--{notempty name='vo.is_auth'}-->
                             <input data-auth-filter="{$vo.pnode}" name='is_auth' data-node="{$vo.node}" checked='checked' class="check-box auth_{$key}" type='checkbox' onclick="this.checked && ($('.login_{$key}')[0].checked = !!this.checked)" value='1'>
@@ -80,7 +80,7 @@
                             <!--{/notempty}-->
                             加入权限控制
                         </label>
-                        <span class="color-desc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─&nbsp;</span>
+                        <span class="color-desc">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├&nbsp;&nbsp;&nbsp;</span>
                         <label class="notselect think-checkbox">
                             <!--{notempty name='vo.is_menu'}-->
                             <input data-menu-filter="{$vo.pnode}" name='is_menu' data-node="{$vo.node}" checked='checked' class='check-box menu_{$key}' type='checkbox' value='1'>
