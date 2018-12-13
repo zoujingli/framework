@@ -102,7 +102,7 @@ $(function () {
             let url = ret.url || (typeof ret.data === 'string' ? ret.data : '');
             let msg = ret.msg || (typeof ret.info === 'string' ? ret.info : '');
             if (time === 'false') {
-                url ? (window.location.href = url) : $.form.reload();
+                return url ? (window.location.href = url) : $.form.reload();
             }
             return (parseInt(ret.code) === 1) ? this.success(msg, time, function () {
                 url ? (window.location.href = url) : $.form.reload();
