@@ -13,18 +13,15 @@
 <body>
 
 <!--{if empty($fans.fansinfo)}-->
-<div class="weui-msg">
-    <div class="weui-msg__icon-area"><i class="weui-icon-cancel weui-icon_msg"></i></div>
-    <div class="weui-msg__text-area">
-        <h2 class="weui-msg__title">操作失败</h2>
-        <p class="weui-msg__desc">通过网页授权获取用户资料失败，请检查权限再试！</p>
-    </div>
-    <div class="weui-msg__opr-area">
-        <p class="weui-btn-area">
-            <a href="javascript:;" onclick="location.reload()" class="weui-btn weui-btn_default">重新获取（刷新）</a>
+<fieldset style="width:80%;margin:1rem auto">
+    <legend style="padding:0.2rem 0.3rem;font-size:0.9rem;color:#666">操作失败</legend>
+    <div style="padding-top:0.4rem">
+        <p style="font-size:0.6rem;margin-bottom:0.8rem">通过网页授权获取用户资料失败，请检查权限再试！</p>
+        <p style="font-size:0.6rem;margin-bottom:0.8rem">
+            <a href="javascript:void(0);" onclick="location.reload()">重新获取（刷新）</a>
         </p>
     </div>
-</div>
+</fieldset>
 <!--{else}-->
 <div class="header" style="padding:1rem 0 0.6rem 0;text-align:center">
     <img style='width:132px;height:132px;border-radius:50%;border:0.6rem solid rgba(150,40,40,0.6)' src="{$fans.fansinfo.headimgurl}">
