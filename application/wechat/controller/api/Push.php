@@ -40,6 +40,13 @@ class Push extends Controller
      */
     protected $openid;
 
+
+    /**
+     * 公众号OPENID
+     * @var string
+     */
+    protected $fromOpenid;
+
     /**
      * 微信消息对象
      * @var array
@@ -88,6 +95,8 @@ class Push extends Controller
                 $this->openid = $this->wechat->getOpenid();
                 $this->receive = $this->toLower($this->wechat->getReceive());
             }
+            $this->fromOpenid = $this->receive['tousername'];
+
             p(PHP_EOL . '===== 消息接口获取的内容 =====');
             p($this->receive);
             // text, event, image, location
@@ -268,10 +277,10 @@ class Push extends Controller
                     'CreateTime'   => time(),
                     'Content'      => $data['content'],
                     'ToUserName'   => $this->openid,
-                    'FromUserName' => $this->receive,
+                    'FromUserName' => $this->fromOpenid,
                 ];
                 p($reply);
-                return $this->wechat->reply($reply, true);
+                return $this->wechat->reply($reply, true, true);
             //exit;
             //return $this->wechat->text($data['content'])->reply([], true);
             case 'image': // 发送图片消息
