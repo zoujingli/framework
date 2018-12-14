@@ -227,11 +227,11 @@ class Push extends Controller
             case 'customservice':
                 return $this->sendMessage('customservice', ['content' => $data['content']], false);
             case 'voice':
-                if (empty($data['voice_url']) || !($media_id = Media::upload($data['voice_url'], 'voice'))) return false;
-                return $this->sendMessage('voice', ['media_id' => $media_id], $isCustom);
+                if (empty($data['voice_url']) || !($mediaId = Media::upload($data['voice_url'], 'voice'))) return false;
+                return $this->sendMessage('voice', ['media_id' => $mediaId], $isCustom);
             case 'image':
-                if (empty($data['image_url']) || !($media_id = Media::upload($data['image_url'], 'image'))) return false;
-                return $this->sendMessage('image', ['media_id' => $media_id], $isCustom);
+                if (empty($data['image_url']) || !($mediaId = Media::upload($data['image_url'], 'image'))) return false;
+                return $this->sendMessage('image', ['media_id' => $mediaId], $isCustom);
             case 'news':
                 list($news, $articles) = [Media::news($data['news_id']), []];
                 if (empty($news['articles'])) return false;
@@ -250,8 +250,8 @@ class Push extends Controller
             case 'video':
                 if (empty($data['video_url']) || empty($data['video_desc']) || empty($data['video_title'])) return false;
                 $videoData = ['title' => $data['video_title'], 'introduction' => $data['video_desc']];
-                if (!($media_id = Media::upload($data['video_url'], 'video', $videoData))) return false;
-                return $this->sendMessage('video', ['media_id' => $media_id, 'title' => $data['video_title'], 'description' => $data['video_desc']], $isCustom);
+                if (!($mediaId = Media::upload($data['video_url'], 'video', $videoData))) return false;
+                return $this->sendMessage('video', ['media_id' => $mediaId, 'title' => $data['video_title'], 'description' => $data['video_desc']], $isCustom);
             default:
                 return false;
         }
@@ -319,9 +319,7 @@ class Push extends Controller
             'CreateTime' => time(), 'MsgType' => strtolower($type),
             'ToUserName' => $this->openid, 'FromUserName' => $this->fromOpenid,
         ];
-        if (!empty($data)) {
-            $reply[ucfirst(strtolower($type))] = $data;
-        }
+        if (!empty($data)) $reply[ucfirst(strtolower($type))] = $data;
         return $this->wechat->reply($reply, true, $this->encrypt);
     }
 
