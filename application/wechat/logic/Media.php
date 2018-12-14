@@ -82,6 +82,7 @@ class Media
     {
         $where = ['md5' => md5($local_url), 'appid' => Wechat::getAppid()];
         if (($mediaId = Db::name('WechatNewsMedia')->where($where)->value('media_id'))) return $mediaId;
+        p(self::getServerPath($local_url));
         $result = Wechat::WeChatMedia()->addMaterial(self::getServerPath($local_url), $type, $videoInfo);
         data_save('WechatNewsMedia', [
             'local_url' => $local_url, 'md5' => $where['md5'], 'appid' => Wechat::getAppid(), 'type' => $type,
