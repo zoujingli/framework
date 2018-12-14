@@ -295,8 +295,15 @@ class Push extends Controller
                 return $this->buildMessage('transfer_customer_service');
             case 'news': // 发送图文消息
                 $articles = [];
-                foreach ($data['articles'] as $article) array_push($articles, ['PicUrl' => $article['picurl'], 'Title' => $article['title'], 'Description' => $article['description'], 'Url' => $article['url']]);
-                p($articles);
+                foreach ($data['articles'] as $article) array_push($articles, [
+                    'PicUrl'      => $article['picurl'], 'Title' => $article['title'],
+                    'Description' => $article['description'], 'Url' => $article['url'],
+                ]);
+                p([
+                    'CreateTime'   => time(), 'MsgType' => 'news',
+                    'Articles'     => $articles, 'ToUserName' => $this->openid,
+                    'FromUserName' => $this->fromOpenid, 'ArticleCount' => count($articles),
+                ]);
                 return $this->wechat->reply([
                     'CreateTime'   => time(), 'MsgType' => 'news',
                     'Articles'     => $articles, 'ToUserName' => $this->openid,
