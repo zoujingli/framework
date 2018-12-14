@@ -33,6 +33,7 @@ class Config extends Controller
      */
     public function options()
     {
+        $this->thrNotify = url('@wechat/api.push', '', false, true);
         if ($this->request->isGet()) {
             $this->title = '公众号授权绑定';
             if (!($this->geoip = cache('mygeoip'))) {
@@ -44,8 +45,7 @@ class Config extends Controller
                 sysconf('wechat_type', 'thr');
                 sysconf('wechat_thr_appid', input('appid'));
                 sysconf('wechat_thr_appkey', input('appkey'));
-                sysconf('wechat_thr_notify', $thrNotify = url('@wechat/api.push', '', true, true));
-                Wechat::wechat()->setApiNotifyUri($thrNotify);
+                Wechat::wechat()->setApiNotifyUri($this->thrNotify);
             }
             try {
                 $this->wechat = Wechat::wechat()->getConfig();
@@ -55,6 +55,9 @@ class Config extends Controller
             return $this->fetch();
         }
         foreach ($this->request->post() as $k => $v) sysconf($k, $v);
+        if ($this->request->post('wechat_type') === 'thr') {
+            Wechat::wechat()->setApiNotifyUri($this->thrNotify);
+        }
         $this->success('公众号参数获取成功！', url('@admin') . '#' . url('wechat/config/options'));
     }
 

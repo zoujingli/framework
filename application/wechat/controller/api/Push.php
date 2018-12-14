@@ -53,7 +53,13 @@ class Push extends Controller
     protected $wechat;
 
     /**
-     * 获取当前出口IP
+     * 强制客服消息回复
+     * @var boolean
+     */
+    protected $forceCustom = false;
+
+    /**
+     * 获取网络出口IP
      * @return mixed
      */
     public function geoip()
@@ -62,16 +68,26 @@ class Push extends Controller
     }
 
     /**
-     * 微信消息推送入口
+     * 消息推送处理接口
      * @return string
      */
     public function index()
     {
         try {
-            $this->appid = Wechat::getAppid();
             $this->wechat = Wechat::WeChatReceive();
-            $this->openid = $this->wechat->getOpenid();
-            $this->receive = $this->toLower($this->wechat->getReceive());
+            if ($this->request->has('receive', 'post')) {
+                $this->appid = $this->request->post('appid', '', null);
+                $this->openid = $this->request->post('openid', '', null);
+                $this->receive = $this->toLower(unserialize($this->request->post('receive', '', null)));
+                if (empty($this->appid) || empty($this->openid) || empty($this->receive)) {
+                    throw new \think\Exception('微信API实例缺失必要参数[appid,openid,receive]');
+                }
+                $this->forceCustom = true;
+            } else {
+                $this->appid = Wechat::getAppid();
+                $this->openid = $this->wechat->getOpenid();
+                $this->receive = $this->toLower($this->wechat->getReceive());
+            }
             p(PHP_EOL . '===== 消息接口获取的内容 =====');
             p($this->receive);
             // text, event, image, location
@@ -79,16 +95,16 @@ class Push extends Controller
                 if (is_string(($result = $this->$method()))) {
                     p('===== 消息接口返回的内容 =====');
                     p($result);
-                    p(\WeChat\Contracts\Tools::xml2arr($result));
                     return $result;
                 }
-                p('===== 无需要回复内容 =====');
             }
+            return 'success';
         } catch (\Exception $e) {
             p('===== 回复内容消息异常 =====');
             p(__METHOD__ . " [{$e->getCode()}] {$e->getMessage()}");
             \think\facade\Log::error(__METHOD__ . " [{$e->getCode()}] {$e->getMessage()}");
         }
+        p('===== 无需要回复内容 =====');
         return 'success';
     }
 
@@ -120,7 +136,7 @@ class Push extends Controller
      */
     protected function text()
     {
-        return $this->keys("wechat_keys#keys#{$this->receive['content']}");
+        return $this->keys("wechat_keys#keys#{$this->receive['content']}", false, $this->forceCustom);
     }
 
     /**
@@ -145,19 +161,19 @@ class Push extends Controller
                         return $this->keys("wechat_keys#keys#{$key}", false, true);
                     }
                 }
-                return $this->keys('wechat_keys#keys#subscribe', true);
+                return $this->keys('wechat_keys#keys#subscribe', true, $this->forceCustom);
             case 'unsubscribe':
                 return $this->updateFansinfo(false);
             case 'click':
-                return $this->keys("wechat_keys#keys#{$this->receive['eventkey']}");
+                return $this->keys("wechat_keys#keys#{$this->receive['eventkey']}", false, $this->forceCustom);
             case 'scancode_push':
             case 'scancode_waitmsg':
                 if (empty($this->receive['scancodeinfo'])) return false;
                 if (empty($this->receive['scancodeinfo']['scanresult'])) return false;
-                return $this->keys("wechat_keys#keys#{$this->receive['scancodeinfo']['scanresult']}");
+                return $this->keys("wechat_keys#keys#{$this->receive['scancodeinfo']['scanresult']}", false, $this->forceCustom);
             case 'scan':
                 if (empty($this->receive['eventkey'])) return false;
-                return $this->keys("wechat_keys#keys#{$this->receive['eventkey']}");
+                return $this->keys("wechat_keys#keys#{$this->receive['eventkey']}", false, $this->forceCustom);
             default:
                 return false;
         }
