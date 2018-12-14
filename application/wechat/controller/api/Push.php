@@ -296,6 +296,7 @@ class Push extends Controller
             case 'news': // 发送图文消息
                 $articles = [];
                 foreach ($data['articles'] as $article) array_push($articles, ['PicUrl' => $article['picurl'], 'Title' => $article['title'], 'Description' => $article['description'], 'Url' => $article['url']]);
+                p($articles);
                 return $this->wechat->reply([
                     'CreateTime'   => time(), 'MsgType' => 'news',
                     'Articles'     => $articles, 'ToUserName' => $this->openid,
