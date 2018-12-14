@@ -126,7 +126,7 @@ class Tools extends Controller
             'out_trade_no'     => time(),
             'total_fee'        => '1',
             'trade_type'       => 'NATIVE',
-            'notify_url'       => url('@wx-demo-notify', '', true, true),
+            'notify_url'       => url('@wechat/api.tools/notify', '', true, true),
             'spbill_create_ip' => request()->ip(),
         ];
         $order = $pay->create($options);
@@ -181,7 +181,7 @@ class Tools extends Controller
      */
     public function jsapiQrc()
     {
-        $url = url('@wx-demo-jsapi', '', true, true);
+        $url = url('@wechat/api.tools/jsapi', '', true, true);
         return $this->createQrc($url);
     }
 
