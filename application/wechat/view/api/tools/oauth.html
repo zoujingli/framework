@@ -33,28 +33,28 @@
 
 <fieldset style="width:80%;margin:0.7rem auto">
     <legend>用户标识</legend>
-    <div>
-        <h3 style="font-size:0.8rem;margin-bottom:0.6rem">OPENID</h3>
+    <div style="padding-top:0.3rem">
+        <h3 style="font-size:0.8rem;margin-bottom:0.3rem">OPENID</h3>
         <p style="font-size:0.7rem;margin-bottom:0.8rem">{$fans.fansinfo.openid}</p>
-        <h3 style="font-size:0.8rem;margin-bottom:0.6rem">UNIONID</h3>
+        <h3 style="font-size:0.8rem;margin-bottom:0.3rem">UNIONID</h3>
         <p style="font-size:0.7rem;margin-bottom:0.8rem">{$fans.fansinfo.unionid|default='未获取到'}</p>
     </div>
 </fieldset>
 
 <fieldset style="width:80%;margin:0.7rem auto">
     <legend>详细资料</legend>
-    <div>
-        <h3 style="font-size:0.8rem;margin-bottom:0.6rem">性别</h3>
+    <div style="padding-top:0.3rem">
+        <h3 style="font-size:0.8rem;margin-bottom:0.3rem">性别</h3>
         <p style="font-size:0.7rem;margin-bottom:0.8rem">{:[1=>'男',2=>'女'][$fans.fansinfo.sex]??'未知'}</p>
 
-        <h3 style="font-size:0.8rem;margin-bottom:0.6rem">系统语言</h3>
+        <h3 style="font-size:0.8rem;margin-bottom:0.3rem">系统语言</h3>
         <p style="font-size:0.7rem">{$fans.fansinfo.language}</p>
 
-        <h3 style="font-size:0.8rem;margin-bottom:0.6rem">所在区域</h3>
+        <h3 style="font-size:0.8rem;margin-bottom:0.3rem">所在区域</h3>
         <p style="font-size:0.7rem;margin-bottom:0.8rem">{$fans.fansinfo.country}{$fans.fansinfo.province}{$fans.fansinfo.city}</p>
 
         {if isset($fans.fansinfo.privilege.0)}
-        <h3 style="font-size:0.8rem;margin-bottom:0.6rem">设备网络</h3>
+        <h3 style="font-size:0.8rem;margin-bottom:0.3rem">设备网络</h3>
         <p style="font-size:0.7rem;margin-bottom:0.8rem">{$fans.fansinfo.privilege.0|default='未获取到网络信息'}</p>
         {/if}
     </div>
