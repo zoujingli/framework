@@ -93,11 +93,10 @@ class Push extends Controller
             // text, event, image, location
             if (method_exists($this, ($method = $this->receive['msgtype']))) {
                 if (is_string(($result = $this->$method()))) {
-                    p('===== 消息接口返回的内容 =====');
+                    p('===== 消息直接回复的内容 =====');
                     p($result);
                     return $result;
                 }
-                p($this->forceCustom ? '客服消息回复' : '直接XML回复');
             }
             return 'success';
         } catch (\Exception $e) {
@@ -256,7 +255,9 @@ class Push extends Controller
     private function sendMessage($type, $data, $isCustom = false)
     {
         if ($isCustom) {
+            p('===== 消息回复客服消息的内容 =====');
             $info = ['touser' => $this->openid, 'msgtype' => $type, "{$type}" => $data];
+            p($info);
             Wechat::WeChatCustom()->send($info);
         } else switch (strtolower($type)) {
             case 'text': // 发送文本消息

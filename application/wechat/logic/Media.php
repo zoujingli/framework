@@ -58,10 +58,7 @@ class Media
     public static function image($local_url)
     {
         $map = ['md5' => md5($local_url)];
-        if (($media_url = Db::name('WechatNewsImage')->where($map)->value('media_url'))) {
-            return $media_url;
-        }
-        p(self::getServerPath($local_url));
+        if (($mediaUrl = Db::name('WechatNewsImage')->where($map)->value('media_url'))) return $mediaUrl;
         $info = Wechat::WeChatMedia()->uploadImg(self::getServerPath($local_url));
         data_save('WechatNewsImage', ['local_url' => $local_url, 'media_url' => $info['url'], 'md5' => $map['md5']], 'md5');
         return $info['url'];
@@ -82,7 +79,6 @@ class Media
     {
         $where = ['md5' => md5($local_url), 'appid' => Wechat::getAppid()];
         if (($mediaId = Db::name('WechatNewsMedia')->where($where)->value('media_id'))) return $mediaId;
-        p(self::getServerPath($local_url));
         $result = Wechat::WeChatMedia()->addMaterial(self::getServerPath($local_url), $type, $videoInfo);
         data_save('WechatNewsMedia', [
             'local_url' => $local_url, 'md5' => $where['md5'], 'appid' => Wechat::getAppid(), 'type' => $type,
