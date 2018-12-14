@@ -11,7 +11,19 @@
     <div class="layui-tab-content">
         <div class="layui-tab-item padding-top-20">{include file='config/options_api'}</div>
         <div class="layui-tab-item padding-top-20">{include file='config/options_thr'}</div>
-        <div class="layui-tab-item padding-top-20 layui-clear">
+        <div class="layui-tab-item layui-clear">
+            <div class="layui-elem-quote">
+                <p class="font-s14 margin-bottom-10">
+                    <strong>支付测试配置</strong><br>
+                    JSAPI支付测试需要在微信商户平台配置支付目录：<a data-copy="{:url('@wechat/api.tools/','','',true)}">{:url('@wechat/api.tools/','','',true)}</a>
+                </p>
+                <p class="font-s14">
+                    <strong>普通接口强制绑定</strong><br>
+                    网页授权及JSSDK签名都需要在公众号平台配置授权域名：<a data-copy="{:request()->host()}">{:request()->host()}</a><br><br>
+                    <strong>第三方平台授权</strong><br>
+                    JSSDK签名测试需要在开放平台配置当前域名授权：<a data-copy="{:request()->host()}">{:request()->host()}</a>
+                </p>
+            </div>
             <div class="pull-left padding-right-15 notselect">
                 <img class="notselect" data-tips-image src="{:url('@wechat/api.tools/oauth_qrc')}" style="width:120px">
                 <p class="text-center" style="margin-left:-10px">网页授权</p>
