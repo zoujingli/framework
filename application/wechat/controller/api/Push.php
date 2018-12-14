@@ -101,8 +101,8 @@ class Push extends Controller
             return 'success';
         } catch (\Exception $e) {
             p('===== 回复内容消息异常 =====');
-            p(__METHOD__ . " [{$e->getCode()}] {$e->getMessage()}");
-            \think\facade\Log::error(__METHOD__ . " [{$e->getCode()}] {$e->getMessage()}");
+            p(__METHOD__ . ":{$e->getLine()} [{$e->getCode()}] {$e->getMessage()}");
+            \think\facade\Log::error(__METHOD__ . ":{$e->getLine()} [{$e->getCode()}] {$e->getMessage()}");
         }
         p('===== 无需要回复内容 =====');
         return 'success';
