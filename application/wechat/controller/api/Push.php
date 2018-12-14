@@ -103,25 +103,13 @@ class Push extends Controller
                 $this->receive = $this->toLower($this->wechat->getReceive());
             }
             $this->fromOpenid = $this->receive['tousername'];
-            p(PHP_EOL . '===== 消息接口获取的内容 =====');
-            p($this->receive);
             // text, event, image, location
             if (method_exists($this, ($method = $this->receive['msgtype']))) {
-                if (is_string(($result = $this->$method()))) {
-                    p('===== 消息直接回复的内容 =====');
-                    p($result);
-                    return $result;
-                }
-                p('==== 异常消息 ======');
-                p($result);
+                if (is_string(($result = $this->$method()))) return $result;
             }
-            return 'success';
         } catch (\Exception $e) {
-            p('===== 回复内容消息异常 =====');
-            p(__METHOD__ . ":{$e->getLine()} [{$e->getCode()}] {$e->getMessage()}");
             \think\facade\Log::error(__METHOD__ . ":{$e->getLine()} [{$e->getCode()}] {$e->getMessage()}");
         }
-        p('===== 无需要回复内容 =====');
         return 'success';
     }
 
@@ -272,16 +260,10 @@ class Push extends Controller
     private function sendMessage($type, $data, $isCustom = false)
     {
         if ($isCustom) {
-            p('===== 消息回复客服消息的内容 =====');
-            $info = ['touser' => $this->openid, 'msgtype' => $type, "{$type}" => $data];
-            p($info);
-            Wechat::WeChatCustom()->send($info);
+            Wechat::WeChatCustom()->send(['touser' => $this->openid, 'msgtype' => $type, "{$type}" => $data]);
         } else switch (strtolower($type)) {
             case 'text': // 发送文本消息
-                return $this->wechat->reply([
-                    'ToUserName' => $this->openid, 'FromUserName' => $this->fromOpenid,
-                    'CreateTime' => time(), 'Content' => $data['content'], 'MsgType' => 'text',
-                ], true, $this->encrypt);
+                return $this->wechat->reply(['CreateTime' => time(), 'MsgType' => 'text', 'ToUserName' => $this->openid, 'FromUserName' => $this->fromOpenid, 'Content' => $data['content']], true, $this->encrypt);
             case 'image': // 发送图片消息
                 return $this->buildMessage($type, ['MediaId' => $data['media_id']]);
             case 'voice': // 发送语言消息
@@ -295,20 +277,8 @@ class Push extends Controller
                 return $this->buildMessage('transfer_customer_service');
             case 'news': // 发送图文消息
                 $articles = [];
-                foreach ($data['articles'] as $article) array_push($articles, [
-                    'PicUrl'      => $article['picurl'], 'Title' => $article['title'],
-                    'Description' => $article['description'], 'Url' => $article['url'],
-                ]);
-                p([
-                    'CreateTime'   => time(), 'MsgType' => 'news',
-                    'Articles'     => $articles, 'ToUserName' => $this->openid,
-                    'FromUserName' => $this->fromOpenid, 'ArticleCount' => count($articles),
-                ]);
-                return $this->wechat->reply([
-                    'CreateTime'   => time(), 'MsgType' => 'news',
-                    'Articles'     => $articles, 'ToUserName' => $this->openid,
-                    'FromUserName' => $this->fromOpenid, 'ArticleCount' => count($articles),
-                ], true, $this->encrypt);
+                foreach ($data['articles'] as $article) array_push($articles, ['PicUrl' => $article['picurl'], 'Title' => $article['title'], 'Description' => $article['description'], 'Url' => $article['url']]);
+                return $this->wechat->reply(['CreateTime' => time(), 'MsgType' => 'news', 'ToUserName' => $this->openid, 'FromUserName' => $this->fromOpenid, 'Articles' => $articles, 'ArticleCount' => count($articles)], true, $this->encrypt);
             default:
                 return 'success';
         }
@@ -323,10 +293,7 @@ class Push extends Controller
      */
     private function buildMessage($type, $data = [])
     {
-        $reply = [
-            'CreateTime' => time(), 'MsgType' => strtolower($type),
-            'ToUserName' => $this->openid, 'FromUserName' => $this->fromOpenid,
-        ];
+        $reply = ['CreateTime' => time(), 'MsgType' => strtolower($type), 'ToUserName' => $this->openid, 'FromUserName' => $this->fromOpenid];
         if (!empty($data)) $reply[ucfirst(strtolower($type))] = $data;
         return $this->wechat->reply($reply, true, $this->encrypt);
     }
