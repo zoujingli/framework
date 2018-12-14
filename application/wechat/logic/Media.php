@@ -16,6 +16,7 @@ namespace app\wechat\logic;
 
 use library\File;
 use think\Db;
+use WeChat\Contracts\MyCurlFile;
 
 /**
  * 微信素材管理
@@ -92,10 +93,11 @@ class Media
      * 文件位置处理
      * @param string $local
      * @return string
+     * @throws \WeChat\Exceptions\LocalCacheException
      */
     protected static function getServerPath($local)
     {
         if (file_exists($local)) return $local;
-        return File::down($local)['file'];
+        return new MyCurlFile(File::down($local)['file']);
     }
 }
