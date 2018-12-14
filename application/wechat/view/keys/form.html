@@ -97,13 +97,6 @@
                         </div>
                     </div>
 
-                    <div class="layui-form-item" data-keys-type='customservice'>
-                        <label class="layui-form-label">提示内容</label>
-                        <div class="layui-input-block">
-                            <textarea name="content" maxlength="10000" class="layui-textarea">{$vo.content|raw|default='说点什么吧'}</textarea>
-                        </div>
-                    </div>
-
                     <div class="layui-form-item" data-keys-type='news'>
                         <label class="layui-form-label label-required">选取图文</label>
                         <div class="layui-input-block">
@@ -275,6 +268,7 @@
         // 默认类型事件
         $body.off('click', 'input[name=type]').on('click', 'input[name=type]', function () {
             let value = $(this).val(), $form = $(this).parents('form');
+            if (value === 'customservice') value = 'text';
             let $current = $form.find('[data-keys-type="' + value + '"]').removeClass('layui-hide');
             $form.find('[data-keys-type]').not($current).addClass('layui-hide');
             switch (value) {
