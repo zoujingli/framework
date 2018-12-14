@@ -97,6 +97,7 @@ class Push extends Controller
                     p($result);
                     return $result;
                 }
+                p($this->forceCustom ? '客服消息回复' : '直接XML回复');
             }
             return 'success';
         } catch (\Exception $e) {
