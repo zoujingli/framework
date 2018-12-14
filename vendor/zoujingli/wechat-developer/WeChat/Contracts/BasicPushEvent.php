@@ -116,16 +116,17 @@ class BasicPushEvent
     }
 
     /**
-     * 回复消息
+     * 生成XML内容并回复消息
      * @param array $data 消息内容
-     * @param bool $return 是否返回XML内容
+     * @param boolean $return 是否返回XML内容
+     * @param boolean $isEncrypt 是否加密内容
      * @return string
      * @throws InvalidDecryptException
      */
-    public function reply(array $data = [], $return = false)
+    public function reply(array $data = [], $return = false, $isEncrypt = false)
     {
         $xml = Tools::arr2xml(empty($data) ? $this->message : $data);
-        if ($this->encryptType == 'aes') {
+        if ($this->encryptType == 'aes' || $isEncrypt) {
             if (!class_exists('Prpcrypt', false)) {
                 require __DIR__ . '/Prpcrypt.php';
             }
