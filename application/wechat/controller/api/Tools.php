@@ -101,7 +101,7 @@ class Tools extends Controller
      */
     public function scanOneQrc()
     {
-        $pay = \We::WePayOrder();
+        $pay = Wechat::WePayOrder();
         $result = $pay->qrcParams('8888888');
         return $this->createQrc($result);
     }
@@ -114,7 +114,7 @@ class Tools extends Controller
      */
     public function scanOneNotify()
     {
-        $pay = \We::WePayOrder();
+        $pay = Wechat::WePayOrder();
         $notify = $pay->getNotify();
         p('======= 来自扫码支付1的数据 ======');
         p($notify);
@@ -159,7 +159,7 @@ class Tools extends Controller
      */
     public function scanQrc()
     {
-        $pay = \We::WePayOrder();
+        $pay = Wechat::WePayOrder();
         $result = $pay->create([
             'body'             => '测试商品',
             'out_trade_no'     => time(),
@@ -195,7 +195,7 @@ class Tools extends Controller
      */
     public function jsapi()
     {
-        $pay = \We::WePayOrder();
+        $pay = Wechat::WePayOrder();
         $openid = Wechat::getWebOauthInfo(request()->url(true), 0)['openid'];
         $options = [
             'body'             => '测试商品',
@@ -246,7 +246,7 @@ class Tools extends Controller
      */
     public function notify()
     {
-        $wechat = \We::WePayOrder();
+        $wechat = Wechat::WePayOrder();
         p($wechat->getNotify());
         return 'SUCCESS';
     }

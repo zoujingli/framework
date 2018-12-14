@@ -126,7 +126,7 @@ class Wechat extends \We
      */
     public static function instance($name, $type = 'WeChat', $config = [])
     {
-        if (!in_array($type, ['WeChat', 'WeMini'])) $type = self::$type;
+        if (!in_array($type, ['WeChat', 'WeMini', 'WePay', 'AliPay'])) $type = self::$type;
         if (self::getType() === 'api' || in_array($type, ['WePay', 'AliPay'])) {
             $class = "\\{$type}\\" . ucfirst(strtolower($name));
             if (class_exists($class)) return new $class(empty($config) ? self::config() : $config);
