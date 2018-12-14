@@ -31,27 +31,34 @@
     <h1>{$fans.fansinfo.nickname}</h1>
 </div>
 
-<h2>用户标识</h2>
-<h3>OPENID</h3>
-<p>{$fans.fansinfo.openid}</p>
+<fieldset>
+    <legend>用户标识</legend>
+    <div>
+        <h3>OPENID</h3>
+        <p>{$fans.fansinfo.openid}</p>
+        <h3>UNIONID</h3>
+        <p>{$fans.fansinfo.unionid|default='未获取到'}</p>
+    </div>
+</fieldset>
 
-<h3>UNIONID</h3>
-<p>{$fans.fansinfo.unionid|default='未获取到'}</p>
+<fieldset>
+    <legend>详细资料</legend>
+    <div>
+        <h3>性别</h3>
+        <p>{:[1=>'男',2=>'女'][$fans.fansinfo.sex]??'未知'}</p>
 
-<h2>详细资料</h2>
-<h3>姓名</h3>
-<p>{:[1=>'男',2=>'女'][$fans.fansinfo.sex]??'未知'}</p>
+        <h3>系统语言</h3>
+        <p>{$fans.fansinfo.language}</p>
 
-<h3>系统语言</h3>
-<p>{$fans.fansinfo.language}</p>
+        <h3>所在区域</h3>
+        <p>{$fans.fansinfo.country}{$fans.fansinfo.province}{$fans.fansinfo.city}</p>
 
-<h3>所在区域</h3>
-<p>{$fans.fansinfo.country}{$fans.fansinfo.province}{$fans.fansinfo.city}</p>
-
-{if isset($fans.fansinfo.privilege.0)}
-<h3>设备网络</h3>
-<p>{$fans.fansinfo.privilege.0|default='未获取到网络信息'}</p>
-{/if}
+        {if isset($fans.fansinfo.privilege.0)}
+        <h3>设备网络</h3>
+        <p>{$fans.fansinfo.privilege.0|default='未获取到网络信息'}</p>
+        {/if}
+    </div>
+</fieldset>
 
 <!--{/if}-->
 </body>
