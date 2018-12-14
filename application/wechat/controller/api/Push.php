@@ -82,7 +82,7 @@ class Push extends Controller
                 if (empty($this->appid) || empty($this->openid) || empty($this->receive)) {
                     throw new \think\Exception('微信API实例缺失必要参数[appid,openid,receive]');
                 }
-                // $this->forceCustom = true;
+                $this->forceCustom = true;
             } else {
                 $this->appid = Wechat::getAppid();
                 $this->openid = $this->wechat->getOpenid();
@@ -208,7 +208,7 @@ class Push extends Controller
             case 'text':
                 return $this->sendMessage('text', ['content' => $data['content']], $isCustom);
             case 'customservice':
-                return $this->sendMessage('customservice', ['content' => $data['content']], $isCustom);
+                return $this->sendMessage('customservice', ['content' => $data['content']], false);
             case 'voice':
                 if (empty($data['voice_url']) || !($media_id = Media::upload($data['voice_url'], 'voice'))) return false;
                 return $this->sendMessage('voice', ['media_id' => $media_id], $isCustom);
