@@ -18,9 +18,30 @@ namespace app\wechat\logic;
  * 微信处理管理
  * Class Wechat
  * @package app\wechat\logic
+ *
+ * ----- WeOpen for Open -----
+ * @method \WeOpen\Login login() static 第三方微信登录
+ * @method \WeOpen\Service service() static 第三方服务
+ *
+ * ----- WeMini for Open -----
+ * @method \WeMini\Code WeMiniCode() static 小程序代码管理
+ * @method \WeMini\User WeMiniUser() static 小程序帐号管理
+ * @method \WeMini\Basic WeMiniBasic() static 小程序基础信息
+ * @method \WeMini\Domain WeMiniDomain() static 小程序域名管理
+ * @method \WeMini\Tester WeMiniTester() static 小程序成员管理
+ * @method \WeMini\Account WeMiniAccount() static 小程序账号管理
+ *
+ * ----- ThinkService -----
+ * @method mixed wechat() static 第三方微信工具
  */
 class Wechat extends \We
 {
+
+    /**
+     * 接口类型模式
+     * @var string
+     */
+    private static $type = 'WeChat';
 
     /**
      * 获取微信支付配置
@@ -32,10 +53,12 @@ class Wechat extends \We
     public static function config($options = null)
     {
         if (empty($options)) $options = [
+            // 微信功能必需参数
             'token'          => sysconf('wechat_token'),
             'appid'          => sysconf('wechat_appid'),
             'appsecret'      => sysconf('wechat_appsecret'),
             'encodingaeskey' => sysconf('wechat_encodingaeskey'),
+            // 微信支付必要参数
             'mch_id'         => sysconf('wechat_mch_id'),
             'mch_key'        => sysconf('wechat_mch_key'),
             'cachepath'      => env('runtime_path') . 'wechat' . DIRECTORY_SEPARATOR,
@@ -70,24 +93,122 @@ class Wechat extends \We
      * @return mixed
      * @throws \think\Exception
      * @throws \think\exception\PDOException
-     * @throws \WeChat\Exceptions\InvalidInstanceException
      */
     public static function __callStatic($name, $arguments)
     {
-        if (substr($name, 0, 6) === 'WeChat') {
-            $class = 'WeChat\\' . substr($name, 6);
-        } elseif (substr($name, 0, 6) === 'WeMini') {
-            $class = 'WeMini\\' . substr($name, 6);
-        } elseif (substr($name, 0, 5) === 'WePay') {
-            $class = 'WePay\\' . substr($name, 5);
-        } elseif (substr($name, 0, 6) === 'AliPay') {
-            $class = 'AliPay\\' . substr($name, 6);
-        }
-        if (!empty($class) && class_exists($class)) {
+        $config = [];
+        if (is_array($arguments) && count($arguments) > 0) {
             $option = array_shift($arguments);
-            return new $class(is_array($option) ? $option : self::config());
+            $config = is_array($option) ? $option : self::config();
         }
-        throw new \WeChat\Exceptions\InvalidInstanceException("class {$name} not found");
+        if (in_array($name, ['wechat'])) {
+            return self::instance(trim($name, '_'), 'WeChat', $config);
+        } elseif (substr($name, 0, 6) === 'WeChat') {
+            return self::instance(substr($name, 6), 'WeChat', $config);
+        } elseif (substr($name, 0, 6) === 'WeMini') {
+            return self::instance(substr($name, 6), 'WeMini', $config);
+        } elseif (substr($name, 0, 5) === 'WePay') {
+            return self::instance(substr($name, 5), 'WePay', $config);
+        } elseif (substr($name, 0, 6) === 'AliPay') {
+            return self::instance(substr($name, 6), 'AliPay', $config);
+        }
+        throw new \think\Exception("class {$name} not found");
+    }
+
+    /**
+     * 接口对象实例化
+     * @param string $name 接口名称
+     * @param string $type 接口类型
+     * @param array $config
+     * @return mixed
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     */
+    public static function instance($name, $type = 'WeChat', $config = [])
+    {
+        if (!in_array($type, ['WeChat', 'WeMini'])) $type = self::$type;
+        if (self::getType() === 'api' || in_array($type, ['WePay', 'AliPay'])) {
+            $class = "\\{$type}\\" . ucfirst(strtolower($name));
+            if (class_exists($class)) return new $class(empty($config) ? self::config() : $config);
+            throw new \think\Exception("Class '{$class}' not found");
+        } else {
+            list($appid, $appkey) = [sysconf('wechat_thr_appid'), sysconf('wechat_thr_appkey')];
+            $token = strtolower("{$name}-{$appid}-{$appkey}-{$type}");
+            $location = config('wechat.service_url') . "/wechat/api.client/soap/{$token}.html";
+            return new \SoapClient(null, ['uri' => strtolower($name), 'location' => $location, 'trace' => true]);
+        }
+    }
+
+    /**
+     * 获取微信网页JSSDK
+     * @param null|string $url JS签名地址
+     * @return array
+     * @throws \WeChat\Exceptions\InvalidResponseException
+     * @throws \WeChat\Exceptions\LocalCacheException
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     */
+    public static function getWebJssdkSign($url = null)
+    {
+        $url = is_null($url) ? request()->url(true) : $url;
+        if (self::getType() === 'api') {
+            return self::WeChatScript()->getJsSign($url);
+        } else {
+            return self::wechat()->jsSign($url);
+        }
+    }
+
+    /**
+     * 初始化进入授权
+     * @param string $url 授权页面URL地址
+     * @param integer $isfull 授权公众号模式
+     * @param boolean $isRedirect 是否进行跳转
+     * @return array
+     * @throws \WeChat\Exceptions\InvalidResponseException
+     * @throws \WeChat\Exceptions\LocalCacheException
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     */
+    public static function applyWebOauth($url, $isfull = 0, $isRedirect = true)
+    {
+        $appid = self::getAppid();
+        list($openid, $fansinfo) = [session("{$appid}_openid"), session("{$appid}_fansinfo")];
+        if ((empty($isfull) && !empty($openid)) || (!empty($isfull) && !empty($fansinfo))) {
+            empty($fansinfo) || Fans::set($fansinfo);
+            return ['openid' => $openid, 'fansinfo' => $fansinfo];
+        }
+        if (self::getType() === 'api') {
+            $wechat = self::WeChatOauth();
+            if (request()->get('state') !== $appid) {
+                $snsapi = empty($isfull) ? 'snsapi_base' : 'snsapi_userinfo';
+                $param = (strpos($url, '?') !== false ? '&' : '?') . 'rcode=' . encode($url);
+                $OauthUrl = $wechat->getOauthRedirect($url . $param, $appid, $snsapi);
+                if ($isRedirect) redirect($OauthUrl, [], 301)->send();
+                exit("window.location.href='{$OauthUrl}'");
+            }
+            if (($token = $wechat->getOauthAccessToken()) && isset($token['openid'])) {
+                session("{$appid}_openid", $openid = $token['openid']);
+                if (empty($isfull) && request()->get('rcode')) {
+                    redirect(decode(request()->get('rcode')), [], 301)->send();
+                }
+                session("{$appid}_fansinfo", $fansinfo = $wechat->getUserInfo($token['access_token'], $openid));
+                empty($fansinfo) || Fans::set($fansinfo);
+            }
+            redirect(decode(request()->get('rcode')), [], 301)->send();
+        } else {
+            $service = self::wechat();
+            $result = $service->oauth(session_id(), $url, $isfull);
+            session("{$appid}_openid", $openid = $result['openid']);
+            session("{$appid}_fansinfo", $fansinfo = $result['fans']);
+            if ((empty($isfull) && !empty($openid)) || (!empty($isfull) && !empty($fansinfo))) {
+                empty($fansinfo) || Fans::set($fansinfo);
+                return ['openid' => $openid, 'fansinfo' => $fansinfo];
+            }
+            if ($isRedirect && !empty($result['url'])) {
+                redirect($result['url'], [], 301)->send();
+            }
+            exit("window.location.href='{$result['url']}'");
+        }
     }
 
     /**
@@ -98,7 +219,24 @@ class Wechat extends \We
      */
     public static function getAppid()
     {
-        return sysconf('wechat_appid');
+        if (self::getType() === 'api') {
+            return sysconf('wechat_appid');
+        } else {
+            return sysconf('wechat_thr_appid');
+        }
+    }
+
+    /**
+     * 获取接口授权模式
+     * @return string
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     */
+    public static function getType()
+    {
+        $type = strtolower(sysconf('wechat_type'));
+        if (in_array($type, ['api', 'thr'])) return $type;
+        throw new \think\Exception('请在后台配置微信对接授权模式');
     }
 
 }

@@ -1,73 +1,48 @@
 {extend name="admin@main"}
 
 {block name="content"}
-<form onsubmit="return false;" data-auto="true" method="post" class='layui-form layui-card' autocomplete="off">
 
-    <div class="layui-card-body">
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">
-                Token<br><span class="nowrap color-desc">接口认证令牌</span>
-            </label>
-            <div class="layui-input-block">
-                <input name="wechat_token" required placeholder="请输入消息推送对接认证Token（必填）" value="{:sysconf('wechat_token')}" class="layui-input">
-                <p class="help-block">公众号平台与系统对接认证Token，请优先填写此参数并保存，然后再在微信公众号平台操作对接。</p>
+<div class="layui-tab layui-tab-card">
+    <ul class="layui-tab-title">
+        <li data-wechat-type="api">普通接口强制绑定</li>
+        <li data-wechat-type="thr">第三方授权模式</li>
+        <li data-wechat-type="thr">接口功能测试</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item padding-top-20">{include file='config/options_api'}</div>
+        <div class="layui-tab-item padding-top-20">{include file='config/options_thr'}</div>
+        <div class="layui-tab-item padding-top-20 layui-clear">
+            <div class="pull-left padding-right-15 notselect">
+                <img class="notselect" data-tips-image src="{:url('@wechat/api.tools/oauth_qrc')}" style="width:120px">
+                <p class="text-center" style="margin-left:-10px">网页授权</p>
             </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">
-                AppId<br><span class="nowrap color-desc">公众号APPID</span>
-            </label>
-            <div class="layui-input-block">
-                <input name="wechat_appid" placeholder="请输入以wx开头的18位公众号APPID（必填）" pattern="^wx[0-9a-z]{16}$" maxlength="18" required="required" value="{:sysconf('wechat_appid')}" class="layui-input">
-                <p class="help-block">公众号APPID是所有接口必要参数，可以在公众号平台 [ 开发 > 基本配置 ] 页面获取。</p>
+            <div class="pull-left padding-left-0 padding-right-15">
+                <img class="notselect" data-tips-image src="{:url('@wechat/api.tools/jssdk_qrc')}" style="width:120px;">
+                <p class="text-center">JSSDK签名</p>
             </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">
-                AppSecret<br><span class="nowrap color-desc">公众号Secret</span>
-            </label>
-            <div class="layui-input-block">
-                <input name="wechat_appsecret" required placeholder="请输入32位公众号AppSecret（必填）" value="{:sysconf('wechat_appsecret')}" maxlength="32" pattern="^[0-9a-z]{32}$" class="layui-input">
-                <p class="help-block">公众号应用密钥是所有接口必要参数，可以在公众号平台 [ 开发 > 基本配置 ] 页面授权后获取。</p>
+            <div class="pull-left padding-left-0 padding-right-15">
+                <img class="notselect" data-tips-image src="{:url('@wechat/api.tools/jsapiqrc')}" style="width:120px;">
+                <p class="text-center">JSAPI支付</p>
             </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">
-                EnAesKey<br><span class="nowrap color-desc">消息加密密钥</span>
-            </label>
-            <div class="layui-input-block">
-                <input name="wechat_encodingaeskey" placeholder="请输入43位消息公众号加密密钥（可选）" value="{:sysconf('wechat_encodingaeskey')}" maxlength="43" pattern="^.{43}$" class="layui-input">
-                <p class="help-block">若开启了消息加密时必需填写，消息加密密钥必需填写并保持与公众号平台一致。</p>
+            <div class="pull-left padding-left-0 padding-right-15">
+                <img class="notselect" data-tips-image src="{:url('@wechat/api.tools/scanoneqrc')}" style="width:120px;">
+                <p class="text-center">扫码支付①</p>
             </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label margin-top-15">
-                PushApiUrl<br><span class="nowrap color-desc">消息推送接收</span>
-            </label>
-            <div class="layui-input-block">
-                <div class="relative">
-                    <input name="wechat_push_url" value="服务器授权IP：{$geoip}" readonly class="layui-input layui-bg-gray border-0">
-                    <a data-copy="{$geoip}" class="absolute layui-btn layui-bg-gray" style="top:0;right:0;background:none!important"><i class="fa fa-copy"></i></a>
-                </div>
-                <div class="relative margin-top-5">
-                    <input name="wechat_push_url" value="消息推送地址：{:url('@wechat/api.push','',false,true)}" readonly class="layui-input layui-bg-gray border-0">
-                    <a data-copy="{:url('@wechat/api.push','',false,true)}" class="absolute layui-btn layui-bg-gray" style="top:0;right:0;background:none!important"><i class="fa fa-copy"></i></a>
-                </div>
-                <p class="help-block">公众号服务平台消息推送接口及服务器授权IP地址，需在公众号接口开发处配置。</p>
+            <div class="pull-left padding-left-0">
+                <img class="notselect" data-tips-image src="{:url('@wechat/api.tools/scanqrc')}" style="width:120px;">
+                <p class="text-center">扫码支付②</p>
             </div>
-        </div>
-
-        <div class="hr-line-dashed"></div>
-
-        <div class="layui-form-item text-center">
-            <button class="layui-btn" type="submit">保存配置</button>
         </div>
     </div>
+</div>
 
-</form>
+{/block}
+
+{block name='script'}
+<script>
+    $(function () {
+        let type = '{:sysconf("wechat_type")}' || 'api';
+        $('[data-wechat-type=' + type + ']').trigger('click');
+    });
+</script>
 {/block}

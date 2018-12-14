@@ -14,6 +14,7 @@
 
 namespace app\wechat\controller;
 
+use app\wechat\logic\Wechat;
 use library\Controller;
 use library\File;
 
@@ -33,15 +34,28 @@ class Config extends Controller
     public function options()
     {
         if ($this->request->isGet()) {
-            if (!($this->geoip = cache('mygeoip'))) {
-                $this->geoip = http_get('https://framework.thinkadmin.top/wechat/api.push/geoip');
-                cache('mygeoip', $this->geoip, 360);
-            }
             $this->title = '公众号授权绑定';
+            if (!($this->geoip = cache('mygeoip'))) {
+                cache('mygeoip', $this->geoip = http_get('https://framework.thinkadmin.top/wechat/api.push/geoip'), 360);
+            }
+            $code = encode(url('@admin', '', true, true) . '#' . $this->request->url());
+            $this->authurl = config('wechat.service_url') . "/wechat/api.push/auth/{$code}.html";
+            if ($this->request->has('appid', 'get', true) && $this->request->has('appkey', 'get', true)) {
+                sysconf('wechat_type', 'thr');
+                sysconf('wechat_thr_appid', input('appid'));
+                sysconf('wechat_thr_appkey', input('appkey'));
+                sysconf('wechat_thr_notify', $thrNotify = url('@wechat/api.push', '', true, true));
+                Wechat::wechat()->setApiNotifyUri($thrNotify);
+            }
+            try {
+                $this->wechat = Wechat::wechat()->getConfig();
+            } catch (\Exception $e) {
+                $this->wechat = [];
+            }
             return $this->fetch();
         }
         foreach ($this->request->post() as $k => $v) sysconf($k, $v);
-        $this->success('公众号参数获取成功！');
+        $this->success('公众号参数获取成功！', url('@admin') . '#' . url('wechat/config/options'));
     }
 
     /**

@@ -592,12 +592,16 @@ $(function () {
     });
     $.previewImage = function (src, area) {
         let img = new Image(), index = $.msg.loading();
-        img.style.height = 'auto', img.style.width = area || '480px';
-        img.onerror = function () {
+        img.style.display = 'none', img.style.height = 'auto', img.style.width = area || '480px';
+        document.body.appendChild(img), img.onerror = function () {
             $.msg.close(index);
-        };
-        img.onload = function () {
-            layer.open({type: 1, area: area || '480px', title: false, closeBtn: 1, skin: 'layui-layer-nobg', shadeClose: true, success: img.onerror, content: img.outerHTML});
+        }, img.onload = function () {
+            layer.open({
+                type: 1, shadeClose: true, success: img.onerror, content: $(img), title: false,
+                area: area || '480px', closeBtn: 1, skin: 'layui-layer-nobg', end: function () {
+                    document.body.removeChild(img);
+                }
+            });
         };
         img.src = src;
     };

@@ -62,3 +62,15 @@ if (!function_exists('sysdata')) {
         return data_save('SystemData', ['name' => $name, 'value' => emoji_encode(json_encode($value, 256))], 'name');
     }
 }
+
+if (!function_exists('local_image')) {
+    /**
+     * 下载远程文件到本地
+     * @param string $url 远程图片地址
+     * @return string
+     */
+    function local_image($url)
+    {
+        return \library\File::down($url)['url'];
+    }
+}
