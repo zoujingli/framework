@@ -263,7 +263,13 @@ class Push extends Controller
             Wechat::WeChatCustom()->send($info);
         } else switch (strtolower($type)) {
             case 'text': // 发送文本消息
-                return $this->wechat->text($data['content'])->reply([], true);
+                return $this->wechat->reply([
+                    'MsgType'      => 'text',
+                    'CreateTime'   => time(),
+                    'Content'      => $data['content'],
+                    'ToUserName'   => $this->openid,
+                    'FromUserName' => $this->appid,
+                ], true);
             case 'image': // 发送图片消息
                 return $this->wechat->image($data['media_id'])->reply([], true);
             case 'voice': // 发送语言消息
