@@ -93,9 +93,9 @@ class Media
      * @return string
      * @throws \WeChat\Exceptions\LocalCacheException
      */
-    protected static function getServerPath($local)
+    private static function getServerPath($local)
     {
-        if (file_exists($local)) return $local;
+        if (file_exists($local)) return new MyCurlFile($local);
         return new MyCurlFile(File::down($local)['file']);
     }
 }
