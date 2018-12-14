@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-
-command="php `pwd`/think queue:listen"
-
-if [ `ps aux|grep -v grep|grep "$command"|wc -l` = 0 ]
-then
-echo 需要启动命令 $command
-$command &
+command="php $(cd `dirname $0`;pwd)/think queue:listen"
+ps aux|grep -v grep|grep "$command" > /dev/null
+if [ $? != 0 ]; then
+echo "没有发现进程，正在启动进程..."
+$command > /dev/null 2>&1 &
+ps aux|grep -v grep|grep "$command" > /dev/null
+if [ $? = 0 ]; then echo "进程启动成功！";else echo "进程启动失败！";fi;
 else
-echo 不需要启动命令 $command
+echo "进程已经存在，不需要重新启动进程！"
 fi
