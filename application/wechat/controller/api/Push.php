@@ -97,6 +97,8 @@ class Push extends Controller
                     p($result);
                     return $result;
                 }
+                p('==== 异常消息 ======');
+                p($result);
             }
             return 'success';
         } catch (\Exception $e) {
