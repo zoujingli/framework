@@ -1,0 +1,87 @@
+{extend name='admin@main'}
+
+{block name="button"}
+<!--{if auth("store/card/add")}-->
+<button data-modal='{:url("add")}' data-title="添加卡券" class='layui-btn layui-btn-sm layui-btn-primary'>添加卡券</button>
+<!--{/if}-->
+<!--{if auth("store/card/del")}-->
+<button data-action='{:url("del")}' data-rule="id#{key}" class='layui-btn layui-btn-sm layui-btn-primary'>删除卡券</button>
+<!--{/if}-->
+{/block}
+
+{block name="content"}
+<table class="layui-table" lay-skin="line">
+    <caption class="margin-bottom-10 text-left">{include file='goods/index_search'}</caption>
+    <!--{notempty name='list'}-->
+    <thead>
+    <tr>
+        <th class='list-table-check-td think-checkbox'>
+            <input data-auto-none="" data-check-target='.list-check-box' type='checkbox'>
+        </th>
+        <th class='list-table-sort-td'>
+            <button type="button" data-reload class="layui-btn layui-btn-xs">刷 新</button>
+        </th>
+        <th class='text-left nowrap'>卡券名称</th>
+        <th class='text-left nowrap' colspan="2">卡券信息</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <!--{/notempty}-->
+    <tbody>
+    <!--{foreach $list as $key=>$vo}-->
+    <tr>
+        <td class='list-table-check-td think-checkbox'><input class="list-check-box" value='{$vo.id}' type='checkbox'></td>
+        <td class='list-table-sort-td'><input data-action-blur="{:request()->url()}" data-value="id#{$vo.id};action#sort;sort#{value}" data-loading="false" value="{$vo.sort}" class="list-sort-input"></td>
+        <td class='text-left nowrap'>
+            卡券名称：<span class="layui-badge layui-bg-gray">{$vo.name|default=''}</span><br>
+            销售价格：<span class="layui-badge layui-bg-gray">{$vo.price+0}</span>
+        </td>
+        <td class='text-left nowrap'>
+            库存统计：<span class="layui-badge layui-bg-gray">{$vo.num_stock}</span><br>
+            销售统计：<span class="layui-badge layui-bg-gray">{$vo.num_sales}</span>
+        </td>
+        <td class='text-left nowrap'>
+            失效时间：<span class="layui-badge layui-bg-gray">{$vo.effective_date}</span><br>
+            有效天数：<span class="layui-badge layui-bg-gray">{$vo.effective_days}</span>
+        </td>
+        <td class='text-left nowrap'>
+            {eq name='vo.status' value='0'}
+            <span class="layui-badge">已下架</span>
+            {else}
+            <span class="layui-badge layui-bg-green">销售中</span>
+            {/eq}
+        </td>
+        <td class='text-left nowrap'>
+
+            {if auth("store/card/edit")}
+            <span class="text-explode">|</span>
+            <a data-modal='{:url("edit")}?id={$vo.id}'>编辑</a>
+            {/if}
+
+            {if $vo.status eq 1 and auth("store/card/forbid")}
+            <span class="text-explode">|</span>
+            <a data-action="{:url('forbid')}" data-value="id#{$vo.id};status#0">下架</a>
+            {elseif auth("store/card/resume")}
+            <span class="text-explode">|</span>
+            <a data-action="{:url('resume')}" data-value="id#{$vo.id};status#1">上架</a>
+            {/if}
+
+            {if auth("store/card/del")}
+            <span class="text-explode">|</span>
+            <a data-confirm="确定要删除数据吗?" data-action="{:url('del')}" data-value="id#{$vo.id}">删除</a>
+            {/if}
+
+        </td>
+    </tr>
+    <!--{/foreach}-->
+    </tbody>
+</table>
+
+<!--{empty name='list'}-->
+<blockquote class="layui-elem-quote border-0 text-center">没 有 记 录 哦！</blockquote>
+<!--{else}-->
+{$pagehtml|raw|default=''}
+<!--{/empty}-->
+
+{/block}

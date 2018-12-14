@@ -115,6 +115,37 @@ class Query extends Logic
     }
 
     /**
+     * 实例化分页管理器
+     * @param boolean $isPage 是否启用分页
+     * @param boolean $isDisplay 是否渲染模板
+     * @param boolean $total 集合分页记录数
+     * @param integer $limit 集合每页记录数
+     * @return mixed
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
+     */
+    public function page($isPage = true, $isDisplay = true, $total = false, $limit = 0)
+    {
+        return (new Page($this->query, $isPage, $isDisplay, $total, $limit))->init($this->controller);
+    }
+
+
+    /**
+     * 列表指定排序
+     * @param  string|array $field 排序字段
+     * @param  string $order 排序方式
+     * @return $this
+     */
+    public function order($field, $order = null)
+    {
+        $this->query->order($field, $order);
+        return $this;
+    }
+
+    /**
      * 设置DateTime区间查询
      * @param string|array $fields 查询字段
      * @param string $split 输入分隔符

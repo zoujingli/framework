@@ -450,12 +450,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/zoujingli/ThinkLibrary.git",
-            "reference": "fedacba1679666a7b07bf62ebca41bb61d4e8ac6"
+            "reference": "c11482f89a70523503383eaea2d19e0313a429c1"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/fedacba1679666a7b07bf62ebca41bb61d4e8ac6",
-            "reference": "fedacba1679666a7b07bf62ebca41bb61d4e8ac6",
+            "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/c11482f89a70523503383eaea2d19e0313a429c1",
+            "reference": "c11482f89a70523503383eaea2d19e0313a429c1",
             "shasum": "",
             "mirrors": [
                 {
@@ -473,7 +473,7 @@
             "php": ">=5.4",
             "qiniu/php-sdk": "^7.2"
         },
-        "time": "2018-12-11T06:02:27+00:00",
+        "time": "2018-12-14T11:02:58+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -504,17 +504,17 @@
     },
     {
         "name": "zoujingli/wechat-developer",
-        "version": "v1.2.8",
-        "version_normalized": "1.2.8.0",
+        "version": "v1.2.9",
+        "version_normalized": "1.2.9.0",
         "source": {
             "type": "git",
             "url": "https://github.com/zoujingli/WeChatDeveloper.git",
-            "reference": "365b012ec6d12465465abe62581bcbf6f0d65b63"
+            "reference": "9587b125b844cef0715e480985ec6b56128d8c3c"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zoujingli/WeChatDeveloper/zipball/365b012ec6d12465465abe62581bcbf6f0d65b63",
-            "reference": "365b012ec6d12465465abe62581bcbf6f0d65b63",
+            "url": "https://api.github.com/repos/zoujingli/WeChatDeveloper/zipball/9587b125b844cef0715e480985ec6b56128d8c3c",
+            "reference": "9587b125b844cef0715e480985ec6b56128d8c3c",
             "shasum": "",
             "mirrors": [
                 {
@@ -529,7 +529,7 @@
             "ext-openssl": "*",
             "php": ">=5.4"
         },
-        "time": "2018-12-12T06:52:27+00:00",
+        "time": "2018-12-14T08:36:16+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

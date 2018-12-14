@@ -134,7 +134,7 @@ class Controller extends \stdClass
      */
     protected function fetch($tpl = '', $vars = [])
     {
-        throw new HttpResponseException(view($tpl, array_merge($vars, (array)$this)));
+        throw new HttpResponseException(view($tpl, $vars)->assign((array)$this));
     }
 
     /**
