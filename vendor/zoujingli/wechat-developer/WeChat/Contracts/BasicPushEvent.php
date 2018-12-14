@@ -91,7 +91,7 @@ class BasicPushEvent
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $this->postxml = file_get_contents("php://input");
             $this->encryptType = $this->input->get('encrypt_type');
-            if ($this->encryptType == 'aes') {
+            if ($this->isEncrypt()) {
                 if (empty($options['encodingaeskey'])) {
                     throw new InvalidArgumentException("Missing Config -- [encodingaeskey]");
                 }
@@ -116,6 +116,15 @@ class BasicPushEvent
     }
 
     /**
+     * 消息是否需要加密
+     * @return boolean
+     */
+    public function isEncrypt()
+    {
+        return $this->encryptType === 'aes';
+    }
+
+    /**
      * 回复消息
      * @param array $data 消息内容
      * @param boolean $return 是否返回XML内容
@@ -126,7 +135,7 @@ class BasicPushEvent
     public function reply(array $data = [], $return = false, $isEncrypt = false)
     {
         $xml = Tools::arr2xml(empty($data) ? $this->message : $data);
-        if ($this->encryptType == 'aes' || $isEncrypt) {
+        if ($this->isEncrypt() || $isEncrypt) {
             if (!class_exists('Prpcrypt', false)) {
                 require __DIR__ . '/Prpcrypt.php';
             }

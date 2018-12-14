@@ -40,6 +40,12 @@ class Push extends Controller
      */
     protected $openid;
 
+    /**
+     * 消息是否加密码
+     * @var boolean
+     */
+    protected $encrypt;
+
 
     /**
      * 公众号OPENID
@@ -85,18 +91,18 @@ class Push extends Controller
             if ($this->request->has('receive', 'post') && Wechat::getType() === 'thr') {
                 $this->appid = $this->request->post('appid', '', null);
                 $this->openid = $this->request->post('openid', '', null);
+                $this->encrypt = boolval($this->request->post('encrypt', 0));
                 $this->receive = $this->toLower(unserialize($this->request->post('receive', '', null)));
                 if (empty($this->appid) || empty($this->openid) || empty($this->receive)) {
                     throw new \think\Exception('微信API实例缺失必要参数[appid,openid,receive]');
                 }
-                // $this->forceCustom = true;
             } else {
                 $this->appid = Wechat::getAppid();
                 $this->openid = $this->wechat->getOpenid();
+                $this->encrypt = $this->wechat->isEncrypt();
                 $this->receive = $this->toLower($this->wechat->getReceive());
             }
             $this->fromOpenid = $this->receive['tousername'];
-
             p(PHP_EOL . '===== 消息接口获取的内容 =====');
             p($this->receive);
             // text, event, image, location
@@ -272,35 +278,48 @@ class Push extends Controller
             Wechat::WeChatCustom()->send($info);
         } else switch (strtolower($type)) {
             case 'text': // 发送文本消息
-                $reply = [
-                    'MsgType'      => 'text',
-                    'CreateTime'   => time(),
-                    'Content'      => $data['content'],
-                    'ToUserName'   => $this->openid,
-                    'FromUserName' => $this->fromOpenid,
-                ];
-                p($reply);
-                return $this->wechat->reply($reply, true, true);
-            //exit;
-            //return $this->wechat->text($data['content'])->reply([], true);
+                return $this->buildMessage($type, $data['content']);
             case 'image': // 发送图片消息
-                return $this->wechat->image($data['media_id'])->reply([], true);
+                return $this->buildMessage($type, ['MediaId' => $data['media_id']]);
             case 'voice': // 发送语言消息
-                return $this->wechat->voice($data['media_id'])->reply([], true);
+                return $this->buildMessage($type, ['MediaId' => $data['media_id']]);
             case 'video': // 发送视频消息
-                return $this->wechat->video($data['media_id'], $data['title'], $data['description'])->reply([], true);
+                return $this->buildMessage($type, ['Title' => $data['title'], 'MediaId' => $data['media_id'], 'Description' => $data['description']]);
             case 'music': // 发送音乐消息
-                return $this->wechat->music($data['title'], $data['description'], $data['musicurl'], $data['hqmusicurl'], $data['thumb_media_id'])->reply([], true);
+                return $this->buildMessage($type, ['Title' => $data['title'], 'Description' => $data['description'], 'MusicUrl' => $data['musicurl'], 'HQMusicUrl' => $data['musicurl'], 'ThumbMediaId' => $data['thumb_media_id']]);
             case 'customservice': // 转交客服消息
                 if ($data['content']) $this->sendMessage('text', $data, true);
-                return $this->wechat->transferCustomerService()->reply([], true);
+                return $this->buildMessage('transfer_customer_service');
             case 'news': // 发送图文消息
                 $articles = [];
                 foreach ($data['articles'] as $article) array_push($articles, ['PicUrl' => $article['picurl'], 'Title' => $article['title'], 'Description' => $article['description'], 'Url' => $article['url']]);
-                return $this->wechat->news($articles)->reply([], true);
+                return $this->wechat->reply([
+                    'CreateTime'   => time(), 'MsgType' => 'news',
+                    'Articles'     => $articles, 'ToUserName' => $this->openid,
+                    'FromUserName' => $this->fromOpenid, 'ArticleCount' => count($articles),
+                ], true, $this->encrypt);
             default:
                 return 'success';
         }
+    }
+
+    /**
+     * 消息数据生成
+     * @param string $type
+     * @param string|array $data
+     * @return string
+     * @throws \WeChat\Exceptions\InvalidDecryptException
+     */
+    private function buildMessage($type, $data = [])
+    {
+        $reply = [
+            'CreateTime' => time(), 'MsgType' => strtolower($type),
+            'ToUserName' => $this->openid, 'FromUserName' => $this->fromOpenid,
+        ];
+        if (!empty($data)) {
+            $reply[ucfirst(strtolower($type))] = $data;
+        }
+        return $this->wechat->reply($reply, true, $this->encrypt);
     }
 
     /**
