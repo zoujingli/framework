@@ -61,6 +61,7 @@ class Media
         if (($media_url = Db::name('WechatNewsImage')->where($map)->value('media_url'))) {
             return $media_url;
         }
+        p(self::getServerPath($local_url));
         $info = Wechat::WeChatMedia()->uploadImg(self::getServerPath($local_url));
         data_save('WechatNewsImage', ['local_url' => $local_url, 'media_url' => $info['url'], 'md5' => $map['md5']], 'md5');
         return $info['url'];
