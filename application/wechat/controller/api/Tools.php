@@ -34,7 +34,7 @@ class Tools extends Controller
      */
     public function oauth()
     {
-        $this->fans = Wechat::applyWebOauth($this->request->url(true), 1);
+        $this->fans = Wechat::getWebOauthInfo($this->request->url(true), 1);
         return $this->fetch();
     }
 
@@ -196,7 +196,7 @@ class Tools extends Controller
     public function jsapi()
     {
         $pay = new \WePay\Order(config('wechat.'));
-        $openid = Wechat::applyWebOauth(request()->url(true), 0)['openid'];
+        $openid = Wechat::getWebOauthInfo(request()->url(true), 0)['openid'];
         $options = [
             'body'             => '测试商品',
             'out_trade_no'     => time(),

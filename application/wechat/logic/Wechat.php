@@ -169,7 +169,7 @@ class Wechat extends \We
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
-    public static function applyWebOauth($url, $isfull = 0, $isRedirect = true)
+    public static function getWebOauthInfo($url, $isfull = 0, $isRedirect = true)
     {
         $appid = self::getAppid();
         list($openid, $fansinfo) = [session("{$appid}_openid"), session("{$appid}_fansinfo")];
