@@ -75,7 +75,7 @@ class Push extends Controller
     {
         try {
             $this->wechat = Wechat::WeChatReceive();
-            if ($this->request->has('receive', 'post')) {
+            if ($this->request->has('receive', 'post') && Wechat::getType() === 'thr') {
                 $this->appid = $this->request->post('appid', '', null);
                 $this->openid = $this->request->post('openid', '', null);
                 $this->receive = $this->toLower(unserialize($this->request->post('receive', '', null)));
