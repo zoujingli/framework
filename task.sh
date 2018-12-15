@@ -5,5 +5,5 @@ ps aux|grep -v grep|grep "$command">/dev/null
 if [ $? != 0 ]; then echo -e "\n没有发现进程，正在启动进程...\n"
 $command > /dev/null 2>&1 &
 ps aux|grep -v grep|grep "$command">/dev/null
-if [ $? = 0 ]; then echo -e "\t### 进程启动成功 ### \n";else echo -e "\t进程启动失败 ###\n";fi
+if [ $? = 0 ]; then echo -e "   ### 进程启动成功 ### \n";else echo -e "   进程启动失败 ###\n";fi
 else echo -e "\n进程已经存在，不需要重新启动进程\n";fi
