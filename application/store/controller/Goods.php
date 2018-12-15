@@ -34,12 +34,16 @@ class Goods extends Controller
     /**
      * 商品列表
      * @return mixed
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
      */
     public function index()
     {
         $this->title = '商品管理';
-        $query = $this->_query($this->table)->like('title')->equal('status');
-        return $this->_page($query->db()->where(['is_deleted' => '0'])->order('sort asc,id desc'));
+        return $this->_query($this->table)->equal('status')->like('title')->where(['is_deleted' => '0'])->order('sort asc,id desc')->page();
     }
 
     /**

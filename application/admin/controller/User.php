@@ -37,12 +37,16 @@ class User extends Controller
     /**
      * 用户列表
      * @return array
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
      */
     public function index()
     {
         $this->title = '系统用户管理';
-        $search = $this->_query($this->table)->like('username,phone,mail')->equal('status');
-        return $this->_page($search->dateBetween('login_at')->db()->where(['is_deleted' => '0']));
+        return $this->_query($this->table)->where(['is_deleted' => '0'])->like('username,phone,mail')->dateBetween('login_at')->equal('status')->page();
     }
 
     /**

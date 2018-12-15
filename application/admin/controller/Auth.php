@@ -34,12 +34,16 @@ class Auth extends Controller
     /**
      * 权限列表
      * @return array|string
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
      */
     public function index()
     {
         $this->title = '系统权限管理';
-        $query = $this->_query($this->table)->like('title,desc')->equal('status')->dateBetween('create_at');
-        return $this->_page($query->db()->order('sort asc,id desc'));
+        return $this->_query($this->table)->dateBetween('create_at')->order('sort asc,id desc')->like('title,desc')->equal('status')->page();
     }
 
     /**

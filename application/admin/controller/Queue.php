@@ -32,14 +32,18 @@ class Queue extends Controller
     /**
      * 任务列表
      * @return array
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
      */
     public function index()
     {
         $this->title = '系统任务管理';
         $this->uris = Db::name($this->table)->distinct(true)->column('uri');
         $this->titles = Db::name($this->table)->distinct(true)->column('title');
-        $query = $this->_query($this->table)->equal('status,title,uri')->dateBetween('create_at');
-        return $this->_page($query->db()->order('id desc'));
+        return $this->_query($this->table)->equal('status,title,uri')->dateBetween('create_at')->order('id desc')->page();
     }
 
     /**
