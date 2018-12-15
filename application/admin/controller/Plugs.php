@@ -26,6 +26,40 @@ class Plugs extends Controller
 {
 
     /**
+     * 文件状态检查
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     */
+    public function upstate()
+    {
+        $ext = strtolower(pathinfo($this->request->post('filename', ''), 4));
+        $name = File::name($this->request->post('md5'), $ext, '', 'strtolower');
+        // 检查文件是否已上传
+        $this->safe = $this->getUploadSafe();
+        if (is_string($site_url = File::url($name))) {
+            $this->success('检测到该文件已经存在，无需再次上传！', ['site_url' => $this->safe ? $name : $site_url]);
+        }
+        // 文件驱动
+        $file = File::instance($this->getUploadType());
+        // 生成上传授权参数
+        $param = [
+            'file_url' => $name, 'uptype' => $this->uptype, 'token' => md5($name . session_id()),
+            'site_url' => $file->base($name), 'server' => $file->upload(), 'safe' => $this->safe,
+        ];
+        if (strtolower($this->uptype) === 'qiniu') {
+            $auth = new \Qiniu\Auth(sysconf('storage_qiniu_access_key'), sysconf('storage_qiniu_secret_key'));
+            $param['token'] = $auth->uploadToken(sysconf('storage_qiniu_bucket'), $name, 3600, [
+                'returnBody' => json_encode(['code' => 1, 'data' => ['site_url' => $file->base($name)]], JSON_UNESCAPED_UNICODE),
+            ]);
+        } elseif (strtolower($this->uptype) === 'oss') {
+            $param['OSSAccessKeyId'] = sysconf('storage_oss_keyid');
+            $param['policy'] = base64_encode(json_encode(['conditions' => [['content-length-range', 0, 1048576000]], 'expiration' => gmdate("Y-m-d\TH:i:s\Z", time() + 3600)]));
+            $param['signature'] = base64_encode(hash_hmac('sha1', $param['policy'], sysconf('storage_oss_secret'), true));
+        }
+        $this->error('未检测到文件，需要上传完整的文件！', $param);
+    }
+
+    /**
      * 文件上传
      * @return mixed
      * @throws \think\Exception
@@ -91,7 +125,8 @@ class Plugs extends Controller
         }
         $this->safe = $this->getUploadSafe();
         $this->uptype = $this->getUploadType();
-        $name = File::name($file->getPathname(), pathinfo($file->getInfo('name'), 4), '', 'md5_file');
+        $this->ext = pathinfo($file->getInfo('name'), 4);
+        $name = File::name($file->getPathname(), $this->ext, '', 'md5_file');
         $info = File::instance($this->uptype)->save($name, file_get_contents($file->getRealPath()));
         if (is_array($info) && isset($info['url'])) {
             return json(['uploaded' => true, 'filename' => $name, 'url' => $this->safe ? $name : $info['url']]);
@@ -99,39 +134,6 @@ class Plugs extends Controller
         return json(['uploaded' => false, 'error' => ['message' => '文件处理失败，请稍候再试！']]);
     }
 
-    /**
-     * 文件状态检查
-     * @throws \think\Exception
-     * @throws \think\exception\PDOException
-     */
-    public function upstate()
-    {
-        $ext = strtolower(pathinfo($this->request->post('filename', ''), 4));
-        $name = File::name($this->request->post('md5'), $ext, '', 'strtolower');
-        // 检查文件是否已上传
-        $this->safe = $this->getUploadSafe();
-        if (is_string($site_url = File::url($name))) {
-            $this->success('检测到该文件已经存在，无需再次上传！', ['site_url' => $this->safe ? $name : $site_url]);
-        }
-        // 文件驱动
-        $file = File::instance($this->getUploadType());
-        // 生成上传授权参数
-        $param = [
-            'file_url' => $name, 'uptype' => $this->uptype, 'token' => md5($name . session_id()),
-            'site_url' => $file->base($name), 'server' => $file->upload(), 'safe' => $this->safe,
-        ];
-        if (strtolower($this->uptype) === 'qiniu') {
-            $auth = new \Qiniu\Auth(sysconf('storage_qiniu_access_key'), sysconf('storage_qiniu_secret_key'));
-            $param['token'] = $auth->uploadToken(sysconf('storage_qiniu_bucket'), $name, 3600, [
-                'returnBody' => json_encode(['code' => 1, 'data' => ['site_url' => $file->base($name)]], JSON_UNESCAPED_UNICODE),
-            ]);
-        } elseif (strtolower($this->uptype) === 'oss') {
-            $param['OSSAccessKeyId'] = sysconf('storage_oss_keyid');
-            $param['policy'] = base64_encode(json_encode(['conditions' => [['content-length-range', 0, 1048576000]], 'expiration' => gmdate("Y-m-d\TH:i:s\Z", time() + 3600)]));
-            $param['signature'] = base64_encode(hash_hmac('sha1', $param['policy'], sysconf('storage_oss_secret'), true));
-        }
-        $this->error('未检测到文件，需要上传完整的文件！', $param);
-    }
 
     /**
      * 获取文件上传方式

@@ -26,12 +26,6 @@ use think\Db;
 class Menu extends Controller
 {
     /**
-     * 指定操作的数据表
-     * @var string
-     */
-    protected $table = 'WechatMenu';
-
-    /**
      * 微信菜单的类型
      * @var array
      */

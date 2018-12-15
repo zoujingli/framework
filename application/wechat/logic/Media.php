@@ -47,24 +47,6 @@ class Media
     }
 
     /**
-     * 上传图片到微信服务器
-     * @param string $local_url 图文地址
-     * @return string
-     * @throws \WeChat\Exceptions\InvalidResponseException
-     * @throws \WeChat\Exceptions\LocalCacheException
-     * @throws \think\Exception
-     * @throws \think\exception\PDOException
-     */
-    public static function image($local_url)
-    {
-        $map = ['md5' => md5($local_url)];
-        if (($mediaUrl = Db::name('WechatNewsImage')->where($map)->value('media_url'))) return $mediaUrl;
-        $info = Wechat::WeChatMedia()->uploadImg(self::getServerPath($local_url));
-        data_save('WechatNewsImage', ['local_url' => $local_url, 'media_url' => $info['url'], 'md5' => $map['md5']], 'md5');
-        return $info['url'];
-    }
-
-    /**
      * 上传图片永久素材，返回素材media_id
      * @param string $local_url 文件URL地址
      * @param string $type 文件类型
@@ -78,9 +60,9 @@ class Media
     public static function upload($local_url, $type = 'image', $videoInfo = [])
     {
         $where = ['md5' => md5($local_url), 'appid' => Wechat::getAppid()];
-        if (($mediaId = Db::name('WechatNewsMedia')->where($where)->value('media_id'))) return $mediaId;
+        if (($mediaId = Db::name('WechatMedia')->where($where)->value('media_id'))) return $mediaId;
         $result = Wechat::WeChatMedia()->addMaterial(self::getServerPath($local_url), $type, $videoInfo);
-        data_save('WechatNewsMedia', [
+        data_save('WechatMedia', [
             'local_url' => $local_url, 'md5' => $where['md5'], 'appid' => Wechat::getAppid(), 'type' => $type,
             'media_url' => isset($result['url']) ? $result['url'] : '', 'media_id' => $result['media_id'],
         ], 'type', $where);
