@@ -21,6 +21,7 @@
         <th class='list-table-sort-td'>
             <button type="button" data-reload class="layui-btn layui-btn-xs">刷 新</button>
         </th>
+        <th></th>
         <th class='text-left nowrap'>卡券名称</th>
         <th class='text-left nowrap' colspan="2">卡券信息</th>
         <th></th>
@@ -33,6 +34,7 @@
     <tr>
         <td class='list-table-check-td think-checkbox'><input class="list-check-box" value='{$vo.id}' type='checkbox'></td>
         <td class='list-table-sort-td'><input data-action-blur="{:request()->url()}" data-value="id#{$vo.id};action#sort;sort#{value}" data-loading="false" value="{$vo.sort}" class="list-sort-input"></td>
+        <td class='text-left nowrap'><img data-tips-image src="{$vo.bgimg}" style="width:100%"></td>
         <td class='text-left nowrap'>
             卡券名称：<span class="layui-badge layui-bg-gray">{$vo.name|default=''}</span><br>
             销售价格：<span class="layui-badge layui-bg-gray">{$vo.price+0}</span>
