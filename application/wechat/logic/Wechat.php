@@ -54,8 +54,8 @@ class Wechat extends \We
     {
         if (empty($options)) $options = [
             // 微信功能必需参数
+            'appid'          => self::getAppid(),
             'token'          => sysconf('wechat_token'),
-            'appid'          => sysconf('wechat_appid'),
             'appsecret'      => sysconf('wechat_appsecret'),
             'encodingaeskey' => sysconf('wechat_encodingaeskey'),
             // 微信支付必要参数
