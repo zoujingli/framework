@@ -48,7 +48,7 @@ class Media
 
     /**
      * 上传图片永久素材，返回素材media_id
-     * @param string $local_url 文件URL地址
+     * @param string $url 文件URL地址
      * @param string $type 文件类型
      * @param array $videoInfo 视频信息
      * @return string|null
@@ -57,13 +57,13 @@ class Media
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
-    public static function upload($local_url, $type = 'image', $videoInfo = [])
+    public static function upload($url, $type = 'image', $videoInfo = [])
     {
-        $where = ['md5' => md5($local_url), 'appid' => Wechat::getAppid()];
+        $where = ['md5' => md5($url), 'appid' => Wechat::getAppid()];
         if (($mediaId = Db::name('WechatMedia')->where($where)->value('media_id'))) return $mediaId;
-        $result = Wechat::WeChatMedia()->addMaterial(self::getServerPath($local_url), $type, $videoInfo);
+        $result = Wechat::WeChatMedia()->addMaterial(self::getServerPath($url), $type, $videoInfo);
         data_save('WechatMedia', [
-            'local_url' => $local_url, 'md5' => $where['md5'], 'appid' => Wechat::getAppid(), 'type' => $type,
+            'local_url' => $url, 'md5' => $where['md5'], 'appid' => Wechat::getAppid(), 'type' => $type,
             'media_url' => isset($result['url']) ? $result['url'] : '', 'media_id' => $result['media_id'],
         ], 'type', $where);
         return $result['media_id'];
