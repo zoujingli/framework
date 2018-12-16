@@ -53,14 +53,14 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 .layui-layout>.layui-side .layui-side-scroll{width:100%!important}
 .layui-layout>.layui-side .layui-nav-item{border-bottom:1px solid #333}
 .layui-layout>.layui-side .layui-nav-itemed{border-bottom:none!important}
-.layui-layout>.layui-side .layui-nav-item a{height:45px;color:#fff!important;line-height:45px}
+.layui-layout>.layui-side .layui-nav-item a{height:45px;color:#fff!important;line-height:45px;display:block}
 .layui-layout>.layui-side .layui-nav-item a:hover{background:hsla(0,0%,39%,.2)!important}
 .layui-layout>.layui-side .layui-nav-tree-top a{height:28px!important;line-height:28px!important}
 
 .layui-layout.layui-layout-left-mini>.layui-side,
 .layui-layout.layui-layout-left-mini>.layui-side .layui-nav-tree,
 .layui-layout.layui-layout-left-mini>.layui-side .layui-side-scroll{width:50px;text-align:center}
-.layui-layout.layui-layout-left-mini>.layui-side .layui-nav-item a{padding:0;height:45px;line-height:45px;display:block}
+.layui-layout.layui-layout-left-mini>.layui-side .layui-nav-item a{padding:0}
 .layui-layout.layui-layout-left-mini>.layui-side .layui-nav-item .nav-text{display:none}
 .layui-layout.layui-layout-left-mini>.layui-side .layui-nav-item .nav-icon{display:inline-block!important;padding:0!important}
 .layui-layout.layui-layout-left-mini>.layui-side .layui-nav-item .layui-nav-child{display:block!important;padding:0;background-color:rgba(0,0,0,.3)!important}
