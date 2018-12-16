@@ -60,7 +60,7 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 .layui-layout.layui-layout-left-mini>.layui-side,
 .layui-layout.layui-layout-left-mini>.layui-side .layui-nav-tree,
 .layui-layout.layui-layout-left-mini>.layui-side .layui-side-scroll{width:50px;text-align:center}
-.layui-layout.layui-layout-left-mini>.layui-side .layui-nav-item a{padding:0;height:45px;line-height:45px}
+.layui-layout.layui-layout-left-mini>.layui-side .layui-nav-item a{padding:0;height:45px;line-height:45px;display:block}
 .layui-layout.layui-layout-left-mini>.layui-side .layui-nav-item .nav-text{display:none}
 .layui-layout.layui-layout-left-mini>.layui-side .layui-nav-item .nav-icon{display:inline-block!important;padding:0!important}
 .layui-layout.layui-layout-left-mini>.layui-side .layui-nav-item .layui-nav-child{display:block!important;padding:0;background-color:rgba(0,0,0,.3)!important}
