@@ -10,6 +10,13 @@
         </div>
 
         <div class="layui-form-item">
+            <label class="layui-form-label">门店编号</label>
+            <div class="layui-input-block">
+                <input name="code" required value='{$vo.code|default=""}' placeholder="请输入门店编号" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
             <label class="layui-form-label label-required">门店位置</label>
             <div class="layui-input-block layui-bg-gray padding-5" data-address-container>
                 <div class="inline-block text-center nowrap" style="width:16%;margin-right:1%">

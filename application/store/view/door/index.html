@@ -39,8 +39,9 @@
             <div class="background-image pull-left" data-tips-image="{$vo.logo}" style="background-image:url('{$vo.logo}')"></div>
             {/notempty}
             名称：{$vo.name|default=''}
-            {eq name='vo.status' value='0'}<span class="layui-badge margin-left-10">已停业</span>{else}
-            <span class="layui-badge layui-bg-green margin-left-10">营业中</span>{/eq}
+            <span class="layui-badge layui-bg-cyan margin-left-5">{$vo.code}</span>
+            {eq name='vo.status' value='0'}<span class="layui-badge margin-left-5">已停业</span>{else}
+            <span class="layui-badge layui-bg-green margin-left-5">营业中</span>{/eq}
             <br>
             地址：{$vo.address|default=''}
         </td>

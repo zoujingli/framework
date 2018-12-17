@@ -29,7 +29,7 @@ class Door extends Controller
     public function index()
     {
         $this->title = '门店管理';
-        return $this->_query($this->table)->equal('status')->like('title')->where(['is_deleted' => '0'])->order('sort asc,id desc')->page();
+        return $this->_query($this->table)->equal('status')->like('name')->where(['is_deleted' => '0'])->order('sort asc,id desc')->page();
     }
 
     /**

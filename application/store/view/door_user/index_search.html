@@ -1,0 +1,55 @@
+<fieldset>
+    <legend>条件搜索</legend>
+    <form class="layui-form layui-form-pane form-search" action="{:request()->url()}" onsubmit="return false" method="get" autocomplete="off">
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label">员工名称</label>
+            <div class="layui-input-inline">
+                <input name="name" value="{$Think.get.name|default=''}" placeholder="请输入员工名称" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label">员工手机</label>
+            <div class="layui-input-inline">
+                <input name="phone" value="{$Think.get.phone|default=''}" placeholder="请输入员工手机" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label">员工状态</label>
+            <div class="layui-input-inline">
+                <select class="layui-select" name="status">
+                    {foreach [''=>'- 全部员工 -','1'=>'待审核员工','0'=>'已拒审员工','2'=>'已审核员工'] as $k=>$v}
+                    <!--{eq name='Think.get.status' value='$k.""'}-->
+                    <option selected value="{$k}">{$v}</option>
+                    <!--{else}-->
+                    <option value="{$k}">{$v}</option>
+                    <!--{/eq}-->
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label">门店名称</label>
+            <div class="layui-input-inline">
+                <input name="title" value="{$Think.get.title|default=''}" placeholder="请输入门店名称" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label">营业状态</label>
+            <div class="layui-input-inline">
+                <select class="layui-select" name="door_status">
+                    {foreach [''=>'- 全部门店 -','1'=>'营业中门店','0'=>'已停业门店'] as $k=>$v}
+                    <!--{eq name='Think.get.door_status' value='$k.""'}-->
+                    <option selected value="{$k}">{$v}</option>
+                    <!--{else}-->
+                    <option value="{$k}">{$v}</option>
+                    <!--{/eq}-->
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item layui-inline">
+            <button class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe615;</i> 搜 索</button>
+        </div>
+    </form>
+    <script>form.render()</script>
+</fieldset>
