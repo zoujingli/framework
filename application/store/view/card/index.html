@@ -58,7 +58,7 @@
 
             {if auth("store/card/edit")}
             <span class="text-explode">|</span>
-            <a data-modal='{:url("edit")}?id={$vo.id}'>编辑</a>
+            <a data-title="编辑卡券" data-modal='{:url("edit")}?id={$vo.id}'>编辑</a>
             {/if}
 
             {if $vo.status eq 1 and auth("store/card/forbid")}

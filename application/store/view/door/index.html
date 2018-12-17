@@ -2,10 +2,10 @@
 
 {block name="button"}
 <!--{if auth("store/card/add")}-->
-<button data-modal='{:url("add")}' data-title="添加卡券" class='layui-btn layui-btn-sm layui-btn-primary'>添加卡券</button>
+<button data-modal='{:url("add")}' data-title="添加门店" class='layui-btn layui-btn-sm layui-btn-primary'>添加门店</button>
 <!--{/if}-->
 <!--{if auth("store/card/del")}-->
-<button data-action='{:url("del")}' data-rule="id#{key}" class='layui-btn layui-btn-sm layui-btn-primary'>删除卡券</button>
+<button data-action='{:url("del")}' data-rule="id#{key}" class='layui-btn layui-btn-sm layui-btn-primary'>删除门店</button>
 <!--{/if}-->
 {/block}
 
@@ -22,8 +22,8 @@
             <button type="button" data-reload class="layui-btn layui-btn-xs">刷 新</button>
         </th>
         <th></th>
-        <th class='text-left nowrap'>卡券名称</th>
-        <th class='text-left nowrap' colspan="2">卡券信息</th>
+        <th class='text-left nowrap'>门店名称</th>
+        <th class='text-left nowrap' colspan="2">门店信息</th>
         <th></th>
         <th></th>
     </tr>
@@ -36,7 +36,7 @@
         <td class='list-table-sort-td'><input data-action-blur="{:request()->url()}" data-value="id#{$vo.id};action#sort;sort#{value}" data-loading="false" value="{$vo.sort}" class="list-sort-input"></td>
         <td class='text-left nowrap'></td>
         <td class='text-left nowrap'>
-           门店名称：<span class="layui-badge layui-bg-gray">{$vo.name|default=''}</span><br>
+            门店名称：<span class="layui-badge layui-bg-gray">{$vo.name|default=''}</span><br>
             销售价格：<span class="layui-badge layui-bg-gray">{$vo.price+0}</span>
         </td>
         <td class='text-left nowrap'>
@@ -58,7 +58,7 @@
 
             {if auth("store/card/edit")}
             <span class="text-explode">|</span>
-            <a data-modal='{:url("edit")}?id={$vo.id}'>编辑</a>
+            <a data-title="编辑门店" data-modal='{:url("edit")}?id={$vo.id}'>编辑</a>
             {/if}
 
             {if $vo.status eq 1 and auth("store/card/forbid")}

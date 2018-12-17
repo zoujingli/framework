@@ -2,24 +2,9 @@
     <div class="layui-card-body">
 
         <div class="layui-form-item">
-            <label class="layui-form-label">卡券分类</label>
+            <label class="layui-form-label">门店名称</label>
             <div class="layui-input-block">
-                <select name="type" required class="layui-select">
-                    {foreach $types as $type}
-                    {if isset($vo.type) and $vo.type eq $type}
-                    <option selected value="{$type}">{$type}</option>
-                    {else}
-                    <option value="{$type}">{$type}</option>
-                    {/if}
-                    {/foreach}
-                </select>
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">卡券名称</label>
-            <div class="layui-input-block">
-                <input name="name" required value='{$vo.name|default=""}' placeholder="请输入卡券名称" class="layui-input">
+                <input name="name" required value='{$vo.name|default=""}' placeholder="请输入门店名称" class="layui-input">
             </div>
         </div>
 
@@ -32,9 +17,9 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">卡券库存</label>
+                    <label class="layui-form-label">门店库存</label>
                     <div class="layui-input-block">
-                        <input name="num_stock" onblur="this.value=parseInt(this.value)||0" required value='{$vo.num_stock|default=""}' placeholder="请输入卡券库存" class="layui-input">
+                        <input name="num_stock" onblur="this.value=parseInt(this.value)||0" required value='{$vo.num_stock|default=""}' placeholder="请输入门店库存" class="layui-input">
                     </div>
                 </div>
             </div>
@@ -57,9 +42,9 @@
 
 
         <div class="layui-form-item">
-            <label class="layui-form-label">卡券背景</label>
+            <label class="layui-form-label">门店背景</label>
             <div class="layui-input-block">
-                <input name="bgimg" type="hidden" required value='{$vo.bgimg|default=""}' placeholder="请输入卡券名称" class="layui-input">
+                <input name="bgimg" type="hidden" required value='{$vo.bgimg|default=""}' placeholder="请输入门店名称" class="layui-input">
                 <style>
                     [data-field="bgimg"] {
                         width: 20pc;
@@ -72,9 +57,9 @@
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label">卡券描述</label>
+            <label class="layui-form-label">门店描述</label>
             <div class="layui-input-block">
-                <textarea placeholder="请输入卡券描述" class="layui-textarea" name="content">{$vo.content|default=""}</textarea>
+                <textarea placeholder="请输入门店描述" class="layui-textarea" name="content">{$vo.content|default=""}</textarea>
             </div>
         </div>
     </div>
