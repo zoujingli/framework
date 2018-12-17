@@ -12,25 +12,11 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
+// 系统权限中间键
+\think\facade\Middleware::add('app\admin\logic\Auth');
+
 // 注册系统更新指令
 \think\Console::addDefaultCommands(['app\admin\logic\Update']);
-
-// 系统权限中间键
-\think\facade\Middleware::add(function (\think\Request $request, \Closure $next) {
-    $map = ['node' => ($node = \library\tools\Node::current())];
-    $auth = \think\Db::name('SystemNode')->cache(true, 30)->field('is_auth,is_login')->where($map)->find();
-    $access = ['is_auth' => $auth['is_auth'], 'is_login' => $auth['is_auth'] ? 1 : $auth['is_login']];
-    // 登录状态检查
-    if (!empty($access['is_login']) && !\app\admin\logic\Auth::isLogin()) {
-        $message = ['code' => 0, 'msg' => '抱歉，您还没有登录获取访问权限！', 'url' => url('@admin/login')];
-        return $request->isAjax() ? json($message) : redirect($message['url']);
-    }
-    // 访问权限检查
-    if (!empty($access['is_auth']) && !\app\admin\logic\Auth::checkAuthNode($node)) {
-        return json(['code' => 0, 'msg' => '抱歉，您没有访问该模块的权限！']);
-    }
-    return $next($request);
-});
 
 if (!function_exists('auth')) {
     /**

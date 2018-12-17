@@ -27,14 +27,51 @@ class Auth
 {
 
     /**
+     * 权限检查中间件入口
+     * @param \think\Request $request
+     * @param \Closure $next
+     * @return mixed|\think\response\Json|\think\response\Redirect
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function handle(\think\Request $request, \Closure $next)
+    {
+        $node = Node::current();
+        foreach (self::getIgnore() as $str) if (stripos($node, $str) === 0) return $next($request);
+        // 节点权限查询
+        $auth = Db::name('SystemNode')->cache(true, 60)->field('is_auth,is_login')->where(['node' => $node])->find();
+        $info = ['is_auth' => $auth['is_auth'], 'is_login' => $auth['is_auth'] ? 1 : $auth['is_login']];
+        // 登录状态检查
+        if (!empty($info['is_login']) && !self::isLogin()) {
+            $message = ['code' => 0, 'msg' => '抱歉，您还没有登录获取访问权限！', 'url' => url('@admin/login')];
+            return $request->isAjax() ? json($message) : redirect($message['url']);
+        }
+        // 访问权限检查
+        if (!empty($info['is_auth']) && !self::checkAuthNode($node)) {
+            return json(['code' => 0, 'msg' => '抱歉，您没有访问该模块的权限！']);
+        }
+        return $next($request);
+    }
+
+    /**
+     * 权限节点忽略规则
+     * @return array
+     */
+    public static function getIgnore()
+    {
+        return ['index', 'admin/plugs', 'admin/login', 'admin/index'];
+    }
+
+    /**
      * 获取系统代码节点
      * @param array $nodes
      * @return array
      */
     public static function get($nodes = [])
     {
+        $ignore = self::getIgnore();
         $alias = Db::name('SystemNode')->column('node,is_menu,is_auth,is_login,title');
-        $ignore = ['index', 'wechat/review', 'admin/plugs', 'admin/login', 'admin/index'];
         foreach (Node::getTree(env('app_path')) as $thr) {
             foreach ($ignore as $str) if (stripos($thr, $str) === 0) continue 2;
             $tmp = explode('/', $thr);
