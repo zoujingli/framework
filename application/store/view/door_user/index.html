@@ -1,9 +1,6 @@
 {extend name='admin@main'}
 
 {block name="button"}
-<!--{if auth("store/door_user/add")}-->
-<button data-modal='{:url("add")}' data-title="添加门店" class='layui-btn layui-btn-sm layui-btn-primary'>添加门店</button>
-<!--{/if}-->
 <!--{if auth("store/door_user/del")}-->
 <button data-action='{:url("del")}' data-rule="id#{key}" class='layui-btn layui-btn-sm layui-btn-primary'>删除门店</button>
 <!--{/if}-->
@@ -15,9 +12,7 @@
     <!--{notempty name='list'}-->
     <thead>
     <tr>
-        <th class='list-table-check-td think-checkbox'>
-            <input data-auto-none="" data-check-target='.list-check-box' type='checkbox'>
-        </th>
+        <th class='list-table-check-td think-checkbox'><input data-auto-none data-check-target='.list-check-box' type='checkbox'></th>
         <th class='text-left nowrap'>门店信息</th>
         <th class='text-left nowrap'>员工信息</th>
         <th></th>
@@ -43,11 +38,6 @@
             {eq name='vo.status' value='2'}<span class="layui-badge layui-bg-green">已审核</span>{/eq}
         </td>
         <td class='text-left nowrap'>
-
-            {if auth("store/door_user/edit")}
-            <span class="text-explode">|</span>
-            <a data-title="编辑门店" data-modal='{:url("edit")}?id={$vo.id}'>编辑</a>
-            {/if}
 
             {if auth("store/door_user/pass") and $vo.status eq '0'}
             <span class="text-explode">|</span>

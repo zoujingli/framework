@@ -14,7 +14,7 @@
 
 {block name="content"}
 <table class="layui-table" lay-skin="line">
-    <caption class="margin-bottom-10 text-left">{include file='goods/index_search'}</caption>
+    <caption class="margin-bottom-10 text-left">{include file='door/index_search'}</caption>
     <!--{notempty name='list'}-->
     <thead>
     <tr>
@@ -24,7 +24,6 @@
         <th class='list-table-sort-td'>
             <button type="button" data-reload class="layui-btn layui-btn-xs">刷 新</button>
         </th>
-        <th class='text-left nowrap'>门店信息</th>
         <th></th>
         <th></th>
     </tr>
@@ -39,15 +38,11 @@
             {notempty name='vo.logo'}
             <div class="background-image pull-left" data-tips-image="{$vo.logo}" style="background-image:url('{$vo.logo}')"></div>
             {/notempty}
-            <span class="layui-badge layui-bg-gray">名 称</span>：{$vo.name|default=''}<br>
-            <span class="layui-badge layui-bg-gray">地 址</span>：{$vo.address|default=''}
-        </td>
-        <td class='text-left nowrap'>
-            {eq name='vo.status' value='0'}
-            <span class="layui-badge">已停业</span>
-            {else}
-            <span class="layui-badge layui-bg-green">营业中</span>
-            {/eq}
+            名称：{$vo.name|default=''}
+            {eq name='vo.status' value='0'}<span class="layui-badge margin-left-10">已停业</span>{else}
+            <span class="layui-badge layui-bg-green margin-left-10">营业中</span>{/eq}
+            <br>
+            地址：{$vo.address|default=''}
         </td>
         <td class='text-left nowrap'>
 
