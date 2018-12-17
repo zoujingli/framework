@@ -173,7 +173,7 @@ $(function () {
         };
         // 打开一个iframe窗口
         this.iframe = function (url, title) {
-            return layer.open({title: title || '窗口', type: 2, area: ['800px', '550px'], fix: true, maxmin: false, content: url});
+            return layer.open({title: title || '窗口', type: 2, area: ['550px', '800px'], fix: true, maxmin: false, content: url});
         };
         // 加载HTML到弹出层
         this.modal = function (url, data, title, callback, loading, tips) {
@@ -562,7 +562,8 @@ $(function () {
 
     /*! 注册 data-iframe 事件行为 */
     $body.on('click', '[data-iframe]', function () {
-        $.form.iframe($(this).attr('data-iframe'), $(this).attr('data-title') || '窗口');
+        let index = $.form.iframe($(this).attr('data-iframe'), $(this).attr('data-title') || '窗口');
+        $(this).attr('data-index', index);
     });
 
     /*! 注册 data-icon 事件行为 */
@@ -592,7 +593,8 @@ $(function () {
     });
     $.previewImage = function (src, area) {
         let img = new Image(), index = $.msg.loading();
-        img.style.display = 'none', img.style.height = 'auto', img.style.width = area || '480px';
+        img.style.background = '#fff', img.style.display = 'none';
+        img.style.height = 'auto', img.style.width = area || '480px';
         document.body.appendChild(img), img.onerror = function () {
             $.msg.close(index);
         }, img.onload = function () {

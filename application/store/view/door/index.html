@@ -21,9 +21,8 @@
         <th class='list-table-sort-td'>
             <button type="button" data-reload class="layui-btn layui-btn-xs">刷 新</button>
         </th>
-        <th></th>
         <th class='text-left nowrap'>门店名称</th>
-        <th class='text-left nowrap' colspan="2">门店信息</th>
+        <th class='text-left nowrap'>门店信息</th>
         <th></th>
         <th></th>
     </tr>
@@ -34,24 +33,20 @@
     <tr>
         <td class='list-table-check-td think-checkbox'><input class="list-check-box" value='{$vo.id}' type='checkbox'></td>
         <td class='list-table-sort-td'><input data-action-blur="{:request()->url()}" data-value="id#{$vo.id};action#sort;sort#{value}" data-loading="false" value="{$vo.sort}" class="list-sort-input"></td>
-        <td class='text-left nowrap'></td>
         <td class='text-left nowrap'>
-            门店名称：<span class="layui-badge layui-bg-gray">{$vo.name|default=''}</span><br>
-            销售价格：<span class="layui-badge layui-bg-gray">{$vo.price+0}</span>
+            {notempty name='vo.logo'}
+            <div class="background-image pull-left" data-tips-image="{$vo.logo}" style="background-image:url('{$vo.logo}');width:20px;height:20px"></div>
+            {/notempty}
+            {$vo.name|default=''}
         </td>
         <td class='text-left nowrap'>
-            库存统计：<span class="layui-badge layui-bg-gray">{$vo.num_stock}</span><br>
-            销售统计：<span class="layui-badge layui-bg-gray">{$vo.num_sales}</span>
-        </td>
-        <td class='text-left nowrap'>
-            失效时间：<span class="layui-badge layui-bg-gray">{$vo.effective_date}</span><br>
-            有效天数：<span class="layui-badge layui-bg-gray">{$vo.effective_days}</span>
+            {$vo.content|default=''}
         </td>
         <td class='text-left nowrap'>
             {eq name='vo.status' value='0'}
-            <span class="layui-badge">已下架</span>
+            <span class="layui-badge">已停业</span>
             {else}
-            <span class="layui-badge layui-bg-green">销售中</span>
+            <span class="layui-badge layui-bg-green">营业中</span>
             {/eq}
         </td>
         <td class='text-left nowrap'>
@@ -63,10 +58,10 @@
 
             {if $vo.status eq 1 and auth("store/card/forbid")}
             <span class="text-explode">|</span>
-            <a data-action="{:url('forbid')}" data-value="id#{$vo.id};status#0">下架</a>
+            <a data-action="{:url('forbid')}" data-value="id#{$vo.id};status#0">停业</a>
             {elseif auth("store/card/resume")}
             <span class="text-explode">|</span>
-            <a data-action="{:url('resume')}" data-value="id#{$vo.id};status#1">上架</a>
+            <a data-action="{:url('resume')}" data-value="id#{$vo.id};status#1">营业</a>
             {/if}
 
             {if auth("store/card/del")}
