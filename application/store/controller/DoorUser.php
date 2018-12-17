@@ -28,7 +28,7 @@ class DoorUser extends Controller
      */
     public function index()
     {
-        $this->title = '用户员工管理';
+        $this->title = '门店员工';
         return $this->_query($this->table)->where(['is_deleted' => '0'])->order('sort asc,id desc')->page();
     }
 
