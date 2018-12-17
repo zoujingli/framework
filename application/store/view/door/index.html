@@ -48,21 +48,17 @@
         <td class='text-left nowrap'>
 
             {if auth("store/door/edit")}
-            <span class="text-explode">|</span>
-            <a data-title="编辑门店" data-modal='{:url("edit")}?id={$vo.id}'>编辑</a>
+            <a class="layui-btn layui-btn-sm" data-title="编辑门店" data-modal='{:url("edit")}?id={$vo.id}'>编 辑</a>
             {/if}
 
             {if $vo.status eq 1 and auth("store/door/forbid")}
-            <span class="text-explode">|</span>
-            <a data-action="{:url('forbid')}" data-value="id#{$vo.id};status#0">停业</a>
+            <a class="layui-btn layui-btn-sm layui-btn-warm" data-action="{:url('forbid')}" data-value="id#{$vo.id};status#0">停 业</a>
             {elseif auth("store/door/resume")}
-            <span class="text-explode">|</span>
-            <a data-action="{:url('resume')}" data-value="id#{$vo.id};status#1">营业</a>
+            <a class="layui-btn layui-btn-sm layui-btn-warm" data-action="{:url('resume')}" data-value="id#{$vo.id};status#1">营 业</a>
             {/if}
 
             {if auth("store/door/del")}
-            <span class="text-explode">|</span>
-            <a data-confirm="确定要删除数据吗?" data-action="{:url('del')}" data-value="id#{$vo.id}">删除</a>
+            <a class="layui-btn layui-btn-sm layui-btn-danger" data-confirm="确定要删除数据吗?" data-action="{:url('del')}" data-value="id#{$vo.id}">删 除</a>
             {/if}
 
         </td>
