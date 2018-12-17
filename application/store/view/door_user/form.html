@@ -2,66 +2,29 @@
     <div class="layui-card-body">
 
         <div class="layui-form-item">
-            <label class="layui-form-label">门店名称</label>
+            <label class="layui-form-label">员工名称</label>
             <div class="layui-input-block">
                 <input name="name" required value='{$vo.name|default=""}' placeholder="请输入门店名称" class="layui-input">
             </div>
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label label-required">门店LOGO</label>
+            <label class="layui-form-label">员工手机</label>
             <div class="layui-input-block">
-                <input data-upload-logo type="hidden" name="logo" value="{$vo.logo|default=''}">
-                <script>$('[data-upload-logo]').uploadOneImage();</script>
+                <input name="phone" required value='{$vo.phone|default=""}' placeholder="请输入员工手机" class="layui-input">
             </div>
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label label-required">门店位置</label>
-            <div class="layui-input-block layui-bg-gray padding-5" data-address-container>
-                <div class="inline-block text-center nowrap" style="width:16%;margin-right:1%">
-                    所在城市
-                    <input class="layui-input text-center padding-left-0" name="city" value="{$vo.city|default=''}">
-                </div>
-                <div class="inline-block text-center nowrap" style="width:22%;margin-right:1%">
-                    地址经纬度
-                    <input class="layui-input text-center padding-left-0" name="latlng" value="{$vo.latlng|default=''}">
-                </div>
-                <div class="inline-block text-center nowrap" style="width:60%">
-                    详情地址
-                    <input class="layui-input" style="padding-right:55px" name="address" value="{$vo.address|default=''}">
-                    <a style="top:33px;right:10px" data-address-select class="layui-btn layui-btn-sm absolute">选择</a>
-                </div>
-
-                <script>
-                    $(function () {
-                        let index = 0;
-                        $('[data-address-select]').on('click', function () {
-                            index = $.form.iframe('https://apis.map.qq.com/tools/locpicker?search=1&type=1&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&referer=myapp', '地址选择器', ['550px', '800px']);
-                        });
-                        window.addEventListener('message', function (event) {
-                            let loc = event.data;
-                            if (loc && loc.module === 'locationPicker') {
-                                $('[data-address-container] input[name="city"]').val(loc.cityname || '');
-                                $('[data-address-container] input[name="address"]').val(loc.poiaddress + loc.poiname);
-                                $('[data-address-container] input[name="latlng"]').val((loc.latlng.lat || '') + ',' + (loc.latlng.lng || ''));
-                                $.msg.close(index);
-                                console.log('location', loc);
-                            }
-                        }, false);
-                    });
-                </script>
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">门店描述</label>
+            <label class="layui-form-label">员工描述</label>
             <div class="layui-input-block">
                 <textarea placeholder="请输入门店描述" class="layui-textarea" name="content">{$vo.content|default=""}</textarea>
             </div>
         </div>
     </div>
+
     <div class="hr-line-dashed"></div>
+
     <div class="layui-form-item text-center">
         <!--{notempty name='vo.id'}-->
         <input type='hidden' value='{$vo.id}' name='id'>
@@ -69,5 +32,5 @@
         <button class="layui-btn" type='submit'>保存数据</button>
         <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消编辑吗？" data-close>取消编辑</button>
     </div>
-    <!--<script>window.form.render();</script>-->
+
 </form>

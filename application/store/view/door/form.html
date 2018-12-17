@@ -1,13 +1,6 @@
 <form class="layui-form layui-card" action="{:request()->url()}" data-auto="true" method="post" autocomplete="off">
-    <div class="layui-card-body">
 
-        <div class="layui-form-item layui-hide">
-            <label class="layui-form-label"></label>
-            <div class="layui-input-block">
-                <input data-upload-logo type="hidden" name="logo" value="{$vo.logo|default=''}">
-                <script>$('[data-upload-logo]').uploadOneImage();</script>
-            </div>
-        </div>
+    <div class="layui-card-body">
 
         <div class="layui-form-item">
             <label class="layui-form-label">门店名称</label>
@@ -29,7 +22,7 @@
                 </div>
                 <div class="inline-block text-center nowrap" style="width:60%">
                     详情地址
-                    <input class="layui-input" style="padding-right:55px" name="address" value="{$vo.address|default=''}">
+                    <input class="layui-input" style="padding-right:50px" name="address" value="{$vo.address|default=''}">
                     <a style="top:33px;right:10px" data-address-select class="layui-btn layui-btn-sm absolute" data-tips-text="从地址中选择位置">
                         <i class="layui-icon layui-icon-location margin-0"></i>
                     </a>
@@ -39,16 +32,17 @@
                     $(function () {
                         let index = 0;
                         $('[data-address-select]').on('click', function () {
-                            index = $.form.iframe('https://apis.map.qq.com/tools/locpicker?search=1&type=1&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&referer=myapp', '地址选择器', ['550px', '800px']);
+                            let coord = $('[data-address-container] input[name=latlng]').val() || '';
+                            let params = {search: 1, type: 1, referer: 'myapp', coord: coord, key: 'OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77'};
+                            index = $.form.iframe('https://apis.map.qq.com/tools/locpicker?' + $.param(params), '地址选择器', ['550px', '800px']);
                         });
                         window.addEventListener('message', function (event) {
                             let loc = event.data;
                             if (loc && loc.module === 'locationPicker') {
-                                $('[data-address-container] input[name="city"]').val(loc.cityname || '');
-                                $('[data-address-container] input[name="address"]').val(loc.poiaddress + loc.poiname);
-                                $('[data-address-container] input[name="latlng"]').val((loc.latlng.lat || '') + ',' + (loc.latlng.lng || ''));
+                                $('[data-address-container] input[name=city]').val(loc.cityname || '');
+                                $('[data-address-container] input[name=address]').val(loc.poiaddress + loc.poiname);
+                                $('[data-address-container] input[name=latlng]').val((loc.latlng.lat || '') + ',' + (loc.latlng.lng || ''));
                                 $.msg.close(index);
-                                console.log('location', loc);
                             }
                         }, false);
                     });
@@ -63,7 +57,9 @@
             </div>
         </div>
     </div>
+
     <div class="hr-line-dashed"></div>
+
     <div class="layui-form-item text-center">
         <!--{notempty name='vo.id'}-->
         <input type='hidden' value='{$vo.id}' name='id'>
@@ -71,5 +67,5 @@
         <button class="layui-btn" type='submit'>保存数据</button>
         <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消编辑吗？" data-close>取消编辑</button>
     </div>
-    <!--<script>window.form.render();</script>-->
+
 </form>

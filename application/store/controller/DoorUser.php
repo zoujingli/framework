@@ -28,8 +28,8 @@ class DoorUser extends Controller
      */
     public function index()
     {
-        $this->title = '门店员工';
-        return $this->_query($this->table)->where(['is_deleted' => '0'])->order('sort asc,id desc')->page();
+        $this->title = '门店员工管理';
+        return $this->_query($this->table)->where(['is_deleted' => '0'])->order('id desc')->page();
     }
 
     public function edit()
@@ -46,19 +46,11 @@ class DoorUser extends Controller
     }
 
     /**
-     * 用户禁用
+     * 用户审核
      */
-    public function forbid()
+    public function pass()
     {
-        $this->_save($this->table, ['status' => '0']);
-    }
-
-    /**
-     * 用户禁用
-     */
-    public function resume()
-    {
-        $this->_save($this->table, ['status' => '1']);
+        $this->_save($this->table);
     }
 
 }

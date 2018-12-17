@@ -1,10 +1,10 @@
 {extend name='admin@main'}
 
 {block name="button"}
-<!--{if auth("store/card/add")}-->
+<!--{if auth("store/door_user/add")}-->
 <button data-modal='{:url("add")}' data-title="添加门店" class='layui-btn layui-btn-sm layui-btn-primary'>添加门店</button>
 <!--{/if}-->
-<!--{if auth("store/card/del")}-->
+<!--{if auth("store/door_user/del")}-->
 <button data-action='{:url("del")}' data-rule="id#{key}" class='layui-btn layui-btn-sm layui-btn-primary'>删除门店</button>
 <!--{/if}-->
 {/block}
@@ -18,11 +18,8 @@
         <th class='list-table-check-td think-checkbox'>
             <input data-auto-none="" data-check-target='.list-check-box' type='checkbox'>
         </th>
-        <th class='list-table-sort-td'>
-            <button type="button" data-reload class="layui-btn layui-btn-xs">刷 新</button>
-        </th>
-        <th class='text-left nowrap'>门店名称</th>
         <th class='text-left nowrap'>门店信息</th>
+        <th class='text-left nowrap'>员工信息</th>
         <th></th>
         <th></th>
     </tr>
@@ -32,39 +29,44 @@
     <!--{foreach $list as $key=>$vo}-->
     <tr>
         <td class='list-table-check-td think-checkbox'><input class="list-check-box" value='{$vo.id}' type='checkbox'></td>
-        <td class='list-table-sort-td'><input data-action-blur="{:request()->url()}" data-value="id#{$vo.id};action#sort;sort#{value}" data-loading="false" value="{$vo.sort}" class="list-sort-input"></td>
         <td class='text-left nowrap'>
-            {notempty name='vo.logo'}
-            <div class="background-image pull-left" data-tips-image="{$vo.logo}" style="background-image:url('{$vo.logo}');width:20px;height:20px"></div>
-            {/notempty}
-            {$vo.name|default=''}
+            门店：{$vo.name|default=''}<br>
+            地址：{$vo.address|default=''}
         </td>
         <td class='text-left nowrap'>
-            {$vo.content|default=''}
+            姓名：{$vo.name|default=''}<br>
+            手机：{$vo.phone|default=''}
         </td>
         <td class='text-left nowrap'>
-            {eq name='vo.status' value='0'}
-            <span class="layui-badge">已停业</span>
-            {else}
-            <span class="layui-badge layui-bg-green">营业中</span>
-            {/eq}
+            {eq name='vo.status' value='0'}<span class="layui-badge">已拒绝</span>{/eq}
+            {eq name='vo.status' value='1'}<span class="layui-badge layui-bg-blue">待审核</span>{/eq}
+            {eq name='vo.status' value='2'}<span class="layui-badge layui-bg-green">已审核</span>{/eq}
         </td>
         <td class='text-left nowrap'>
 
-            {if auth("store/card/edit")}
+            {if auth("store/door_user/edit")}
             <span class="text-explode">|</span>
             <a data-title="编辑门店" data-modal='{:url("edit")}?id={$vo.id}'>编辑</a>
             {/if}
 
-            {if $vo.status eq 1 and auth("store/card/forbid")}
+            {if auth("store/door_user/pass") and $vo.status eq '0'}
             <span class="text-explode">|</span>
-            <a data-action="{:url('forbid')}" data-value="id#{$vo.id};status#0">停业</a>
-            {elseif auth("store/card/resume")}
-            <span class="text-explode">|</span>
-            <a data-action="{:url('resume')}" data-value="id#{$vo.id};status#1">营业</a>
+            <a data-action="{:url('pass')}" data-value="id#{$vo.id};status#1">撤销拒绝</a>
             {/if}
 
-            {if auth("store/card/del")}
+            {if auth("store/door_user/pass") and $vo.status eq '1'}
+            <span class="text-explode">|</span>
+            <a data-action="{:url('pass')}" data-value="id#{$vo.id};status#2">审核通过</a>
+            <span class="text-explode">|</span>
+            <a data-action="{:url('pass')}" data-value="id#{$vo.id};status#0">拒绝审核</a>
+            {/if}
+
+            {if auth("store/door_user/pass") and $vo.status eq '2'}
+            <span class="text-explode">|</span>
+            <a data-action="{:url('pass')}" data-value="id#{$vo.id};status#1">撤销审核</a>
+            {/if}
+
+            {if auth("store/door_user/del")}
             <span class="text-explode">|</span>
             <a data-confirm="确定要删除数据吗?" data-action="{:url('del')}" data-value="id#{$vo.id}">删除</a>
             {/if}

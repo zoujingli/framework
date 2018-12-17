@@ -1,12 +1,15 @@
 {extend name='admin@main'}
 
 {block name="button"}
-<!--{if auth("store/card/add")}-->
+
+<!--{if auth("store/door/add")}-->
 <button data-modal='{:url("add")}' data-title="添加门店" class='layui-btn layui-btn-sm layui-btn-primary'>添加门店</button>
 <!--{/if}-->
-<!--{if auth("store/card/del")}-->
+
+<!--{if auth("store/door/del")}-->
 <button data-action='{:url("del")}' data-rule="id#{key}" class='layui-btn layui-btn-sm layui-btn-primary'>删除门店</button>
 <!--{/if}-->
+
 {/block}
 
 {block name="content"}
@@ -16,12 +19,11 @@
     <thead>
     <tr>
         <th class='list-table-check-td think-checkbox'>
-            <input data-auto-none="" data-check-target='.list-check-box' type='checkbox'>
+            <input data-auto-none data-check-target='.list-check-box' type='checkbox'>
         </th>
         <th class='list-table-sort-td'>
             <button type="button" data-reload class="layui-btn layui-btn-xs">刷 新</button>
         </th>
-        <th class='text-left nowrap'>门店名称</th>
         <th class='text-left nowrap'>门店信息</th>
         <th></th>
         <th></th>
@@ -35,12 +37,10 @@
         <td class='list-table-sort-td'><input data-action-blur="{:request()->url()}" data-value="id#{$vo.id};action#sort;sort#{value}" data-loading="false" value="{$vo.sort}" class="list-sort-input"></td>
         <td class='text-left nowrap'>
             {notempty name='vo.logo'}
-            <div class="background-image pull-left" data-tips-image="{$vo.logo}" style="background-image:url('{$vo.logo}');width:20px;height:20px"></div>
+            <div class="background-image pull-left" data-tips-image="{$vo.logo}" style="background-image:url('{$vo.logo}')"></div>
             {/notempty}
-            {$vo.name|default=''}
-        </td>
-        <td class='text-left nowrap'>
-            {$vo.content|default=''}
+            <span class="layui-badge layui-bg-gray">名 称</span>：{$vo.name|default=''}<br>
+            <span class="layui-badge layui-bg-gray">地 址</span>：{$vo.address|default=''}
         </td>
         <td class='text-left nowrap'>
             {eq name='vo.status' value='0'}
@@ -51,20 +51,20 @@
         </td>
         <td class='text-left nowrap'>
 
-            {if auth("store/card/edit")}
+            {if auth("store/door/edit")}
             <span class="text-explode">|</span>
             <a data-title="编辑门店" data-modal='{:url("edit")}?id={$vo.id}'>编辑</a>
             {/if}
 
-            {if $vo.status eq 1 and auth("store/card/forbid")}
+            {if $vo.status eq 1 and auth("store/door/forbid")}
             <span class="text-explode">|</span>
             <a data-action="{:url('forbid')}" data-value="id#{$vo.id};status#0">停业</a>
-            {elseif auth("store/card/resume")}
+            {elseif auth("store/door/resume")}
             <span class="text-explode">|</span>
             <a data-action="{:url('resume')}" data-value="id#{$vo.id};status#1">营业</a>
             {/if}
 
-            {if auth("store/card/del")}
+            {if auth("store/door/del")}
             <span class="text-explode">|</span>
             <a data-confirm="确定要删除数据吗?" data-action="{:url('del')}" data-value="id#{$vo.id}">删除</a>
             {/if}
