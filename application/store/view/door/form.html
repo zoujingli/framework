@@ -1,18 +1,18 @@
 <form class="layui-form layui-card" action="{:request()->url()}" data-auto="true" method="post" autocomplete="off">
     <div class="layui-card-body">
 
-        <div class="layui-form-item">
-            <label class="layui-form-label">门店名称</label>
+        <div class="layui-form-item layui-hide">
+            <label class="layui-form-label"></label>
             <div class="layui-input-block">
-                <input name="name" required value='{$vo.name|default=""}' placeholder="请输入门店名称" class="layui-input">
+                <input data-upload-logo type="hidden" name="logo" value="{$vo.logo|default=''}">
+                <script>$('[data-upload-logo]').uploadOneImage();</script>
             </div>
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label label-required">门店LOGO</label>
+            <label class="layui-form-label">门店名称</label>
             <div class="layui-input-block">
-                <input data-upload-logo type="hidden" name="logo" value="{$vo.logo|default=''}">
-                <script>$('[data-upload-logo]').uploadOneImage();</script>
+                <input name="name" required value='{$vo.name|default=""}' placeholder="请输入门店名称" class="layui-input">
             </div>
         </div>
 
@@ -30,7 +30,9 @@
                 <div class="inline-block text-center nowrap" style="width:60%">
                     详情地址
                     <input class="layui-input" style="padding-right:55px" name="address" value="{$vo.address|default=''}">
-                    <a style="top:33px;right:10px" data-address-select class="layui-btn layui-btn-sm absolute">选择</a>
+                    <a style="top:33px;right:10px" data-address-select class="layui-btn layui-btn-sm absolute" data-tips-text="从地址中选择位置">
+                        <i class="layui-icon layui-icon-location margin-0"></i>
+                    </a>
                 </div>
 
                 <script>
