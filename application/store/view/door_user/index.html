@@ -25,8 +25,8 @@
     <tr>
         <td class='list-table-check-td think-checkbox'><input class="list-check-box" value='{$vo.id}' type='checkbox'></td>
         <td class='text-left nowrap'>
-            门店：{$vo.name|default=''}<br>
-            地址：{$vo.address|default=''}
+            门店：{$vo.door.name|default='<span class="color-desc">未获取门店信息</span>'|raw}<br>
+            地址：{$vo.door.address|default='<span class="color-desc">未获取门店信息</span>'|raw}
         </td>
         <td class='text-left nowrap'>
             姓名：{$vo.name|default=''}<br>

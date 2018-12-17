@@ -3,6 +3,7 @@
 namespace app\store\controller;
 
 use library\Controller;
+use think\Db;
 
 /**
  * 用户用户管理
@@ -29,12 +30,24 @@ class DoorUser extends Controller
     public function index()
     {
         $this->title = '门店员工管理';
-        return $this->_query($this->table)->where(['is_deleted' => '0'])->order('id desc')->page();
+        $subsql = $this->_query('StoreDoor a')->field('a.id')->like('a.name|door_name')->equal('a.status|door_status')->db()->buildSql();
+        return $this->_query($this->table)->whereRaw("id in $subsql")->like('title,phone')->equal('status')->where(['is_deleted' => '0'])->order('id desc')->page();
     }
 
-    public function edit()
+    /**
+     * 数据列表处理
+     * @param array $data
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    protected function _page_filter(array &$data)
     {
-        return $this->_form($this->table, 'form');
+        $doors = Db::name('StoreDoor')->where([['id', 'in', array_unique(array_column($data, 'id'))]])->select();
+        foreach ($data as &$vo) {
+            $vo['door'] = [];
+            foreach ($doors as $door) if ($vo['door_id'] === $door['id']) $vo['door'] = $door;
+        }
     }
 
     /**

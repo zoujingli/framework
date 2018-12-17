@@ -20,6 +20,8 @@ use library\Controller;
  * 搜索条件处理器
  * Class Query
  * @package library\logic
+ * @see \think\Db\Query
+ * @mixin \think\Db\Query
  */
 class Query extends Logic
 {
@@ -65,7 +67,9 @@ class Query extends Logic
     {
         $data = $this->request->$inputType();
         foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
-            if (isset($data[$field]) && $data[$field] !== '') $this->query->whereLike($field, "%{$data[$field]}%");
+            list($dk, $qk) = [$field, $field];
+            if (stripos($field, '|') !== false) list($dk, $qk) = explode('|', $field);
+            if (isset($data[$qk]) && $data[$qk] !== '') $this->query->whereLike($dk, "%{$data[$qk]}%");
         }
         return $this;
     }
@@ -80,7 +84,9 @@ class Query extends Logic
     {
         $data = $this->request->$inputType();
         foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
-            if (isset($data[$field]) && $data[$field] !== '') $this->query->where($field, "{$data[$field]}");
+            list($dk, $qk) = [$field, $field];
+            if (stripos($field, '|') !== false) list($dk, $qk) = explode('|', $field);
+            if (isset($data[$qk]) && $data[$qk] !== '') $this->query->where($dk, "{$data[$qk]}");
         }
         return $this;
     }
@@ -96,24 +102,70 @@ class Query extends Logic
     {
         $data = $this->request->$inputType();
         foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
-            if (isset($data[$field]) && $data[$field] !== '') {
-                $this->query->whereIn($field, explode($split, $data[$field]));
+            list($dk, $qk) = [$field, $field];
+            if (stripos($field, '|') !== false) list($dk, $qk) = explode('|', $field);
+            if (isset($data[$qk]) && $data[$qk] !== '') $this->query->whereIn($dk, explode($split, $data[$qk]));
+        }
+        return $this;
+    }
+
+
+    /**
+     * 设置DateTime区间查询
+     * @param string|array $fields 查询字段
+     * @param string $split 输入分隔符
+     * @param string $inputType 输入类型 get|post
+     * @return $this
+     */
+    public function dateBetween($fields, $split = ' - ', $inputType = 'get')
+    {
+        $data = $this->request->$inputType();
+        foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
+            list($dk, $qk) = [$field, $field];
+            if (stripos($field, '|') !== false) list($dk, $qk) = explode('|', $field);
+            if (isset($data[$qk]) && $data[$qk] !== '') {
+                list($start, $end) = explode($split, $data[$qk]);
+                $this->query->whereBetween($dk, ["{$start} 00:00:00", "{$end} 23:59:59"]);
             }
         }
         return $this;
     }
 
     /**
-     * 设置where条件
-     * @param array $where
+     * 设置区间查询
+     * @param string|array $fields 查询字段
+     * @param string $split 输入分隔符
+     * @param string $inputType 输入类型 get|post
      * @return $this
      */
-    public function where($where)
+    public function valueBetween($fields, $split = ' ', $inputType = 'get')
     {
-        $this->query->where($where);
+        $data = $this->request->$inputType();
+        foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
+            list($dk, $qk) = [$field, $field];
+            if (stripos($field, '|') !== false) list($dk, $qk) = explode('|', $field);
+            if (isset($data[$qk]) && $data[$qk] !== '') {
+                list($start, $end) = explode($split, $data[$field]);
+                $this->query->whereBetween($dk, ["{$start}", "{$end}"]);
+            }
+        }
         return $this;
     }
 
+    /**
+     * 魔术调用方法
+     * @param string $name 调用方法名称
+     * @param array $arguments 调用参数
+     * @return $this
+     */
+    public function __call($name, $arguments)
+    {
+        if (method_exists($this->query, $name)) {
+            call_user_func_array([$this->query, $name], $arguments);
+        }
+        return $this;
+    }
+    
     /**
      * 实例化分页管理器
      * @param boolean $isPage 是否启用分页
@@ -132,54 +184,4 @@ class Query extends Logic
         return (new Page($this->query, $isPage, $isDisplay, $total, $limit))->init($this->controller);
     }
 
-
-    /**
-     * 列表指定排序
-     * @param  string|array $field 排序字段
-     * @param  string $order 排序方式
-     * @return $this
-     */
-    public function order($field, $order = null)
-    {
-        $this->query->order($field, $order);
-        return $this;
-    }
-
-    /**
-     * 设置DateTime区间查询
-     * @param string|array $fields 查询字段
-     * @param string $split 输入分隔符
-     * @param string $inputType 输入类型 get|post
-     * @return $this
-     */
-    public function dateBetween($fields, $split = ' - ', $inputType = 'get')
-    {
-        $data = $this->request->$inputType();
-        foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
-            if (isset($data[$field]) && $data[$field] !== '') {
-                list($start, $end) = explode($split, $data[$field]);
-                $this->query->whereBetween($field, ["{$start} 00:00:00", "{$end} 23:59:59"]);
-            }
-        }
-        return $this;
-    }
-
-    /**
-     * 设置区间查询
-     * @param string|array $fields 查询字段
-     * @param string $split 输入分隔符
-     * @param string $inputType 输入类型 get|post
-     * @return $this
-     */
-    public function valueBetween($fields, $split = ' ', $inputType = 'get')
-    {
-        $data = $this->request->$inputType();
-        foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
-            if (isset($data[$field]) && $data[$field] !== '') {
-                list($start, $end) = explode($split, $data[$field]);
-                $this->query->whereBetween($field, ["{$start}", "{$end}"]);
-            }
-        }
-        return $this;
-    }
 }
