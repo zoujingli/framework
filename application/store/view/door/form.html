@@ -43,7 +43,7 @@
                             let loc = event.data;
                             if (loc && loc.module === 'locationPicker') {
                                 $('[data-address-container] input[name="city"]').val(loc.cityname || '');
-                                $('[data-address-container] input[name="address"]').val(loc.poiaddress + loc.poiname || '');
+                                $('[data-address-container] input[name="address"]').val(loc.poiaddress + loc.poiname);
                                 $('[data-address-container] input[name="latlng"]').val((loc.latlng.lat || '') + ',' + (loc.latlng.lng || ''));
                                 $.msg.close(index);
                                 console.log('location', loc);
