@@ -28,13 +28,13 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">销售价格</label>
                     <div class="layui-input-block">
-                        <input name="price" required value='{$vo.price|default=""}' placeholder="请输入销售价格" class="layui-input">
+                        <input name="price" onblur="this.value=(parseFloat(this.value)||0).toFixed(2)" required value='{$vo.price|default=""}' placeholder="请输入销售价格" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">卡券库存</label>
                     <div class="layui-input-block">
-                        <input name="num_stock" required value='{$vo.num_stock|default=""}' placeholder="请输入卡券库存" class="layui-input">
+                        <input name="num_stock" onblur="this.value=parseInt(this.value)||0" required value='{$vo.num_stock|default=""}' placeholder="请输入卡券库存" class="layui-input">
                     </div>
                 </div>
             </div>
@@ -49,7 +49,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">有效天数</label>
                     <div class="layui-input-block">
-                        <input name="effective_days" required value='{$vo.effective_days|default=""}' placeholder="请输入有效天数" class="layui-input">
+                        <input name="effective_days" onblur="this.value=parseInt(this.value)||0" required value='{$vo.effective_days|default=""}' placeholder="请输入有效天数" class="layui-input">
                     </div>
                 </div>
             </div>

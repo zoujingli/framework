@@ -420,7 +420,7 @@ $(function () {
     $.fn.uploadOneImage = function () {
         let name = $(this).attr('name') || 'image';
         let type = $(this).data('type') || 'png,jpg';
-        let $tpl = $('<a data-file="one" data-field="' + name + '" data-type="' + type + '" class="uploadimage"></a>');
+        let $tpl = $('<a data-file="btn" data-field="' + name + '" data-type="' + type + '" class="uploadimage"></a>');
         $(this).attr('name', name).after($tpl).on('change', function () {
             !!this.value && $tpl.css('backgroundImage', 'url(' + this.value + ')');
         }).trigger('change');
