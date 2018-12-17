@@ -172,8 +172,8 @@ $(function () {
             }, loading, tips);
         };
         // 打开一个iframe窗口
-        this.iframe = function (url, title) {
-            return layer.open({title: title || '窗口', type: 2, area: ['550px', '800px'], fix: true, maxmin: false, content: url});
+        this.iframe = function (url, title, area) {
+            return layer.open({title: title || '窗口', type: 2, area: area || ['800px', '550px'], fix: true, maxmin: false, content: url});
         };
         // 加载HTML到弹出层
         this.modal = function (url, data, title, callback, loading, tips) {

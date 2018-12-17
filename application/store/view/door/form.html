@@ -37,7 +37,7 @@
                     $(function () {
                         let index = 0;
                         $('[data-address-select]').on('click', function () {
-                            index = $.form.iframe('https://apis.map.qq.com/tools/locpicker?search=1&type=1&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&referer=myapp', '地址选择器');
+                            index = $.form.iframe('https://apis.map.qq.com/tools/locpicker?search=1&type=1&key=OB4BZ-D4W3U-B7VVO-4PJWW-6TKDJ-WPB77&referer=myapp', '地址选择器', ['550px', '800px']);
                         });
                         window.addEventListener('message', function (event) {
                             let loc = event.data;
