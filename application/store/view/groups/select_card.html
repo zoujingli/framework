@@ -1,0 +1,88 @@
+<div id="SelectMemberCard">
+    {foreach $CardList as $card}
+    <div class="member-card" data-card-id="{$card.id}" data-card-bgimg="{$card.bgimg}" data-card-name="{$card.name}" data-card-price="{$card.price}">
+        <img src="{$card.bgimg}" alt="bgimg">
+        <div class="member-card-name">{$card.name}</div>
+        <div class="member-card-price">建议零售价 <strong class="color-red">{$card.price+0}</strong> 元</div>
+        <div class="member-card-checked transition"><i class="layui-icon layui-icon-ok-circle"></i></div>
+    </div>
+    {/foreach}
+</div>
+
+<style>
+    #SelectMemberCard {
+        display: none;
+    }
+
+    .member-card {
+        z-index: 99999;
+        cursor: pointer;
+        overflow: hidden;
+        position: relative;
+        display: inline-block;
+        margin-right: 15px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+    }
+
+    .member-card input {
+        color: #800;
+        width: 50px;
+        height: 20px;
+        font-weight: 700;
+        line-height: 16px;
+        text-align: center;
+        border: 1px solid #ccc;
+    }
+
+    .member-card img {
+        width: 240px;
+        height: 130px
+    }
+
+    .member-card div {
+        left: 0;
+        right: 0;
+        position: absolute;
+    }
+
+    .member-card-name {
+        top: 5px;
+        font-size: 16px;
+        line-height: 33px;
+        padding-left: 10px;
+        background: rgba(255, 255, 255, 0.8);
+    }
+
+    .member-card-price {
+        bottom: 5px;
+        text-align: right;
+        padding-right: 10px;
+        background: rgba(255, 255, 255, 0.8)
+    }
+
+    .member-card.active .member-card-checked {
+        display: block;
+    }
+
+    .member-card-checked {
+        top: 0;
+        bottom: 0;
+        display: none;
+        text-align: center;
+        line-height: 150px;
+        background: rgba(0, 0, 0, 0.5)
+    }
+
+    .member-card-checked i {
+        color: #fff;
+        font-size: 50px;
+    }
+</style>
+<script>
+    $(function () {
+        $('body').off('click', '.member-card').on('click', '.member-card', function () {
+            $(this).toggleClass('active');
+        });
+    });
+</script>

@@ -2,10 +2,10 @@
 
 {block name="button"}
 <!--{if auth("store/card/add")}-->
-<button data-modal='{:url("add")}' data-title="添加门店" class='layui-btn layui-btn-sm layui-btn-primary'>添加门店</button>
+<button data-open='{:url("add")}' data-title="添加团购" class='layui-btn layui-btn-sm layui-btn-primary'>添加团购</button>
 <!--{/if}-->
 <!--{if auth("store/card/del")}-->
-<button data-action='{:url("del")}' data-rule="id#{key}" class='layui-btn layui-btn-sm layui-btn-primary'>删除门店</button>
+<button data-action='{:url("del")}' data-rule="id#{key}" class='layui-btn layui-btn-sm layui-btn-primary'>删除团购</button>
 <!--{/if}-->
 {/block}
 
@@ -21,8 +21,8 @@
         <th class='list-table-sort-td'>
             <button type="button" data-reload class="layui-btn layui-btn-xs">刷 新</button>
         </th>
-        <th class='text-left nowrap'>门店名称</th>
-        <th class='text-left nowrap'>门店信息</th>
+        <th class='text-left nowrap'>团购信息</th>
+        <th class='text-left nowrap'>库存销量</th>
         <th></th>
         <th></th>
     </tr>
@@ -35,33 +35,30 @@
         <td class='list-table-sort-td'><input data-action-blur="{:request()->url()}" data-value="id#{$vo.id};action#sort;sort#{value}" data-loading="false" value="{$vo.sort}" class="list-sort-input"></td>
         <td class='text-left nowrap'>
             {notempty name='vo.logo'}
-            <div class="background-image pull-left" data-tips-image="{$vo.logo}" style="background-image:url('{$vo.logo}');width:20px;height:20px"></div>
+            <div class="background-image pull-left" data-tips-image="{$vo.logo}" style="background-image:url('{$vo.logo}')"></div>
             {/notempty}
-            {$vo.name|default=''}
+            团购名称：{$vo.title|default=''}<br>
+            销售价格：<span class="color-green">￥{$vo.price|default='0'}</span>
         </td>
         <td class='text-left nowrap'>
-            {$vo.content|default=''}
+            最大成团等待 <span class="color-blue">{$vo.wait_days}</span> 天<br>
+            总库存 <span class="color-red">{$vo.num_stock|default='0'}</span>
+            总销量 <span class="color-red">{$vo.num_sales|default='0'}</span>
         </td>
-        <td class='text-left nowrap'>
-            {eq name='vo.status' value='0'}
-            <span class="layui-badge">已停业</span>
-            {else}
-            <span class="layui-badge layui-bg-green">营业中</span>
-            {/eq}
-        </td>
+        <td class='text-left nowrap'>{eq name='vo.status' value='0'}<span class="layui-badge">已下架</span>{else}<span class="layui-badge layui-bg-green">销售中</span>{/eq}</td>
         <td class='text-left nowrap'>
 
             {if auth("store/card/edit")}
             <span class="text-explode">|</span>
-            <a data-title="编辑门店" data-modal='{:url("edit")}?id={$vo.id}'>编辑</a>
+            <a data-open='{:url("edit")}?id={$vo.id}'>编辑</a>
             {/if}
 
             {if $vo.status eq 1 and auth("store/card/forbid")}
             <span class="text-explode">|</span>
-            <a data-action="{:url('forbid')}" data-value="id#{$vo.id};status#0">停业</a>
+            <a data-action="{:url('forbid')}" data-value="id#{$vo.id};status#0">下架</a>
             {elseif auth("store/card/resume")}
             <span class="text-explode">|</span>
-            <a data-action="{:url('resume')}" data-value="id#{$vo.id};status#1">营业</a>
+            <a data-action="{:url('resume')}" data-value="id#{$vo.id};status#1">销售</a>
             {/if}
 
             {if auth("store/card/del")}
