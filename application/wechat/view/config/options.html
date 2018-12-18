@@ -55,8 +55,7 @@
 {block name='script'}
 <script>
     $(function () {
-        let type = '{:sysconf("wechat_type")}' || 'api';
-        $('[data-wechat-type=' + type + ']').trigger('click');
+        $('[data-wechat-type=' + ('{:sysconf("wechat_type")}' || 'api') + ']').trigger('click');
     });
 </script>
 {/block}

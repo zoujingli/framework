@@ -49,12 +49,12 @@
     });
 
     require(['jquery.masonry'], function (Masonry) {
-        let item = document.querySelector('#news-box');
-        let msnry = new Masonry(item, {itemSelector: '.news-item', columnWidth: 0});
+        var item = document.querySelector('#news-box');
+        var msnry = new Masonry(item, {itemSelector: '.news-item', columnWidth: 0});
         msnry.layout();
         $('body').on('click', '[data-news-del]', function () {
-            let that = this;
-            let dialogIndex = $.msg.confirm('确定要删除图文吗？', function () {
+            var that = this;
+            var dialogIndex = $.msg.confirm('确定要删除图文吗？', function () {
                 $.form.load('{:url("del")}', {value: 0, field: 'delete', id: that.getAttribute('data-news-del')}, 'post', function (ret) {
                     if (ret.code) {
                         $(that).parents('.news-item').remove();

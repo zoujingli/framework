@@ -204,7 +204,7 @@
 
     $(function () {
 
-        let $body = $('body');
+        var $body = $('body');
 
         // 取消编辑返回
         $('[data-cancel-edit]').on('click', function () {
@@ -215,7 +215,7 @@
 
         // 刷新预览显示
         function showReview(params) {
-            let src = '';
+            var src = '';
             if (params['type'] === 'news') {
                 src = '{:url("@wechat/api.review/news/_id_")}'.replace('_id_', params.content);
             } else {
@@ -245,9 +245,9 @@
         });
 
         // 音乐显示预览
-        let musicSelector = '[name="music_url"],[name="music_title"],[name="music_desc"],[name="music_image"]';
+        var musicSelector = '[name="music_url"],[name="music_title"],[name="music_desc"],[name="music_image"]';
         $body.off('change', musicSelector).on('change', musicSelector, function () {
-            let params = {type: 'music'}, $parent = $(this).parents('form');
+            var params = {type: 'music'}, $parent = $(this).parents('form');
             params.url = $parent.find('[name="music_url"]').val();
             params.desc = $parent.find('[name="music_desc"]').val();
             params.title = $parent.find('[name="music_title"]').val();
@@ -256,9 +256,9 @@
         });
 
         // 视频显示预览
-        let videoSelector = '[name="video_title"],[name="video_url"],[name="video_desc"]';
+        var videoSelector = '[name="video_title"],[name="video_url"],[name="video_desc"]';
         $body.off('change', videoSelector).on('change', videoSelector, function () {
-            let params = {type: 'video'}, $parent = $(this).parents('form');
+            var params = {type: 'video'}, $parent = $(this).parents('form');
             params.url = $parent.find('[name="video_url"]').val();
             params.desc = $parent.find('[name="video_desc"]').val();
             params.title = $parent.find('[name="video_title"]').val();
@@ -267,9 +267,9 @@
 
         // 默认类型事件
         $body.off('click', 'input[name=type]').on('click', 'input[name=type]', function () {
-            let value = $(this).val(), $form = $(this).parents('form');
+            var value = $(this).val(), $form = $(this).parents('form');
             if (value === 'customservice') value = 'text';
-            let $current = $form.find('[data-keys-type="' + value + '"]').removeClass('layui-hide');
+            var $current = $form.find('[data-keys-type="' + value + '"]').removeClass('layui-hide');
             $form.find('[data-keys-type]').not($current).addClass('layui-hide');
             switch (value) {
                 case 'news':

@@ -1,8 +1,8 @@
 define(['plupload'], function (plupload) {
     window.plupload = plupload;
     return function (element) {
-        let $ele = $(element);
-        let loader = new plupload.Uploader({
+        var $ele = $(element);
+        var loader = new plupload.Uploader({
             multi_selection: false,
             multipart_params: {
                 safe: $ele.attr('data-safe') || '',
@@ -22,7 +22,7 @@ define(['plupload'], function (plupload) {
         });
         loader.bind('FileUploaded', function (up, file, res) {
             if (parseInt(res.status) === 200) {
-                let ret = JSON.parse(res.response), field = $ele.data('field') || 'file';
+                var ret = JSON.parse(res.response), field = $ele.data('field') || 'file';
                 $('[name="' + field + '"]').val(ret.url).trigger('change');
             }
         });

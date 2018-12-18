@@ -19,8 +19,8 @@
 <script>
     $(function () {
         window.form.render();
-        let value = '{:sysconf("storage_type")}';
-        let $active = $("[data-storagetype='" + value + "']").trigger('click');
+        var value = '{:sysconf("storage_type")}';
+        var $active = $("[data-storagetype='" + value + "']").trigger('click');
         if ($active.size() < 1) $("[data-storagetype]:first").trigger('click');
     });
 </script>

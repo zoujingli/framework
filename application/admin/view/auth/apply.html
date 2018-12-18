@@ -11,7 +11,7 @@
 
 {block name="script"}
 <script>
-    let RoleAction = new function () {
+    window.RoleAction = new function () {
         this.data = {};
         this.ztree = null;
         this.setting = {
@@ -19,24 +19,21 @@
             check: {enable: true, nocheck: false, chkboxType: {"Y": "ps", "N": "ps"}},
             callback: {
                 beforeClick: function (id, node) {
-                    if (node.children.length < 1) RoleAction.ztree.checkNode(node, !node.checked, null, true);
-                    else RoleAction.ztree.expandNode(node);
+                    node.children.length < 1 ? RoleAction.ztree.checkNode(node, !node.checked, null, true) : RoleAction.ztree.expandNode(node);
                     return false;
                 }
             }
         };
         this.renderChildren = function (list, level) {
-            let childrens = [];
-            for (let i in list) childrens.push({
-                open: true, node: list[i].node,
-                name: list[i].title || list[i].node,
-                checked: list[i].checked || false,
-                children: this.renderChildren(list[i]._sub_, level + 1)
+            var childrens = [];
+            for (var i in list) childrens.push({
+                open: true, node: list[i].node, name: list[i].title || list[i].node,
+                checked: list[i].checked || false, children: this.renderChildren(list[i]._sub_, level + 1)
             });
             return childrens;
         };
         this.getData = function (that) {
-            let index = $.msg.loading();
+            var index = $.msg.loading();
             $.form.load('{:url()}', {id: '{$vo.id}', action: 'get'}, 'post', function (ret) {
                 that.data = that.renderChildren(ret.data, 1);
                 return $.msg.close(index), that.showTree(), false;
@@ -45,16 +42,16 @@
         this.showTree = function () {
             this.ztree = $.fn.zTree.init($("#zTree"), this.setting, this.data);
             while (true) {
-                let nodes = this.ztree.getNodesByFilter(function (node) {
+                var nodes = this.ztree.getNodesByFilter(function (node) {
                     return (!node.node && node.children.length < 1);
                 });
                 if (nodes.length < 1) break;
-                for (let i in nodes) this.ztree.removeNode(nodes[i]);
+                for (var i in nodes) this.ztree.removeNode(nodes[i]);
             }
         };
         this.submit = function () {
-            let nodes = [], data = this.ztree.getCheckedNodes(true);
-            for (let i in data) if (data[i].node) nodes.push(data[i].node);
+            var nodes = [], data = this.ztree.getCheckedNodes(true);
+            for (var i in data) if (data[i].node) nodes.push(data[i].node);
             $.form.load('{:url()}', {id: '{$vo.id}', action: 'save', nodes: nodes}, 'post');
         };
         // 刷新数据
@@ -71,13 +68,13 @@
 <link href="__ROOT__/static/plugs/ztree/zTreeStyle/zTreeStyle.css" rel="stylesheet">
 <script src="__ROOT__/static/plugs/ztree/ztree.all.min.js"></script>
 <style>
-    ul.ztree li{white-space:normal!important}
-    ul.ztree li span.button.switch{margin-right:5px}
-    ul.ztree ul ul li{display:inline-block;white-space:normal}
-    ul.ztree>li{padding:15px 25px 15px 15px}
-    ul.ztree>li>ul{margin-top:12px;border-top:1px solid rgba(0, 0, 0, 0.1)}
-    ul.ztree>li>ul>li{padding:5px}
-    ul.ztree>li>a>span{font-size:15px;font-weight:700}
-    ul.ztree .level2 .button.level2{background:none}
+    ul.ztree li{white-space:normal!important;}
+    ul.ztree li span.button.switch{margin-right:5px;}
+    ul.ztree ul ul li{display:inline-block;white-space:normal;}
+    ul.ztree>li{padding:15px 25px 15px 15px;}
+    ul.ztree>li>ul{margin-top:12px;border-top:1px solid rgba(0,0,0,.1);}
+    ul.ztree>li>ul>li{padding:5px;}
+    ul.ztree>li>a>span{font-weight:700;font-size:15px;}
+    ul.ztree .level2 .button.level2{background:0 0;}
 </style>
 {/block}

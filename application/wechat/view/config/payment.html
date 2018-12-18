@@ -79,25 +79,25 @@
 <script>
     $(function () {
         $('li[data-mch-type]').map(function () {
-            let type = "{:sysconf('wechat_mch_ssl_type')}" || 'p12';
+            var type = "{:sysconf('wechat_mch_ssl_type')}" || 'p12';
             if ($(this).attr('data-mch-type') === type) {
                 $(this).trigger('click').find('input').get(0).checked = true;
             } else {
                 $(this).find('input').get(0).checked = false;
             }
         });
-        for (let o of ['wechat_mch_ssl_p12', 'wechat_mch_ssl_key', 'wechat_mch_ssl_cer']) {
-            $('input[name="' + o + '"]').on('change', function () {
-                let input = this, $button = $(this).next('button');
-                setTimeout(function () {
-                    if (typeof input.value === 'string' && input.value.length > 5) {
-                        $button.find('i').addClass('color-green');
-                    } else {
-                        $button.find('i').removeClass('color-green');
-                    }
-                }, 500);
-            }).trigger('change');
-        }
+        var types = ['wechat_mch_ssl_p12', 'wechat_mch_ssl_key', 'wechat_mch_ssl_cer'];
+        for (var i in types) $('input[name="' + types[i] + '"]').on('change', function () {
+            var input = this, $button = $(this).next('button');
+            setTimeout(function () {
+                if (typeof input.value === 'string' && input.value.length > 5) {
+                    $button.find('i').addClass('color-green');
+                } else {
+                    $button.find('i').removeClass('color-green');
+                }
+            }, 500);
+        }).trigger('change');
+
     });
 </script>
 {/block}

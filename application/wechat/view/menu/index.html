@@ -108,11 +108,11 @@
 <script>
     require(['angular'], function () {
 
-        let $form = $('.menu-form').vali();
-        let $vali = $form.vali().data('validate');
+        var $form = $('.menu-form').vali();
+        var $vali = $form.vali().data('validate');
         $('#MenuEditor.layui-hide').removeClass('layui-hide');
 
-        let app = angular.module("MenuEditor", []).run(callback);
+        var app = angular.module("MenuEditor", []).run(callback);
         angular.bootstrap(document.getElementById(app.name), [app.name]);
 
         function callback($rootScope) {
@@ -124,7 +124,7 @@
                 return $rootScope.$apply(function () {
                     $rootScope.keys = ret.data.keysdata || [];
                     $rootScope.list = ret.data.menudata || [{name: '请输入名称', type: 'click', sub_button: []}];
-                    for (let i in $rootScope.list) $rootScope.list[i].sub_button = $rootScope.list[i].sub_button || [];
+                    for (var i in $rootScope.list) $rootScope.list[i].sub_button = $rootScope.list[i].sub_button || [];
                     $rootScope.list[0].show = true;
                     $rootScope.list[0].active = true;
                     $rootScope.item = $rootScope.list[0];
@@ -147,27 +147,27 @@
 
             // 移除菜单
             $rootScope.delItem = function (one, two) {
-                let tmp = [], _two = null;
+                var tmp = [], _two = null;
                 if (two) {
-                    for (let i in one.sub_button) if (one.sub_button[i] !== two) {
+                    for (var i in one.sub_button) if (one.sub_button[i] !== two) {
                         tmp.push(one.sub_button[i]);
                         if (one.sub_button[i].active) _two = one.sub_button[i];
                     }
                     one.sub_button = tmp;
                     return $rootScope.setActiveItem(one, _two);
                 }
-                for (let i in $rootScope.list) if (one !== $rootScope.list[i]) tmp.push($rootScope.list[i]);
+                for (var i in $rootScope.list) if (one !== $rootScope.list[i]) tmp.push($rootScope.list[i]);
                 $rootScope.list = tmp;
                 if ($rootScope.list.length > 1) $rootScope.setActiveItem($rootScope.list[0])
             };
 
             // 切换选择菜单
             $rootScope.setActiveItem = function (one, two) {
-                for (let i in $rootScope.list) {
+                for (var i in $rootScope.list) {
                     $rootScope.list[i].show = ($rootScope.list[i] === one);
                     $rootScope.list[i].active = two ? false : ($rootScope.list[i] === one);
                 }
-                for (let i in $rootScope.list) for (let j in $rootScope.list[i].sub_button) {
+                for (var i in $rootScope.list) for (var j in $rootScope.list[i].sub_button) {
                     $rootScope.list[i].sub_button[j].active = ($rootScope.list[i].sub_button[j] === two)
                 }
                 $rootScope.item = two || one || {};
