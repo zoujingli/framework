@@ -527,7 +527,7 @@ $(function () {
 
     /*! 输入框失焦提交 */
     $body.on('blur', '[data-action-blur]', function () {
-        var that = this, data = {}, $this = $(this), action = $this.attr('data-action-blur');
+        var data = {}, that = this, $this = $(this), action = $this.attr('data-action-blur');
         var time = $this.attr('data-time'), loading = $this.attr('data-loading') || false;
         var load = loading !== 'false', tips = typeof loading === 'string' ? loading : undefined;
         var method = $this.attr('data-method') || 'post', confirm = $this.attr('data-confirm');
