@@ -41,7 +41,7 @@
      * @type Function
      */
     function uploaded(ret, file) {
-        let url = ret.url || ret.site_url;
+        var url = ret.url || ret.site_url;
         $('#' + file.id).attr('data-md5', file.md5).attr('data-src', url);
         /*{if $mode === 'one'}*/
         top.$('[name="{$field}"]').map(function () {
@@ -51,18 +51,18 @@
         /*{/if}*/
     }
 
-    let isSuccessState = false;
+    var isSuccessState = false;
 
     function completed() {
-        let btnHTML = '完成上传';
+        var btnHTML = '完成上传';
         $('.uploadBtn').html(btnHTML).on('click', successSelected);
 
         function successSelected() {
             if (!isSuccessState && this.innerHTML === btnHTML) {
                 isSuccessState = true;
-                let srcs = [], md5s = [];
+                var srcs = [], md5s = [];
                 $('[data-md5] .success').map(function () {
-                    let $li = $(this).parents('[data-md5]');
+                    var $li = $(this).parents('[data-md5]');
                     md5s.push($li.attr('data-md5'));
                     srcs.push($li.attr('data-src'));
                 });
@@ -77,35 +77,35 @@
 
     // 当domReady的时候开始初始化
     $(function () {
-        let uploader;
-        let $wrap = $('#uploader');
+        var uploader;
+        var $wrap = $('#uploader');
         /* 文件容器 */
-        let $queue = $('<ul class="filelist"></ul>').appendTo($wrap.find('.queueList'));
+        var $queue = $('<ul class="filelist"></ul>').appendTo($wrap.find('.queueList'));
         /* 状态栏，包括进度和控制按钮 */
-        let $statusBar = $wrap.find('.statusBar');
+        var $statusBar = $wrap.find('.statusBar');
         /* 文件总体选择信息。 */
-        let $info = $statusBar.find('.info');
+        var $info = $statusBar.find('.info');
         /* 上传按钮 */
-        let $upload = $wrap.find('.uploadBtn');
+        var $upload = $wrap.find('.uploadBtn');
         /* 没选择文件之前的内容。*/
-        let $placeHolder = $wrap.find('.placeholder');
-        let $progress = $statusBar.find('.progress').hide();
+        var $placeHolder = $wrap.find('.placeholder');
+        var $progress = $statusBar.find('.progress').hide();
         /* 添加的文件数量 */
-        let fileCount = 0;
+        var fileCount = 0;
         /* 添加的文件总大小 */
-        let fileSize = 0;
+        var fileSize = 0;
         /* 优化retina, 在retina下这个值是2 */
-        let ratio = window.devicePixelRatio || 1;
+        var ratio = window.devicePixelRatio || 1;
         /* 缩略图大小 */
-        let thumbnailWidth = 110 * ratio;
-        let thumbnailHeight = 110 * ratio;
+        var thumbnailWidth = 110 * ratio;
+        var thumbnailHeight = 110 * ratio;
         /* 可能有pedding, ready, uploading, confirm, done */
-        let state = "pedding";
+        var state = "pedding";
         /* 所有文件的进度信息，key为file id */
-        let percentages = {};
+        var percentages = {};
         /* 判断浏览器是否支持文件的base64 */
-        let isSupportBase64 = (function () {
-            let data = new Image(), support = true;
+        var isSupportBase64 = (function () {
+            var data = new Image(), support = true;
             data.onload = data.onerror = function () {
                 if (parseInt(this.width) !== 1 || parseInt(this.height) !== 1) support = false;
             };
@@ -113,8 +113,8 @@
             return support;
         }.call(this));
         /* 检测是否已经安装flash, 检测flash的版本 */
-        let flashVersion = (function () {
-            let version;
+        var flashVersion = (function () {
+            var version;
             try {
                 version = navigator.plugins['Shockwave Flash'].description;
             } catch (ex) {
@@ -127,9 +127,9 @@
             version = version.match(/\d+/g);
             return parseFloat(version[0] + '.' + version[1], 10);
         })();
-        let supportTransition = (function () {
-            let style = document.createElement('p').style;
-            let isTransition = 'transition' in style || 'WebkitTransition' in style || 'MozTransition' in style || 'msTransition' in style || 'OTransition' in style;
+        var supportTransition = (function () {
+            var style = document.createElement('p').style;
+            var isTransition = 'transition' in style || 'WebkitTransition' in style || 'MozTransition' in style || 'msTransition' in style || 'OTransition' in style;
             return (style = null), isTransition;
         })();
 
@@ -142,8 +142,8 @@
                     else alert('安装已成功，请刷新！');
                     delete window['expressinstallcallback'];
                 };
-                let swf = '__ROOT__/static/plugs/uploader/expressInstall.swf';
-                let html = '<object type="application/' + 'x-shockwave-flash" data="' + swf + '" ';
+                var swf = '__ROOT__/static/plugs/uploader/expressInstall.swf';
+                var html = '<object type="application/' + 'x-shockwave-flash" data="' + swf + '" ';
                 if (WebUploader.browser.ie) html += 'classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" ';
                 container.html(html + 'width="100%" height="100%" style="outline:0"><param name="movie" value="' + swf + '" /><param name="wmode" value="transparent" /><param name="allowscriptaccess" value="always" /></object>');
             })($wrap);
@@ -152,12 +152,12 @@
         // 文件上传前的检查
         WebUploader.Uploader.register({'before-send-file': 'preupload'}, {
             preupload: function (file) {
-                let me = this, owner = this.owner, deferred = WebUploader.Deferred();
+                var me = this, owner = this.owner, deferred = WebUploader.Deferred();
                 owner.md5File(file.source).fail(function () {
                     deferred.reject();
                 }).then(function (md5) {
                     file.md5 = md5;
-                    let data = {id: file.id, md5: md5, uptype: '{$uptype}', filename: file.name, safe: '{$safe}'};
+                    var data = {id: file.id, md5: md5, uptype: '{$uptype}', filename: file.name, safe: '{$safe}'};
                     $.ajax("{:url('@')}?s=admin/plugs/upstate", {
                         dataType: 'json', method: 'post', data: data, success: function (ret) {
                             if (parseInt(ret.code) === 1) {
@@ -249,8 +249,8 @@
 
         // 拖拽时不接受 js, txt 文件。
         uploader.on('dndAccept', function (items) {
-            let denied = false, len = items.length, unAllowed = 'text/plain;application/javascript ';
-            for (let i = 0; i < len; i++) if (~unAllowed.indexOf(items[i].type)) if (denied = true) break;
+            var denied = false, len = items.length, unAllowed = 'text/plain;application/javascript ';
+            for (var i = 0; i < len; i++) if (~unAllowed.indexOf(items[i].type)) if (denied = true) break;
             return !denied;
         });
 
@@ -262,11 +262,11 @@
 
         // 当有文件添加进来时执行，负责view的创建
         function addFile(file) {
-            let $li = $('<li id="' + file.id + '"><p class="title">' + file.name + '</p><p class="imgWrap"></p><p class="progress"><span></span></p></li>'),
+            var $li = $('<li id="' + file.id + '"><p class="title">' + file.name + '</p><p class="imgWrap"></p><p class="progress"><span></span></p></li>'),
                 $btns = $('<div class="file-panel"><span class="cancel">删除</span><span class="rotateRight">向右旋转</span><span class="rotateLeft">向左旋转</span></div>').appendTo($li),
                 $prgress = $li.find('p.progress span'), $wrap = $li.find('p.imgWrap'), $info = $('<p class="error"></p>');
-            let showError = function (code) {
-                let text = '';
+            var showError = function (code) {
+                var text = '';
                 if (code === 'exceed_size') text = '文件大小超出';
                 else if (code === 'interrupt') text = '上传暂停';
                 else if (code === 'http' || code === 'server' || code === 'abort') text = '上传失败，请重试';
@@ -304,12 +304,12 @@
                 $btns.stop().animate({height: 0});
             });
             $btns.on('click', 'span', function () {
-                let index = $(this).index();
+                var index = $(this).index();
                 if (index === 0) return removeFile(file), uploader.removeFile(file);
                 if (index === 1) file.rotation += 90;
                 if (index === 2) file.rotation -= 90;
                 if (supportTransition) {
-                    let deg = 'rotate(' + file.rotation + 'deg)';
+                    var deg = 'rotate(' + file.rotation + 'deg)';
                     $wrap.css({'-webkit-transform': deg, '-mos-transform': deg, '-o-transform': deg, 'transform': deg});
                 } else $wrap.css('filter', 'progid:DXImageTransform.Microsoft.BasicImage(rotation=' + (~~((file.rotation / 90) % 4 + 4) % 4) + ')');
             });
@@ -324,7 +324,7 @@
         }
 
         function updateTotalProgress() {
-            let loaded = 0, total = 0, spans = $progress.children(), percent;
+            var loaded = 0, total = 0, spans = $progress.children(), percent;
             $.each(percentages, function (k, v) {
                 total += v[0], loaded += v[0] * v[1];
             });
@@ -335,7 +335,7 @@
         }
 
         function updateStatus() {
-            let text = '', stats = '';
+            var text = '', stats = '';
             if (state === 'ready') text = '选中' + fileCount + '个文件，共' + WebUploader.formatSize(fileSize) + '。';
             else if (state === 'confirm') {
                 stats = uploader.getStats();
@@ -373,7 +373,7 @@
                 case 'confirm':
                     $('#filePicker2').removeClass('element-invisible');
                     $progress.hide(), $upload.text('开始上传');
-                    let stats = uploader.getStats();
+                    var stats = uploader.getStats();
                     if (stats.successNum && !stats.uploadFailNum) return setState('finish')
                     break;
                 case 'finish':
@@ -385,7 +385,7 @@
         }
 
         uploader.onUploadProgress = function (file, percentage) {
-            let $li = $('#' + file.id), $percent = $li.find('.progress span');
+            var $li = $('#' + file.id), $percent = $li.find('.progress span');
             $percent.css('width', percentage * 100 + '%');
             percentages[file.id][1] = percentage;
             updateTotalProgress();

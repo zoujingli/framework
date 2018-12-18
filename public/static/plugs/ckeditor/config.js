@@ -22,10 +22,10 @@ CKEDITOR.plugins.add("uimage", {
         editor.ui.addButton("UploadImage", {label: "上传本地图片", command: 'uimage', icon: 'image', toolbar: 'insert,10'});
         editor.addCommand('uimage', {
             exec: function (editor) {
-                let field = '_editor_upload_' + Math.floor(Math.random() * 100000);
-                let url = window.ROOT_URL + '?s=admin/plugs/upfile.html&mode=one&type=png,jpg,gif,jpeg&field=' + field;
+                var field = '_editor_upload_' + Math.floor(Math.random() * 100000);
+                var url = window.ROOT_URL + '?s=admin/plugs/upfile.html&mode=one&type=png,jpg,gif,jpeg&field=' + field;
                 $('<input type="hidden">').attr('name', field).appendTo(editor.element.$).on('change', function () {
-                    let element = CKEDITOR.dom.element.createFromHtml('<img style="max-width:100%" src="' + this.value + '" border="0" title="image" />');
+                    var element = CKEDITOR.dom.element.createFromHtml('<img style="max-width:100%" src="' + this.value + '" border="0" title="image" />');
                     editor.insertElement(element), $(this).remove();
                 });
                 $.form.iframe(url, '插入图片');
@@ -40,10 +40,10 @@ CKEDITOR.plugins.add('umusic', {
         editor.ui.addButton("UploadMusic", {label: "上传MP3文件", command: 'umusic', icon: 'specialchar', toolbar: 'insert,10'});
         editor.addCommand('umusic', {
             exec: function (editor) {
-                let field = '_editor_upload_' + Math.floor(Math.random() * 100000);
-                let url = window.ROOT_URL + '?s=admin/plugs/upfile.html&mode=one&type=mp3&field=' + field;
+                var field = '_editor_upload_' + Math.floor(Math.random() * 100000);
+                var url = window.ROOT_URL + '?s=admin/plugs/upfile.html&mode=one&type=mp3&field=' + field;
                 $('<input type="hidden">').attr('name', field).appendTo(editor.element.$).on('change', function () {
-                    let element = CKEDITOR.dom.element.createFromHtml('<audio controls="controls"><source src="' + this.value + '" type="audio/mpeg"></audio>');
+                    var element = CKEDITOR.dom.element.createFromHtml('<audio controls="controls"><source src="' + this.value + '" type="audio/mpeg"></audio>');
                     editor.insertElement(element), $(this).remove();
                 });
                 $.form.iframe(url, '上传MP3音频');
@@ -58,10 +58,10 @@ CKEDITOR.plugins.add('uvideo', {
         editor.ui.addButton("UploadVideo", {label: "上传MP4文件", command: 'uvideo', icon: 'flash', toolbar: 'insert,10'});
         editor.addCommand('uvideo', {
             exec: function (editor) {
-                let field = '_editor_upload_' + Math.floor(Math.random() * 100000);
-                let url = window.ROOT_URL + '?s=admin/plugs/upfile.html&mode=one&type=mp4&field=' + field;
+                var field = '_editor_upload_' + Math.floor(Math.random() * 100000);
+                var url = window.ROOT_URL + '?s=admin/plugs/upfile.html&mode=one&type=mp4&field=' + field;
                 $('<input type="hidden">').attr('name', field).appendTo(editor.element.$).on('change', function () {
-                    let element = CKEDITOR.dom.element.createFromHtml('<video width="100%" controls="controls"><source src="' + this.value + '" type="audio/mp4"></video>');
+                    var element = CKEDITOR.dom.element.createFromHtml('<video width="100%" controls="controls"><source src="' + this.value + '" type="audio/mp4"></video>');
                     editor.insertElement(element), $(this).remove();
                 });
                 $.form.iframe(url, '上传MP4音频');
@@ -77,7 +77,7 @@ CKEDITOR.plugins.add('uhtml', {
         editor.addCommand('uhtml', {
             exec: function (editor) {
                 layer.prompt({title: '插入HTML代码', formType: 2, area: ['600px', '300px']}, function (html, index) {
-                    let element = CKEDITOR.dom.element.createFromHtml('<div data-type="insert-html">' + html + '</div>');
+                    var element = CKEDITOR.dom.element.createFromHtml('<div data-type="insert-html">' + html + '</div>');
                     editor.insertElement(element), layer.close(index);
                 });
             }
