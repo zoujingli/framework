@@ -20,7 +20,7 @@ class Js extends Controller
         $url = $this->request->server('http_referer', $this->request->url(true), null);
         $wechat = Wechat::getWebOauthInfo($url, $this->request->get('mode', 1), false);
         $openid = isset($wechat['openid']) ? $wechat['openid'] : '';
-        $unionid = isset($wechat['unionid']) ? $wechat['unionid'] : '';
+        $unionid = empty($wechat['fansinfo']['unionid']) ? '' : $wechat['fansinfo']['unionid'];
         $configJson = json_encode(Wechat::getWebJssdkSign($url), JSON_UNESCAPED_UNICODE);
         $fansinfoJson = json_encode(isset($wechat['fansinfo']) ? $wechat['fansinfo'] : [], JSON_UNESCAPED_UNICODE);
         return <<<EOF
