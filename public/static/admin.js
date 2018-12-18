@@ -12,7 +12,9 @@
 
 // IE兼容提示
 (function (w) {
-    if (!("WebSocket" in w && 2 === w.WebSocket.CLOSING)) document.body.innerHTML = '<div style="width:100%;height:100px;font-size:20px;line-height:100px;text-align:center;background-color:#E90D24;color:#fff;margin-bottom:40px;">您使用的浏览器已经<strong>过时</strong>，建议使用最新版本的谷歌浏览器。<a target="_blank" href="https://pc.qq.com/detail/1/detail_2661.html" class="layui-btn layui-btn-primary">立即下载</a></div>';
+    if (!("WebSocket" in w && 2 === w.WebSocket.CLOSING)) {
+        document.body.innerHTML = '<div class="version-debug">您使用的浏览器已经<strong>过时</strong>，建议使用最新版本的谷歌浏览器。<a target="_blank" href="https://pc.qq.com/detail/1/detail_2661.html" class="layui-btn layui-btn-primary">立即下载</a></div>';
+    }
 }(window));
 
 // Layui及jQuery兼容处理
@@ -20,7 +22,7 @@ if (typeof jQuery === 'undefined') window.$ = window.jQuery = layui.$;
 window.form = layui.form, window.layer = layui.layer, window.laydate = layui.laydate;
 
 // 当前资源URL目录
-var baseRoot = (function () {
+window.baseRoot = (function () {
     var src = document.scripts[document.scripts.length - 1].src;
     return src.substring(0, src.lastIndexOf("/") + 1);
 })();
@@ -58,12 +60,12 @@ define('jquery', [], function () {
 });
 
 $(function () {
-    var $body = $('body');
+    window.$body = $('body');
     /*! 消息组件实例 */
     $.msg = new function () {
-        var self = this;
-        this.shade = [0.02, '#000'];
+        var that = this;
         this.indexs = [];
+        this.shade = [0.02, '#000'];
         // 关闭消息框
         this.close = function (index) {
             return layer.close(index);
@@ -79,7 +81,7 @@ $(function () {
                 typeof ok === 'function' && ok.call(this, index);
             }, function () {
                 typeof no === 'function' && no.call(this, index);
-                self.close(index);
+                that.close(index);
             });
             return index;
         };
@@ -112,8 +114,8 @@ $(function () {
             }
             return (parseInt(ret.code) === 1) ? this.success(msg, time, function () {
                 url ? (window.location.href = url) : $.form.reload();
-                for (var i in self.indexs) layer.close(self.indexs[i]);
-                self.indexs = [];
+                for (var i in that.indexs) layer.close(that.indexs[i]);
+                that.indexs = [];
             }) : this.error(msg, 3, function () {
                 url ? window.location.href = url : '';
             });
@@ -135,9 +137,9 @@ $(function () {
             $dom = $dom || $(this.targetClass);
             $dom.find('[required]').parent().prevAll('label').addClass('label-required');
             $dom.find('[data-file="btn"]').map(function () {
-                var self = this;
+                var that = this;
                 require(['upload'], function (apply) {
-                    apply(self)
+                    apply(that)
                 });
             });
         };
@@ -328,10 +330,10 @@ $(function () {
             // 正则验证表单元素
             this.isRegex = function (ele, regex, params) {
                 var inputValue = $(ele).val();
-                var dealValue = this.trim(inputValue);
+                var realValue = this.trim(inputValue);
                 regex = regex || ele.getAttribute('pattern');
-                if (dealValue === "" || !regex) return true;
-                return new RegExp(regex, params || 'i').test(dealValue);
+                if (realValue === "" || !regex) return true;
+                return new RegExp(regex, params || 'i').test(realValue);
             };
             // 检侧所的表单元素
             this.checkAllInput = function () {
@@ -343,8 +345,7 @@ $(function () {
             };
             // 检测表单单元
             this.checkInput = function (input) {
-                var tag = input.tagName.toLowerCase();
-                var need = this.hasProp(input, "required");
+                var tag = input.tagName.toLowerCase(), need = this.hasProp(input, "required");
                 var type = (input.getAttribute("type") || '').replace(/\W+/, "").toLowerCase();
                 if (this.hasProp(input, 'data-auto-none')) return true;
                 var ingoreTags = ['select'], ingoreType = ['radio', 'checkbox', 'submit', 'reset', 'image', 'file', 'hidden'];
@@ -404,11 +405,9 @@ $(function () {
         $('form[data-auto]').map(function () {
             if ($(this).attr('data-listen') !== 'true') {
                 $(this).attr('data-listen', 'true').vali(function (data) {
-                    var type = this.getAttribute('method') || 'POST';
-                    var tips = this.getAttribute('data-tips') || undefined;
-                    var time = this.getAttribute('data-time') || undefined;
-                    var href = this.getAttribute('action') || window.location.href;
                     var call = $(this).attr('data-callback') || '_default_callback';
+                    var type = this.getAttribute('method') || 'POST', tips = this.getAttribute('data-tips') || undefined;
+                    var time = this.getAttribute('data-time') || undefined, href = this.getAttribute('action') || window.location.href;
                     $.form.load(href, data, type, window[call] || undefined, true, tips, time);
                 });
                 $(this).find('[data-form-loaded]').map(function () {
@@ -426,8 +425,7 @@ $(function () {
 
     /*! 上传单个图片 */
     $.fn.uploadOneImage = function () {
-        var name = $(this).attr('name') || 'image';
-        var type = $(this).data('type') || 'png,jpg';
+        var name = $(this).attr('name') || 'image', type = $(this).data('type') || 'png,jpg';
         var $tpl = $('<a data-file="btn" data-field="' + name + '" data-type="' + type + '" class="uploadimage"></a>');
         $(this).attr('name', name).after($tpl).on('change', function () {
             !!this.value && $tpl.css('backgroundImage', 'url(' + this.value + ')');
@@ -506,9 +504,8 @@ $(function () {
 
     /*! 注册 data-action 事件行为 */
     $body.on('click', '[data-action]', function () {
-        var $this = $(this), action = $this.attr('data-action');
-        var data = {}, meth = $this.attr('data-method') || 'post';
-        var time = $this.attr('data-time'), loading = $this.attr('data-loading') || false;
+        var $this = $(this), action = $this.attr('data-action'), time = $this.attr('data-time');
+        var data = {}, meth = $this.attr('data-method') || 'post', loading = $this.attr('data-loading') || false;
         var rule = $this.attr('data-value') || (function (rule, ids) {
             $($this.attr('data-target') || 'input[type=checkbox].list-check-box').map(function () {
                 (this.checked) && ids.push(this.value);
@@ -557,10 +554,8 @@ $(function () {
 
     /*! 注册 data-file 事件行为 */
     $body.on('click', '[data-file]', function () {
-        var safe = $(this).attr('data-safe') || '';
-        var mode = $(this).attr('data-file') || 'one';
-        var name = $(this).attr('data-name') || 'file';
-        var type = $(this).attr('data-type') || 'jpg,png';
+        var safe = $(this).attr('data-safe') || '', mode = $(this).attr('data-file') || 'one';
+        var name = $(this).attr('data-name') || 'file', type = $(this).attr('data-type') || 'jpg,png';
         var field = $(this).attr('data-field') || 'file';
         if (mode !== 'btn') {
             var uptype = $(this).attr('data-uptype') || '';
