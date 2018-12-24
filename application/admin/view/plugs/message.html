@@ -13,15 +13,16 @@
     <link href="__ROOT__/static/plugs/layui/css/layui.css?v={:date('ymd')}" rel="stylesheet">
 </head>
 <body>
-
 {foreach $list as $vo}
-<div class="layui-card">
-    <div class="layui-card-header layui-bg-gray"><a target="_top" href="{:url('@admin')}?messagecode={$vo.code}#{$vo.url}">{$vo.title|default=''}</a></div>
+<div class="layui-card" style="margin:5px 0">
+    <div class="layui-card-header layui-bg-gray">
+        <a style="display:block" target="_top" href="{:url('@admin')}?messagecode={$vo.code}#{$vo.url}">{$vo.title|default=''}</a>
+    </div>
     <div class="layui-card-body">
         {notempty name='vo.desc'}
-        <div class="color-desc font-s12">{$vo.desc|default=''}</div>
+        <a style="display:block;font-size:12px;color:#666" target="_top" href="{:url('@admin')}?messagecode={$vo.code}#{$vo.url}">{$vo.desc|default=''}</a>
         {/notempty}
-        <div class="color-desc font-s12">{$vo.create_at}</div>
+        <a style="display:block;font-size:12px;color:#999" target="_top" href="{:url('@admin')}?messagecode={$vo.code}#{$vo.url}">{$vo.create_at|default=''}</a>
     </div>
 </div>
 {/foreach}
