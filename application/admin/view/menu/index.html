@@ -51,28 +51,24 @@
             {if auth("admin/menu/add")}
             <span class="text-explode">|</span>
             <!--{if $vo.spt<2}-->
-            <a data-title="添加菜单" data-modal='{:url("admin/menu/add")}?pid={$vo.id}'>添加下级</a>
+            <a class="layui-btn layui-btn-xs layui-btn-normal" data-modal='{:url("admin/menu/add")}?pid={$vo.id}'>添 加</a>
             <!--{else}-->
-            <a class="color-desc">添加下级</a>
+            <a class="layui-btn layui-btn-xs layui-btn-disabled">添 加</a>
             <!--{/if}-->
             {/if}
 
             {if auth("admin/menu/edit")}
-            <span class="text-explode">|</span>
-            <a data-title="编辑菜单" data-modal='{:url("admin/menu/edit")}?id={$vo.id}'>编辑</a>
+            <a class="layui-btn layui-btn-xs" data-title="编辑菜单" data-modal='{:url("admin/menu/edit")}?id={$vo.id}'>编 辑</a>
             {/if}
 
             {if $vo.status eq 1 and auth("admin/menu/forbid")}
-            <span class="text-explode">|</span>
-            <a data-action="{:url('forbid')}" data-value="id#{$vo.ids};status#0">禁用</a>
+            <a class="layui-btn layui-btn-warm layui-btn-xs" data-action="{:url('forbid')}" data-value="id#{$vo.ids};status#0">禁 用</a>
             {elseif auth("admin/menu/resume")}
-            <span class="text-explode">|</span>
-            <a data-action="{:url('resume')}" data-value="id#{$vo.ids};status#1">启用</a>
+            <a class="layui-btn layui-btn-warm layui-btn-xs" data-action="{:url('resume')}" data-value="id#{$vo.ids};status#1">启 用</a>
             {/if}
 
             {if auth("admin/menu/del")}
-            <span class="text-explode">|</span>
-            <a data-confirm="确定要删除数据吗?" data-action="{:url('del')}" data-value="id#{$vo.ids}">删除</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" data-confirm="确定要删除数据吗?" data-action="{:url('del')}" data-value="id#{$vo.ids}">删 除</a>
             {/if}
 
         </td>

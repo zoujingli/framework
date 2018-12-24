@@ -425,8 +425,8 @@ $(function () {
 
     /*! 上传单个图片 */
     $.fn.uploadOneImage = function () {
-        var name = $(this).attr('name') || 'image', type = $(this).data('type') || 'png,jpg';
-        var $tpl = $('<a data-file="btn" data-field="' + name + '" data-type="' + type + '" class="uploadimage"></a>');
+        var name = $(this).attr('name') || 'image', type = $(this).data('type') || 'png,jpg,gif';
+        var $tpl = $('<a data-file="one" data-field="' + name + '" data-type="' + type + '" class="uploadimage"></a>');
         $(this).attr('name', name).after($tpl).on('change', function () {
             !!this.value && $tpl.css('backgroundImage', 'url(' + this.value + ')');
         }).trigger('change');

@@ -29,7 +29,9 @@
 <div class="layui-tab layui-tab-card layui-box">
     <ul class="layui-tab-title">
         {foreach $groups as $key=>$group}
-        <li data-type='{$key}'>{$group.node.title|default='<span class="color-desc">未配置名称</span>'|raw}（{$key}）</li>
+        <li data-type='{$key}'>
+            {$group.node.title|default='<span class="color-desc">未配置名称</span>'|raw}（{$key}）
+        </li>
         {/foreach}
     </ul>
     <div class="layui-tab-content">
@@ -99,7 +101,6 @@
     </div>
 </div>
 
-<!--{if auth("admin/node/save")}-->
 <script>
     $(function () {
 
@@ -225,5 +226,4 @@
         }
     });
 </script>
-<!--{/if}-->
 {/block}

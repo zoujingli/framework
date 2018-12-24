@@ -40,25 +40,21 @@
 
             {if auth("admin/auth/edit")}
             <span class="text-explode">|</span>
-            <a data-title="编辑权限" data-modal='{:url("admin/auth/edit")}?id={$vo.id}'>编辑</a>
+            <a class="layui-btn layui-btn-xs" data-title="编辑权限" data-modal='{:url("admin/auth/edit")}?id={$vo.id}'>编 辑</a>
             {/if}
 
             {if auth("admin/auth/apply")}
-            <span class="text-explode">|</span>
-            <a data-open='{:url("admin/auth/apply")}?id={$vo.id}'>授权</a>
+            <a class="layui-btn layui-btn-normal layui-btn-xs" data-open='{:url("admin/auth/apply")}?id={$vo.id}'>授 权</a>
             {/if}
 
             {if $vo.status eq 1 and auth("admin/auth/forbid")}
-            <span class="text-explode">|</span>
-            <a data-action="{:url('forbid')}" data-value="id#{$vo.id};status#0">禁用</a>
+            <a class="layui-btn layui-btn-warm layui-btn-xs" data-action="{:url('forbid')}" data-value="id#{$vo.id};status#0">禁 用</a>
             {elseif auth("admin/auth/resume")}
-            <span class="text-explode">|</span>
-            <a data-action="{:url('resume')}" data-value="id#{$vo.id};status#1">启用</a>
+            <a class="layui-btn layui-btn-warm layui-btn-xs" data-action="{:url('resume')}" data-value="id#{$vo.id};status#1">启 用</a>
             {/if}
 
             {if auth("admin/auth/del")}
-            <span class="text-explode">|</span>
-            <a data-confirm="确定要删除数据吗?" data-action="{:url('del')}" data-value="id#{$vo.id}">删除</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" data-confirm="确定要删除数据吗?" data-action="{:url('del')}" data-value="id#{$vo.id}">删 除</a>
             {/if}
 
         </td>
