@@ -20,7 +20,7 @@
 ::-moz-selection{background-color:#ec494e!important;color:#fff!important}
 :-webkit-autofill,:-webkit-autofill:active,:-webkit-autofill:focus,:-webkit-autofill:hover{box-shadow:0 2px 3px 0 rgba(0,0,0,.1) inset!important;-webkit-transition:color 9999s ease-out,background-color 9999s ease-out!important;-webkit-transition-delay:9999s!important;-webkit-text-fill-color:#333!important}
 body{font-size:12px;color:#333;font-family:'\5FAE\8F6F\96C5\9ED1','Microsoft YaHei','Helvetica Neue','Luxi Sans','DejaVu Sans','Hiragino Sans GB','serif'}
-a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}button{border-radius:0!important}
+a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}
 .version-debug{width:100%;height:100px;font-size:20px;line-height:100px;text-align:center;background-color:#E90D24;color:#fff;margin-bottom:40px;}
 
 /* 页面布局 - 全局 */
@@ -38,7 +38,7 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}but
 .layui-header .layui-nav-item>a{color:#fff!important}
 .layui-header .layui-nav-item.layui-this{background:rgba(0,0,0,.1)}
 .layui-header .layui-nav-bar,.layui-header .layui-nav-item:after{display:none!important}
-.layui-header .layui-nav-item .layui-nav-child{top:49px;padding:0;border:none;border-radius:0;box-shadow:0 1px 2px 0 rgba(0,0,0,.2);line-height:45px}
+.layui-header .layui-nav-item .layui-nav-child{top:49px;padding:0;border:none;box-shadow:0 1px 2px 0 rgba(0,0,0,.2);line-height:45px}
 .layui-header .layui-nav-item .layui-nav-child+a{padding-right:35px}
 .layui-header .layui-nav-item .layui-nav-child.layui-show+a{background:#fff}
 .layui-header .layui-nav-item .layui-nav-child.layui-show+a span{color:#333}
@@ -111,11 +111,10 @@ fieldset{border:1px solid #e6e6e6;margin:0;padding:10px 20px 5px 20px}
 .layui-layer-dialog .layui-layer-content .layui-layer-ico{top:50%!important;margin-top:-15px!important}
 
 .form-search .layui-btn{height:32px;line-height:30px;font-size:12px;padding:0 10px}
-.form-search .layui-form-label{width:auto!important;border-radius:0;padding:0 8px;height:32px;line-height:30px}
+.form-search .layui-form-label{width:auto!important;padding:0 8px;height:32px;line-height:30px}
 .form-search .layui-input-inline{width:170px}
 .form-search .layui-input-inline input,
-.form-search .layui-input-inline select{border-radius:0;padding:2px 8px;height:32px;line-height:30px;width:100%}
-.form-search .layui-form-select{border-radius:0}
+.form-search .layui-input-inline select{padding:2px 8px;height:32px;line-height:30px;width:100%}
 .form-search .layui-form-select dl{top:31px;padding:0}
 
 /** 加载进度 */
@@ -146,7 +145,8 @@ fieldset{border:1px solid #e6e6e6;margin:0;padding:10px 20px 5px 20px}
 .uploadimagemtl:hover a:hover{color:#fff;text-decoration:none}
 
 /** Layui样式调整 */
-.layui-input,.layui-select{line-height:38px}
+.layui-btn-sm.layui-btn-primary{line-height:28px}
+.layui-input, .layui-select{line-height:38px}
 .layui-table td,.layui-table th{font-size:12px}
 .layui-table td .text-explode{margin:0 4px!important;color:#ccc!important}
 .layui-table td .text-explode:first-child{display:none;opacity:0}
@@ -156,9 +156,7 @@ fieldset{border:1px solid #e6e6e6;margin:0;padding:10px 20px 5px 20px}
 .layui-table .list-table-sort-td button{width:56px;background:#009688}
 .layui-table .list-table-sort-td input{padding:2px;width:50px;border:1px solid #e6e6e6;color:#666;text-align:center;font-size:9pt;line-height:18px}
 .layui-table .list-table-check-td{width:30px!important;text-align:center}
-.layui-table .list-table-check-td input{margin:0;vertical-align:middle}
-.layui-btn{border-radius:0!important}
-.layui-btn.layui-btn-sm.layui-btn-primary{line-height:28px}
+.layui-table .list-table-check-td input{margin:0!important;vertical-align:middle}
 
 /** checkbox 优化 */
 label.think-checkbox,label.think-radio{display:inline-block;margin-right:10px}

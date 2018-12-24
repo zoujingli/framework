@@ -239,17 +239,17 @@
     },
     {
         "name": "topthink/framework",
-        "version": "v5.1.31",
-        "version_normalized": "5.1.31.0",
+        "version": "v5.1.32",
+        "version_normalized": "5.1.32.0",
         "source": {
             "type": "git",
             "url": "https://github.com/top-think/framework.git",
-            "reference": "adde39c236cfeda454fe725d999d89abf67b8caf"
+            "reference": "88a2ab625b35e047896718db320e08375cf021da"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/top-think/framework/zipball/adde39c236cfeda454fe725d999d89abf67b8caf",
-            "reference": "adde39c236cfeda454fe725d999d89abf67b8caf",
+            "url": "https://api.github.com/repos/top-think/framework/zipball/88a2ab625b35e047896718db320e08375cf021da",
+            "reference": "88a2ab625b35e047896718db320e08375cf021da",
             "shasum": "",
             "mirrors": [
                 {
@@ -271,7 +271,7 @@
             "sebastian/phpcpd": "2.*",
             "squizlabs/php_codesniffer": "2.*"
         },
-        "time": "2018-12-11T05:17:32+00:00",
+        "time": "2018-12-23T13:42:11+00:00",
         "type": "think-framework",
         "installation-source": "dist",
         "notification-url": "https://packagist.org/downloads/",
@@ -509,12 +509,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/zoujingli/WeChatDeveloper.git",
-            "reference": "9587b125b844cef0715e480985ec6b56128d8c3c"
+            "reference": "9e117202873a3219b978eba6bac4c3c40b5cbc3c"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zoujingli/WeChatDeveloper/zipball/9587b125b844cef0715e480985ec6b56128d8c3c",
-            "reference": "9587b125b844cef0715e480985ec6b56128d8c3c",
+            "url": "https://api.github.com/repos/zoujingli/WeChatDeveloper/zipball/9e117202873a3219b978eba6bac4c3c40b5cbc3c",
+            "reference": "9e117202873a3219b978eba6bac4c3c40b5cbc3c",
             "shasum": "",
             "mirrors": [
                 {
@@ -529,7 +529,7 @@
             "ext-openssl": "*",
             "php": ">=5.4"
         },
-        "time": "2018-12-14T08:36:16+00:00",
+        "time": "2018-12-19T07:58:04+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

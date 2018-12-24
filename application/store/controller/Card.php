@@ -15,7 +15,6 @@
 namespace app\store\controller;
 
 use library\Controller;
-use think\Db;
 
 /**
  * 卡券管理
