@@ -146,6 +146,7 @@ fieldset{border:1px solid #e6e6e6;margin:0;padding:10px 20px 5px 20px}
 
 /** Layui样式调整 */
 .layui-btn-sm.layui-btn-primary{line-height:28px}
+.layui-btn-xs.layui-btn-primary{line-height:20px}
 .layui-input, .layui-select{line-height:38px}
 .layui-table td,.layui-table th{font-size:12px}
 .layui-table td .text-explode{margin:0 4px!important;color:#ccc!important}
