@@ -3,14 +3,14 @@
 {block name="button"}
 
 {if auth("admin/message/del")}
-<button data-action='{:url("del")}' data-rule="id#{key}" data-confirm="确定要删除这些消息吗？" class='layui-btn layui-btn-sm layui-btn-primary'>删除消息</button>
+<button data-action='{:url("del")}' data-rule="id#{key}" data-confirm="确定要删除这些消息吗？" class='layui-btn layui-btn-sm layui-btn-primary'>批量删除</button>
 {/if}
 
 {/block}
 
 {block name="content"}
 <table class="layui-table" lay-skin="line">
-    <caption class="margin-bottom-10 text-left">{include file='user/index_search'}</caption>
+    <caption class="margin-bottom-10 text-left">{include file='message/index_search'}</caption>
     {notempty name='list'}
     <thead>
     <tr>
