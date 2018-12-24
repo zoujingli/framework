@@ -29,7 +29,7 @@
     <tr>
         <td class='list-table-check-td think-checkbox'><input class="list-check-box" value='{$vo.id}' type='checkbox'></td>
         <td class='text-left nowrap'>
-            <a target="_blank" href="{$vo.url|default=''}">{$vo.title|default=''}</a><br>
+            <a target="_blank" href="{:url('@admin')}?messagecode={$vo.code}#{$vo.url|default=''}">{$vo.title|default=''}</a><br>
             <span class="color-desc">{$vo.desc|default=''}</span><br>
         </td>
         <td class='text-left nowrap'>
