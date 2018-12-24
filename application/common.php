@@ -43,7 +43,7 @@ if (!function_exists('sysdata')) {
     {
         if (is_null($value)) {
             $json = json_decode(emoji_decode(\think\Db::name('SystemData')->where('name', $name)->value('value')), true);
-            return empty($json) ? null : $json;
+            return empty($json) ? [] : $json;
         }
         return data_save('SystemData', ['name' => $name, 'value' => emoji_encode(json_encode($value, 256))], 'name');
     }
@@ -58,5 +58,26 @@ if (!function_exists('local_image')) {
     function local_image($url)
     {
         return \library\File::down($url)['url'];
+    }
+}
+
+if (!function_exists('base64_image')) {
+    /**
+     * base64 图片上传接口
+     * @param string $content
+     * @return string
+     */
+    function base64_image($content)
+    {
+        try {
+            if (preg_match('|^data:image/(.*?);base64,|i', $content)) {
+                list($ext, $base) = explode('|||', preg_replace('|^data:image/(.*?);base64,|i', '$1|||', $content));
+                $info = \library\File::save('base64image/' . md5($base) . '.' . (empty($ext) ? 'tmp' : $ext), base64_decode($base));
+                return $info['url'];
+            }
+            return $content;
+        } catch (\Exception $e) {
+            return $content;
+        }
     }
 }
