@@ -44,13 +44,18 @@ class Keys extends Controller
     /**
      * 显示关键字列表
      * @return array|string
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
      */
     public function index()
     {
         // 关键字二维码生成
         if ($this->request->get('action') === 'qrc') {
             try {
-                $wechat = \We::WeChatQrcode(Wechat::config());
+                $wechat = Wechat::WeChatQrcode();
                 $result = $wechat->create($this->request->get('keys', ''));
                 $this->success('生成二维码成功！', "javascript:$.previewImage('{$wechat->url($result['ticket'])}')");
             } catch (\think\exception\HttpResponseException $exception) {
@@ -61,8 +66,7 @@ class Keys extends Controller
         }
         // 关键字列表显示
         $this->title = '回复规则管理';
-        $db = Db::name($this->table)->whereNotIn('keys', ['subscribe', 'default']);
-        return $this->_page($db->order('sort asc,id desc'));
+        return $this->_query($this->table)->whereNotIn('keys', ['subscribe', 'default'])->order('sort asc,id desc')->page();
     }
 
     /**
