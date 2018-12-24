@@ -29,9 +29,7 @@
 <div class="layui-tab layui-tab-card layui-box">
     <ul class="layui-tab-title">
         {foreach $groups as $key=>$group}
-        <li data-type='{$key}' data-open="{:url('index')}?type={$key}">
-            {$group.node.title|default='<span class="color-desc">未配置名称</span>'|raw}（{$key}）
-        </li>
+        <li data-type='{$key}'>{$group.node.title|default='<span class="color-desc">未配置名称</span>'|raw}（{$key}）</li>
         {/foreach}
     </ul>
     <div class="layui-tab-content">
@@ -105,9 +103,7 @@
 <script>
     $(function () {
 
-        var $tabType = $('.layui-tab ul.layui-tab-title li[data-type="{$Think.get.type}"]');
-        if ($tabType.size() < 1) $tabType = $('.layui-tab ul.layui-tab-title li:first');
-        $tabType.trigger('click');
+        $('.layui-tab ul.layui-tab-title li:first').trigger('click');
 
         syncLoginGroup.call(this);
         $('[data-login-group]').on('click', function () {
