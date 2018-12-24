@@ -112,8 +112,8 @@
 <script>
     $.get('{:url("@admin/api.message/gets")}', {}, function (ret) {
         if (ret.code && ret.data.length > 0) layer.open({
-            shade: false, offset: 'rb', anim: 5, type: 2, area: ['360px', '500px'], btn: false, show: false,
             title: '<i class="layui-icon">&#xe645;</i> 系统消息', content: ['{:url("@admin/plugs/message")}'],
+            shade: false, offset: 'rb', anim: 5, type: 2, area: ['360px', '500px'], btn: false, maxmin: false,
         });
     });
 </script>
