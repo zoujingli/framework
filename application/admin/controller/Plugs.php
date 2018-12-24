@@ -16,6 +16,7 @@ namespace app\admin\controller;
 
 use library\Controller;
 use library\File;
+use think\Db;
 
 /**
  * 后台插件管理
@@ -180,6 +181,20 @@ class Plugs extends Controller
     {
         $this->title = '图标选择器';
         $this->field = input('field', 'icon');
+        return $this->fetch();
+    }
+
+    /**
+     * 系统消息展示
+     * @return mixed
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function message()
+    {
+        $where = ['read_state' => '0'];
+        $this->list = Db::name('SystemMessage')->where($where)->order('id desc')->select();
         return $this->fetch();
     }
 

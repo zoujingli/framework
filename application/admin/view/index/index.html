@@ -110,18 +110,12 @@
 <script src="__ROOT__/static/admin.js"></script>
 {block name='script'}{/block}
 <script>
-    $.get('{:url("@admin/api.message/gets")}', function (ret) {
-        if (ret.code > 0 && ret.data.length > 0) {
-            var html = '<div style="max-height:300px;overflow:auto;margin-top:-20px;margin-bottom:-20px;margin-right:-20px;padding-right:15px;width:325px">';
-            for (var i in ret.data) html += '<div style="padding:10px 0;line-height:20px">' +
-                '<div><a class="nowrap layui-elip inline-block" style="width:270px;font-size:14px" target="_blank" href="' + ret.data[i].url + '">' + ret.data[i].title + '</a><a class="pull-right">忽略</a></div>' +
-                '<div class="nowrap layui-elip" style="font-size:12px;color:#999">' + ret.data[i].desc + '</div>' +
-                '<div style="font-size:12px;color:#999">' + ret.data[i].create_at + '</div>' +
-                '</div>';
-            html += '</div>';
-            layer.open({anim: 5, area: '360px', btn: false, title: '<i class="layui-icon">&#xe645;</i> 系统消息', shade: false, offset: 'rb', content: html})
-        }
-    })
+    $.get('{:url("@admin/api.message/gets")}', {}, function (ret) {
+        if (ret.code && ret.data.length > 0) layer.open({
+            shade: false, offset: 'rb', anim: 5, type: 2, area: ['360px', '500px'], btn: false, show: false,
+            title: '<i class="layui-icon">&#xe645;</i> 系统消息', content: ['{:url("@admin/plugs/message")}'],
+        });
+    });
 </script>
 </body>
 

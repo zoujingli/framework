@@ -33,8 +33,23 @@ class Message
      */
     public static function add($title, $desc, $url, $node)
     {
-        $data = ['title' => $title, 'desc' => $desc, 'url' => $url, 'node' => $node];
+        $data = ['title' => $title, 'desc' => $desc, 'url' => $url, 'code' => time() . rand(1000, 9999), 'node' => $node];
         return Db::name('SystemMessage')->insert($data) !== false;
+    }
+
+    /**
+     * 系统消息状态更新
+     * @param integer $code
+     * @return boolean
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     */
+    public static function set($code)
+    {
+        $result = Db::name('SystemMessage')->where(['code' => $code, 'read_state' => '0'])->update([
+            'read_state' => '1', 'read_at' => date('Y-m-d H:i:s'), 'read_uid' => session('user.id'),
+        ]);
+        return $result !== false;
     }
 
 }

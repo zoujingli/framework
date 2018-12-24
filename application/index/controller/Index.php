@@ -14,6 +14,7 @@
 
 namespace app\index\controller;
 
+use app\admin\logic\Message;
 use library\Controller;
 
 /**
@@ -29,5 +30,16 @@ class Index extends Controller
     public function index()
     {
         $this->redirect('@admin');
+    }
+
+    public function test()
+    {
+        $result = Message::add(
+            '有新的用户申请审核！',
+            '小小邹，13617341324，门店号',
+            '/admin/index/main.html?spm=m-1',
+            'admin/wechat/index'
+        );
+        dump($result);
     }
 }

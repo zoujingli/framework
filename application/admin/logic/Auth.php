@@ -31,12 +31,18 @@ class Auth
      * @param \think\Request $request
      * @param \Closure $next
      * @return mixed|\think\response\Json|\think\response\Redirect
+     * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
      */
     public function handle(\think\Request $request, \Closure $next)
     {
+        // 消息处理
+        if (($messagecode = $request->get('messagecode')) > 0) Message::set($messagecode);
+
+        // 节点忽略跳过
         $node = Node::current();
         foreach (self::getIgnore() as $str) if (stripos($node, $str) === 0) return $next($request);
         // 节点权限查询
