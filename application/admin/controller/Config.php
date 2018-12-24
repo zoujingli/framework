@@ -81,8 +81,10 @@ class Config extends Controller
         foreach ($this->request->post() as $k => $v) sysconf($k, $v);
         if ($this->request->post('storage_type') === 'oss') {
             try {
-                $domain = File::instance('oss')->setBucket($this->request->post('storage_oss_bucket'));
-                if (stripos('.aliyuncs.com', sysconf('storage_oss_domain')) === false) {
+                $local = sysconf('storage_oss_domain');
+                $bucket = $this->request->post('storage_oss_bucket');
+                $domain = File::instance('oss')->setBucket($bucket);
+                if (empty($local) || stripos($local, '.aliyuncs.com') !== false) {
                     sysconf('storage_oss_domain', $domain);
                 }
             } catch (\Exception $e) {
