@@ -23,6 +23,7 @@ use think\Db;
  */
 class Message extends Controller
 {
+
     /**
      * 获取系统消息列表
      * @throws \think\db\exception\DataNotFoundException
@@ -31,9 +32,7 @@ class Message extends Controller
      */
     public function gets()
     {
-        $where = ['read_state' => '0'];
-        $list = Db::name('SystemMessage')->where($where)->order('id desc')->select();
-        $this->success('获取系统消息成功！', $list);
+        $this->success('获取系统消息成功！', \app\admin\logic\Message::gets());
     }
 
     /**

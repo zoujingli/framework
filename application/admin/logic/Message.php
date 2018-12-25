@@ -33,7 +33,8 @@ class Message
      */
     public static function add($title, $desc, $url, $node)
     {
-        $data = ['title' => $title, 'desc' => $desc, 'url' => $url, 'code' => time() . rand(1000, 9999), 'node' => $node];
+        $code = time() . rand(1000, 9999);
+        $data = ['title' => $title, 'desc' => $desc, 'url' => $url, 'code' => $code, 'node' => $node];
         return Db::name('SystemMessage')->insert($data) !== false;
     }
 
@@ -50,6 +51,21 @@ class Message
             'read_state' => '1', 'read_at' => date('Y-m-d H:i:s'), 'read_uid' => session('user.id'),
         ]);
         return $result !== false;
+    }
+
+    /**
+     * 获取消息列表成功
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public static function gets()
+    {
+        $where = ['read_state' => '0'];
+        $list = Db::name('SystemMessage')->where($where)->order('id desc')->select();
+        foreach ($list as $key => $vo) if (!empty($vo['node']) && !auth($vo['node'])) unset($list[$key]);
+        return $list;
     }
 
 }
