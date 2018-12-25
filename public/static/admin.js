@@ -210,8 +210,8 @@ $(function () {
         // 计算URL地址中有效的URI
         this.getUri = function (uri) {
             uri = uri || window.location.href;
-            uri = (uri.indexOf(window.location.host) > -1 ? uri.split(window.location.host)[1] : uri).split('?')[0];
-            return (uri.indexOf('#') !== -1 ? uri.split('#')[1] : uri);
+            uri = (uri.indexOf(window.location.host) > -1 ? uri.split(window.location.host)[1] : uri);
+            return (uri.indexOf('#') > -1 ? uri.split('#')[1] : uri).split('?')[0];
         };
         // 通过URI查询最有可能的菜单NODE
         this.queryNode = function (url) {
