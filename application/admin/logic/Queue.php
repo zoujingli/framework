@@ -175,9 +175,9 @@ class Queue
             $this->writeln('执行任务失败！');
             $this->status = Queue::STATUS_FAIL;
         }
-        Queue::status($this->id, $this->status, $this->statusDesc);
         $job->delete();
-        Message::add("{$this->title}任务执行完成！", '', url('@admin/queue/index'), 'admin/queue/index');
+        Queue::status($this->id, $this->status, $this->statusDesc);
+        Message::add("{$this->title}", '任务执行完成', url('@admin/queue/index'), 'admin/queue/index');
     }
 
     /**
