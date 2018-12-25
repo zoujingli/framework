@@ -177,7 +177,7 @@ class Queue
         }
         $job->delete();
         Queue::status($this->id, $this->status, $this->statusDesc);
-        Message::add("{$this->title}", '任务执行完成', url('@admin/queue/index'), 'admin/queue/index');
+        Message::add("{$this->title}", '后台任务执行完成！', url('@admin/queue/index'), 'admin/queue/index');
     }
 
     /**
