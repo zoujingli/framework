@@ -13,7 +13,7 @@
     <caption class="margin-bottom-10 text-left">
         {include file='queue/index_search'}
         {if session('user.username') eq 'admin'}
-        <div class="layui-code">
+        <div class="layui-code margin-bottom-0">
             <strong>进程守护脚本命令</strong> <span class="color-desc">(仅支持Linux环境)</span><br>
             <p class="color-desc margin-top-10">1.修改sh文件运行权限</p>
             chmod +x {:env('root_path')}task.sh
@@ -86,8 +86,6 @@
 
 {empty name='list'}
 <blockquote class="layui-elem-quote border-0 text-center">没 有 记 录 哦！</blockquote>
-{else}
-{$pagehtml|raw|default=''}
-{/empty}
+{else}{$pagehtml|raw|default=''}{/empty}
 
 {/block}
