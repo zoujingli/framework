@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit8e4644b8240ab28ec6dac2ce09a34c74
+class ComposerStaticInit0e5a0b42b4dfba62806ddd74f6487de6
 {
     public static $files = array (
         '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
@@ -293,12 +293,15 @@ class ComposerStaticInit8e4644b8240ab28ec6dac2ce09a34c74
         'app\\admin\\controller\\Index' => __DIR__ . '/../..' . '/application/admin/controller/Index.php',
         'app\\admin\\controller\\Login' => __DIR__ . '/../..' . '/application/admin/controller/Login.php',
         'app\\admin\\controller\\Menu' => __DIR__ . '/../..' . '/application/admin/controller/Menu.php',
+        'app\\admin\\controller\\Message' => __DIR__ . '/../..' . '/application/admin/controller/Message.php',
         'app\\admin\\controller\\Node' => __DIR__ . '/../..' . '/application/admin/controller/Node.php',
         'app\\admin\\controller\\Plugs' => __DIR__ . '/../..' . '/application/admin/controller/Plugs.php',
         'app\\admin\\controller\\Queue' => __DIR__ . '/../..' . '/application/admin/controller/Queue.php',
         'app\\admin\\controller\\User' => __DIR__ . '/../..' . '/application/admin/controller/User.php',
+        'app\\admin\\controller\\api\\Message' => __DIR__ . '/../..' . '/application/admin/controller/api/Message.php',
         'app\\admin\\controller\\api\\Update' => __DIR__ . '/../..' . '/application/admin/controller/api/Update.php',
         'app\\admin\\logic\\Auth' => __DIR__ . '/../..' . '/application/admin/logic/Auth.php',
+        'app\\admin\\logic\\Message' => __DIR__ . '/../..' . '/application/admin/logic/Message.php',
         'app\\admin\\logic\\Queue' => __DIR__ . '/../..' . '/application/admin/logic/Queue.php',
         'app\\admin\\logic\\Update' => __DIR__ . '/../..' . '/application/admin/logic/Update.php',
         'app\\index\\controller\\Index' => __DIR__ . '/../..' . '/application/index/controller/Index.php',
@@ -380,9 +383,9 @@ class ComposerStaticInit8e4644b8240ab28ec6dac2ce09a34c74
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit8e4644b8240ab28ec6dac2ce09a34c74::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit8e4644b8240ab28ec6dac2ce09a34c74::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit8e4644b8240ab28ec6dac2ce09a34c74::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit0e5a0b42b4dfba62806ddd74f6487de6::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit0e5a0b42b4dfba62806ddd74f6487de6::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit0e5a0b42b4dfba62806ddd74f6487de6::$classMap;
 
         }, null, ClassLoader::class);
     }

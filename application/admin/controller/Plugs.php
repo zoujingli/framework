@@ -128,7 +128,7 @@ class Plugs extends Controller
         $this->uptype = $this->getUploadType();
         $this->ext = pathinfo($file->getInfo('name'), 4);
         $name = File::name($file->getPathname(), $this->ext, '', 'md5_file');
-        $info = File::instance($this->uptype)->save($name, file_get_contents($file->getRealPath()));
+        $info = File::instance($this->uptype)->save($name, file_get_contents($file->getRealPath()), $this->safe);
         if (is_array($info) && isset($info['url'])) {
             return json(['uploaded' => true, 'filename' => $name, 'url' => $this->safe ? $name : $info['url']]);
         }
