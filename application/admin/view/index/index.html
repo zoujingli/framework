@@ -109,6 +109,7 @@
 <script src="__ROOT__/static/plugs/require/require.js"></script>
 <script src="__ROOT__/static/admin.js"></script>
 {block name='script'}{/block}
+{if session('user.id')}
 <script>
     $.get('{:url("@admin/api.message/gets")}', {}, function (ret) {
         if (ret.code && ret.data.length > 0) layer.open({
@@ -117,6 +118,7 @@
         });
     });
 </script>
+{/if}
 </body>
 
 </html>
