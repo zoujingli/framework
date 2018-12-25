@@ -36,7 +36,7 @@ class Keys extends Controller
      * 消息类型
      * @var array
      */
-    protected $types = [
+    public $types = [
         'text'  => '文字', 'news' => '图文', 'image' => '图片', 'music' => '音乐',
         'video' => '视频', 'voice' => '语音', 'customservice' => '转客服',
     ];
@@ -66,7 +66,7 @@ class Keys extends Controller
         }
         // 关键字列表显示
         $this->title = '回复规则管理';
-        return $this->_query($this->table)->whereNotIn('keys', ['subscribe', 'default'])->order('sort asc,id desc')->page();
+        return $this->_query($this->table)->like('keys,type')->equal('status')->dateBetween('create_at')->whereNotIn('keys', ['subscribe', 'default'])->order('sort asc,id desc')->page();
     }
 
     /**
