@@ -27,19 +27,16 @@ class Update extends Command
 {
 
     /**
+     * 指定更新模块
+     * @var array
+     */
+    protected $modules = [];
+
+    /**
      * 基础URL地址
      * @var string
      */
     protected static $baseUri = 'https://framework.thinkadmin.top';
-
-    /**
-     * 指令初始化配置
-     */
-    protected function configure()
-    {
-        // 指令配置
-        $this->setName('update')->setDescription('Sync Update Code for ThinkAdmin');
-    }
 
     /**
      * 执行指令
@@ -49,21 +46,13 @@ class Update extends Command
      */
     protected function execute(Input $input, Output $output)
     {
+
         $output->writeln('准备更新指定规则的代码文件...');
-        foreach (self::diff() as $file) switch ($file['type']) {
-            case 'add':
-            case 'mod':
-                if (self::down(encode($file['name'])))
-                    $output->info("更新文件 {$file['name']} 成功！");
-                else
-                    $output->error("更新文件 {$file['name']} 失败！");
+        foreach (self::diff() as $file) foreach ($this->modules as $module) {
+            if (stripos($file['name'], $module) === 0) {
+                $this->syncFile($file, $output);
                 break;
-            case 'del':
-                if (unlink(realpath(env('root_path') . $file['name'])))
-                    $output->info("移除文件 {$file['name']} 成功！");
-                else
-                    $output->error("移除文件 {$file['name']} 失败！");
-                break;
+            }
         }
         $output->writeln('指定规则的代码文件更新完成！');
     }
@@ -73,20 +62,28 @@ class Update extends Command
      */
     public static function sync()
     {
-        foreach (self::diff() as $file) switch ($file['type']) {
-            case 'add':
-            case 'mod':
-                if (self::down(encode($file['name'])))
-                    echo "同步文件 {$file['name']} 成功！" . PHP_EOL;
-                else
-                    echo "同步文件 {$file['name']} 失败！" . PHP_EOL;
-                break;
-            case 'del':
-                if (unlink(realpath(env('root_path') . $file['name'])))
-                    echo "移除文件 {$file['name']} 成功！" . PHP_EOL;
-                else
-                    echo "移除文件 {$file['name']} 失败！" . PHP_EOL;
-                break;
+        foreach (self::diff() as $file) self::syncFile($file, new Output());
+    }
+
+    /**
+     * 同步指定文件
+     * @param array $file
+     * @param Output $output
+     */
+    private static function syncFile($file, $output)
+    {
+        if (in_array($file['type'], ['add', 'mod'])) {
+            if (self::down(encode($file['name']))) {
+                $output->info("更新文件 {$file['name']} 成功！");
+            } else {
+                $output->error("更新文件 {$file['name']} 失败！");
+            }
+        } elseif (in_array($file['type'], ['del'])) {
+            if (unlink(realpath(env('root_path') . $file['name']))) {
+                $output->info("移除文件 {$file['name']} 成功！");
+            } else {
+                $output->error("移除文件 {$file['name']} 失败！");
+            }
         }
     }
 
@@ -98,7 +95,8 @@ class Update extends Command
     {
         return self::tree([
             'application/wechat', 'application/admin',
-            'public/static/plugs', 'public/static/theme', 'public/static/admin.js',
+            'public/static/plugs', 'public/static/theme',
+            'public/static/admin.js',
         ], [
             'application/admin/view/login/index.html',
         ]);
