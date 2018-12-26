@@ -11,27 +11,63 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
     <link href="__ROOT__/static/plugs/awesome/fonts.css?v={:date('ymd')}" rel="stylesheet">
     <link href="__ROOT__/static/plugs/layui/css/layui.css?v={:date('ymd')}" rel="stylesheet">
+    <style>
+        .layui-card {
+            margin: 0;
+        }
+
+        .layui-card .layui-card-header a {
+            display: block
+        }
+
+        .layui-card .layui-card-body a {
+            display: block;
+            font-size: 12px;
+            color: #666
+        }
+    </style>
+    <script src="__ROOT__/static/plugs/angular/angular.min.js"></script>
 </head>
-<body>
-{foreach $list as $vo}
-<div class="layui-card" style="margin:5px 0">
+<body id="MessageContainer">
+
+<div class="layui-card" ng-repeat="x in list">
     <div class="layui-card-header layui-bg-gray">
-        <a style="display:block" target="_top" href="{:url('@admin')}?messagecode={$vo.code}#{$vo.url}">{$vo.title|default=''}</a>
+        <a target="_top" href="{:url('@admin')}?messagecode={{x.code}}#{{x.url}}" ng-bind="x.title"></a>
+        <a href="javascript:void(0)" ng-click="setReadState(x.code)" style="position:absolute;right:0;top:0;width:50px;text-align:center">忽略</a>
     </div>
     <div class="layui-card-body">
-        {notempty name='vo.desc'}
-        <a style="display:block;font-size:12px;color:#666" target="_top" href="{:url('@admin')}?messagecode={$vo.code}#{$vo.url}">{$vo.desc|default=''}</a>
-        {/notempty}
-        <a style="display:block;font-size:12px;color:#999" target="_top" href="{:url('@admin')}?messagecode={$vo.code}#{$vo.url}">{$vo.create_at|default=''}</a>
+        <a target="_top" href="{:url('@admin')}?messagecode={{x.code}}#{{x.url}}" ng-bind="x.desc"></a>
+        <a target="_top" href="{:url('@admin')}?messagecode={{x.code}}#{{x.url}}" ng-bind="x.create_at"></a>
     </div>
 </div>
-{/foreach}
+
 <script>
     (function () {
+        let app = angular.module("MessageContainer", []).run(callback);
+        angular.bootstrap(document.getElementById(app.name), [app.name]);
         var index = parent.layer.getFrameIndex(window.name);
-        if (parseInt('{:count($list)}') < 1) parent.layer.close(index);
-        // parent.layer.iframeAuto(index);
-    })(this);
+
+        function callback($rootScope, $http, $interval) {
+
+            $rootScope.list = [];
+
+            refere.call(this), $interval(refere, 2000), $interval(function () {
+                parent.layer.iframeAuto(index);
+                top.$body.trigger('resize');
+            }, 10);
+
+            $rootScope.setReadState = function (code) {
+                $http.post('{:url("@admin/api.message/set")}', {code: code}).then(refere);
+            };
+
+            function refere() {
+                $http.get('{:url("@admin/api.message/gets")}').then(function (ret) {
+                    $rootScope.list = (ret.data || []).data;
+                    if ($rootScope.list < 1) parent.layer.style(index, {height: '0'});
+                });
+            }
+        }
+    })();
 </script>
 </body>
 </html>
