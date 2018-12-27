@@ -6,7 +6,6 @@ define(['plupload'], function (plupload) {
             multi_selection: false,
             multipart_params: {
                 safe: $ele.attr('data-safe') || '',
-                name: $ele.attr('data-name') || 'file',
                 uptype: $ele.attr('data-uptype') || '',
             },
             browse_button: $ele.get(0),

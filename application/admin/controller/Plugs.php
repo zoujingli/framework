@@ -71,7 +71,6 @@ class Plugs extends Controller
         $this->safe = $this->getUploadSafe();
         $this->uptype = $this->getUploadType();
         $this->mode = $this->request->get('mode', 'one');
-        $this->name = $this->request->get('name', 'file');
         $this->field = $this->request->get('field', 'file');
         $this->types = $this->request->get('type', 'jpg,png');
         $this->mimes = File::mine($this->types);
@@ -167,7 +166,7 @@ class Plugs extends Controller
     private function getUploadFile()
     {
         try {
-            return $this->request->file(input('name', 'file'));
+            return $this->request->file('file');
         } catch (\Exception $e) {
             $this->error(lang($e->getMessage()));
         }

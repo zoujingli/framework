@@ -555,11 +555,10 @@ $(function () {
     /*! 注册 data-file 事件行为 */
     $body.on('click', '[data-file]', function () {
         var safe = $(this).attr('data-safe') || '', mode = $(this).attr('data-file') || 'one';
-        var name = $(this).attr('data-name') || 'file', type = $(this).attr('data-type') || 'jpg,png';
-        var field = $(this).attr('data-field') || 'file';
+        var field = $(this).attr('data-field') || 'file', type = $(this).attr('data-type') || 'jpg,png';
         if (mode !== 'btn') {
             var uptype = $(this).attr('data-uptype') || '';
-            var params = $.param({name: name, mode: mode, uptype: uptype, type: type, field: field, safe: safe});
+            var params = $.param({mode: mode, uptype: uptype, type: type, field: field, safe: safe});
             var location = window.ROOT_URL + '?s=admin/plugs/upfile.html&' + params;
             $.form.iframe(location, $(this).attr('data-title') || '文件上传');
         }
