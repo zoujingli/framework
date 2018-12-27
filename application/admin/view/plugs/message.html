@@ -10,23 +10,10 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
     <link href="__ROOT__/static/plugs/layui/css/layui.css?v={:date('ymd')}" rel="stylesheet">
-    <style>
-
-        .layui-card {
-            margin: 0;
-        }
-        
-        .layui-card .layui-card-body a {
-            display: block;
-            font-size: 12px;
-            color: #666
-        }
-
-    </style>
+    <style>.layui-card{margin:0}.layui-card .layui-card-body a{display:block;font-size:12px;color:#666}</style>
     <script src="__ROOT__/static/plugs/angular/angular.min.js"></script>
 </head>
 <body id="MessageContainer">
-
 <div class="layui-card" ng-repeat="x in list">
     <div class="layui-card-header layui-bg-gray">
         <a target="_top" href="{:url('@admin')}?messagecode={{x.code}}#{{x.url}}" ng-bind="x.title"></a>
@@ -37,30 +24,27 @@
         <a target="_top" href="{:url('@admin')}?messagecode={{x.code}}#{{x.url}}" ng-bind="x.create_at"></a>
     </div>
 </div>
-
 <script>
     (function () {
-        let app = angular.module("MessageContainer", []).run(callback);
-        angular.bootstrap(document.getElementById(app.name), [app.name]);
         var index = parent.layer.getFrameIndex(window.name);
-
-        function callback($rootScope, $http, $interval) {
-
+        var app = angular.module("MessageContainer", []).run(callback);
+        angular.bootstrap(document.getElementById(app.name), [app.name]);
+        function callback($rootScope, $http, $timeout, $interval) {
             $rootScope.list = [];
-
-            refresh.call(this), $interval(refresh, 2000), $interval(function () {
+            $rootScope.setReadState = function (code) {
+                $http.post('{:url("@admin/api.message/set")}', {code:code}).then(function () {
+                    refresh(false);
+                });
+            };
+            refresh.call(this, true), $interval(function () {
                 parent.layer.iframeAuto(index);
                 top.$body.trigger('resize');
             }, 10);
-
-            $rootScope.setReadState = function (code) {
-                $http.post('{:url("@admin/api.message/set")}', {code: code}).then(refere);
-            };
-
-            function refresh() {
+            function refresh(isCallback) {
                 $http.get('{:url("@admin/api.message/gets")}').then(function (ret) {
-                    $rootScope.list = (ret.data || {data: []}).data;
-                    if ($rootScope.list < 1) parent.layer.style(index, {height: '0'});
+                    $rootScope.list = (ret.data || {data:[]}).data;
+                    if ($rootScope.list < 1) parent.layer.style(index, {height:'0'});
+                    if (isCallback !== false) $timeout(refresh, 2000);
                 });
             }
         }
