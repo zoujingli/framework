@@ -29,7 +29,7 @@ class Index extends Controller
      */
     public function index()
     {
-        $this->redirect('@admin');
+        $this->redirect('@admin/login');
     }
 
     public function test()
