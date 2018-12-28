@@ -110,14 +110,14 @@ class News extends Controller
         if ($this->request->isGet()) {
             empty($id) && $this->error('参数错误，请稍候再试！');
             if ($this->request->get('output') === 'json') {
-                $this->success('获取数据成功', Media::news($id));
+                $this->success('获取数据成功！', Media::news($id));
             }
             return $this->fetch('form', ['title' => '编辑图文']);
         }
         $post = $this->request->post();
         if (isset($post['data']) && ($ids = $this->_apply_news_article($post['data']))) {
             if (data_save('wechat_news', ['id' => $id, 'article_id' => $ids], 'id')) {
-                $this->success('图文更新成功!', url('@admin') . '#' . url('@wechat/news/index'));
+                $this->success('图文更新成功！', url('@admin') . '#' . url('@wechat/news/index'));
             }
         }
         $this->error('图文更新失败，请稍候再试！');
