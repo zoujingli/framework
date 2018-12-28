@@ -90,8 +90,7 @@ class News extends Controller
         }
         $data = $this->request->post();
         if (($ids = $this->_apply_news_article($data['data'])) && !empty($ids)) {
-            $post = ['article_id' => $ids, 'create_by' => session('user.id')];
-            if (data_save($this->table, $post, 'id') !== false) {
+            if (data_save($this->table, ['article_id' => $ids, 'create_by' => session('user.id')], 'id') !== false) {
                 $url = url('@admin') . '#' . url('@wechat/news/index') . '?spm=' . $this->request->get('spm');
                 $this->success('图文添加成功！', $url);
             }
