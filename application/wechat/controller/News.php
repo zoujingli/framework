@@ -76,18 +76,6 @@ class News extends Controller
         foreach ($data as &$vo) $vo = Media::news($vo['id']);
     }
 
-
-    /**
-     * 媒体资源显示
-     * @return array
-     */
-    public function image()
-    {
-        $this->field = $this->request->get('field', 'local_url');
-        $db = Db::name('WechatNewsImage')->order('id desc');
-        return $this->_page($db, true, true, false, 24);
-    }
-
     /**
      * 添加图文
      * @return string
