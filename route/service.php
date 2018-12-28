@@ -13,14 +13,14 @@
 // +----------------------------------------------------------------------
 
 return [
-    'wechat/api.push/auth/:token'    => 'service/api.push/auth',
-    'service/api.push/auth/:token'   => 'service/api.push/auth',
+    'wechat/api.push/auth/:redirect'  => 'service/api.push/auth',
+    'service/api.push/auth/:redirect' => 'service/api.push/auth',
     // 微信开放平台推送兼容
-    'wechat/api.push/ticket'         => 'service/api.push/ticket',
-    'service/api.push/ticket'        => 'service/api.push/ticket',
-    'wechat/api.push/notify/:appid'  => 'service/api.push/notify',
-    'service/api.push/notify/:appid' => 'service/api.push/notify',
+    'wechat/api.push/ticket'          => 'service/api.push/ticket',
+    'service/api.push/ticket'         => 'service/api.push/ticket',
+    'wechat/api.push/notify/:appid'   => 'service/api.push/notify',
+    'service/api.push/notify/:appid'  => 'service/api.push/notify',
     // 微信开放平台与客户端接口兼容
-    'wechat/api.client/soap/:param'  => 'service/api.client/soap',
-    'service/api.client/soap/:param' => 'service/api.client/soap',
+    'wechat/api.client/soap/:param'   => 'service/api.client/soap',
+    'service/api.client/soap/:param'  => 'service/api.client/soap',
 ];
