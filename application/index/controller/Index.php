@@ -31,15 +31,5 @@ class Index extends Controller
     {
         $this->redirect('@admin/login');
     }
-
-    public function test()
-    {
-        $result = Message::add(
-            '有新的用户申请审核！',
-            '小小邹，13617341324，门店号',
-            '/admin/index/main.html?spm=m-1',
-            'admin/wechat/index'
-        );
-        dump($result);
-    }
+    
 }
