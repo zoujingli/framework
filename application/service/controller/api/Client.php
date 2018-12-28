@@ -56,23 +56,6 @@ class Client extends Controller
      */
     protected $message = '';
 
-
-    /**
-     * 启动Yar接口服务
-     * @param string $param AppName-AppId-AppKey
-     * @return string
-     */
-    public function yar($param)
-    {
-        try {
-            $instance = $this->create($param);
-            $service = new \Yar_Server($instance);
-            $service->handle();
-        } catch (\Exception $e) {
-            return 'YarServieError: ' . __METHOD__ . '  ###' . $e->getMessage();
-        }
-    }
-
     /**
      * 启动SOAP接口服务
      * @param string $param AppName-AppId-AppKey
@@ -86,7 +69,7 @@ class Client extends Controller
             $service->setObject(empty($instance) ? $this : $instance);
             $service->handle();
         } catch (\Exception $e) {
-            return 'SoapServieError: ' . __METHOD__ . '  ###' . $e->getMessage();
+            return $e->getMessage();
         }
     }
 
@@ -116,7 +99,7 @@ class Client extends Controller
             }
             if (!empty($instance)) return $instance;
         }
-        throw new \think\Exception('Authorisation does not pass.');
+        throw new \think\Exception($this->message);
     }
 
     /**
