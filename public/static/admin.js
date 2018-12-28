@@ -363,12 +363,12 @@ $(function () {
             // 错误消息显示
             this.showError = function (ele, content) {
                 $(ele).addClass('validate-error'), this.insertError(ele);
-                $($(ele).data('input-info')).addClass('layui-anim layui-anim-scale').css({width: 'auto'}).html(content);
+                $($(ele).data('input-info')).addClass('layui-anim layui-anim-fadein').css({width: 'auto'}).html(content);
             };
             // 错误消息消除
             this.hideError = function (ele) {
                 $(ele).removeClass('validate-error'), this.insertError(ele);
-                $($(ele).data('input-info')).removeClass('layui-anim-scale').css({width: '30px'}).html('');
+                $($(ele).data('input-info')).removeClass('layui-anim-fadein').css({width: '30px'}).html('');
             };
             // 错误消息标签插入
             this.insertError = function (ele) {
