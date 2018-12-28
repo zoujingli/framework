@@ -17,6 +17,7 @@ namespace app\service\controller;
 use app\service\logic\Build;
 use app\service\logic\Wechat;
 use library\Controller;
+use think\Db;
 
 /**
  * Class Index
@@ -48,47 +49,45 @@ class Index extends Controller
 
     /**
      * 同步获取权限
-     * @throws \WeChat\Exceptions\InvalidResponseException
-     * @throws \WeChat\Exceptions\LocalCacheException
-     * @throws \think\Exception
-     * @throws \think\exception\PDOException
      */
     public function sync()
     {
-        $appid = $this->request->get('appid');
-        $where = ['authorizer_appid' => $appid, 'is_deleted' => '0', 'status' => '1'];
-        $author = Db::name('WechatServiceConfig')->where($where)->find();
-        empty($author) && $this->error('无效的授权信息，请同步其它公众号！');
-        $wechat = Wechat::service();
-        $info = Build::filter($wechat->getAuthorizerInfo($appid));
-        $info['authorizer_appid'] = $appid;
-        if (data_save('WechatServiceConfig', $info, 'authorizer_appid')) {
-            $this->success('更新授权信息成功！', '');
+        try {
+            $appid = $this->request->get('appid');
+            $where = ['authorizer_appid' => $appid, 'is_deleted' => '0', 'status' => '1'];
+            $author = Db::name('WechatServiceConfig')->where($where)->find();
+            empty($author) && $this->error('无效的授权信息，请同步其它公众号！');
+            $info = Build::filter(Wechat::service()->getAuthorizerInfo($appid));
+            $info['authorizer_appid'] = $appid;
+            if (data_save('WechatServiceConfig', $info, 'authorizer_appid')) {
+                $this->success('更新授权信息成功！', '');
+            }
+        } catch (\Exception $e) {
+            $this->error("获取授权信息失败，请稍候再试！<br>{$e->getMessage()}");
         }
-        $this->error('获取授权信息失败，请稍候再试！');
     }
 
     /**
      * 同步获取所有授权公众号记录
-     * @throws \WeChat\Exceptions\InvalidResponseException
-     * @throws \WeChat\Exceptions\LocalCacheException
-     * @throws \think\Exception
-     * @throws \think\exception\PDOException
      */
     public function syncall()
     {
-        $wechat = Wechat::service();
-        $result = $wechat->getAuthorizerList();
-        foreach ($result['list'] as $item) if (!empty($item['refresh_token']) && !empty($item['auth_time'])) {
-            $data = Build::filter($wechat->getAuthorizerInfo($item['authorizer_appid']));
-            $data['authorizer_appid'] = $item['authorizer_appid'];
-            $data['authorizer_refresh_token'] = $item['refresh_token'];
-            $data['create_at'] = date('Y-m-d H:i:s', $item['auth_time']);
-            if (!data_save('WechatServiceConfig', $data, 'authorizer_appid')) {
-                $this->error('获取授权信息失败，请稍候再试！', '');
+        try {
+            $wechat = Wechat::service();
+            $result = $wechat->getAuthorizerList();
+            foreach ($result['list'] as $item) if (!empty($item['refresh_token']) && !empty($item['auth_time'])) {
+                $data = Build::filter($wechat->getAuthorizerInfo($item['authorizer_appid']));
+                $data['authorizer_appid'] = $item['authorizer_appid'];
+                $data['authorizer_refresh_token'] = $item['refresh_token'];
+                $data['create_at'] = date('Y-m-d H:i:s', $item['auth_time']);
+                if (!data_save('WechatServiceConfig', $data, 'authorizer_appid')) {
+                    $this->error('获取授权信息失败，请稍候再试！', '');
+                }
             }
+            $this->success('同步所有授权信息成功！', '');
+        } catch (\Exception $e) {
+            $this->error("同步授权失败，请稍候再试！<br>{$e->getMessage()}");
         }
-        $this->success('同步所有授权信息成功！', '');
     }
 
     /**

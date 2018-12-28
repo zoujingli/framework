@@ -163,13 +163,14 @@ class Push extends Controller
         if (!($info = array_merge($result, $author))) {
             return '获取授权数据失败, 请稍候再试!';
         }
+        // 生成公众号授权参数
         $info = Build::filter($info);
         $info['status'] = '1';
         $info['is_deleted'] = '0';
         $info['expires_in'] = time() + 7000;
         $info['create_at'] = date('Y-m-d H:i:s');
         // 微信接口APPKEY处理与更新
-        $config = Db::name('WechatServiceConfig')->where('authorizer_appid', $result['authorizer_appid'])->find();
+        $config = Db::name('WechatServiceConfig')->where(['authorizer_appid' => $result['authorizer_appid']])->find();
         $info['appkey'] = empty($config['appkey']) ? md5(uniqid('', true)) : $config['appkey'];
         data_save('WechatServiceConfig', $info, 'authorizer_appid');
         if (!empty($redirect)) { // 带上appid与appkey跳转到应用
