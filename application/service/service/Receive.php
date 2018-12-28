@@ -23,7 +23,7 @@ use think\Db;
  * @author Anyon <zoujingli@qq.com>
  * @date 2016/10/27 14:14
  */
-class ReceiveService
+class Receive
 {
 
     /**

@@ -12,14 +12,14 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-namespace app\service\service;
+namespace app\service\logic;
 
 /**
  * 公众号授权数据处理
  * Class BuildService
  * @package app\wechat\service
  */
-class BuildService
+class Build
 {
 
     /**
@@ -29,11 +29,9 @@ class BuildService
      */
     public static function filter(array $info)
     {
-        if (isset($info['func_info'])) {
-            $info['func_info'] = join(',', array_map(function ($tmp) {
-                return $tmp['funcscope_category']['id'];
-            }, $info['func_info']));
-        }
+        if (isset($info['func_info'])) $info['func_info'] = join(',', array_map(function ($tmp) {
+            return $tmp['funcscope_category']['id'];
+        }, $info['func_info']));
         $info['verify_type_info'] = join(',', $info['verify_type_info']);
         $info['service_type_info'] = join(',', $info['service_type_info']);
         $info['business_info'] = json_encode($info['business_info'], JSON_UNESCAPED_UNICODE);

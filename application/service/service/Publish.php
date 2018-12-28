@@ -22,7 +22,7 @@ use app\service\logic\Wechat;
  * @author Anyon <zoujingli@qq.com>
  * @date 2016/10/27 14:14
  */
-class PublishService
+class Publish
 {
 
     /**

@@ -14,10 +14,10 @@
 
 namespace app\service\controller\api;
 
+use app\service\logic\Build;
 use app\service\logic\Wechat;
-use app\service\service\BuildService;
-use app\service\service\PublishService;
-use app\service\service\ReceiveService;
+use app\service\service\Publish;
+use app\service\service\Receive;
 use library\Controller;
 use think\Db;
 use WeChat\Oauth;
@@ -46,10 +46,10 @@ class Push extends Controller
     {
         /* 全网发布接口测试 */
         if ($appid === 'wx570bc396a51b8ff8') {
-            return PublishService::handler($appid);
+            return Publish::handler($appid);
         }
         /* 接口类正常服务 */
-        return ReceiveService::handler($appid);
+        return Receive::handler($appid);
     }
 
     /**
@@ -163,7 +163,7 @@ class Push extends Controller
         if (!($info = array_merge($result, $author))) {
             return '获取授权数据失败, 请稍候再试!';
         }
-        $info = BuildService::filter($info);
+        $info = Build::filter($info);
         $info['status'] = '1';
         $info['is_deleted'] = '0';
         $info['expires_in'] = time() + 7000;

@@ -14,6 +14,8 @@
 
 namespace app\service\controller;
 
+use app\service\logic\Build;
+use app\service\logic\Wechat;
 use library\Controller;
 
 /**
@@ -40,10 +42,8 @@ class Index extends Controller
     public function index()
     {
         $this->title = '微信授权管理';
-        return $this->_query($this->table)
-            ->like('authorizer_appid,nick_name,principal_name')
-            ->equal('service_type')->dateBetween('create_at')
-            ->order('id desc')->page();
+        return $this->_query($this->table)->like('authorizer_appid,nick_name,principal_name')
+            ->equal('service_type')->dateBetween('create_at')->order('id desc')->page();
     }
 
     /**
@@ -59,10 +59,10 @@ class Index extends Controller
         $where = ['authorizer_appid' => $appid, 'is_deleted' => '0', 'status' => '1'];
         $author = Db::name('WechatServiceConfig')->where($where)->find();
         empty($author) && $this->error('无效的授权信息，请同步其它公众号！');
-        $wechat = WechatService::service();
-        $info = BuildService::filter($wechat->getAuthorizerInfo($appid));
+        $wechat = Wechat::service();
+        $info = Build::filter($wechat->getAuthorizerInfo($appid));
         $info['authorizer_appid'] = $appid;
-        if (DataService::save('WechatServiceConfig', $info, 'authorizer_appid')) {
+        if (data_save('WechatServiceConfig', $info, 'authorizer_appid')) {
             $this->success('更新授权信息成功！', '');
         }
         $this->error('获取授权信息失败，请稍候再试！');
@@ -77,17 +77,15 @@ class Index extends Controller
      */
     public function syncall()
     {
-        $wechat = WechatService::service();
+        $wechat = Wechat::service();
         $result = $wechat->getAuthorizerList();
-        foreach ($result['list'] as $item) {
-            if (!empty($item['refresh_token']) && !empty($item['auth_time'])) {
-                $data = BuildService::filter($wechat->getAuthorizerInfo($item['authorizer_appid']));
-                $data['authorizer_appid'] = $item['authorizer_appid'];
-                $data['authorizer_refresh_token'] = $item['refresh_token'];
-                $data['create_at'] = date('Y-m-d H:i:s', $item['auth_time']);
-                if (!DataService::save('WechatServiceConfig', $data, 'authorizer_appid')) {
-                    $this->error('获取授权信息失败，请稍候再试！', '');
-                }
+        foreach ($result['list'] as $item) if (!empty($item['refresh_token']) && !empty($item['auth_time'])) {
+            $data = Build::filter($wechat->getAuthorizerInfo($item['authorizer_appid']));
+            $data['authorizer_appid'] = $item['authorizer_appid'];
+            $data['authorizer_refresh_token'] = $item['refresh_token'];
+            $data['create_at'] = date('Y-m-d H:i:s', $item['auth_time']);
+            if (!data_save('WechatServiceConfig', $data, 'authorizer_appid')) {
+                $this->error('获取授权信息失败，请稍候再试！', '');
             }
         }
         $this->success('同步所有授权信息成功！', '');
@@ -95,41 +93,25 @@ class Index extends Controller
 
     /**
      * 删除微信
-     * @throws \think\Exception
-     * @throws \think\exception\PDOException
      */
     public function del()
     {
-        $wechat = WechatService::service();
-        if (DataService::update($this->table)) {
-            $this->success("微信删除成功！", '');
-        }
-        $this->error("微信删除失败，请稍候再试！");
+        $this->_delete($this->table);
     }
 
     /**
      * 微信禁用
-     * @throws \think\Exception
-     * @throws \think\exception\PDOException
      */
     public function forbid()
     {
-        if (DataService::update($this->table)) {
-            $this->success("微信禁用成功！", '');
-        }
-        $this->error("微信禁用失败，请稍候再试！");
+        $this->_save($this->table, ['status' => '0']);
     }
 
     /**
-     * 微信禁用
-     * @throws \think\Exception
-     * @throws \think\exception\PDOException
+     * 微信启用
      */
     public function resume()
     {
-        if (DataService::update($this->table)) {
-            $this->success("微信启用成功！", '');
-        }
-        $this->error("微信启用失败，请稍候再试！");
+        $this->_save($this->table, ['status' => '1']);
     }
 }

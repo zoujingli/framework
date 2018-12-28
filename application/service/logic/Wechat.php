@@ -15,7 +15,6 @@
 namespace app\service\logic;
 
 use think\Db;
-use think\Exception;
 use WeOpen\MiniApp;
 
 /**
@@ -100,15 +99,15 @@ class Wechat
             'component_encodingaeskey' => sysconf('component_encodingaeskey'),
         ];
         // 注册授权公众号 AccessToken 处理
-        $config['GetAccessTokenCallback'] = function ($authorizer_appid) use ($config) {
-            $where = ['authorizer_appid' => $authorizer_appid];
-            if (!($refresh_token = Db::name('WechatServiceConfig')->where($where)->value('authorizer_refresh_token'))) {
-                throw new Exception('The WeChat information is not configured.', '404');
+        $config['GetAccessTokenCallback'] = function ($authorizerAppid) use ($config) {
+            $where = ['authorizer_appid' => $authorizerAppid];
+            if (!($refreshToken = Db::name('WechatServiceConfig')->where($where)->value('authorizer_refresh_token'))) {
+                throw new \think\Exception('The WeChat information is not configured.', '404');
             }
             $open = new MiniApp($config);
-            $result = $open->refreshAccessToken($authorizer_appid, $refresh_token);
+            $result = $open->refreshAccessToken($authorizerAppid, $refreshToken);
             if (empty($result['authorizer_access_token']) || empty($result['authorizer_refresh_token'])) {
-                throw new Exception($result['errmsg'], '0');
+                throw new \think\Exception($result['errmsg'], '0');
             }
             Db::name('WechatServiceConfig')->where($where)->update([
                 'authorizer_access_token'  => $result['authorizer_access_token'],

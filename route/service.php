@@ -12,15 +12,9 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-namespace app\service\handler;
-
-/**
- * 微信配置服务
- * Class ConfigHandler
- * @package app\wechat\handler
- * @author Anyon <zoujingli@qq.com>
- */
-class ConfigHandler extends BasicHandler
-{
-
-}
+return [
+    'wechat/api.push/ticket'        => 'service/api.push/ticket',
+    'wechat/api.push/notify/:appid' => 'service/api.push/notify',
+    'wechat/api.client/yar/:param'  => 'service/api.client/yar',
+    'wechat/api.client/soap/:param' => 'service/api.client/soap',
+];

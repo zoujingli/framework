@@ -17,8 +17,6 @@ namespace app\service\controller\api;
 use app\service\logic\Wechat;
 use think\Controller;
 use think\Db;
-use think\Exception;
-use think\facade\Log;
 
 /**
  * 获取微信SDK实例对象
@@ -71,8 +69,7 @@ class Client extends Controller
             $service = new \Yar_Server($instance);
             $service->handle();
         } catch (\Exception $e) {
-            Log::error($errmsg = 'YarServieError: ' . __METHOD__ . '  ###' . $e->getMessage());
-            return $errmsg;
+            return 'YarServieError: ' . __METHOD__ . '  ###' . $e->getMessage();
         }
     }
 
@@ -89,8 +86,7 @@ class Client extends Controller
             $service->setObject(empty($instance) ? $this : $instance);
             $service->handle();
         } catch (\Exception $e) {
-            Log::error($errmsg = 'SoapServieError: ' . __METHOD__ . '  ###' . $e->getMessage());
-            return $errmsg;
+            return 'SoapServieError: ' . __METHOD__ . '  ###' . $e->getMessage();
         }
     }
 
@@ -114,13 +110,13 @@ class Client extends Controller
                 $instance = Wechat::instance($this->name, $this->appid, 'WeMini');
             } elseif (stripos('Service,MiniApp', $this->name) !== false) {
                 $instance = Wechat::instance($this->name, $this->appid, 'WeOpen');
-            } elseif (stripos('Wechat,Config', $this->name) !== false) {
-                $className = "\\app\\wechat\\handler\\{$this->name}Handler";
+            } elseif (stripos('Wechat,Config,Handler', $this->name) !== false) {
+                $className = "\\app\\service\\Handler";
                 $instance = new $className($this->config);
             }
+            if (!empty($instance)) return $instance;
         }
-        if (empty($instance)) throw new Exception('Authorisation does not pass.');
-        return $instance;
+        throw new \think\Exception('Authorisation does not pass.');
     }
 
     /**
