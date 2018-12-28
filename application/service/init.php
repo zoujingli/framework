@@ -12,7 +12,8 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-return [
+\think\facade\Route::rules([
+    // 发起开放平台授权链接兼容
     'wechat/api.push/auth/:redirect'  => 'service/api.push/auth',
     'service/api.push/auth/:redirect' => 'service/api.push/auth',
     // 微信开放平台推送兼容
@@ -23,4 +24,4 @@ return [
     // 微信开放平台与客户端接口兼容
     'wechat/api.client/soap/:param'   => 'service/api.client/soap',
     'service/api.client/soap/:param'  => 'service/api.client/soap',
-];
+]);
