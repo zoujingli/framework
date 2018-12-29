@@ -11,6 +11,10 @@ use library\Controller;
  */
 class LuckdrawPrize extends Controller
 {
+    /**
+     * 绑定数据表
+     * @var string
+     */
     protected $table = 'ActivityLuckdrawPrize';
 
 }
