@@ -28,5 +28,5 @@
 
 return [
     // ThinkService 授权接口地址
-    'service_url' => 'https://framework.thinkadmin.top',
+    'service_url' => 'https://service.thinkadmin.top',
 ];
