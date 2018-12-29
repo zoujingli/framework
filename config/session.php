@@ -12,7 +12,6 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-
 /* 定义会话路径 */
 $_path_ = env('runtime_path') . 'sess' . DIRECTORY_SEPARATOR;
 file_exists($_path_) || mkdir($_path_, 0755, true);

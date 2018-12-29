@@ -12,11 +12,6 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-foreach (scandir($_path_ = env('app_path')) as $dir) {
-    if (stripos($dir, '.') === 0) continue;
-    $init = $_path_ . $dir . DIRECTORY_SEPARATOR . "init.php";
-    if (file_exists($init)) include_once($init);
-}
 return [
     // 应用调试模式
     'app_debug'      => true,

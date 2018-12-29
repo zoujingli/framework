@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit0e5a0b42b4dfba62806ddd74f6487de6
+class ComposerStaticInitb7b25fdf64c47b8fed2fcffbab0b132f
 {
     public static $files = array (
         '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
@@ -304,18 +304,21 @@ class ComposerStaticInit0e5a0b42b4dfba62806ddd74f6487de6
         'app\\admin\\logic\\Message' => __DIR__ . '/../..' . '/application/admin/logic/Message.php',
         'app\\admin\\logic\\Queue' => __DIR__ . '/../..' . '/application/admin/logic/Queue.php',
         'app\\admin\\logic\\Update' => __DIR__ . '/../..' . '/application/admin/logic/Update.php',
+        'app\\admin\\logic\\update\\UpdateAdmin' => __DIR__ . '/../..' . '/application/admin/logic/update/UpdateAdmin.php',
+        'app\\admin\\logic\\update\\UpdateAll' => __DIR__ . '/../..' . '/application/admin/logic/update/UpdateAll.php',
+        'app\\admin\\logic\\update\\UpdatePlugs' => __DIR__ . '/../..' . '/application/admin/logic/update/UpdatePlugs.php',
+        'app\\admin\\logic\\update\\UpdateWechat' => __DIR__ . '/../..' . '/application/admin/logic/update/UpdateWechat.php',
         'app\\index\\controller\\Index' => __DIR__ . '/../..' . '/application/index/controller/Index.php',
-        'app\\store\\controller\\Card' => __DIR__ . '/../..' . '/application/store/controller/Card.php',
-        'app\\store\\controller\\Door' => __DIR__ . '/../..' . '/application/store/controller/Door.php',
-        'app\\store\\controller\\DoorUser' => __DIR__ . '/../..' . '/application/store/controller/DoorUser.php',
+        'app\\service\\controller\\Config' => __DIR__ . '/../..' . '/application/service/controller/Config.php',
+        'app\\service\\controller\\Index' => __DIR__ . '/../..' . '/application/service/controller/Index.php',
+        'app\\service\\controller\\api\\Client' => __DIR__ . '/../..' . '/application/service/controller/api/Client.php',
+        'app\\service\\controller\\api\\Push' => __DIR__ . '/../..' . '/application/service/controller/api/Push.php',
+        'app\\service\\logic\\Build' => __DIR__ . '/../..' . '/application/service/logic/Build.php',
+        'app\\service\\logic\\Wechat' => __DIR__ . '/../..' . '/application/service/logic/Wechat.php',
+        'app\\service\\service\\Handler' => __DIR__ . '/../..' . '/application/service/service/Handler.php',
+        'app\\service\\service\\Publish' => __DIR__ . '/../..' . '/application/service/service/Publish.php',
+        'app\\service\\service\\Receive' => __DIR__ . '/../..' . '/application/service/service/Receive.php',
         'app\\store\\controller\\Goods' => __DIR__ . '/../..' . '/application/store/controller/Goods.php',
-        'app\\store\\controller\\Groups' => __DIR__ . '/../..' . '/application/store/controller/Groups.php',
-        'app\\store\\controller\\GroupsOrder' => __DIR__ . '/../..' . '/application/store/controller/GroupsOrder.php',
-        'app\\store\\controller\\api\\Door' => __DIR__ . '/../..' . '/application/store/controller/api/Door.php',
-        'app\\store\\controller\\api\\DoorUser' => __DIR__ . '/../..' . '/application/store/controller/api/DoorUser.php',
-        'app\\store\\controller\\api\\Groups' => __DIR__ . '/../..' . '/application/store/controller/api/Groups.php',
-        'app\\store\\controller\\api\\GroupsOrder' => __DIR__ . '/../..' . '/application/store/controller/api/GroupsOrder.php',
-        'app\\store\\controller\\api\\Member' => __DIR__ . '/../..' . '/application/store/controller/api/Member.php',
         'app\\store\\logic\\Goods' => __DIR__ . '/../..' . '/application/store/logic/Goods.php',
         'app\\wechat\\Jobs' => __DIR__ . '/../..' . '/application/wechat/Jobs.php',
         'app\\wechat\\controller\\Config' => __DIR__ . '/../..' . '/application/wechat/controller/Config.php',
@@ -383,9 +386,9 @@ class ComposerStaticInit0e5a0b42b4dfba62806ddd74f6487de6
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit0e5a0b42b4dfba62806ddd74f6487de6::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit0e5a0b42b4dfba62806ddd74f6487de6::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit0e5a0b42b4dfba62806ddd74f6487de6::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitb7b25fdf64c47b8fed2fcffbab0b132f::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitb7b25fdf64c47b8fed2fcffbab0b132f::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitb7b25fdf64c47b8fed2fcffbab0b132f::$classMap;
 
         }, null, ClassLoader::class);
     }
