@@ -11,5 +11,6 @@ use library\Controller;
  */
 class LuckdrawMemberRecord extends Controller
 {
+    protected $table = 'ActivityLuckdrawMemberRecord';
 
 }

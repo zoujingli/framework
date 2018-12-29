@@ -11,5 +11,6 @@ use library\Controller;
  */
 class LuckdrawConfig extends Controller
 {
+    protected $table = 'ActivityLuckdrawConfig';
 
 }
