@@ -209,8 +209,8 @@ class Push extends Controller
                 'url'   => url("@activity/api.wap/index/{$id}", '', false, true),
                 'title' => $info['title'], 'picurl' => $info['logo'],
             ], true);
-            p($info);
         }
+        p($rule);
 
         list($table, $field, $value) = explode('#', $rule . '##');
         $data = Db::name($table)->where([$field => $value])->find();
