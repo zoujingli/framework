@@ -46,7 +46,7 @@ class LuckdrawConfig extends Controller
         if ($this->request->get('action') === 'qrc') {
             try {
                 $wechat = Wechat::WeChatQrcode();
-                $result = $wechat->create('activity#' . $this->request->get('keys', ''));
+                $result = $wechat->create('ac' . $this->request->get('keys', ''));
                 $this->success('生成二维码成功！', "javascript:$.previewImage('{$wechat->url($result['ticket'])}')");
             } catch (\think\exception\HttpResponseException $exception) {
                 throw  $exception;

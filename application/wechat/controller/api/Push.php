@@ -202,8 +202,8 @@ class Push extends Controller
      */
     private function keys($rule, $isLast = false, $isCustom = false)
     {
-        if (stripos($rule, 'activity#') !== false) {
-            list(, , , $id) = explode('#', $rule);
+        if (stripos($rule, 'ac') !== false) {
+            list(, $id) = explode('ac', $rule);
             $info = Db::name('activity_luckdraw_config')->where(['id' => $id])->find();
             p($info);
             if (!empty($info)) $this->sendMessage('news', ['articles' => [[
