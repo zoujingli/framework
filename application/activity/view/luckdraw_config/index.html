@@ -21,7 +21,7 @@
         <th class='list-table-check-td think-checkbox'>
             <input data-auto-none="" data-check-target='.list-check-box' type='checkbox'>
         </th>
-        <th class='text-left nowrap' style="width:120px">抽奖名</th>
+        <th class='text-left nowrap' style="width:120px">活动名称</th>
         <th class='text-left nowrap' style="width:180px">创建时间</th>
         <th class='text-left nowrap' style="width:120px">账号状态</th>
         <th class='text-left nowrap'></th>
@@ -34,7 +34,7 @@
         <td class='list-table-check-td think-checkbox'>
             <input class="list-check-box" value='{$vo.id}' type='checkbox'>
         </td>
-        <td class='text-left nowrap'>{$vo.title|default=''}</td>
+        <td class='text-left nowrap'><i class="fa fa-qrcode fa-lg margin-right-5 pointer" data-load="{$vo.qrc}" data-time="false"></i>{$vo.title|default=''}</td>
         <td class='text-left nowrap'>{$vo.create_at|format_datetime|raw}</td>
         <td class='text-left nowrap'>{eq name='vo.status' value='0'}<span class="layui-badge">已禁用</span>{else}<span class="layui-badge layui-bg-green">使用中</span>{/eq}</td>
         <td class='text-left nowrap'>

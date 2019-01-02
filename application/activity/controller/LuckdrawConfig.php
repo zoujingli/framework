@@ -14,6 +14,7 @@
 
 namespace app\activity\controller;
 
+use app\wechat\logic\Wechat;
 use library\Controller;
 use think\Db;
 
@@ -41,8 +42,27 @@ class LuckdrawConfig extends Controller
      */
     public function index()
     {
+        // 关键字二维码生成
+        if ($this->request->get('action') === 'qrc') {
+            try {
+                $wechat = Wechat::WeChatQrcode();
+                $result = $wechat->create('activity#' . $this->request->get('keys', ''));
+                $this->success('生成二维码成功！', "javascript:$.previewImage('{$wechat->url($result['ticket'])}')");
+            } catch (\think\exception\HttpResponseException $exception) {
+                throw  $exception;
+            } catch (\Exception $e) {
+                $this->error("生成二维码失败，请稍候再试！<br> {$e->getMessage()}");
+            }
+        }
         $this->title = '抽奖活动管理';
         return $this->_query($this->table)->order('id desc')->page();
+    }
+
+    protected function _page_filter(&$data)
+    {
+        foreach ($data as &$vo) {
+            $vo['qrc'] = url('@wechat/keys/index') . "?action=qrc&keys={$vo['id']}";
+        }
     }
 
     /**
