@@ -38,7 +38,8 @@ class Wap extends Controller
     public function index($code)
     {
         $this->init($code);
-        $this->records = Db::name('activity_luckdraw_member_record')->where(['cid' => $this->vo['id']])->order('id desc')->select();
+        $this->records = Db::name('activity_luckdraw_member_record')
+            ->where([['prize_id', '>', '0']])->where(['cid' => $this->vo['id']])->order('id desc')->select();
         return $this->fetch();
     }
 
