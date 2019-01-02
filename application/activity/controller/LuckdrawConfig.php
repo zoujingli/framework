@@ -88,7 +88,10 @@ class LuckdrawConfig extends Controller
             foreach (array_keys($post['prize_id']) as $v) foreach ($prizes as $pz) {
                 if (intval($pz['id']) === intval($post['prize_id'][$v])) array_push($records, [
                     'prize_id'    => $pz['id'], 'prize_logo' => $pz['logo'], 'cid' => $vo['id'],
-                    'prize_title' => $pz['title'], 'prize_num' => $post['prize_num'][$v], 'prize_rate' => $post['prize_rate'][$v],
+                    'prize_title' => $pz['title'],
+                    'prize_num'   => $post['prize_num'][$v],
+                    'prize_rate'  => $post['prize_rate'][$v],
+                    'prize_level' => $post['prize_level'][$v],
                 ]);
             }
             Db::name('activity_luckdraw_config_record')->where(['cid' => $vo['id']])->delete();

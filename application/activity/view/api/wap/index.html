@@ -1,0 +1,189 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>{$vo.title|default=''}</title>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width">
+    <link rel="stylesheet" href="__ROOT__/static/activity/css/style.css">
+    <script src="__ROOT__/static/plugs/jquery/jquery.min.js"></script>
+    <script src="__ROOT__/static/activity/layer.mobile/layer.js"></script>
+    <script>
+        window.onresize = function () {
+            var deviceWidth = document.documentElement.clientWidth;
+            if (deviceWidth > 640) deviceWidth = 640;
+            document.documentElement.style.fontSize = deviceWidth / 7.5 + 'px';
+        };
+        window.onresize();
+
+        var ApiFun = new function () {
+            this.doDraw = function () {
+
+                /* {if empty($member)} */
+
+                // 需要补充资料
+                document.querySelector('#mask1').className = 'mask show';
+                document.querySelector('.info-dialog').className = 'info-dialog show';
+
+                /* {else} */
+
+                var index = layer.open({type: 2, content: '抽奖中...'});
+                $.post('{:url("@activity/api.wap/prize/".$vo.id)}', {}, function (ret) {
+                    layer.close(index);
+                    if (ret.code > 0) return layer.open({
+                        content: ret.info, skin: 'msg', time: 2, end: function () {
+                            location.reload();
+                        }, shade: true
+                    });
+                    return layer.open({
+                        content: ret.info, skin: 'msg', time: 2, end: function () {
+                            location.reload();
+                        }, shade: true
+                    });
+                });
+
+                /* {/if} */
+
+            };
+            // 补充用户数据
+            this.doInfo = function () {
+                var phone = $('#phone').val() || '', username = $('#username').val() || '';
+                if (!/.{1}/.test(username)) return layer.open({content: '请输入您的姓名！', skin: 'msg', time: 2, shade: true});
+                if (!/^1\d{10}$/.test(phone)) return layer.open({content: '请输入正确的手机号！', skin: 'msg', time: 2, shade: true});
+                var index = layer.open({type: 2, content: '提交中...', shade: true});
+                $.post('{:url("@activity/api.wap/info/".$vo.id)}', {phone: phone, username: username}, function (ret) {
+                    layer.close(index);
+                    if (ret.code > 0) return window.location.reload();
+                    return layer.open({content: ret.info, skin: 'msg', time: 2, shade: true});
+                });
+            };
+
+            this.doUsed = function () {
+                var uncode = $('#uncode').val() || '';
+                if (!uncode) return layer.open({content: '请输入核销码再操作！', skin: 'msg', time: 2, shade: true});
+                var index = layer.open({type: 2, content: '正在核销奖品...', shade: true});
+                $.post('{:url("@activity/api.wap/used/".$vo.id)}', {uncode: uncode}, function (ret) {
+                    layer.close(index);
+                    if (ret.code > 0) if (ret.code > 0) return layer.open({
+                        content: ret.info, skin: 'msg', time: 2, end: function () {
+                            location.reload();
+                        }, shade: true
+                    });
+                    return layer.open({content: ret.info, skin: 'msg', time: 2, shade: true});
+                });
+            }
+        };
+    </script>
+</head>
+
+<body>
+
+<div class="page index-page">
+    <img src="__ROOT__/static/activity/images/bg.jpg" alt="一尚美术">
+    <div class="page-body">
+        <img onclick="showRule()" class="rule" src="__ROOT__/static/activity/images/rule.png" alt="活动规则">
+        <!-- 抽奖按钮 -->
+        <img class="btn" src="__ROOT__/static/activity/images/yu.png" alt="点我抽奖" onclick="ApiFun.doDraw()">
+        <!-- 已中奖的点击按钮变成 查看奖品 -->
+        <!-- <img class="btn" src="__ROOT__/static/activity/images/yu1.png" alt="查看奖品" > -->
+
+        <!-- 中奖明细 -->
+        <div class="detail">
+            <img class="title" src="__ROOT__/static/activity/images/t1.png" alt="中奖明细">
+            <div class="ls-box">
+                <img class="icon1" src="__ROOT__/static/activity/images/icon1.png" alt="一尚美术">
+                <img class="icon1 icon2" src="__ROOT__/static/activity/images/icon1.png" alt="一尚美术">
+                <ul>
+                    {foreach $records as $vo}
+                    <li>
+                        <div class="ls-title">
+                            <span>{$vo.username|default=''}</span>
+                            <span>{$vo.prize_level|default='特等奖'}</span>
+                        </div>
+                        <div class="ls-text">{$vo.prize_title|default=''}</div>
+                    </li>
+                    {/foreach}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 填写信息 -->
+{if empty($member)}
+<div id="mask1" class="mask show" onclick="hideDraw()"></div>
+<div class="info-dialog show">
+    <h2>填写信息即可参与抽奖哦~</h2>
+    <div class="form">
+        <label>
+            <span>您的姓名：</span>
+            <input id="username" type="text" maxlength="20">
+        </label>
+        <label>
+            <span>手机号码：</span>
+            <input id="phone" type="tel" maxlength="11">
+        </label>
+    </div>
+    <div class="btns">
+        <span onclick="hideDraw()">取消</span>
+        <span onclick="ApiFun.doInfo()">确认</span>
+    </div>
+</div>
+{elseif !empty($record)}
+<!-- 中奖弹窗 -->
+<div class="luck-mask show">
+    <img onclick="this.parentNode.className='luck-mask'" class="close" src="__ROOT__/static/activity/images/close.png" alt="关闭">
+    <img src="__ROOT__/static/activity/images/luck.png" alt="中奖了">
+    <div class="luck-dialog">
+        <h1>{$record.prize_level|default='特等奖'}</h1>
+        <h3>{$record.prize_title|default='未中奖'}</h3>
+        {empty name='record.uncode_state'}
+        <div>
+            <input id="uncode" type="text" placeholder="请输入核销码">
+            <div onclick="ApiFun.doUsed()" class="dialog-btn">确认核销</div>
+        </div>
+        {else}
+        <div class="dialog-btn btn1">奖品已核销</div>
+        {/empty}
+    </div>
+</div>
+{/if}
+
+<!-- 规则说明 -->
+<div class="rule-mask">
+    <img onclick="this.parentNode.className='rule-mask'" class="close" src="__ROOT__/static/activity/images/close.png" alt="关闭">
+    <div class="rule-dialog">
+        <h1 class="dialog-title">活动规则</h1>
+        <div class="rule-content">{foreach $rules as $r}<p>{$r}</p>{/foreach}</div>
+    </div>
+</div>
+
+<!-- script -->
+<script>
+    // 显示活动规则
+    function showRule() {
+        document.querySelector('.rule-mask').className = 'rule-mask show';
+    };
+
+    // 显示填写信息弹窗
+    function draw() {
+        document.querySelector('#mask1').className = 'mask show';
+        document.querySelector('.info-dialog').className = 'info-dialog show';
+    };
+
+    // 隐藏填写信息弹窗
+    function hideDraw() {
+        document.querySelector('#mask1').className = 'mask';
+        document.querySelector('.info-dialog').className = 'info-dialog';
+    };
+
+    // 显示中奖
+    function showLuck() {
+        document.querySelector('.luck-mask').className = 'luck-mask show';
+    };
+</script>
+
+</body>
+
+</html>

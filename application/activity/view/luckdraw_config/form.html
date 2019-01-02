@@ -4,6 +4,9 @@
 <table class="layui-hide">
     <tbody id='add-item-tpl'>
     <tr>
+        <td class="nowrap" style="width:120px">
+            <input name="prize_level[]" value="特等奖" class="layui-input">
+        </td>
         <td>
             <select name='prize_id[]' class="layui-select">
                 {foreach $prizes as $prize}
@@ -12,10 +15,10 @@
             </select>
         </td>
         <td class="nowrap" style="width:120px">
-            <input name="prize_num[]" onblur="this.value=parseInt(this.value)||1" value="{$x.num|default='1'}" class="layui-input">
+            <input name="prize_num[]" onblur="this.value=parseInt(this.value)||1" value="1" class="layui-input">
         </td>
         <td class="nowrap" style="width:120px">
-            <input name="prize_rate[]" onblur="this.value=(parseFloat(this.value)||0).toFixed(4)" value="{$x.rate|default='0.0001'}" class="layui-input border-0 inline-block">
+            <input name="prize_rate[]" onblur="this.value=(parseFloat(this.value)||0).toFixed(4)" value="0.0001" class="layui-input border-0 inline-block">
             <span class="absolute font-s14" style='right:10px;width:39px;text-align:center;height:39px;line-height:39px;display:inline-block'>%</span>
         </td>
         <td class="nowrap text-center" style="width:100px">
@@ -43,11 +46,18 @@
             </div>
         </div>
         <div class="layui-form-item">
+            <label class="layui-form-label">奖品核销码</label>
+            <div class="layui-input-block">
+                <input name="code" value='{$vo.code|default=""}' required placeholder="请输入核销码" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label">活动奖品</label>
             <div class="layui-input-block">
                 <table class="layui-table">
                     <thead>
                     <tr>
+                        <th>奖项名称</th>
                         <th>奖品名称</th>
                         <th>奖品数量</th>
                         <th>中奖率(总概率100%)</th>
@@ -57,6 +67,9 @@
                     <tbody class="layui-bg-gray">
                     {foreach $selectPrizes as $pz}
                     <tr>
+                        <td class="nowrap" style="width:120px">
+                            <input name="prize_level[]" value="{$pz.prize_level|default=''}" class="layui-input">
+                        </td>
                         <td>
                             <select name='prize_id[]' class="layui-select">
                                 {foreach $prizes as $prize}
@@ -83,16 +96,16 @@
                     </tr>
                     {/foreach}
                     <tr>
-                        <td colspan="4"><a onclick="$(this).parents('tr').before($('#add-item-tpl').html()),form.render();" class="layui-btn layui-btn-xs">添加奖项</a></td>
+                        <td colspan="5"><a onclick="$(this).parents('tr').before($('#add-item-tpl').html()),form.render();" class="layui-btn layui-btn-xs">添加奖项</a></td>
                     </tr>
                     </tbody>
                 </table>
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">活动内容</label>
+            <label class="layui-form-label">活动规则</label>
             <div class="layui-input-block">
-                <input name="content" value='{$vo.content|default=""}' placeholder="请输入活动内容" class="layui-input">
+                <textarea class="layui-textarea" name="content" placeholder="请输入活动规则">{$vo.content|default=''}</textarea>
             </div>
         </div>
         <div class="layui-form-item">
@@ -112,10 +125,6 @@
     </div>
     <script>
         window.form.render();
-
-        require(['ckeditor'], function () {
-            window.createEditor('[name=content]');
-        });
 
         function moveRm(that) {
             $.msg.confirm('确定要移除这个选项吗?', function (index) {
