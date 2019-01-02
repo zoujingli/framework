@@ -298,17 +298,17 @@
     },
     {
         "name": "topthink/think-helper",
-        "version": "v1.0.6",
-        "version_normalized": "1.0.6.0",
+        "version": "v1.0.7",
+        "version_normalized": "1.0.7.0",
         "source": {
             "type": "git",
             "url": "https://github.com/top-think/think-helper.git",
-            "reference": "0c99dc625b0d2d4124e1b6ca15a3ad6f0125963f"
+            "reference": "5f92178606c8ce131d36b37a57c58eb71e55f019"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/top-think/think-helper/zipball/0c99dc625b0d2d4124e1b6ca15a3ad6f0125963f",
-            "reference": "0c99dc625b0d2d4124e1b6ca15a3ad6f0125963f",
+            "url": "https://api.github.com/repos/top-think/think-helper/zipball/5f92178606c8ce131d36b37a57c58eb71e55f019",
+            "reference": "5f92178606c8ce131d36b37a57c58eb71e55f019",
             "shasum": "",
             "mirrors": [
                 {
@@ -317,7 +317,7 @@
                 }
             ]
         },
-        "time": "2017-04-05T07:15:37+00:00",
+        "time": "2018-10-05T00:43:21+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
