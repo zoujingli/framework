@@ -24,7 +24,6 @@
         <th class='text-left nowrap' style="width:120px">奖品名</th>
         <th class='text-left nowrap' style="width:180px">创建时间</th>
         <th class='text-left nowrap' style="width:120px">账号状态</th>
-        <th class='text-left nowrap' style="width:150px">最后登录</th>
         <th class='text-left nowrap'></th>
     </tr>
     </thead>
@@ -35,28 +34,10 @@
         <td class='list-table-check-td think-checkbox'>
             <input class="list-check-box" value='{$vo.id}' type='checkbox'>
         </td>
-        <td class='text-left nowrap'>{$vo.username|default=''}</td>
+        <td class='text-left nowrap'>{$vo.title|default=''}</td>
         <td class='text-left nowrap'>日期：{$vo.create_at|format_datetime|str_replace=' ','<br>时间：',###|raw}</td>
+        <td class='text-left nowrap'>{eq name='vo.status' value='0'}<span class="layui-badge">已禁用</span>{else}<span class="layui-badge layui-bg-green">使用中</span>{/eq}</td>
         <td class='text-left nowrap'>
-            登录次数：{$vo.login_num|default=0}<br>
-            使用状态：{eq name='vo.status' value='0'}<span class="layui-badge">已禁用</span>{else}<span class="layui-badge layui-bg-green">使用中</span>{/eq}
-        </td>
-        <td class='text-left nowrap'>
-            {if $vo.login_num > 0}
-            日期：{$vo.login_at|format_datetime|str_replace=' ','<br>时间：',###|raw}
-            {else}
-            <span class="color-desc">没有登录记录</span>
-            {/if}
-        </td>
-        <td class='text-left nowrap'>
-
-            {if auth("activity/luckdraw_prize/auth")}
-            <a class="layui-btn layui-btn-primary layui-btn-sm" data-title="奖品授权" data-modal='{:url("auth")}?id={$vo.id}'>授 权</a>
-            {/if}
-
-            {if auth("activity/luckdraw_prize/pass")}
-            <a class="layui-btn layui-btn-normal layui-btn-sm" data-title="设置密码" data-modal='{:url("pass")}?id={$vo.id}'>密 码</a>
-            {/if}
 
             {if auth("activity/luckdraw_prize/edit")}
             <a class="layui-btn layui-btn-sm" data-title="编辑奖品" data-modal='{:url("edit")}?id={$vo.id}'>编 辑</a>

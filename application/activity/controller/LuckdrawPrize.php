@@ -40,7 +40,7 @@ class LuckdrawPrize extends Controller
     public function index()
     {
         $this->title = '活动奖品管理';
-        return $this->_query($this->table)->page();
+        return $this->_query($this->table)->like('title,content')->equal('status')->page();
     }
 
     public function add()
