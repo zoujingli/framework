@@ -55,7 +55,7 @@ class LuckdrawConfig extends Controller
             }
         }
         $this->title = '抽奖活动管理';
-        return $this->_query($this->table)->order('id desc')->page();
+        return $this->_query($this->table)->where(['is_deleted' => '0'])->order('id desc')->page();
     }
 
     protected function _page_filter(&$data)
