@@ -80,6 +80,7 @@
 <body>
 
 <div class="page index-page">
+    {if !empty($vo.status) and empty($vo.is_deleted)}
     <img src="__ROOT__/static/activity/images/bg.jpg" alt="一尚美术">
     <div class="page-body">
         <img onclick="showRule()" class="rule" src="__ROOT__/static/activity/images/rule.png" alt="活动规则">
@@ -159,8 +160,15 @@
     </div>
 </div>
 
+{else}
+<script>
+    alert('活动已经结束');
+</script>
+{/if}
+
 <!-- script -->
 <script>
+
     // 显示活动规则
     function showRule() {
         document.querySelector('.rule-mask').className = 'rule-mask show';

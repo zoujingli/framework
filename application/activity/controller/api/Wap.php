@@ -146,7 +146,6 @@ class Wap extends Controller
         $this->vo = Db::name('activity_luckdraw_config')->where(['id' => $code])->find();
         if (empty($this->vo)) $this->error('活动不存在，请通过邀请二维码进入！');
         $this->rules = explode("\n", $this->vo['content']);
-//        $this->openid = 'testopenid';
         $this->member = Db::name('activity_luckdraw_member')->where(['openid' => $this->openid])->find();
         $this->record = Db::name('activity_luckdraw_member_record')->where(['mid' => $this->member['id'], 'cid' => $this->vo['id']])->find();
     }
