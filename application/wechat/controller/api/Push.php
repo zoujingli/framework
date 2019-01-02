@@ -164,6 +164,7 @@ class Push extends Controller
                 $this->updateFansinfo(true);
                 if (isset($this->receive['eventkey']) && is_string($this->receive['eventkey'])) {
                     if (($key = preg_replace('/^qrscene_/i', '', $this->receive['eventkey']))) {
+                        if (is_numeric($key)) $this->acitve($key);
                         return $this->keys("wechat_keys#keys#{$key}", false, true);
                     }
                 }
@@ -179,10 +180,21 @@ class Push extends Controller
                 return $this->keys("wechat_keys#keys#{$this->receive['scancodeinfo']['scanresult']}", false, $this->forceCustom);
             case 'scan':
                 if (empty($this->receive['eventkey'])) return false;
+                if (is_numeric($this->receive['eventkey'])) $this->acitve($this->receive['eventkey']);
                 return $this->keys("wechat_keys#keys#{$this->receive['eventkey']}", false, $this->forceCustom);
             default:
                 return false;
         }
+    }
+
+    private function acitve($id)
+    {
+        $info = Db::name('activity_luckdraw_config')->where(['id' => $id])->find();
+        p($info);
+        if (!empty($info)) $this->sendMessage('news', ['articles' => [[
+            'url'   => url("@activity/api.wap/index/{$id}", '', false, true),
+            'title' => $info['title'], 'picurl' => $info['logo'],
+        ]]], true);
     }
 
     /**
@@ -202,17 +214,6 @@ class Push extends Controller
      */
     private function keys($rule, $isLast = false, $isCustom = false)
     {
-        if (stripos($rule, 'ac') !== false) {
-            list(, $id) = explode('ac', $rule);
-            $info = Db::name('activity_luckdraw_config')->where(['id' => $id])->find();
-            p($info);
-            if (!empty($info)) $this->sendMessage('news', ['articles' => [[
-                'url'   => url("@activity/api.wap/index/{$id}", '', false, true),
-                'title' => $info['title'], 'picurl' => $info['logo'],
-            ]]], true);
-        }
-        p($rule);
-
         list($table, $field, $value) = explode('#', $rule . '##');
         $data = Db::name($table)->where([$field => $value])->find();
         if (empty($data['type']) || (array_key_exists('status', $data) && empty($data['status']))) {
