@@ -39,6 +39,7 @@ class LuckdrawConfig extends Controller
      */
     public function index()
     {
+        $this->title = '抽奖活动管理';
         return $this->_query($this->table)->page();
     }
 

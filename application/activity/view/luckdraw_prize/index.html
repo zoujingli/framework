@@ -1,27 +1,27 @@
-{extend name='main'}
+{extend name='admin@main'}
 
 {block name="button"}
 
-{if auth("admin/user/add")}
-<button data-modal='{:url("add")}' data-title="添加用户" class='layui-btn layui-btn-sm layui-btn-primary'>添加用户</button>
+{if auth("activity/luckdraw_prize/add")}
+<button data-modal='{:url("add")}' data-title="添加奖品" class='layui-btn layui-btn-sm layui-btn-primary'>添加奖品</button>
 {/if}
 
-{if auth("admin/user/del")}
-<button data-action='{:url("del")}' data-rule="id#{key}" data-confirm="确定要删除这些用户吗？" class='layui-btn layui-btn-sm layui-btn-primary'>删除用户</button>
+{if auth("activity/luckdraw_prize/del")}
+<button data-action='{:url("del")}' data-rule="id#{key}" data-confirm="确定要删除这些奖品吗？" class='layui-btn layui-btn-sm layui-btn-primary'>删除奖品</button>
 {/if}
 
 {/block}
 
 {block name="content"}
 <table class="layui-table" lay-skin="line">
-    <caption class="margin-bottom-10 text-left">{include file='user/index_search'}</caption>
+    <caption class="margin-bottom-10 text-left">{include file='luckdraw_prize/index_search'}</caption>
     {notempty name='list'}
     <thead>
     <tr>
         <th class='list-table-check-td think-checkbox'>
             <input data-auto-none="" data-check-target='.list-check-box' type='checkbox'>
         </th>
-        <th class='text-left nowrap' style="width:120px">用户名</th>
+        <th class='text-left nowrap' style="width:120px">奖品名</th>
         <th class='text-left nowrap' style="width:180px">创建时间</th>
         <th class='text-left nowrap' style="width:120px">账号状态</th>
         <th class='text-left nowrap' style="width:150px">最后登录</th>
@@ -50,26 +50,26 @@
         </td>
         <td class='text-left nowrap'>
 
-            {if auth("admin/user/auth")}
-            <a class="layui-btn layui-btn-primary layui-btn-sm" data-title="用户授权" data-modal='{:url("auth")}?id={$vo.id}'>授 权</a>
+            {if auth("activity/luckdraw_prize/auth")}
+            <a class="layui-btn layui-btn-primary layui-btn-sm" data-title="奖品授权" data-modal='{:url("auth")}?id={$vo.id}'>授 权</a>
             {/if}
 
-            {if auth("admin/user/pass")}
+            {if auth("activity/luckdraw_prize/pass")}
             <a class="layui-btn layui-btn-normal layui-btn-sm" data-title="设置密码" data-modal='{:url("pass")}?id={$vo.id}'>密 码</a>
             {/if}
 
-            {if auth("admin/user/edit")}
-            <a class="layui-btn layui-btn-sm" data-title="编辑用户" data-modal='{:url("edit")}?id={$vo.id}'>编 辑</a>
+            {if auth("activity/luckdraw_prize/edit")}
+            <a class="layui-btn layui-btn-sm" data-title="编辑奖品" data-modal='{:url("edit")}?id={$vo.id}'>编 辑</a>
             {/if}
 
-            {if $vo.status eq 1 and auth("admin/user/forbid")}
+            {if $vo.status eq 1 and auth("activity/luckdraw_prize/forbid")}
             <a class="layui-btn layui-btn-sm layui-btn-warm" data-action="{:url('forbid')}" data-value="id#{$vo.id};status#0">禁 用</a>
-            {elseif auth("admin/user/resume")}
+            {elseif auth("activity/luckdraw_prize/resume")}
             <a class="layui-btn layui-btn-sm layui-btn-warm" data-action="{:url('resume')}" data-value="id#{$vo.id};status#1">启 用</a>
             {/if}
 
-            {if auth("admin/user/del")}
-            <a class="layui-btn layui-btn-sm layui-btn-danger" data-confirm="确定要删除该用户吗？" data-action="{:url('del')}" data-value="id#{$vo.id}">删 除</a>
+            {if auth("activity/luckdraw_prize/del")}
+            <a class="layui-btn layui-btn-sm layui-btn-danger" data-confirm="确定要删除该奖品吗？" data-action="{:url('del')}" data-value="id#{$vo.id}">删 除</a>
             {/if}
 
         </td>

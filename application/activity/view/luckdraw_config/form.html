@@ -1,12 +1,12 @@
 <form class="layui-form layui-card" action="{:request()->url()}" data-auto="true" method="post" autocomplete="off">
     <div class="layui-card-body">
         <div class="layui-form-item">
-            <label class="layui-form-label">用户账号</label>
+            <label class="layui-form-label">抽奖账号</label>
             <div class="layui-input-block">
                 <!--{if $vo and isset($vo.username)}-->
                 <input disabled value='{$vo.username|default=""}' class="layui-input layui-bg-gray">
                 <!--{else}-->
-                <input name="username" value='{$vo.username|default=""}' required pattern="^.{4,}$" placeholder="请输入4位及以上字符用户名称" class="layui-input">
+                <input name="username" value='{$vo.username|default=""}' required pattern="^.{4,}$" placeholder="请输入4位及以上字符抽奖名称" class="layui-input">
                 <!--{/if}-->
             </div>
         </div>
@@ -40,9 +40,9 @@
         </div>
         <!--{/if}-->
         <div class="layui-form-item">
-            <label class="layui-form-label">用户描述</label>
+            <label class="layui-form-label">抽奖描述</label>
             <div class="layui-input-block">
-                <textarea placeholder="请输入用户描述" class="layui-textarea" name="desc">{$vo.desc|default=""}</textarea>
+                <textarea placeholder="请输入抽奖描述" class="layui-textarea" name="desc">{$vo.desc|default=""}</textarea>
             </div>
         </div>
     </div>

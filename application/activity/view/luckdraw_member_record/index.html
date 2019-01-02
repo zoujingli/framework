@@ -1,4 +1,4 @@
-{extend name='main'}
+{extend name='admin@main'}
 
 {block name="button"}
 
@@ -14,7 +14,7 @@
 
 {block name="content"}
 <table class="layui-table" lay-skin="line">
-    <caption class="margin-bottom-10 text-left">{include file='user/index_search'}</caption>
+    <caption class="margin-bottom-10 text-left">{include file='luckdraw_member_record/index_search'}</caption>
     {notempty name='list'}
     <thead>
     <tr>
