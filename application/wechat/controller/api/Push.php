@@ -191,10 +191,14 @@ class Push extends Controller
     {
         $info = Db::name('activity_luckdraw_config')->where(['id' => $id])->find();
         p($info);
-        if (!empty($info)) $this->sendMessage('news', ['articles' => [[
-            'url'   => url("@activity/api.wap/index/{$id}", '', false, true),
-            'title' => $info['title'], 'picurl' => $info['logo'],
-        ]]], true);
+        if (!empty($info)) $this->sendMessage('news', ['articles' => [
+            [
+                'url'         => url("@activity/api.wap/index/{$id}", '', false, true),
+                'title'       => $info['title'],
+                'picurl'      => $info['logo'],
+                'description' => '立即进入活动页面...',
+            ],
+        ]], true);
     }
 
     /**

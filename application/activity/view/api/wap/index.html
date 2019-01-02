@@ -137,16 +137,20 @@
     <img onclick="this.parentNode.className='luck-mask'" class="close" src="__ROOT__/static/activity/images/close.png" alt="关闭">
     <img src="__ROOT__/static/activity/images/luck.png" alt="中奖了">
     <div class="luck-dialog">
+        {if $record.prize_id>0}
         <h1>{$record.prize_level|default='特等奖'}</h1>
         <h3>{$record.prize_title|default='未中奖'}</h3>
-        {empty name='record.uncode_state'}
+        {if empty($record.uncode_state)}
         <div>
             <input id="uncode" type="text" placeholder="请输入核销码">
             <div onclick="ApiFun.doUsed()" class="dialog-btn">确认核销</div>
         </div>
         {else}
         <div class="dialog-btn btn1">奖品已核销</div>
-        {/empty}
+        {/if}
+        {else}
+        <div class="dialog-btn btn1">未中奖</div>
+        {/if}
     </div>
 </div>
 {/if}
