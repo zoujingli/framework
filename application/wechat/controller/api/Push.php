@@ -187,10 +187,21 @@ class Push extends Controller
         }
     }
 
+    /**
+     * 推送活动页面
+     * @param  string $id
+     * @throws \WeChat\Exceptions\InvalidDecryptException
+     * @throws \WeChat\Exceptions\InvalidResponseException
+     * @throws \WeChat\Exceptions\LocalCacheException
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
+     */
     private function acitve($id)
     {
         $info = Db::name('activity_luckdraw_config')->where(['id' => $id])->find();
-        p($info);
         if (!empty($info)) $this->sendMessage('news', ['articles' => [
             [
                 'url'         => url("@activity/api.wap/index/{$id}", '', false, true),
