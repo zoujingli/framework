@@ -231,10 +231,10 @@
         uploader.on('uploadBeforeSend', function (file, data, header) {
             header['X_Requested_With'] = 'XMLHttpRequest';
             data['allowed_types'] = this.options.accept[0].extensions.split(',').join('|');
-            data['token'] = file.file.token;
-            data['md5'] = file.file.md5;
-            data['key'] = file.file.key;
+            data['md5'] = file.file.md5 || '';
+            data['key'] = file.file.key || '';
             data['safe'] = file.file.safe || 0;
+            data['token'] = file.file.token || '';
         });
 
         /* 处理上传后的结果 */
