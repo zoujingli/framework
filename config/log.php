@@ -14,6 +14,7 @@
 
 return [
     'type'        => 'file',
-    'max_files'   => '200',
-    'apart_level' => ['error', 'sql'],
+    'max_files'   => '500',
+    'level'       => ['error', 'alert', 'sql'],
+    'apart_level' => ['error', 'alert', 'sql'],
 ];
