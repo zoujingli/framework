@@ -43,14 +43,12 @@
             <label class="relative block"><input name="component_encodingaeskey" required pattern="^.{43}$" maxlength="43" placeholder="请输入43位微信消息加解密Key" value="{:sysconf('component_encodingaeskey')}" class="layui-input"></label>
             <p class="help-block">在代替微信收发消息过程中使用。必须是长度为43位的字符串，只能是字母和数字。</p>
         </div>
-
-
+        
         <div class="layui-form-item">
             <strong>微信消息与事件接收URL</strong>
             <label class="relative block"><input disabled class="layui-input layui-bg-gray" value="{:url('@service/api.push/notify/\$APPID\$','',false,true)}"></label>
             <p class="help-block">通过该 URL 接收微信消息和事件推送，该参数按规则填写，实际接收消息时 $APPID$ 将被替换为微信 AppId。</p>
         </div>
-
 
         <div class="layui-row text-center">
             <div class="layui-col-sm8 layui-col-md6">
