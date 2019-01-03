@@ -554,7 +554,7 @@ $(function () {
 
     /*! 注册 data-file 事件行为 */
     $body.on('click', '[data-file]', function () {
-        var safe = $(this).attr('data-safe') || '', mode = $(this).attr('data-file') || 'one';
+        var safe = $(this).attr('data-safe') || '0', mode = $(this).attr('data-file') || 'one';
         var field = $(this).attr('data-field') || 'file', type = $(this).attr('data-type') || 'jpg,png';
         if (mode !== 'btn') {
             var uptype = $(this).attr('data-uptype') || '';

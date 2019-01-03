@@ -164,7 +164,6 @@ class Push extends Controller
                 $this->updateFansinfo(true);
                 if (isset($this->receive['eventkey']) && is_string($this->receive['eventkey'])) {
                     if (($key = preg_replace('/^qrscene_/i', '', $this->receive['eventkey']))) {
-                        if (is_numeric($key)) $this->acitve($key);
                         return $this->keys("wechat_keys#keys#{$key}", false, true);
                     }
                 }
@@ -180,38 +179,12 @@ class Push extends Controller
                 return $this->keys("wechat_keys#keys#{$this->receive['scancodeinfo']['scanresult']}", false, $this->forceCustom);
             case 'scan':
                 if (empty($this->receive['eventkey'])) return false;
-                if (is_numeric($this->receive['eventkey'])) $this->acitve($this->receive['eventkey']);
                 return $this->keys("wechat_keys#keys#{$this->receive['eventkey']}", false, $this->forceCustom);
             default:
                 return false;
         }
     }
-
-    /**
-     * 推送活动页面
-     * @param  string $id
-     * @throws \WeChat\Exceptions\InvalidDecryptException
-     * @throws \WeChat\Exceptions\InvalidResponseException
-     * @throws \WeChat\Exceptions\LocalCacheException
-     * @throws \think\Exception
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     * @throws \think\exception\PDOException
-     */
-    private function acitve($id)
-    {
-        $info = Db::name('activity_luckdraw_config')->where(['id' => $id])->find();
-        if (!empty($info)) $this->sendMessage('news', ['articles' => [
-            [
-                'url'         => url("@activity/api.wap/index/{$id}", '', false, true),
-                'title'       => $info['title'],
-                'picurl'      => $info['logo'],
-                'description' => '立即进入活动页面...',
-            ],
-        ]], true);
-    }
-
+    
     /**
      * 关键字处理
      * @param string $rule 关键字规则

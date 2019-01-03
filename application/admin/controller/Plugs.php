@@ -156,7 +156,7 @@ class Plugs extends Controller
      */
     private function getUploadSafe()
     {
-        return $this->safe = boolval(input('safe', ''));
+        return $this->safe = boolval(input('safe'));
     }
 
     /**

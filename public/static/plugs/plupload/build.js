@@ -5,7 +5,7 @@ define(['plupload'], function (plupload) {
         var loader = new plupload.Uploader({
             multi_selection: false,
             multipart_params: {
-                safe: $ele.attr('data-safe') || '',
+                safe: $ele.attr('data-safe') || '0',
                 uptype: $ele.attr('data-uptype') || '',
             },
             browse_button: $ele.get(0),

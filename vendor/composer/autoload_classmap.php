@@ -179,6 +179,7 @@ return array(
     'app\\activity\\controller\\LuckdrawMember' => $baseDir . '/application/activity/controller/LuckdrawMember.php',
     'app\\activity\\controller\\LuckdrawMemberRecord' => $baseDir . '/application/activity/controller/LuckdrawMemberRecord.php',
     'app\\activity\\controller\\LuckdrawPrize' => $baseDir . '/application/activity/controller/LuckdrawPrize.php',
+    'app\\activity\\controller\\api\\Wap' => $baseDir . '/application/activity/controller/api/Wap.php',
     'app\\admin\\controller\\Auth' => $baseDir . '/application/admin/controller/Auth.php',
     'app\\admin\\controller\\Config' => $baseDir . '/application/admin/controller/Config.php',
     'app\\admin\\controller\\Index' => $baseDir . '/application/admin/controller/Index.php',
