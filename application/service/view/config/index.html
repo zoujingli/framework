@@ -1,8 +1,8 @@
 {extend name="admin@main"}
 
 {block name="content"}
-<fieldset style="max-width:800px" class="margin-bottom-15">
-    <legend class="layui-bg-blue">接口地址</legend>
+<fieldset class="margin-bottom-15">
+    <legend class="layui-bg-cyan">接口地址</legend>
     <div class="layui-form-item">
         <p class="color-green">授权发起页域名</p>
         <label class="relative block">
@@ -34,8 +34,8 @@
     </div>
 </fieldset>
 
-<fieldset style="max-width:800px" class="margin-bottom-15">
-    <legend class="layui-bg-blue">对接参数</legend>
+<fieldset class="margin-bottom-15">
+    <legend class="layui-bg-cyan">对接参数</legend>
     <form onsubmit="return false;" data-auto="true" method="post" class='layui-form layui-card' autocomplete="off">
         <div class="layui-form-item">
             <p class="color-green">微信接口服务AppID</p>
@@ -59,7 +59,7 @@
         </div>
         <div class="hr-line-dashed"></div>
         <div class="text-center padding-bottom-15">
-            <button class="layui-btn layui-btn-normal" type="submit">保存配置</button>
+            <button class="layui-btn" type="submit">保存配置</button>
         </div>
     </form>
 </fieldset>
