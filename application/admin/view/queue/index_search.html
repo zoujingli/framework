@@ -1,7 +1,17 @@
+{if session('user.username') eq 'admin'}
+<fieldset class="margin-bottom-10">
+    <legend class="layui-bg-cyan">进程守护</legend>
+    <div class="layui-code border-0 margin-top-0">
+        <p class="color-desc margin-top-10">1.修改sh文件运行权限</p>
+        chmod +x {:env('root_path')}task.sh
+        <p class="color-desc margin-top-10">2.配置定时任务（建议每分钟执行）</p>
+        {:env('root_path')}task.sh
+    </div>
+</fieldset>
+{/if}
 <fieldset>
-    <legend>条件搜索</legend>
+    <legend class="layui-bg-cyan">条件搜索</legend>
     <form class="layui-form layui-form-pane form-search" action="{:request()->url()}" onsubmit="return false" method="get" autocomplete="off">
-
         <div class="layui-form-item layui-inline">
             <label class="layui-form-label">任务名称</label>
             <div class="layui-input-inline">
@@ -17,7 +27,6 @@
                 </select>
             </div>
         </div>
-
         <div class="layui-form-item layui-inline">
             <label class="layui-form-label">任务指令</label>
             <div class="layui-input-inline">
@@ -33,14 +42,12 @@
                 </select>
             </div>
         </div>
-
         <div class="layui-form-item layui-inline">
             <label class="layui-form-label">创建时间</label>
             <div class="layui-input-inline">
                 <input name="create_at" value="{$Think.get.create_at|default=''}" placeholder="请选择创建时间" class="layui-input">
             </div>
         </div>
-
         <div class="layui-form-item layui-inline">
             <label class="layui-form-label">任务状态</label>
             <div class="layui-input-inline">
@@ -55,16 +62,12 @@
                 </select>
             </div>
         </div>
-
         <div class="layui-form-item layui-inline">
             <button class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe615;</i> 搜 索</button>
         </div>
-
         <script>
             window.form.render();
             window.laydate.render({range: true, elem: '[name="create_at"]'});
         </script>
-
     </form>
-
 </fieldset>

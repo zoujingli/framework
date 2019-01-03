@@ -14,7 +14,6 @@
 
 namespace app\index\controller;
 
-use app\admin\logic\Message;
 use library\Controller;
 
 /**
@@ -31,5 +30,5 @@ class Index extends Controller
     {
         $this->redirect('@admin/login');
     }
-    
+
 }
