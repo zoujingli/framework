@@ -12,10 +12,22 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-return [
-    'app\admin\logic\update\UpdateAll',
-    'app\admin\logic\update\UpdatePlugs',
-    'app\admin\logic\update\UpdateAdmin',
-    'app\admin\logic\update\UpdateWechat',
-    'app\admin\logic\update\UpdateService',
-];
+namespace app\admin\logic\update;
+
+use app\admin\logic\Update;
+
+/**
+ * Class UpdateService
+ * @package app\admin\logic\update
+ */
+class UpdateService extends Update
+{
+    /**
+     * 配置入口
+     */
+    protected function configure()
+    {
+        $this->modules = ['application/service/'];
+        $this->setName('update:service')->setDescription('Sync Update Service Module Code for ThinkAdmin');
+    }
+}

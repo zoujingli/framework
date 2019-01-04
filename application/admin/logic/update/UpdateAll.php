@@ -28,7 +28,7 @@ class UpdateAll extends Update
      */
     protected function configure()
     {
-        $this->modules = ['application/admin/', 'application/wechat/', 'public/static/'];
+        $this->modules = ['application/admin/', 'application/wechat/', 'application/service/', 'public/static/'];
         $this->setName('update:all')->setDescription('Sync Update Admin & Wechat & Plugs Module Code for ThinkAdmin');
     }
 }
