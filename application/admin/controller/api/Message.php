@@ -15,7 +15,6 @@
 namespace app\admin\controller\api;
 
 use library\Controller;
-use think\Db;
 
 /**
  * Class Message

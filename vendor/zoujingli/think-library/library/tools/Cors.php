@@ -30,7 +30,7 @@ class Cors
      * @var array
      */
     private static $allowHeader = [
-        'Host', 'Token', 'Accept', 'Cookie', 'Origin', 'Pragma', 'Expires', 'Referer',
+        'Host', 'CorsToken', 'Accept', 'Cookie', 'Origin', 'Pragma', 'Expires', 'Referer',
         'User-Agent', 'Keep-Alive', 'Content-Type', 'Cache-Control', 'Last-Event-ID',
         'Last-Modified', 'Content-Language', 'X-Requested-With', 'If-Modified-Since',
     ];
