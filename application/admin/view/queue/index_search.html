@@ -43,12 +43,6 @@
             </div>
         </div>
         <div class="layui-form-item layui-inline">
-            <label class="layui-form-label">创建时间</label>
-            <div class="layui-input-inline">
-                <input name="create_at" value="{$Think.get.create_at|default=''}" placeholder="请选择创建时间" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item layui-inline">
             <label class="layui-form-label">任务状态</label>
             <div class="layui-input-inline">
                 <select name="status" class="layui-select">
@@ -63,11 +57,24 @@
             </div>
         </div>
         <div class="layui-form-item layui-inline">
+            <label class="layui-form-label">创建时间</label>
+            <div class="layui-input-inline">
+                <input name="create_at" value="{$Think.get.create_at|default=''}" placeholder="请选择创建时间" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label">跟进时间</label>
+            <div class="layui-input-inline">
+                <input name="status_at" value="{$Think.get.status_at|default=''}" placeholder="请选择跟进时间" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-inline">
             <button class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe615;</i> 搜 索</button>
         </div>
         <script>
             window.form.render();
             window.laydate.render({range: true, elem: '[name="create_at"]'});
+            window.laydate.render({range: true, elem: '[name="status_at"]'});
         </script>
     </form>
 </fieldset>

@@ -43,7 +43,7 @@ class Queue extends Controller
         $this->title = '系统任务管理';
         $this->uris = Db::name($this->table)->distinct(true)->column('uri');
         $this->titles = Db::name($this->table)->distinct(true)->column('title');
-        return $this->_query($this->table)->equal('status,title,uri')->dateBetween('create_at')->order('id desc')->page();
+        return $this->_query($this->table)->equal('status,title,uri')->dateBetween('create_at,status_at')->order('id desc')->page();
     }
 
     /**
