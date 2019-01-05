@@ -75,6 +75,7 @@ class Queue extends Controller
             foreach (explode(',', $this->request->post('id', '0')) as $id) {
                 if (!\app\admin\logic\Queue::del($id)) $isNot = true;
             }
+            if (empty($isNot)) $this->_delete($this->table);
             $this->success($isNot ? '部分任务删除成功！' : '任务删除成功！');
         } catch (\think\exception\HttpResponseException $exception) {
             throw $exception;
