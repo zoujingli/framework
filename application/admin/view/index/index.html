@@ -23,10 +23,29 @@
 <body class="layui-layout-body">
 {block name='body'}
 <style>
-    html,body{height:100%;background:#e7e8eb}
-    .layui-layout-admin{margin:0 auto;height:100%;display:block;max-width:1330px;position:relative;}
-    .layui-side{position:absolute !important}
-    .layui-body{left:200px;right:0;position:absolute!important;background:white}
+    html, body {
+        height: 100%;
+        background: #e7e8eb
+    }
+
+    .layui-layout-admin {
+        margin: 0 auto;
+        height: 100%;
+        display: block;
+        max-width: 1330px;
+        position: relative;
+    }
+
+    .layui-side {
+        position: absolute !important
+    }
+
+    .layui-body {
+        left: 200px;
+        right: 0;
+        position: absolute !important;
+        background: white
+    }
 </style>
 <div class="layui-layout layui-layout-admin layui-layout-left-hide">
 
@@ -116,11 +135,11 @@
 <script src="__ROOT__/static/plugs/require/require.js"></script>
 <script src="__ROOT__/static/admin.js"></script>
 {block name='script'}{/block}
-{if session('user.id')}
+{if session('user.id') and sysconf('system_message_state')}
 <script>
     layer.open({
-        title:false, closeBtn:false, maxmin:false, shade:false, content:['{:url("@admin/plugs/message")}'],
-        offset:'rb', anim:2, type:2, area:['360px', '0'], btn:false, success:function (layero, index) {
+        title: false, closeBtn: false, maxmin: false, shade: false, content: ['{:url("@admin/plugs/message")}'],
+        offset: 'rb', anim: 2, type: 2, area: ['360px', '0'], btn: false, success: function (layero, index) {
             layer.iframeAuto(index);
         }
     });

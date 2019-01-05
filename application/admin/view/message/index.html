@@ -2,8 +2,34 @@
 
 {block name="button"}
 
+{if auth("admin/message/onoff")}
+<form class="layui-form inline-block StatusSwitch" action="">
+    <!--{if sysconf('system_message_state')}-->
+    <input type="checkbox" checked lay-skin="switch" lay-filter="StatusSwitch" lay-text="开启|关闭">
+    <!--{else}-->
+    <input type="checkbox" lay-skin="switch" lay-filter="StatusSwitch" lay-text="开启|关闭">
+    <!--{/if}-->
+    <script>
+        form.on('switch(StatusSwitch)', function () {
+            $.form.load('{:url("onoff")}', {}, 'get', function () {
+                return false;
+            });
+        });
+    </script>
+    <style>
+        form.StatusSwitch .layui-form-switch {
+            margin: 0 10px 0 0;
+        }
+    </style>
+</form>
+{/if}
+
+{if auth("admin/message/clear")}
+<button data-load='{:url("clear")}' data-confirm="确定要清理所有消息记录吗？" class='layui-btn layui-btn-sm layui-btn-primary'>清理所有消息</button>
+{/if}
+
 {if auth("admin/message/del")}
-<button data-action='{:url("del")}' data-rule="id#{key}" data-confirm="确定要删除这些消息吗？" class='layui-btn layui-btn-sm layui-btn-primary'>批量删除</button>
+<button data-action='{:url("del")}' data-rule="id#{key}" data-confirm="确定要删除这些消息吗？" class='layui-btn layui-btn-sm layui-btn-primary'>批量删除消息</button>
 {/if}
 
 {/block}

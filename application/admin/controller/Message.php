@@ -15,6 +15,7 @@
 namespace app\admin\controller;
 
 use library\Controller;
+use think\Db;
 
 /**
  * 系统消息管理
@@ -58,6 +59,34 @@ class Message extends Controller
     public function del()
     {
         $this->_delete($this->table);
+    }
+
+    /**
+     * 清理所有消息
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     */
+    public function clear()
+    {
+        if (Db::name($this->table)->whereRaw('1=1')->delete() !== false) {
+            $this->success('系统消息清理成功！');
+        }
+        $this->error('系统消息清理失败，请稍候再试！');
+    }
+
+    /**
+     * 系统消息开关处理
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     */
+    public function onoff()
+    {
+        $state = intval(sysconf('system_message_state'));
+        sysconf('system_message_state', empty($state) ? 1 : 0);
+        if (sysconf('system_message_state')) {
+            $this->success('系统消息提示开启成功！');
+        }
+        $this->success('系统消息提示关闭成功！');
     }
 
 }
