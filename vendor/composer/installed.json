@@ -177,17 +177,17 @@
     },
     {
         "name": "symfony/options-resolver",
-        "version": "v3.4.20",
-        "version_normalized": "3.4.20.0",
+        "version": "v3.4.21",
+        "version_normalized": "3.4.21.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/options-resolver.git",
-            "reference": "2cf5aa084338c1f67166013aebe87e2026bbe953"
+            "reference": "8a10e36ffd04c0c551051594952304d34ecece71"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/options-resolver/zipball/2cf5aa084338c1f67166013aebe87e2026bbe953",
-            "reference": "2cf5aa084338c1f67166013aebe87e2026bbe953",
+            "url": "https://api.github.com/repos/symfony/options-resolver/zipball/8a10e36ffd04c0c551051594952304d34ecece71",
+            "reference": "8a10e36ffd04c0c551051594952304d34ecece71",
             "shasum": "",
             "mirrors": [
                 {
@@ -199,7 +199,7 @@
         "require": {
             "php": "^5.5.9|>=7.0.8"
         },
-        "time": "2018-11-11T19:48:54+00:00",
+        "time": "2019-01-01T13:45:19+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -450,12 +450,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/zoujingli/ThinkLibrary.git",
-            "reference": "a5787c651a3057ee869fb8a1c5b03fc0d8fc1f56"
+            "reference": "ca991b4be4ca47b495048387e09ca9ca3079cf03"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/a5787c651a3057ee869fb8a1c5b03fc0d8fc1f56",
-            "reference": "a5787c651a3057ee869fb8a1c5b03fc0d8fc1f56",
+            "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/ca991b4be4ca47b495048387e09ca9ca3079cf03",
+            "reference": "ca991b4be4ca47b495048387e09ca9ca3079cf03",
             "shasum": "",
             "mirrors": [
                 {
@@ -473,7 +473,7 @@
             "php": ">=5.4",
             "qiniu/php-sdk": "^7.2"
         },
-        "time": "2019-01-04T05:59:08+00:00",
+        "time": "2019-01-08T02:33:17+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -509,12 +509,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/zoujingli/WeChatDeveloper.git",
-            "reference": "9e117202873a3219b978eba6bac4c3c40b5cbc3c"
+            "reference": "79126e15bae72761cae50a73f2321acc83ec827f"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zoujingli/WeChatDeveloper/zipball/9e117202873a3219b978eba6bac4c3c40b5cbc3c",
-            "reference": "9e117202873a3219b978eba6bac4c3c40b5cbc3c",
+            "url": "https://api.github.com/repos/zoujingli/WeChatDeveloper/zipball/79126e15bae72761cae50a73f2321acc83ec827f",
+            "reference": "79126e15bae72761cae50a73f2321acc83ec827f",
             "shasum": "",
             "mirrors": [
                 {
@@ -529,7 +529,7 @@
             "ext-openssl": "*",
             "php": ">=5.4"
         },
-        "time": "2018-12-19T07:58:04+00:00",
+        "time": "2019-01-07T06:53:11+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

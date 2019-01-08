@@ -180,7 +180,7 @@ if (!function_exists('emoji_encode')) {
     }
 }
 
-if (!function_exists('emoji_decode')) {
+if (!function_exists('emoji_clearemoji_decode')) {
     /**
      * Emoji 表情解析
      * @param string $string
@@ -189,5 +189,17 @@ if (!function_exists('emoji_decode')) {
     function emoji_decode($string)
     {
         return \library\tools\Crypt::emojiDecode($string);
+    }
+}
+
+if (!function_exists('emoji_clear')) {
+    /**
+     * Emoji 表情清除
+     * @param string $string
+     * @return string
+     */
+    function emoji_clear($string)
+    {
+        return \library\tools\Crypt::emojiClear($string);
     }
 }

@@ -235,6 +235,7 @@ return array(
     'library\\logic\\Save' => $vendorDir . '/zoujingli/think-library/library/logic/Save.php',
     'library\\tools\\Cors' => $vendorDir . '/zoujingli/think-library/library/tools/Cors.php',
     'library\\tools\\Crypt' => $vendorDir . '/zoujingli/think-library/library/tools/Crypt.php',
+    'library\\tools\\Csv' => $vendorDir . '/zoujingli/think-library/library/tools/Csv.php',
     'library\\tools\\Data' => $vendorDir . '/zoujingli/think-library/library/tools/Data.php',
     'library\\tools\\Http' => $vendorDir . '/zoujingli/think-library/library/tools/Http.php',
     'library\\tools\\Node' => $vendorDir . '/zoujingli/think-library/library/tools/Node.php',

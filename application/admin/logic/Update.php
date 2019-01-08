@@ -46,15 +46,14 @@ class Update extends Command
      */
     protected function execute(Input $input, Output $output)
     {
-
-        $output->writeln('准备更新指定规则的代码文件...');
+        $output->writeln('prepare to update file information...');
         foreach (self::diff() as $file) foreach ($this->modules as $module) {
             if (stripos($file['name'], $module) === 0) {
                 $this->syncFile($file, $output);
                 break;
             }
         }
-        $output->writeln('指定规则的代码文件更新完成！');
+        $output->writeln('update of all specified files completed.');
     }
 
     /**
@@ -74,16 +73,12 @@ class Update extends Command
     {
         if (in_array($file['type'], ['add', 'mod'])) {
             if (self::down(encode($file['name']))) {
-                $output->info("更新文件 {$file['name']} 成功！");
-            } else {
-                $output->error("更新文件 {$file['name']} 失败！");
-            }
+                $output->info("{$file['name']} updated successfully.");
+            } else $output->error("{$file['name']} update failed.");
         } elseif (in_array($file['type'], ['del'])) {
             if (unlink(realpath(env('root_path') . $file['name']))) {
-                $output->info("移除文件 {$file['name']} 成功！");
-            } else {
-                $output->error("移除文件 {$file['name']} 失败！");
-            }
+                $output->info("{$file['name']} remove successfully.");
+            } else $output->error("{$file['name']} remove failed.");
         }
     }
 
@@ -145,7 +140,7 @@ class Update extends Command
         foreach ($_local as $t) if (!isset($_serve[$t['name']])) array_push($_new, ['type' => 'del', 'name' => $t['name']]);
         unset($_serve, $_local);
         usort($_new, function ($a, $b) {
-            return $a['name'] <> $b['name'] ? ($a['name'] > $b['name'] ? 1 : -1) : 0;
+            return $a['name'] !== $b['name'] ? ($a['name'] > $b['name'] ? 1 : -1) : 0;
         });
         return $_new;
     }

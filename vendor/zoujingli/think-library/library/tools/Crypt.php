@@ -69,4 +69,16 @@ class Crypt
         }, json_encode($content)));
     }
 
+    /**
+     * Emoji字符串清清理
+     * @param string $content
+     * @return string
+     */
+    public static function emojiClear($content)
+    {
+        return preg_replace_callback('/./u', function (array $match) {
+            return strlen($match[0]) >= 4 ? '' : $match[0];
+        }, $content);
+    }
+
 }
