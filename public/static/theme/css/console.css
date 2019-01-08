@@ -135,7 +135,7 @@ fieldset{border:1px solid #e6e6e6;margin:0;padding:10px 20px 5px 20px}
 .pagination-container>ul>li>span{background:#dcdcdc;cursor:default}
 .pagination-container>ul>li>a:hover{border-color:#dcdcdc;background:#dcdcdc}
 .pagination-container>ul>li.active{z-index:2}
-.pagination-container>ul>li.active>span{border-color:#009688;background:#009688!important;color:#fff}
+.pagination-container>ul>li.active>span{border-color:#009688;background:#009688!important;color:#fff;padding-right:1px}
 
 /* 图片上传 */
 .uploadimage{display:inline-block;width:5pc;height:5pc;background:url(../img/image.png) no-repeat center center;background-size:cover;cursor:pointer}
