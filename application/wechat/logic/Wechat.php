@@ -131,12 +131,19 @@ class Wechat extends \We
             $class = "\\{$type}\\" . ucfirst(strtolower($name));
             if (class_exists($class)) return new $class(empty($config) ? self::config() : $config);
             throw new \think\Exception("Class '{$class}' not found");
-        } else {
-            list($appid, $appkey) = [sysconf('wechat_thr_appid'), sysconf('wechat_thr_appkey')];
-            $token = strtolower("{$name}-{$appid}-{$appkey}-{$type}");
-            $location = config('wechat.service_url') . "/wechat/api.client/soap/{$token}.html";
-            return new \SoapClient(null, ['uri' => strtolower($name), 'location' => $location, 'trace' => true]);
         }
+        set_time_limit(3600);
+        list($appid, $appkey) = [sysconf('wechat_thr_appid'), sysconf('wechat_thr_appkey')];
+        $token = strtolower("{$name}-{$appid}-{$appkey}-{$type}");
+        if (class_exists('Yar_Client')) {
+            $location = config('wechat.service_url') . "/wechat/api.client/yar/{$token}.html";
+            return new \Yar_Client($location);
+        }
+        if (class_exists('SoapClient')) {
+            $location = config('wechat.service_url') . "/wechat/api.client/yar/{$token}.html";
+            return new \SoapClient(null, ['uri' => strtolower($name), 'location' => $location]);
+        }
+        throw new \think\Exception("Yar or soap extensions are not installed.");
     }
 
     /**

@@ -57,6 +57,22 @@ class Client extends Controller
     protected $message = '';
 
     /**
+     * 启动Yar接口服务
+     * @param string $param AppName-AppId-AppKey
+     * @return string
+     */
+    public function yar($param)
+    {
+        try {
+            $instance = $this->create($param);
+            $service = new \Yar_Server($instance);
+            $service->handle();
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    /**
      * 启动SOAP接口服务
      * @param string $param AppName-AppId-AppKey
      * @return string
