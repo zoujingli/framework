@@ -115,7 +115,9 @@
     layer.open({
         title: false, closeBtn: false, maxmin: false, shade: false, content: ['{:url("@admin/plugs/message")}'],
         offset: 'rb', anim: 2, type: 2, area: ['360px', '0'], btn: false, success: function (layero, index) {
-            layer.iframeAuto(index);
+            setInterval(function () {
+                layer.iframeAuto(index);
+            }, 500);
         }
     });
 </script>
