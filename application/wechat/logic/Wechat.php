@@ -140,7 +140,7 @@ class Wechat extends \We
             return new \Yar_Client($location);
         }
         if (class_exists('SoapClient')) {
-            $location = config('wechat.service_url') . "/wechat/api.client/yar/{$token}.html";
+            $location = config('wechat.service_url') . "/wechat/api.client/soap/{$token}.html";
             return new \SoapClient(null, ['uri' => strtolower($name), 'location' => $location]);
         }
         throw new \think\Exception("Yar or soap extensions are not installed.");
