@@ -130,7 +130,6 @@ class Controller extends \stdClass
      * @access protected
      * @param string $tpl 模板名称
      * @param array $vars 模板变量
-     * @return mixed
      */
     protected function fetch($tpl = '', $vars = [])
     {

@@ -47,7 +47,8 @@ class Node
             $className = env('app_namespace') . str_replace('/', '\\', substr($matches[0], 0, -4));
             if (class_exists($className)) foreach (get_class_methods($className) as $funcName) {
                 if (stripos($funcName, '_') === 0 || $funcName === 'initialize') continue;
-                if (stripos($controller = str_replace('/', '.', substr($matches[2], 0, -4)), 'api.') !== false) continue;
+                $controller = str_replace('/', '.', substr($matches[2], 0, -4));
+                if (stripos($controller, 'api.') !== false || stripos($controller, 'wap.') !== false) continue;
                 $nodes[] = self::parseString("{$matches[1]}/{$controller}") . '/' . strtolower($funcName);
             }
         }

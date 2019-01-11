@@ -124,4 +124,18 @@ class Data
         }
         return $ids;
     }
+
+    /**
+     * 数据唯一数字编码
+     * @param integer $length
+     * @return string
+     */
+    public static function uniqidNumberCode($length = 10)
+    {
+        $time = time() . '';
+        if ($length < 10) $length = 10;
+        $string = ($time[0] + $time[1]) . substr($time, 2) . rand(0, 9);
+        while (strlen($string) < $length) $string .= rand(0, 9);
+        return $string;
+    }
 }
