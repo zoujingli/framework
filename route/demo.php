@@ -48,6 +48,6 @@ Route::post('admin/node/save', function () {
 Route::post('wechat/config/index', function () {
     return json(['code' => 0, 'info' => '测试环境禁止修改微信配置操作！']);
 });
-Route::post('service/node/index', function () {
+Route::post('service/config/index', function () {
     return json(['code' => 0, 'info' => '测试环境禁止修改微信配置操作！']);
 });
