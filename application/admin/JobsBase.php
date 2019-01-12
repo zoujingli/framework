@@ -24,13 +24,24 @@ use app\admin\service\Queue;
  */
 class JobsBase
 {
-    # 待处理
+    /**
+     * 待处理
+     */
     const STATUS_PEND = 1;
-    # 处理中
+
+    /**
+     * 处理中
+     */
     const STATUS_PROC = 2;
-    # 处理完成
+
+    /**
+     * 处理完成
+     */
     const STATUS_COMP = 3;
-    # 处理失败
+
+    /**
+     * 处理失败
+     */
     const STATUS_FAIL = 4;
 
     /**
