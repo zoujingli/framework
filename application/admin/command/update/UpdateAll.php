@@ -38,6 +38,6 @@ class UpdateAll extends Update
             'public/static/',
             'config/',
         ];
-        $this->setName('update:all')->setDescription('Sync Update All Module Code for ThinkAdmin');
+        $this->setName('update:all')->setDescription('Sync Update All Module Files for ThinkAdmin');
     }
 }

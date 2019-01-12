@@ -34,7 +34,7 @@ class UpdateCommon extends Update
             'application/command.php',
             'application/middleware.php',
         ];
-        $this->setName('update:common')->setDescription('Sync Update Common Module Code for ThinkAdmin');
+        $this->setName('update:common')->setDescription('Sync Update Common Module Files for ThinkAdmin');
     }
 
 }

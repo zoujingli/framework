@@ -29,6 +29,6 @@ class UpdateAdmin extends Update
     protected function configure()
     {
         $this->modules = ['application/admin/'];
-        $this->setName('update:admin')->setDescription('Sync Update Admin Module Code for ThinkAdmin');
+        $this->setName('update:admin')->setDescription('Sync Update Admin Module Files for ThinkAdmin');
     }
 }
