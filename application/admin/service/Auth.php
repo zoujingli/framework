@@ -40,7 +40,7 @@ class Auth
     public function handle(\think\Request $request, \Closure $next)
     {
         // 消息处理
-        if (($messagecode = $request->get('messagecode')) > 0) Message::set($messagecode);
+        if (($code = $request->get('messagecode')) > 0) Message::set($code);
         // 节点忽略跳过
         $node = Node::current();
         foreach (self::getIgnore() as $str) if (stripos($node, $str) === 0) return $next($request);
