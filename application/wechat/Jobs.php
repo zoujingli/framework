@@ -14,7 +14,7 @@
 
 namespace app\wechat;
 
-use app\admin\queue\Jobs as BaseJobs;
+use app\admin\Jobs as BaseJobs;
 use app\wechat\logic\Fans;
 use app\wechat\logic\Wechat;
 use think\Db;
@@ -25,7 +25,6 @@ use think\Db;
  */
 class Jobs extends BaseJobs
 {
-
     /**
      * 当前任务URI
      */
