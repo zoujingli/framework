@@ -71,16 +71,15 @@ class Update extends Command
      */
     private static function syncFile($file, $output)
     {
-        echo $file . PHP_EOL;
-//        if (in_array($file['type'], ['add', 'mod'])) {
-//            if (self::down(encode($file['name']))) {
-//                $output->info("{$file['name']} updated successfully.");
-//            } else $output->error("{$file['name']} update failed.");
-//        } elseif (in_array($file['type'], ['del'])) {
-//            if (unlink(realpath(env('root_path') . $file['name']))) {
-//                $output->info("{$file['name']} remove successfully.");
-//            } else $output->error("{$file['name']} remove failed.");
-//        }
+        if (in_array($file['type'], ['add', 'mod'])) {
+            if (self::down(encode($file['name']))) {
+                $output->info("{$file['name']} updated successfully.");
+            } else $output->error("{$file['name']} update failed.");
+        } elseif (in_array($file['type'], ['del'])) {
+            if (unlink(realpath(env('root_path') . $file['name']))) {
+                $output->info("{$file['name']} remove successfully.");
+            } else $output->error("{$file['name']} remove failed.");
+        }
     }
 
     /**
