@@ -94,13 +94,13 @@ class JobsBase
         $this->title = isset($data['_job_title_']) ? $data['_job_title_'] : '';
         // 标记任务处理中
         $this->writeln('Queue starting ...');
-        Queue::status($this->id, Queue::STATUS_PROC, $this->statusDesc);
+        Queue::status($this->id, self::STATUS_PROC, $this->statusDesc);
         if ($this->execute()) {
             $this->writeln('Queue execution completion.');
-            $this->status = JobsBase::STATUS_COMP;
+            $this->status = self::STATUS_COMP;
         } else {
             $this->writeln('Queue execution failure.');
-            $this->status = JobsBase::STATUS_FAIL;
+            $this->status = self::STATUS_FAIL;
         }
         $job->delete();
         Queue::status($this->id, $this->status, $this->statusDesc);
