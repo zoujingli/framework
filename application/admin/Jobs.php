@@ -106,7 +106,7 @@ class Jobs
     protected function writeln($text, $method = 'writeln')
     {
         $message = "【({$this->id}){$this->title}】{$text} {$this->statusDesc}";
-        if (class_exists($this->output, $method)) $this->output->$method($message);
+        if (method_exists($this->output, $method)) $this->output->$method($message);
         else $this->output->writeln($message);
     }
 
