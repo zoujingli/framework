@@ -16,8 +16,6 @@ namespace app\admin;
 
 use app\admin\service\Message;
 use app\admin\service\Queue;
-use think\console\Output;
-use think\queue\Job;
 
 /**
  * 基础指令公共类
@@ -60,7 +58,7 @@ class Jobs
     protected $status;
 
     /**
-     * @var Output
+     * @var \think\console\Output
      */
     protected $output;
 
@@ -72,15 +70,15 @@ class Jobs
 
     /**
      * 启动任务处理
-     * @param Job $job
-     * @param array $data
+     * @param \think\queue\Job $job 当前任务对象
+     * @param array $data 任务执行对象
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
-    public function fire(Job $job, $data)
+    public function fire(\think\queue\Job $job, $data = [])
     {
         $this->data = $data;
-        $this->output = new Output();
+        $this->output = new \think\console\Output();
         $this->id = isset($data['_job_id_']) ? $data['_job_id_'] : '';
         $this->title = isset($data['_job_title_']) ? $data['_job_title_'] : '';
         // 标记任务处理中
