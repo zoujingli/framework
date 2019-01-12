@@ -22,7 +22,7 @@ use app\admin\service\Queue;
  * Class QueueBase
  * @package app\admin\command
  */
-class Jobs
+class JobsBase
 {
     # 待处理
     const STATUS_PEND = 1;
@@ -86,10 +86,10 @@ class Jobs
         Queue::status($this->id, Queue::STATUS_PROC, $this->statusDesc);
         if ($this->execute()) {
             $this->writeln('Queue execution completion.');
-            $this->status = Jobs::STATUS_COMP;
+            $this->status = JobsBase::STATUS_COMP;
         } else {
             $this->writeln('Queue execution failure.');
-            $this->status = Jobs::STATUS_FAIL;
+            $this->status = JobsBase::STATUS_FAIL;
         }
         $job->delete();
         Queue::status($this->id, $this->status, $this->statusDesc);

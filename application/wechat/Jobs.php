@@ -14,7 +14,7 @@
 
 namespace app\wechat;
 
-use app\admin\Jobs as BaseJobs;
+use app\admin\JobsBase;
 use app\wechat\logic\Fans;
 use app\wechat\logic\Wechat;
 use think\Db;
@@ -23,12 +23,12 @@ use think\Db;
  * Class Jobs
  * @package app\wechat
  */
-class Jobs extends BaseJobs
+class Jobs extends JobsBase
 {
     /**
      * 当前任务URI
      */
-    const URI = 'app\\wechat\\Jobs';
+    const URI = 'app\\wechat\\JobsBase';
 
     /**
      * 执行任务
