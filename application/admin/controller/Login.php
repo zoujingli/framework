@@ -64,7 +64,7 @@ class Login extends Controller
             'login_num' => Db::raw('login_num+1'),
         ]);
         session('user', $user);
-        empty($user['authorize']) || \app\admin\logic\Auth::applyNode();
+        empty($user['authorize']) || \app\admin\service\Auth::applyNode();
         $this->success('登录成功，正在进入系统...', url('@admin'));
     }
 

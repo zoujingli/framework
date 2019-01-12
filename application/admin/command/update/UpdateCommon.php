@@ -12,23 +12,29 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-namespace app\admin\logic\update;
+namespace app\admin\command\update;
 
-use app\admin\logic\Update;
+use app\admin\command\Update;
 
 /**
- * 更新微信模块指令
- * Class UpdateWechat
- * @package app\admin\logic\update
+ * 通用模块更新
+ * Class UpdateCommon
+ * @package app\admin\command\update
  */
-class UpdateWechat extends Update
+class UpdateCommon extends Update
 {
     /**
      * 配置入口
      */
     protected function configure()
     {
-        $this->modules = ['application/wechat/'];
-        $this->setName('update:wechat')->setDescription('Sync Update Wechat Module Code for ThinkAdmin');
+        $this->modules = [
+            'config/',
+            'application/common.php',
+            'application/command.php',
+            'application/middleware.php',
+        ];
+        $this->setName('update:common')->setDescription('Sync Update Common Module Code for ThinkAdmin');
     }
+
 }

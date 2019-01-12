@@ -12,23 +12,23 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-namespace app\admin\logic\update;
+namespace app\admin\command\update;
 
-use app\admin\logic\Update;
+use app\admin\command\Update;
 
 /**
- * 更新插件指令
- * Class UpdatePlugs
+ * 系统模块更新指令
+ * Class UpdateAdmin
  * @package app\admin\logic\update
  */
-class UpdatePlugs extends Update
+class UpdateAdmin extends Update
 {
     /**
      * 配置入口
      */
     protected function configure()
     {
-        $this->modules = ['public/static/'];
-        $this->setName('update:plugs')->setDescription('Sync Update Plugs Module Code for ThinkAdmin');
+        $this->modules = ['application/admin/'];
+        $this->setName('update:admin')->setDescription('Sync Update Admin Module Code for ThinkAdmin');
     }
 }

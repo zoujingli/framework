@@ -56,7 +56,7 @@ class Queue extends Controller
             $info = Db::name($this->table)->where($where)->find();
             if (empty($info)) $this->error('需要重置的任务获取异常！');
             $data = isset($info['data']) ? json_decode($info['data'], true) : '[]';
-            \app\admin\logic\Queue::add($info['title'], $info['uri'], $info['later'], $data, $info['double'], $info['desc']);
+            \app\admin\service\Queue::add($info['title'], $info['uri'], $info['later'], $data, $info['double'], $info['desc']);
             $this->success('任务重置成功！', url('@admin') . '#' . url('@admin/queue/index'));
         } catch (\think\exception\HttpResponseException $exception) {
             throw $exception;
@@ -73,7 +73,7 @@ class Queue extends Controller
         try {
             $isNot = false;
             foreach (explode(',', $this->request->post('id', '0')) as $id) {
-                if (!\app\admin\logic\Queue::del($id)) $isNot = true;
+                if (!\app\admin\service\Queue::del($id)) $isNot = true;
             }
             if (empty($isNot)) $this->_delete($this->table);
             $this->success($isNot ? '部分任务删除成功！' : '任务删除成功！');

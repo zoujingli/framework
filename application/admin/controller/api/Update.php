@@ -14,7 +14,7 @@
 
 namespace app\admin\controller\api;
 
-use app\admin\logic\Update as UpdateLogic;
+use app\admin\command\Update as UpdateLogic;
 use library\Controller;
 
 /**

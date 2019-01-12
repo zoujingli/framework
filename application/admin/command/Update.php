@@ -12,7 +12,7 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-namespace app\admin\logic;
+namespace app\admin\command;
 
 use think\console\Command;
 use think\console\Input;
@@ -71,15 +71,16 @@ class Update extends Command
      */
     private static function syncFile($file, $output)
     {
-        if (in_array($file['type'], ['add', 'mod'])) {
-            if (self::down(encode($file['name']))) {
-                $output->info("{$file['name']} updated successfully.");
-            } else $output->error("{$file['name']} update failed.");
-        } elseif (in_array($file['type'], ['del'])) {
-            if (unlink(realpath(env('root_path') . $file['name']))) {
-                $output->info("{$file['name']} remove successfully.");
-            } else $output->error("{$file['name']} remove failed.");
-        }
+        echo $file . PHP_EOL;
+//        if (in_array($file['type'], ['add', 'mod'])) {
+//            if (self::down(encode($file['name']))) {
+//                $output->info("{$file['name']} updated successfully.");
+//            } else $output->error("{$file['name']} update failed.");
+//        } elseif (in_array($file['type'], ['del'])) {
+//            if (unlink(realpath(env('root_path') . $file['name']))) {
+//                $output->info("{$file['name']} remove successfully.");
+//            } else $output->error("{$file['name']} remove failed.");
+//        }
     }
 
     /**
@@ -89,11 +90,12 @@ class Update extends Command
     public static function build()
     {
         return self::tree([
-            'application/wechat', 'application/admin',
-            'public/static/plugs', 'public/static/theme',
-            'public/static/admin.js',
+            'application/wechat', 'application/admin', 'config/',
+            'public/static/plugs', 'public/static/theme', 'public/static/admin.js',
+            'application/command.php', 'application/common.php', 'application/middleware.php',
         ], [
             'application/admin/view/login/index.html',
+            'config/database.php',
         ]);
     }
 

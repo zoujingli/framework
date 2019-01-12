@@ -31,7 +31,7 @@ class Message extends Controller
      */
     public function gets()
     {
-        $this->success('获取系统消息成功！', \app\admin\logic\Message::gets());
+        $this->success('获取系统消息成功！', \app\admin\service\Message::gets());
     }
 
     /**
@@ -42,7 +42,7 @@ class Message extends Controller
     public function set()
     {
         $code = $this->request->post('code');
-        if (\app\admin\logic\Message::set($code)) {
+        if (\app\admin\service\Message::set($code)) {
             $this->success('系统消息状态更新成功！');
         }
         $this->error('系统消息状态更新失败，请稍候再试！');

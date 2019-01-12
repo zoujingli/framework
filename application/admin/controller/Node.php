@@ -38,7 +38,7 @@ class Node extends Controller
     public function index()
     {
         $this->title = '系统节点管理';
-        list($nodes, $groups) = [\app\admin\logic\Auth::get(), []];
+        list($nodes, $groups) = [\app\admin\service\Auth::get(), []];
         $this->nodes = Data::arr2table($nodes, 'node', 'pnode');
         foreach ($this->nodes as $node) {
             $pnode = explode('/', $node['node'])[0];
@@ -56,7 +56,7 @@ class Node extends Controller
      */
     public function clear()
     {
-        $nodes = array_unique(array_column(\app\admin\logic\Auth::get(), 'node'));
+        $nodes = array_unique(array_column(\app\admin\service\Auth::get(), 'node'));
         if (false !== Db::name($this->table)->whereNotIn('node', $nodes)->delete()) {
             $this->success('清理无效节点记录成功！', '');
         }

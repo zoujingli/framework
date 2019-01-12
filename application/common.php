@@ -20,7 +20,7 @@ if (!function_exists('auth')) {
      */
     function auth($node)
     {
-        return \app\admin\logic\Auth::checkAuthNode($node);
+        return \app\admin\service\Auth::checkAuthNode($node);
     }
 }
 

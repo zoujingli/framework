@@ -12,4 +12,32 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-return ['app\admin\service\Auth'];
+namespace app\admin\command\update;
+
+use app\admin\command\Update;
+
+/**
+ * 更新所在模块指令
+ * Class UpdateAll
+ * @package app\admin\logic\update
+ */
+class UpdateAll extends Update
+{
+    /**
+     * 配置入口
+     */
+    protected function configure()
+    {
+        $this->modules = [
+            'application/admin/',
+            'application/wechat/',
+            'application/service/',
+            'application/common.php',
+            'application/command.php',
+            'application/middleware.php',
+            'public/static/',
+            'config/',
+        ];
+        $this->setName('update:all')->setDescription('Sync All Module Code for ThinkAdmin');
+    }
+}

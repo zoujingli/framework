@@ -12,11 +12,9 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-namespace app\admin\logic;
+namespace app\admin\service;
 
-use think\console\Output;
 use think\Db;
-use think\queue\Job;
 
 /**
  * 任务管理器
@@ -33,42 +31,6 @@ class Queue
     const STATUS_COMP = 3;
     // 处理失败
     const STATUS_FAIL = 4;
-
-    /**
-     * 任务ID
-     * @var integer
-     */
-    protected $id;
-
-    /**
-     * 任务数据
-     * @var array
-     */
-    protected $data;
-
-    /**
-     * 任务名称
-     * @var string
-     */
-    protected $title;
-
-    /**
-     * 命令输出对象
-     * @var Output
-     */
-    protected $output;
-
-    /**
-     * 任务状态
-     * @var integer
-     */
-    protected $status;
-
-    /**
-     * 任务状态描述
-     * @var string
-     */
-    protected $statusDesc = '';
 
     /**
      * 创建任务并记录日志
@@ -150,53 +112,6 @@ class Queue
             return true;
         }
         return false;
-    }
-
-    /**
-     * 启动任务处理
-     * @param Job $job
-     * @param array $data
-     * @throws \think\Exception
-     * @throws \think\exception\PDOException
-     */
-    public function fire(Job $job, $data)
-    {
-        $this->data = $data;
-        $this->output = new Output();
-        $this->id = isset($data['_job_id_']) ? $data['_job_id_'] : '';
-        $this->title = isset($data['_job_title_']) ? $data['_job_title_'] : '';
-        // 标记任务处理中
-        $this->writeln('执行任务开始...');
-        Queue::status($this->id, Queue::STATUS_PROC, $this->statusDesc);
-        if ($this->execute()) {
-            $this->writeln('执行任务完成！');
-            $this->status = Queue::STATUS_COMP;
-        } else {
-            $this->writeln('执行任务失败！');
-            $this->status = Queue::STATUS_FAIL;
-        }
-        $job->delete();
-        Queue::status($this->id, $this->status, $this->statusDesc);
-        Message::add("{$this->title}", '后台任务执行完成！', url('@admin/queue/index'), 'admin/queue/index');
-    }
-
-    /**
-     * 输出消息
-     * @param string $text
-     * @param string $method
-     */
-    protected function writeln($text, $method = 'writeln')
-    {
-        $this->output->$method("【({$this->id}){$this->title}】{$text} {$this->statusDesc}");
-    }
-
-    /**
-     * 执行任务
-     * @return boolean
-     */
-    protected function execute()
-    {
-        return true;
     }
 
 }

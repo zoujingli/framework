@@ -36,7 +36,7 @@ class Index extends Controller
     public function index()
     {
         $this->title = '系统管理';
-        $this->menus = \app\admin\logic\Auth::getAuthMenu();
+        $this->menus = \app\admin\service\Auth::getAuthMenu();
         if (empty($this->menus) && !session('user.id')) {
             $this->redirect('@admin/login');
         }

@@ -58,7 +58,7 @@ class Auth extends Controller
         $auth = $this->request->post('id', '0');
         switch (strtolower($this->request->post('action'))) {
             case 'get': // 获取权限配置
-                $nodes = \app\admin\logic\Auth::get();
+                $nodes = \app\admin\service\Auth::get();
                 $checked = Db::name('SystemAuthNode')->where(['auth' => $auth])->column('node');
                 foreach ($nodes as &$node) $node['checked'] = in_array($node['node'], $checked);
                 $data = $this->_apply_filter(Data::arr2tree($nodes, 'node', 'pnode', '_sub_'));

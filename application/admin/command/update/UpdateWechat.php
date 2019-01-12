@@ -12,22 +12,23 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-namespace app\admin\logic\update;
+namespace app\admin\command\update;
 
-use app\admin\logic\Update;
+use app\admin\command\Update;
 
 /**
- * Class UpdateService
+ * 更新微信模块指令
+ * Class UpdateWechat
  * @package app\admin\logic\update
  */
-class UpdateService extends Update
+class UpdateWechat extends Update
 {
     /**
      * 配置入口
      */
     protected function configure()
     {
-        $this->modules = ['application/service/'];
-        $this->setName('update:service')->setDescription('Sync Update Service Module Code for ThinkAdmin');
+        $this->modules = ['application/wechat/'];
+        $this->setName('update:wechat')->setDescription('Sync Update Wechat Module Code for ThinkAdmin');
     }
 }
