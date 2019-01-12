@@ -89,7 +89,7 @@ class Update extends Command
     public static function build()
     {
         return self::tree([
-            'application/wechat', 'application/admin', 'config/',
+            'application/wechat', 'application/admin', 'application/service', 'config/',
             'public/static/plugs', 'public/static/theme', 'public/static/admin.js',
             'application/command.php', 'application/common.php', 'application/middleware.php',
         ], [
