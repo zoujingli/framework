@@ -28,7 +28,7 @@ class Jobs extends JobsBase
     /**
      * 当前任务URI
      */
-    const URI = 'app\\wechat\\JobsBase';
+    const URI = 'app\\wechat\\Jobs';
 
     /**
      * 执行任务
