@@ -93,8 +93,8 @@ class Update extends Command
             'application/command.php', 'application/common.php', 'application/middleware.php',
             'config/', 'public/static/plugs', 'public/static/theme', 'public/static/admin.js',
         ], [
+            'config/database.php', 'config/wechat.php',
             'application/admin/view/login/index.html',
-            'config/database.php',
         ]);
     }
 
