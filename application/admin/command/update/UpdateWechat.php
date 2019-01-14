@@ -29,6 +29,6 @@ class UpdateWechat extends Update
     protected function configure()
     {
         $this->modules = ['application/wechat/'];
-        $this->setName('update:wechat')->setDescription('Sync Update Wechat Module Files for ThinkAdmin');
+        $this->setName('update:wechat')->setDescription('Sync Update Wechat Files for ThinkAdmin');
     }
 }

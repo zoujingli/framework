@@ -29,12 +29,11 @@ class UpdateCommon extends Update
     protected function configure()
     {
         $this->modules = [
-            'config/',
             'application/common.php',
             'application/command.php',
             'application/middleware.php',
         ];
-        $this->setName('update:common')->setDescription('Sync Update Common Module Files for ThinkAdmin');
+        $this->setName('update:common')->setDescription('Sync Update Common Files for ThinkAdmin');
     }
 
 }

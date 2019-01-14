@@ -29,15 +29,15 @@ class UpdateAll extends Update
     protected function configure()
     {
         $this->modules = [
+            'config/',
+            'public/static/',
             'application/admin/',
             'application/wechat/',
             'application/service/',
             'application/common.php',
             'application/command.php',
             'application/middleware.php',
-            'public/static/',
-            'config/',
         ];
-        $this->setName('update:all')->setDescription('Sync Update All Module Files for ThinkAdmin');
+        $this->setName('update:all')->setDescription('Sync Update All Files for ThinkAdmin');
     }
 }

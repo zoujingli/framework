@@ -13,10 +13,11 @@
 // +----------------------------------------------------------------------
 
 return [
-    'app\admin\command\update\UpdateAdmin',
     'app\admin\command\update\UpdateAll',
-    'app\admin\command\update\UpdateCommon',
+    'app\admin\command\update\UpdateAdmin',
     'app\admin\command\update\UpdatePlugs',
-    'app\admin\command\update\UpdateService',
+    'app\admin\command\update\UpdateCommon',
+    'app\admin\command\update\UpdateConfig',
     'app\admin\command\update\UpdateWechat',
+    'app\admin\command\update\UpdateService',
 ];

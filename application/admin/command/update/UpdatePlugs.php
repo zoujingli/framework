@@ -29,6 +29,6 @@ class UpdatePlugs extends Update
     protected function configure()
     {
         $this->modules = ['public/static/'];
-        $this->setName('update:plugs')->setDescription('Sync Update Plugs Module Files for ThinkAdmin');
+        $this->setName('update:plugs')->setDescription('Sync Update Plugs Files for ThinkAdmin');
     }
 }
