@@ -13,7 +13,7 @@
 // +----------------------------------------------------------------------
 
 return [
-    'app\admin\command\update\UpdateAll',
+    // 'app\admin\command\update\UpdateAll',
     'app\admin\command\update\UpdateAdmin',
     'app\admin\command\update\UpdatePlugs',
     'app\admin\command\update\UpdateCommon',
