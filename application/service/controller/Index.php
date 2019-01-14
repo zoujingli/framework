@@ -85,6 +85,8 @@ class Index extends Controller
                 }
             }
             $this->success('同步所有授权信息成功！', '');
+        } catch (\think\exception\HttpResponseException $exception) {
+            throw $exception;
         } catch (\Exception $e) {
             $this->error("同步授权失败，请稍候再试！<br>{$e->getMessage()}");
         }
