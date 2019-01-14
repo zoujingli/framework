@@ -63,8 +63,6 @@ class Push extends Controller
      */
     public function ticket()
     {
-        p(__METHOD__);
-        p(file_get_contents('php://input'));
         $server = Wechat::service();
         if (!($data = $server->getComonentTicket())) {
             return "Ticket event handling failed.";
@@ -162,24 +160,21 @@ class Push extends Controller
             return "接收微信第三方平台授权失败! ";
         }
         // 重新通过接口查询公众号参数
-        $author = $service->getAuthorizerInfo($result['authorizer_appid']);
-        if (!($info = array_merge($result, $author))) {
+        if (!($update = array_merge($result, $service->getAuthorizerInfo($result['authorizer_appid'])))) {
             return '获取授权数据失败, 请稍候再试!';
         }
         // 生成公众号授权参数
-        $info = Build::filter($info);
-        $info['status'] = '1';
-        $info['is_deleted'] = '0';
-        $info['expires_in'] = time() + 7000;
-        $info['create_at'] = date('Y-m-d H:i:s');
+        $update = array_merge(Build::filter($update), [
+            'status' => '1', 'is_deleted' => '0', 'expires_in' => time() + 7000, 'create_at' => date('y-m-d H:i:s'),
+        ]);
         // 微信接口APPKEY处理与更新
         $config = Db::name('WechatServiceConfig')->where(['authorizer_appid' => $result['authorizer_appid']])->find();
-        $info['appkey'] = empty($config['appkey']) ? md5(uniqid('', true)) : $config['appkey'];
-        data_save('WechatServiceConfig', $info, 'authorizer_appid');
+        $update['appkey'] = empty($config['appkey']) ? md5(uniqid('', true)) : $config['appkey'];
+        data_save('WechatServiceConfig', $update, 'authorizer_appid');
         if (!empty($redirect)) { // 带上appid与appkey跳转到应用
             $split = stripos($redirect, '?') > 0 ? '&' : '?';
             $realurl = preg_replace(['/appid=\w+/i', '/appkey=\w+/i', '/(\?\&)$/i'], ['', '', ''], $redirect);
-            return redirect("{$realurl}{$split}appid={$info['authorizer_appid']}&appkey={$info['appkey']}");
+            return redirect("{$realurl}{$split}appid={$update['authorizer_appid']}&appkey={$update['appkey']}");
         }
     }
 
