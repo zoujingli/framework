@@ -63,25 +63,27 @@ class Push extends Controller
      */
     public function ticket()
     {
+        p(__METHOD__);
         p(file_get_contents('php://input'));
         $server = Wechat::service();
         if (!($data = $server->getComonentTicket())) {
             return "Ticket event handling failed.";
         }
-        # 授权成功通知
-        if (!empty($data['AuthorizerAppid']) && $data['InfoType'] === 'authorized') {
+        if (!empty($data['AuthorizerAppid']) && isset($data['InfoType'])) {
             $where = ['authorizer_appid' => $data['AuthorizerAppid']];
-            Db::name('WechatServiceConfig')->where($where)->update(['is_deleted' => '0']);
-        }
-        # 接收取消授权服务事件
-        if (!empty($data['AuthorizerAppid']) && $data['InfoType'] === 'unauthorized') {
-            $where = ['authorizer_appid' => $data['AuthorizerAppid']];
-            Db::name('WechatServiceConfig')->where($where)->update(['is_deleted' => '1']);
-        }
-        # 授权更新通知
-        if (!empty($data['AuthorizerAppid']) && $data['InfoType'] === 'updateauthorized') {
-            $_GET['auth_code'] = $data['PreAuthCode'];
-            $this->applyAuth($server);
+            # 授权成功通知
+            if ($data['InfoType'] === 'authorized') {
+                Db::name('WechatServiceConfig')->where($where)->update(['is_deleted' => '0']);
+            }
+            # 接收取消授权服务事件
+            if ($data['InfoType'] === 'unauthorized') {
+                Db::name('WechatServiceConfig')->where($where)->update(['is_deleted' => '1']);
+            }
+            # 授权更新通知
+            if ($data['InfoType'] === 'updateauthorized') {
+                $_GET['auth_code'] = $data['PreAuthCode'];
+                $this->applyAuth($server);
+            }
         }
         return 'success';
     }
