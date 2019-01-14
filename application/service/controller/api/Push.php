@@ -63,6 +63,7 @@ class Push extends Controller
      */
     public function ticket()
     {
+        p(file_get_contents('php://input'));
         $server = Wechat::service();
         if (!($data = $server->getComonentTicket())) {
             return "Ticket event handling failed.";
