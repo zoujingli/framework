@@ -38,14 +38,14 @@
     <legend class="layui-bg-cyan">对接参数</legend>
     <form onsubmit="return false;" data-auto="true" method="post" class='layui-form layui-card' autocomplete="off">
         <div class="layui-form-item">
-            <p class="color-green">微信接口服务AppID</p>
-            <label class="relative block"><input name="component_appid" required pattern="^.{18}$" maxlength="18" placeholder="请输入18位微信接口服务AppID" value="{:sysconf('component_appid')}" class="layui-input"></label>
-            <p class="help-block">微信接口服务 AppID，需要在微信开放平台获取。</p>
+            <p class="color-green">第三方平台服务AppID</p>
+            <label class="relative block"><input name="component_appid" required pattern="^.{18}$" maxlength="18" placeholder="请输入18位第三方平台服务AppID" value="{:sysconf('component_appid')}" class="layui-input"></label>
+            <p class="help-block">第三方平台服务 AppID，需要在微信第三方平台获取。</p>
         </div>
         <div class="layui-form-item">
-            <p class="color-green">微信接口服务AppSecret</p>
-            <label class="relative block"><input name="component_appsecret" required pattern="^.{32}$" maxlength="32" placeholder="请输入32位微信接口服务AppSecret" value="{:sysconf('component_appsecret')}" class="layui-input"></label>
-            <p class="help-block">微信接口服务 AppSecret，需要在微信开放平台获取。</p>
+            <p class="color-green">第三方平台服务AppSecret</p>
+            <label class="relative block"><input name="component_appsecret" required pattern="^.{32}$" maxlength="32" placeholder="请输入32位第三方平台服务AppSecret" value="{:sysconf('component_appsecret')}" class="layui-input"></label>
+            <p class="help-block">第三方平台服务 AppSecret，需要在微信第三方平台获取。</p>
         </div>
         <div class="layui-form-item">
             <p class="color-green">微信消息校验Token</p>
