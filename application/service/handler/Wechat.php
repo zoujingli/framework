@@ -44,10 +44,10 @@ class Wechat
     protected $message;
 
     /**
-     * ConfigService constructor.
+     * Wechat constructor.
      * @param array $config
      */
-    public function __construct($config)
+    public function __construct($config = [])
     {
         $this->config = $config;
         $this->appid = isset($config['authorizer_appid']) ? $config['authorizer_appid'] : '';
@@ -58,11 +58,19 @@ class Wechat
      * @return boolean
      * @throws \think\Exception
      */
-    public function checkInit()
+    private function checkInit()
     {
         if (!empty($this->config)) return true;
-        return false;
         throw new \think\Exception('Wechat Please bind Wechat first');
+    }
+
+    /**
+     * 接口测试
+     * @return integer
+     */
+    public function test()
+    {
+        return time();
     }
 
     /**
