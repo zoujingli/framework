@@ -131,12 +131,12 @@ class Wechat
     /**
      * 微信网页授权
      * @param string $sessid 当前会话id(可用session_id()获取)
-     * @param string $self_url 当前会话URL地址(需包含域名的完整URL地址)
+     * @param string $selfUrl 当前会话URL地址(需包含域名的完整URL地址)
      * @param int $fullMode 网页授权模式(0静默模式,1高级授权)
      * @return array|bool
      * @throws \think\Exception
      */
-    public function oauth($sessid, $self_url, $fullMode = 0)
+    public function oauth($sessid, $selfUrl, $fullMode = 0)
     {
         $this->checkInit();
         $fans = cache("{$this->appid}_{$sessid}_fans");
@@ -147,7 +147,7 @@ class Wechat
         $service = WechatLogic::service();
         $mode = empty($fullMode) ? 'snsapi_base' : 'snsapi_userinfo';
         $url = url('@service/api.push/oauth', '', true, true);
-        $params = ['mode' => $fullMode, 'sessid' => $sessid, 'enurl' => encode($self_url)];
+        $params = ['mode' => $fullMode, 'sessid' => $sessid, 'enurl' => encode($selfUrl)];
         $authurl = $service->getOauthRedirect($this->appid, $url . '?' . http_build_query($params), $mode);
         return ['openid' => $openid, 'fans' => $fans, 'url' => $authurl];
     }
