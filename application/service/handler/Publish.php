@@ -12,7 +12,7 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-namespace app\service\service;
+namespace app\service\handler;
 
 use app\service\logic\Wechat;
 

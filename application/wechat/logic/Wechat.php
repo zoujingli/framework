@@ -136,11 +136,11 @@ class Wechat extends \We
         list($appid, $appkey) = [sysconf('wechat_thr_appid'), sysconf('wechat_thr_appkey')];
         $token = strtolower("{$name}-{$appid}-{$appkey}-{$type}");
         if (class_exists('Yar_Client')) {
-            $location = config('wechat.service_url') . "/wechat/api.client/yar/{$token}.html";
+            $location = config('wechat.service_url') . "/service/api.client/yar/{$token}";
             return new \Yar_Client($location);
         }
         if (class_exists('SoapClient')) {
-            $location = config('wechat.service_url') . "/wechat/api.client/soap/{$token}.html";
+            $location = config('wechat.service_url') . "/service/api.client/soap/{$token}";
             return new \SoapClient(null, ['uri' => strtolower($name), 'location' => $location]);
         }
         throw new \think\Exception("Yar or soap extensions are not installed.");

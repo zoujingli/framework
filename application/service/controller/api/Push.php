@@ -16,11 +16,8 @@ namespace app\service\controller\api;
 
 use app\service\logic\Build;
 use app\service\logic\Wechat;
-use app\service\service\Publish;
-use app\service\service\Receive;
 use library\Controller;
 use think\Db;
-use WeChat\Oauth;
 
 /**
  * 微信推送事件处理
@@ -46,10 +43,10 @@ class Push extends Controller
     {
         /* 全网发布接口测试 */
         if ($appid === 'wx570bc396a51b8ff8') {
-            return Publish::handler($appid);
+            return \app\service\handler\Publish::handler($appid);
         }
         /* 接口类正常服务 */
-        return Receive::handler($appid);
+        return \app\service\handler\Receive::handler($appid);
     }
 
     /**
@@ -103,7 +100,7 @@ class Push extends Controller
         if (empty($result['openid'])) throw new \think\Exception('网页授权失败, 无法进一步操作！');
         cache("{$appid}_{$sessid}_openid", $result['openid'], 3600);
         if (!empty($mode)) {
-            $wechat = new Oauth($service->getConfig($appid));
+            $wechat = new \WeChat\Oauth($service->getConfig($appid));
             $fans = $wechat->getUserInfo($result['access_token'], $result['openid']);
             if (empty($fans)) throw new \think\Exception('网页授权信息获取失败, 无法进一步操作！');
             cache("{$appid}_{$sessid}_fans", $fans);

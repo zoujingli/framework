@@ -12,7 +12,7 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-namespace app\service\service;
+namespace app\service\handler;
 
 use app\service\logic\Wechat as WechatLogic;
 use think\Db;
@@ -23,7 +23,7 @@ use think\Db;
  * @package app\wechat\handler
  * @author Anyon <zoujingli@qq.com>
  */
-class Handler
+class Config
 {
     /**
      * 当前微信APPID

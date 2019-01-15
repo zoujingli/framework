@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit9b858585678d31166744fceb92857b45
+class ComposerStaticInitab0b312d4a22db77e3305018595ee09b
 {
     public static $files = array (
         '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
@@ -288,6 +288,15 @@ class ComposerStaticInit9b858585678d31166744fceb92857b45
         'WePay\\Refund' => __DIR__ . '/..' . '/zoujingli/wechat-developer/WePay/Refund.php',
         'WePay\\Transfers' => __DIR__ . '/..' . '/zoujingli/wechat-developer/WePay/Transfers.php',
         'WePay\\TransfersBank' => __DIR__ . '/..' . '/zoujingli/wechat-developer/WePay/TransfersBank.php',
+        'app\\admin\\JobsBase' => __DIR__ . '/../..' . '/application/admin/JobsBase.php',
+        'app\\admin\\command\\Update' => __DIR__ . '/../..' . '/application/admin/command/Update.php',
+        'app\\admin\\command\\update\\UpdateAdmin' => __DIR__ . '/../..' . '/application/admin/command/update/UpdateAdmin.php',
+        'app\\admin\\command\\update\\UpdateAll' => __DIR__ . '/../..' . '/application/admin/command/update/UpdateAll.php',
+        'app\\admin\\command\\update\\UpdateCommon' => __DIR__ . '/../..' . '/application/admin/command/update/UpdateCommon.php',
+        'app\\admin\\command\\update\\UpdateConfig' => __DIR__ . '/../..' . '/application/admin/command/update/UpdateConfig.php',
+        'app\\admin\\command\\update\\UpdatePlugs' => __DIR__ . '/../..' . '/application/admin/command/update/UpdatePlugs.php',
+        'app\\admin\\command\\update\\UpdateService' => __DIR__ . '/../..' . '/application/admin/command/update/UpdateService.php',
+        'app\\admin\\command\\update\\UpdateWechat' => __DIR__ . '/../..' . '/application/admin/command/update/UpdateWechat.php',
         'app\\admin\\controller\\Auth' => __DIR__ . '/../..' . '/application/admin/controller/Auth.php',
         'app\\admin\\controller\\Config' => __DIR__ . '/../..' . '/application/admin/controller/Config.php',
         'app\\admin\\controller\\Index' => __DIR__ . '/../..' . '/application/admin/controller/Index.php',
@@ -300,15 +309,9 @@ class ComposerStaticInit9b858585678d31166744fceb92857b45
         'app\\admin\\controller\\User' => __DIR__ . '/../..' . '/application/admin/controller/User.php',
         'app\\admin\\controller\\api\\Message' => __DIR__ . '/../..' . '/application/admin/controller/api/Message.php',
         'app\\admin\\controller\\api\\Update' => __DIR__ . '/../..' . '/application/admin/controller/api/Update.php',
-        'app\\admin\\logic\\Auth' => __DIR__ . '/../..' . '/application/admin/logic/Auth.php',
-        'app\\admin\\logic\\Message' => __DIR__ . '/../..' . '/application/admin/logic/Message.php',
-        'app\\admin\\logic\\Queue' => __DIR__ . '/../..' . '/application/admin/logic/Queue.php',
-        'app\\admin\\logic\\Update' => __DIR__ . '/../..' . '/application/admin/logic/Update.php',
-        'app\\admin\\logic\\update\\UpdateAdmin' => __DIR__ . '/../..' . '/application/admin/logic/update/UpdateAdmin.php',
-        'app\\admin\\logic\\update\\UpdateAll' => __DIR__ . '/../..' . '/application/admin/logic/update/UpdateAll.php',
-        'app\\admin\\logic\\update\\UpdatePlugs' => __DIR__ . '/../..' . '/application/admin/logic/update/UpdatePlugs.php',
-        'app\\admin\\logic\\update\\UpdateService' => __DIR__ . '/../..' . '/application/admin/logic/update/UpdateService.php',
-        'app\\admin\\logic\\update\\UpdateWechat' => __DIR__ . '/../..' . '/application/admin/logic/update/UpdateWechat.php',
+        'app\\admin\\service\\Auth' => __DIR__ . '/../..' . '/application/admin/service/Auth.php',
+        'app\\admin\\service\\Message' => __DIR__ . '/../..' . '/application/admin/service/Message.php',
+        'app\\admin\\service\\Queue' => __DIR__ . '/../..' . '/application/admin/service/Queue.php',
         'app\\index\\controller\\Index' => __DIR__ . '/../..' . '/application/index/controller/Index.php',
         'app\\service\\controller\\Config' => __DIR__ . '/../..' . '/application/service/controller/Config.php',
         'app\\service\\controller\\Index' => __DIR__ . '/../..' . '/application/service/controller/Index.php',
@@ -388,9 +391,9 @@ class ComposerStaticInit9b858585678d31166744fceb92857b45
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit9b858585678d31166744fceb92857b45::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit9b858585678d31166744fceb92857b45::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit9b858585678d31166744fceb92857b45::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitab0b312d4a22db77e3305018595ee09b::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitab0b312d4a22db77e3305018595ee09b::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitab0b312d4a22db77e3305018595ee09b::$classMap;
 
         }, null, ClassLoader::class);
     }
