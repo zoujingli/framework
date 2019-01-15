@@ -88,7 +88,7 @@ class Wechat
     public function setApiNotifyUri($notifyUri)
     {
         $this->checkInit();
-        if (empty($notifyUri)) throw new \think\Exception('请传入微信通知URL');
+        if (empty($notifyUri)) return false; //throw new \think\Exception('请传入微信通知URL');
         list($where, $data) = [['authorizer_appid' => $this->appid], ['appuri' => $notifyUri]];
         return Db::name('WechatServiceConfig')->where($where)->update($data) !== false;
     }
