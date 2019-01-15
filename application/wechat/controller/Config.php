@@ -70,7 +70,16 @@ class Config extends Controller
     public function payment()
     {
         $this->title = '公众号支付配置';
-        if ($this->request->isGet()) return $this->fetch();
+        if ($this->request->isGet()) {
+            $file = File::instance('local');
+            $this->wechat_mch_ssl_cer = sysconf('wechat_mch_ssl_cer');
+            $this->wechat_mch_ssl_key = sysconf('wechat_mch_ssl_key');
+            $this->wechat_mch_ssl_p12 = sysconf('wechat_mch_ssl_p12');
+            if (!$file->has($this->wechat_mch_ssl_cer, true)) $this->wechat_mch_ssl_cer = '';
+            if (!$file->has($this->wechat_mch_ssl_key, true)) $this->wechat_mch_ssl_key = '';
+            if (!$file->has($this->wechat_mch_ssl_p12, true)) $this->wechat_mch_ssl_p12 = '';
+            return $this->fetch();
+        }
         if ($this->request->post('wechat_mch_ssl_type') === 'p12') {
             $mchid = $this->request->post('wechat_mch_id');
             $sslp12 = $this->request->post('wechat_mch_ssl_p12');

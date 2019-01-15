@@ -42,18 +42,18 @@
                     </ul>
                     <div class="layui-tab-content">
                         <div class="layui-tab-item padding-top-15 padding-bottom-15">
-                            <input name="wechat_mch_ssl_p12" value="{:sysconf('wechat_mch_ssl_p12')}" type="hidden">
+                            <input name="wechat_mch_ssl_p12" value="{$wechat_mch_ssl_p12|default=''}" type="hidden">
                             <button data-file="btn" data-uptype="local" data-safe="true" data-type="p12" data-field="wechat_mch_ssl_p12" type="button" class="layui-btn layui-btn-primary">
                                 <i class="layui-icon layui-icon-vercode font-s14"></i> 上传P12证书
                             </button>
                             <p class="help-block margin-top-10">微信商户支付P12证书，可以在商户平台下载工具并使用工具生成。</p>
                         </div>
                         <div class="layui-tab-item padding-top-15 padding-bottom-15">
-                            <input name="wechat_mch_ssl_key" value="{:sysconf('wechat_mch_ssl_key')}" type="hidden">
+                            <input name="wechat_mch_ssl_key" value="{$wechat_mch_ssl_key|default=''}" type="hidden">
                             <button data-file="btn" data-uptype="local" data-safe="true" data-type="pem" data-field="wechat_mch_ssl_key" type="button" class="layui-btn layui-btn-primary margin-right-5">
                                 <i class="layui-icon layui-icon-vercode font-s14"></i> 上传KEY证书
                             </button>
-                            <input name="wechat_mch_ssl_cer" value="{:sysconf('wechat_mch_ssl_cer')}" type="hidden">
+                            <input name="wechat_mch_ssl_cer" value="{$wechat_mch_ssl_cer|default=''}" type="hidden">
                             <button data-file="btn" data-uptype="local" data-safe="true" data-type="pem" data-field="wechat_mch_ssl_cer" type="button" class="layui-btn layui-btn-primary">
                                 <i class="layui-icon layui-icon-vercode font-s14"></i> 上传CERT证书
                             </button>
@@ -93,13 +93,12 @@
             var input = this, $button = $(this).next('button');
             setTimeout(function () {
                 if (typeof input.value === 'string' && input.value.length > 5) {
-                    $button.find('i').addClass('color-green');
+                    $button.find('i').addClass('color-green layui-icon-vercode').removeClass('layui-icon-upload-drag');
                 } else {
-                    $button.find('i').removeClass('color-green');
+                    $button.find('i').removeClass('color-green layui-icon-vercode').addClass('layui-icon-upload-drag');
                 }
-            }, 500);
+            }, 300);
         }).trigger('change');
-
     });
 </script>
 {/block}
