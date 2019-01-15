@@ -23,7 +23,7 @@ use think\Db;
  * @package app\wechat\handler
  * @author Anyon <zoujingli@qq.com>
  */
-class Config
+class Wechat
 {
     /**
      * 当前微信APPID
