@@ -45,7 +45,6 @@ class Config extends Controller
                 sysconf('wechat_type', 'thr');
                 sysconf('wechat_thr_appid', input('appid'));
                 sysconf('wechat_thr_appkey', input('appkey'));
-                dump(Wechat::wechat()->getConfig());
                 Wechat::wechat()->setApiNotifyUri($this->thrNotify);
             }
             try {
