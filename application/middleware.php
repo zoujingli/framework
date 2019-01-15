@@ -12,4 +12,6 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-return ['app\admin\service\Auth'];
+return [
+    'app\admin\service\Auth',
+];
