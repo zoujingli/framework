@@ -65,7 +65,7 @@ class Client extends Controller
     {
         try {
             $instance = $this->create($param);
-            $service = new \Yar_Server($instance);
+            $service = new \Yar_Server(empty($instance) ? $this : $instance);
             $service->handle();
         } catch (\Exception $e) {
             return $e->getMessage();
