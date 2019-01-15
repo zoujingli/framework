@@ -61,6 +61,7 @@ class Wechat
     public function checkInit()
     {
         if (!empty($this->config)) return true;
+        return false;
         throw new \think\Exception('Wechat Please bind Wechat first');
     }
 
