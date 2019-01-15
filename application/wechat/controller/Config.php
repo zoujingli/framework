@@ -40,11 +40,12 @@ class Config extends Controller
                 cache('mygeoip', $this->geoip = http_get('https://framework.thinkadmin.top/wechat/api.push/geoip'), 360);
             }
             $code = encode(url('@admin', '', true, true) . '#' . $this->request->url());
-            $this->authurl = config('wechat.service_url') . "/wechat/api.push/auth/{$code}.html";
+            $this->authurl = config('wechat.service_url') . "/service/api.push/auth/{$code}";
             if ($this->request->has('appid', 'get', true) && $this->request->has('appkey', 'get', true)) {
                 sysconf('wechat_type', 'thr');
                 sysconf('wechat_thr_appid', input('appid'));
                 sysconf('wechat_thr_appkey', input('appkey'));
+                dump(Wechat::wechat()->getConfig());
                 Wechat::wechat()->setApiNotifyUri($this->thrNotify);
             }
             try {

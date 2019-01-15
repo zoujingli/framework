@@ -61,7 +61,7 @@ class Wechat
     public function checkInit()
     {
         if (!empty($this->config)) return true;
-        throw new \think\Exception('Wechat Please bind Wechat first', '304');
+        throw new \think\Exception('Wechat Please bind Wechat first');
     }
 
     /**
@@ -88,7 +88,7 @@ class Wechat
     public function setApiNotifyUri($notifyUri)
     {
         $this->checkInit();
-        if (empty($notifyUri)) throw new \think\Exception('请传入微信通知URL', '401');
+        if (empty($notifyUri)) throw new \think\Exception('请传入微信通知URL');
         list($where, $data) = [['authorizer_appid' => $this->appid], ['appuri' => $notifyUri]];
         return Db::name('WechatServiceConfig')->where($where)->update($data) !== false;
     }

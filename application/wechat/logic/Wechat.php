@@ -137,6 +137,7 @@ class Wechat extends \We
         $token = strtolower("{$name}-{$appid}-{$appkey}-{$type}");
         if (class_exists('Yar_Client')) {
             $location = config('wechat.service_url') . "/service/api.client/yar/{$token}";
+            dump($location);
             return new \Yar_Client($location);
         }
         if (class_exists('SoapClient')) {
