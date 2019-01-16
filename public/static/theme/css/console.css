@@ -177,6 +177,7 @@ label.think-checkbox,label.think-radio{display:inline-block;margin-right:10px}
 .mobile-footer li a{display:block;overflow:hidden;margin-top:-1px;margin-bottom:-1px;width:auto;border:1px solid hsla(0,0%,100%,0);border-left:1px solid #e7e7eb;color:#616161;text-decoration:none;text-overflow:ellipsis;white-space:nowrap;word-wrap:normal}
 .mobile-footer li a:hover{background:rgba(0,0,0,.02)}
 .mobile-footer li a.active{border:1px solid #44b549!important;box-shadow:0 0 1px #44b549}
+.mobile-footer li a span:before{content:'';display:inline-block;width:1px;height:1px}
 .mobile-footer li>.close{position:absolute;top:1px;right:1px;display:none;width:18px;height:18px;text-align:center;line-height:18px;cursor:pointer}
 .mobile-footer li:hover>.close{display:inline-block}
 .mobile-footer li:hover>.close:hover{background:#999!important;color:#fff!important}
