@@ -80,6 +80,7 @@ class Index extends Controller
                 $data['authorizer_appid'] = $item['authorizer_appid'];
                 $data['authorizer_refresh_token'] = $item['refresh_token'];
                 $data['create_at'] = date('Y-m-d H:i:s', $item['auth_time']);
+                p($data);
                 if (!data_save('WechatServiceConfig', $data, 'authorizer_appid')) {
                     $this->error('获取授权信息失败，请稍候再试！', '');
                 }
