@@ -60,7 +60,7 @@ class Index extends Controller
             $info = Build::filter(Wechat::service()->getAuthorizerInfo($appid));
             $info['authorizer_appid'] = $appid;
             if (data_save('WechatServiceConfig', $info, 'authorizer_appid')) {
-                $this->success('更新授权信息成功！', '');
+                $this->success('更新公众号授权信息成功！', '');
             }
         } catch (\think\exception\HttpResponseException $exception) {
             throw $exception;
