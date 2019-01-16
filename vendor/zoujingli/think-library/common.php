@@ -180,7 +180,7 @@ if (!function_exists('emoji_encode')) {
     }
 }
 
-if (!function_exists('emoji_clearemoji_decode')) {
+if (!function_exists('emoji_decode')) {
     /**
      * Emoji 表情解析
      * @param string $string

@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitab0b312d4a22db77e3305018595ee09b
+class ComposerStaticInitbf7203092c5df5fe205d53f2b2c47b1b
 {
     public static $files = array (
         '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
@@ -317,11 +317,11 @@ class ComposerStaticInitab0b312d4a22db77e3305018595ee09b
         'app\\service\\controller\\Index' => __DIR__ . '/../..' . '/application/service/controller/Index.php',
         'app\\service\\controller\\api\\Client' => __DIR__ . '/../..' . '/application/service/controller/api/Client.php',
         'app\\service\\controller\\api\\Push' => __DIR__ . '/../..' . '/application/service/controller/api/Push.php',
+        'app\\service\\handler\\Publish' => __DIR__ . '/../..' . '/application/service/handler/Publish.php',
+        'app\\service\\handler\\Receive' => __DIR__ . '/../..' . '/application/service/handler/Receive.php',
+        'app\\service\\handler\\Wechat' => __DIR__ . '/../..' . '/application/service/handler/Wechat.php',
         'app\\service\\logic\\Build' => __DIR__ . '/../..' . '/application/service/logic/Build.php',
         'app\\service\\logic\\Wechat' => __DIR__ . '/../..' . '/application/service/logic/Wechat.php',
-        'app\\service\\service\\Handler' => __DIR__ . '/../..' . '/application/service/service/Handler.php',
-        'app\\service\\service\\Publish' => __DIR__ . '/../..' . '/application/service/service/Publish.php',
-        'app\\service\\service\\Receive' => __DIR__ . '/../..' . '/application/service/service/Receive.php',
         'app\\store\\controller\\Goods' => __DIR__ . '/../..' . '/application/store/controller/Goods.php',
         'app\\store\\logic\\Goods' => __DIR__ . '/../..' . '/application/store/logic/Goods.php',
         'app\\wechat\\Jobs' => __DIR__ . '/../..' . '/application/wechat/Jobs.php',
@@ -353,6 +353,7 @@ class ComposerStaticInitab0b312d4a22db77e3305018595ee09b
         'library\\tools\\Crypt' => __DIR__ . '/..' . '/zoujingli/think-library/library/tools/Crypt.php',
         'library\\tools\\Csv' => __DIR__ . '/..' . '/zoujingli/think-library/library/tools/Csv.php',
         'library\\tools\\Data' => __DIR__ . '/..' . '/zoujingli/think-library/library/tools/Data.php',
+        'library\\tools\\Express' => __DIR__ . '/..' . '/zoujingli/think-library/library/tools/Express.php',
         'library\\tools\\Http' => __DIR__ . '/..' . '/zoujingli/think-library/library/tools/Http.php',
         'library\\tools\\Node' => __DIR__ . '/..' . '/zoujingli/think-library/library/tools/Node.php',
         'library\\tools\\Options' => __DIR__ . '/..' . '/zoujingli/think-library/library/tools/Options.php',
@@ -391,9 +392,9 @@ class ComposerStaticInitab0b312d4a22db77e3305018595ee09b
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitab0b312d4a22db77e3305018595ee09b::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitab0b312d4a22db77e3305018595ee09b::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitab0b312d4a22db77e3305018595ee09b::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitbf7203092c5df5fe205d53f2b2c47b1b::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitbf7203092c5df5fe205d53f2b2c47b1b::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitbf7203092c5df5fe205d53f2b2c47b1b::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -239,17 +239,17 @@
     },
     {
         "name": "topthink/framework",
-        "version": "v5.1.32",
-        "version_normalized": "5.1.32.0",
+        "version": "v5.1.33",
+        "version_normalized": "5.1.33.0",
         "source": {
             "type": "git",
             "url": "https://github.com/top-think/framework.git",
-            "reference": "88a2ab625b35e047896718db320e08375cf021da"
+            "reference": "477e1cef91290a36398ecbcdffcec7268d80f0dd"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/top-think/framework/zipball/88a2ab625b35e047896718db320e08375cf021da",
-            "reference": "88a2ab625b35e047896718db320e08375cf021da",
+            "url": "https://api.github.com/repos/top-think/framework/zipball/477e1cef91290a36398ecbcdffcec7268d80f0dd",
+            "reference": "477e1cef91290a36398ecbcdffcec7268d80f0dd",
             "shasum": "",
             "mirrors": [
                 {
@@ -271,7 +271,7 @@
             "sebastian/phpcpd": "2.*",
             "squizlabs/php_codesniffer": "2.*"
         },
-        "time": "2018-12-23T13:42:11+00:00",
+        "time": "2019-01-16T06:10:52+00:00",
         "type": "think-framework",
         "installation-source": "dist",
         "notification-url": "https://packagist.org/downloads/",
@@ -450,12 +450,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/zoujingli/ThinkLibrary.git",
-            "reference": "f7fa1df5ccbb0bd2d4b49a9d46b21cbad321ab0c"
+            "reference": "892f1750e31013cd9ae52170f50204375a0b2cb7"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/f7fa1df5ccbb0bd2d4b49a9d46b21cbad321ab0c",
-            "reference": "f7fa1df5ccbb0bd2d4b49a9d46b21cbad321ab0c",
+            "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/892f1750e31013cd9ae52170f50204375a0b2cb7",
+            "reference": "892f1750e31013cd9ae52170f50204375a0b2cb7",
             "shasum": "",
             "mirrors": [
                 {
@@ -473,7 +473,7 @@
             "php": ">=5.4",
             "qiniu/php-sdk": "^7.2"
         },
-        "time": "2019-01-10T10:35:41+00:00",
+        "time": "2019-01-16T09:48:37+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
