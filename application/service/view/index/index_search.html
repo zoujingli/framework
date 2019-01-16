@@ -22,8 +22,8 @@
             <label class="layui-form-label">类型过滤</label>
             <div class="layui-input-inline">
                 <select name="service_type" class="layui-select">
-                    <option value="">- 显示所有 -</option>
-                    {foreach ['0'=>'订阅号','2'=>'服务号','3'=>'小程序'] as $k=>$v}
+                    <option value="">- 所有公众号 -</option>
+                    {foreach ['0'=>'显示订阅号类型','2'=>'显示服务号类型','3'=>'显示小程序类型'] as $k=>$v}
                     <!--{if $k.'' eq $Think.get.service_type}-->
                     <option selected value="{$k}">{$v}</option>
                     <!--{else}-->
