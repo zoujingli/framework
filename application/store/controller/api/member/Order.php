@@ -30,7 +30,7 @@ class Order extends Member
      */
     public function set()
     {
-
+        \app\store\service\Order::create();
     }
 
     /**
