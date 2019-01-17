@@ -23,8 +23,15 @@ use library\Controller;
  */
 class Member extends Controller
 {
+    /**
+     * 会员数据
+     * @var array
+     */
     protected $member;
 
+    /**
+     * Member constructor.
+     */
     public function __construct()
     {
         parent::__construct();
