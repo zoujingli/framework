@@ -33,9 +33,11 @@ class Address extends Member
      */
     public function gets()
     {
-        $where = ['mid' => $this->member['id']];
         $this->success('获取会员收货地址成功！', [
-            'list' => Db::name('StoreMemberAddress')->where($where)->order('is_default desc,id desc')->select(),
+            'list' => Db::name('StoreMemberAddress')
+                ->where(['mid' => $this->member['id']])
+                ->order('is_default desc,id desc')
+                ->select(),
         ]);
     }
 
@@ -72,10 +74,10 @@ class Address extends Member
             'area.require'     => '收货地址区域不能为空！',
             'address.require'  => '收货详情地址不能为空！',
         ]);
-        if ($data['is_default']) {
-            Db::name('StoreMemberAddress')->where(['mid' => $this->member['id']])->update(['is_default' => '0']);
+        if (!empty($data['is_default'])) {
+            Db::name('StoreMemberAddress')->where(['mid' => $this->member['id']])->setField('is_default', '0');
         }
-        if ($this->request->post('address_id')) {
+        if ($this->request->has('address_id', 'post', true)) {
             $data['id'] = $this->request->post('address_id');
         }
         if (data_save('StoreMemberAddress', $data, 'id')) {
