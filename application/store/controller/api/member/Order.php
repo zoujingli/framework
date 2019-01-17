@@ -24,26 +24,41 @@ use app\store\controller\api\Member;
 class Order extends Member
 {
 
+    /**
+     * 创建订单
+     */
     public function set()
     {
 
     }
 
+    /**
+     * 获取订单列表
+     */
     public function gets()
     {
 
     }
 
+    /**
+     * 获取订单信息
+     */
     public function get()
     {
 
     }
 
+    /**
+     * 取消订单
+     */
     public function cancel()
     {
 
     }
 
+    /**
+     * 订单确认收货
+     */
     public function confirm()
     {
 
