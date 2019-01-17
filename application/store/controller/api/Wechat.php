@@ -43,13 +43,13 @@ class Wechat extends Controller
             if (isset($result['openid'])) {
                 data_save('StoreMember', ['openid' => $result['openid']], 'openid');
                 $result['member'] = Db::name('StoreMember')->where(['openid' => $result['openid']])->find();
-                $this->success('Code信息换取成功！', $result);
+                $this->success('授权CODE信息换取成功！', $result);
             }
             $this->error("[{$result['errcode']}] {$result['errmsg']}");
         } catch (\think\exception\HttpResponseException $exception) {
             throw $exception;
         } catch (\Exception $exception) {
-            $this->error("Code信息换取失败，{$exception->getMessage()}");
+            $this->error("授权CODE信息换取失败，{$exception->getMessage()}");
         }
     }
 
