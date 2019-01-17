@@ -15,6 +15,7 @@
 namespace app\store\controller\api;
 
 use library\Controller;
+use think\Db;
 
 /**
  * 会员管理基类
@@ -31,11 +32,22 @@ class Member extends Controller
 
     /**
      * Member constructor.
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
     public function __construct()
     {
         parent::__construct();
-        $this->member = ['id' => '0'];
+        // 会员信息检查
+        $mid = $this->request->post('mid');
+        $openid = $this->request->post('openid');
+        if (empty($mid)) $this->error('无效的会员ID参数！');
+        if (empty($openid)) $this->error('无效的会员绑定的OPENID！');
+        $where = ['id' => $mid, 'openid' => $openid];
+        $this->member = Db::name('StoreMember')->where($where)->find();
+        if (empty($this->member)) $this->error('无效的会员信息，请重新登录授权！');
+        $this->member['nickname'] = emoji_decode($this->member['nickname']);
     }
 
 }
