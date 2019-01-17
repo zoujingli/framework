@@ -88,7 +88,7 @@ class Goods extends Controller
             ]);
             if (!empty($data)) {
                 Db::name('StoreGoodsStock')->insertAll($data);
-                \app\store\logic\Goods::syncStock($post['id']);
+                \app\store\service\Goods::syncStock($post['id']);
                 $this->success('商品信息入库成功！');
             }
         }

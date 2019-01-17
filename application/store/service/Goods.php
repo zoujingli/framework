@@ -12,7 +12,7 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-namespace app\store\logic;
+namespace app\store\service;
 
 use think\Db;
 
