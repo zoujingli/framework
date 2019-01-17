@@ -15,6 +15,7 @@
 namespace app\store\controller\api;
 
 use library\Controller;
+use think\Db;
 
 /**
  * Class Wechat
@@ -22,14 +23,66 @@ use library\Controller;
  */
 class Wechat extends Controller
 {
-    public function session()
+    /**
+     * 获取小程序配置
+     * @return array
+     */
+    private function config()
     {
-
+        return config('wechat.wxpay');
     }
 
+    /**
+     * Code信息换取
+     */
+    public function session()
+    {
+        try {
+            $code = $this->request->post('code');
+            $result = \We::WeMiniCrypt($this->config())->session($code);
+            if (isset($result['openid'])) {
+                data_save('StoreMember', ['openid' => $result['openid']], 'openid');
+                $result['member'] = Db::name('StoreMember')->where(['openid' => $result['openid']])->find();
+                $this->success('Code信息换取成功！', $result);
+            }
+            $this->error("[{$result['errcode']}] {$result['errmsg']}");
+        } catch (\think\exception\HttpResponseException $exception) {
+            throw $exception;
+        } catch (\Exception $exception) {
+            $this->error("Code信息换取失败，{$exception->getMessage()}");
+        }
+    }
+
+    /**
+     * 小程序数据解密
+     */
     public function decode()
     {
-
+        try {
+            $iv = $this->request->post('iv');
+            $session = $this->request->post('session');
+            $content = $this->request->post('encrypted');
+            if (empty($session)) {
+                $code = $this->request->post('code');
+                $result = \We::WeMiniCrypt($this->config())->session($code);
+                $session = isset($result['session_key']) ? $result['session_key'] : '';
+            }
+            $result = \We::WeMiniCrypt($this->config())->decode($iv, $session, $content);
+            if ($result !== false && isset($result['openId'])) {
+                data_save('StoreMember', [
+                    'openid'   => $result['openId'],
+                    'headimg'  => $result['avatarUrl'],
+                    'nickname' => emoji_encode($result['nickName']),
+                ], 'openid');
+                $result['member'] = Db::name('StoreMember')->where(['openid' => $result['openId']])->find();
+                $this->success('解密数据返回成功！', $result);
+            }
+        } catch (\think\exception\HttpResponseException $exception) {
+            throw $exception;
+        } catch (\Exception $e) {
+            $this->error("解密数据返回失败，{$e->getMessage()}");
+        }
+        $this->error('解密数据失败，请稍候再试！');
     }
 
 }
