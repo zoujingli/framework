@@ -75,14 +75,14 @@ class Wechat extends Controller
                     'nickname' => emoji_encode($result['nickName']),
                 ], 'openid');
                 $result['member'] = Db::name('StoreMember')->where(['openid' => $result['openId']])->find();
-                $this->success('解密数据返回成功！', $result);
+                $this->success('小程序加密数据解密成功！', $result);
             }
         } catch (\think\exception\HttpResponseException $exception) {
             throw $exception;
         } catch (\Exception $e) {
-            $this->error("解密数据返回失败，{$e->getMessage()}");
+            $this->error("小程序加密数据解密失败，{$e->getMessage()}");
         }
-        $this->error('解密数据失败，请稍候再试！');
+        $this->error('小程序加密数据解密失败，请稍候再试！');
     }
 
 }
