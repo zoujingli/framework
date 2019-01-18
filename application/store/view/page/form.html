@@ -51,6 +51,7 @@
         <fieldset data-type-box="mul" class="padding-bottom-15">
             <legend>多页模式</legend>
             <div id="item-list-box">
+                {notempty name='vo.mul.goods'}
                 {foreach $vo.mul.goods as $g}
                 <div class="layui-form-item block relative">
                     <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px">*</sup>绑定商品</h3>
@@ -74,6 +75,7 @@
                     </div>
                 </div>
                 {/foreach}
+                {/notempty}
             </div>
             <button onclick="addItem()" type="button" class="layui-btn layui-btn-sm">增加商品</button>
         </fieldset>
