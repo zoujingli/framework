@@ -44,14 +44,14 @@ class Page extends Controller
     /**
      * 数据列表处理
      * @param array $data
+     * @param array $goodsId
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      */
-    protected function build($data = [])
+    protected function build($data = [], $goodsId = [])
     {
-        $goodsId = [];
         foreach ($data as $vo) $goodsId = array_unique(array_merge($goodsId, $vo['mul']['goods']));
         $goodsList = Db::name('StoreGoods')->field('id,title,logo')->whereIn('id', $goodsId)->select();
         foreach ($data as &$vo) foreach ($vo['mul']['goods'] as &$g) foreach ($goodsList as $v) if ($g == $v['id']) $g = $v;
