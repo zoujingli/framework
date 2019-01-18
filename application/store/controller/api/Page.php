@@ -38,6 +38,23 @@ class Page extends Controller
             $vo['one'] = json_decode($vo['one'], true);
             $vo['mul'] = json_decode($vo['mul'], true);
         }
-        $this->success('获取页面列表成功！', ['list' => $list]);
+        $this->success('获取页面列表成功！', ['list' => $this->build($list)]);
+    }
+
+    /**
+     * 数据列表处理
+     * @param array $data
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    protected function build($data = [])
+    {
+        $goodsId = [];
+        foreach ($data as $vo) $goodsId = array_unique(array_merge($goodsId, $vo['mul']['goods']));
+        $goodsList = Db::name('StoreGoods')->field('id,title,logo')->whereIn('id', $goodsId)->select();
+        foreach ($data as &$vo) foreach ($vo['mul']['goods'] as &$g) foreach ($goodsList as $v) if ($g == $v['id']) $g = $v;
+        return $data;
     }
 }
