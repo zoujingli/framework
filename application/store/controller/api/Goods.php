@@ -60,9 +60,9 @@ class Goods extends Controller
         $field = 'id,title,logo,specs,lists,image,content,number_sales,number_stock';
         $goods = Db::name('StoreGoods')->field($field)->where($where)->find();
         if (empty($goods)) $this->error('指定商品不存在，请更换商品ID重试！');
+        $goods['image'] = explode('|', $goods['image']);
         $goods['specs'] = json_decode($goods['specs'], true);
         $goods['lists'] = json_decode($goods['lists'], true);
-        $goods['image'] = explode('|', $goods['image']);
         $goods['list'] = Db::name('StoreGoodsList')->where(['goods_id' => $goods_id])->select();
         if (empty($goods['list'])) $this->error('指定商品规格不存在，请更换商品ID重试！');
         $this->success('获取商品信息成功！', $goods);
