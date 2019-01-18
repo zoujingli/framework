@@ -36,8 +36,8 @@ class Page extends Controller
         $where = ['is_deteted' => '0', 'status' => '1'];
         $list = Db::name('StorePage')->where($where)->order('sort asc,id desc')->select();
         foreach ($list as &$vo) {
-            $vo['one'] = json_decode($vo['one']);
-            $vo['mul'] = json_decode($vo['mul']);
+            $vo['one'] = json_decode($vo['one'], true);
+            $vo['mul'] = json_decode($vo['mul'], true);
         }
         $this->success('获取页面列表成功！', ['list' => $list]);
     }
