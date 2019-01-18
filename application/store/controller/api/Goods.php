@@ -53,7 +53,7 @@ class Goods extends Controller
     {
         $goods_id = input('goods_id');
         $where = ['is_deleted' => '0', 'status' => '1', 'id' => $goods_id];
-        $goods = Db::name('StoreGoods')->where($where)->select();
+        $goods = Db::name('StoreGoods')->where($where)->find();
         if (empty($goods)) $this->error('指定商品不存在，请更换商品ID重试！');
         $goods['specs'] = json_decode($goods['specs'], true);
         $goods['lists'] = json_decode($goods['lists'], true);
