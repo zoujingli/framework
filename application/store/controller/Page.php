@@ -15,6 +15,7 @@
 namespace app\store\controller;
 
 use library\Controller;
+use think\Db;
 
 /**
  * 页面管理
@@ -31,10 +32,16 @@ class Page extends Controller
 
     /**
      * 页面管理
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
      */
     public function index()
     {
-        $this->fetch();
+        $this->title = '商城页面管理';
+        $this->_query($this->table)->order('sort asc,id desc')->page();
     }
 
     /**
@@ -42,6 +49,7 @@ class Page extends Controller
      */
     public function add()
     {
+        $this->title = '添加商城页面';
         $this->_form($this->table, 'form');
     }
 
@@ -50,7 +58,22 @@ class Page extends Controller
      */
     public function edit()
     {
+        $this->title = '编辑商城页面';
         $this->_form($this->table, 'form');
+    }
+
+    /**
+     * 表单数据处理
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    protected function _form_filter()
+    {
+        if ($this->request->isGet()) {
+            $where = ['is_deleted' => '0', 'status' => '1'];
+            $this->goodsList = Db::name('StoreGoods')->where($where)->order('sort asc,id desc')->select();
+        }
     }
 
     /**

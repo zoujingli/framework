@@ -1,0 +1,102 @@
+{extend name='admin@main'}
+
+{block name="content"}
+<form onsubmit="return false;" id="GoodsForm" data-auto="true" method="post" class='layui-form layui-card' autocomplete="off">
+
+    <div class="layui-card-body padding-left-40">
+
+        <div class="layui-form-item block relative">
+            <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px">*</sup>页面标题</h3>
+            <input name="title" required class="layui-input" placeholder="请输入页面标题" value="{$vo.title|default=''}">
+        </div>
+
+        <div class="layui-form-item block relative">
+            <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px">*</sup>页面类型</h3>
+            <div class="relative layui-input">
+                {foreach ['one'=>'单页模式','mul'=>'多页模式'] as $k=>$v}
+                <label class="think-radio">
+                    {if isset($vo.type) and $vo.type eq $k}
+                    <input name="type" checked lay-ignore type="radio" value="{$k}"> {$v}
+                    {else}
+                    <input name="type" lay-ignore type="radio" value="{$k}"> {$v}
+                    {/if}
+                </label>
+                {/foreach}
+            </div>
+        </div>
+
+        <fieldset data-type-box="one">
+            <legend>单页模式</legend>
+            <div>
+                <div class="layui-form-item block relative">
+                    <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px">*</sup>展示图片</h3>
+                    <input name="data['image']" required class="layui-input" placeholder="请上传展示图片" value="{$data.image|default=''}">
+                </div>
+                <div class="layui-form-item block relative">
+                    <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px">*</sup>绑定商品</h3>
+                    <select name="data['goods']" class="layui-select">
+                        {foreach $goodsList as $v}
+                        {if isset($data.goods) and $data.goods eq $v.id}
+                        <option selected value="{$v.id}">{$v.title|default=''}</option>
+                        {else}
+                        <option value="{$v.id}">{$v.title|default=''}</option>
+                        {/if}
+                        {/foreach}
+                    </select>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset data-type-box="mul">
+            <legend>多页模式</legend>
+            <div class="padding-bottom-15">
+                <div class="layui-form-item block relative">
+                    <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px">*</sup>展示图片</h3>
+                    <input name="data['image']" required class="layui-input" placeholder="请上传展示图片" value="{$data.image|default=''}">
+                </div>
+                <div class="layui-form-item block relative">
+                    <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px">*</sup>绑定商品</h3>
+                    <select name="data['goods']" class="layui-select">
+                        {foreach $goodsList as $v}
+                        {if isset($data.goods) and $data.goods eq $v.id}
+                        <option selected value="{$v.id}">{$v.title|default=''}</option>
+                        {else}
+                        <option value="{$v.id}">{$v.title|default=''}</option>
+                        {/if}
+                        {/foreach}
+                    </select>
+                </div>
+                <button type="button" class="layui-btn layui-btn-sm">增加页面</button>
+            </div>
+        </fieldset>
+
+
+        <div class="layui-form-item text-center">
+            {notempty name='vo.id'}<input type="hidden" name="id" value="{$vo.id}">{/notempty}
+            <button class="layui-btn layui-btn-danger" ng-click="hsitoryBack()" type="button">取消编辑</button>
+            <button class="layui-btn" type="submit">保存页面</button>
+        </div>
+
+    </div>
+</form>
+
+{/block}
+
+{block name='script'}
+<script>
+    $(function () {
+        // 表单模式处理
+        window.form.render();
+        // 页面模式切换处理
+        $('input[name="type"]').on('click', function () {
+            var type = this.value;
+            $('[data-type-box]').not($('[data-type-box="' + type + '"]').show()).hide();
+            console.log(type)
+        });
+        // 自动切换页面模式
+        var $radio = $('input[name="type"]:checked');
+        if ($radio.size() < 1) $radio = $('input[name="type"]:first');
+        $radio.trigger('click');
+    });
+</script>
+{/block}
