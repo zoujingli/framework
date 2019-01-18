@@ -54,6 +54,12 @@ class Page extends Controller
     {
         foreach ($data as $vo) $goodsId = array_unique(array_merge($goodsId, $vo['mul']['goods']));
         $goodsList = Db::name('StoreGoods')->field('id,title,logo')->whereIn('id', $goodsId)->select();
+        $field = 'goods_id,goods_spec,price_market,price_selling,number_sales,number_stock,number_virtual';
+        $goodsLists = Db::name('StoreGoodsList')->field($field)->where(['status' => '1'])->whereIn('goods_id', $goodsId)->select();
+        foreach ($goodsList as &$vo) {
+            $vo['list'] = [];
+            foreach ($goodsLists as $v) if ($vo['id'] === $v['goods_id']) $vo['list'][] = $v;
+        }
         foreach ($data as &$vo) foreach ($vo['mul']['goods'] as &$g) foreach ($goodsList as $v) if ($g == $v['id']) $g = $v;
         return $data;
     }
