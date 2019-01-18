@@ -47,27 +47,30 @@
             </div>
         </fieldset>
 
-        <fieldset data-type-box="mul">
+        <fieldset data-type-box="mul" class="padding-bottom-15">
             <legend>多页模式</legend>
-            <div class="padding-bottom-15">
-                <div class="layui-form-item block relative">
-                    <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px">*</sup>展示图片</h3>
-                    <input name="data['image']" required class="layui-input" placeholder="请上传展示图片" value="{$data.image|default=''}">
+            <div class="layui-form-item block relative">
+                <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px">*</sup>绑定商品</h3>
+                <div class="layui-row">
+                    <div class="layui-col-xs8">
+                        <select name="data['goods'][]" class="layui-select">
+                            {foreach $goodsList as $v}
+                            {if isset($data.goods) and $data.goods eq $v.id}
+                            <option selected value="{$v.id}">{$v.title|default=''}</option>
+                            {else}
+                            <option value="{$v.id}">{$v.title|default=''}</option>
+                            {/if}
+                            {/foreach}
+                        </select>
+                    </div>
+                    <div class="layui-col-xs4 padding-top-5 padding-left-10">
+                        <a class="layui-btn layui-btn-sm">上移</a>
+                        <a class="layui-btn layui-btn-sm">下移</a>
+                        <a class="layui-btn layui-btn-sm layui-btn-danger">移除</a>
+                    </div>
                 </div>
-                <div class="layui-form-item block relative">
-                    <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px">*</sup>绑定商品</h3>
-                    <select name="data['goods']" class="layui-select">
-                        {foreach $goodsList as $v}
-                        {if isset($data.goods) and $data.goods eq $v.id}
-                        <option selected value="{$v.id}">{$v.title|default=''}</option>
-                        {else}
-                        <option value="{$v.id}">{$v.title|default=''}</option>
-                        {/if}
-                        {/foreach}
-                    </select>
-                </div>
-                <button type="button" class="layui-btn layui-btn-sm">增加页面</button>
             </div>
+            <button type="button" class="layui-btn layui-btn-sm">增加商品</button>
         </fieldset>
 
         <div class="layui-form-item text-center margin-top-20">
@@ -88,9 +91,8 @@
         window.form.render();
         // 页面模式切换处理
         $('input[name="type"]').on('click', function () {
-            var type = this.value;
-            $('[data-type-box]').not($('[data-type-box="' + type + '"]').show()).hide();
-            console.log(type)
+            $('[data-type-box]').not($('[data-type-box="' + this.value + '"]').show()).hide();
+            console.log(this.value)
         });
         // 自动切换页面模式
         var $radio = $('input[name="type"]:checked');
