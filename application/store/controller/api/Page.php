@@ -15,6 +15,7 @@
 namespace app\store\controller\api;
 
 use library\Controller;
+use think\Db;
 
 /**
  * 页面接口管理
@@ -24,8 +25,20 @@ use library\Controller;
 class Page extends Controller
 {
 
+    /**
+     * 获取微信商品首页
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
     public function gets()
     {
-
+        $where = ['is_deteted' => '0', 'status' => '1'];
+        $list = Db::name('StorePage')->where($where)->order('sort asc,id desc')->select();
+        foreach ($list as &$vo) {
+            $vo['one'] = json_decode($vo['one']);
+            $vo['mul'] = json_decode($vo['mul']);
+        }
+        $this->success('获取页面列表成功！', ['list' => $list]);
     }
 }
