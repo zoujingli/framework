@@ -5,7 +5,7 @@
 <button data-open='{:url("add")}' data-title="添加页面" class='layui-btn layui-btn-sm layui-btn-primary'>添加页面</button>
 <!--{/if}-->
 <!--{if auth("store/page/del")}-->
-<button data-action='{:url("del")}' data-rule="id#{key}" class='layui-btn layui-btn-sm layui-btn-primary'>删除页面</button>
+<button data-action='{:url("del")}' data-rule="id#{key}" data-confirm="确定要删除页面吗?" class='layui-btn layui-btn-sm layui-btn-primary'>删除页面</button>
 <!--{/if}-->
 {/block}
 
