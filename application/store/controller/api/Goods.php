@@ -37,7 +37,9 @@ class Goods extends Controller
         $list = Db::name('StoreGoods')->where($where)->order('sort asc,id desc')->select();
         $goodsList = Db::name('StoreGoodsList')->whereIn('goods_id', array_unique(array_column($list, 'id')))->select();
         foreach ($list as &$vo) {
-            list($vo['specs'], $vo['lists'], $vo['list']) = [json_decode($vo['specs'], true), json_decode($vo['lists'], true), []];
+            $vo['image'] = explode('|', $vo['image']);
+            $vo['specs'] = json_decode($vo['specs'], true);
+            $vo['lists'] = json_decode($vo['lists'], true);
             foreach ($goodsList as $goods) if ($goods['goods_id'] === $vo['id']) array_push($vo['list'], $goods);
         }
         $this->success('获取商品列表成功！', ['list' => $list]);
@@ -57,6 +59,7 @@ class Goods extends Controller
         if (empty($goods)) $this->error('指定商品不存在，请更换商品ID重试！');
         $goods['specs'] = json_decode($goods['specs'], true);
         $goods['lists'] = json_decode($goods['lists'], true);
+        $goods['image'] = explode('|', $goods['image']);
         $goods['list'] = Db::name('StoreGoodsList')->where(['goods_id' => $goods_id])->select();
         if (empty($goods['list'])) $this->error('指定商品规格不存在，请更换商品ID重试！');
         $this->success('获取商品信息成功！', $goods);
