@@ -34,11 +34,11 @@ class Goods extends Controller
     public function gets()
     {
         $where = ['is_deleted' => '0', 'status' => '1'];
-        $list = Db::name('StoreGoods')->where($where)->select();
-        $gList = Db::name('StoreGoodsList')->whereIn('goods_id', array_unique(array_column($list, 'id')))->select();
+        $list = Db::name('StoreGoods')->where($where)->order('sort asc,id desc')->select();
+        $goodsList = Db::name('StoreGoodsList')->whereIn('goods_id', array_unique(array_column($list, 'id')))->select();
         foreach ($list as &$vo) {
-            $vo['list'] = [];
-            foreach ($gList as $g) if ($g['goods_id'] === $vo['id']) array_push($vo['list'], $g);
+            list($vo['specs'], $vo['lists'], $vo['list']) = [json_decode($vo['specs'], true), json_decode($vo['lists'], true), []];
+            foreach ($goodsList as $goods) if ($goods['goods_id'] === $vo['id']) array_push($vo['list'], $goods);
         }
         $this->success('获取商品列表成功！', ['list' => $list]);
     }
@@ -55,6 +55,8 @@ class Goods extends Controller
         $where = ['is_deleted' => '0', 'status' => '1', 'id' => $goods_id];
         $goods = Db::name('StoreGoods')->where($where)->select();
         if (empty($goods)) $this->error('指定商品不存在，请更换商品ID重试！');
+        $goods['specs'] = json_decode($goods['specs'], true);
+        $goods['lists'] = json_decode($goods['lists'], true);
         $goods['list'] = Db::name('StoreGoodsList')->where(['goods_id' => $goods_id])->select();
         if (empty($goods['list'])) $this->error('指定商品规格不存在，请更换商品ID重试！');
         $this->success('获取商品信息成功！', $goods);
