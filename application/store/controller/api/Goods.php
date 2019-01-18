@@ -37,6 +37,7 @@ class Goods extends Controller
         $list = Db::name('StoreGoods')->where($where)->order('sort asc,id desc')->select();
         $goodsList = Db::name('StoreGoodsList')->whereIn('goods_id', array_unique(array_column($list, 'id')))->select();
         foreach ($list as &$vo) {
+            $vo['list'] = [];
             $vo['image'] = explode('|', $vo['image']);
             $vo['specs'] = json_decode($vo['specs'], true);
             $vo['lists'] = json_decode($vo['lists'], true);
