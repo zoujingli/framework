@@ -12,8 +12,8 @@
 
         <div class="layui-form-item block relative">
             <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px">*</sup>页面类型</h3>
-            <div class="relative layui-input">
-                {foreach ['one'=>'单页模式','mul'=>'多页模式'] as $k=>$v}
+            <div class="relative layui-input notselect">
+                {foreach ['one'=>'单页模式','mul'=>'多页模式'] as $k => $v}
                 <label class="think-radio">
                     {if isset($vo.type) and $vo.type eq $k}
                     <input name="type" checked lay-ignore type="radio" value="{$k}"> {$v}
@@ -70,10 +70,9 @@
             </div>
         </fieldset>
 
-
-        <div class="layui-form-item text-center">
+        <div class="layui-form-item text-center margin-top-20">
             {notempty name='vo.id'}<input type="hidden" name="id" value="{$vo.id}">{/notempty}
-            <button class="layui-btn layui-btn-danger" ng-click="hsitoryBack()" type="button">取消编辑</button>
+            <button class="layui-btn layui-btn-danger" onclick="history.back()" type="button">取消编辑</button>
             <button class="layui-btn" type="submit">保存页面</button>
         </div>
 
