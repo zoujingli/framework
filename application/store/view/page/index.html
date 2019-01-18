@@ -35,7 +35,7 @@
         <td class='list-table-sort-td'><input data-action-blur="{:request()->url()}" data-value="id#{$vo.id};action#sort;sort#{value}" data-loading="false" value="{$vo.sort}" class="list-sort-input"></td>
         <td class='text-left nowrap'>{$vo.title}</td>
         <td class='text-left nowrap'>{$vo.type==='mul'?'多页模式':'单页模式'}</td>
-        <td>{$vo.create_at}</td>
+        <td>{$vo.create_at|default='--'}</td>
         <td class='text-left nowrap'>{eq name='vo.status' value='0'}<span class="layui-badge">已禁用</span>{else}<span class="layui-badge layui-bg-green">使用中</span>{/eq}</td>
         <td class='text-left nowrap'>
 

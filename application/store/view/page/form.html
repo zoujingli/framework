@@ -30,13 +30,14 @@
             <div>
                 <div class="layui-form-item block relative">
                     <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px">*</sup>展示图片</h3>
-                    <input name="one[image]" required class="layui-input" placeholder="请上传展示图片" value="{$data.image|default=''}">
+                    <input name="one[image]" required class="layui-input" placeholder="请上传展示图片" value="{$vo.one.image|default=''}">
+                    <button class="layui-btn layui-btn-sm" data-file="btn" data-field="one[image]" data-type="png,jpg,gif">上传图片</button>
                 </div>
                 <div class="layui-form-item block relative">
                     <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px">*</sup>绑定商品</h3>
                     <select name="one[goods]" class="layui-select">
                         {foreach $goodsList as $v}
-                        {if isset($data.goods) and $data.goods eq $v.id}
+                        {if isset($vo.one.goods) and $vo.one.goods eq $v.id}
                         <option selected value="{$v.id}">{$v.title|default=''}</option>
                         {else}
                         <option value="{$v.id}">{$v.title|default=''}</option>
@@ -50,13 +51,14 @@
         <fieldset data-type-box="mul" class="padding-bottom-15">
             <legend>多页模式</legend>
             <div id="item-list-box">
+                {foreach $vo.mul.goods as $g}
                 <div class="layui-form-item block relative">
                     <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px">*</sup>绑定商品</h3>
                     <div class="layui-row">
                         <div class="layui-col-xs8">
                             <select name="mul[goods][]" class="layui-select">
                                 {foreach $goodsList as $v}
-                                {if isset($data.goods) and $data.goods eq $v.id}
+                                {if isset($data.goods) and $g eq $v.id}
                                 <option selected value="{$v.id}">{$v.title|default=''}</option>
                                 {else}
                                 <option value="{$v.id}">{$v.title|default=''}</option>
@@ -71,6 +73,7 @@
                         </div>
                     </div>
                 </div>
+                {/foreach}
             </div>
             <button onclick="addItem()" type="button" class="layui-btn layui-btn-sm">增加商品</button>
         </fieldset>

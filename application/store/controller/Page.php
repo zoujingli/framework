@@ -51,7 +51,8 @@ class Page extends Controller
     protected function _page_filter(&$data)
     {
         foreach ($data as &$vo) {
-            $vo['data'] = json_decode($vo[$vo['type']]);
+            $vo['one'] = json_decode($vo['one'], true);
+            $vo['mul'] = json_decode($vo['mul'], true);
         }
     }
 
@@ -85,9 +86,22 @@ class Page extends Controller
         if ($this->request->isGet()) {
             $where = ['is_deleted' => '0', 'status' => '1'];
             $this->goodsList = Db::name('StoreGoods')->where($where)->order('sort asc,id desc')->select();
+            if (isset($post['one'])) $post['one'] = json_decode($post['one'], true);
+            if (isset($post['mul'])) $post['mul'] = json_decode($post['mul'], true);
         } else foreach (['one', 'mul'] as $type) {
             if (empty($post[$type])) $post[$type] = [];
             $post[$type] = json_encode($post[$type], JSON_UNESCAPED_UNICODE);
+        }
+    }
+
+    /**
+     * 表单数据结果处理
+     * @param boolean $result
+     */
+    protected function _form_result($result)
+    {
+        if ($result) {
+            $this->success('页面更新成功！', url('@admin') . '#' . url('@store/page/index'));
         }
     }
 
