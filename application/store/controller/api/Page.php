@@ -33,8 +33,7 @@ class Page extends Controller
      */
     public function gets()
     {
-        $list = Db::name('StorePage')->field('title,type,image,one,mul')
-            ->where(['status' => '1'])->order('sort asc,id desc')->select();
+        $list = Db::name('StorePage')->field('title,type,one,mul')->where(['status' => '1'])->order('sort asc,id desc')->select();
         foreach ($list as &$vo) {
             $vo['one'] = json_decode($vo['one'], true);
             $vo['mul'] = json_decode($vo['mul'], true);
