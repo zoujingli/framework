@@ -45,6 +45,17 @@ class Page extends Controller
     }
 
     /**
+     * 数据列表处理
+     * @param array $data
+     */
+    protected function _page_filter(&$data)
+    {
+        foreach ($data as &$vo) {
+            $vo['data'] = json_decode($vo[$vo['type']]);
+        }
+    }
+
+    /**
      * 添加页面
      */
     public function add()
@@ -64,15 +75,19 @@ class Page extends Controller
 
     /**
      * 表单数据处理
+     * @param array $post
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      */
-    protected function _form_filter()
+    protected function _form_filter(&$post = [])
     {
         if ($this->request->isGet()) {
             $where = ['is_deleted' => '0', 'status' => '1'];
             $this->goodsList = Db::name('StoreGoods')->where($where)->order('sort asc,id desc')->select();
+        } else foreach (['one', 'mul'] as $type) {
+            if (empty($post[$type])) $post[$type] = [];
+            $post[$type] = json_encode($post[$type], JSON_UNESCAPED_UNICODE);
         }
     }
 
