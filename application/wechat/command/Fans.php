@@ -53,12 +53,13 @@ class Fans extends Command
     /**
      * 同步微信粉丝列表
      * @param string $next
+     * @param integer $index
      * @throws \WeChat\Exceptions\InvalidResponseException
      * @throws \WeChat\Exceptions\LocalCacheException
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
-    protected function _list($next = '')
+    protected function _list($next = '', $index = 0)
     {
         $appid = Wechat::getAppid();
         $wechat = Wechat::WeChatUser();
@@ -66,7 +67,11 @@ class Fans extends Command
         while (true) if (is_array($result = $wechat->getUserList($next)) && !empty($result['data']['openid'])) {
             foreach (array_chunk($result['data']['openid'], 100) as $chunk) {
                 if (is_array($list = $wechat->getBatchUserInfo($chunk)) && !empty($list['user_info_list'])) {
-                    foreach ($list['user_info_list'] as $user) \app\wechat\service\Fans::set($user, $appid);
+                    foreach ($list['user_info_list'] as $user) {
+                        $indexString = str_pad(++$index, strlen($result['total']), '0', STR_PAD_LEFT);
+                        $this->output->writeln("({$indexString}/{$result['total']}) updating {$user['openid']} to database");
+                        \app\wechat\service\Fans::set($user, $appid);
+                    }
                 }
             }
             if (in_array($result['next_openid'], $result['data']['openid'])) break;
