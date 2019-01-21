@@ -53,7 +53,7 @@ class Update extends Command
                 break;
             }
         }
-        $output->comment('update of all specified files completed.');
+        $output->comment('update of all specified files successful.');
     }
 
     /**
