@@ -77,7 +77,7 @@ class Fans extends Command
             if (in_array($result['next_openid'], $result['data']['openid'])) break;
             else $next = $result['next_openid'];
         }
-        $this->output->comment('synchronized fans list completion.');
+        $this->output->comment('synchronized fans list successful.');
     }
 
     /**
@@ -100,7 +100,7 @@ class Fans extends Command
             if (in_array($result['next_openid'], $result['data']['openid'])) break;
             else $next = $result['next_openid'];
         }
-        $this->output->comment('synchronized fans black completion.');
+        $this->output->comment('synchronized fans black successful.');
     }
 
     /**
@@ -120,7 +120,7 @@ class Fans extends Command
             Db::name('WechatFansTags')->where('1=1')->delete();
             Db::name('WechatFansTags')->insertAll($list['tags']);
         }
-        $this->output->comment('synchronized fan tag list successful.');
+        $this->output->comment('synchronized fans tags successful.');
     }
 
 }
