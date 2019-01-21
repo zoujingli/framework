@@ -77,7 +77,7 @@ class Fans extends Command
             if (in_array($result['next_openid'], $result['data']['openid'])) break;
             else $next = $result['next_openid'];
         }
-        $this->output->writeln('synchronized fans list completion.');
+        $this->output->highlight('synchronized fans list completion.');
     }
 
     /**
