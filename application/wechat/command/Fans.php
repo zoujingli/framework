@@ -42,11 +42,11 @@ class Fans extends Command
      */
     protected function execute(Input $input, Output $output)
     {
-        $output->writeln('preparing for synchronization of fan command...');
+        # $output->writeln('preparing for synchronization of fan command...');
         foreach ($this->module as $m) {
             if (method_exists($this, $fun = "_{$m}")) $this->$fun();
         }
-        $output->writeln('synchronized fans command completion.');
+        # $output->writeln('synchronized fans command completion.');
     }
 
 
