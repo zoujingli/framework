@@ -12,28 +12,9 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-namespace app\admin\command\update;
-
-use app\admin\command\Update;
-
-/**
- * 通用模块更新
- * Class UpdateCommon
- * @package app\admin\command\update
- */
-class UpdateCommon extends Update
-{
-    /**
-     * 配置入口
-     */
-    protected function configure()
-    {
-        $this->modules = [
-            'application/common.php',
-            'application/command.php',
-            'application/middleware.php',
-        ];
-        $this->setName('update:common')->setDescription('Synchronize update function files');
+// 动态加载模块初始化文件
+if (function_exists('think\__include_file')) {
+    foreach (glob(env('app_path') . '/*/init.php') as $file) {
+        \think\__include_file($file);
     }
-
 }

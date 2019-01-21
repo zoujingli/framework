@@ -82,7 +82,6 @@ if (!function_exists('base64_image')) {
 \think\Console::addDefaultCommands([
     'app\admin\command\update\UpdateAdmin',
     'app\admin\command\update\UpdatePlugs',
-    'app\admin\command\update\UpdateCommon',
     'app\admin\command\update\UpdateConfig',
     'app\admin\command\update\UpdateWechat',
     'app\admin\command\update\UpdateService',
