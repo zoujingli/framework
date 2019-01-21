@@ -69,7 +69,7 @@ class Fans extends Command
                 if (is_array($list = $wechat->getBatchUserInfo($chunk)) && !empty($list['user_info_list'])) {
                     foreach ($list['user_info_list'] as $user) {
                         $indexString = str_pad(++$index, strlen($result['total']), '0', STR_PAD_LEFT);
-                        $this->output->writeln("({$indexString}/{$result['total']}) updating wechat fans {$user['openid']}");
+                        $this->output->writeln("({$indexString}/{$result['total']}) updating wechat user {$user['openid']}");
                         \app\wechat\service\Fans::set($user, $appid);
                     }
                 }
