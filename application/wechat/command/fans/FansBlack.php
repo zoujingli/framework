@@ -29,6 +29,6 @@ class FansBlack extends Fans
     protected function configure()
     {
         $this->module = ['black'];
-        $this->setName('wechat:fansblack')->setDescription('Synchronize black of fans');
+        $this->setName('xFans:block')->setDescription('Synchronize black of fans');
     }
 }

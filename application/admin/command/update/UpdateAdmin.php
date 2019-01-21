@@ -29,6 +29,6 @@ class UpdateAdmin extends Update
     protected function configure()
     {
         $this->modules = ['application/admin/'];
-        $this->setName('update:admin')->setDescription('Synchronize update admin module files');
+        $this->setName('xUpdate:admin')->setDescription('Synchronize update admin module files');
     }
 }

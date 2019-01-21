@@ -29,7 +29,7 @@ class FansList extends Fans
     protected function configure()
     {
         $this->module = ['list'];
-        $this->setName('wechat:fanslist')->setDescription('Synchronize list of fans');
+        $this->setName('xFans:list')->setDescription('Synchronize list of fans');
     }
 
 }

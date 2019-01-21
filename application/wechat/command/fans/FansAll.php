@@ -29,6 +29,6 @@ class FansAll extends Fans
     protected function configure()
     {
         $this->module = ['list', 'black', 'tags'];
-        $this->setName('wechat:fansall')->setDescription('Synchronize all of fans');
+        $this->setName('xFans:all')->setDescription('Synchronize all of fans');
     }
 }
