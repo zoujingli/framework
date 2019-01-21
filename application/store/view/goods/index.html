@@ -46,11 +46,6 @@
                 </tr>
                 <!--{/foreach}-->
             </table>
-            <style>
-                table.trim-bottom-border tr:last-child td {
-                    border: none !important;
-                }
-            </style>
         </td>
         <td class='text-left nowrap'>
             {eq name='vo.status' value='0'}<span class="layui-badge">已下架</span>{else}<span class="layui-badge layui-bg-green">销售中</span>{/eq}
@@ -58,26 +53,21 @@
         <td class='text-left nowrap'>
 
             {if auth("store/goods/edit")}
-            <span class="text-explode">|</span>
-            <a data-open='{:url("edit")}?id={$vo.id}'>编辑</a>
+            <a class="layui-btn layui-btn-sm" data-open='{:url("edit")}?id={$vo.id}'>编 辑</a>
             {/if}
 
             {if $vo.status eq 1 and auth("store/goods/forbid")}
-            <span class="text-explode">|</span>
-            <a data-action="{:url('forbid')}" data-value="id#{$vo.id};status#0">下架</a>
+            <a class="layui-btn layui-btn-sm layui-btn-warm" data-action="{:url('forbid')}" data-value="id#{$vo.id};status#0">下 架</a>
             {elseif auth("store/goods/resume")}
-            <span class="text-explode">|</span>
-            <a data-action="{:url('resume')}" data-value="id#{$vo.id};status#1">上架</a>
+            <a class="layui-btn layui-btn-sm layui-btn-warm" data-action="{:url('resume')}" data-value="id#{$vo.id};status#1">上 架</a>
             {/if}
 
             {if auth("store/goods/stock")}
-            <span class="text-explode">|</span>
-            <a data-title="商品入库" data-modal='{:url("stock")}?id={$vo.id}'>入库</a>
+            <a class="layui-btn layui-btn-sm layui-btn-normal" data-title="商品入库" data-modal='{:url("stock")}?id={$vo.id}'>入 库</a>
             {/if}
 
             {if auth("store/goods/del")}
-            <span class="text-explode">|</span>
-            <a data-confirm="确定要删除数据吗?" data-action="{:url('del')}" data-value="id#{$vo.id}">删除</a>
+            <a class="layui-btn layui-btn-sm layui-btn-danger" data-confirm="确定要删除数据吗?" data-action="{:url('del')}" data-value="id#{$vo.id}">删 除</a>
             {/if}
 
         </td>
@@ -91,5 +81,11 @@
 <!--{else}-->
 {$pagehtml|raw|default=''}
 <!--{/empty}-->
+
+<style>
+    table.trim-bottom-border tr:last-child td {
+        border: none !important;
+    }
+</style>
 
 {/block}
