@@ -20,7 +20,7 @@ use app\admin\service\Queue;
 /**
  * 基础指令公共类
  * Class QueueBase
- * @package app\admin\command
+ * @package app\admin
  */
 class JobsBase
 {
