@@ -114,13 +114,13 @@ class Fans extends Command
     {
         $appid = Wechat::getAppid();
         $wechat = Wechat::WeChatTags();
-        $this->output->highlight('prepare a list of synchronize fans tags...');
+        $this->output->comment('prepare a list of synchronize fans tags...');
         if (is_array($list = $wechat->getTags()) && !empty($list['tags'])) {
             foreach ($list['tags'] as &$tag) $tag['appid'] = $appid;
             Db::name('WechatFansTags')->where('1=1')->delete();
             Db::name('WechatFansTags')->insertAll($list['tags']);
         }
-        $this->output->highlight('synchronized fan tag list successful.');
+        $this->output->comment('synchronized fan tag list successful.');
     }
 
 }
