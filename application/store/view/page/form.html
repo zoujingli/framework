@@ -62,7 +62,7 @@
                             <div class="layui-col-xs8">
                                 <select name="mul[goods][]" class="layui-select">
                                     {foreach $goodsList as $v}
-                                    {if isset($data.goods) and $g eq $v.id}
+                                    {if $g eq $v.id}
                                     <option selected value="{$v.id}">{$v.title|default=''}</option>
                                     {else}
                                     <option value="{$v.id}">{$v.title|default=''}</option>
