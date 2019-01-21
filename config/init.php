@@ -18,3 +18,5 @@ if (function_exists('think\__include_file')) {
         \think\__include_file($file);
     }
 }
+
+return [];
