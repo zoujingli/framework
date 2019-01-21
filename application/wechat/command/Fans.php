@@ -63,7 +63,7 @@ class Fans extends Command
     {
         $appid = Wechat::getAppid();
         $wechat = Wechat::WeChatUser();
-        $this->output->warning('preparing a synchronize fans list...');
+        $this->output->highlight('preparing a synchronize fans list...');
         while (true) if (is_array($result = $wechat->getUserList($next)) && !empty($result['data']['openid'])) {
             foreach (array_chunk($result['data']['openid'], 100) as $chunk) {
                 if (is_array($list = $wechat->getBatchUserInfo($chunk)) && !empty($list['user_info_list'])) {
@@ -77,7 +77,7 @@ class Fans extends Command
             if (in_array($result['next_openid'], $result['data']['openid'])) break;
             else $next = $result['next_openid'];
         }
-        $this->output->warning('synchronized fans list completion.');
+        $this->output->highlight('synchronized fans list completion.');
     }
 
     /**
@@ -91,7 +91,7 @@ class Fans extends Command
     public function _black($next = '')
     {
         $wechat = Wechat::WeChatUser();
-        $this->output->warning('prepare a synchronize fans black...');
+        $this->output->highlight('prepare a synchronize fans black...');
         while (true) if (is_array($result = $wechat->getBlackList($next)) && !empty($result['data']['openid'])) {
             foreach (array_chunk($result['data']['openid'], 100) as $chunk) {
                 $where = [['is_black', 'eq', '0'], ['openid', 'in', $chunk]];
@@ -100,7 +100,7 @@ class Fans extends Command
             if (in_array($result['next_openid'], $result['data']['openid'])) break;
             else $next = $result['next_openid'];
         }
-        $this->output->warning('synchronized fans black completion.');
+        $this->output->highlight('synchronized fans black completion.');
     }
 
     /**
@@ -114,13 +114,13 @@ class Fans extends Command
     {
         $appid = Wechat::getAppid();
         $wechat = Wechat::WeChatTags();
-        $this->output->warning('prepare a list of synchronize fans tags...');
+        $this->output->highlight('prepare a list of synchronize fans tags...');
         if (is_array($list = $wechat->getTags()) && !empty($list['tags'])) {
             foreach ($list['tags'] as &$tag) $tag['appid'] = $appid;
             Db::name('WechatFansTags')->where('1=1')->delete();
             Db::name('WechatFansTags')->insertAll($list['tags']);
         }
-        $this->output->warning('synchronized fan tag list successful.');
+        $this->output->highlight('synchronized fan tag list successful.');
     }
 
 }

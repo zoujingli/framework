@@ -46,14 +46,14 @@ class Update extends Command
      */
     protected function execute(Input $input, Output $output)
     {
-        $output->warning('prepare to update file information...');
+        $output->highlight('prepare to update file information...');
         foreach (self::diff() as $file) foreach ($this->modules as $module) {
             if (stripos($file['name'], $module) === 0) {
                 $this->syncFile($file, $output);
                 break;
             }
         }
-        $output->warning('update of all specified files completed.');
+        $output->highlight('update of all specified files completed.');
     }
 
     /**
