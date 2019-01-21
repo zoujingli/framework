@@ -29,6 +29,6 @@ class FansTags extends Fans
     protected function configure()
     {
         $this->module = ['tags'];
-        $this->setName('wechat:fanstags')->setDescription('Synchronize tag of fans');
+        $this->setName('wechat:fanstags')->setDescription('Synchronize tags of fans');
     }
 }

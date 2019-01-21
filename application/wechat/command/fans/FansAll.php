@@ -17,18 +17,18 @@ namespace app\wechat\command\fans;
 use app\wechat\command\Fans;
 
 /**
- * 粉丝黑名单指令
+ * 同步全部粉丝指令
  * Class FansBlack
  * @package app\wechat\command\fans
  */
-class FansBlack extends Fans
+class FansAll extends Fans
 {
     /**
      * 配置入口
      */
     protected function configure()
     {
-        $this->module = ['black'];
-        $this->setName('wechat:fansblack')->setDescription('Synchronize black of fans');
+        $this->module = ['list', 'black', 'tags'];
+        $this->setName('wechat:fansall')->setDescription('Synchronize all of fans');
     }
 }
