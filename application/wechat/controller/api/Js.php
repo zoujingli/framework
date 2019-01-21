@@ -5,6 +5,11 @@ namespace app\wechat\controller\api;
 use app\wechat\service\Wechat;
 use library\Controller;
 
+/**
+ * 前端JS获取控制器
+ * Class Js
+ * @package app\wechat\controller\api
+ */
 class Js extends Controller
 {
     /**
