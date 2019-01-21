@@ -14,7 +14,7 @@
 
 namespace app\wechat\controller\api;
 
-use app\wechat\logic\Media;
+use app\wechat\service\Media;
 use library\Controller;
 use think\Db;
 

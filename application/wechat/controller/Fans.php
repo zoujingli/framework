@@ -16,7 +16,7 @@ namespace app\wechat\controller;
 
 use app\admin\service\Queue;
 use app\wechat\Jobs;
-use app\wechat\logic\Wechat;
+use app\wechat\service\Wechat;
 use library\Controller;
 use think\Db;
 use think\exception\HttpResponseException;

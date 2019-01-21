@@ -12,12 +12,12 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-namespace app\wechat\logic;
+namespace app\wechat\service;
 
 /**
  * 微信处理管理
  * Class Wechat
- * @package app\wechat\logic
+ * @package app\wechat\service
  *
  * ----- WeOpen for Open -----
  * @method \WeOpen\Login login() static 第三方微信登录

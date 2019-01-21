@@ -12,7 +12,7 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-namespace app\wechat\logic;
+namespace app\wechat\service;
 
 use library\File;
 use think\Db;
@@ -21,7 +21,7 @@ use WeChat\Contracts\MyCurlFile;
 /**
  * 微信素材管理
  * Class Media
- * @package app\wechat\logic
+ * @package app\wechat\service
  */
 class Media
 {

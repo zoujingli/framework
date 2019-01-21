@@ -15,7 +15,6 @@
 namespace library;
 
 use library\tools\Cors;
-use think\exception\HttpResponseException;
 
 /**
  * 标准控制器基类
@@ -97,7 +96,7 @@ class Controller extends \stdClass
     protected function success($info, $data = [], $code = 1)
     {
         $result = ['code' => $code, 'info' => $info, 'data' => $data];
-        throw new HttpResponseException(json($result, 200, Cors::getRequestHeader()));
+        throw new \think\exception\HttpResponseException(json($result, 200, Cors::getRequestHeader()));
     }
 
     /**
@@ -110,7 +109,7 @@ class Controller extends \stdClass
     protected function error($info, $data = [], $code = 0)
     {
         $result = ['code' => $code, 'info' => $info, 'data' => $data];
-        throw new HttpResponseException(json($result, 200, Cors::getRequestHeader()));
+        throw new \think\exception\HttpResponseException(json($result, 200, Cors::getRequestHeader()));
     }
 
     /**
@@ -122,7 +121,7 @@ class Controller extends \stdClass
      */
     protected function redirect($url, $params = [], $code = 301)
     {
-        throw new HttpResponseException(redirect($url, $params, $code));
+        throw new \think\exception\HttpResponseException(redirect($url, $params, $code));
     }
 
     /**
@@ -133,7 +132,8 @@ class Controller extends \stdClass
      */
     protected function fetch($tpl = '', $vars = [])
     {
-        throw new HttpResponseException(view($tpl, $vars)->assign((array)$this));
+        foreach ($this as $name => $value) $vars[$name] = $value;
+        throw new \think\exception\HttpResponseException(view($tpl, $vars));
     }
 
     /**

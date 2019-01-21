@@ -2,9 +2,8 @@
 
 namespace app\wechat\controller\api;
 
-use app\wechat\logic\Wechat;
+use app\wechat\service\Wechat;
 use library\Controller;
-use think\exception\HttpResponseException;
 
 class Js extends Controller
 {

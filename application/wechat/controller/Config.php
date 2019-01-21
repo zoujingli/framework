@@ -14,7 +14,7 @@
 
 namespace app\wechat\controller;
 
-use app\wechat\logic\Wechat;
+use app\wechat\service\Wechat;
 use library\Controller;
 use library\File;
 

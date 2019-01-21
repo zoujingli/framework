@@ -13,17 +13,17 @@
         <div class="layui-tab-item">{include file='config/options_thr'}</div>
         <div class="layui-tab-item layui-clear">
             <div class="layui-elem-quote border-0">
-                <p class="font-s14 margin-bottom-10">
-                    <strong>支付测试配置</strong><br>
-                    JSAPI支付测试需要在微信商户平台配置支付目录：<a data-copy="{:url('@wechat/api.tools/','','',true)}">{:url('@wechat/api.tools/','','',true)}</a>
+                <p class="font-s14 margin-bottom-10 color-text">
+                    <strong>第三方平台授权</strong><br>
+                    JSSDK签名测试需要在开放平台配置当前的授权域名：<a data-copy="{:request()->host()}">{:request()->host()}</a>
                 </p>
-                <p class="font-s14 margin-bottom-10">
+                <p class="font-s14 margin-bottom-10 color-text">
                     <strong>普通接口强制绑定</strong><br>
                     网页授权及JSSDK签名都需要在公众号平台配置授权域名：<a data-copy="{:request()->host()}">{:request()->host()}</a>
                 </p>
-                <p class="font-s14">
-                    <strong>第三方平台授权</strong><br>
-                    JSSDK签名测试需要在开放平台配置当前的授权域名：<a data-copy="{:request()->host()}">{:request()->host()}</a>
+                <p class="font-s14 color-text">
+                    <strong>支付测试配置</strong><br>
+                    JSAPI支付测试需要在微信商户平台配置支付目录：<a data-copy="{:url('@wechat/api.tools/','','',true)}">{:url('@wechat/api.tools/','','',true)}</a>
                 </p>
             </div>
             <div class="pull-left padding-right-15 notselect">

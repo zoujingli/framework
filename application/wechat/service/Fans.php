@@ -12,14 +12,14 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-namespace app\wechat\logic;
+namespace app\wechat\service;
 
 use think\Db;
 
 /**
  * 微信粉丝信息
  * Class Fans
- * @package app\wechat\logic
+ * @package app\wechat\service
  */
 class Fans
 {

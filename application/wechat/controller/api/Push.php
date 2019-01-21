@@ -14,9 +14,9 @@
 
 namespace app\wechat\controller\api;
 
-use app\wechat\logic\Fans;
-use app\wechat\logic\Media;
-use app\wechat\logic\Wechat;
+use app\wechat\service\Fans;
+use app\wechat\service\Media;
+use app\wechat\service\Wechat;
 use library\Controller;
 use think\Db;
 
@@ -184,7 +184,7 @@ class Push extends Controller
                 return false;
         }
     }
-    
+
     /**
      * 关键字处理
      * @param string $rule 关键字规则

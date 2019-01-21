@@ -15,8 +15,8 @@
 namespace app\wechat;
 
 use app\admin\JobsBase;
-use app\wechat\logic\Fans;
-use app\wechat\logic\Wechat;
+use app\wechat\service\Fans;
+use app\wechat\service\Wechat;
 use think\Db;
 
 /**
