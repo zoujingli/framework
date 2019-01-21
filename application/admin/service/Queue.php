@@ -19,7 +19,7 @@ use think\Db;
 /**
  * 任务管理器
  * Class Queue
- * @package app\admin\logic
+ * @package app\admin\service
  */
 class Queue
 {

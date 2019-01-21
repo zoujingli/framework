@@ -21,7 +21,7 @@ use think\Db;
 /**
  * 权限访问及菜单管理
  * Class Auth
- * @package app\admin\logic
+ * @package app\admin\service
  */
 class Auth
 {

@@ -19,7 +19,7 @@ use think\Db;
 /**
  * 系统消息管理
  * Class Message
- * @package app\admin\logic
+ * @package app\admin\service
  */
 class Message
 {
