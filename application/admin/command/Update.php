@@ -46,7 +46,7 @@ class Update extends Command
      */
     protected function execute(Input $input, Output $output)
     {
-        $output->comment('prepare to update file information...');
+        $output->comment('prepare to update file information ...');
         foreach (self::diff() as $file) foreach ($this->modules as $module) {
             if (stripos($file['name'], $module) === 0) {
                 $this->syncFile($file, $output);
