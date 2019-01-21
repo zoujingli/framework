@@ -29,7 +29,7 @@ class FansList extends Fans
     protected function configure()
     {
         $this->module = ['list'];
-        $this->setName('xFans:list')->setDescription('Synchronize list of fans');
+        $this->setName('xfans:list')->setDescription('Synchronize list of fans');
     }
 
 }

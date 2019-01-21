@@ -29,6 +29,6 @@ class FansAll extends Fans
     protected function configure()
     {
         $this->module = ['list', 'black', 'tags'];
-        $this->setName('xFans:all')->setDescription('Synchronize all of fans');
+        $this->setName('xfans:all')->setDescription('Synchronize all of fans');
     }
 }

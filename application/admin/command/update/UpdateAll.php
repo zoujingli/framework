@@ -38,6 +38,6 @@ class UpdateAll extends Update
             'application/command.php',
             'application/middleware.php',
         ];
-        $this->setName('xUpdate:all')->setDescription('Synchronize update all files');
+        $this->setName('xupdate:all')->setDescription('Synchronize update all files');
     }
 }
