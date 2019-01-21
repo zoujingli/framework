@@ -112,7 +112,7 @@ class JobsBase
      * @param string $text 消息内容
      * @param string $method 输出方法
      */
-    protected function writeln($text, $method = 'writeln')
+    protected function writeln($text, $method = 'info')
     {
         $message = "【({$this->id}){$this->title}】{$text} {$this->statusDesc}";
         if (method_exists($this->output, $method)) $this->output->$method($message);
