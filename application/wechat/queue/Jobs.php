@@ -12,9 +12,9 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-namespace app\wechat;
+namespace app\wechat\queue;
 
-use app\admin\JobsBase;
+use app\admin\queue\JobsBase;
 use app\wechat\service\Fans;
 use app\wechat\service\Wechat;
 use think\Db;
@@ -28,7 +28,7 @@ class Jobs extends JobsBase
     /**
      * 当前任务URI
      */
-    const URI = 'app\\wechat\\Jobs';
+    const URI = self::class;
 
     /**
      * 执行任务

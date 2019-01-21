@@ -12,23 +12,8 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-namespace app\admin\command\update;
-
-use app\admin\command\Update;
-
-/**
- * 更新插件指令
- * Class UpdatePlugs
- * @package app\admin\logic\update
- */
-class UpdatePlugs extends Update
-{
-    /**
-     * 配置入口
-     */
-    protected function configure()
-    {
-        $this->modules = ['public/static/'];
-        $this->setName('update:plugs')->setDescription('Synchronize update plugs static files');
-    }
-}
+\think\Console::addDefaultCommands([
+    'app\wechat\command\fans\FansTags',
+    'app\wechat\command\fans\FansList',
+    'app\wechat\command\fans\FansBlack',
+]);

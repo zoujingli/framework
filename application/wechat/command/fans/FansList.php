@@ -12,23 +12,24 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-namespace app\admin\command\update;
+namespace app\wechat\command\fans;
 
-use app\admin\command\Update;
+use app\wechat\command\Fans;
 
 /**
- * 更新插件指令
- * Class UpdatePlugs
- * @package app\admin\logic\update
+ * 粉丝列表指令管理
+ * Class FansList
+ * @package app\wechat\command\fans
  */
-class UpdatePlugs extends Update
+class FansList extends Fans
 {
     /**
      * 配置入口
      */
     protected function configure()
     {
-        $this->modules = ['public/static/'];
-        $this->setName('update:plugs')->setDescription('Synchronize update plugs static files');
+        $this->module = ['list'];
+        $this->setName('wechat:fanslist')->setDescription('Synchronize list of fans');
     }
+
 }

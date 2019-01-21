@@ -12,6 +12,23 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-return [
-    'app\admin\service\Auth',
-];
+namespace app\wechat\command\fans;
+
+use app\wechat\command\Fans;
+
+/**
+ * 粉丝标签指令
+ * Class FansTags
+ * @package app\wechat\command\fans
+ */
+class FansTags extends Fans
+{
+    /**
+     * 配置入口
+     */
+    protected function configure()
+    {
+        $this->module = ['tags'];
+        $this->setName('wechat:fanstags')->setDescription('Synchronize tag of fans');
+    }
+}

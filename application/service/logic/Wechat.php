@@ -15,7 +15,6 @@
 namespace app\service\logic;
 
 use think\Db;
-use WeOpen\MiniApp;
 
 /**
  * 微信数据服务
@@ -104,7 +103,7 @@ class Wechat
             if (!($refreshToken = Db::name('WechatServiceConfig')->where($where)->value('authorizer_refresh_token'))) {
                 throw new \think\Exception('The WeChat information is not configured.', '404');
             }
-            $open = new MiniApp($config);
+            $open = new \WeOpen\MiniApp($config);
             $result = $open->refreshAccessToken($authorizerAppid, $refreshToken);
             if (empty($result['authorizer_access_token']) || empty($result['authorizer_refresh_token'])) {
                 throw new \think\Exception($result['errmsg'], '0');
@@ -115,7 +114,7 @@ class Wechat
             ]);
             return $result['authorizer_access_token'];
         };
-        $app = new MiniApp($config);
+        $app = new \WeOpen\MiniApp($config);
         if (in_array(strtolower($name), ['service', 'miniapp'])) {
             return $app;
         }

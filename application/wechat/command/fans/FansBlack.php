@@ -12,11 +12,23 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-return [
-    'app\admin\command\update\UpdateAdmin',
-    'app\admin\command\update\UpdatePlugs',
-    'app\admin\command\update\UpdateCommon',
-    'app\admin\command\update\UpdateConfig',
-    'app\admin\command\update\UpdateWechat',
-    'app\admin\command\update\UpdateService',
-];
+namespace app\wechat\command\fans;
+
+use app\wechat\command\Fans;
+
+/**
+ * 粉丝黑名单指令
+ * Class FansBlack
+ * @package app\wechat\command\fans
+ */
+class FansBlack extends Fans
+{
+    /**
+     * 配置入口
+     */
+    protected function configure()
+    {
+        $this->module = ['black'];
+        $this->setName('wechat:fansblack')->setDescription('Synchronize blacklist of fans');
+    }
+}

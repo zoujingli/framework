@@ -51,7 +51,9 @@ if (!function_exists('local_image')) {
      */
     function local_image($url)
     {
-        return \library\File::down($url)['url'];
+        $result = \library\File::down($url);
+        if (isset($result['url'])) return $result['url'];
+        return $url;
     }
 }
 
@@ -75,3 +77,16 @@ if (!function_exists('base64_image')) {
         }
     }
 }
+
+// 注册系统指令
+\think\Console::addDefaultCommands([
+    'app\admin\command\update\UpdateAdmin',
+    'app\admin\command\update\UpdatePlugs',
+    'app\admin\command\update\UpdateCommon',
+    'app\admin\command\update\UpdateConfig',
+    'app\admin\command\update\UpdateWechat',
+    'app\admin\command\update\UpdateService',
+]);
+
+// 注册系统权限管理中间键
+\think\facade\Middleware::add('app\admin\service\Auth');

@@ -38,6 +38,6 @@ class UpdateAll extends Update
             'application/command.php',
             'application/middleware.php',
         ];
-        $this->setName('update:all')->setDescription('Sync Update All Files for ThinkAdmin');
+        $this->setName('update:all')->setDescription('Synchronize update all files');
     }
 }

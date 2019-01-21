@@ -28,6 +28,6 @@ class UpdateService extends Update
     protected function configure()
     {
         $this->modules = ['application/service/'];
-        $this->setName('update:service')->setDescription('Sync Update Service Files for ThinkAdmin');
+        $this->setName('update:service')->setDescription('Synchronize update service module files');
     }
 }

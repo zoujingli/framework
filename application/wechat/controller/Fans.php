@@ -15,7 +15,7 @@
 namespace app\wechat\controller;
 
 use app\admin\service\Queue;
-use app\wechat\Jobs;
+use app\wechat\queue\Jobs;
 use app\wechat\service\Wechat;
 use library\Controller;
 use think\Db;

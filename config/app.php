@@ -12,6 +12,13 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
+// 动态加载模块初始化文件
+if (function_exists('think\__include_file')) {
+    foreach (glob(env('app_path') . '/*/init.php') as $file) {
+        \think\__include_file($file);
+    }
+}
+
 return [
     // 应用调试模式
     'app_debug'      => true,
