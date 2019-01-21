@@ -63,13 +63,13 @@ class Fans extends Command
     {
         $appid = Wechat::getAppid();
         $wechat = Wechat::WeChatUser();
-        $this->output->highlight('preparing a synchronize fans list...');
+        $this->output->comment('preparing a synchronize fans list...');
         while (true) if (is_array($result = $wechat->getUserList($next)) && !empty($result['data']['openid'])) {
             foreach (array_chunk($result['data']['openid'], 100) as $chunk) {
                 if (is_array($list = $wechat->getBatchUserInfo($chunk)) && !empty($list['user_info_list'])) {
                     foreach ($list['user_info_list'] as $user) {
                         $indexString = str_pad(++$index, strlen($result['total']), '0', STR_PAD_LEFT);
-                        $this->output->info("({$indexString}/{$result['total']}) updating wechat user {$user['openid']}");
+                        $this->output->writeln("({$indexString}/{$result['total']}) updating wechat user {$user['openid']}");
                         \app\wechat\service\Fans::set($user, $appid);
                     }
                 }
@@ -77,7 +77,7 @@ class Fans extends Command
             if (in_array($result['next_openid'], $result['data']['openid'])) break;
             else $next = $result['next_openid'];
         }
-        $this->output->highlight('synchronized fans list completion.');
+        $this->output->comment('synchronized fans list completion.');
     }
 
     /**
@@ -91,7 +91,7 @@ class Fans extends Command
     public function _black($next = '')
     {
         $wechat = Wechat::WeChatUser();
-        $this->output->highlight('prepare a synchronize fans black...');
+        $this->output->comment('prepare a synchronize fans black...');
         while (true) if (is_array($result = $wechat->getBlackList($next)) && !empty($result['data']['openid'])) {
             foreach (array_chunk($result['data']['openid'], 100) as $chunk) {
                 $where = [['is_black', 'eq', '0'], ['openid', 'in', $chunk]];
@@ -100,7 +100,7 @@ class Fans extends Command
             if (in_array($result['next_openid'], $result['data']['openid'])) break;
             else $next = $result['next_openid'];
         }
-        $this->output->highlight('synchronized fans black completion.');
+        $this->output->comment('synchronized fans black completion.');
     }
 
     /**
