@@ -4,30 +4,28 @@
 <form onsubmit="return false;" data-auto="true" method="post" class='layui-form layui-card' autocomplete="off">
 
     <div class="layui-card-body">
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">页面标题</label>
-            <div class="layui-input-block">
-                <input name="title" required class="layui-input" placeholder="请输入页面标题" value="{$vo.title|default=''}">
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label label-required">页面类型</label>
-            <div class="layui-input-block">
-                {foreach ['one'=>'单页模式','mul'=>'多页模式'] as $k => $v}
-                <label class="think-radio">
-                    {if isset($vo.type) and $vo.type eq $k}
-                    <input name="type" checked lay-ignore type="radio" value="{$k}"> {$v}
-                    {else}
-                    <input name="type" lay-ignore type="radio" value="{$k}"> {$v}
-                    {/if}
-                </label>
-                {/foreach}
-            </div>
-        </div>
-
         <div style="padding-left:45px;">
+            <fieldset>
+                <legend>页面主体</legend>
+                <div class="layui-form-item block relative">
+                    <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px">*</sup>页面标题</h3>
+                    <input name="title" required class="layui-input" placeholder="请输入页面标题" value="{$vo.title|default=''}">
+                </div>
+                <div class="layui-form-item block relative">
+                    <span class="color-green margin-right-10">页面类型</span>
+                    {foreach ['one'=>'单页模式','mul'=>'多页模式'] as $k => $v}
+                    <label class="think-radio">
+                        {if isset($vo.type) and $vo.type eq $k}
+                        <input name="type" checked lay-ignore type="radio" value="{$k}"> {$v}
+                        {else}
+                        <input name="type" lay-ignore type="radio" value="{$k}"> {$v}
+                        {/if}
+                    </label>
+                    {/foreach}
+                </div>
+            </fieldset>
+
+
             <fieldset data-type-box="one">
                 <legend>单页模式</legend>
                 <div>
