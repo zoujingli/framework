@@ -15,9 +15,9 @@
 namespace app\store\controller\api\member;
 
 use app\store\controller\api\Member;
+use app\wechat\service\Wechat;
 use library\tools\Data;
 use think\Db;
-use think\exception\HttpResponseException;
 
 /**
  * 订单接口管理
@@ -42,7 +42,7 @@ class Order extends Member
         $order['mid'] = $this->member['id'];
         $order['order_no'] = Data::uniqidNumberCode(12);
         foreach (explode('||', $rule) as $item) {
-            list($goods_id, $goods_spec, $number) = explode('', $item);
+            list($goods_id, $goods_spec, $number) = explode('@', $item);
             $map = ['id' => $goods_id, 'status' => '1', 'is_deleted' => '0'];
             $goods = Db::name('StoreGoods')->field('id,logo,title,image,content')->where($map)->find();
             if (empty($goods)) $this->error('查询商品主体信息失败，请稍候再试！');
@@ -64,6 +64,7 @@ class Order extends Member
                 'number'        => $number,
             ]);
         }
+        $order['status'] = '3';
         $order['price_goods'] = array_sum(array_column($orderList, 'price_real'));
         $order['price_express'] = array_sum(array_column($orderList, 'price_express'));
         $order['price_service'] = array_sum(array_column($orderList, 'price_service'));
@@ -71,11 +72,41 @@ class Order extends Member
         try {
             Db::name('StoreOrder')->insert($order);
             Db::name('StoreOrderList')->insertAll($orderList);
-            $this->success('订单创建成功，请完成支付！');
-        } catch (HttpResponseException $exception) {
+            $this->success('订单创建成功，请完成支付！', $this->getPayParams($order['order_no'], $order['price_total']));
+        } catch (\think\exception\HttpResponseException $exception) {
             throw $exception;
         } catch (\Exception $e) {
             $this->error("创建订单失败，请稍候再试！{$e->getMessage()}");
+        }
+    }
+
+    /**
+     * 获取订单支付参数
+     * @param string $order_no
+     * @param string $pay_price
+     * @return array
+     */
+    private function getPayParams($order_no, $pay_price)
+    {
+        $options = [
+            'body'             => '商城订单支付',
+            'openid'           => $this->openid,
+            'out_trade_no'     => $order_no,
+            'total_fee'        => '1',
+            // 'total_fee'        => $pay_price * 100,
+            'trade_type'       => 'JSAPI',
+            'notify_url'       => url('@store/api.notify/wxpay', '', false, true),
+            'spbill_create_ip' => $this->request->ip(),
+        ];
+        try {
+            $pay = Wechat::WePayOrder();
+            $info = $pay->create($options);
+            if ($info['return_code'] === 'SUCCESS' && $info['result_code'] === 'SUCCESS') {
+                return $pay->jsapiParams($info['prepay_id']);
+            }
+            if (isset($info['err_code_des'])) throw new \think\Exception($info['err_code_des']);
+        } catch (\Exception $e) {
+            $this->error("创建订单失败参数失败！{$e->getMessage()}");
         }
     }
 
