@@ -22,6 +22,7 @@
             <button type="button" data-reload class="layui-btn layui-btn-xs">刷 新</button>
         </th>
         <th class='text-left nowrap'>商品名称</th>
+        <th class='text-left nowrap'>入会礼包</th>
         <th class='text-left nowrap'>商品信息</th>
         <th></th>
         <th></th>
@@ -34,6 +35,15 @@
         <td class='list-table-check-td think-checkbox'><input class="list-check-box" value='{$vo.id}' type='checkbox'></td>
         <td class='list-table-sort-td'><input data-action-blur="{:request()->url()}" data-value="id#{$vo.id};action#sort;sort#{value}" data-loading="false" value="{$vo.sort}" class="list-sort-input"></td>
         <td class='text-left nowrap'><a class="layui-icon font-s12 layui-icon-picture" data-tips-image="{$vo.logo}"></a>&nbsp;{$vo.title}</td>
+        <td class='text-left nowrap'>
+            {if $vo.vip_mod eq 0}
+            <span class="color-desc">没有绑定入会权限</span>
+            {elseif $vo.vip_mod eq 1}
+            <span class="color-green">临时会员({$vo.vip_month|default=0}月)</span>
+            {elseif $vo.vip_mod eq 2}
+            <span class="color-blue">普通会员({$vo.vip_month|default=0}月)</span>
+            {/if}
+        </td>
         <td class='text-left nowrap padding-0'>
             <table class="trim-bottom-border">
                 <!--{foreach $vo.list as $goods}-->

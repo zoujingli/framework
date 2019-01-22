@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit895e73cbbdb979c076581d358083b36c
+class ComposerStaticInit2093f77549203ab682069015d968a234
 {
     public static $files = array (
         '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
@@ -302,7 +302,6 @@ class ComposerStaticInit895e73cbbdb979c076581d358083b36c
         'app\\admin\\controller\\Menu' => __DIR__ . '/../..' . '/application/admin/controller/Menu.php',
         'app\\admin\\controller\\Message' => __DIR__ . '/../..' . '/application/admin/controller/Message.php',
         'app\\admin\\controller\\Node' => __DIR__ . '/../..' . '/application/admin/controller/Node.php',
-        'app\\admin\\controller\\Plugs' => __DIR__ . '/../..' . '/application/admin/controller/Plugs.php',
         'app\\admin\\controller\\Queue' => __DIR__ . '/../..' . '/application/admin/controller/Queue.php',
         'app\\admin\\controller\\User' => __DIR__ . '/../..' . '/application/admin/controller/User.php',
         'app\\admin\\controller\\api\\Message' => __DIR__ . '/../..' . '/application/admin/controller/api/Message.php',
@@ -405,9 +404,9 @@ class ComposerStaticInit895e73cbbdb979c076581d358083b36c
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit895e73cbbdb979c076581d358083b36c::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit895e73cbbdb979c076581d358083b36c::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit895e73cbbdb979c076581d358083b36c::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit2093f77549203ab682069015d968a234::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit2093f77549203ab682069015d968a234::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit2093f77549203ab682069015d968a234::$classMap;
 
         }, null, ClassLoader::class);
     }

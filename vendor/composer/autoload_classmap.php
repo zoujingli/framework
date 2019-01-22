@@ -189,7 +189,6 @@ return array(
     'app\\admin\\controller\\Menu' => $baseDir . '/application/admin/controller/Menu.php',
     'app\\admin\\controller\\Message' => $baseDir . '/application/admin/controller/Message.php',
     'app\\admin\\controller\\Node' => $baseDir . '/application/admin/controller/Node.php',
-    'app\\admin\\controller\\Plugs' => $baseDir . '/application/admin/controller/Plugs.php',
     'app\\admin\\controller\\Queue' => $baseDir . '/application/admin/controller/Queue.php',
     'app\\admin\\controller\\User' => $baseDir . '/application/admin/controller/User.php',
     'app\\admin\\controller\\api\\Message' => $baseDir . '/application/admin/controller/api/Message.php',
