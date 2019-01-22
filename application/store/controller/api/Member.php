@@ -31,6 +31,12 @@ class Member extends Controller
     protected $member;
 
     /**
+     * 公众号OPENID
+     * @var string
+     */
+    protected $openid;
+
+    /**
      * Member constructor.
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
