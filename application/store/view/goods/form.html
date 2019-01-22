@@ -41,8 +41,8 @@
 
                     <div class="inline-block">
                         <div class="layui-unselect layui-form-radio">
-                            <label data-vip-month-box>有效 <input onblur="this.value=parseInt(this.value)||0" maxlength="2" value="{$vo.vip_month|default=0}" class="inline-block text-center font-s12 inner-input"> 月</label>
-                            <label data-vip-up-discount-box>，VIP1升级VIP2优惠 <input onblur="this.value=(parseFloat(this.value)||0).toFixed(2)" value="{$vo.vip_up_discount|default='0.00'}" class="inline-block text-center font-s12 inner-input"> 元。</label>
+                            <label data-vip-month-box>有效 <input onblur="this.value=parseInt(this.value)||0" maxlength="2" name="vip_month" value="{$vo.vip_month|default=0}" class="inline-block text-center font-s12 inner-input"> 月</label>
+                            <label data-vip-up-discount-box>，VIP1升级VIP2优惠 <input onblur="this.value=(parseFloat(this.value)||0).toFixed(2)" name="vip_discount" value="{$vo.vip_discount|default='0.00'}" class="inline-block text-center font-s12 inner-input"> 元。</label>
                         </div>
                     </div>
                     <script>
