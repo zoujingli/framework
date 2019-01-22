@@ -100,6 +100,7 @@ class Order extends Member
         ];
         try {
             $pay = Wechat::WePayOrder(config('wechat.miniapp'));
+            dump(config('wechat.miniapp'));
             $info = $pay->create($options);
             if ($info['return_code'] === 'SUCCESS' && $info['result_code'] === 'SUCCESS') {
                 return $pay->jsapiParams($info['prepay_id']);
