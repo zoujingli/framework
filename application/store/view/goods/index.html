@@ -37,7 +37,7 @@
         <td class='text-left nowrap'><a class="layui-icon font-s12 layui-icon-picture" data-tips-image="{$vo.logo}"></a>&nbsp;{$vo.title}</td>
         <td class='text-left nowrap'>
             {if $vo.vip_mod eq 0}
-            <span class="color-desc">没有绑定入会权限</span>
+            <span class="color-desc">未绑定入会权限</span>
             {elseif $vo.vip_mod eq 1}
             <span class="color-green">临时会员({$vo.vip_month|default=0}月)</span>
             {elseif $vo.vip_mod eq 2}
