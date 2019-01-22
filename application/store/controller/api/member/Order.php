@@ -17,6 +17,7 @@ namespace app\store\controller\api\member;
 use app\store\controller\api\Member;
 use library\tools\Data;
 use think\Db;
+use think\Exception;
 
 /**
  * 订单接口管理
@@ -87,6 +88,29 @@ class Order extends Member
             throw $exception;
         } catch (\Exception $e) {
             $this->error("创建订单失败，请稍候再试！{$e->getMessage()}");
+        }
+    }
+
+    /**
+     * 获取订单支付状态
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function pay()
+    {
+        $order_no = $this->request->post('order_no');
+        $order = Db::name('StoreOrder')->where(['order_no' => $order_no])->find();
+        if (empty($order_no)) $this->error('获取订单信息异常，请稍候再试！');
+        if ($order['pay_state']) $this->error('订单已经完成支付，不需要再次支付！');
+        if ($order['status'] <> 3) $this->error('该订单不能发起支付哦！');
+        try {
+            $param = $this->getPayParams($order['order_no'], $order['price_total']);
+            $this->success('获取订单支付参数成功！', $param);
+        } catch (\think\exception\HttpResponseException $exception) {
+            throw  $exception;
+        } catch (\Exception $e) {
+            $this->error("获取订单支付参数失败，{$e->getMessage()}");
         }
     }
 
