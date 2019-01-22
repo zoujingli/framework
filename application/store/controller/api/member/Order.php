@@ -107,7 +107,7 @@ class Order extends Member
             }
             if (isset($info['err_code_des'])) throw new \think\Exception($info['err_code_des']);
         } catch (\Exception $e) {
-            $this->error("创建订单失败参数失败！{$e->getMessage()}");
+            $this->error("创建订单失败参数失败，{$e->getMessage()}");
         }
     }
 
