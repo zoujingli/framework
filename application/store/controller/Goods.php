@@ -126,6 +126,9 @@ class Goods extends Controller
             $defaultValues = Db::name('StoreGoodsList')->where(['goods_id' => $data['id']])->column($fields);
             $this->defaultValues = json_encode($defaultValues, JSON_UNESCAPED_UNICODE);
         }
+        if ($this->request->isPost()) {
+            $data['vip_state'] = intval(!empty($data['vip_state']));
+        }
     }
 
     /**
@@ -145,6 +148,8 @@ class Goods extends Controller
                 'goods_spec'     => $vo[0]['key'],
                 'price_market'   => $vo[0]['market'],
                 'price_selling'  => $vo[0]['selling'],
+                'price_member'   => $vo[0]['member'],
+                'price_express'  => $vo[0]['express'],
                 'number_virtual' => $vo[0]['virtual'],
                 'status'         => $vo[0]['status'] ? 1 : 0,
             ], 'goods_spec', ['goods_id' => $goods_id]);

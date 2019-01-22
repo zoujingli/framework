@@ -24,13 +24,30 @@
                 </tr>
                 </thead>
             </table>
-            <script>
-                $(function () {
-                    $('[name="logo"]').uploadOneImage();
-                    $('[name="image"]').uploadMultipleImage();
-                });
-            </script>
+            <script>$('[name="logo"]').uploadOneImage(), $('[name="image"]').uploadMultipleImage()</script>
         </div>
+
+        <fieldset class="margin-bottom-15">
+            <legend>入会礼包配置</legend>
+            <div>
+                <div class="layui-form-item block relative">
+                    {foreach ['0'=>'不绑定入会权限','1'=>'临时会员','2'=>'普通会员'] as $k => $v}
+                    {if isset($vo.vip_mod) and $vo.vip_mod eq $k.''}
+                    <input type="radio" name="vip_mod" checked value="{$k}" title="{$v}">
+                    {else}
+                    <input type="radio" name="vip_mod" value="{$k}" title="{$v}">
+                    {/if}
+                    {/foreach}
+                    <script>$('[name="vip_mod"]:checked').size() || $('[name="vip_mod"]:first').trigger('click')</script>
+                    <div class="inline-block">
+                        <div class="layui-unselect layui-form-radio">
+                            <label>有效 <input maxlength="2" onblur="this.value=parseInt(this.value)||0" value="{$vo.vip_month|default=0}" class="inline-block text-center font-s12 inner-input"> 月，</label>
+                            <label>VIP1升级VIP2优惠 <input onblur="this.value=(parseFloat(this.value)||0).toFixed(2)" value="{$vo.vip_up_discount|default='0.00'}" class="inline-block text-center font-s12 inner-input"> 元。</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
 
         <div class="layui-form-item">
             <h3 class="color-green">
@@ -63,6 +80,8 @@
                     <th ng-repeat="x in specsTreeNava track by $index" class="nowrap" ng-bind="x"></th>
                     <th width="10%" class="text-center nowrap">市场价格</th>
                     <th width="10%" class="text-center nowrap">销售价格</th>
+                    <th width="10%" class="text-center nowrap">会员价格</th>
+                    <th width="10%" class="text-center nowrap">快递费用</th>
                     <th width="10%" class="text-center nowrap">虚拟销量</th>
                     <th width="10%" class="text-center nowrap">销售状态</th>
                 </tr>
@@ -82,11 +101,21 @@
                     </td>
                     <td class="padding-0">
                         <label class="padding-0 margin-0">
+                            <input ng-blur="rows[0].member=setValue(rows[0].key,'member',$event.target.value,'(parseFloat(_)||0).toFixed(2)')" class="layui-input border-0 padding-left-0 text-center" ng-model="rows[0].member">
+                        </label>
+                    </td>
+                    <td class="padding-0">
+                        <label class="padding-0 margin-0">
+                            <input ng-blur="rows[0].express=setValue(rows[0].key,'express',$event.target.value,'(parseFloat(_)||0).toFixed(2)')" class="layui-input border-0 padding-left-0 text-center" ng-model="rows[0].express">
+                        </label>
+                    </td>
+                    <td class="padding-0">
+                        <label class="padding-0 margin-0">
                             <input ng-blur="rows[0].virtual=setValue(rows[0].key,'virtual',$event.target.value,'(parseInt(_)||0)')" class="layui-input border-0 padding-left-0 text-center" ng-model="rows[0].virtual">
                         </label>
                     </td>
                     <td class="text-center layui-bg-gray">
-                        <label class="think-checkbox margin-0 full-width full-height block"><input type="checkbox" ng-model="rows[0].status"></label>
+                        <label class="think-checkbox margin-0 full-width full-height block"><input lay-ignore type="checkbox" ng-model="rows[0].status"></label>
                     </td>
                 </tr>
                 </tbody>
@@ -110,6 +139,13 @@
 </form>
 
 <style>
+
+    .inner-input {
+        width: 80px;
+        height: 14px;
+        padding: 1px 5px;
+        line-height: 12px;
+    }
 
     .goods-spec-box {
         position: relative;
@@ -195,6 +231,7 @@
 
 {block name='script'}
 <script>
+    window.form.render();
     require(['ckeditor', 'angular'], function () {
         window.createEditor('[name="content"]', {height: 500});
         let app = angular.module("GoodsForm", []).run(callback);
@@ -256,6 +293,12 @@
                             });
                             list[row][0].selling = getValue(_key, function (data) {
                                 return data.selling || '0.00';
+                            });
+                            list[row][0].member = getValue(_key, function (data) {
+                                return data.member || '0.00';
+                            });
+                            list[row][0].express = getValue(_key, function (data) {
+                                return data.express || '0.00';
                             });
                             list[row][0].status = getValue(_key, function (data) {
                                 return !!(typeof data.status !== 'undefined' ? data.status : true);
