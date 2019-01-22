@@ -37,6 +37,8 @@ class Page extends Controller
         foreach ($list as &$vo) {
             $vo['one'] = json_decode($vo['one'], true);
             $vo['mul'] = json_decode($vo['mul'], true);
+            if ($vo['type'] === 'one') unset($vo['mul']);
+            if ($vo['type'] === 'mul') unset($vo['one']);
         }
         $this->success('获取页面列表成功！', ['list' => $this->build($list)]);
     }
