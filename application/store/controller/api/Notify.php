@@ -15,7 +15,6 @@
 
 namespace app\store\controller\api;
 
-use app\wechat\service\Wechat;
 use think\Db;
 
 /**
@@ -34,7 +33,7 @@ class Notify
      */
     public function wxpay()
     {
-        $wechat = Wechat::WePayOrder(config('wechat.miniapp'));
+        $wechat = \We::WePayOrder(config('wechat.miniapp'));
         p($notify = $wechat->getNotify());
         if ($notify['result_code'] == 'SUCCESS' && $notify['return_code'] == 'SUCCESS') {
             if ($this->update($notify['out_trade_no'], $notify['transaction_id'], $notify['cash_fee'] / 100, 'wechat')) {

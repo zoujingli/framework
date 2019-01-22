@@ -15,7 +15,6 @@
 namespace app\store\controller\api\member;
 
 use app\store\controller\api\Member;
-use app\wechat\service\Wechat;
 use library\tools\Data;
 use think\Db;
 
@@ -99,7 +98,7 @@ class Order extends Member
             'spbill_create_ip' => $this->request->ip(),
         ];
         try {
-            $pay = Wechat::WePayOrder(config('wechat.miniapp'));
+            $pay = \We::WePayOrder(config('wechat.miniapp'));
             dump(config('wechat.miniapp'));
             $info = $pay->create($options);
             if ($info['return_code'] === 'SUCCESS' && $info['result_code'] === 'SUCCESS') {
