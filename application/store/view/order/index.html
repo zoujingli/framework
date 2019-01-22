@@ -1,0 +1,85 @@
+{extend name='admin@main'}
+
+{block name="content"}
+<table class="layui-table" lay-skin="line">
+    <caption class="margin-bottom-10 text-left">{include file='order/index_search'}</caption>
+    <!--{notempty name='list'}-->
+    <thead>
+    <tr>
+        <th class='list-table-check-td think-checkbox'>
+            <input data-auto-none="" data-check-target='.list-check-box' type='checkbox'>
+        </th>
+        <th class="text-left nowrap">会员信息</th>
+        <th class='text-left nowrap'>订单信息</th>
+        <th class='text-left nowrap'>商品信息</th>
+        <th class='text-left nowrap'>支付信息</th>
+        <th class='text-left nowrap'>发货信息</th>
+    </tr>
+    </thead>
+    <!--{/notempty}-->
+    <tbody>
+    <!--{foreach $list as $key=>$vo}-->
+    <tr>
+        <td class='list-table-check-td think-checkbox'>
+            <input class="list-check-box" value='{$vo.id}' type='checkbox'>
+        </td>
+        <td class="text-left nowrap relative" style="overflow:hidden">
+            {notempty name='vo.member.headimg'}
+            <img data-tips-image style="width:60px;height:60px;" src="{$vo.member.headimg|default=''}" class="pull-left margin-right-5">
+            {/notempty}
+            会员昵称：{$vo.member.nickname|default=''}<br>
+            代理编号：{$vo.member.agent.code|default='--'}<br>
+            会员手机：{$vo.member.phone|default=''}<br>
+        </td>
+        <td class='text-left nowrap'>
+            订单单号：<span class="color-blue">{$vo.order_no|default=''}</span>
+            {eq name='vo.status' value='2'}<span class="layui-badge layui-bg-orange margin-left-5">待付款</span>{/eq}
+            {eq name='vo.status' value='3'}<span class="layui-badge layui-bg-black margin-left-5">待发货</span>{/eq}
+            {eq name='vo.status' value='4'}<span class="layui-badge layui-bg-green margin-left-5">已发货</span>{/eq}
+            {eq name='vo.status' value='5'}<span class="layui-badge layui-bg-blue margin-left-5">已完成</span>{/eq}
+            <br>
+            订单金额：￥{$vo.price_real+0}
+            <br>
+            下单时间：{$vo.create_at|default=''}
+            <br>
+        </td>
+        <td class="text-left nowrap">
+            {foreach $vo.list as $g}
+            <div>{$g.goods_title|default=''} x{$g.number|default=0}</div>
+            {/foreach}
+        </td>
+        <td class="text-left nowrap">
+            支付金额：{empty name='vo.pay_state'}--{else}￥{$vo.pay_price+0}{/empty}<br>
+            支付单号：{empty name='vo.pay_state'}--{else}{$vo.pay_no|default=''}{/empty}<br>
+            支付时间：{empty name='vo.pay_state'}--{else}{$vo.pay_at|default=''}{/empty}<br>
+        </td>
+        <td class="text-left nowrap">
+            {if $vo.express_type eq 1}
+            收货信息：{$vo.express_name}<span class="margin-left-5 color-blue">{$vo.express_phone}</span><br>
+            收货地址：{$vo.express_province}{$vo.express_city}{$vo.express_area}{$vo.express_address}<br>
+            发货状态：{eq name='vo.express_state' value='0'}
+            <span class="layui-badge layui-bg-black">未发货</span>
+            {else}
+            <span class="layui-badge layui-bg-blue">已发货</span>
+            <span data-tips-text="发货单号" class="layui-badge layui-bg-gray margin-left-5">{$vo.api_tracking_no|default=$vo.api_order_no}</span>
+            {/eq}
+            {else}
+            自提
+            {/if}
+        </td>
+    </tr>
+    <!--{/foreach}-->
+    </tbody>
+</table>
+
+<!--{empty name='list'}-->
+<blockquote class="layui-elem-quote border-0 text-center">没 有 记 录 哦！</blockquote>
+<!--{else}-->
+{$pagehtml|raw|default=''}
+<!--{/empty}-->
+<style>
+    table.trim-bottom-border tr:last-child td {
+        border: none !important
+    }
+</style>
+{/block}
