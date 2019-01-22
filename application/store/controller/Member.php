@@ -39,6 +39,7 @@ class Member extends Controller
      */
     public function index()
     {
+        $this->title = '商城会员管理';
         $this->_query($this->table)->order('id desc')->page();
     }
 
