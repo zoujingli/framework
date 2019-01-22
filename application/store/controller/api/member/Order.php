@@ -99,7 +99,7 @@ class Order extends Member
             'spbill_create_ip' => $this->request->ip(),
         ];
         try {
-            $pay = Wechat::WePayOrder();
+            $pay = Wechat::WePayOrder(config('wechat.miniapp'));
             $info = $pay->create($options);
             if ($info['return_code'] === 'SUCCESS' && $info['result_code'] === 'SUCCESS') {
                 return $pay->jsapiParams($info['prepay_id']);
