@@ -112,18 +112,24 @@ class Order extends Member
 
     /**
      * 获取订单列表
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
      */
     public function gets()
     {
-
-    }
-
-    /**
-     * 获取订单信息
-     */
-    public function get()
-    {
-
+        $map = ['mid' => $this->member['id']];
+        if ($this->request->has('status', 'post', true)) $map['status'] = $this->request->post('status');
+        if ($this->request->has('order_no', 'post', true)) $map['order_no'] = $this->request->post('order_no');
+        $result = $this->_query('StoreOrder')->where($map)->order('id desc')->page(false, false);
+        $glist = Db::name('StoreOrderList')->whereIn('order_no', array_unique(array_column($result['list'], 'order_no')))->select();
+        foreach ($result['list'] as &$vo) {
+            $vo['list'] = [];
+            foreach ($glist as $goods) if ($vo['order_no'] === $goods['order_no']) $vo['list'][] = $goods;
+        }
+        $this->success('获取订单列表成功！', $result);
     }
 
     /**
