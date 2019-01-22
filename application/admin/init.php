@@ -27,9 +27,9 @@ if (!function_exists('auth')) {
 if (!function_exists('sysdata')) {
     /**
      * JSON 数据读取与存储
-     * @param string $name
-     * @param array|null $value
-     * @return array|null|boolean
+     * @param string $name 数据名称
+     * @param array|null $value 数据内容
+     * @return mixed
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
