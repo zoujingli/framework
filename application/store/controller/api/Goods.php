@@ -42,7 +42,9 @@ class Goods extends Controller
             $vo['image'] = explode('|', $vo['image']);
             $vo['specs'] = json_decode($vo['specs'], true);
             $vo['lists'] = json_decode($vo['lists'], true);
-            foreach ($goodsList as $goods) if ($goods['goods_id'] === $vo['id']) array_push($vo['list'], $goods);
+            foreach ($goodsList as $goods) if ($goods['goods_id'] === $vo['id']) {
+                array_push($vo['list'], $goods);
+            }
         }
         $this->success('获取商品列表成功！', ['list' => $list]);
     }
