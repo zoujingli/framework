@@ -37,9 +37,19 @@ class Order extends Member
     {
         $rule = $this->request->post('rule');
         if (empty($rule)) $this->error('下单商品规则不能为空！');
+        // 获取地址处理
+        $address_id = $this->request->post('address_id');
+        $address = Db::name('StoreMemberAddress')->where(['id' => $address_id, 'mid' => $this->mid])->find();
+        if (empty($address)) $this->error('收货地址异常，请重新下单！');
         list($order, $orderList) = [[], []];
         $order['mid'] = $this->member['id'];
         $order['order_no'] = Data::uniqidNumberCode(12);
+        $order['express_name'] = $address['name'];
+        $order['express_phone'] = $address['phone'];
+        $order['express_province'] = $address['province'];
+        $order['express_city'] = $address['city'];
+        $order['express_area'] = $address['area'];
+        $order['express_address'] = $address['address'];
         foreach (explode('||', $rule) as $item) {
             list($goods_id, $goods_spec, $number) = explode('@', $item);
             $map = ['id' => $goods_id, 'status' => '1', 'is_deleted' => '0'];
