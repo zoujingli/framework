@@ -15,4 +15,11 @@
 return [
     // ThinkService 授权接口地址
     'service_url' => 'https://framework.thinkadmin.top',
+    // 小程序支付
+    'miniapp'     => [
+        'appid'     => 'wx6bb7b70258da09c6',
+        'appsecret' => 'd47a7394a7b69c7180bd11ec8d55d234',
+        'mch_id'    => "1332187001",
+        'mch_key'   => 'A82DC5BD1F3359081049C568D8502BC5',
+    ],
 ];

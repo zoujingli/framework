@@ -29,7 +29,7 @@ class Wechat extends Controller
      */
     private function config()
     {
-        return config('wechat.wxpay');
+        return config('wechat.miniapp');
     }
 
     /**
