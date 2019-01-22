@@ -51,7 +51,7 @@
         <td class='text-left nowrap'>
 
             {if auth("admin/user/auth")}
-            <a class="layui-btn layui-btn-primary layui-btn-sm" data-title="用户授权" data-modal='{:url("auth")}?id={$vo.id}'>授 权</a>
+            <a class="layui-btn layui-btn-normal layui-btn-sm" data-title="用户授权" data-modal='{:url("auth")}?id={$vo.id}'>授 权</a>
             {/if}
 
             {if auth("admin/user/pass")}
