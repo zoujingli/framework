@@ -44,7 +44,7 @@
                 {if $vo.status eq 0}<span class="color-red">已禁用</span>{elseif $vo.status eq 1}<span class="color-green">使用中</span>{/if}
             </div>
         </td>
-        <td class="text-left nowrap">{$vo.create_at|format_datetime|str_replace=' ','<br>',###|raw}</td>
+        <td class="text-left nowrap">日期：{$vo.create_at|format_datetime|str_replace=' ','<br>时间：',###|raw}</td>
         <td class='text-left nowrap'>
 
             {if $vo.status eq 1 and auth("servce/index/forbid")}
