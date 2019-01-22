@@ -29,6 +29,9 @@ class Order extends Member
 
     /**
      * 创建订单
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
     public function set()
     {
@@ -44,7 +47,7 @@ class Order extends Member
             if (empty($goods)) $this->error('查询商品主体信息失败，请稍候再试！');
             $goodsSpec = Db::name('StoreGoodsList')->where(['goods_id' => $goods_id, 'goods_spec' => $goods_spec])->find();
             if (empty($goodsSpec)) $this->error('查询商品规则信息失败，请稍候再试！');
-            $orderList[] = [
+            array_push($orderList, [
                 'mid'           => $order['mid'],
                 'order_no'      => $order['order_no'],
                 'goods_id'      => $goods_id,
@@ -55,11 +58,15 @@ class Order extends Member
                 'price_selling' => $goodsSpec['price_selling'],
                 'price_member'  => $goodsSpec['price_member'],
                 'price_express' => $goodsSpec['price_express'],
+                'price_service' => $goodsSpec['price_service'],
                 'price_real'    => $goodsSpec['price_member'] * $number,
                 'number'        => $number,
-            ];
+            ]);
         }
-        $order['price_real'] = array_sum(array_column($orderList, 'price_real'));
+        $order['price_goods'] = array_sum(array_column($orderList, 'price_real'));
+        $order['price_express'] = array_sum(array_column($orderList, 'price_express'));
+        $order['price_service'] = array_sum(array_column($orderList, 'price_service'));
+        $order['price_real'] = $order['price_goods'] + $order['price_express'] + $order['price_service'];
         try {
             Db::name('StoreOrder')->insert($order);
             Db::name('StoreOrderList')->insertAll($orderList);
