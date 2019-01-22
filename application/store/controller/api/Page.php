@@ -54,7 +54,9 @@ class Page extends Controller
      */
     protected function build($data = [], $goodsId = [])
     {
-        foreach ($data as $vo) $goodsId = array_unique(array_merge($goodsId, $vo['mul']['goods']));
+        foreach ($data as $vo) if (isset($vo['mul'])) {
+            $goodsId = array_unique(array_merge($goodsId, $vo['mul']['goods']));
+        }
         $goodsList = Db::name('StoreGoods')->field('id,title,logo')->whereIn('id', $goodsId)->select();
         $field = 'goods_id,goods_spec,price_market,price_selling,number_sales,number_stock,number_virtual';
         $goodsLists = Db::name('StoreGoodsList')->field($field)->where(['status' => '1'])->whereIn('goods_id', $goodsId)->select();
