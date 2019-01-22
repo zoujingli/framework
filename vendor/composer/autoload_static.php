@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitda7cd55e65fd24538846289d2b9b9b5f
+class ComposerStaticInitee451d675e6f8dcc3a62543920a1ded8
 {
     public static $files = array (
         '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
@@ -288,11 +288,9 @@ class ComposerStaticInitda7cd55e65fd24538846289d2b9b9b5f
         'WePay\\Refund' => __DIR__ . '/..' . '/zoujingli/wechat-developer/WePay/Refund.php',
         'WePay\\Transfers' => __DIR__ . '/..' . '/zoujingli/wechat-developer/WePay/Transfers.php',
         'WePay\\TransfersBank' => __DIR__ . '/..' . '/zoujingli/wechat-developer/WePay/TransfersBank.php',
-        'app\\admin\\JobsBase' => __DIR__ . '/../..' . '/application/admin/JobsBase.php',
         'app\\admin\\command\\Update' => __DIR__ . '/../..' . '/application/admin/command/Update.php',
         'app\\admin\\command\\update\\UpdateAdmin' => __DIR__ . '/../..' . '/application/admin/command/update/UpdateAdmin.php',
         'app\\admin\\command\\update\\UpdateAll' => __DIR__ . '/../..' . '/application/admin/command/update/UpdateAll.php',
-        'app\\admin\\command\\update\\UpdateCommon' => __DIR__ . '/../..' . '/application/admin/command/update/UpdateCommon.php',
         'app\\admin\\command\\update\\UpdateConfig' => __DIR__ . '/../..' . '/application/admin/command/update/UpdateConfig.php',
         'app\\admin\\command\\update\\UpdatePlugs' => __DIR__ . '/../..' . '/application/admin/command/update/UpdatePlugs.php',
         'app\\admin\\command\\update\\UpdateService' => __DIR__ . '/../..' . '/application/admin/command/update/UpdateService.php',
@@ -309,6 +307,7 @@ class ComposerStaticInitda7cd55e65fd24538846289d2b9b9b5f
         'app\\admin\\controller\\User' => __DIR__ . '/../..' . '/application/admin/controller/User.php',
         'app\\admin\\controller\\api\\Message' => __DIR__ . '/../..' . '/application/admin/controller/api/Message.php',
         'app\\admin\\controller\\api\\Update' => __DIR__ . '/../..' . '/application/admin/controller/api/Update.php',
+        'app\\admin\\queue\\JobsBase' => __DIR__ . '/../..' . '/application/admin/queue/JobsBase.php',
         'app\\admin\\service\\Auth' => __DIR__ . '/../..' . '/application/admin/service/Auth.php',
         'app\\admin\\service\\Message' => __DIR__ . '/../..' . '/application/admin/service/Message.php',
         'app\\admin\\service\\Queue' => __DIR__ . '/../..' . '/application/admin/service/Queue.php',
@@ -332,7 +331,11 @@ class ComposerStaticInitda7cd55e65fd24538846289d2b9b9b5f
         'app\\store\\controller\\api\\member\\Order' => __DIR__ . '/../..' . '/application/store/controller/api/member/Order.php',
         'app\\store\\service\\Goods' => __DIR__ . '/../..' . '/application/store/service/Goods.php',
         'app\\store\\service\\Order' => __DIR__ . '/../..' . '/application/store/service/Order.php',
-        'app\\wechat\\Jobs' => __DIR__ . '/../..' . '/application/wechat/Jobs.php',
+        'app\\wechat\\command\\Fans' => __DIR__ . '/../..' . '/application/wechat/command/Fans.php',
+        'app\\wechat\\command\\fans\\FansAll' => __DIR__ . '/../..' . '/application/wechat/command/fans/FansAll.php',
+        'app\\wechat\\command\\fans\\FansBlack' => __DIR__ . '/../..' . '/application/wechat/command/fans/FansBlack.php',
+        'app\\wechat\\command\\fans\\FansList' => __DIR__ . '/../..' . '/application/wechat/command/fans/FansList.php',
+        'app\\wechat\\command\\fans\\FansTags' => __DIR__ . '/../..' . '/application/wechat/command/fans/FansTags.php',
         'app\\wechat\\controller\\Config' => __DIR__ . '/../..' . '/application/wechat/controller/Config.php',
         'app\\wechat\\controller\\Fans' => __DIR__ . '/../..' . '/application/wechat/controller/Fans.php',
         'app\\wechat\\controller\\Keys' => __DIR__ . '/../..' . '/application/wechat/controller/Keys.php',
@@ -342,6 +345,7 @@ class ComposerStaticInitda7cd55e65fd24538846289d2b9b9b5f
         'app\\wechat\\controller\\api\\Push' => __DIR__ . '/../..' . '/application/wechat/controller/api/Push.php',
         'app\\wechat\\controller\\api\\Review' => __DIR__ . '/../..' . '/application/wechat/controller/api/Review.php',
         'app\\wechat\\controller\\api\\Tools' => __DIR__ . '/../..' . '/application/wechat/controller/api/Tools.php',
+        'app\\wechat\\queue\\Jobs' => __DIR__ . '/../..' . '/application/wechat/queue/Jobs.php',
         'app\\wechat\\service\\Fans' => __DIR__ . '/../..' . '/application/wechat/service/Fans.php',
         'app\\wechat\\service\\Media' => __DIR__ . '/../..' . '/application/wechat/service/Media.php',
         'app\\wechat\\service\\Wechat' => __DIR__ . '/../..' . '/application/wechat/service/Wechat.php',
@@ -400,9 +404,9 @@ class ComposerStaticInitda7cd55e65fd24538846289d2b9b9b5f
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitda7cd55e65fd24538846289d2b9b9b5f::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitda7cd55e65fd24538846289d2b9b9b5f::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitda7cd55e65fd24538846289d2b9b9b5f::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitee451d675e6f8dcc3a62543920a1ded8::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitee451d675e6f8dcc3a62543920a1ded8::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitee451d675e6f8dcc3a62543920a1ded8::$classMap;
 
         }, null, ClassLoader::class);
     }
