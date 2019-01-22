@@ -123,7 +123,7 @@ class Order extends Member
         $where = ['mid' => $this->member['id']];
         if ($this->request->has('status', 'post', true)) $where['status'] = $this->request->post('status');
         if ($this->request->has('order_no', 'post', true)) $where['order_no'] = $this->request->post('order_no');
-        $result = $this->_query('StoreOrder')->where($where)->order('id desc')->page();
+        $result = $this->_query('StoreOrder')->where($where)->order('id desc')->page(true, false, false, 20);
         $glist = Db::name('StoreOrderList')->whereIn('order_no', array_unique(array_column($result['list'], 'order_no')))->select();
         foreach ($result['list'] as &$vo) {
             $vo['list'] = [];
