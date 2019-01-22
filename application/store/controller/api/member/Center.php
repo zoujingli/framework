@@ -30,7 +30,7 @@ class Center extends Member
      */
     public function info()
     {
-        $data = ['id' => $this->member['id']];
+        $data = [];
         if ($this->request->has('headimg', 'post', true)) {
             $data['headimg'] = $this->request->post('headimg');
         }
@@ -41,6 +41,7 @@ class Center extends Member
             $data['username'] = emoji_encode($this->request->post('username'));
         }
         if (empty($data)) $this->error('没有需要修改的数据哦！');
+        $data['id'] = $this->member['id'];
         if (data_save('StoreMember', $data, 'id')) {
             $this->success('会员资料更新成功！');
         }
