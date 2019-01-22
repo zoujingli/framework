@@ -35,6 +35,21 @@
         </div>
 
         <div class="layui-form-item layui-inline">
+            <label class="layui-form-label">使用状态</label>
+            <div class="layui-input-inline">
+                <select class="layui-select" name="status">
+                    {foreach [''=>'-- 全部 --','0'=>'已禁用的账号','1'=>'使用中的账号'] as $k=>$v}
+                    {eq name='Think.get.status' value='$k.""'}
+                    <option selected value="{$k}">{$v}</option>
+                    {else}
+                    <option value="{$k}">{$v}</option>
+                    {/eq}
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-inline">
             <label class="layui-form-label">注册公司</label>
             <div class="layui-input-inline">
                 <input name="principal_name" value="{$Think.get.principal_name|default=''}" placeholder="请输入注册公司" class="layui-input">

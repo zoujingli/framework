@@ -44,7 +44,7 @@ class Index extends Controller
     {
         $this->title = '微信授权管理';
         return $this->_query($this->table)->like('authorizer_appid,nick_name,principal_name')
-            ->equal('service_type')->dateBetween('create_at')->order('id desc')->page();
+            ->equal('service_type,status')->dateBetween('create_at')->order('id desc')->page();
     }
 
     /**
