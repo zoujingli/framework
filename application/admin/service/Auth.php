@@ -65,7 +65,7 @@ class Auth
      */
     public static function getIgnore()
     {
-        return ['index', 'admin/plugs', 'admin/login', 'admin/index'];
+        return ['index', 'admin/login', 'admin/index'];
     }
 
     /**

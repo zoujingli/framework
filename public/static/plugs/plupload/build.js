@@ -9,7 +9,7 @@ define(['plupload'], function (plupload) {
                 uptype: $ele.attr('data-uptype') || '',
             },
             browse_button: $ele.get(0),
-            url: '?s=admin/plugs/plupload',
+            url: '?s=admin/api.plugs/plupload',
             runtimes: 'html5,flash,silverlight,html4',
             file_data_name: $ele.attr('data-name') || 'file',
             flash_swf_url: baseRoot + 'plugs/plupload/plupload.flash.swf',

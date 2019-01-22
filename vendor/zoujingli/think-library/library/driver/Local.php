@@ -65,7 +65,7 @@ class Local extends File
      */
     public function upload()
     {
-        return url('@') . '?s=admin/plugs/upload';
+        return url('@') . '?s=admin/api.plugs/upload';
     }
 
     /**

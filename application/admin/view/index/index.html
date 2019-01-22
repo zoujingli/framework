@@ -113,7 +113,7 @@
 {if session('user.id') and sysconf('system_message_state')}
 <script>
     layer.open({
-        title: false, closeBtn: false, maxmin: false, shade: false, content: ['{:url("@admin/plugs/message")}'],
+        title: false, closeBtn: false, maxmin: false, shade: false, content: ['{:url("@admin/api.plugs/message")}'],
         offset: 'rb', anim: 2, type: 2, area: ['360px', '0'], btn: false, success: function (layero, index) {
             setInterval(function () {
                 layer.iframeAuto(index);

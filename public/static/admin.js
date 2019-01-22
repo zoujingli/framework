@@ -39,9 +39,9 @@ require.config({
         'base64': ['plugs/jquery/base64.min'],
         'angular': ['plugs/angular/angular.min'],
         'ckeditor': ['plugs/ckeditor/ckeditor'],
+        'plupload': ['plugs/plupload/plupload.min'],
         'websocket': ['plugs/socket/websocket'],
         'pcasunzips': ['plugs/jquery/pcasunzips'],
-        'plupload': ['plugs/plupload/plupload.min'],
         'jquery.ztree': ['plugs/ztree/ztree.all.min'],
         'jquery.masonry': ['plugs/jquery/masonry.min'],
         'jquery.autocompleter': ['plugs/jquery/autocompleter.min'],
@@ -559,7 +559,7 @@ $(function () {
         if (mode !== 'btn') {
             var uptype = $(this).attr('data-uptype') || '';
             var params = $.param({mode: mode, uptype: uptype, type: type, field: field, safe: safe});
-            var location = window.ROOT_URL + '?s=admin/plugs/upfile.html&' + params;
+            var location = window.ROOT_URL + '?s=admin/api.plugs/upfile.html&' + params;
             $.form.iframe(location, $(this).attr('data-title') || '文件上传');
         }
     });
@@ -573,7 +573,7 @@ $(function () {
     /*! 注册 data-icon 事件行为 */
     $body.on('click', '[data-icon]', function () {
         var field = $(this).attr('data-icon') || $(this).attr('data-field') || 'icon';
-        var location = window.ROOT_URL + '?s=admin/plugs/icon.html&field=' + field;
+        var location = window.ROOT_URL + '?s=admin/api.plugs/icon.html&field=' + field;
         $.form.iframe(location, '图标选择');
     });
 

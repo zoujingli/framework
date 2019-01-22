@@ -23,7 +23,7 @@ CKEDITOR.plugins.add("uimage", {
         editor.addCommand('uimage', {
             exec: function (editor) {
                 var field = '_editor_upload_' + Math.floor(Math.random() * 100000);
-                var url = window.ROOT_URL + '?s=admin/plugs/upfile.html&mode=one&type=png,jpg,gif,jpeg&field=' + field;
+                var url = window.ROOT_URL + '?s=admin/api.plugs/upfile.html&mode=one&type=png,jpg,gif,jpeg&field=' + field;
                 $('<input type="hidden">').attr('name', field).appendTo(editor.element.$).on('change', function () {
                     var element = CKEDITOR.dom.element.createFromHtml('<img style="max-width:100%" src="' + this.value + '" border="0" title="image" />');
                     editor.insertElement(element), $(this).remove();
@@ -41,7 +41,7 @@ CKEDITOR.plugins.add('umusic', {
         editor.addCommand('umusic', {
             exec: function (editor) {
                 var field = '_editor_upload_' + Math.floor(Math.random() * 100000);
-                var url = window.ROOT_URL + '?s=admin/plugs/upfile.html&mode=one&type=mp3&field=' + field;
+                var url = window.ROOT_URL + '?s=admin/api.plugs/upfile.html&mode=one&type=mp3&field=' + field;
                 $('<input type="hidden">').attr('name', field).appendTo(editor.element.$).on('change', function () {
                     var element = CKEDITOR.dom.element.createFromHtml('<audio controls="controls"><source src="' + this.value + '" type="audio/mpeg"></audio>');
                     editor.insertElement(element), $(this).remove();
@@ -59,7 +59,7 @@ CKEDITOR.plugins.add('uvideo', {
         editor.addCommand('uvideo', {
             exec: function (editor) {
                 var field = '_editor_upload_' + Math.floor(Math.random() * 100000);
-                var url = window.ROOT_URL + '?s=admin/plugs/upfile.html&mode=one&type=mp4&field=' + field;
+                var url = window.ROOT_URL + '?s=admin/api.plugs/upfile.html&mode=one&type=mp4&field=' + field;
                 $('<input type="hidden">').attr('name', field).appendTo(editor.element.$).on('change', function () {
                     var element = CKEDITOR.dom.element.createFromHtml('<video width="100%" controls="controls"><source src="' + this.value + '" type="audio/mp4"></video>');
                     editor.insertElement(element), $(this).remove();

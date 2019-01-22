@@ -193,6 +193,7 @@ return array(
     'app\\admin\\controller\\Queue' => $baseDir . '/application/admin/controller/Queue.php',
     'app\\admin\\controller\\User' => $baseDir . '/application/admin/controller/User.php',
     'app\\admin\\controller\\api\\Message' => $baseDir . '/application/admin/controller/api/Message.php',
+    'app\\admin\\controller\\api\\Plugs' => $baseDir . '/application/admin/controller/api/Plugs.php',
     'app\\admin\\controller\\api\\Update' => $baseDir . '/application/admin/controller/api/Update.php',
     'app\\admin\\queue\\JobsBase' => $baseDir . '/application/admin/queue/JobsBase.php',
     'app\\admin\\service\\Auth' => $baseDir . '/application/admin/service/Auth.php',
