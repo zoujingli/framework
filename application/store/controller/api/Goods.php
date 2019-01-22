@@ -33,7 +33,7 @@ class Goods extends Controller
      */
     public function gets()
     {
-        $where = ['is_deleted' => '0', 'status' => '1'];
+        $where = ['is_deleted' => '0', 'status' => '1', 'vip_mod' => '0'];
         $field = 'id,title,logo,specs,lists,image,content,number_sales,number_stock';
         $list = Db::name('StoreGoods')->field($field)->where($where)->order('sort asc,id desc')->select();
         $goodsList = Db::name('StoreGoodsList')->whereIn('goods_id', array_unique(array_column($list, 'id')))->select();
