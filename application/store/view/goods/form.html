@@ -47,7 +47,9 @@
                     </div>
                     <script>
                         $(function () {
-                            if ($('[name="vip_mod"]:checked').size() < 1) $('[name="vip_mod"]:first').trigger('click');
+                            if ($('[name="vip_mod"]:checked').size() < 1) {
+                                $('[name="vip_mod"]:first').trigger('click');
+                            }
                             applyShow($('[name="vip_mod"]:checked').val());
                             form.on('radio(vipMod)', function (ele) {
                                 applyShow(ele.value);
