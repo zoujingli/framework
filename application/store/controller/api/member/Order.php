@@ -28,10 +28,11 @@ class Order extends Member
 {
 
     /**
-     * 创建订单
+     * 创建商城订单
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
+     * 商品ID1@商品规格1@商品数量1||商品ID2@商品规格2@商品数量2
      */
     public function set()
     {
