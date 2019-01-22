@@ -19,7 +19,7 @@ return [
     'miniapp'     => [
         'appid'     => 'wx6bb7b70258da09c6',
         'appsecret' => 'd47a7394a7b69c7180bd11ec8d55d234',
-        'mch_id'    => "1332187001",
+        'mch_id'    => '1332187001',
         'mch_key'   => 'A82DC5BD1F3359081049C568D8502BC5',
         'ssl_p12'   => __DIR__ . '/cert/1332187001_20181030_cert.p12',
     ],
