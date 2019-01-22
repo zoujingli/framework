@@ -64,7 +64,9 @@ class Page extends Controller
             $vo['list'] = [];
             foreach ($goodsLists as $v) if ($vo['id'] === $v['goods_id']) $vo['list'][] = $v;
         }
-        foreach ($data as &$vo) foreach ($vo['mul']['goods'] as &$g) foreach ($goodsList as $v) if ($g == $v['id']) $g = $v;
+        foreach ($data as &$vo) if (isset($vo['mul'])) {
+            foreach ($vo['mul']['goods'] as &$g) foreach ($goodsList as $v) if ($g == $v['id']) $g = $v;
+        }
         return $data;
     }
 }
