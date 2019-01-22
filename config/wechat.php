@@ -13,9 +13,9 @@
 // +----------------------------------------------------------------------
 
 return [
-    // ThinkService 授权接口地址
+    // 微信开放平台接口
     'service_url' => 'https://framework.thinkadmin.top',
-    // 小程序支付
+    // 小程序支付参数
     'miniapp'     => [
         'appid'     => 'wx6bb7b70258da09c6',
         'appsecret' => 'd47a7394a7b69c7180bd11ec8d55d234',
