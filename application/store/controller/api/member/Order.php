@@ -15,7 +15,9 @@
 namespace app\store\controller\api\member;
 
 use app\store\controller\api\Member;
+use library\tools\Data;
 use think\Db;
+use think\exception\HttpResponseException;
 
 /**
  * 订单接口管理
@@ -30,7 +32,43 @@ class Order extends Member
      */
     public function set()
     {
-        \app\store\service\Order::create();
+        $rule = $this->request->post('rule');
+        if (empty($rule)) $this->error('下单商品规则不能为空！');
+        list($order, $orderList) = [[], []];
+        $order['mid'] = $this->member['id'];
+        $order['order_no'] = Data::uniqidNumberCode(12);
+        foreach (explode('||', $rule) as $item) {
+            list($goods_id, $goods_spec, $number) = explode('', $item);
+            $map = ['id' => $goods_id, 'status' => '1', 'is_deleted' => '0'];
+            $goods = Db::name('StoreGoods')->field('id,logo,title,image,content')->where($map)->find();
+            if (empty($goods)) $this->error('查询商品主体信息失败，请稍候再试！');
+            $goodsSpec = Db::name('StoreGoodsList')->where(['goods_id' => $goods_id, 'goods_spec' => $goods_spec])->find();
+            if (empty($goodsSpec)) $this->error('查询商品规则信息失败，请稍候再试！');
+            $orderList[] = [
+                'mid'           => $order['mid'],
+                'order_no'      => $order['order_no'],
+                'goods_id'      => $goods_id,
+                'goods_spec'    => $goods_spec,
+                'goods_logo'    => $goods['logo'],
+                'goods_title'   => $goods['title'],
+                'price_market'  => $goodsSpec['price_market'],
+                'price_selling' => $goodsSpec['price_selling'],
+                'price_member'  => $goodsSpec['price_member'],
+                'price_express' => $goodsSpec['price_express'],
+                'price_real'    => $goodsSpec['price_member'] * $number,
+                'number'        => $number,
+            ];
+        }
+        $order['price_real'] = array_sum(array_column($orderList, 'price_real'));
+        try {
+            Db::name('StoreOrder')->insert($order);
+            Db::name('StoreOrderList')->insertAll($orderList);
+            $this->success('订单创建成功，请完成支付！');
+        } catch (HttpResponseException $exception) {
+            throw $exception;
+        } catch (\Exception $e) {
+            $this->error("创建订单失败，请稍候再试！{$e->getMessage()}");
+        }
     }
 
     /**
