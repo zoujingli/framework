@@ -66,7 +66,7 @@ class Order extends Member
         $order['price_goods'] = array_sum(array_column($orderList, 'price_real'));
         $order['price_express'] = array_sum(array_column($orderList, 'price_express'));
         $order['price_service'] = array_sum(array_column($orderList, 'price_service'));
-        $order['price_real'] = $order['price_goods'] + $order['price_express'] + $order['price_service'];
+        $order['price_total'] = $order['price_goods'] + $order['price_express'] + $order['price_service'];
         try {
             Db::name('StoreOrder')->insert($order);
             Db::name('StoreOrderList')->insertAll($orderList);
