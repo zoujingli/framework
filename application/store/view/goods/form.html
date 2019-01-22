@@ -33,18 +33,40 @@
                 <div class="layui-form-item block relative">
                     {foreach ['0'=>'不绑定入会权限','1'=>'临时会员','2'=>'普通会员'] as $k => $v}
                     {if isset($vo.vip_mod) and $vo.vip_mod eq $k.''}
-                    <input type="radio" name="vip_mod" checked value="{$k}" title="{$v}">
+                    <input type="radio" name="vip_mod" checked value="{$k}" title="{$v}" lay-filter="vipMod">
                     {else}
-                    <input type="radio" name="vip_mod" value="{$k}" title="{$v}">
+                    <input type="radio" name="vip_mod" value="{$k}" title="{$v}" lay-filter="vipMod">
                     {/if}
                     {/foreach}
-                    <script>$('[name="vip_mod"]:checked').size() || $('[name="vip_mod"]:first').trigger('click')</script>
+
                     <div class="inline-block">
                         <div class="layui-unselect layui-form-radio">
-                            <label>有效 <input maxlength="2" onblur="this.value=parseInt(this.value)||0" value="{$vo.vip_month|default=0}" class="inline-block text-center font-s12 inner-input"> 月，</label>
-                            <label>VIP1升级VIP2优惠 <input onblur="this.value=(parseFloat(this.value)||0).toFixed(2)" value="{$vo.vip_up_discount|default='0.00'}" class="inline-block text-center font-s12 inner-input"> 元。</label>
+                            <label data-vip-month-box>有效 <input onblur="this.value=parseInt(this.value)||0" maxlength="2" value="{$vo.vip_month|default=0}" class="inline-block text-center font-s12 inner-input"> 月</label>
+                            <label data-vip-up-discount-box>，VIP1升级VIP2优惠 <input onblur="this.value=(parseFloat(this.value)||0).toFixed(2)" value="{$vo.vip_up_discount|default='0.00'}" class="inline-block text-center font-s12 inner-input"> 元。</label>
                         </div>
                     </div>
+                    <script>
+                        $(function () {
+                            if ($('[name="vip_mod"]:checked').size() < 1) $('[name="vip_mod"]:first').trigger('click');
+                            applyShow($('[name="vip_mod"]:checked').val());
+                            form.on('radio(vipMod)', function (ele) {
+                                applyShow(ele.value);
+                            });
+
+                            function applyShow(mod) {
+                                if (parseInt(mod) === 0) {
+                                    $('[data-vip-month-box]').hide();
+                                    $('[data-vip-up-discount-box]').hide();
+                                } else if (parseInt(mod) === 1) {
+                                    $('[data-vip-month-box]').show().find('input').removeClass('layui-bg-gray').removeAttr('readonly');
+                                    $('[data-vip-up-discount-box]').hide();
+                                } else if (parseInt(mod) === 2) {
+                                    $('[data-vip-month-box]').show().find('input').addClass('layui-bg-gray').attr('readonly', 'readonly').val('12');
+                                    $('[data-vip-up-discount-box]').show();
+                                }
+                            }
+                        });
+                    </script>
                 </div>
             </div>
         </fieldset>
