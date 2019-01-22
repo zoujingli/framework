@@ -25,13 +25,19 @@ use think\Db;
 class Member extends Controller
 {
     /**
-     * 会员数据
+     * 当前会员ID
+     * @var integer
+     */
+    protected $mid;
+
+    /**
+     * 当前会员数据
      * @var array
      */
     protected $member;
 
     /**
-     * 公众号OPENID
+     * 当前公众号OPENID
      * @var string
      */
     protected $openid;
@@ -46,11 +52,11 @@ class Member extends Controller
     {
         parent::__construct();
         // 会员信息检查
-        $mid = $this->request->post('mid');
-        $openid = $this->request->post('openid');
+        $this->mid = $this->request->post('mid');
+        $this->openid = $this->request->post('openid');
         if (empty($mid)) $this->error('无效的会员ID参数！');
-        if (empty($openid)) $this->error('无效的会员绑定的OPENID！');
-        $where = ['id' => $mid, 'openid' => $openid];
+        if (empty($this->openid)) $this->error('无效的会员绑定的OPENID！');
+        $where = ['id' => $this->mid, 'openid' => $this->openid];
         $this->member = Db::name('StoreMember')->where($where)->find();
         if (empty($this->member)) $this->error('无效的会员信息，请重新登录授权！');
         $this->member['nickname'] = emoji_decode($this->member['nickname']);
