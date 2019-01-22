@@ -78,6 +78,9 @@ if (!function_exists('base64_image')) {
     }
 }
 
+// 注册系统权限管理中间键
+\think\facade\Middleware::add('app\admin\service\Auth');
+
 // 注册系统指令
 \think\Console::addDefaultCommands([
     'app\admin\command\update\UpdateAdmin',
@@ -86,6 +89,3 @@ if (!function_exists('base64_image')) {
     'app\admin\command\update\UpdateWechat',
     'app\admin\command\update\UpdateService',
 ]);
-
-// 注册系统权限管理中间键
-\think\facade\Middleware::add('app\admin\service\Auth');
