@@ -71,7 +71,8 @@ class Order extends Member
         try {
             Db::name('StoreOrder')->insert($order);
             Db::name('StoreOrderList')->insertAll($orderList);
-            $this->success('订单创建成功，请完成支付！', $this->getPayParams($order['order_no'], $order['price_total']));
+            $param = $this->getPayParams($order['order_no'], $order['price_total']);
+            $this->success('订单创建成功，请完成支付！', ['order' => $order, 'param' => $param]);
         } catch (\think\exception\HttpResponseException $exception) {
             throw $exception;
         } catch (\Exception $e) {
