@@ -106,6 +106,7 @@
                     <th width="10%" class="text-center nowrap">销售价格</th>
                     <th width="10%" class="text-center nowrap">会员价格</th>
                     <th width="10%" class="text-center nowrap">快递费用</th>
+                    <th width="10%" class="text-center nowrap">服务费用</th>
                     <th width="10%" class="text-center nowrap">虚拟销量</th>
                     <th width="10%" class="text-center nowrap">销售状态</th>
                 </tr>
@@ -131,6 +132,11 @@
                     <td class="padding-0">
                         <label class="padding-0 margin-0">
                             <input ng-blur="rows[0].express=setValue(rows[0].key,'express',$event.target.value,'(parseFloat(_)||0).toFixed(2)')" class="layui-input border-0 padding-left-0 text-center" ng-model="rows[0].express">
+                        </label>
+                    </td>
+                    <td class="padding-0">
+                        <label class="padding-0 margin-0">
+                            <input ng-blur="rows[0].service=setValue(rows[0].key,'service',$event.target.value,'(parseFloat(_)||0).toFixed(2)')" class="layui-input border-0 padding-left-0 text-center" ng-model="rows[0].service">
                         </label>
                     </td>
                     <td class="padding-0">
@@ -323,6 +329,9 @@
                             });
                             list[row][0].express = getValue(_key, function (data) {
                                 return data.express || '0.00';
+                            });
+                            list[row][0].service = getValue(_key, function (data) {
+                                return data.service || '0.00';
                             });
                             list[row][0].status = getValue(_key, function (data) {
                                 return !!(typeof data.status !== 'undefined' ? data.status : true);
