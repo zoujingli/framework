@@ -1,0 +1,71 @@
+<fieldset>
+    <legend>条件搜索</legend>
+    <form class="layui-form layui-form-pane form-search" action="{:request()->url()}" onsubmit="return false" method="get" autocomplete="off">
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label">微信昵称</label>
+            <div class="layui-input-inline">
+                <input name="nickname" value="{$Think.get.nickname|default=''}" placeholder="请输入微信昵称" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label">会员手机</label>
+            <div class="layui-input-inline">
+                <input name="phone" value="{$Think.get.phone|default=''}" placeholder="请输入会员手机" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label">代理权限</label>
+            <div class="layui-input-inline">
+                <select class="layui-select" name="agent_auth">
+                    {foreach [''=>'- 全部会员 -','1'=>'已购买入会礼包','0'=>'未购买入会礼包'] as $k=>$v}
+                    <!--{eq name='Think.get.agent_auth' value='$k.""'}-->
+                    <option selected value="{$k}">{$v}</option>
+                    <!--{else}-->
+                    <option value="{$k}">{$v}</option>
+                    <!--{/eq}-->
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label">代理昵称</label>
+            <div class="layui-input-inline">
+                <input name="agent_nickname" value="{$Think.get.agent_nickname|default=''}" placeholder="请输入代理昵称" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label">代理手机</label>
+            <div class="layui-input-inline">
+                <input name="agent_phone" value="{$Think.get.agent_phone|default=''}" placeholder="请输入代理手机" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label">绑定状态</label>
+            <div class="layui-input-inline">
+                <select class="layui-select" name="agent_status">
+                    {foreach [''=>'- 全部会员 -','0'=>'临时绑定','1'=>'永久绑定'] as $k=>$v}
+                    <!--{eq name='Think.get.agent_status' value='$k.""'}-->
+                    <option selected value="{$k}">{$v}</option>
+                    <!--{else}-->
+                    <option value="{$k}">{$v}</option>
+                    <!--{/eq}-->
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-inline">
+            <button class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe615;</i> 搜 索</button>
+            <button type="button" data-export-list class="layui-btn layui-btn-primary"><i class="layui-icon layui-icon-export"></i> 导 出</button>
+        </div>
+    </form>
+    <script>
+        $('[data-export-list]').on('click', function () {
+            window.location.href = '{:url("@")}?s=store/member/index&' + $(this).parents('form').serialize() + '&action=export'
+        });
+        form.render();
+    </script>
+</fieldset>
