@@ -58,12 +58,10 @@ class Notify
         $map = ['order_no' => $order_no, 'pay_state' => '1', 'status' => '3'];
         if (Db::name('StoreOrder')->where($map)->count() > 0) return false;
         // 更新订单支付状态
-        return Db::name('StoreOrder')->where([
-                'pay_state' => '0', 'order_no' => $order_no,
-            ])->update([
+        return Db::name('StoreOrder')->where(['pay_state' => '0', 'order_no' => $order_no])->update([
+                'status'    => '3',
                 'pay_type'  => $type,
                 'pay_no'    => $pay_no,
-                'status'    => '3',
                 'pay_price' => $pay_price,
                 'pay_state' => '1',
                 'pay_at'    => date('Y-m-d H:i:s'),
