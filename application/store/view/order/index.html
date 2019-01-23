@@ -38,7 +38,7 @@
             {eq name='vo.status' value='4'}<span class="layui-badge layui-bg-green margin-left-5">已发货</span>{/eq}
             {eq name='vo.status' value='5'}<span class="layui-badge layui-bg-blue margin-left-5">已完成</span>{/eq}
             <br>
-            订单金额：￥{$vo.price_real+0}
+            订单金额：￥{$vo.price_total+0}
             <br>
             下单时间：{$vo.create_at|default=''}
             <br>
