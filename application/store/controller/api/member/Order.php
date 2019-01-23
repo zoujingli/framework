@@ -64,7 +64,7 @@ class Order extends Member
                 'number'        => $number,
             ]);
         }
-        $order['status'] = '2';
+        $order['status'] = '1';
         $order['price_goods'] = array_sum(array_column($orderList, 'price_real'));
         $order['price_express'] = array_sum(array_column($orderList, 'price_express'));
         $order['price_service'] = array_sum(array_column($orderList, 'price_service'));
