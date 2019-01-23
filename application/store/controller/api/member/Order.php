@@ -17,7 +17,6 @@ namespace app\store\controller\api\member;
 use app\store\controller\api\Member;
 use library\tools\Data;
 use think\Db;
-use think\Exception;
 
 /**
  * 订单接口管理
@@ -187,10 +186,15 @@ class Order extends Member
      */
     public function gets()
     {
-        $where = [['mid', 'eq', $this->member['id']]];
-        if ($this->request->has('status', 'post', true)) $where[] = ['status', 'eq', $this->request->post('status')];
-        if ($this->request->has('order_no', 'post', true)) $where[] = ['order_no', 'eq', $this->request->post('order_no')];
-        if (empty($where['order_no'])) $where[] = ['status', 'in', ['0', '2', '3', '4', '5']];
+        $where = [['mid', 'eq', $this->mid]];
+        if ($this->request->has('order_no', 'post', true)) {
+            $where[] = ['order_no', 'eq', $this->request->post('order_no')];
+        } else {
+            $where[] = ['status', 'in', ['0', '2', '3', '4', '5']];
+        }
+        if ($this->request->has('status', 'post', true)) {
+            $where[] = ['status', 'eq', $this->request->post('status')];
+        }
         $result = $this->_query('StoreOrder')->where($where)->order('id desc')->page(true, false, false, 20);
         $glist = Db::name('StoreOrderList')->whereIn('order_no', array_unique(array_column($result['list'], 'order_no')))->select();
         foreach ($result['list'] as &$vo) {
