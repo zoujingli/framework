@@ -38,19 +38,9 @@ class Order extends Member
     {
         $rule = $this->request->post('rule');
         if (empty($rule)) $this->error('下单商品规则不能为空！');
-        // 获取地址处理
-        $address_id = $this->request->post('address_id');
-        $address = Db::name('StoreMemberAddress')->where(['id' => $address_id, 'mid' => $this->mid])->find();
-        if (empty($address)) $this->error('收货地址异常，请重新下单！');
         list($order, $orderList) = [[], []];
         $order['mid'] = $this->member['id'];
         $order['order_no'] = Data::uniqidNumberCode(12);
-        $order['express_name'] = $address['name'];
-        $order['express_phone'] = $address['phone'];
-        $order['express_province'] = $address['province'];
-        $order['express_city'] = $address['city'];
-        $order['express_area'] = $address['area'];
-        $order['express_address'] = $address['address'];
         foreach (explode('||', $rule) as $item) {
             list($goods_id, $goods_spec, $number) = explode('@', $item);
             $map = ['id' => $goods_id, 'status' => '1', 'is_deleted' => '0'];
@@ -74,7 +64,7 @@ class Order extends Member
                 'number'        => $number,
             ]);
         }
-        $order['status'] = '3';
+        $order['status'] = '2';
         $order['price_goods'] = array_sum(array_column($orderList, 'price_real'));
         $order['price_express'] = array_sum(array_column($orderList, 'price_express'));
         $order['price_service'] = array_sum(array_column($orderList, 'price_service'));
@@ -89,6 +79,47 @@ class Order extends Member
         } catch (\Exception $e) {
             $this->error("创建订单失败，请稍候再试！{$e->getMessage()}");
         }
+    }
+
+    /**
+     * 订单信息完成
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
+     */
+    public function perfect()
+    {
+        $data = $this->_input([
+            'order_no'   => $this->request->post('order_no'),
+            'address_id' => $this->request->post('address_id'),
+        ], [
+            'order_no'   => 'require',
+            'address_id' => 'require',
+        ], [
+            'order_no.require'   => '订单号不能为空！',
+            'address_id.require' => '收货地址ID不能为空（0自提可以为空）',
+        ]);
+        $map = ['order_no' => $data['order_no'], 'mid' => $this->member['id']];
+        $order = Db::name('StoreOrder')->whereIn('status', ['1', '2'])->where($map)->find();
+        if (empty($order)) $this->error('订单异常，请返回商品重新下单！');
+        $update = ['status' => '2'];
+        $where = ['id' => $data['address_id'], 'mid' => $this->member['id']];
+        $address = Db::name('StoreMemberAddress')->where($where)->find();
+        if (empty($address)) $this->error('会员收货地址异常，请刷新页面重试！');
+        $update['express_address_id'] = $data['address_id'];
+        $update['express_name'] = $address['name'];
+        $update['express_phone'] = $address['phone'];
+        $update['express_province'] = $address['province'];
+        $update['express_city'] = $address['city'];
+        $update['express_area'] = $address['area'];
+        $update['express_address'] = $address['address'];
+        if (Db::name('StoreOrder')->where($map)->update($update) !== false) {
+            $params = $this->getPayParams($order['order_no'], $order['price_real']);
+            $this->success('更新订单会员信息成功！', $params);
+        }
+        $this->error('更新订单会员信息失败，请稍候再试！');
     }
 
     /**
