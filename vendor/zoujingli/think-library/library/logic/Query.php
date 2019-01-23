@@ -15,6 +15,7 @@
 namespace library\logic;
 
 use library\Controller;
+use think\Db;
 
 /**
  * 搜索条件处理器
@@ -29,12 +30,11 @@ class Query extends Logic
     /**
      * Query constructor.
      * @param \think\db\Query|string $dbQuery
-     * @throws \think\Exception
      */
     public function __construct($dbQuery)
     {
         $this->request = request();
-        $this->query = \think\Db::name($dbQuery);
+        $this->query = is_string($dbQuery) ? Db::name($dbQuery) : $dbQuery;
     }
 
     /**
@@ -165,7 +165,7 @@ class Query extends Logic
         }
         return $this;
     }
-    
+
     /**
      * 实例化分页管理器
      * @param boolean $isPage 是否启用分页

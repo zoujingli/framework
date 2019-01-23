@@ -15,6 +15,7 @@
 namespace library\logic;
 
 use library\Controller;
+use think\Db;
 use think\db\Query;
 
 /**
@@ -48,13 +49,12 @@ class Delete extends Logic
      * @param string|Query $dbQuery
      * @param string $pkField 指定数据对象主键
      * @param array $where 额外更新条件
-     * @throws \think\Exception
      */
     public function __construct($dbQuery, $pkField = '', $where = [])
     {
         $this->where = $where;
         $this->request = request();
-        $this->query = \think\Db::name($dbQuery);
+        $this->query = is_string($dbQuery) ? Db::name($dbQuery) : $dbQuery;
         $this->pkField = empty($pkField) ? $this->query->getPk() : $pkField;
         $this->pkValue = $this->request->post($this->pkField, null);
     }

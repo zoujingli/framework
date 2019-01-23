@@ -14,6 +14,7 @@
 
 namespace library\tools;
 
+use think\Db;
 use think\db\Query;
 
 /**
@@ -34,12 +35,13 @@ class Data
      */
     public static function save($dbQuery, $data, $key = 'id', $where = [])
     {
-        list($table, $value) = [\think\Db::name($dbQuery)->getTable(), isset($data[$key]) ? $data[$key] : null];
+        $db = is_string($dbQuery) ? Db::name($dbQuery) : $dbQuery;
+        list($table, $value) = [$db->getTable(), isset($data[$key]) ? $data[$key] : null];
         $map = isset($where[$key]) ? [] : (is_string($value) ? [[$key, 'in', explode(',', $value)]] : [$key => $value]);
-        if (\think\Db::table($table)->where($where)->where($map)->count() > 0) {
-            return \think\Db::table($table)->strict(false)->where($where)->where($map)->update($data) !== false;
+        if (Db::table($table)->where($where)->where($map)->count() > 0) {
+            return Db::table($table)->strict(false)->where($where)->where($map)->update($data) !== false;
         }
-        return \think\Db::table($table)->strict(false)->insert($data) !== false;
+        return Db::table($table)->strict(false)->insert($data) !== false;
     }
 
     /**
@@ -57,7 +59,7 @@ class Data
         list($case, $_data) = [[], []];
         foreach ($data as $row) foreach ($row as $k => $v) $case[$k][] = "WHEN '{$row[$key]}' THEN '{$v}'";
         if (isset($case[$key])) unset($case[$key]);
-        $db = \think\Db::name($dbQuery);
+        $db = is_string($dbQuery) ? Db::name($dbQuery) : $dbQuery;
         foreach ($case as $k => $v) $_data[$k] = $db->raw("CASE `{$key}` " . join(' ', $v) . ' END');
         return $db->whereIn($key, array_unique(array_column($data, $key)))->where($where)->update($_data) !== false;
     }
