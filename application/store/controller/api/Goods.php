@@ -37,6 +37,9 @@ class Goods extends Controller
         if ($this->request->has('title', 'post', true)) {
             $where[] = ['title', 'like', "%{$this->request->post('title')}%"];
         }
+        if ($this->request->has('cate_id', 'post', true)) {
+            $where[] = ['cate_id', 'eq', $this->request->post('cate_id')];
+        }
         $field = 'id,title,logo,specs,lists,image,content,number_sales,number_stock';
         $list = Db::name('StoreGoods')->field($field)->where($where)->order('sort asc,id desc')->select();
         $goodsList = Db::name('StoreGoodsList')->whereIn('goods_id', array_unique(array_column($list, 'id')))->select();
