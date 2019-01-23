@@ -127,15 +127,14 @@ class Goods extends Controller
      */
     protected function _form_filter(&$data)
     {
-        if (empty($data['id'])) $data['id'] = Data::uniqidNumberCode(11);
-
+        // 生成商品ID
+        if (empty($data['id'])) $data['id'] = Data::uniqidNumberCode(10);
         if ($this->request->isGet()) {
             $fields = 'goods_spec,goods_id,status,price_market market,price_selling selling,number_virtual virtual';
             $defaultValues = Db::name('StoreGoodsList')->where(['goods_id' => $data['id']])->column($fields);
             $this->defaultValues = json_encode($defaultValues, JSON_UNESCAPED_UNICODE);
             $this->cates = Db::name('StoreGoodsCate')->where(['is_deleted' => '0', 'status' => '1'])->order('sort asc,id desc')->select();
-        }
-        if ($this->request->isPost()) {
+        } elseif ($this->request->isPost()) {
             Db::name('StoreGoodsList')->where(['goods_id' => $data['id']])->update(['status' => '0']);
             foreach (json_decode($data['lists'], true) as $vo) Data::save('StoreGoodsList', [
                 'goods_id'       => $data['id'],
