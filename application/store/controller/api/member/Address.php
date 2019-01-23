@@ -77,8 +77,8 @@ class Address extends Member
         if (!empty($data['is_default'])) {
             Db::name('StoreMemberAddress')->where(['mid' => $this->member['id']])->setField('is_default', '0');
         }
-        if ($this->request->has('address_id', 'post', true)) {
-            $data['id'] = $this->request->post('address_id');
+        if ($this->request->has('id', 'post', true)) {
+            $data['id'] = $this->request->post('id');
         }
         if (data_save('StoreMemberAddress', $data, 'id')) {
             $this->success('收货地址更新成功！');
