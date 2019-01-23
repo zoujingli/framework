@@ -1,18 +1,29 @@
 <form onsubmit="return false;" action="{:request()->url()}" data-auto="true" method="post" class='layui-form layui-card' autocomplete="off">
 
     <div class="layui-card-body">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">商品分类图片</label>
+            <div class="layui-input-block">
+                <input name="logo" required value='{$vo.logo|default=""}' placeholder="请上传分类图片" class="layui-input">
+                <button data-file="btn" data-field="logo" data-type="png,jpg,gif" class="layui-btn layui-btn-sm" type="button">上传图片</button>
+            </div>
+        </div>
+
         <div class="layui-form-item">
             <label class="layui-form-label">商品分类名称</label>
             <div class="layui-input-block">
                 <input name="title" required value='{$vo.title|default=""}' placeholder="请输入商品分类名称" class="layui-input">
             </div>
         </div>
+
         <div class="layui-form-item">
             <label class="layui-form-label">商品分类描述</label>
             <div class="layui-input-block">
                 <textarea class="layui-textarea" name="desc">{$vo.desc|default=''}</textarea>
             </div>
         </div>
+
     </div>
 
     <div class="hr-line-dashed"></div>

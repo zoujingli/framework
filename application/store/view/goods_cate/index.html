@@ -21,9 +21,9 @@
         <th class='list-table-sort-td'>
             <button type="button" data-reload class="layui-btn layui-btn-xs">刷 新</button>
         </th>
-        <th class='text-left nowrap'>商品分类名称</th>
-        <th class='text-left nowrap'>商品分类描述</th>
+        <th class='text-left nowrap'>分类名称</th>
         <th class="text-center">状态</th>
+        <th class="text-center"></th>
         <th></th>
     </tr>
     </thead>
@@ -31,11 +31,20 @@
     <tbody>
     <!--{foreach $list as $key=>$vo}-->
     <tr>
-        <td class='list-table-check-td think-checkbox'><input class="list-check-box" value='{$vo.id}' type='checkbox'></td>
-        <td class='list-table-sort-td'><input data-action-blur="{:request()->url()}" data-value="id#{$vo.id};action#sort;sort#{value}" data-loading="false" value="{$vo.sort}" class="list-sort-input"></td>
-        <td class='text-left nowrap'>{$vo.title|default=''}</td>
-        <td class='text-left nowrap'>{$vo.desc|default=''}</td>
-        <td class='text-center nowrap'>{eq name='vo.status' value='0'}<span class="layui-badge">已禁用</span>{else}<span class="layui-badge layui-bg-green">使用中</span>{/eq}<br></td>
+        <td class='list-table-check-td think-checkbox'>
+            <input class="list-check-box" value='{$vo.id}' type='checkbox'>
+        </td>
+        <td class='list-table-sort-td'>
+            <input data-action-blur="{:request()->url()}" data-value="id#{$vo.id};action#sort;sort#{value}" data-loading="false" value="{$vo.sort}" class="list-sort-input">
+        </td>
+        <td class='text-left nowrap'>
+            <a data-tips-image="{$vo.logo|default=''}" class="fa fa-qrcode font-s14 margin-right-5"></a>
+            {$vo.title|default=''}
+        </td>
+        <td class='text-center nowrap'>
+            {eq name='vo.status' value='0'}<span class="layui-badge">已禁用</span>{else}<span class="layui-badge layui-bg-green">使用中</span>{/eq}<br>
+        </td>
+        <td class='text-center nowrap'>{$vo.create_at|format_datetime}</td>
         <td class='text-left nowrap'>
 
             {if auth("store/goods_cate/edit")}

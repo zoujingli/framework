@@ -84,8 +84,8 @@ class Goods extends Controller
      */
     public function cate()
     {
-        $field = 'id cate_id,title cate_title';
         $where = ['is_deleted' => '0', 'status' => '1'];
+        $field = 'id cate_id,logo cate_logo,title cate_title';
         $list = Db::name('StoreGoodsCate')->field($field)->where($where)->order('sort asc,id desc')->select();
         $this->success('获取商品分类成功！', ['list' => $list]);
     }
