@@ -116,7 +116,7 @@ class Order extends Member
         $update['express_area'] = $address['area'];
         $update['express_address'] = $address['address'];
         if (Db::name('StoreOrder')->where($map)->update($update) !== false) {
-            $params = $this->getPayParams($order['order_no'], $order['price_real']);
+            $params = $this->getPayParams($order['order_no'], $order['price_total']);
             $this->success('更新订单会员信息成功！', $params);
         }
         $this->error('更新订单会员信息失败，请稍候再试！');
