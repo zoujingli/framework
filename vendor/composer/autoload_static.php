@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit2093f77549203ab682069015d968a234
+class ComposerStaticInit2f8eb8149e0a8270fd3fd574fdf91199
 {
     public static $files = array (
         '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
@@ -322,12 +322,17 @@ class ComposerStaticInit2093f77549203ab682069015d968a234
         'app\\service\\logic\\Build' => __DIR__ . '/../..' . '/application/service/logic/Build.php',
         'app\\service\\logic\\Wechat' => __DIR__ . '/../..' . '/application/service/logic/Wechat.php',
         'app\\store\\controller\\Goods' => __DIR__ . '/../..' . '/application/store/controller/Goods.php',
+        'app\\store\\controller\\GoodsCate' => __DIR__ . '/../..' . '/application/store/controller/GoodsCate.php',
+        'app\\store\\controller\\Member' => __DIR__ . '/../..' . '/application/store/controller/Member.php',
+        'app\\store\\controller\\Order' => __DIR__ . '/../..' . '/application/store/controller/Order.php',
         'app\\store\\controller\\Page' => __DIR__ . '/../..' . '/application/store/controller/Page.php',
         'app\\store\\controller\\api\\Goods' => __DIR__ . '/../..' . '/application/store/controller/api/Goods.php',
         'app\\store\\controller\\api\\Member' => __DIR__ . '/../..' . '/application/store/controller/api/Member.php',
+        'app\\store\\controller\\api\\Notify' => __DIR__ . '/../..' . '/application/store/controller/api/Notify.php',
         'app\\store\\controller\\api\\Page' => __DIR__ . '/../..' . '/application/store/controller/api/Page.php',
         'app\\store\\controller\\api\\Wechat' => __DIR__ . '/../..' . '/application/store/controller/api/Wechat.php',
         'app\\store\\controller\\api\\member\\Address' => __DIR__ . '/../..' . '/application/store/controller/api/member/Address.php',
+        'app\\store\\controller\\api\\member\\Center' => __DIR__ . '/../..' . '/application/store/controller/api/member/Center.php',
         'app\\store\\controller\\api\\member\\Order' => __DIR__ . '/../..' . '/application/store/controller/api/member/Order.php',
         'app\\store\\service\\Goods' => __DIR__ . '/../..' . '/application/store/service/Goods.php',
         'app\\store\\service\\Order' => __DIR__ . '/../..' . '/application/store/service/Order.php',
@@ -404,9 +409,9 @@ class ComposerStaticInit2093f77549203ab682069015d968a234
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit2093f77549203ab682069015d968a234::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit2093f77549203ab682069015d968a234::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit2093f77549203ab682069015d968a234::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit2f8eb8149e0a8270fd3fd574fdf91199::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit2f8eb8149e0a8270fd3fd574fdf91199::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit2f8eb8149e0a8270fd3fd574fdf91199::$classMap;
 
         }, null, ClassLoader::class);
     }

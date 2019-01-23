@@ -445,8 +445,8 @@
     },
     {
         "name": "zoujingli/think-library",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
+        "version": "v5.1.x-dev",
+        "version_normalized": "5.1.9999999.9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/zoujingli/ThinkLibrary.git",
