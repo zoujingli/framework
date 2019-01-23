@@ -64,7 +64,7 @@ class Page extends Logic
         $this->isPage = $isPage;
         $this->isDisplay = $isDisplay;
         $this->request = request();
-        $this->query = scheme_db($dbQuery);
+        $this->query = \think\Db::name($dbQuery);
     }
 
     /**

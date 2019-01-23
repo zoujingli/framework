@@ -26,12 +26,12 @@ ThinkLibrary 是针对 ThinkPHP5.1 版本封装的一套工具类库，方便快
 
 ## 使用说明
 * ThinkLibrary 需要Composer支持
-* 安装命令 ` composer require zoujingli/think-library `
+* 安装命令 ` composer require zoujingli/think-library 5.1.x-dev`
 * 案例代码：
 控制器需要继承 `library\Controller`，然后`$this`就可能使用全部功能
 ```php
 // 定义 MyController 控制器
-class MyController extend \library\Controller{
+class MyController extend \library\Controller {
 
     // 指定当前数据表名
     protected $dbQuery = '数据表名';

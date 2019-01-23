@@ -27,26 +27,6 @@ if (!function_exists('p')) {
     }
 }
 
-if (!function_exists('scheme_db')) {
-    /**
-     * 获取兼容Db方法
-     * @param \think\db\Query|string $dbQuery
-     * @param string $method
-     * @return \think\db\Query
-     * @throws \think\Exception
-     */
-    function scheme_db($dbQuery, $method = 'name')
-    {
-        if (is_object($dbQuery)) return $dbQuery;
-        foreach (['\think\facade\Db', '\think\Db'] as $class) {
-            if (class_exists(trim($class, '\\'))) {
-                return $class::$method($dbQuery);
-            }
-        }
-        throw new \think\Exception("Not Found Db Class {$dbQuery}");
-    }
-}
-
 if (!function_exists('format_datetime')) {
     /**
      * 日期格式标准输出
@@ -76,7 +56,7 @@ if (!function_exists('sysconf')) {
             list($row, $data) = [['name' => $name, 'value' => $value], []];
             return \library\tools\Data::save('SystemConfig', $row, 'name');
         }
-        if (empty($data)) $data = scheme_db('SystemConfig')->column('name,value');
+        if (empty($data)) $data = \think\Db::name('SystemConfig')->column('name,value');
         return isset($data[$name]) ? $data[$name] : '';
     }
 }

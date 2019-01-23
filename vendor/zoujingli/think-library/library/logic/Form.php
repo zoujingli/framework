@@ -67,7 +67,7 @@ class Form extends Logic
     public function __construct($dbQuery, $tpl = '', $pkField = '', $where = [], $data = [])
     {
         $this->request = request();
-        $this->query = scheme_db($dbQuery);
+        $this->query = \think\Db::name($dbQuery);
         list($this->tpl, $this->where, $this->data) = [$tpl, $where, $data];
         $this->pkField = empty($pkField) ? ($this->query->getPk() ? $this->query->getPk() : 'id') : $pkField;;
         $this->pkValue = input($this->pkField, isset($data[$this->pkField]) ? $data[$this->pkField] : null);

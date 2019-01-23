@@ -34,7 +34,7 @@ class Query extends Logic
     public function __construct($dbQuery)
     {
         $this->request = request();
-        $this->query = scheme_db($dbQuery);
+        $this->query = \think\Db::name($dbQuery);
     }
 
     /**

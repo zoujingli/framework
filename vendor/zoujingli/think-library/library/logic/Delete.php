@@ -54,7 +54,7 @@ class Delete extends Logic
     {
         $this->where = $where;
         $this->request = request();
-        $this->query = scheme_db($dbQuery);
+        $this->query = \think\Db::name($dbQuery);
         $this->pkField = empty($pkField) ? $this->query->getPk() : $pkField;
         $this->pkValue = $this->request->post($this->pkField, null);
     }

@@ -34,12 +34,12 @@ class Data
      */
     public static function save($dbQuery, $data, $key = 'id', $where = [])
     {
-        list($table, $value) = [scheme_db($dbQuery)->getTable(), isset($data[$key]) ? $data[$key] : null];
+        list($table, $value) = [\think\Db::name($dbQuery)->getTable(), isset($data[$key]) ? $data[$key] : null];
         $map = isset($where[$key]) ? [] : (is_string($value) ? [[$key, 'in', explode(',', $value)]] : [$key => $value]);
-        if (scheme_db($table, 'table')->where($where)->where($map)->count() > 0) {
-            return scheme_db($table, 'table')->strict(false)->where($where)->where($map)->update($data) !== false;
+        if (\think\Db::table($table)->where($where)->where($map)->count() > 0) {
+            return \think\Db::table($table)->strict(false)->where($where)->where($map)->update($data) !== false;
         }
-        return scheme_db($table, 'table')->strict(false)->insert($data) !== false;
+        return \think\Db::table($table)->strict(false)->insert($data) !== false;
     }
 
     /**
@@ -57,7 +57,7 @@ class Data
         list($case, $_data) = [[], []];
         foreach ($data as $row) foreach ($row as $k => $v) $case[$k][] = "WHEN '{$row[$key]}' THEN '{$v}'";
         if (isset($case[$key])) unset($case[$key]);
-        $db = scheme_db($dbQuery);
+        $db = \think\Db::name($dbQuery);
         foreach ($case as $k => $v) $_data[$k] = $db->raw("CASE `{$key}` " . join(' ', $v) . ' END');
         return $db->whereIn($key, array_unique(array_column($data, $key)))->where($where)->update($_data) !== false;
     }
