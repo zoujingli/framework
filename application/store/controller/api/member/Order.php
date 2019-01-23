@@ -187,9 +187,10 @@ class Order extends Member
      */
     public function gets()
     {
-        $where = ['mid' => $this->member['id']];
-        if ($this->request->has('status', 'post', true)) $where['status'] = $this->request->post('status');
-        if ($this->request->has('order_no', 'post', true)) $where['order_no'] = $this->request->post('order_no');
+        $where = [['mid', 'eq', $this->member['id']]];
+        if ($this->request->has('status', 'post', true)) $where[] = ['status', 'eq', $this->request->post('status')];
+        if ($this->request->has('order_no', 'post', true)) $where[] = ['order_no', 'eq', $this->request->post('order_no')];
+        if (empty($where['order_no'])) $where[] = ['status', 'in', ['0', '2', '3', '4', '5']];
         $result = $this->_query('StoreOrder')->where($where)->order('id desc')->page(true, false, false, 20);
         $glist = Db::name('StoreOrderList')->whereIn('order_no', array_unique(array_column($result['list'], 'order_no')))->select();
         foreach ($result['list'] as &$vo) {
