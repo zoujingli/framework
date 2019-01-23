@@ -8,13 +8,14 @@ define(['plupload'], function (plupload) {
                 safe: $ele.attr('data-safe') || '0',
                 uptype: $ele.attr('data-uptype') || '',
             },
+            drop_element: $ele.get(0),
             browse_button: $ele.get(0),
             url: '?s=admin/api.plugs/plupload',
             runtimes: 'html5,flash,silverlight,html4',
             file_data_name: $ele.attr('data-name') || 'file',
-            flash_swf_url: baseRoot + 'plugs/plupload/plupload.flash.swf',
+            flash_swf_url: baseRoot + 'plugs/plupload/Moxie.swf',
+            silverlight_xap_url: baseRoot + 'plugs/plupload/Moxie.xap',
             filters: [{title: 'files', extensions: $ele.attr('data-type') || '*'}],
-            silverlight_xap_url: baseRoot + 'plugs/plupload/plupload.silverlight.xap',
         });
         loader.bind('FilesAdded', function () {
             loader.start();
