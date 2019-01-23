@@ -33,7 +33,10 @@ class Goods extends Controller
      */
     public function gets()
     {
-        $where = ['is_deleted' => '0', 'status' => '1', 'vip_mod' => '0'];
+        $where = [['status', 'eq', '1'], ['vip_mod', 'eq', '0'], ['is_deleted', 'eq', '0']];
+        if ($this->request->has('title', 'post', true)) {
+            $where[] = ['title', 'like', "%{$this->request->post('title')}%"];
+        }
         $field = 'id,title,logo,specs,lists,image,content,number_sales,number_stock';
         $list = Db::name('StoreGoods')->field($field)->where($where)->order('sort asc,id desc')->select();
         $goodsList = Db::name('StoreGoodsList')->whereIn('goods_id', array_unique(array_column($list, 'id')))->select();
