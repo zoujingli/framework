@@ -90,5 +90,4 @@ class Goods extends Controller
         $this->success('获取商品分类成功！', ['list' => $list]);
     }
 
-
 }
