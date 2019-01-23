@@ -6,6 +6,19 @@
     <div class="layui-card-body padding-left-40">
 
         <div class="layui-form-item block relative">
+            <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px">*</sup>商品分类</h3>
+            <select class="layui-select" name="cate_id" lay-search>
+                {foreach $cates as $cate}
+                {if isset($vo.cate_id) and $vo.cate_id eq $cate.id}
+                <option selected value="{$cate.id}">{$cate.title|default=''}</option>
+                {else}
+                <option value="{$cate.id}">{$cate.title|default=''}</option>
+                {/if}
+                {/foreach}
+            </select>
+        </div>
+
+        <div class="layui-form-item block relative">
             <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px">*</sup>商品名称</h3>
             <input name="title" required class="layui-input" placeholder="请输入商品名称" value="{$vo.title|default=''}">
         </div>
@@ -102,12 +115,12 @@
                 <thead>
                 <tr>
                     <th ng-repeat="x in specsTreeNava track by $index" class="nowrap" ng-bind="x"></th>
-                    <th width="10%" class="text-center nowrap">市场价格</th>
-                    <th width="10%" class="text-center nowrap">销售价格</th>
-                    <th width="10%" class="text-center nowrap">会员价格</th>
-                    <th width="10%" class="text-center nowrap">快递费用</th>
-                    <th width="10%" class="text-center nowrap">服务费用</th>
-                    <th width="10%" class="text-center nowrap">虚拟销量</th>
+                    <th width="10%" class="text-center nowrap">市场价格 <a ng-click="batchSet('market',2)" data-tips-text="批量设置" class="layui-icon">&#xe63c;</a></th>
+                    <th width="10%" class="text-center nowrap">销售价格 <a ng-click="batchSet('selling',2)" data-tips-text="批量设置" class="layui-icon">&#xe63c;</a></th>
+                    <th width="10%" class="text-center nowrap">会员价格 <a ng-click="batchSet('member',2)" data-tips-text="批量设置" class="layui-icon">&#xe63c;</a></th>
+                    <th width="10%" class="text-center nowrap">快递费用 <a ng-click="batchSet('express',2)" data-tips-text="批量设置" class="layui-icon">&#xe63c;</a></th>
+                    <th width="10%" class="text-center nowrap">服务费用 <a ng-click="batchSet('service',2)" data-tips-text="批量设置" class="layui-icon">&#xe63c;</a></th>
+                    <th width="10%" class="text-center nowrap">虚拟销量 <a ng-click="batchSet('virtual',0)" data-tips-text="批量设置" class="layui-icon">&#xe63c;</a></th>
                     <th width="10%" class="text-center nowrap">销售状态</th>
                 </tr>
                 </thead>
@@ -271,6 +284,18 @@
             $rootScope.isAddMode = eval('{$vo.id?false:true}');
             let defaultValues = angular.fromJson('{$defaultValues|raw|default=0}') || {};
             $rootScope.specs = angular.fromJson('{$vo.specs|raw|default=0}') || [{name: '默认分组', list: [{name: '默认规格', check: true}]}];
+            // 批量设置数值
+            $rootScope.batchSet = function (type, fixed) {
+                layer.prompt({title: '请输入数值', formType: 0}, function (value, index) {
+                    $rootScope.$apply(function () {
+                        var val = (parseFloat(value) || 0).toFixed(fixed);
+                        for (var i in $rootScope.specsTreeData) for (var j in $rootScope.specsTreeData[i]) {
+                            $rootScope.specsTreeData[i][j][type] = val;
+                        }
+                    });
+                    layer.close(index);
+                });
+            };
             // 返回商品列表
             $rootScope.hsitoryBack = function () {
                 $.msg.confirm('确定要取消编辑吗？', function (index) {

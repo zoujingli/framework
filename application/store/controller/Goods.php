@@ -118,33 +118,26 @@ class Goods extends Controller
     /**
      * 表单数据处理
      * @param array $data
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
      */
     protected function _form_filter(&$data)
     {
-        if ($this->request->isGet() && !empty($data['id'])) {
+        if (empty($data['id'])) $data['id'] = Data::uniqidNumberCode(11);
+
+        if ($this->request->isGet()) {
             $fields = 'goods_spec,goods_id,status,price_market market,price_selling selling,number_virtual virtual';
             $defaultValues = Db::name('StoreGoodsList')->where(['goods_id' => $data['id']])->column($fields);
             $this->defaultValues = json_encode($defaultValues, JSON_UNESCAPED_UNICODE);
+            $this->cates = Db::name('StoreGoodsCate')->where(['is_deleted' => '0', 'status' => '1'])->order('sort asc,id desc')->select();
         }
         if ($this->request->isPost()) {
-            $data['vip_state'] = intval(!empty($data['vip_state']));
-        }
-    }
-
-    /**
-     * 表单结果处理
-     * @param boolean $result
-     * @param array $data
-     * @throws \think\Exception
-     * @throws \think\exception\PDOException
-     */
-    protected function _form_result($result, $data)
-    {
-        if ($result && $this->request->isPost()) {
-            $goods_id = empty($data['id']) ? Db::name($this->table)->getLastInsID() : $data['id'];
-            Db::name('StoreGoodsList')->where(['goods_id' => $goods_id])->update(['status' => '0']);
+            Db::name('StoreGoodsList')->where(['goods_id' => $data['id']])->update(['status' => '0']);
             foreach (json_decode($data['lists'], true) as $vo) Data::save('StoreGoodsList', [
-                'goods_id'       => $goods_id,
+                'goods_id'       => $data['id'],
                 'goods_spec'     => $vo[0]['key'],
                 'price_market'   => $vo[0]['market'],
                 'price_selling'  => $vo[0]['selling'],
@@ -152,7 +145,17 @@ class Goods extends Controller
                 'price_express'  => $vo[0]['express'],
                 'number_virtual' => $vo[0]['virtual'],
                 'status'         => $vo[0]['status'] ? 1 : 0,
-            ], 'goods_spec', ['goods_id' => $goods_id]);
+            ], 'goods_spec', ['goods_id' => $data['id']]);
+        }
+    }
+
+    /**
+     * 表单结果处理
+     * @param boolean $result
+     */
+    protected function _form_result($result)
+    {
+        if ($result && $this->request->isPost()) {
             $this->success('商品编辑成功！', 'javascript:history.back()');
         }
     }
