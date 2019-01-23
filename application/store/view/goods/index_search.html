@@ -8,6 +8,21 @@
             </div>
         </div>
         <div class="layui-form-item layui-inline">
+            <label class="layui-form-label">商品分类</label>
+            <div class="layui-input-inline">
+                <select class="layui-select" name="cate_id" lay-search>
+                    <option value="">-- 所有商品 --</option>
+                    {foreach $clist as $v}
+                    <!--{eq name='Think.get.cate_id' value='$v.id.""'}-->
+                    <option selected value="{$v.id}">{$v.title}</option>
+                    <!--{else}-->
+                    <option value="{$v.id}">{$v.title}</option>
+                    <!--{/eq}-->
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item layui-inline">
             <label class="layui-form-label">入会权限</label>
             <div class="layui-input-inline">
                 <select class="layui-select" name="vip_mod">
