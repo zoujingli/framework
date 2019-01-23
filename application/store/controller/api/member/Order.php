@@ -72,7 +72,7 @@ class Order extends Member
         try {
             Db::name('StoreOrder')->insert($order);
             Db::name('StoreOrderList')->insertAll($orderList);
-            $this->success('订单创建成功，请完成支付！', ['order' => $order]);
+            $this->success('订单创建成功，请补全收货信息后支付！', ['order' => $order]);
         } catch (\think\exception\HttpResponseException $exception) {
             throw $exception;
         } catch (\Exception $e) {
