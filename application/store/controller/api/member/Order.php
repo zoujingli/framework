@@ -193,8 +193,11 @@ class Order extends Member
         $result = $this->_query('StoreOrder')->where($where)->order('id desc')->page(true, false, false, 20);
         $glist = Db::name('StoreOrderList')->whereIn('order_no', array_unique(array_column($result['list'], 'order_no')))->select();
         foreach ($result['list'] as &$vo) {
-            $vo['list'] = [];
-            foreach ($glist as $goods) if ($vo['order_no'] === $goods['order_no']) $vo['list'][] = $goods;
+            list($vo['goods_count'], $vo['list']) = [0, []];
+            foreach ($glist as $goods) if ($vo['order_no'] === $goods['order_no']) {
+                $vo['list'][] = $goods;
+                $vo['goods_count'] += $goods['number'];
+            }
         }
         $this->success('获取订单列表成功！', $result);
     }
