@@ -14,6 +14,8 @@
 
 namespace app\store\service;
 
+use think\Db;
+
 /**
  * 订单服务管理器
  * Class Order
@@ -21,8 +23,28 @@ namespace app\store\service;
  */
 class Order
 {
-    public static function create()
+
+    /**
+     * 获取订单实际支付金额
+     * @param array $member
+     * @param array $order
+     */
+    public static function buildOrderPrice($member = [], $order = [])
     {
+
+    }
+
+    /**
+     * 更新会员级别信息
+     * @param string $order_no
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public static function updateMember($order_no)
+    {
+        $where = ['order_no' => $order_no, 'pay_state' => '1'];
+        $order = Db::name('StoreOrder')->where($where)->find();
 
     }
 }
