@@ -11,7 +11,6 @@
         </th>
         <th class='text-left nowrap'>会员信息</th>
         <th class='text-left nowrap'>会员状态</th>
-        <th class='text-left nowrap'>绑定代理</th>
     </tr>
     </thead>
     <!--{/notempty}-->
@@ -27,24 +26,13 @@
             绑定手机：{$vo.phone|default=''}
         </td>
         <td class='text-left'>
-            创建时间：{$vo.create_at}<br>
-            入会产品：{if $vo.agent_auth}
-            <span class="layui-badge">已购买入会礼包</span>
-            {else}
-            <span class="layui-badge layui-bg-gray">未购买入会礼包</span>
+            会员级别：{if $vo.vip_level eq 0} 游客会员
+            {elseif $vo.vip_level eq 1} 临时会员（{$vo.vip_date|default=''}）
+            {elseif $vo.vip_level eq 2} VIP1会员（{$vo.vip_date|default=''}）
+            {elseif $vo.vip_level eq 3} VIP2会员（{$vo.vip_date|default=''}）
             {/if}
-        </td>
-        <td>
-            代理昵称：{$vo.bind_agent.nickname|default='--'}
             <br>
-            代理手机：{$vo.bind_agent.phone|default='--'}
-            {notempty name='vo.bind_agent.phone'}
-            {if $vo['agent_id'] > 0}
-            <span class="layui-badge layui-bg-cyan margin-left-5">永久</span>
-            {else}
-            <span class="layui-badge layui-bg-blue margin-left-5">临时</span>
-            {/if}
-            {/notempty}
+            创建时间：{$vo.create_at}<br>
         </td>
     </tr>
     <!--{/foreach}-->
