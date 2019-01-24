@@ -71,19 +71,19 @@ class Order extends Member
                 'goods_spec'     => $goods_spec,
                 'goods_logo'     => $goods['logo'],
                 'goods_title'    => $goods['title'],
+                'number'         => $number,
                 'vip_mod'        => $goods['vip_mod'],
                 'vip_month'      => $goods['vip_month'],
                 'vip_discount'   => $goods['vip_discount'],
                 'price_market'   => $goodsSpec['price_market'],
                 'price_selling'  => $goodsSpec['price_selling'],
-                'number'         => $number,
                 // 服务费，普通订单不收服务费
-                'price_service'  => intval($type) === 1 ? '0.00' : $goods['price_service'],
+                'price_service'  => intval($type) === 1 ? '0' : $goods['price_service'],
+                'price_real'     => intval($type) === 1 && $priceReal > 0 ? $priceReal : '0',
                 'price_express'  => intval($type) === 1 ? $goods['price_express1'] : $goods['price_express2'],
-                'price_real'     => intval($type) === 1 ? ($priceReal < 0 ? '0.00' : $priceReal) : '0.00',
                 // VIP1升VIP2优惠金额处理
                 'discount_desc'  => $isUpdate ? 'VIP1升VIP2优惠金额' : '',
-                'discount_price' => $isUpdate ? $goods['vip_discount'] : '0.00',
+                'discount_price' => $isUpdate ? $goods['vip_discount'] : '0',
             ]);
         }
         $order['price_express'] = max(array_column($orderList, 'price_express'));
