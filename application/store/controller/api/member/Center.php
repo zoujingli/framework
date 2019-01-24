@@ -80,7 +80,7 @@ class Center extends Member
             $this->error('获取短信模板失败，联系管理员配置！');
         }
         $cache = cache($cachekey);
-        if (Extend::sendSms($phone, str_replace('{code}', $code, $content))) {
+        if (Extend::sendSms($this->mid, $phone, str_replace('{code}', $code, $content))) {
             $dtime = ($cache['time'] + 120 < time()) ? 0 : (120 - time() + $cache['time']);
             $this->success('短信验证码发送成功！', ['time' => $dtime]);
         }

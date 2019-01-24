@@ -27,6 +27,7 @@ class Extend
 
     /**
      * 发送短信验证码
+     * @param string $mid 会员ID
      * @param string $phone 手机号
      * @param string $content 短信内容
      * @param string $productid 短信通道ID
@@ -34,7 +35,7 @@ class Extend
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
-    public static function sendSms($phone, $content, $productid = '676767')
+    public static function sendSms($mid, $phone, $content, $productid = '676767')
     {
         $tkey = date("YmdHis");
         $data = [
@@ -47,7 +48,7 @@ class Extend
         ];
         $result = Http::post('http://www.ztsms.cn/sendNSms.do', $data);
         list($code, $msg) = explode(',', $result . ',');
-        $insert = ['phone' => $phone, 'content' => $content, 'result' => $result];
+        $insert = ['mid' => $mid, 'phone' => $phone, 'content' => $content, 'result' => $result];
         Db::name('StoreMemberSmsHistory')->insert($insert);
         return intval($code) === 1;
     }
