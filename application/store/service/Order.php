@@ -36,8 +36,8 @@ class Order
     {
         $member = Db::name('StoreMember')->where(['id' => $mid])->find();
         if (empty($member)) return false;
-        $isUsedOrder = Db::name('StoreMemberHistory')->where(['order_no' => $order_no])->count() > 0;
-        if ($isUsedOrder) return false;
+        $usedOrderCount = Db::name('StoreMemberHistory')->where(['order_no' => $order_no])->count() > 0;
+        if ($usedOrderCount) return false;
         $order = Db::name('StoreOrder')->where(['order_no' => $order_no, 'pay_state' => '1'])->find();
         if (empty($order)) return false;
         $orderGoods = Db::name('StoreOrderList')->where(['order_no' => $order_no])->whereIn('vip_mod', ['1', '2'])->order('vip_mod desc')->find();
