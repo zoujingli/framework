@@ -118,7 +118,7 @@ class Tools extends Controller
         $notify = $pay->getNotify();
         p('======= 来自扫码支付1的数据 ======');
         p($notify);
-        // 产品ID @todo 你的业务，并实现下面的统一下单操作
+        // 产品ID 你的业务代码，并实现下面的统一下单操作
         $product_id = $notify['product_id'];
         // 微信统一下单处理
         $options = [
