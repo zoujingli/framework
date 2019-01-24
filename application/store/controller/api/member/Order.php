@@ -61,7 +61,10 @@ class Order extends Member
             }
             // 根据会员升级状态及商品类型，计算商品实际金额
             $priceReal = $goodsSpec['price_selling'] * $number;
-            if ($isUpdate && intval($type) === 1) $priceReal -= $goods['vip_discount'];
+            if ($isUpdate && intval($type) === 1) {
+                $priceReal -= $goods['vip_discount'];
+                if ($priceReal < 0) $priceReal = '0';
+            }
             // 订单详情处理
             array_push($orderList, [
                 'mid'            => $order['mid'],
@@ -78,8 +81,8 @@ class Order extends Member
                 'price_market'   => $goodsSpec['price_market'],
                 'price_selling'  => $goodsSpec['price_selling'],
                 // 服务费，普通订单不收服务费
+                'price_real'     => intval($type) === 1 ? $priceReal : '0',
                 'price_service'  => intval($type) === 1 ? '0' : $goods['price_service'],
-                'price_real'     => intval($type) === 1 && $priceReal > 0 ? $priceReal : '0',
                 'price_express'  => intval($type) === 1 ? $goods['price_express1'] : $goods['price_express2'],
                 // VIP1升VIP2优惠金额处理
                 'discount_desc'  => $isUpdate ? 'VIP1升VIP2优惠金额' : '',
