@@ -72,6 +72,7 @@ class Order extends Member
                 'number'        => $number,
             ]);
         }
+        // @todo 会员升级优惠还没有处理
         $order['status'] = '1';
         $order['price_goods'] = array_sum(array_column($orderList, 'price_real'));
         $order['price_express'] = array_sum(array_column($orderList, 'price_express'));
