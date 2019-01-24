@@ -36,17 +36,22 @@ class Order
     {
         $member = Db::name('StoreMember')->where(['id' => $mid])->find();
         if (empty($member)) return false;
+        // 检查订单是否已经使用
         $usedOrderCount = Db::name('StoreMemberHistory')->where(['order_no' => $order_no])->count() > 0;
         if ($usedOrderCount) return false;
+        // 订单支付验证
         $order = Db::name('StoreOrder')->where(['order_no' => $order_no, 'pay_state' => '1'])->find();
         if (empty($order)) return false;
-        $goods = Db::name('StoreOrderList')->where(['order_no' => $order_no])->whereIn('vip_mod', ['1', '2'])->order('vip_mod desc')->find();
+        // 获取订单升级参数
+        $where = [['order_no', 'eq', $order_no], ['vip_mod', 'in', ['1', '2']]];
+        $goods = Db::name('StoreOrderList')->where($where)->order('vip_mod desc')->find();
         if (empty($goods)) return false;
-        $vipMod = intval(max($goods['vip_mod']));
-        if ($vipMod === 1) { # 临时会员获取
-
-        } elseif ($vipMod === 2) { # 普通会员获取
-
+        // 处理会员升级
+        switch (intval($goods['vip_mod'])) {
+            case 1:  # 临时会员获取
+                break;
+            case 2: # 普通会员获取
+                break;
         }
     }
 }
