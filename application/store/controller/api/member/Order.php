@@ -45,37 +45,50 @@ class Order extends Member
         list($order, $orderList) = [[], []];
         $order['mid'] = $this->mid;
         $order['type'] = $type;
+        $order['status'] = '1';
         $order['order_no'] = Data::uniqidNumberCode(12);
         foreach (explode('||', $rule) as $item) {
             list($goods_id, $goods_spec, $number) = explode('@', $item);
+            // 商品信息检查
             $goods = Db::name('StoreGoods')->where(['id' => $goods_id, 'status' => '1', 'is_deleted' => '0'])->find();
             if (empty($goods)) $this->error('查询商品主体信息失败，请稍候再试！');
             $goodsSpec = Db::name('StoreGoodsList')->where(['goods_id' => $goods_id, 'goods_spec' => $goods_spec])->find();
             if (empty($goodsSpec)) $this->error('查询商品规则信息失败，请稍候再试！');
+            // 会员升级状态处理（ 普通订单 & 礼包商品 & VIP1）
+            $isUpdate = false;
+            if (intval($goods['vip_mod']) === 2 && intval($type) === 1) {
+                if (intval($this->member['vip_level']) === 2) $isUpdate = true;
+            }
+            // 根据会员升级状态及商品类型，计算商品实际金额
+            $priceReal = $goodsSpec['price_selling'] * $number;
+            if ($isUpdate && intval($type) === 1) $priceReal -= $goods['vip_discount'];
+            // 订单详情处理
             array_push($orderList, [
-                'mid'           => $order['mid'],
-                'type'          => $order['type'],
-                'order_no'      => $order['order_no'],
-                'goods_id'      => $goods_id,
-                'goods_spec'    => $goods_spec,
-                'goods_logo'    => $goods['logo'],
-                'goods_title'   => $goods['title'],
-                'vip_mod'       => $goods['vip_mod'],
-                'vip_month'     => $goods['vip_month'],
-                'vip_discount'  => $goods['vip_discount'],
-                'price_market'  => $goodsSpec['price_market'],
-                'price_selling' => $goodsSpec['price_selling'],
+                'mid'            => $order['mid'],
+                'type'           => $order['type'],
+                'order_no'       => $order['order_no'],
+                'goods_id'       => $goods_id,
+                'goods_spec'     => $goods_spec,
+                'goods_logo'     => $goods['logo'],
+                'goods_title'    => $goods['title'],
+                'vip_mod'        => $goods['vip_mod'],
+                'vip_month'      => $goods['vip_month'],
+                'vip_discount'   => $goods['vip_discount'],
+                'price_market'   => $goodsSpec['price_market'],
+                'price_selling'  => $goodsSpec['price_selling'],
+                'number'         => $number,
                 // 服务费，普通订单不收服务费
-                'price_service' => intval($type) === 1 ? '0.00' : $goods['price_service'],
-                'price_express' => intval($type) === 1 ? $goods['price_express1'] : $goods['price_express2'],
-                'price_real'    => intval($type) === 1 ? $goodsSpec['price_selling'] * $number : '0.00',
-                'number'        => $number,
+                'price_service'  => intval($type) === 1 ? '0.00' : $goods['price_service'],
+                'price_express'  => intval($type) === 1 ? $goods['price_express1'] : $goods['price_express2'],
+                'price_real'     => intval($type) === 1 ? ($priceReal < 0 ? '0.00' : $priceReal) : '0.00',
+                // VIP1升VIP2优惠金额处理
+                'discount_desc'  => $isUpdate ? 'VIP1升VIP2优惠金额' : '',
+                'discount_price' => $isUpdate ? $goods['vip_discount'] : '0.00',
             ]);
         }
-        // @todo 会员升级优惠还没有处理
-        $order['status'] = '1';
+
         $order['price_goods'] = array_sum(array_column($orderList, 'price_real'));
-        $order['price_express'] = array_sum(array_column($orderList, 'price_express'));
+        $order['price_express'] = max(array_column($orderList, 'price_express'));
         $order['price_service'] = array_sum(array_column($orderList, 'price_service'));
         $order['price_total'] = $order['price_goods'] + $order['price_express'] + $order['price_service'];
         try {
