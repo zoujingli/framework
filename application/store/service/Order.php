@@ -38,8 +38,8 @@ class Order
         if (empty($member)) return false;
         $order = Db::name('StoreOrder')->where(['order_no' => $order_no, 'pay_state' => '1'])->find();
         if (empty($order)) return false;
-        $orderList = Db::name('StoreOrderList')->where(['order_no' => $order_no])->whereIn('vip_mod', ['1', '2'])->column('vip_mod');
-        if (empty($orderList)) return false;
+        $vipMod = Db::name('StoreOrderList')->where(['order_no' => $order_no])->whereIn('vip_mod', ['1', '2'])->column('vip_mod');
+        if (empty($vipMod)) return false;
         $isUsedOrder = Db::name('StoreMemberHistory')->where(['order_no' => $order_no])->count() > 0;
         if ($isUsedOrder) return false;
 
