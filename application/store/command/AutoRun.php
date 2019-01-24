@@ -56,14 +56,18 @@ class AutoRun extends Command
             'cancel_at'    => date('Y-m-d H:i:s'),
             'cancel_desc'  => '30分钟未完成支付自动取消订单',
         ]);
-        $this->output->info('auto cancel order: ' . $count);
+        if ($count > 0) {
+            $this->output->info('auto cancel order -> ' . $count);
+        } else {
+            $this->output->comment('not cancel order.');
+        }
         # 清理一天前未支付的订单
         $list = Db::name('StoreOrder')->where([
             ['pay_state', 'eq', '0'],
             ['create_at', '<', date('Y-m-d H:i:s', strtotime('-1 day'))],
         ])->limit(20)->select();
         if (count($order_nos = array_unique(array_column($list, 'order_no'))) > 0) {
-            $this->output->info('clear order: ' . join(',' . PHP_EOL . "\t", $order_nos));
+            $this->output->info('auto clear order -> ' . join(',' . PHP_EOL . "\t", $order_nos));
             Db::name('StoreOrder')->whereIn('order_no', $order_nos)->delete();
             Db::name('StoreOrderList')->whereIn('order_no', $order_nos)->delete();
         } else {
