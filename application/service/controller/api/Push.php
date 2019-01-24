@@ -103,7 +103,7 @@ class Push extends Controller
             $wechat = new \WeChat\Oauth($service->getConfig($appid));
             $fans = $wechat->getUserInfo($result['access_token'], $result['openid']);
             if (empty($fans)) throw new \think\Exception('网页授权信息获取失败, 无法进一步操作！');
-            cache("{$appid}_{$sessid}_fans", $fans);
+            cache("{$appid}_{$sessid}_fans", $fans, 3600);
         }
         redirect(decode($enurl), [], 301)->send();
     }
