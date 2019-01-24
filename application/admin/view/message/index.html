@@ -81,8 +81,6 @@
     </tbody>
 </table>
 
-{empty name='list'}
-<blockquote class="layui-elem-quote border-0 text-center">没 有 记 录 哦！</blockquote>
-{else}{$pagehtml|raw|default=''}{/empty}
+{empty name='list'}<span class="notdata">没有记录哦</span>{else}{$pagehtml|raw|default=''}{/empty}
 
 {/block}
