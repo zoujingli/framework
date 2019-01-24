@@ -41,9 +41,9 @@ class Extend
             'tkey'      => $tkey,
             'mobile'    => $phone,
             'content'   => $content,
-            'username'  => sysconf('sms_username'),
+            'username'  => sysconf('sms_zt_username'),
             'productid' => $productid,
-            'password'  => md5(md5(sysconf('sms_password')) . $tkey),
+            'password'  => md5(md5(sysconf('sms_zt_password')) . $tkey),
         ];
         $result = Http::post('http://www.ztsms.cn/sendNSms.do', $data);
         list($code, $msg) = explode(',', $result . ',');
@@ -63,8 +63,8 @@ class Extend
         $tkey = date("YmdHis");
         $data = [
             'tkey'     => $tkey,
-            'username' => sysconf('sms_username'),
-            'password' => md5(md5(sysconf('sms_password')) . $tkey),
+            'username' => sysconf('sms_zt_username'),
+            'password' => md5(md5(sysconf('sms_zt_password')) . $tkey),
         ];
         $result = Http::post('http://www.ztsms.cn/balanceN.do', $data);
         if ($result > -1) {
