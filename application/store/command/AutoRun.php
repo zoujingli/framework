@@ -31,7 +31,7 @@ class AutoRun extends Command
      */
     protected function configure()
     {
-        $this->setName('xstore:auto')->setDescription('Auto Clear store order data');
+        $this->setName('xstore:auto')->setDescription('Auto clear store order data');
     }
 
     /**
