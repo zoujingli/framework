@@ -103,4 +103,12 @@ class Center extends Member
         $this->error('手机绑定登录失败，请稍候再试！');
     }
 
+    /**
+     * 获取会员资源成功
+     */
+    public function member()
+    {
+        $this->success('获取会员资料成功！', $this->member);
+    }
+
 }
