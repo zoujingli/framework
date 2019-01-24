@@ -15,7 +15,7 @@
 // 动态加载模块初始化文件
 if (function_exists('think\__include_file')) {
     $ds = DIRECTORY_SEPARATOR;
-    foreach (glob(env('app_path') . "{$ds}*{$ds}system.php") as $file) {
+    foreach (glob(env('app_path') . "{$ds}*{$ds}sys.php") as $file) {
         \think\__include_file($file);
     }
 }
