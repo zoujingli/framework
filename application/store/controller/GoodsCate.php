@@ -39,7 +39,7 @@ class GoodsCate extends Controller
     public function index()
     {
         $this->title = '商品分类管理';
-        return $this->_query($this->table)->order('sort asc,id desc')->page();
+        return $this->_query($this->table)->like('title')->equal('status')->order('sort asc,id desc')->page();
     }
 
     /**
