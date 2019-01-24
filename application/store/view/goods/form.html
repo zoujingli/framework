@@ -44,7 +44,7 @@
             <legend>入会礼包配置</legend>
             <div>
                 <div class="layui-form-item block relative">
-                    {foreach ['0'=>'不绑定入会权限','1'=>'临时会员','2'=>'普通会员'] as $k => $v}
+                    {foreach ['0'=>'普通商品','1'=>'临时入会礼包','2'=>'入会礼包'] as $k => $v}
                     {if isset($vo.vip_mod) and $vo.vip_mod eq $k.''}
                     <input type="radio" name="vip_mod" checked value="{$k}" title="{$v}" lay-filter="vipMod">
                     {else}
@@ -72,16 +72,37 @@
                                 if (parseInt(mod) === 0) {
                                     $('[data-vip-month-box]').hide();
                                     $('[data-vip-up-discount-box]').hide();
+                                    $('[data-express2-box]').show();
+                                    $('[data-service-box]').show();
                                 } else if (parseInt(mod) === 1) {
                                     $('[data-vip-month-box]').show().find('input').removeClass('layui-bg-gray').removeAttr('readonly');
                                     $('[data-vip-up-discount-box]').hide();
+                                    $('[data-express2-box]').hide();
+                                    $('[data-service-box]').hide();
                                 } else if (parseInt(mod) === 2) {
                                     $('[data-vip-month-box]').show().find('input').addClass('layui-bg-gray').attr('readonly', 'readonly').val('12');
                                     $('[data-vip-up-discount-box]').show();
+                                    $('[data-express2-box]').hide();
+                                    $('[data-service-box]').hide();
                                 }
                             }
                         });
                     </script>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="margin-bottom-15">
+            <legend>运费及服务费</legend>
+            <div>
+                <div class="layui-form-item block relative">
+                    <div class="inline-block">
+                        <div class="layui-unselect layui-form-radio">
+                            <label>直接购买需运费 <input onblur="this.value=(parseFloat(this.value)||0).toFixed(2)" name="price_express1" value="{$vo.price_express1|default='0.00'}" class="inline-block text-center font-s12 inner-input"> 元；</label><br>
+                            <label data-express2-box>免费领取需运费 <input onblur="this.value=(parseFloat(this.value)||0).toFixed(2)" name="price_express2" value="{$vo.price_express2|default='0.00'}" class="inline-block text-center font-s12 inner-input"> 元；</label>
+                            <label data-service-box>免费领取服务费 <input onblur="this.value=(parseFloat(this.value)||0).toFixed(2)" name="price_service" value="{$vo.price_service|default='0.00'}" class="inline-block text-center font-s12 inner-input"> 元；</label>
+                        </div>
+                    </div>
                 </div>
             </div>
         </fieldset>
@@ -117,9 +138,6 @@
                     <th ng-repeat="x in specsTreeNava track by $index" class="nowrap" ng-bind="x"></th>
                     <th width="10%" class="text-center nowrap">市场价格 <a ng-click="batchSet('market',2)" data-tips-text="批量设置" class="layui-icon">&#xe63c;</a></th>
                     <th width="10%" class="text-center nowrap">销售价格 <a ng-click="batchSet('selling',2)" data-tips-text="批量设置" class="layui-icon">&#xe63c;</a></th>
-                    <th width="10%" class="text-center nowrap">会员价格 <a ng-click="batchSet('member',2)" data-tips-text="批量设置" class="layui-icon">&#xe63c;</a></th>
-                    <th width="10%" class="text-center nowrap">快递费用 <a ng-click="batchSet('express',2)" data-tips-text="批量设置" class="layui-icon">&#xe63c;</a></th>
-                    <th width="10%" class="text-center nowrap">服务费用 <a ng-click="batchSet('service',2)" data-tips-text="批量设置" class="layui-icon">&#xe63c;</a></th>
                     <th width="10%" class="text-center nowrap">虚拟销量 <a ng-click="batchSet('virtual',0)" data-tips-text="批量设置" class="layui-icon">&#xe63c;</a></th>
                     <th width="10%" class="text-center nowrap">销售状态</th>
                 </tr>
@@ -135,21 +153,6 @@
                     <td class="padding-0">
                         <label class="padding-0 margin-0">
                             <input ng-blur="rows[0].selling=setValue(rows[0].key,'selling',$event.target.value,'(parseFloat(_)||0).toFixed(2)')" class="layui-input border-0 padding-left-0 text-center" ng-model="rows[0].selling">
-                        </label>
-                    </td>
-                    <td class="padding-0">
-                        <label class="padding-0 margin-0">
-                            <input ng-blur="rows[0].member=setValue(rows[0].key,'member',$event.target.value,'(parseFloat(_)||0).toFixed(2)')" class="layui-input border-0 padding-left-0 text-center" ng-model="rows[0].member">
-                        </label>
-                    </td>
-                    <td class="padding-0">
-                        <label class="padding-0 margin-0">
-                            <input ng-blur="rows[0].express=setValue(rows[0].key,'express',$event.target.value,'(parseFloat(_)||0).toFixed(2)')" class="layui-input border-0 padding-left-0 text-center" ng-model="rows[0].express">
-                        </label>
-                    </td>
-                    <td class="padding-0">
-                        <label class="padding-0 margin-0">
-                            <input ng-blur="rows[0].service=setValue(rows[0].key,'service',$event.target.value,'(parseFloat(_)||0).toFixed(2)')" class="layui-input border-0 padding-left-0 text-center" ng-model="rows[0].service">
                         </label>
                     </td>
                     <td class="padding-0">
@@ -348,15 +351,6 @@
                             });
                             list[row][0].selling = getValue(_key, function (data) {
                                 return data.selling || '0.00';
-                            });
-                            list[row][0].member = getValue(_key, function (data) {
-                                return data.member || '0.00';
-                            });
-                            list[row][0].express = getValue(_key, function (data) {
-                                return data.express || '0.00';
-                            });
-                            list[row][0].service = getValue(_key, function (data) {
-                                return data.service || '0.00';
                             });
                             list[row][0].status = getValue(_key, function (data) {
                                 return !!(typeof data.status !== 'undefined' ? data.status : true);

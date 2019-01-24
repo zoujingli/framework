@@ -141,8 +141,6 @@ class Goods extends Controller
                 'goods_spec'     => $vo[0]['key'],
                 'price_market'   => $vo[0]['market'],
                 'price_selling'  => $vo[0]['selling'],
-                'price_member'   => $vo[0]['member'],
-                'price_express'  => $vo[0]['express'],
                 'number_virtual' => $vo[0]['virtual'],
                 'status'         => $vo[0]['status'] ? 1 : 0,
             ], 'goods_spec', ['goods_id' => $data['id']]);

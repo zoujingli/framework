@@ -35,20 +35,26 @@ class Order extends Member
      */
     public function set()
     {
-        $rule = $this->request->post('rule');
+        // 订单类型
+        $type = $this->request->post('type', '1'); # 1 普通订单,2 免费领取订单
+        if (!in_array($type, ['1', '2'])) $this->error('订单类型错误！');
+        // 商品规则
+        $rule = $this->request->post('rule', '');
         if (empty($rule)) $this->error('下单商品规则不能为空！');
+        // 订单处理
         list($order, $orderList) = [[], []];
-        $order['mid'] = $this->member['id'];
+        $order['type'] = $type;
+        $order['mid'] = $this->mid;
         $order['order_no'] = Data::uniqidNumberCode(12);
         foreach (explode('||', $rule) as $item) {
             list($goods_id, $goods_spec, $number) = explode('@', $item);
-            $map = ['id' => $goods_id, 'status' => '1', 'is_deleted' => '0'];
-            $goods = Db::name('StoreGoods')->field('id,logo,title,image,content,vip_mod,vip_month,vip_discount')->where($map)->find();
+            $goods = Db::name('StoreGoods')->where(['id' => $goods_id, 'status' => '1', 'is_deleted' => '0'])->find();
             if (empty($goods)) $this->error('查询商品主体信息失败，请稍候再试！');
             $goodsSpec = Db::name('StoreGoodsList')->where(['goods_id' => $goods_id, 'goods_spec' => $goods_spec])->find();
             if (empty($goodsSpec)) $this->error('查询商品规则信息失败，请稍候再试！');
             array_push($orderList, [
                 'mid'           => $order['mid'],
+                'type'          => $order['type'],
                 'order_no'      => $order['order_no'],
                 'goods_id'      => $goods_id,
                 'goods_spec'    => $goods_spec,
@@ -59,10 +65,10 @@ class Order extends Member
                 'vip_discount'  => $goods['vip_discount'],
                 'price_market'  => $goodsSpec['price_market'],
                 'price_selling' => $goodsSpec['price_selling'],
-                'price_member'  => $goodsSpec['price_member'],
-                'price_express' => $goodsSpec['price_express'],
-                'price_service' => $goodsSpec['price_service'],
-                'price_real'    => $goodsSpec['price_member'] * $number,
+                // 服务费，普通订单不收服务费
+                'price_service' => intval($type) === 1 ? '0.00' : $goods['price_service'],
+                'price_express' => intval($type) === 1 ? $goods['price_express1'] : $goods['price_express2'],
+                'price_real'    => intval($type) === 1 ? $goodsSpec['price_selling'] * $number : '0.00',
                 'number'        => $number,
             ]);
         }
