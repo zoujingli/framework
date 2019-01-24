@@ -36,13 +36,17 @@ class Order
     {
         $member = Db::name('StoreMember')->where(['id' => $mid])->find();
         if (empty($member)) return false;
-        $order = Db::name('StoreOrder')->where(['order_no' => $order_no, 'pay_state' => '1'])->find();
-        if (empty($order)) return false;
-        $vipMods = Db::name('StoreOrderList')->where(['order_no' => $order_no])->whereIn('vip_mod', ['1', '2'])->column('vip_mod');
-        if (empty($vipMods)) return false;
-        $vipMod = max($vipMods);
         $isUsedOrder = Db::name('StoreMemberHistory')->where(['order_no' => $order_no])->count() > 0;
         if ($isUsedOrder) return false;
+        $order = Db::name('StoreOrder')->where(['order_no' => $order_no, 'pay_state' => '1'])->find();
+        if (empty($order)) return false;
+        $orderGoods = Db::name('StoreOrderList')->where(['order_no' => $order_no])->whereIn('vip_mod', ['1', '2'])->order('vip_mod desc')->find();
+        if (empty($orderGoods)) return false;
+        $vipMod = intval(max($orderGoods['vip_mod']));
+        if ($vipMod === 1) { # 临时会员获取
 
+        } elseif ($vipMod === 2) { # 普通会员获取
+
+        }
     }
 }
