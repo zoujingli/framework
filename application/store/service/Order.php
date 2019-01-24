@@ -48,9 +48,9 @@ class Order
         if (empty($goods)) return false;
         // @todo 处理会员升级
         switch (intval($goods['vip_mod'])) {
-            case 1: # 临时会员获取
+            case 1: # 临时会员升级
                 break;
-            case 2: # 普通会员获取
+            case 2: # 普通会员升级
                 break;
         }
     }
