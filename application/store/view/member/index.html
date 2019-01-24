@@ -22,8 +22,8 @@
             {notempty name='vo.headimg'}
             <img data-tips-image style="width:40px;height:40px;" src="{$vo.headimg|default=''}" class="pull-left margin-right-5">
             {/notempty}
-            会员昵称：{$vo.nickname|default=''}<br>
-            绑定手机：{$vo.phone|default=''}
+            会员昵称：{$vo.nickname|default='--'}<br>
+            绑定手机：{$vo.phone|default='--'}
         </td>
         <td class='text-left'>
             会员级别：{if $vo.vip_level eq 0} 游客会员
