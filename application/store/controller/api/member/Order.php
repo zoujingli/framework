@@ -86,9 +86,8 @@ class Order extends Member
                 'discount_price' => $isUpdate ? $goods['vip_discount'] : '0.00',
             ]);
         }
-
-        $order['price_goods'] = array_sum(array_column($orderList, 'price_real'));
         $order['price_express'] = max(array_column($orderList, 'price_express'));
+        $order['price_goods'] = array_sum(array_column($orderList, 'price_real'));
         $order['price_service'] = array_sum(array_column($orderList, 'price_service'));
         $order['price_total'] = $order['price_goods'] + $order['price_express'] + $order['price_service'];
         try {
