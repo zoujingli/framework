@@ -40,9 +40,9 @@ class Order
         if ($usedOrderCount) return false;
         $order = Db::name('StoreOrder')->where(['order_no' => $order_no, 'pay_state' => '1'])->find();
         if (empty($order)) return false;
-        $orderGoods = Db::name('StoreOrderList')->where(['order_no' => $order_no])->whereIn('vip_mod', ['1', '2'])->order('vip_mod desc')->find();
-        if (empty($orderGoods)) return false;
-        $vipMod = intval(max($orderGoods['vip_mod']));
+        $goods = Db::name('StoreOrderList')->where(['order_no' => $order_no])->whereIn('vip_mod', ['1', '2'])->order('vip_mod desc')->find();
+        if (empty($goods)) return false;
+        $vipMod = intval(max($goods['vip_mod']));
         if ($vipMod === 1) { # 临时会员获取
 
         } elseif ($vipMod === 2) { # 普通会员获取
