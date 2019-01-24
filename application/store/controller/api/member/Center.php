@@ -61,6 +61,9 @@ class Center extends Member
     public function sendsms()
     {
         $phone = $this->request->post('phone');
+        if ($this->request->post('secure') !== sysconf('sms_secure')) {
+            $this->error('短信发送安全码不正确，请使用正确的安全码！');
+        }
         $member = Db::name('StoreMember')->where(['phone' => $phone])->find();
         if (!empty($member)) $this->error('该手机号已经注册了，请使用其它手机号！');
         $cache = cache($cachekey = "send_register_sms_{$phone}");
