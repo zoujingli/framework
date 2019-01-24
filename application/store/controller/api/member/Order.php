@@ -43,7 +43,7 @@ class Order extends Member
         foreach (explode('||', $rule) as $item) {
             list($goods_id, $goods_spec, $number) = explode('@', $item);
             $map = ['id' => $goods_id, 'status' => '1', 'is_deleted' => '0'];
-            $goods = Db::name('StoreGoods')->field('id,logo,title,image,content')->where($map)->find();
+            $goods = Db::name('StoreGoods')->field('id,logo,title,image,content,vip_mod,vip_month,vip_discount')->where($map)->find();
             if (empty($goods)) $this->error('查询商品主体信息失败，请稍候再试！');
             $goodsSpec = Db::name('StoreGoodsList')->where(['goods_id' => $goods_id, 'goods_spec' => $goods_spec])->find();
             if (empty($goodsSpec)) $this->error('查询商品规则信息失败，请稍候再试！');
