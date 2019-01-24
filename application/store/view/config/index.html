@@ -11,7 +11,7 @@
 
             {if empty($query.code)}
             <div class="layui-code border-0">{$query.msg|default=''}</div>
-            {else}
+            {elseif $query.code eq 1}
             <div class="layui-code border-0">平台剩余 {$query.num|default=0} 条可用短信，{$query.msg|default=''}</div>
             {/if}
 
