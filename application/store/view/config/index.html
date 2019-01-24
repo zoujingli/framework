@@ -37,6 +37,16 @@
 
             <div class="layui-form-item">
                 <label>
+                    <span class="color-green margin-right-10 font-s14">短信发送安全码</span><span class="nowrap color-desc">Secure</span>
+                    <span class="block relative">
+                        <input name="sms_secure" required placeholder="请输入短信发送安全码" value="{:sysconf('sms_secure')}" class="layui-input">
+                    </span>
+                </label>
+                <p class="help-block">短信发送安全码，调用接口发短信时需要传入此参数。</p>
+            </div>
+
+            <div class="layui-form-item">
+                <label>
                     <span class="color-green margin-right-10 font-s14">注册短信模板</span><span class="nowrap color-desc">Template</span>
                     <span class="block relative">
                     <textarea class="layui-textarea" required name="sms_reg_template" placeholder="请输入助通短信平台密码">{:sysconf('sms_reg_template')}</textarea>
