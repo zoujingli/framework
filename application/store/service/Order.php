@@ -46,7 +46,7 @@ class Order
         $where = [['order_no', 'eq', $order_no], ['vip_mod', 'in', ['1', '2']]];
         $goods = Db::name('StoreOrderList')->where($where)->order('vip_mod desc')->find();
         if (empty($goods)) return false;
-        // 处理会员升级
+        // @todo 处理会员升级 
         switch (intval($goods['vip_mod'])) {
             case 1:  # 临时会员获取
                 break;
