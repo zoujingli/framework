@@ -64,7 +64,7 @@ class AutoRun extends Command
         ])->limit(20)->select();
         $order_nos = array_unique(array_column($list, 'order_no'));
         if (count($order_nos) > 0) {
-            $this->output->writeln('clear order: ' . join(',', $order_nos));
+            $this->output->writeln('clear order: ' . join(',' . PHP_EOL . "\t", $order_nos));
             Db::name('StoreOrder')->whereIn('order_no', $order_nos)->delete();
             Db::name('StoreOrderList')->whereIn('order_no', $order_nos)->delete();
         } else {
