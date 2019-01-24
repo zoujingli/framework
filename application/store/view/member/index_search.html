@@ -27,16 +27,19 @@
                 </select>
             </div>
         </div>
-
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label">注册时间</label>
+            <div class="layui-input-inline">
+                <input name="create_at" value="{$Think.get.create_at|default=''}" placeholder="请选择发送时间" class="layui-input">
+            </div>
+        </div>
         <div class="layui-form-item layui-inline">
             <button class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe615;</i> 搜 索</button>
             <button type="button" data-export-list class="layui-btn layui-btn-primary layui-hide"><i class="layui-icon layui-icon-export"></i> 导 出</button>
         </div>
     </form>
     <script>
-        $('[data-export-list]').on('click', function () {
-            window.location.href = '{:url("@")}?s=store/member/index&' + $(this).parents('form').serialize() + '&action=export'
-        });
         form.render();
+        laydate.render({range: true, elem: '[name="create_at"]'})
     </script>
 </fieldset>

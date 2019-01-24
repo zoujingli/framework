@@ -40,7 +40,7 @@ class Member extends Controller
     public function index()
     {
         $this->title = '商城会员管理';
-        $this->_query($this->table)->equal('vip_level')->order('id desc')->page();
+        $this->_query($this->table)->like('nickname,phone')->equal('vip_level')->dateBetween('create_at')->order('id desc')->page();
     }
 
 }
