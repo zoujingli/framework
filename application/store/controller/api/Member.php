@@ -62,8 +62,8 @@ class Member extends Controller
         $this->member['nickname'] = emoji_decode($this->member['nickname']);
         $this->applyTimesCount();
     }
-    
-    private function applyTimesCount()
+
+    protected function applyTimesCount()
     {
         $this->member['times_count'] = 0;
         // 临时会员及VIP1每月只有1次领取机会
@@ -74,6 +74,8 @@ class Member extends Controller
         if (intval($this->member['vip_level']) === 3) {
             $this->member['times_count'] = 2;
         }
+        // 已经使用次数
+        $this->member['times_used'] = 0;
     }
 
 }
