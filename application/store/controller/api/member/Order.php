@@ -38,6 +38,9 @@ class Order extends Member
         // 订单类型
         $type = $this->request->post('type', '1'); # 1 普通订单,2 免费领取订单
         if (!in_array($type, ['1', '2'])) $this->error('订单类型错误！');
+        if (intval($type) === 2 && $this->member['times_count'] <= $this->member['times_used']) {
+            $this->error('本月免费领取额度已经用完了，下个月再来领取吧！');
+        }
         // 商品规则
         $rule = $this->request->post('rule', '');
         if (empty($rule)) $this->error('下单商品规则不能为空！');
@@ -62,7 +65,7 @@ class Order extends Member
             if (empty($goodsSpec)) $this->error('查询商品规则信息失败，请稍候再试！');
             // 会员升级状态处理（ 普通订单 & 礼包商品 & VIP1）
             $isUpdate = false;
-            if (intval($goods['vip_mod']) === 2 && intval($type) === 1) {
+            if (intval($type) === 1 && intval($goods['vip_mod']) === 2) {
                 if (intval($this->member['vip_level']) === 2) $isUpdate = true;
             }
             // 根据会员升级状态及商品类型，计算商品实际金额
