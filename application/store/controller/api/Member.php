@@ -41,7 +41,7 @@ class Member extends Controller
      * @var string
      */
     protected $openid;
-    
+
     /**
      * Member constructor.
      * @throws \think\db\exception\DataNotFoundException
@@ -84,6 +84,7 @@ class Member extends Controller
         // 会员当前已经领取次数
         $where = [['mid', 'eq', $this->mid], ['status', 'in', ['2', '3', '4', '5']]];
         $this->member['times_used'] = Db::name('StoreOrder')->where($where)->count();
+        return $this->member;
     }
 
 }
