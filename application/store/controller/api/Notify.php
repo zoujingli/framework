@@ -12,14 +12,13 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-
 namespace app\store\controller\api;
 
 use app\store\service\Order;
 use think\Db;
 
 /**
- * 通知处理
+ * 支付通知处理
  * Class Notify
  * @package app\store\controller\api
  */
