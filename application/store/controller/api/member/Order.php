@@ -44,9 +44,15 @@ class Order extends Member
         // 订单处理
         list($order, $orderList) = [[], []];
         $order['order_no'] = Data::uniqidNumberCode(12);
+        list($order['mid'], $order['type'], $order['status']) = [$this->mid, $type, '1'];
+        // 推荐人会员ID处理
         $order['from_mid'] = $this->request->post('from_mid', '0');
         if (intval($order['from_mid']) === intval($this->mid)) $order['from_mid'] = '0';
-        list($order['mid'], $order['type'], $order['status']) = [$this->mid, $type, '1'];
+        if ($order['from_mid'] > 0) {
+            if (Db::name('StoreMember')->where(['id' => $order['from_mid']])->count() < 1) {
+                $this->error('无效的推荐会员ID，稍候再试！');
+            }
+        }
         foreach (explode('||', $rule) as $item) {
             list($goods_id, $goods_spec, $number) = explode('@', $item);
             // 商品信息检查
