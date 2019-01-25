@@ -82,7 +82,7 @@ class Goods extends Controller
                 array_push($vo['list'], $goods);
             }
         }
-        $this->success('获取商品列表成功！', ['list' => $list]);
+        $this->success('获取礼包列表成功！', ['list' => $list]);
     }
 
     /**
