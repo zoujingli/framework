@@ -155,7 +155,7 @@ class Order extends Member
         $order = Db::name('StoreOrder')->where(['order_no' => $order_no])->find();
         if (empty($order_no)) $this->error('获取订单信息异常，请稍候再试！');
         if ($order['pay_state']) $this->error('订单已经完成支付，不需要再次支付！');
-        if ($order['status'] <> 3) $this->error('该订单不能发起支付哦！');
+        if ($order['status'] <> 2) $this->error('该订单不能发起支付哦！');
         try {
             $param = $this->getPayParams($order['order_no'], $order['price_total']);
             $this->success('获取订单支付参数成功！', $param);
