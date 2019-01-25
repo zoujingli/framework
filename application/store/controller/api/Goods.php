@@ -56,6 +56,36 @@ class Goods extends Controller
     }
 
     /**
+     * 获取礼包商品列表
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function vips()
+    {
+        $where = [['status', 'eq', '1'], ['vip_mod', 'neq', '0'], ['is_deleted', 'eq', '0']];
+        if ($this->request->has('title', 'post', true)) {
+            $where[] = ['title', 'like', "%{$this->request->post('title')}%"];
+        }
+        if ($this->request->has('cate_id', 'post', true)) {
+            $where[] = ['cate_id', 'eq', $this->request->post('cate_id')];
+        }
+        $field = 'id,title,logo,specs,lists,cate_id,image,content,number_sales,number_stock';
+        $list = Db::name('StoreGoods')->field($field)->where($where)->order('sort asc,id desc')->select();
+        $goodsList = Db::name('StoreGoodsList')->whereIn('goods_id', array_unique(array_column($list, 'id')))->select();
+        foreach ($list as &$vo) {
+            $vo['list'] = [];
+            $vo['image'] = explode('|', $vo['image']);
+            $vo['specs'] = json_decode($vo['specs'], true);
+            $vo['lists'] = json_decode($vo['lists'], true);
+            foreach ($goodsList as $goods) if ($goods['goods_id'] === $vo['id']) {
+                array_push($vo['list'], $goods);
+            }
+        }
+        $this->success('获取商品列表成功！', ['list' => $list]);
+    }
+
+    /**
      * 获取单个商品信息
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
