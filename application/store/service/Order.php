@@ -46,12 +46,62 @@ class Order
         $where = [['order_no', 'eq', $order_no], ['vip_mod', 'in', ['1', '2']]];
         $goods = Db::name('StoreOrderList')->where($where)->order('vip_mod desc')->find();
         if (empty($goods)) return false;
-        // @todo 处理会员升级
-        switch (intval($goods['vip_mod'])) {
-            case 1: # 临时会员升级
-                break;
-            case 2: # 普通会员升级
-                break;
+        try {
+            $history = ['mid' => $mid, 'order_no' => $order_no, 'from_level' => $member['vip_level'], 'from_date' => $member['vip_date']];
+            Db::transaction(function () use ($mid, $history, $member, $goods) {
+                // 游客会员
+                if (intval($member['vip_level']) === 0 && in_array(intval($goods['vip_mod']), [1, 2])) {
+                    if (intval($goods['vip_mod']) === 1) { # 购买临时礼包，升级临时会员
+                        $history['to_level'] = '1';
+                        $history['to_date'] = date('Y-m-d', strtotime("+{$goods['vip_month']} month"));
+                        $history['desc'] = '游客会员购买临时礼包升级临时会员';
+                    }
+                    if (intval($goods['vip_mod']) === 2) { # 购买普通礼包，升级到VIP1
+                        $history['to_level'] = '2';
+                        $history['to_date'] = date('Y-m-d', strtotime("+{$goods['vip_month']} month"));
+                        $history['desc'] = '游客会员购买临时礼包直接续期';
+                    }
+                    Db::name('StoreMemberHistory')->insert($history);
+                    Db::name('StoreMember')->where(['id' => $mid])->update(['vip_level' => $history['to_level'], 'vip_date' => $history['to_date']]);
+                }
+                // 临时会员
+                if (intval($member['vip_level']) === 1 && in_array(intval($goods['vip_mod']), [1, 2])) {
+                    if (intval($goods['vip_mod']) === 1) { # 购买临时礼包直接续期会员等级
+                        $history['to_level'] = '1';
+                        $history['to_date'] = date('Y-m-d', strtotime("+{$goods['vip_month']} month"));
+                        $history['desc'] = '临时会员购买普通礼包直接续期';
+                    }
+                    if (intval($goods['vip_mod']) === 2) { # 购买普通礼包升级到VIP1
+                        $history['to_level'] = '2';
+                        $history['to_date'] = date('Y-m-d', strtotime("+{$goods['vip_month']} month"));
+                        $history['desc'] = '临时会员购买普通礼包升级VIP1';
+                    }
+                    Db::name('StoreMemberHistory')->insert($history);
+                    Db::name('StoreMember')->where(['id' => $mid])->update(['vip_level' => $history['to_level'], 'vip_date' => $history['to_date']]);
+                    return true;
+                }
+                // VIP1会员，购买会员礼包升级到VIP2
+                if (intval($member['vip_level']) === 2 && intval($goods['vip_mod']) === 2) {
+                    $history['to_level'] = '3';
+                    $history['to_date'] = $member['vip_date'];
+                    $history['desc'] = 'VIP1购买普通礼包升级VIP2';
+                    Db::name('StoreMemberHistory')->insert($history);
+                    Db::name('StoreMember')->where(['id' => $mid])->update(['vip_level' => $history['to_level'], 'vip_date' => $history['to_date']]);
+                    return true;
+                }
+                // VIP2会员, 购买会员礼包直接续期会员等级
+                if (intval($member['vip_level']) === 3 && intval($goods['vip_mod']) === 2) {
+                    $history['to_level'] = '3';
+                    $history['to_date'] = date('Y-m-d', strtotime("+{$goods['vip_month']} month"));
+                    $history['desc'] = 'VIP2购买普通礼包直接VIP2续期';
+                    Db::name('StoreMemberHistory')->insert($history);
+                    Db::name('StoreMember')->where(['id' => $mid])->update(['vip_level' => $history['to_level'], 'vip_date' => $history['to_date']]);
+                    return true;
+                }
+            });
+            return true;
+        } catch (\Exception $e) {
+            return false;
         }
     }
 }
