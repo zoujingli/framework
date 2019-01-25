@@ -41,7 +41,7 @@ class Member extends Controller
      * @var string
      */
     protected $openid;
-
+    
     /**
      * Member constructor.
      * @throws \think\db\exception\DataNotFoundException
@@ -56,8 +56,15 @@ class Member extends Controller
         $this->openid = $this->request->post('openid');
         if (empty($this->mid)) $this->error('无效的会员ID参数！');
         if (empty($this->openid)) $this->error('无效的会员绑定OPENID！');
+        $this->getMember();
     }
 
+    /**
+     * 获取会员信息
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
     protected function getMember()
     {
         $where = ['id' => $this->mid, 'openid' => $this->openid];
