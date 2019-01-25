@@ -47,18 +47,20 @@ class Order
         $goods = Db::name('StoreOrderList')->where($where)->order('vip_mod desc')->find();
         if (empty($goods)) return false;
         try {
+            $toTime = time();
+            if (!empty($member['vip_date']) && $member['vip_date'] > date('Y-m-d')) $toTime = strtotime("{$member['vip_date']} 12:00:00");
             $history = ['mid' => $mid, 'order_no' => $order_no, 'from_level' => $member['vip_level'], 'from_date' => $member['vip_date']];
-            Db::transaction(function () use ($mid, $history, $member, $goods) {
+            Db::transaction(function () use ($mid, $history, $member, $goods, $toTime) {
                 // 游客会员
                 if (intval($member['vip_level']) === 0 && in_array(intval($goods['vip_mod']), [1, 2])) {
                     if (intval($goods['vip_mod']) === 1) { # 购买临时礼包，升级临时会员
                         $history['to_level'] = '1';
-                        $history['to_date'] = date('Y-m-d', strtotime("+{$goods['vip_month']} month"));
+                        $history['to_date'] = date('Y-m-d', strtotime("+{$goods['vip_month']} month", $toTime));
                         $history['desc'] = '游客会员购买临时礼包升级临时会员';
                     }
                     if (intval($goods['vip_mod']) === 2) { # 购买普通礼包，升级到VIP1
                         $history['to_level'] = '2';
-                        $history['to_date'] = date('Y-m-d', strtotime("+{$goods['vip_month']} month"));
+                        $history['to_date'] = date('Y-m-d', strtotime("+{$goods['vip_month']} month", $toTime));
                         $history['desc'] = '游客会员购买临时礼包直接续期';
                     }
                     Db::name('StoreMemberHistory')->insert($history);
@@ -68,12 +70,12 @@ class Order
                 if (intval($member['vip_level']) === 1 && in_array(intval($goods['vip_mod']), [1, 2])) {
                     if (intval($goods['vip_mod']) === 1) { # 购买临时礼包直接续期会员等级
                         $history['to_level'] = '1';
-                        $history['to_date'] = date('Y-m-d', strtotime("+{$goods['vip_month']} month"));
+                        $history['to_date'] = date('Y-m-d', strtotime("+{$goods['vip_month']} month", $toTime));
                         $history['desc'] = '临时会员购买普通礼包直接续期';
                     }
                     if (intval($goods['vip_mod']) === 2) { # 购买普通礼包升级到VIP1
                         $history['to_level'] = '2';
-                        $history['to_date'] = date('Y-m-d', strtotime("+{$goods['vip_month']} month"));
+                        $history['to_date'] = date('Y-m-d', strtotime("+{$goods['vip_month']} month", $toTime));
                         $history['desc'] = '临时会员购买普通礼包升级VIP1';
                     }
                     Db::name('StoreMemberHistory')->insert($history);
@@ -92,7 +94,7 @@ class Order
                 // VIP2会员, 购买会员礼包直接续期会员等级
                 if (intval($member['vip_level']) === 3 && intval($goods['vip_mod']) === 2) {
                     $history['to_level'] = '3';
-                    $history['to_date'] = date('Y-m-d', strtotime("+{$goods['vip_month']} month"));
+                    $history['to_date'] = date('Y-m-d', strtotime("+{$goods['vip_month']} month", $toTime));
                     $history['desc'] = 'VIP2购买普通礼包直接VIP2续期';
                     Db::name('StoreMemberHistory')->insert($history);
                     Db::name('StoreMember')->where(['id' => $mid])->update(['vip_level' => $history['to_level'], 'vip_date' => $history['to_date']]);
