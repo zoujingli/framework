@@ -56,15 +56,14 @@ class Member extends Controller
         $this->openid = $this->request->post('openid');
         if (empty($this->mid)) $this->error('无效的会员ID参数！');
         if (empty($this->openid)) $this->error('无效的会员绑定OPENID！');
+    }
+
+    protected function getMember()
+    {
         $where = ['id' => $this->mid, 'openid' => $this->openid];
         $this->member = Db::name('StoreMember')->where($where)->find();
         if (empty($this->member)) $this->error('无效的会员信息，请重新登录授权！');
         $this->member['nickname'] = emoji_decode($this->member['nickname']);
-        $this->applyTimesCount();
-    }
-
-    protected function applyTimesCount()
-    {
         // 游客会员每月没有领取机会
         $this->member['times_count'] = 0;
         // 临时会员及VIP1每月只有1次领取机会

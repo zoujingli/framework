@@ -45,8 +45,7 @@ class Center extends Member
         if (empty($data)) $this->error('没有需要修改的数据哦！');
         $data['id'] = $this->member['id'];
         if (data_save('StoreMember', $data, 'id')) {
-            $where = ['id' => $this->mid, 'openid' => $this->openid];
-            $this->success('会员资料更新成功！', Db::name('StoreMember')->where($where)->find());
+            $this->success('会员资料更新成功！', $this->getMember());
         }
         $this->error('会员资料更新失败，请稍候再试！');
     }
