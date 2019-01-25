@@ -84,7 +84,7 @@ class Page extends Controller
     protected function _form_filter(&$post = [])
     {
         if ($this->request->isGet()) {
-            $where = ['is_deleted' => '0', 'status' => '1', 'vip_mod' => '0'];
+            $where = ['is_deleted' => '0', 'status' => '1'];
             $this->goodsList = Db::name('StoreGoods')->where($where)->order('sort asc,id desc')->select();
             if (isset($post['one'])) $post['one'] = json_decode($post['one'], true);
             if (isset($post['mul'])) $post['mul'] = json_decode($post['mul'], true);
