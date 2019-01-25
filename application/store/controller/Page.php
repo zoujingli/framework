@@ -86,6 +86,10 @@ class Page extends Controller
         if ($this->request->isGet()) {
             $where = ['is_deleted' => '0', 'status' => '1'];
             $this->goodsList = Db::name('StoreGoods')->where($where)->order('sort asc,id desc')->select();
+            $maps = ['普通商品', '临时礼包', '会员礼包'];
+            foreach ($this->goodsList as &$vo) {
+                $vo['title'] = (isset($maps[$vo['vip_mod']]) ? "【{$maps[$vo['vip_mod']]}】" : '【类型异常】') . $vo['title'];
+            }
             if (isset($post['one'])) $post['one'] = json_decode($post['one'], true);
             if (isset($post['mul'])) $post['mul'] = json_decode($post['mul'], true);
         } else foreach (['one', 'mul'] as $type) {
