@@ -76,7 +76,8 @@ class Member extends Controller
             $this->member['times_count'] = 2;
         }
         // 已经使用次数
-        $this->member['times_used'] = 0;
+        $where = [['mid', 'eq', $this->mid], ['status', 'in', ['2', '3', '4', '5']]];
+        $this->member['times_used'] = Db::name('StoreOrder')->where($where)->count();
     }
 
 }
