@@ -60,6 +60,11 @@ class Member extends Controller
         $this->member = Db::name('StoreMember')->where($where)->find();
         if (empty($this->member)) $this->error('无效的会员信息，请重新登录授权！');
         $this->member['nickname'] = emoji_decode($this->member['nickname']);
+        $this->applyTimesCount();
+    }
+    
+    private function applyTimesCount()
+    {
         $this->member['times_count'] = 0;
         // 临时会员及VIP1每月只有1次领取机会
         if (in_array(intval($this->member['vip_level']), [1, 2])) {
