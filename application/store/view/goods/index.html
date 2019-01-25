@@ -43,17 +43,18 @@
         <td class='list-table-sort-td'><input data-action-blur="{:request()->url()}" data-value="id#{$vo.id};action#sort;sort#{value}" data-loading="false" value="{$vo.sort}" class="list-sort-input"></td>
         <td class='text-left nowrap'>
             {notempty name='vo.logo'}
-            <img data-tips-image style="width:40px;height:40px;vertical-align:top" src="{$vo.logo|default=''}" class="margin-right-5">
+            <img data-tips-image style="width:60px;height:60px;vertical-align:top" src="{$vo.logo|default=''}" class="margin-right-5">
             {/notempty}
             <div class="inline-block">
                 分类：{$vo.cate.title|default='--'}<br>
+                类型：{$vo.type|default=''}{if $vo.vip_month>0}({$vo.vip_month|default=0}月){/if}<br>
                 商品：{$vo.title|default='--'}
             </div>
         </td>
         <td class='text-left nowrap padding-0 relative'>
-            <div style="overflow:auto;max-height:56px;padding:5px 0">
+            <div style="overflow:auto;max-height:68px;padding:5px 0">
                 {foreach $vo.list as $goods}
-                <div class="layui-row" style="line-height:28px">
+                <div class="layui-row" style="line-height:23px">
                     <div class="layui-col-xs4 text-center layui-elip font-s10">{:str_replace(['::',';;'],[':',';'],$goods.goods_spec)}</div>
                     <div class="layui-col-xs2 text-center layui-elip color-blue font-s10">{$goods.price_market+0}</div>
                     <div class="layui-col-xs2 text-center layui-elip color-blue font-s10">{$goods.price_selling+0}</div>
@@ -64,8 +65,9 @@
             </div>
         </td>
         <td class='text-left nowrap'>
+            服务：{$vo.price_service|default='--'}<br>
+            快递：{$vo.price_express1|default='--'} / {$vo.price_express2|default='--'}<br>
             状态：{eq name='vo.status' value='0'}<span class="layui-badge">已下架</span>{else}<span class="layui-badge layui-bg-green">销售中</span>{/eq}<br>
-            类型：{$vo.type|default=''}{if $vo.vip_month>0}({$vo.vip_month|default=0}月){/if}<br>
         </td>
         <td class='text-left nowrap'>
 
