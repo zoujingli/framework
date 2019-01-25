@@ -28,7 +28,12 @@
         <p class="help-block">通过该 URL 接收微信消息和事件推送，该参数按规则填写，实际接收消息时 $APPID$ 将被替换为微信 AppId</p>
     </div>
     <div class="layui-form-item">
-        <p class="color-green">客户端系统Soap接口URL</p>
+        <p class="color-green">客户端系统 Yar 模式接口</p>
+        <label class="relative block"><input disabled class="layui-input layui-bg-gray" value="{:url('@service/api.client/yar/PARAM','',false,true)}"></label>
+        <p class="help-block">客户端系统 Yar 接口 URL，PARAM 由调用参数组成（AppName-AppId-AppKey-AppType）</p>
+    </div>
+    <div class="layui-form-item">
+        <p class="color-green">客户端系统 Soap 模式接口</p>
         <label class="relative block"><input disabled class="layui-input layui-bg-gray" value="{:url('@service/api.client/soap/PARAM','',false,true)}"></label>
         <p class="help-block">客户端系统 Soap 接口 URL，PARAM 由调用参数组成（AppName-AppId-AppKey-AppType）</p>
     </div>
