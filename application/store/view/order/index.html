@@ -23,13 +23,15 @@
         <td class='list-table-check-td think-checkbox'>
             <input class="list-check-box" value='{$vo.id}' type='checkbox'>
         </td>
-        <td class="text-left nowrap relative" style="overflow:hidden">
+        <td class="text-left nowrap relative" style="overflow:hidden;">
             {notempty name='vo.member.headimg'}
-            <img data-tips-image style="width:60px;height:60px;" src="{$vo.member.headimg|default=''}" class="pull-left margin-right-5">
+            <img data-tips-image style="width:60px;height:60px;vertical-align:top" src="{$vo.member.headimg|default=''}" class="margin-right-5">
             {/notempty}
-            会员昵称：{$vo.member.nickname|default=''}<br>
-            代理编号：{$vo.member.agent.code|default='--'}<br>
-            会员手机：{$vo.member.phone|default=''}<br>
+            <div class="inline-block">
+                会员昵称：{$vo.member.nickname|default=''}<br>
+                代理编号：{$vo.member.agent.code|default='--'}<br>
+                会员手机：{$vo.member.phone|default='--'}<br>
+            </div>
         </td>
         <td class='text-left nowrap'>
             订单单号：<span class="color-blue">{$vo.order_no|default=''}</span>

@@ -43,8 +43,10 @@ class Order extends Member
         if (empty($rule)) $this->error('下单商品规则不能为空！');
         // 订单处理
         list($order, $orderList) = [[], []];
-        list($order['mid'], $order['type'], $order['status']) = [$this->mid, $type, '1'];
         $order['order_no'] = Data::uniqidNumberCode(12);
+        $order['from_mid'] = $this->request->post('from_mid', '0');
+        if (intval($order['from_mid']) === intval($this->mid)) $order['form_mid'] = 0;
+        list($order['mid'], $order['type'], $order['status']) = [$this->mid, $type, '1'];
         foreach (explode('||', $rule) as $item) {
             list($goods_id, $goods_spec, $number) = explode('@', $item);
             // 商品信息检查
