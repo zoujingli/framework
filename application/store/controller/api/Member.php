@@ -75,7 +75,7 @@ class Member extends Controller
         if (intval($this->member['vip_level']) === 3) {
             $this->member['times_count'] = 2;
         }
-        // 已经使用次数
+        // 会员当前已经领取次数
         $where = [['mid', 'eq', $this->mid], ['status', 'in', ['2', '3', '4', '5']]];
         $this->member['times_used'] = Db::name('StoreOrder')->where($where)->count();
     }
