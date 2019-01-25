@@ -41,8 +41,11 @@ class Publish
      */
     public static function handler($appid)
     {
-        /* 创建接口操作对象 */
-        $wechat = Wechat::WeChatReceive($appid);
+        try {
+            $wechat = Wechat::WeChatReceive($appid);
+        } catch (\Exception $e) {
+            return "Wechat message handling failed, {$e->getMessage()}";
+        }
         /* 分别执行对应类型的操作 */
         switch (strtolower($wechat->getMsgType())) {
             case 'text':

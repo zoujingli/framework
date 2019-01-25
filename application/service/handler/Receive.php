@@ -37,7 +37,11 @@ class Receive
      */
     public static function handler($appid)
     {
-        $service = Wechat::WeChatReceive($appid);
+        try {
+            $service = Wechat::WeChatReceive($appid);
+        } catch (\Exception $e) {
+            return "Wechat message handling failed, {$e->getMessage()}";
+        }
         // 验证微信配置信息
         $config = Db::name('WechatServiceConfig')->where(['authorizer_appid' => $appid])->find();
         if (empty($config) || empty($config['appuri'])) {
