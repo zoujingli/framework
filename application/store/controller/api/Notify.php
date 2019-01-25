@@ -15,6 +15,7 @@
 
 namespace app\store\controller\api;
 
+use app\store\service\Order;
 use think\Db;
 
 /**
@@ -55,17 +56,17 @@ class Notify
     private function update($order_no, $pay_no, $pay_price, $type = 'wechat')
     {
         // 检查订单支付状态
-        $map = ['order_no' => $order_no, 'pay_state' => '1', 'status' => '3'];
-        if (Db::name('StoreOrder')->where($map)->count() > 0) return false;
+        $where = ['order_no' => $order_no, 'pay_state' => '0', 'status' => '2'];
+        $order = Db::name('StoreOrder')->where($where)->find();
+        if (empty($order)) return false;
         // 更新订单支付状态
-        return Db::name('StoreOrder')->where(['pay_state' => '0', 'order_no' => $order_no])->update([
-                'status'    => '3',
-                'pay_type'  => $type,
-                'pay_no'    => $pay_no,
-                'pay_price' => $pay_price,
-                'pay_state' => '1',
-                'pay_at'    => date('Y-m-d H:i:s'),
-            ]) != false;
+        $result = Db::name('StoreOrder')->where($where)->update([
+            'pay_type'  => $type, 'pay_no' => $pay_no, 'status' => '3',
+            'pay_price' => $pay_price, 'pay_state' => '1', 'pay_at' => date('Y-m-d H:i:s'),
+        ]);
+        // 调用会员升级机制
+        Order::update($order['mid'], $order['order_no']);
+        return $result !== false;
     }
 
 }
