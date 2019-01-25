@@ -65,6 +65,7 @@ class Member extends Controller
 
     protected function applyTimesCount()
     {
+        // 游客会员每月没有领取机会
         $this->member['times_count'] = 0;
         // 临时会员及VIP1每月只有1次领取机会
         if (in_array(intval($this->member['vip_level']), [1, 2])) {
