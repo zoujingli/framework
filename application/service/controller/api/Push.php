@@ -60,19 +60,22 @@ class Push extends Controller
      */
     public function ticket()
     {
-        $server = Wechat::service();
-        if (!($data = $server->getComonentTicket())) {
-            return "Ticket event handling failed.";
+        try {
+            $server = Wechat::service();
+            if (!($data = $server->getComonentTicket())) {
+                return "Ticket event handling failed.";
+            }
+        } catch (\Exception $e) {
+            return "Ticket event handling failed, {$e->getMessage()}";
         }
         if (!empty($data['AuthorizerAppid']) && isset($data['InfoType'])) {
-            $where = ['authorizer_appid' => $data['AuthorizerAppid']];
             # 授权成功通知
             if ($data['InfoType'] === 'authorized') {
-                Db::name('WechatServiceConfig')->where($where)->update(['is_deleted' => '0']);
+                Db::name('WechatServiceConfig')->where(['authorizer_appid' => $data['AuthorizerAppid']])->update(['is_deleted' => '0']);
             }
             # 接收取消授权服务事件
             if ($data['InfoType'] === 'unauthorized') {
-                Db::name('WechatServiceConfig')->where($where)->update(['is_deleted' => '1']);
+                Db::name('WechatServiceConfig')->where(['authorizer_appid' => $data['AuthorizerAppid']])->update(['is_deleted' => '1']);
             }
             # 授权更新通知
             if ($data['InfoType'] === 'updateauthorized') {
