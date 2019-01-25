@@ -35,7 +35,7 @@
                     </div>
                     <div class="layui-form-item block relative">
                         <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px">*</sup>绑定商品</h3>
-                        <select name="one[goods]" class="layui-select">
+                        <select name="one[goods]" class="layui-select" lay-search>
                             {foreach $goodsList as $v}
                             {if isset($vo.one.goods) and $vo.one.goods eq $v.id}
                             <option selected value="{$v.id}">{$v.title|default=''}</option>
@@ -57,7 +57,7 @@
                         <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px">*</sup>绑定商品</h3>
                         <div class="layui-row">
                             <div class="layui-col-xs8">
-                                <select name="mul[goods][]" class="layui-select">
+                                <select name="mul[goods][]" class="layui-select" lay-search>
                                     {foreach $goodsList as $v}
                                     {if $g eq $v.id}
                                     <option selected value="{$v.id}">{$v.title|default=''}</option>
@@ -98,7 +98,7 @@
         <h3 class="color-green"><sup class='color-red font-s14 absolute' style="margin-left:-10px">*</sup>绑定商品</h3>
         <div class="layui-row">
             <div class="layui-col-xs8">
-                <select name="mul[goods][]" class="layui-select">
+                <select name="mul[goods][]" class="layui-select" lay-search>
                     {foreach $goodsList as $v}
                     {if isset($data.goods) and $data.goods eq $v.id}
                     <option selected value="{$v.id}">{$v.title|default=''}</option>
