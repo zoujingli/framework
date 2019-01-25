@@ -15,16 +15,7 @@
         <div class="layui-form-item layui-inline">
             <label class="layui-form-label">任务名称</label>
             <div class="layui-input-inline">
-                <select class="layui-select" name="title" lay-search>
-                    <option value="">-- 全部 --</option>
-                    {foreach $titles as $title}
-                    <!--{eq name='Think.get.title' value='$title'}-->
-                    <option selected value="{$title}">{$title}</option>
-                    <!--{else}-->
-                    <option value="{$title}">{$title}</option>
-                    <!--{/eq}-->
-                    {/foreach}
-                </select>
+                <input name="title" value="{$Think.get.title|default=''}" placeholder="请输入任务名称" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item layui-inline">

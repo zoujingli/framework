@@ -23,10 +23,10 @@
             </div>
         </div>
         <div class="layui-form-item layui-inline">
-            <label class="layui-form-label">入会权限</label>
+            <label class="layui-form-label">商品类型</label>
             <div class="layui-input-inline">
                 <select class="layui-select" name="vip_mod">
-                    {foreach [''=>'- 全部商品 -','2'=>'普通会员权限','1'=>'临时会员权限','0'=>'无权限'] as $k=>$v}
+                    {foreach [''=>'- 全部商品 -','0'=>'普通商品','1'=>'临时礼包','2'=>'会员礼包'] as $k=>$v}
                     <!--{eq name='Think.get.vip_mod' value='$k.""'}-->
                     <option selected value="{$k}">{$v}</option>
                     <!--{else}-->
