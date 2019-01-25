@@ -179,7 +179,7 @@ class Wechat extends \We
     {
         $appid = self::getAppid();
         list($openid, $fansinfo) = [session("{$appid}_openid"), session("{$appid}_fansinfo")];
-        if ((empty($isfull) && !empty($openid)) || (!empty($isfull) && !empty($fansinfo))) {
+        if ((empty($isfull) && !empty($openid)) || (!empty($isfull) && !empty($openid) && !empty($fansinfo))) {
             empty($fansinfo) || Fans::set($fansinfo);
             return ['openid' => $openid, 'fansinfo' => $fansinfo];
         }
@@ -202,11 +202,10 @@ class Wechat extends \We
             }
             redirect(decode(request()->get('rcode')), [], 301)->send();
         } else {
-            $service = self::wechat();
-            $result = $service->oauth(session_id(), $url, $isfull);
+            $result = self::wechat()->oauth(session_id(), $url, $isfull);
             session("{$appid}_openid", $openid = $result['openid']);
             session("{$appid}_fansinfo", $fansinfo = $result['fans']);
-            if ((empty($isfull) && !empty($openid)) || (!empty($isfull) && !empty($fansinfo))) {
+            if ((empty($isfull) && !empty($openid)) || (!empty($isfull) && !empty($openid) && !empty($fansinfo))) {
                 empty($fansinfo) || Fans::set($fansinfo);
                 return ['openid' => $openid, 'fansinfo' => $fansinfo];
             }
