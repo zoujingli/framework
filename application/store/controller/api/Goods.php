@@ -90,7 +90,7 @@ class Goods extends Controller
     {
         $goods_id = input('goods_id');
         $where = ['is_deleted' => '0', 'status' => '1', 'id' => $goods_id];
-        $field = 'id,title,logo,specs,lists,cate_id,image,content,number_sales,number_stock';
+        $field = 'id,title,logo,specs,lists,cate_id,image,content,number_sales,number_stock,vip_mod,vip_month,vip_discount';
         $goods = Db::name('StoreGoods')->field($field)->where($where)->find();
         if (empty($goods)) $this->error('指定商品不存在，请更换商品ID重试！');
         $goods['image'] = explode('|', $goods['image']);
