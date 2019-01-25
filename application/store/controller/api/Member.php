@@ -55,7 +55,7 @@ class Member extends Controller
         $this->mid = $this->request->post('mid');
         $this->openid = $this->request->post('openid');
         if (empty($this->mid)) $this->error('无效的会员ID参数！');
-        if (empty($this->openid)) $this->error('无效的会员绑定的OPENID！');
+        if (empty($this->openid)) $this->error('无效的会员绑定OPENID！');
         $where = ['id' => $this->mid, 'openid' => $this->openid];
         $this->member = Db::name('StoreMember')->where($where)->find();
         if (empty($this->member)) $this->error('无效的会员信息，请重新登录授权！');
