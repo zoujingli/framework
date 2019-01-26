@@ -61,7 +61,7 @@ class Wechat extends \We
             // 微信支付必要参数
             'mch_id'         => sysconf('wechat_mch_id'),
             'mch_key'        => sysconf('wechat_mch_key'),
-            'cachepath'      => env('runtime_path') . 'wechat' . DIRECTORY_SEPARATOR,
+            'cache_path'     => env('runtime_path') . 'wechat' . DIRECTORY_SEPARATOR,
         ];
         if (sysconf('wechat_mch_ssl_type') === 'p12') {
             $options['ssl_p12'] = self::_parseCertPath(sysconf('wechat_mch_ssl_p12'));
