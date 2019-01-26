@@ -15,6 +15,7 @@
 namespace app\store\controller\api\member;
 
 use app\store\controller\api\Member;
+use app\store\service\Goods;
 use library\tools\Data;
 use think\Db;
 
@@ -45,7 +46,7 @@ class Order extends Member
         $rule = $this->request->post('rule', '');
         if (empty($rule)) $this->error('下单商品规则不能为空！');
         // 订单处理
-        list($order, $orderList) = [[], []];
+        list($order, $orderList, $goodsIds) = [[], [], []];
         $order['order_no'] = Data::uniqidNumberCode(12);
         list($order['mid'], $order['type'], $order['status']) = [$this->mid, $type, '1'];
         // 推荐人会员ID处理
@@ -63,6 +64,11 @@ class Order extends Member
             if (empty($goods)) $this->error('查询商品主体信息失败，请稍候再试！');
             $goodsSpec = Db::name('StoreGoodsList')->where(['goods_id' => $goods_id, 'goods_spec' => $goods_spec])->find();
             if (empty($goodsSpec)) $this->error('查询商品规则信息失败，请稍候再试！');
+            $goodsIds[] = $goods_id;
+            // 商品库存检查
+            if ($goodsSpec['number_sales'] + $number > $goodsSpec['number_stock']) {
+                $this->error('商品库存不足，请购买其它商品！');
+            }
             // 会员升级状态处理（ 普通订单 & 礼包商品 & VIP1）
             $isUpdate = false;
             if (intval($type) === 1 && intval($goods['vip_mod']) === 2) {
@@ -105,6 +111,8 @@ class Order extends Member
         try {
             Db::name('StoreOrder')->insert($order);
             Db::name('StoreOrderList')->insertAll($orderList);
+            // 同步商品库存及销量
+            foreach (array_unique($goodsIds) as $goods_id) Goods::syncStock($goods_id);
             $this->success('订单创建成功，请补全收货信息后支付！', ['order' => $order]);
         } catch (\think\exception\HttpResponseException $exception) {
             throw $exception;

@@ -34,17 +34,32 @@ class Goods
      */
     public static function syncStock($goodsId)
     {
-        // 入库统计更新
-        $fields = "goods_id,goods_spec,concat(goods_id,'::',goods_spec) spec,sum(number_stock) stock";
-        $stockList = Db::name('StoreGoodsStock')->field($fields)->where(['goods_id' => $goodsId])->group('spec')->select();
-        foreach ($stockList as $vo) Db::name('StoreGoodsList')->where([
+        // 商品入库统计
+        $fields = "goods_id,goods_spec,ifnull(sum(number_stock),0) number_stock";
+        $stockList = Db::name('StoreGoodsStock')->field($fields)->where(['goods_id' => $goodsId])->group('goods_id,goods_spec')->select();
+        // 商品销量统计
+        $where = [['a.status', 'in', ['1', '2', '3', '4', '5']]];
+        $fields = 'b.goods_id,b.goods_spec,ifnull(sum(b.number),0) number_sales';
+        $salesList = Db::table('store_order a')->field($fields)->leftJoin('store_order_list b', 'a.order_no = b.order_no')->where($where)->group('b.goods_id,b.goods_spec')->select();
+        // 组装更新数据
+        $dataList = [];
+        foreach (array_merge($stockList, $salesList) as $vo) {
+            $key = "{$vo['goods_id']}@@{$vo['goods_spec']}";
+            $dataList[$key] = isset($dataList[$key]) ? array_merge($dataList[$key], $vo) : $vo;
+            if (empty($dataList[$key]['number_sales'])) $dataList[$key]['number_sales'] = '0';
+            if (empty($dataList[$key]['number_stock'])) $dataList[$key]['number_stock'] = '0';
+        }
+        unset($salesList, $stockList);
+        // 更新商品规则销量及库存
+        foreach ($dataList as $vo) Db::name('StoreGoodsList')->where([
             'goods_id' => $goodsId, 'goods_spec' => $vo['goods_spec'],
-        ])->update(['number_stock' => $vo['stock']]);
-        // 销售统计更新
-        $smap = [['goods_id', 'eq', $goodsId], ['status', 'in', ['0', '1']]];
+        ])->update([
+            'number_stock' => $vo['number_stock'], 'number_sales' => $vo['number_sales'],
+        ]);
+        // 更新商品主体销量及库存
         Db::name('StoreGoods')->where(['id' => $goodsId])->update([
-            'number_stock' => (int)array_sum(array_column($stockList, 'stock')),
-            'number_sales' => 0//(int)Db::name('StoreOrderList')->where($smap)->sum('goods_number'),
+            'number_stock' => intval(array_sum(array_column($dataList, 'number_stock'))),
+            'number_sales' => intval(array_sum(array_column($dataList, 'number_sales'))),
         ]);
     }
 
