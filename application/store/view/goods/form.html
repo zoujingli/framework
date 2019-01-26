@@ -284,7 +284,7 @@
         angular.bootstrap(document.getElementById(app.name), [app.name]);
 
         function callback($rootScope) {
-            $rootScope.isAddMode = eval('{$vo.id?false:true}');
+            $rootScope.isAddMode = parseInt('{$isAddMode|default=0}');
             let defaultValues = angular.fromJson('{$defaultValues|raw|default=0}') || {};
             $rootScope.specs = angular.fromJson('{$vo.specs|raw|default=0}') || [{name: '默认分组', list: [{name: '默认规格', check: true}]}];
             // 批量设置数值
