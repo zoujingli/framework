@@ -14,6 +14,7 @@
 
 namespace app\admin\service;
 
+use library\tools\Data;
 use think\Db;
 
 /**
@@ -33,7 +34,7 @@ class Message
      */
     public static function add($title, $desc, $url, $node)
     {
-        $code = time() . rand(1000, 9999);
+        $code = Data::uniqidNumberCode(12);
         $data = ['title' => $title, 'desc' => $desc, 'url' => $url, 'code' => $code, 'node' => $node];
         return Db::name('SystemMessage')->insert($data) !== false;
     }
