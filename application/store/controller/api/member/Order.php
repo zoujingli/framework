@@ -298,4 +298,17 @@ class Order extends Member
         }
         $this->error('该订单状态不允许确认哦~');
     }
+
+    /**
+     * 订单状态统计
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function total()
+    {
+        $result = Db::name('StoreOrder')->fieldRaw('mid,status,count(1) count')
+            ->where(['mid' => $this->mid])->group('status')->select();
+        $this->success('获取订单统计记录！', $result);
+    }
 }
