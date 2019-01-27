@@ -36,10 +36,10 @@ if (!function_exists('sysdata')) {
     function sysdata($name, array $value = null)
     {
         if (is_null($value)) {
-            $json = json_decode(emoji_decode(\think\Db::name('SystemData')->where('name', $name)->value('value')), true);
-            return empty($json) ? [] : $json;
+            $data = json_decode(\think\Db::name('SystemData')->where('name', $name)->value('value'), true);
+            return empty($data) ? [] : $data;
         }
-        return data_save('SystemData', ['name' => $name, 'value' => emoji_encode(json_encode($value, 256))], 'name');
+        return data_save('SystemData', ['name' => $name, 'value' => json_encode($value, 256)], 'name');
     }
 }
 
@@ -78,7 +78,7 @@ if (!function_exists('base64_image')) {
     }
 }
 
-// 注册系统权限管理中间键
+// 注册权限中间键
 \think\facade\Middleware::add('app\admin\service\Auth');
 
 // 注册系统指令
