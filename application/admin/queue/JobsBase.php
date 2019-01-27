@@ -96,7 +96,7 @@ class JobsBase
         $this->writeln('Queue starting ...');
         Queue::status($this->id, self::STATUS_PROC, $this->statusDesc);
         if ($this->execute()) {
-            $this->writeln('Queue execution completion.');
+            $this->writeln('Queue execution successful.');
             $this->status = self::STATUS_COMP;
         } else {
             $this->writeln('Queue execution failure.');
