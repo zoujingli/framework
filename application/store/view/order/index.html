@@ -56,8 +56,8 @@
             支付时间：{empty name='vo.pay_state'}--{else}{$vo.pay_at|default=''}{/empty}<br>
         </td>
         <td class="text-left nowrap">
-            收货信息：{$vo.express_name}<span class="margin-left-5 color-blue">{$vo.express_phone}</span><br>
-            收货地址：{$vo.express_province}{$vo.express_city}{$vo.express_area}{$vo.express_address}<br>
+            收货信息：{$vo.express_name|default='--'}<span class="margin-left-5 color-blue">{$vo.express_phone}</span><br>
+            收货地址：{$vo.express_province|default='--'}{$vo.express_city}{$vo.express_area}{$vo.express_address}<br>
             发货状态：{eq name='vo.express_state' value='0'}
             <span class="layui-badge layui-bg-black">未发货</span>
             {else}
