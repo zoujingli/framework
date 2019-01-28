@@ -37,7 +37,7 @@ class Config extends Controller
         if ($this->request->isGet()) {
             $this->title = '公众号授权绑定';
             if (!($this->geoip = cache('mygeoip'))) {
-                cache('mygeoip', $this->geoip = http_get('https://framework.thinkadmin.top/wechat/api.push/geoip'), 360);
+                cache('mygeoip', $this->geoip = gethostbyname($this->request->host()), 360);
             }
             $code = encode(url('@admin', '', true, true) . '#' . $this->request->url());
             $this->authurl = config('wechat.service_url') . "/service/api.push/auth/{$code}";
