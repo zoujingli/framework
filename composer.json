@@ -7,11 +7,6 @@
       "email": "zoujingli@qq.com"
     }
   ],
-  "autoload": {
-    "psr-4": {
-      "app\\": "application"
-    }
-  },
   "require": {
     "php": ">=5.6",
     "ext-curl": "*",

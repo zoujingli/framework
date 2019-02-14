@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInita26d105e5ee4628344373d26d7a265f5
+class ComposerStaticInitad007c1b2e2835dc4a81ea832f9d605e
 {
     public static $files = array (
         '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
@@ -23,10 +23,6 @@ class ComposerStaticInita26d105e5ee4628344373d26d7a265f5
         'l' => 
         array (
             'library\\' => 8,
-        ),
-        'a' => 
-        array (
-            'app\\' => 4,
         ),
         'W' => 
         array (
@@ -73,10 +69,6 @@ class ComposerStaticInita26d105e5ee4628344373d26d7a265f5
         'library\\' => 
         array (
             0 => __DIR__ . '/..' . '/zoujingli/think-library/library',
-        ),
-        'app\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/application',
         ),
         'WePay\\' => 
         array (
@@ -288,72 +280,6 @@ class ComposerStaticInita26d105e5ee4628344373d26d7a265f5
         'WePay\\Refund' => __DIR__ . '/..' . '/zoujingli/wechat-developer/WePay/Refund.php',
         'WePay\\Transfers' => __DIR__ . '/..' . '/zoujingli/wechat-developer/WePay/Transfers.php',
         'WePay\\TransfersBank' => __DIR__ . '/..' . '/zoujingli/wechat-developer/WePay/TransfersBank.php',
-        'app\\admin\\command\\Update' => __DIR__ . '/../..' . '/application/admin/command/Update.php',
-        'app\\admin\\command\\update\\UpdateAdmin' => __DIR__ . '/../..' . '/application/admin/command/update/UpdateAdmin.php',
-        'app\\admin\\command\\update\\UpdateAll' => __DIR__ . '/../..' . '/application/admin/command/update/UpdateAll.php',
-        'app\\admin\\command\\update\\UpdateConfig' => __DIR__ . '/../..' . '/application/admin/command/update/UpdateConfig.php',
-        'app\\admin\\command\\update\\UpdatePlugs' => __DIR__ . '/../..' . '/application/admin/command/update/UpdatePlugs.php',
-        'app\\admin\\command\\update\\UpdateService' => __DIR__ . '/../..' . '/application/admin/command/update/UpdateService.php',
-        'app\\admin\\command\\update\\UpdateWechat' => __DIR__ . '/../..' . '/application/admin/command/update/UpdateWechat.php',
-        'app\\admin\\controller\\Auth' => __DIR__ . '/../..' . '/application/admin/controller/Auth.php',
-        'app\\admin\\controller\\Config' => __DIR__ . '/../..' . '/application/admin/controller/Config.php',
-        'app\\admin\\controller\\Index' => __DIR__ . '/../..' . '/application/admin/controller/Index.php',
-        'app\\admin\\controller\\Login' => __DIR__ . '/../..' . '/application/admin/controller/Login.php',
-        'app\\admin\\controller\\Menu' => __DIR__ . '/../..' . '/application/admin/controller/Menu.php',
-        'app\\admin\\controller\\Message' => __DIR__ . '/../..' . '/application/admin/controller/Message.php',
-        'app\\admin\\controller\\Node' => __DIR__ . '/../..' . '/application/admin/controller/Node.php',
-        'app\\admin\\controller\\Queue' => __DIR__ . '/../..' . '/application/admin/controller/Queue.php',
-        'app\\admin\\controller\\User' => __DIR__ . '/../..' . '/application/admin/controller/User.php',
-        'app\\admin\\controller\\api\\Message' => __DIR__ . '/../..' . '/application/admin/controller/api/Message.php',
-        'app\\admin\\controller\\api\\Plugs' => __DIR__ . '/../..' . '/application/admin/controller/api/Plugs.php',
-        'app\\admin\\controller\\api\\Update' => __DIR__ . '/../..' . '/application/admin/controller/api/Update.php',
-        'app\\admin\\queue\\JobsBase' => __DIR__ . '/../..' . '/application/admin/queue/JobsBase.php',
-        'app\\admin\\service\\Auth' => __DIR__ . '/../..' . '/application/admin/service/Auth.php',
-        'app\\admin\\service\\Message' => __DIR__ . '/../..' . '/application/admin/service/Message.php',
-        'app\\admin\\service\\Queue' => __DIR__ . '/../..' . '/application/admin/service/Queue.php',
-        'app\\index\\controller\\Index' => __DIR__ . '/../..' . '/application/index/controller/Index.php',
-        'app\\service\\controller\\Config' => __DIR__ . '/../..' . '/application/service/controller/Config.php',
-        'app\\service\\controller\\Index' => __DIR__ . '/../..' . '/application/service/controller/Index.php',
-        'app\\service\\controller\\api\\Client' => __DIR__ . '/../..' . '/application/service/controller/api/Client.php',
-        'app\\service\\controller\\api\\Push' => __DIR__ . '/../..' . '/application/service/controller/api/Push.php',
-        'app\\service\\handler\\Publish' => __DIR__ . '/../..' . '/application/service/handler/Publish.php',
-        'app\\service\\handler\\Receive' => __DIR__ . '/../..' . '/application/service/handler/Receive.php',
-        'app\\service\\handler\\Wechat' => __DIR__ . '/../..' . '/application/service/handler/Wechat.php',
-        'app\\service\\logic\\Build' => __DIR__ . '/../..' . '/application/service/logic/Build.php',
-        'app\\service\\logic\\Wechat' => __DIR__ . '/../..' . '/application/service/logic/Wechat.php',
-        'app\\store\\controller\\Goods' => __DIR__ . '/../..' . '/application/store/controller/Goods.php',
-        'app\\store\\controller\\GoodsCate' => __DIR__ . '/../..' . '/application/store/controller/GoodsCate.php',
-        'app\\store\\controller\\Member' => __DIR__ . '/../..' . '/application/store/controller/Member.php',
-        'app\\store\\controller\\Order' => __DIR__ . '/../..' . '/application/store/controller/Order.php',
-        'app\\store\\controller\\Page' => __DIR__ . '/../..' . '/application/store/controller/Page.php',
-        'app\\store\\controller\\api\\Goods' => __DIR__ . '/../..' . '/application/store/controller/api/Goods.php',
-        'app\\store\\controller\\api\\Member' => __DIR__ . '/../..' . '/application/store/controller/api/Member.php',
-        'app\\store\\controller\\api\\Notify' => __DIR__ . '/../..' . '/application/store/controller/api/Notify.php',
-        'app\\store\\controller\\api\\Page' => __DIR__ . '/../..' . '/application/store/controller/api/Page.php',
-        'app\\store\\controller\\api\\Wechat' => __DIR__ . '/../..' . '/application/store/controller/api/Wechat.php',
-        'app\\store\\controller\\api\\member\\Address' => __DIR__ . '/../..' . '/application/store/controller/api/member/Address.php',
-        'app\\store\\controller\\api\\member\\Center' => __DIR__ . '/../..' . '/application/store/controller/api/member/Center.php',
-        'app\\store\\controller\\api\\member\\Order' => __DIR__ . '/../..' . '/application/store/controller/api/member/Order.php',
-        'app\\store\\service\\Goods' => __DIR__ . '/../..' . '/application/store/service/Goods.php',
-        'app\\store\\service\\Order' => __DIR__ . '/../..' . '/application/store/service/Order.php',
-        'app\\wechat\\command\\Fans' => __DIR__ . '/../..' . '/application/wechat/command/Fans.php',
-        'app\\wechat\\command\\fans\\FansAll' => __DIR__ . '/../..' . '/application/wechat/command/fans/FansAll.php',
-        'app\\wechat\\command\\fans\\FansBlack' => __DIR__ . '/../..' . '/application/wechat/command/fans/FansBlack.php',
-        'app\\wechat\\command\\fans\\FansList' => __DIR__ . '/../..' . '/application/wechat/command/fans/FansList.php',
-        'app\\wechat\\command\\fans\\FansTags' => __DIR__ . '/../..' . '/application/wechat/command/fans/FansTags.php',
-        'app\\wechat\\controller\\Config' => __DIR__ . '/../..' . '/application/wechat/controller/Config.php',
-        'app\\wechat\\controller\\Fans' => __DIR__ . '/../..' . '/application/wechat/controller/Fans.php',
-        'app\\wechat\\controller\\Keys' => __DIR__ . '/../..' . '/application/wechat/controller/Keys.php',
-        'app\\wechat\\controller\\Menu' => __DIR__ . '/../..' . '/application/wechat/controller/Menu.php',
-        'app\\wechat\\controller\\News' => __DIR__ . '/../..' . '/application/wechat/controller/News.php',
-        'app\\wechat\\controller\\api\\Js' => __DIR__ . '/../..' . '/application/wechat/controller/api/Js.php',
-        'app\\wechat\\controller\\api\\Push' => __DIR__ . '/../..' . '/application/wechat/controller/api/Push.php',
-        'app\\wechat\\controller\\api\\Review' => __DIR__ . '/../..' . '/application/wechat/controller/api/Review.php',
-        'app\\wechat\\controller\\api\\Tools' => __DIR__ . '/../..' . '/application/wechat/controller/api/Tools.php',
-        'app\\wechat\\queue\\Jobs' => __DIR__ . '/../..' . '/application/wechat/queue/Jobs.php',
-        'app\\wechat\\service\\Fans' => __DIR__ . '/../..' . '/application/wechat/service/Fans.php',
-        'app\\wechat\\service\\Media' => __DIR__ . '/../..' . '/application/wechat/service/Media.php',
-        'app\\wechat\\service\\Wechat' => __DIR__ . '/../..' . '/application/wechat/service/Wechat.php',
         'library\\Controller' => __DIR__ . '/..' . '/zoujingli/think-library/library/Controller.php',
         'library\\File' => __DIR__ . '/..' . '/zoujingli/think-library/library/File.php',
         'library\\driver\\Local' => __DIR__ . '/..' . '/zoujingli/think-library/library/driver/Local.php',
@@ -409,9 +335,9 @@ class ComposerStaticInita26d105e5ee4628344373d26d7a265f5
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInita26d105e5ee4628344373d26d7a265f5::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInita26d105e5ee4628344373d26d7a265f5::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInita26d105e5ee4628344373d26d7a265f5::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitad007c1b2e2835dc4a81ea832f9d605e::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitad007c1b2e2835dc4a81ea832f9d605e::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitad007c1b2e2835dc4a81ea832f9d605e::$classMap;
 
         }, null, ClassLoader::class);
     }
