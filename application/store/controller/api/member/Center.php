@@ -72,7 +72,7 @@ class Center extends Member
         }
         list($code, $content) = [rand(1000, 9999), sysconf('sms_reg_template')];
         if (empty($content) || stripos($content, '{code}') === false) {
-            $content = '您的登录验证码为{code}，请在十分钟内完成操作！';
+            $content = '您的验证码为{code}，请在十分钟内完成操作！';
         }
         cache($cachekey, ['phone' => $phone, 'captcha' => $code, 'time' => time()], 600);
         if (empty($content) || strpos($content, '{code}') === false) {
