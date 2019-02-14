@@ -109,4 +109,19 @@ class Order
             return false;
         }
     }
+
+    /**
+     * 订单利润计算
+     * @param string $order_no
+     * @return boolean
+     */
+    public static function profit($order_no = '')
+    {
+        $where = ['order_no' => $order_no];
+        if (Db::name('StoreProfitRecord')->where($where)->count() > 0) {
+            return false;
+        }
+
+
+    }
 }
