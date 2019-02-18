@@ -91,6 +91,7 @@ class Update extends Command
         return self::tree([
             'config/log.php',
             'config/system.php',
+            'config/template.php',
             'application/admin',
             'application/wechat',
             'application/service',
