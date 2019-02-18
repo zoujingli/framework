@@ -24,6 +24,19 @@ if (!function_exists('auth')) {
     }
 }
 
+if (!function_exists('_syslog')) {
+    /**
+     * 写入系统日志
+     * @param string $action 日志行为
+     * @param string $content 日志内容
+     * @return boolean
+     */
+    function _syslog($action, $content)
+    {
+        return \app\admin\service\Log::write($action, $content);
+    }
+}
+
 if (!function_exists('sysdata')) {
     /**
      * JSON 数据读取与存储

@@ -16,7 +16,6 @@ namespace library\logic;
 
 use library\Controller;
 use library\tools\Data;
-use think\Db;
 use think\db\Query;
 
 /**
@@ -66,8 +65,7 @@ class Form extends Logic
      */
     public function __construct($dbQuery, $tpl = '', $pkField = '', $where = [], $data = [])
     {
-        $this->request = request();
-        $this->query = is_string($dbQuery) ? Db::name($dbQuery) : $dbQuery;
+        $this->query = $this->buildQuery($dbQuery);
         list($this->tpl, $this->where, $this->data) = [$tpl, $where, $data];
         $this->pkField = empty($pkField) ? ($this->query->getPk() ? $this->query->getPk() : 'id') : $pkField;;
         $this->pkValue = input($this->pkField, isset($data[$this->pkField]) ? $data[$this->pkField] : null);
@@ -88,23 +86,23 @@ class Form extends Logic
     {
         $this->controller = $controller;
         // GET请求, 获取数据并显示表单页面
-        if ($this->request->isGet()) {
+        if ($this->controller->request->isGet()) {
             if ($this->pkValue !== null) {
                 $where = [$this->pkField => $this->pkValue];
                 $data = (array)$this->query->where($where)->where($this->where)->find();
             }
             $data = array_merge($data, $this->data);
-            if (false !== $this->controller->_callback('_form_filter', $data)) {
+            if (false !== $this->controller->callback('_form_filter', $data)) {
                 return $this->controller->fetch($this->tpl, ['vo' => $data]);
             }
             return $data;
         }
         // POST请求, 数据自动存库处理
-        if ($this->request->isPost()) {
-            $data = array_merge($this->request->post(), $this->data);
-            if (false !== $this->controller->_callback('_form_filter', $data, $this->where)) {
+        if ($this->controller->request->isPost()) {
+            $data = array_merge($this->controller->request->post(), $this->data);
+            if (false !== $this->controller->callback('_form_filter', $data, $this->where)) {
                 $result = Data::save($this->query, $data, $this->pkField, $this->where);
-                if (false !== $this->controller->_callback('_form_result', $result, $data)) {
+                if (false !== $this->controller->callback('_form_result', $result, $data)) {
                     if ($result !== false) $this->controller->success('恭喜, 数据保存成功!', '');
                     $this->controller->error('数据保存失败, 请稍候再试!');
                 }

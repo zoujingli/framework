@@ -15,6 +15,7 @@
 namespace library\logic;
 
 use library\Controller;
+use think\Db;
 
 /**
  * 基础视图管理器
@@ -30,12 +31,6 @@ abstract class Logic
     protected $query;
 
     /**
-     * 当前请求对象
-     * @var \think\Request
-     */
-    public $request;
-
-    /**
      * 当前操作控制器引用
      * @var \library\Controller
      */
@@ -47,5 +42,15 @@ abstract class Logic
      * @return mixed
      */
     abstract public function init(Controller $controller);
+
+    /**
+     * 获取数据库查询对象
+     * @param string|\think\db\Query $dbQuery
+     * @return \think\db\Query
+     */
+    protected function buildQuery($dbQuery)
+    {
+        return is_string($dbQuery) ? Db::name($dbQuery) : $dbQuery;
+    }
 
 }

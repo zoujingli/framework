@@ -14,6 +14,7 @@
 
 namespace app\wechat\controller;
 
+use app\admin\service\Log;
 use app\wechat\service\Wechat;
 use library\Controller;
 use think\Db;
@@ -85,6 +86,7 @@ class Menu extends Controller
             } catch (\Exception $e) {
                 $this->error("微信菜单发布失败，请稍候再试！<br> {$e->getMessage()}");
             }
+            _syslog('微信管理', '发布微信菜单成功');
             $this->success('保存发布菜单成功！', '');
         }
     }
@@ -127,7 +129,6 @@ class Menu extends Controller
             case 'pic_photo_or_album':
                 return ['name' => $item['name'], 'type' => $item['type'], 'key' => isset($item['key']) ? $item['key'] : $item['type']];
             case 'click':
-                p($item);
                 return ['name' => $item['name'], 'type' => $item['type'], 'key' => $item['key']];
             case 'view':
                 return ['name' => $item['name'], 'type' => $item['type'], 'url' => $item['url']];

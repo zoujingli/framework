@@ -18,7 +18,7 @@ use think\facade\Log;
 use think\facade\Session;
 
 /**
- * Cors跨域及Token支持类
+ * Cors跨域支持工具
  * Class Cors
  * @package library\tools
  */

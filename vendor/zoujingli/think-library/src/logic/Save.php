@@ -15,7 +15,6 @@
 namespace library\logic;
 
 use library\Controller;
-use think\Db;
 use think\db\Query;
 
 /**
@@ -59,11 +58,10 @@ class Save extends Logic
     public function __construct($dbQuery, $data = [], $pkField = '', $where = [])
     {
         $this->where = $where;
-        $this->request = request();
-        $this->data = empty($data) ? $this->request->post() : $data;
-        $this->query = is_string($dbQuery) ? Db::name($dbQuery) : $dbQuery;
+        $this->query = $this->buildQuery($dbQuery);
+        $this->data = empty($data) ? $this->controller->request->post() : $data;
         $this->pkField = empty($pkField) ? $this->query->getPk() : $pkField;
-        $this->pkValue = $this->request->post($this->pkField, null);
+        $this->pkValue = $this->controller->request->post($this->pkField, null);
     }
 
     /**
@@ -82,13 +80,13 @@ class Save extends Logic
             if (isset($this->data)) unset($this->data[$this->pkField]);
         }
         // 前置回调处理
-        if (false === $this->controller->_callback('_save_filter', $this->query, $this->data)) {
+        if (false === $this->controller->callback('_save_filter', $this->query, $this->data)) {
             return false;
         }
         // 执行更新操作
         $result = $this->query->where($this->where)->update($this->data) !== false;
         // 结果回调处理
-        if (false === $this->controller->_callback('_save_result', $result)) {
+        if (false === $this->controller->callback('_save_result', $result)) {
             return $result;
         }
         // 回复前端结果

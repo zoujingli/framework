@@ -24,9 +24,9 @@ use think\Db;
  */
 class Login extends Controller
 {
+
     /**
      * 用户登录
-     * @return mixed
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -65,6 +65,7 @@ class Login extends Controller
         ]);
         session('user', $user);
         empty($user['authorize']) || \app\admin\service\Auth::applyNode();
+        _syslog('系统管理', '用户登录系统成功');
         $this->success('登录成功，正在进入系统...', url('@admin'));
     }
 
@@ -73,6 +74,7 @@ class Login extends Controller
      */
     public function out()
     {
+        if (session('user')) _syslog('系统管理', '用户退出登录成功');
         empty($_SESSION) || $_SESSION = [];
         [session_unset(), session_destroy()];
         $this->success('退出登录成功！', url('@admin/login'));

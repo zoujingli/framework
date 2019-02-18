@@ -21,7 +21,6 @@ namespace library\tools;
  */
 class Node
 {
-
     /**
      * 获取当前访问节点
      * @return string
@@ -41,12 +40,13 @@ class Node
      */
     public static function getTree($dir, $nodes = [])
     {
+        $ignore = ['success', 'error', 'redirect', 'fetch', 'assign', 'initialize', 'callback'];
         foreach (self::scanDir($dir) as $file) {
             list($matches, $filename) = [[], str_replace(DIRECTORY_SEPARATOR, '/', $file)];
             if (!preg_match('|/(\w+)/controller/(.+)|', $filename, $matches)) continue;
             $className = env('app_namespace') . str_replace('/', '\\', substr($matches[0], 0, -4));
             if (class_exists($className)) foreach (get_class_methods($className) as $funcName) {
-                if (stripos($funcName, '_') === 0 || $funcName === 'initialize') continue;
+                if (stripos($funcName, '_') === 0 || in_array($funcName, $ignore)) continue;
                 $controller = str_replace('/', '.', substr($matches[2], 0, -4));
                 if (stripos($controller, 'api.') !== false || stripos($controller, 'wap.') !== false) continue;
                 $nodes[] = self::parseString("{$matches[1]}/{$controller}") . '/' . strtolower($funcName);

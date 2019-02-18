@@ -1,0 +1,70 @@
+<?php
+
+// +----------------------------------------------------------------------
+// | framework
+// +----------------------------------------------------------------------
+// | 版权所有 2014~2018 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
+// +----------------------------------------------------------------------
+// | 官方网站: http://framework.thinkadmin.top
+// +----------------------------------------------------------------------
+// | 开源协议 ( https://mit-license.org )
+// +----------------------------------------------------------------------
+// | github开源项目：https://github.com/zoujingli/framework
+// +----------------------------------------------------------------------
+
+namespace app\admin\controller;
+
+use library\Controller;
+
+/**
+ * 系统日志管理
+ * Class Log
+ * @package app\admin\controller
+ */
+class Log extends Controller
+{
+
+    /**
+     * 指定当前数据表
+     * @var string
+     */
+    public $table = 'SystemLog';
+
+    /**
+     * 日志列表
+     * @return array|string
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function index()
+    {
+        $this->title = '系统操作日志';
+        return $this->_query($this->table)->like('action,content,username')->dateBetween('create_at')->order('id desc')->page();
+    }
+
+    /**
+     * 列表数据处理
+     * @param array $data
+     * @throws \Exception
+     */
+    protected function _index_data_filter(&$data)
+    {
+        $ip = new \Ip2Region();
+        foreach ($data as &$vo) {
+            $result = $ip->btreeSearch($vo['ip']);
+            $vo['isp'] = isset($result['region']) ? $result['region'] : '';
+            $vo['isp'] = str_replace(['内网IP', '0', '|'], '', $vo['isp']);
+        }
+    }
+
+    /**
+     * 日志删除操作
+     */
+    public function del()
+    {
+        $this->_delete($this->table);
+    }
+
+}

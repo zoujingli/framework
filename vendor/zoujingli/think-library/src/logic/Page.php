@@ -61,9 +61,8 @@ class Page extends Logic
         $this->total = $total;
         $this->limit = $limit;
         $this->isPage = $isPage;
-        $this->request = request();
         $this->isDisplay = $isDisplay;
-        $this->query = is_string($dbQuery) ? Db::name($dbQuery) : $dbQuery;
+        $this->query = $this->buildQuery($dbQuery);
     }
 
     /**
@@ -79,9 +78,8 @@ class Page extends Logic
     public function init(Controller $controller)
     {
         $this->controller = $controller;
-        if ($this->request->isPost()) {
-            $this->_sort();
-        }
+        // 列表排序操作
+        if ($this->controller->request->isPost()) $this->_sort();
         // 未配置 order 规则时自动按 sort 字段排序
         if (!$this->query->getOptions('order') && method_exists($this->query, 'getTableFields')) {
             if (in_array('sort', $this->query->getTableFields())) $this->query->order('sort asc');
@@ -89,22 +87,24 @@ class Page extends Logic
         // 列表分页及结果集处理
         if ($this->isPage) {
             // 分页每页显示记录数
-            $limit = intval($this->request->get('limit', cookie('page-limit')));
+            $limit = intval($this->controller->request->get('limit', cookie('page-limit')));
             cookie('page-limit', $limit = $limit >= 10 ? $limit : 20);
             if ($this->limit > 0) $limit = $this->limit;
             $rows = [];
-            $page = $this->query->paginate($limit, $this->total, ['query' => ($query = $this->request->get())]);
+            $page = $this->query->paginate($limit, $this->total, ['query' => ($query = $this->controller->request->get())]);
             foreach ([10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200] as $num) {
                 list($query['limit'], $query['page'], $selected) = [$num, '1', $limit === $num ? 'selected' : ''];
-                $url = url('@admin') . '#' . $this->request->baseUrl() . '?' . urldecode(http_build_query($query));
+                $url = url('@admin') . '#' . $this->controller->request->baseUrl() . '?' . urldecode(http_build_query($query));
                 array_push($rows, "<option data-num='{$num}' value='{$url}' {$selected}>{$num}</option>");
             }
             $select = "<select onchange='location.href=this.options[this.selectedIndex].value' data-auto-none>" . join('', $rows) . "</select>";
             $html = "<div class='pagination-container nowrap'><span>共 {$page->total()} 条记录，每页显示 {$select} 条，共 {$page->lastPage()} 页当前显示第 {$page->currentPage()} 页。</span>{$page->render()}</div>";
             $this->controller->assign('pagehtml', preg_replace('|href="(.*?)"|', 'data-open="$1" onclick="return false" href="$1"', $html));
             $result = ['page' => ['limit' => intval($limit), 'total' => intval($page->total()), 'pages' => intval($page->lastPage()), 'current' => intval($page->currentPage())], 'list' => $page->items()];
-        } else $result = ['list' => $this->query->select()];
-        if (false !== $this->controller->_callback('_page_filter', $result['list']) && $this->isDisplay) {
+        } else {
+            $result = ['list' => $this->query->select()];
+        }
+        if (false !== $this->controller->callback('_page_filter', $result['list']) && $this->isDisplay) {
             return $this->controller->fetch('', $result);
         }
         return $result;
@@ -117,9 +117,9 @@ class Page extends Logic
      */
     protected function _sort()
     {
-        switch (strtolower($this->request->post('action', ''))) {
+        switch (strtolower($this->controller->request->post('action', ''))) {
             case 'resort':
-                foreach ($this->request->post() as $key => $value) {
+                foreach ($this->controller->request->post() as $key => $value) {
                     if (preg_match('/^_\d{1,}$/', $key) && preg_match('/^\d{1,}$/', $value)) {
                         list($where, $update) = [['id' => trim($key, '_')], ['sort' => $value]];
                         if (false === Db::table($this->query->getTable())->where($where)->update($update)) {
@@ -129,8 +129,8 @@ class Page extends Logic
                 }
                 return $this->controller->success('排序成功, 正在刷新页面！', '');
             case 'sort':
-                $where = $this->request->post();
-                $sort = intval($this->request->post('sort'));
+                $where = $this->controller->request->post();
+                $sort = intval($this->controller->request->post('sort'));
                 unset($where['action'], $where['sort']);
                 if (Db::table($this->query->getTable())->where($where)->update(['sort' => $sort]) !== false) {
                     return $this->controller->success('排序参数修改成功！', '');

@@ -52,7 +52,6 @@ class Input extends Logic
     {
         $this->rule = $rule;
         $this->info = $info;
-        $this->request = request();
         $this->data = $this->parse($data);
     }
 

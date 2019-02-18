@@ -15,7 +15,6 @@
 namespace library\logic;
 
 use library\Controller;
-use think\Db;
 
 /**
  * 搜索条件处理器
@@ -33,8 +32,7 @@ class Query extends Logic
      */
     public function __construct($dbQuery)
     {
-        $this->request = request();
-        $this->query = is_string($dbQuery) ? Db::name($dbQuery) : $dbQuery;
+        $this->query = $this->buildQuery($dbQuery);
     }
 
     /**
@@ -65,7 +63,7 @@ class Query extends Logic
      */
     public function like($fields, $inputType = 'get')
     {
-        $data = $this->request->$inputType();
+        $data = $this->controller->request->$inputType();
         foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
             list($dk, $qk) = [$field, $field];
             if (stripos($field, '|') !== false) list($dk, $qk) = explode('|', $field);
@@ -82,7 +80,7 @@ class Query extends Logic
      */
     public function equal($fields, $inputType = 'get')
     {
-        $data = $this->request->$inputType();
+        $data = $this->controller->request->$inputType();
         foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
             list($dk, $qk) = [$field, $field];
             if (stripos($field, '|') !== false) list($dk, $qk) = explode('|', $field);
@@ -100,7 +98,7 @@ class Query extends Logic
      */
     public function in($fields, $split = ',', $inputType = 'get')
     {
-        $data = $this->request->$inputType();
+        $data = $this->controller->request->$inputType();
         foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
             list($dk, $qk) = [$field, $field];
             if (stripos($field, '|') !== false) list($dk, $qk) = explode('|', $field);
@@ -119,7 +117,7 @@ class Query extends Logic
      */
     public function dateBetween($fields, $split = ' - ', $inputType = 'get')
     {
-        $data = $this->request->$inputType();
+        $data = $this->controller->request->$inputType();
         foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
             list($dk, $qk) = [$field, $field];
             if (stripos($field, '|') !== false) list($dk, $qk) = explode('|', $field);
@@ -140,7 +138,7 @@ class Query extends Logic
      */
     public function valueBetween($fields, $split = ' ', $inputType = 'get')
     {
-        $data = $this->request->$inputType();
+        $data = $this->controller->request->$inputType();
         foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
             list($dk, $qk) = [$field, $field];
             if (stripos($field, '|') !== false) list($dk, $qk) = explode('|', $field);

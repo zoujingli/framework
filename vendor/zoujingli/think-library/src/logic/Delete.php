@@ -15,7 +15,6 @@
 namespace library\logic;
 
 use library\Controller;
-use think\Db;
 use think\db\Query;
 
 /**
@@ -53,10 +52,9 @@ class Delete extends Logic
     public function __construct($dbQuery, $pkField = '', $where = [])
     {
         $this->where = $where;
-        $this->request = request();
-        $this->query = is_string($dbQuery) ? Db::name($dbQuery) : $dbQuery;
+        $this->query = $this->buildQuery($dbQuery);
         $this->pkField = empty($pkField) ? $this->query->getPk() : $pkField;
-        $this->pkValue = $this->request->post($this->pkField, null);
+        $this->pkValue = $this->controller->request->post($this->pkField, null);
     }
 
     /**
@@ -74,7 +72,7 @@ class Delete extends Logic
             $this->query->whereIn($this->pkField, explode(',', $this->pkValue));
         }
         // 前置回调处理
-        if (false === $this->controller->_callback('_delete_filter', $this->query, $where)) {
+        if (false === $this->controller->callback('_delete_filter', $this->query, $where)) {
             return null;
         }
         // 执行删除操作
@@ -84,7 +82,7 @@ class Delete extends Logic
             $result = $this->query->where($this->where)->delete();
         }
         // 结果回调处理
-        if (false === $this->controller->_callback('_delete_result', $result)) {
+        if (false === $this->controller->callback('_delete_result', $result)) {
             return $result;
         }
         // 回复前端结果
