@@ -499,12 +499,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/zoujingli/ThinkLibrary.git",
-            "reference": "c82aad2d6d2ac5ef48fe562f8a5c14dc8a97a107"
+            "reference": "87a694ffc44b7ec9824a89d259a58dd2c3762e88"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/c82aad2d6d2ac5ef48fe562f8a5c14dc8a97a107",
-            "reference": "c82aad2d6d2ac5ef48fe562f8a5c14dc8a97a107",
+            "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/87a694ffc44b7ec9824a89d259a58dd2c3762e88",
+            "reference": "87a694ffc44b7ec9824a89d259a58dd2c3762e88",
             "shasum": "",
             "mirrors": [
                 {
@@ -523,7 +523,7 @@
             "qiniu/php-sdk": "^7.2",
             "topthink/framework": "5.1.*"
         },
-        "time": "2019-02-18T05:31:48+00:00",
+        "time": "2019-02-18T05:33:03+00:00",
         "type": "library",
         "installation-source": "source",
         "autoload": {
@@ -548,12 +548,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/zoujingli/WeChatDeveloper.git",
-            "reference": "def818b7df403c7a00a5070a722e531161f68835"
+            "reference": "06ee3506a8f513c748dd986029508f9dea7e281a"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zoujingli/WeChatDeveloper/zipball/def818b7df403c7a00a5070a722e531161f68835",
-            "reference": "def818b7df403c7a00a5070a722e531161f68835",
+            "url": "https://api.github.com/repos/zoujingli/WeChatDeveloper/zipball/06ee3506a8f513c748dd986029508f9dea7e281a",
+            "reference": "06ee3506a8f513c748dd986029508f9dea7e281a",
             "shasum": "",
             "mirrors": [
                 {

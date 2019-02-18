@@ -47,12 +47,12 @@ class Save extends Logic
      * @var string
      */
     protected $pkValue;
-
+    
     /**
-     * ViewForm constructor.
+     * Save constructor.
      * @param string|Query $dbQuery
      * @param array $data 表单扩展数据
-     * @param string $pkField 指定数据对象主键
+     * @param string $pkField 数据对象主键
      * @param array $where 额外更新条件
      */
     public function __construct($dbQuery, $data = [], $pkField = '', $where = [])
