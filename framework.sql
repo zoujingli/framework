@@ -727,7 +727,7 @@ DROP TABLE IF EXISTS `wechat_keys`;
 CREATE TABLE `wechat_keys`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `appid` char(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '公众号APPID',
-  `type` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '类型:text文件消息,image图片消息,news图文消息',
+  `type` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '类型(text文件消息,image图片消息,news图文消息)',
   `keys` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '关键字',
   `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '文本内容',
   `image_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '图片链接',
