@@ -324,7 +324,7 @@ INSERT INTO `system_config` VALUES (3, 'app_version', 'v1.0');
 INSERT INTO `system_config` VALUES (4, 'site_copy', '©版权所有 2014-2018 楚才科技');
 INSERT INTO `system_config` VALUES (5, 'site_icon', 'http://127.0.0.1:8000/upload/f47b8fe06e38ae99/08e8398da45583b9.png');
 INSERT INTO `system_config` VALUES (7, 'miitbeian', '粤ICP备16006642号-2');
-INSERT INTO `system_config` VALUES (8, 'storage_type', 'oss');
+INSERT INTO `system_config` VALUES (8, 'storage_type', 'local');
 INSERT INTO `system_config` VALUES (9, 'storage_local_exts', 'png,jpg,rar,doc,icon,mp3,mp4,p12,pem,mp3,gif');
 INSERT INTO `system_config` VALUES (10, 'storage_qiniu_bucket', 'https');
 INSERT INTO `system_config` VALUES (11, 'storage_qiniu_domain', 'ssl.cdn.cuci.cc');
