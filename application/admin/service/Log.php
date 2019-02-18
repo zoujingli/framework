@@ -16,7 +16,6 @@ namespace app\admin\service;
 
 use library\tools\Node;
 use think\Db;
-use think\db\Query;
 
 /**
  * 系统日志服务管理
