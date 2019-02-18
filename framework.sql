@@ -11,7 +11,7 @@
  Target Server Version : 50562
  File Encoding         : 65001
 
- Date: 17/01/2019 15:40:04
+ Date: 18/02/2019 13:44:43
 */
 
 SET NAMES utf8mb4;
@@ -23,6 +23,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `store_goods`;
 CREATE TABLE `store_goods`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `cate_id` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '商品分类',
   `title` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '商品标题',
   `logo` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '商品图标',
   `specs` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '商品规格JSON',
@@ -31,13 +32,38 @@ CREATE TABLE `store_goods`  (
   `content` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '商品内容',
   `number_sales` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '销售数量',
   `number_stock` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '库库数量',
-  `agent` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '代理资格',
+  `vip_mod` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '入会权限(0没有权限,1临时会员,2普通会员)',
+  `vip_month` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '入会月份',
+  `vip_discount` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '会员升级优惠',
+  `price_service` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '服务费用',
+  `price_express1` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '直接下单运费',
+  `price_express2` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '免费领取运费',
+  `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '销售状态',
+  `sort` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '排序权重',
+  `is_deleted` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '删除状态',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `index_store_goods_vip_mod`(`vip_mod`) USING BTREE,
+  INDEX `index_store_goods_status`(`status`) USING BTREE,
+  INDEX `index_store_goods_cate_id`(`cate_id`) USING BTREE,
+  INDEX `index_store_goods_is_deleted`(`is_deleted`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商城商品主表' ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Table structure for store_goods_cate
+-- ----------------------------
+DROP TABLE IF EXISTS `store_goods_cate`;
+CREATE TABLE `store_goods_cate`  (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `logo` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '分类图标',
+  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '分类名称',
+  `desc` varchar(1024) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '分类描述',
   `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '销售状态',
   `sort` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '排序权重',
   `is_deleted` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '删除状态',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商城商品主表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商城商品分类' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for store_goods_list
@@ -56,7 +82,8 @@ CREATE TABLE `store_goods_list`  (
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_store_goods_list_id`(`goods_id`) USING BTREE,
-  INDEX `index_store_goods_list_spec`(`goods_spec`) USING BTREE
+  INDEX `index_store_goods_list_spec`(`goods_spec`) USING BTREE,
+  INDEX `index_store_goods_list_status`(`status`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商城商品规格' ROW_FORMAT = Compact;
 
 -- ----------------------------
@@ -81,21 +108,17 @@ DROP TABLE IF EXISTS `store_member`;
 CREATE TABLE `store_member`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `openid` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '微信OPENID',
-  `headimg` varchar(512) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '头像',
+  `headimg` varchar(512) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '头像地址',
   `nickname` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '微信昵称',
-  `username` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '会员真实姓名',
-  `phone` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '会员手机',
-  `agent_id` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '代理ID(0非代理,其它是代理ID)',
-  `agent_auth` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '代理权限(0无资格,1可申请)',
-  `bind_agent_id` bigint(20) NULL DEFAULT 0 COMMENT '绑定的代理ID',
-  `bind_mid` bigint(20) NULL DEFAULT 0 COMMENT '绑定的会员ID',
-  `wechat_num` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '微信号',
-  `is_deleted` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '删除状态',
+  `phone` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '联系手机',
+  `username` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '真实姓名',
+  `vip_level` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '会员级别(0游客,1为临时,2为VIP1,3为VIP2)',
+  `vip_date` date NULL DEFAULT NULL COMMENT '保级日期',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_store_member_openid`(`openid`) USING BTREE,
-  INDEX `index_store_member_agent_id`(`agent_id`) USING BTREE,
-  INDEX `index_store_member_bind_agent_id`(`bind_agent_id`) USING BTREE
+  INDEX `index_store_member_phone`(`phone`) USING BTREE,
+  INDEX `index_store_member_vip_level`(`vip_level`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商城会员主表' ROW_FORMAT = Compact;
 
 -- ----------------------------
@@ -112,11 +135,44 @@ CREATE TABLE `store_member_address`  (
   `area` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '地址-区域',
   `address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '地址-详情',
   `is_default` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '默认地址',
-  `is_deleted` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '删除状态',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_store_member_address_mid`(`mid`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商城会员收货地址' ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Table structure for store_member_history
+-- ----------------------------
+DROP TABLE IF EXISTS `store_member_history`;
+CREATE TABLE `store_member_history`  (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `mid` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '会员ID',
+  `order_no` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '订单号',
+  `from_level` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '来自级别',
+  `from_date` date NULL DEFAULT NULL COMMENT '来自日期',
+  `to_level` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '目标级别',
+  `to_date` date NULL DEFAULT NULL COMMENT '目标日期',
+  `desc` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '记录描述',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `index_store_member_history_mid`(`mid`) USING BTREE,
+  INDEX `index_store_member_history_order_no`(`order_no`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商城会员变更记录' ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Table structure for store_member_sms_history
+-- ----------------------------
+DROP TABLE IF EXISTS `store_member_sms_history`;
+CREATE TABLE `store_member_sms_history`  (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `mid` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '会员ID',
+  `phone` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '目标手机',
+  `content` varchar(512) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '短信内容',
+  `result` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '返回结果',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `index_store_member_sms_history_phone`(`phone`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商城会员短信记录' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for store_order
@@ -125,16 +181,16 @@ DROP TABLE IF EXISTS `store_order`;
 CREATE TABLE `store_order`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `mid` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '会员ID',
-  `order_no` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '订单号',
-  `agent_id` bigint(20) NULL DEFAULT 0 COMMENT '下单代理ID（假如下单会员是代理）',
-  `agent_auth` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '代理资格',
-  `from_mid` bigint(20) NULL DEFAULT 0 COMMENT '推荐会员ID',
-  `from_agent_id` bigint(20) NULL DEFAULT 0 COMMENT '推荐代理ID',
-  `belong_mid` bigint(20) NULL DEFAULT 0 COMMENT '团队业绩归属会员ID',
-  `price_real` decimal(20, 2) NULL DEFAULT 0.00 COMMENT '实际待付金额',
+  `type` tinyint(255) UNSIGNED NULL DEFAULT 1 COMMENT '订单类型(1普通订单,2免费领取订单)',
+  `order_no` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '订单单号',
+  `from_mid` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '推荐会员ID',
+  `price_total` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '待付金额统计',
+  `price_goods` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '商品费用统计',
+  `price_express` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '快递费用统计',
+  `price_service` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '服务费用统计',
   `pay_state` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '支付状态',
-  `pay_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '支付方式',
-  `pay_price` decimal(20, 2) NULL DEFAULT 0.00 COMMENT '支付价格',
+  `pay_type` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '支付方式',
+  `pay_price` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '支付价格',
   `pay_no` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '支付单号',
   `pay_at` datetime NULL DEFAULT NULL COMMENT '支付时间',
   `cancel_state` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '取消状态',
@@ -147,7 +203,6 @@ CREATE TABLE `store_order`  (
   `refund_desc` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '退款描述',
   `api_order_no` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '平台订单编号',
   `api_tracking_no` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '平台跟踪号',
-  `express_type` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '商品取货方式(1配送,2自提)',
   `express_state` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '发货状态(0未发货,1已发货,2已签收)',
   `express_company_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '发货快递公司代号',
   `express_company_title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '发货快递公司名称',
@@ -161,9 +216,6 @@ CREATE TABLE `store_order`  (
   `express_area` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '收货地址区域',
   `express_address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '收货详细地址',
   `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '订单状态(0已取消,1预订单待补全,2新订单待支付,3已支付待发货,4已发货待签收,5已完成)',
-  `calc_knot_rebate` tinyint(1) NULL DEFAULT 0 COMMENT '是否已计算秒结奖（0：未计算  1：已计算）',
-  `has_knot_rebate` tinyint(1) NULL DEFAULT 0 COMMENT '是否有秒结奖返利（0：没有  1：有）',
-  `rebate_remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '返利备注',
   `is_deleted` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '删除状态',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
@@ -182,25 +234,45 @@ CREATE TABLE `store_order`  (
 DROP TABLE IF EXISTS `store_order_list`;
 CREATE TABLE `store_order_list`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `order_no` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '订单号',
+  `mid` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '会员ID',
+  `type` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '订单类型',
+  `order_no` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '订单单号',
   `goods_id` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '商品标识',
-  `goods_sn` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '商品序号',
-  `goods_sku` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '商品SKU',
   `goods_title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '商品标题',
-  `goods_logo` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '商品LOGO',
-  `goods_desc` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '商品描述',
+  `goods_logo` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '商品图标',
   `goods_spec` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '商品规格',
   `price_real` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '交易金额',
   `price_selling` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '销售价格',
   `price_market` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '市场价格',
-  `agent_auth` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '代理资格',
-  `agent_knot` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '代理秒结',
+  `price_express` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '快递费用',
+  `price_service` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '服务费用',
+  `discount_price` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '优惠金额',
+  `discount_desc` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '优惠描述',
+  `vip_mod` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '入会权限(0没有权限,1临时会员,2普通会员)',
+  `vip_month` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '入会月数',
+  `vip_discount` decimal(20, 0) UNSIGNED NULL DEFAULT 0 COMMENT '会员升级优惠',
   `number` bigint(20) UNSIGNED NOT NULL DEFAULT 0 COMMENT '交易数量',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_store_goods_list_id`(`goods_id`) USING BTREE,
   INDEX `index_store_goods_list_spec`(`goods_spec`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商城订单详情' ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Table structure for store_page
+-- ----------------------------
+DROP TABLE IF EXISTS `store_page`;
+CREATE TABLE `store_page`  (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '页面标题',
+  `type` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '页面类型',
+  `one` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'JSON内容',
+  `mul` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'JSON内容',
+  `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '记录状态',
+  `sort` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '排序权重',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商城页面管理' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for system_auth
@@ -241,21 +313,21 @@ CREATE TABLE `system_config`  (
   `value` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '配置值',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_system_config_name`(`name`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 66 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统配置' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统配置' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of system_config
 -- ----------------------------
 INSERT INTO `system_config` VALUES (1, 'app_name', 'Framework');
-INSERT INTO `system_config` VALUES (2, 'site_name', '基线开发平台');
+INSERT INTO `system_config` VALUES (2, 'site_name', 'Framework');
 INSERT INTO `system_config` VALUES (3, 'app_version', 'v1.0');
 INSERT INTO `system_config` VALUES (4, 'site_copy', '©版权所有 2014-2018 楚才科技');
 INSERT INTO `system_config` VALUES (5, 'site_icon', 'http://127.0.0.1:8000/upload/f47b8fe06e38ae99/08e8398da45583b9.png');
 INSERT INTO `system_config` VALUES (7, 'miitbeian', '粤ICP备16006642号-2');
-INSERT INTO `system_config` VALUES (8, 'storage_type', 'local');
-INSERT INTO `system_config` VALUES (9, 'storage_local_exts', 'png,jpg,rar,doc,icon,mp3,mp4,p12,pem,mp3');
-INSERT INTO `system_config` VALUES (10, 'storage_qiniu_bucket', 'static');
-INSERT INTO `system_config` VALUES (11, 'storage_qiniu_domain', '用你自己的吧');
+INSERT INTO `system_config` VALUES (8, 'storage_type', 'oss');
+INSERT INTO `system_config` VALUES (9, 'storage_local_exts', 'png,jpg,rar,doc,icon,mp3,mp4,p12,pem,mp3,gif');
+INSERT INTO `system_config` VALUES (10, 'storage_qiniu_bucket', 'https');
+INSERT INTO `system_config` VALUES (11, 'storage_qiniu_domain', 'ssl.cdn.cuci.cc');
 INSERT INTO `system_config` VALUES (12, 'storage_qiniu_access_key', '用你自己的吧');
 INSERT INTO `system_config` VALUES (13, 'storage_qiniu_secret_key', '用你自己的吧');
 INSERT INTO `system_config` VALUES (14, 'storage_oss_bucket', 'cuci-mytest');
@@ -265,7 +337,7 @@ INSERT INTO `system_config` VALUES (17, 'storage_oss_keyid', '用你自己的吧
 INSERT INTO `system_config` VALUES (18, 'storage_oss_secret', '用你自己的吧');
 INSERT INTO `system_config` VALUES (36, 'storage_oss_is_https', 'http');
 INSERT INTO `system_config` VALUES (43, 'storage_qiniu_region', '华东');
-INSERT INTO `system_config` VALUES (44, 'storage_qiniu_is_https', 'http');
+INSERT INTO `system_config` VALUES (44, 'storage_qiniu_is_https', 'https');
 INSERT INTO `system_config` VALUES (45, 'wechat_mch_id', '1332187001');
 INSERT INTO `system_config` VALUES (46, 'wechat_mch_key', 'A82DC5BD1F3359081049C568D8502BC5');
 INSERT INTO `system_config` VALUES (47, 'wechat_mch_ssl_type', 'p12');
@@ -279,14 +351,17 @@ INSERT INTO `system_config` VALUES (54, 'wechat_encodingaeskey', '');
 INSERT INTO `system_config` VALUES (55, 'wechat_push_url', '消息推送地址：http://127.0.0.1:8000/wechat/api.push');
 INSERT INTO `system_config` VALUES (56, 'wechat_type', 'thr');
 INSERT INTO `system_config` VALUES (57, 'wechat_thr_appid', 'wx60a43dd8161666d4');
-INSERT INTO `system_config` VALUES (58, 'wechat_thr_appkey', '18a1590770a76930bf311a824a4a5a02');
-INSERT INTO `system_config` VALUES (59, 'wechat_thr_notify', 'http://127.0.0.1:8000/wechat/api.push/thr');
+INSERT INTO `system_config` VALUES (58, 'wechat_thr_appkey', 'eef5b4d20485de6ac88972640c9f4753');
 INSERT INTO `system_config` VALUES (60, 'wechat_thr_appurl', '消息推送地址：http://127.0.0.1:8000/wechat/api.push');
 INSERT INTO `system_config` VALUES (61, 'component_appid', 'wx1b8278fa121d8dc6');
 INSERT INTO `system_config` VALUES (62, 'component_appsecret', 'cf5af39408fb3b977584a40d399d298c');
 INSERT INTO `system_config` VALUES (63, 'component_token', 'P8QHTIxpBEq88IrxatqhgpBm2OAQROkI');
 INSERT INTO `system_config` VALUES (64, 'component_encodingaeskey', 'L5uFIa0U6KLalPyXckyqoVIJYLhsfrg8k9YzybZIHsx');
 INSERT INTO `system_config` VALUES (65, 'system_message_state', '0');
+INSERT INTO `system_config` VALUES (66, 'sms_zt_username', '用你自己的吧');
+INSERT INTO `system_config` VALUES (67, 'sms_zt_password', '用你自己的吧');
+INSERT INTO `system_config` VALUES (68, 'sms_reg_template', '您的验证码为{code}，请在十分钟内完成操作！');
+INSERT INTO `system_config` VALUES (69, 'sms_secure', 'cuci');
 
 -- ----------------------------
 -- Table structure for system_data
@@ -298,7 +373,12 @@ CREATE TABLE `system_data`  (
   `value` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '配置值',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_system_data_name`(`name`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统数据存储' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统数据存储' ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of system_data
+-- ----------------------------
+INSERT INTO `system_data` VALUES (1, 'menudata', '[{\"name\":\"请输入名称\",\"type\":\"view\",\"url\":\"h\"}]');
 
 -- ----------------------------
 -- Table structure for system_jobs
@@ -336,6 +416,21 @@ CREATE TABLE `system_jobs_log`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统任务日志' ROW_FORMAT = Compact;
 
 -- ----------------------------
+-- Table structure for system_log
+-- ----------------------------
+DROP TABLE IF EXISTS `system_log`;
+CREATE TABLE `system_log`  (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `node` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '当前操作节点',
+  `geoip` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '操作者IP地址',
+  `action` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '操作行为名称',
+  `content` varchar(1024) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '操作内容描述',
+  `username` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '操作人用户名',
+  `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统操作日志' ROW_FORMAT = Compact;
+
+-- ----------------------------
 -- Table structure for system_menu
 -- ----------------------------
 DROP TABLE IF EXISTS `system_menu`;
@@ -353,7 +448,7 @@ CREATE TABLE `system_menu`  (
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_system_menu_node`(`node`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 41 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统菜单' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统菜单' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of system_menu
@@ -369,7 +464,7 @@ INSERT INTO `system_menu` VALUES (10, 4, '文件存储', '', 'layui-icon layui-i
 INSERT INTO `system_menu` VALUES (11, 4, '系统参数', '', 'layui-icon layui-icon-set', 'admin/config/info', '', '_self', 1, 1, '2018-09-06 16:43:47');
 INSERT INTO `system_menu` VALUES (12, 2, '权限管理', '', '', '#', '', '_self', 20, 1, '2018-09-06 18:01:31');
 INSERT INTO `system_menu` VALUES (13, 0, '商城管理', '', '', '#', '', '_self', 200, 1, '2018-10-12 13:56:29');
-INSERT INTO `system_menu` VALUES (14, 13, '商品管理', '', 'layui-icon layui-icon-component', 'store/goods/index', '', '_self', 10, 1, '2018-10-12 13:56:48');
+INSERT INTO `system_menu` VALUES (14, 48, '商品管理', '', 'layui-icon layui-icon-component', 'store/goods/index', '', '_self', 30, 1, '2018-10-12 13:56:48');
 INSERT INTO `system_menu` VALUES (16, 0, '微信管理', '', '', '#', '', '_self', 210, 1, '2018-10-31 15:15:27');
 INSERT INTO `system_menu` VALUES (17, 16, '微信管理', '', '', '#', '', '_self', 10, 1, '2018-10-31 15:16:46');
 INSERT INTO `system_menu` VALUES (18, 17, '微信配置', '', 'layui-icon layui-icon-set', 'wechat/config/options', '', '_self', 1, 1, '2018-10-31 15:17:11');
@@ -387,6 +482,15 @@ INSERT INTO `system_menu` VALUES (37, 0, '开放平台', '', '', '#', '', '_self
 INSERT INTO `system_menu` VALUES (38, 40, '开放平台配置', '', 'layui-icon layui-icon-set', 'service/config/index', '', '_self', 0, 1, '2018-12-28 13:29:44');
 INSERT INTO `system_menu` VALUES (39, 40, '公众授权管理', '', 'layui-icon layui-icon-template-1', 'service/index/index', '', '_self', 0, 1, '2018-12-28 13:30:07');
 INSERT INTO `system_menu` VALUES (40, 37, '开放平台管理', '', '', '#', '', '_self', 0, 1, '2018-12-28 16:05:46');
+INSERT INTO `system_menu` VALUES (41, 47, '页面管理', '', 'layui-icon layui-icon-template-1', 'store/page/index', '', '_self', 20, 1, '2019-01-18 09:58:55');
+INSERT INTO `system_menu` VALUES (42, 48, '会员管理', '', 'layui-icon layui-icon-username', 'store/member/index', '', '_self', 50, 1, '2019-01-22 14:24:23');
+INSERT INTO `system_menu` VALUES (43, 48, '订单管理', '', 'layui-icon layui-icon-template-1', 'store/order/index', '', '_self', 40, 1, '2019-01-22 14:46:22');
+INSERT INTO `system_menu` VALUES (44, 48, '商品分类', '', 'layui-icon layui-icon-app', 'store/goods_cate/index', '', '_self', 20, 1, '2019-01-23 10:41:06');
+INSERT INTO `system_menu` VALUES (45, 47, '商城配置', '', 'layui-icon layui-icon-set', 'store/config/index', '', '_self', 10, 1, '2019-01-24 16:47:33');
+INSERT INTO `system_menu` VALUES (46, 47, '短信记录', '', 'layui-icon layui-icon-tabs', 'store/message/index', '', '_self', 30, 1, '2019-01-24 18:09:58');
+INSERT INTO `system_menu` VALUES (47, 13, '商城配置', '', '', '#', '', '_self', 10, 1, '2019-01-25 16:47:49');
+INSERT INTO `system_menu` VALUES (48, 13, '数据管理', '', '', '#', '', '_self', 20, 1, '2019-01-25 16:48:35');
+INSERT INTO `system_menu` VALUES (49, 4, '系统日志', '', 'layui-icon layui-icon-form', 'admin/log/index', '', '_self', 5, 1, '2019-02-18 12:56:56');
 
 -- ----------------------------
 -- Table structure for system_message
@@ -405,7 +509,7 @@ CREATE TABLE `system_message`  (
   `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '消息状态',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统消息' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统消息' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for system_node
@@ -421,7 +525,7 @@ CREATE TABLE `system_node`  (
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_system_node_node`(`node`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 149 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统节点' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统节点' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of system_node
@@ -515,6 +619,31 @@ INSERT INTO `system_node` VALUES (126, 'service/index/resume', '启用公众号�
 INSERT INTO `system_node` VALUES (127, 'service/index', '公众号授权管理', 0, 1, 1, '2018-12-28 13:27:59');
 INSERT INTO `system_node` VALUES (147, 'admin/message/clear', '清理消息', 0, 1, 1, '2019-01-05 13:23:49');
 INSERT INTO `system_node` VALUES (148, 'admin/message/onoff', '消息开关', 0, 1, 1, '2019-01-05 13:23:49');
+INSERT INTO `system_node` VALUES (149, 'store/page/index', '页面管理', 1, 1, 1, '2019-01-18 09:58:00');
+INSERT INTO `system_node` VALUES (150, 'store/page/add', '添加页面', 0, 1, 1, '2019-01-18 09:58:00');
+INSERT INTO `system_node` VALUES (151, 'store/page/edit', '编辑页面', 0, 1, 1, '2019-01-18 09:58:00');
+INSERT INTO `system_node` VALUES (152, 'store/page/forbid', '禁用页面', 0, 1, 1, '2019-01-18 09:58:00');
+INSERT INTO `system_node` VALUES (153, 'store/page/resume', '启用页面', 0, 1, 1, '2019-01-18 09:58:01');
+INSERT INTO `system_node` VALUES (154, 'store/page/del', '删除页面', 0, 1, 1, '2019-01-18 09:58:01');
+INSERT INTO `system_node` VALUES (155, 'store/page', '页面管理', 0, 1, 1, '2019-01-18 09:58:07');
+INSERT INTO `system_node` VALUES (156, 'store/member/index', '商城会员管理', 1, 1, 1, '2019-01-22 14:23:55');
+INSERT INTO `system_node` VALUES (157, 'store/member', '商城会员管理', 0, 1, 1, '2019-01-22 14:24:02');
+INSERT INTO `system_node` VALUES (158, 'store/order/index', '商城订单管理', 1, 1, 1, '2019-01-22 14:45:52');
+INSERT INTO `system_node` VALUES (159, 'store/order', '商城订单管理', 0, 1, 1, '2019-01-22 14:45:59');
+INSERT INTO `system_node` VALUES (160, 'store/goods_cate/index', '商品分类管理', 1, 1, 1, '2019-01-23 10:39:54');
+INSERT INTO `system_node` VALUES (161, 'store/goods_cate/add', '添加商品分类', 0, 1, 1, '2019-01-23 10:39:54');
+INSERT INTO `system_node` VALUES (162, 'store/goods_cate/edit', '编辑商品分类', 0, 1, 1, '2019-01-23 10:39:54');
+INSERT INTO `system_node` VALUES (163, 'store/goods_cate/forbid', '禁用商品分类', 0, 1, 1, '2019-01-23 10:39:55');
+INSERT INTO `system_node` VALUES (164, 'store/goods_cate/resume', '启用商品分类', 0, 1, 1, '2019-01-23 10:39:55');
+INSERT INTO `system_node` VALUES (165, 'store/goods_cate/del', '删除商品分类', 0, 1, 1, '2019-01-23 10:39:55');
+INSERT INTO `system_node` VALUES (166, 'store/goods_cate', '商品分类', 0, 1, 1, '2019-01-23 10:40:01');
+INSERT INTO `system_node` VALUES (167, 'store/config/index', '商城配置', 1, 1, 1, '2019-01-24 16:47:01');
+INSERT INTO `system_node` VALUES (168, 'store/config', '商城配置', 0, 1, 1, '2019-01-24 16:47:09');
+INSERT INTO `system_node` VALUES (169, 'store/message/index', '短信消息', 1, 1, 1, '2019-01-24 18:09:05');
+INSERT INTO `system_node` VALUES (170, 'store/message', '短信消息', 0, 1, 1, '2019-01-24 18:09:12');
+INSERT INTO `system_node` VALUES (171, 'admin/log/index', '日志管理列表', 1, 1, 1, '2019-02-18 12:56:07');
+INSERT INTO `system_node` VALUES (172, 'admin/log/del', '删除日志管理', 0, 1, 1, '2019-02-18 12:56:07');
+INSERT INTO `system_node` VALUES (173, 'admin/log', '系统日志管理', 0, 1, 1, '2019-02-18 12:56:15');
 
 -- ----------------------------
 -- Table structure for system_user
@@ -537,12 +666,12 @@ CREATE TABLE `system_user`  (
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `index_system_user_username`(`username`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10001 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统用户' ROW_FORMAT = Compact;
+) ENGINE = InnoDB  AUTO_INCREMENT = 10001 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统用户' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of system_user
 -- ----------------------------
-INSERT INTO `system_user` VALUES (10000, 'admin', '21232f297a57a5a743894a0e4a801fc3', '22222222', '', '', '2019-01-17 14:40:43', '127.0.0.1', 331, '3', '', 1, 0, '2015-11-13 15:14:22');
+INSERT INTO `system_user` VALUES (10000, 'admin', '21232f297a57a5a743894a0e4a801fc3', '', '', '', '2019-02-18 13:42:12', '127.0.0.1', 0, '3', '', 1, 0, '2015-11-13 15:14:22');
 
 -- ----------------------------
 -- Table structure for wechat_fans
@@ -555,15 +684,15 @@ CREATE TABLE `wechat_fans`  (
   `openid` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '粉丝openid',
   `tagid_list` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '粉丝标签id',
   `is_black` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '是否为黑名单状态',
-  `subscribe` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '是否关注该公众号(0:未关注, 1:已关注)',
-  `nickname` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '用户的昵称',
-  `sex` tinyint(1) UNSIGNED NULL DEFAULT NULL COMMENT '用户的性别(1:男性,2:女性,0:未知)',
+  `subscribe` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '关注状态(0未关注,1已关注)',
+  `nickname` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '用户昵称',
+  `sex` tinyint(1) UNSIGNED NULL DEFAULT NULL COMMENT '用户性别(1男性,2女性,0未知)',
   `country` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '用户所在国家',
   `province` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '用户所在省份',
   `city` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '用户所在城市',
   `language` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '用户的语言(zh_CN)',
   `headimgurl` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '用户头像',
-  `subscribe_time` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '用户关注时间',
+  `subscribe_time` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '关注时间',
   `subscribe_at` datetime NULL DEFAULT NULL COMMENT '关注时间',
   `remark` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '备注',
   `subscribe_scene` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '扫码关注场景',
