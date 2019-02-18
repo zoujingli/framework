@@ -59,9 +59,9 @@ class Save extends Logic
     {
         $this->where = $where;
         $this->query = $this->buildQuery($dbQuery);
-        $this->data = empty($data) ? $this->controller->request->post() : $data;
+        $this->data = empty($data) ? request()->post() : $data;
         $this->pkField = empty($pkField) ? $this->query->getPk() : $pkField;
-        $this->pkValue = $this->controller->request->post($this->pkField, null);
+        $this->pkValue = request()->post($this->pkField, null);
     }
 
     /**

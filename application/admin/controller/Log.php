@@ -49,11 +49,11 @@ class Log extends Controller
      * @param array $data
      * @throws \Exception
      */
-    protected function _index_data_filter(&$data)
+    protected function _index_page_filter(&$data)
     {
         $ip = new \Ip2Region();
         foreach ($data as &$vo) {
-            $result = $ip->btreeSearch($vo['ip']);
+            $result = $ip->btreeSearch($vo['geoip']);
             $vo['isp'] = isset($result['region']) ? $result['region'] : '';
             $vo['isp'] = str_replace(['内网IP', '0', '|'], '', $vo['isp']);
         }

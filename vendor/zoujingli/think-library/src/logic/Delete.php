@@ -44,9 +44,9 @@ class Delete extends Logic
     protected $pkValue;
 
     /**
-     * ViewForm constructor.
+     * Delete constructor.
      * @param string|Query $dbQuery
-     * @param string $pkField 指定数据对象主键
+     * @param string $pkField 数据对象主键
      * @param array $where 额外更新条件
      */
     public function __construct($dbQuery, $pkField = '', $where = [])
@@ -54,7 +54,7 @@ class Delete extends Logic
         $this->where = $where;
         $this->query = $this->buildQuery($dbQuery);
         $this->pkField = empty($pkField) ? $this->query->getPk() : $pkField;
-        $this->pkValue = $this->controller->request->post($this->pkField, null);
+        $this->pkValue = request()->post($this->pkField, null);
     }
 
     /**

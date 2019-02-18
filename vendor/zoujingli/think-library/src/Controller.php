@@ -105,7 +105,6 @@ class Controller extends \stdClass
 
     /**
      * 返回视图内容
-     * @access protected
      * @param string $tpl 模板名称
      * @param array $vars 模板变量
      */
@@ -117,7 +116,6 @@ class Controller extends \stdClass
 
     /**
      * 模板变量赋值
-     * @access protected
      * @param  mixed $name 要显示的模板变量
      * @param  mixed $value 变量的值
      * @return $this
@@ -138,7 +136,7 @@ class Controller extends \stdClass
      * @param mixed $two 回调引用参数2
      * @return boolean
      */
-    public function callback($name, &$one, &$two = [])
+    public function callback($name, &$one = [], &$two = [])
     {
         $methods = [$name, "_{$this->request->action()}{$name}"];
         foreach ($methods as $method) if (method_exists($this, $method)) {

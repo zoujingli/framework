@@ -19,7 +19,8 @@
     "topthink/framework": "5.1.*",
     "topthink/think-queue": "^2.0",
     "zoujingli/think-library": "5.1.*-dev",
-    "zoujingli/weopen-developer": "dev-master"
+    "zoujingli/weopen-developer": "dev-master",
+    "zoujingli/ip2region": "^1.0"
   },
   "repositories": {
     "packagist": {

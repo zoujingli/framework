@@ -40,7 +40,7 @@ class Node
      */
     public static function getTree($dir, $nodes = [])
     {
-        $ignore = ['success', 'error', 'redirect', 'fetch', 'assign', 'initialize', 'callback'];
+        $ignore = ['initialize', 'success', 'error', 'redirect', 'fetch', 'assign', 'callback'];
         foreach (self::scanDir($dir) as $file) {
             list($matches, $filename) = [[], str_replace(DIRECTORY_SEPARATOR, '/', $file)];
             if (!preg_match('|/(\w+)/controller/(.+)|', $filename, $matches)) continue;

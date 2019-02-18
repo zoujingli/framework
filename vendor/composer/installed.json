@@ -444,18 +444,67 @@
         "description": "The ThinkPHP5 Queue Package"
     },
     {
+        "name": "zoujingli/ip2region",
+        "version": "v1.0.5",
+        "version_normalized": "1.0.5.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/zoujingli/ip2region.git",
+            "reference": "944dc687304133027c4586a35ff78b57e56dd659"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/zoujingli/ip2region/zipball/944dc687304133027c4586a35ff78b57e56dd659",
+            "reference": "944dc687304133027c4586a35ff78b57e56dd659",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://dl.laravel-china.org/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "require": {
+            "php": ">=5.3"
+        },
+        "time": "2019-01-23T06:23:53+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "Ip2Region.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "Apache-2.0"
+        ],
+        "authors": [
+            {
+                "name": "Anyon",
+                "email": "zoujingli@qq.com",
+                "homepage": "http://ctolog.com"
+            }
+        ],
+        "description": "Ip2Region for PHP",
+        "homepage": "https://github.com/zoujingli/Ip2Region",
+        "keywords": [
+            "Ip2Region"
+        ]
+    },
+    {
         "name": "zoujingli/think-library",
         "version": "v5.1.x-dev",
         "version_normalized": "5.1.9999999.9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/zoujingli/ThinkLibrary.git",
-            "reference": "f177dfa153d98c0554b23535bee4c2fb07275ad5"
+            "reference": "c82aad2d6d2ac5ef48fe562f8a5c14dc8a97a107"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/f177dfa153d98c0554b23535bee4c2fb07275ad5",
-            "reference": "f177dfa153d98c0554b23535bee4c2fb07275ad5",
+            "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/c82aad2d6d2ac5ef48fe562f8a5c14dc8a97a107",
+            "reference": "c82aad2d6d2ac5ef48fe562f8a5c14dc8a97a107",
             "shasum": "",
             "mirrors": [
                 {
@@ -474,9 +523,9 @@
             "qiniu/php-sdk": "^7.2",
             "topthink/framework": "5.1.*"
         },
-        "time": "2019-02-15T09:55:18+00:00",
+        "time": "2019-02-18T05:31:48+00:00",
         "type": "library",
-        "installation-source": "dist",
+        "installation-source": "source",
         "autoload": {
             "files": [
                 "common.php"
