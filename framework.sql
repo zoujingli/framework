@@ -356,7 +356,7 @@ INSERT INTO `system_config` VALUES (60, 'wechat_thr_appurl', '消息推送地址
 INSERT INTO `system_config` VALUES (61, 'component_appid', 'wx28b58798480874f9');
 INSERT INTO `system_config` VALUES (62, 'component_appsecret', '885357eaf5abd45a7b82e2933e0bb60f');
 INSERT INTO `system_config` VALUES (63, 'component_token', 'token');
-INSERT INTO `system_config` VALUES (64, 'component_encodingaeskey', 'KeyL5uFIa0U6KLalPyXckyqoVIJYLhsfrg8k9YzybZIHsx');
+INSERT INTO `system_config` VALUES (64, 'component_encodingaeskey', 'L5uFIa0U6KLalPyXckyqoVIJYLhsfrg8k9YzybZIHsx');
 INSERT INTO `system_config` VALUES (65, 'system_message_state', '0');
 INSERT INTO `system_config` VALUES (66, 'sms_zt_username', '用你自己的吧');
 INSERT INTO `system_config` VALUES (67, 'sms_zt_password', '用你自己的吧');
