@@ -24,8 +24,8 @@
     <thead>
     <tr>
         <th class='list-table-check-td think-checkbox'><input data-auto-none data-check-target='.list-check-box' type='checkbox'></th>
-        <th class='text-left nowrap'>微信昵称</th>
-        <th class="text-left nowrap">粉丝标签</th>
+        <th width="180px" class='text-left nowrap'>微信昵称</th>
+        <th width="180px" class="text-left nowrap">粉丝标签</th>
         <th width="150px" class='text-left nowrap'>性别语音</th>
         <th width="180px" class='text-left nowrap'>关注时间</th>
         <th width="80px" class='text-center nowrap'>状态</th>
@@ -40,10 +40,12 @@
             <input class="list-check-box" value='{$vo.openid}' type='checkbox'>
         </td>
         <td class='text-left nowrap relative layui-elip'>
-            <div class="background-image pull-left" data-tips-image="{$vo.headimgurl}" style="background-image:url('{$vo.headimgurl}')"></div>
-            昵称：{$vo.nickname}
-            <br>
-            区域：{$vo.country} {$vo.province} {$vo.city}
+            <img src="{$vo.headimgurl|default=''}" onerror="$(this).remove()" data-tips-image class="inline-block" style="width:40px;height:40px;vertical-align:top;margin-right:5px">
+            <div class="inline-block">
+                昵称：{$vo.nickname|default='--'}
+                <br>
+                区域：{$vo.country|default='--'} {$vo.province} {$vo.city}
+            </div>
         </td>
         <td class="text-left">
             {foreach $vo.tags as $t}
