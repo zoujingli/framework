@@ -47,10 +47,12 @@
                 区域：{$vo.country|default='--'} {$vo.province} {$vo.city}
             </div>
         </td>
-        <td class="text-left">
-            {foreach $vo.tags as $t}
-            <span><span class="layui-badge layui-bg-cyan margin-right-5">{$t|default='--'}</span></span>
-            {/foreach}
+        <td class="text-left padding-0">
+            <div style="max-height:55px;overflow:auto">
+                {foreach $vo.tags as $t}
+                <p><span class="layui-badge layui-bg-cyan margin-right-5">{$t|default='--'}</span></p>
+                {/foreach}
+            </div>
         </td>
         <td class='text-left nowrap'>
             性别：{switch name='vo.sex'}{case value='1'}男{/case}{case value='2'}女{/case}{default}未知{/switch}
