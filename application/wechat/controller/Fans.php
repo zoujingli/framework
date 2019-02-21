@@ -51,8 +51,15 @@ class Fans extends Controller
      */
     protected function _index_page_filter(array &$data)
     {
-        foreach ($data as &$user) foreach (['country', 'province', 'city', 'nickname', 'remark'] as $k) {
-            if (isset($user[$k])) $user[$k] = emoji_decode($user[$k]);
+        $tags = Db::name('WechatFansTags')->column('id,name');
+        foreach ($data as &$user) {
+            $user['tags'] = [];
+            foreach (explode(',', $user['tagid_list']) as $tagid) {
+                if (isset($tags[$tagid])) $user['tags'][] = $tags[$tagid];
+            }
+            foreach (['country', 'province', 'city', 'nickname', 'remark'] as $k) {
+                if (isset($user[$k])) $user[$k] = emoji_decode($user[$k]);
+            }
         }
     }
 
@@ -105,6 +112,14 @@ class Fans extends Controller
         } catch (\Exception $e) {
             $this->error("创建同步粉丝任务失败，请稍候再试！<br> {$e->getMessage()}");
         }
+    }
+
+    /**
+     * 删除粉丝
+     */
+    public function del()
+    {
+        $this->_delete($this->table);
     }
 
 }

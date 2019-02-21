@@ -25,9 +25,11 @@
     <tr>
         <th class='list-table-check-td think-checkbox'><input data-auto-none data-check-target='.list-check-box' type='checkbox'></th>
         <th class='text-left nowrap'>微信昵称</th>
+        <th class="text-left nowrap">粉丝标签</th>
         <th width="150px" class='text-left nowrap'>性别语音</th>
         <th width="180px" class='text-left nowrap'>关注时间</th>
-        <th class='text-left nowrap'>状态</th>
+        <th width="80px" class='text-center nowrap'>状态</th>
+        <th></th>
     </tr>
     </thead>
     <!--{/notempty}-->
@@ -43,6 +45,11 @@
             <br>
             区域：{$vo.country} {$vo.province} {$vo.city}
         </td>
+        <td class="text-left">
+            {foreach $vo.tags as $t}
+            <span><span class="layui-badge layui-bg-cyan margin-right-5">{$t|default='--'}</span></span>
+            {/foreach}
+        </td>
         <td class='text-left nowrap'>
             性别：{switch name='vo.sex'}{case value='1'}男{/case}{case value='2'}女{/case}{default}未知{/switch}
             <br>
@@ -51,28 +58,33 @@
         <td class='text-left nowrap'>
             日期：{$vo.subscribe_at|format_datetime|str_replace=' ','<br>时间：',###|raw}
         </td>
-        <td class='text-left nowrap'>
-
+        <td class='text-center nowrap'>
             {eq name='vo.subscribe' value='0'}
-            <span class="layui-badge margin-right-10">未关注</span>
+            <span class="layui-badge">未关注</span>
             {else}
-            <span class="layui-badge layui-bg-green margin-right-10">已关注</span>
+            <span class="layui-badge layui-bg-green">已关注</span>
             {/eq}
-
             <br>
-
             {eq name='vo.is_black' value='0'}
             <span class="layui-badge layui-bg-green">未拉黑</span>
-            <!--{if auth("wechat/fans/setblack")}-->
-            <a style="top:-13px" class="margin-left-10 relative layui-btn layui-btn-primary layui-btn-sm" data-action="{:url('setblack')}" data-value="openid#{$vo.openid}">立即拉黑</a>
-            <!--{/if}-->
             {else}
             <span class="layui-badge">已拉黑</span>
+            {/eq}
+        </td>
+        <td class="nowrap">
+            {eq name='vo.is_black' value='0'}
+            <!--{if auth("wechat/fans/setblack")}-->
+            <a class="margin-left-10 layui-btn layui-btn-normal layui-btn-sm" data-action="{:url('setblack')}" data-value="openid#{$vo.openid}">立即拉黑</a>
+            <!--{/if}-->
+            {else}
             <!--{if auth("wechat/fans/delblack")}-->
-            <a style="top:-13px" class="margin-left-10 relative layui-btn layui-btn-primary layui-btn-sm" data-action="{:url('delblack')}" data-value="openid#{$vo.openid}">取消拉黑</a>
+            <a class="margin-left-10 layui-btn layui-btn-normal layui-btn-sm" data-action="{:url('delblack')}" data-value="openid#{$vo.openid}">取消拉黑</a>
             <!--{/if}-->
             {/eq}
 
+            <!--{if auth("wechat/fans/del")}-->
+            <a class="layui-btn layui-btn-sm layui-btn-danger" data-confirm="确定要删除该规则吗？" data-action="{:url('del')}" data-value="id#{$vo.id}">删 除</a>
+            <!--{/if}-->
         </td>
     </tr>
     <!--{/foreach}-->
