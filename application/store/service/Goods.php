@@ -59,7 +59,7 @@ class Goods
             if (empty($dataList[$key]['number_stock'])) $dataList[$key]['number_stock'] = '0';
         }
         unset($salesList, $stockList);
-        // 更新商品规则销量及库存
+        // 更新商品规格销量及库存
         foreach ($dataList as $vo) Db::name('StoreGoodsList')->where([
             'goods_id' => $goodsId, 'goods_spec' => $vo['goods_spec'],
         ])->update([
