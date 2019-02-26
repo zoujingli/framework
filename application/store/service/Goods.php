@@ -60,7 +60,6 @@ class Goods
         }
         unset($salesList, $stockList);
         // 更新商品规则销量及库存
-
         foreach ($dataList as $vo) Db::name('StoreGoodsList')->where([
             'goods_id' => $goodsId, 'goods_spec' => $vo['goods_spec'],
         ])->update([
