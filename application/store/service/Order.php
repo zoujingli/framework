@@ -111,6 +111,24 @@ class Order
     }
 
     /**
+     * 根据订单同步库存销量
+     * @param string $order_no
+     * @return boolean
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
+     */
+    public static function syncStock($order_no)
+    {
+        foreach (array_unique(Db::name('StoreOrderList')->where(['order_no' => $order_no])->column('goods_id')) as $goods_id) {
+            if (!Goods::syncStock($goods_id)) return false;
+        }
+        return true;
+    }
+
+    /**
      * 订单利润计算
      * @param string $order_no
      * @return boolean

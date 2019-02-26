@@ -35,6 +35,7 @@ class Goods
     /**
      * 同步商品库存信息
      * @param integer $goodsId
+     * @return boolean
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -70,6 +71,7 @@ class Goods
             'number_stock' => intval(array_sum(array_column($dataList, 'number_stock'))),
             'number_sales' => intval(array_sum(array_column($dataList, 'number_sales'))),
         ]);
+        return true;
     }
 
 }

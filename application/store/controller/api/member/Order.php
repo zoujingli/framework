@@ -269,7 +269,9 @@ class Order extends Member
                 'cancel_at'    => date('Y-m-d H:i:s'),
                 'cancel_desc'  => '用户主动取消订单！',
             ]);
-            if ($result !== false) $this->success('订单取消成功！');
+            if ($result !== false && \app\store\service\Order::syncStock($order['order_no'])) {
+                $this->success('订单取消成功！');
+            }
             $this->error('订单取消失败，请稍候再试！');
         }
         $this->error('该订单状态不允许取消哦~');
