@@ -32,13 +32,22 @@ class Goods
      * @throws \think\exception\DbException
      * @throws \think\exception\PDOException
      */
+    /**
+     * 同步商品库存信息
+     * @param integer $goodsId
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
+     */
     public static function syncStock($goodsId)
     {
         // 商品入库统计
         $fields = "goods_id,goods_spec,ifnull(sum(number_stock),0) number_stock";
         $stockList = Db::name('StoreGoodsStock')->field($fields)->where(['goods_id' => $goodsId])->group('goods_id,goods_spec')->select();
         // 商品销量统计
-        $where = [['a.status', 'in', ['1', '2', '3', '4', '5']]];
+        $where = [['a.status', 'in', ['1', '2', '3', '4', '5']], ['b.goods_id', 'eq', $goodsId]];
         $fields = 'b.goods_id,b.goods_spec,ifnull(sum(b.number),0) number_sales';
         $salesList = Db::table('store_order a')->field($fields)->leftJoin('store_order_list b', 'a.order_no = b.order_no')->where($where)->group('b.goods_id,b.goods_spec')->select();
         // 组装更新数据
