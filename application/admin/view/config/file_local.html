@@ -1,11 +1,11 @@
-<form onsubmit="return false;" data-auto="true" method="post" class='layui-form layui-card' autocomplete="off">
-    <div class="layui-card-body">
-        <div class="color-blue padding-left-40 padding-bottom-20 padding-top-20">
+<form onsubmit="return false;" data-auto="true" method="post" class='layui-form layui-card padding-0' autocomplete="off">
+    <div class="layui-card-body padding-0">
+        <div class="color-blue padding-left-40 padding-bottom-20">
             文件将存储在本地服务器，需确保服务器的 public/upload 目录有写入权限，还需要有足够的存储空间。
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">
-                AllowExts<br><span class="nowrap color-desc">允许类型</span>
+                AllowExts<br><span class="nowrap color-desc">允许上传文件</span>
             </label>
             <div class="layui-input-block">
                 <input type="text" name="storage_local_exts" required value="{:sysconf('storage_local_exts')}" placeholder="请输入系统文件上传后缀" class="layui-input">
