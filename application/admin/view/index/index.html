@@ -116,7 +116,7 @@
         syncMessage();
 
         function syncMessage() {
-            $.form.load('{:url("@admin/api.message/gets")}', {}, 'get', function (ret) {
+            $.get('{:url("@admin/api.message/gets")}', function (ret) {
                 if (ret.code && ret.data.length > 0) for (var i in ret.data) {
                     var item = ret.data[i];
                     if ($('[data-message-code=' + item.code + ']').size() < 1) spop({
@@ -126,8 +126,8 @@
                         }
                     });
                 }
-                return setTimeout(syncMessage, 3000), false;
-            }, false);
+                setTimeout(syncMessage, 3000)
+            });
         }
     });
 </script>
