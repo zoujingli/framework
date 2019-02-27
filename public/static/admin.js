@@ -34,6 +34,7 @@ require.config({
     map: {'*': {css: baseRoot + 'plugs/require/css.js'}},
     paths: {
         'md5': ['plugs/jquery/md5.min'],
+        'spop': ['plugs/spop/spop.min'],
         'json': ['plugs/jquery/json.min'],
         'upload': ['plugs/plupload/build'],
         'base64': ['plugs/jquery/base64.min'],
@@ -47,6 +48,7 @@ require.config({
         'jquery.autocompleter': ['plugs/jquery/autocompleter.min'],
     },
     shim: {
+        'spop': {deps: ['css!' + baseRoot + 'plugs/spop/spop.min.css']},
         'plupload': {deps: [baseRoot + 'plugs/plupload/moxie.min.js']},
         'websocket': {deps: [baseRoot + 'plugs/socket/swfobject.min.js']},
         'jquery.ztree': {deps: ['jquery', 'css!' + baseRoot + 'plugs/ztree/zTreeStyle/zTreeStyle.css']},

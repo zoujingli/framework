@@ -112,12 +112,22 @@
 {block name='script'}{/block}
 {if session('user.id') and sysconf('system_message_state')}
 <script>
-    layer.open({
-        title: false, closeBtn: false, maxmin: false, shade: false, content: ['{:url("@admin/api.plugs/message")}'],
-        offset: 'rb', anim: 2, type: 2, area: ['360px', '0'], btn: false, success: function (layero, index) {
-            setInterval(function () {
-                layer.iframeAuto(index);
-            }, 500);
+    require(['spop'], function () {
+        syncMessage();
+
+        function syncMessage() {
+            $.form.load('{:url("@admin/api.message/gets")}', {}, 'get', function (ret) {
+                if (ret.code && ret.data.length > 0) for (var i in ret.data) {
+                    var item = ret.data[i];
+                    if ($('[data-message-code=' + item.code + ']').size() < 1) spop({
+                        template: '<span data-message-code="' + item.code + '" class="spop-title block">' + item.title + '</span>' + item.desc,
+                        position: 'bottom-right', style: 'success', group: item.code, onClose: function () {
+                            $.post('{:url("@admin/api.message/set")}', {code: this.group});
+                        }
+                    });
+                }
+                return setTimeout(syncMessage, 3000), false;
+            }, false);
         }
     });
 </script>
