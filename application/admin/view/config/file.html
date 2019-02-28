@@ -5,7 +5,7 @@
 <form class="layui-card layui-form">
     <div class="layui-card-body">
         <div class="layui-form-item">
-            <label class="layui-form-label">Storage<br><span class="nowrap color-desc">文件存储类型</span></label>
+            <label class="layui-form-label">Storage<br><span class="nowrap color-desc">存储类型</span></label>
             <div class="layui-input-block">
                 {foreach ['local'=>'本地服务器存储','oss'=>'阿里云OSS存储','qiniu'=>'七牛云存储'] as $k=>$v}
                 <input type="radio" data-storagetype="{$k}" name="storage_type" value="{$k}" title="{$v}" lay-filter="storage_type">
