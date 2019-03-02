@@ -58,11 +58,11 @@ class Queue
         if (empty($double) && self::exists($title)) {
             throw new \think\Exception('该任务已经创建，请耐心等待处理完成！');
         }
-        $job_id = Db::name('SystemJobsLog')->insertGetId([
+        $jobId = Db::name('SystemJobsLog')->insertGetId([
             'title' => $title, 'later' => $later, 'uri' => $uri, 'double' => intval($double),
             'data'  => json_encode($data, 256), 'desc' => $desc, 'status_at' => date('Y-m-d H:i:s'),
         ]);
-        $data['_job_id_'] = $job_id;
+        $data['_job_id_'] = $jobId;
         $data['_job_title_'] = $title;
         \think\Queue::later($later, $uri, $data);
     }

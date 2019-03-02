@@ -40,7 +40,7 @@ class Jobs extends JobsBase
             $appid = Wechat::getAppid();
             $wechat = Wechat::WeChatUser();
             $next = ''; // 获取远程粉丝
-            $this->writeln('准备同步粉丝列表...');
+            $this->output->writeln('Start synchronizing fans from the Wechat server');
             while (is_array($result = $wechat->getUserList($next)) && !empty($result['data']['openid'])) {
                 foreach (array_chunk($result['data']['openid'], 100) as $chunk)
                     if (is_array($list = $wechat->getBatchUserInfo($chunk)) && !empty($list['user_info_list']))
@@ -49,7 +49,7 @@ class Jobs extends JobsBase
                 $next = $result['next_openid'];
             }
             $next = ''; // 同步粉丝黑名单
-            $this->writeln('准备同步粉丝黑名单列表...');
+            $this->output->writeln('Start synchronizing black from the Wechat server');
             while (is_array($result = $wechat->getBlackList($next)) && !empty($result['data']['openid'])) {
                 foreach (array_chunk($result['data']['openid'], 100) as $chunk) {
                     $where = [['is_black', 'eq', '0'], ['openid', 'in', $chunk]];
@@ -59,7 +59,7 @@ class Jobs extends JobsBase
                 $next = $result['next_openid'];
             }
             // 同步粉丝标签列表
-            $this->writeln('准备同步粉丝标签列表...');
+            $this->output->writeln('Start synchronizing tags from the Wechat server');
             if (is_array($list = Wechat::WeChatTags()->getTags()) && !empty($list['tags'])) {
                 foreach ($list['tags'] as &$tag) $tag['appid'] = $appid;
                 Db::name('WechatFansTags')->where('1=1')->delete();

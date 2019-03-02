@@ -14,7 +14,6 @@
 
 namespace app\admin\queue;
 
-use app\admin\service\Message;
 use app\admin\service\Queue;
 
 /**
@@ -92,31 +91,23 @@ class JobsBase
         $this->output = new \think\console\Output();
         $this->id = isset($data['_job_id_']) ? $data['_job_id_'] : '';
         $this->title = isset($data['_job_title_']) ? $data['_job_title_'] : '';
-        // 标记任务处理中
-        $this->writeln('Queue starting ...');
+        $this->output->newLine();
+        $this->output->writeln("       System Task {$this->id} Execution Start");
+        $this->output->writeln('---------------------------------------------');
         Queue::status($this->id, self::STATUS_PROC, $this->statusDesc);
         if ($this->execute()) {
-            $this->writeln('Queue execution successful.');
+            $this->output->writeln('---------------------------------------------');
+            $this->output->info("                Successful");
             $this->status = self::STATUS_COMP;
         } else {
-            $this->writeln('Queue execution failure.');
+            $this->output->writeln('---------------------------------------------');
+            $this->output->error("                Failure");
             $this->status = self::STATUS_FAIL;
         }
         $job->delete();
         Queue::status($this->id, $this->status, $this->statusDesc);
-        Message::add("{$this->title}", '后台任务执行完成！', url('@admin/queue/index'), 'admin/queue/index');
-    }
-
-    /**
-     * 过程消息输出
-     * @param string $content 消息内容
-     * @param string $method 输出方法
-     */
-    protected function writeln($content, $method = 'info')
-    {
-        $message = "【({$this->id}){$this->title}】{$content} {$this->statusDesc}";
-        if (method_exists($this->output, $method)) $this->output->$method($message);
-        else $this->output->writeln($message);
+        $this->output->writeln('---------------------------------------------');
+        $this->output->newLine();
     }
 
     /**
