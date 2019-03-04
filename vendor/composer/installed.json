@@ -177,17 +177,17 @@
     },
     {
         "name": "symfony/options-resolver",
-        "version": "v3.4.22",
-        "version_normalized": "3.4.22.0",
+        "version": "v3.4.23",
+        "version_normalized": "3.4.23.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/options-resolver.git",
-            "reference": "0f1cbaee6b356e72c0e025f9a4e9d76a25bf4793"
+            "reference": "926e3b797e6bb66c0e4d7da7eff3a174f7378bcf"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/options-resolver/zipball/0f1cbaee6b356e72c0e025f9a4e9d76a25bf4793",
-            "reference": "0f1cbaee6b356e72c0e025f9a4e9d76a25bf4793",
+            "url": "https://api.github.com/repos/symfony/options-resolver/zipball/926e3b797e6bb66c0e4d7da7eff3a174f7378bcf",
+            "reference": "926e3b797e6bb66c0e4d7da7eff3a174f7378bcf",
             "shasum": "",
             "mirrors": [
                 {
@@ -199,7 +199,7 @@
         "require": {
             "php": "^5.5.9|>=7.0.8"
         },
-        "time": "2019-01-16T09:39:14+00:00",
+        "time": "2019-02-23T15:06:07+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -239,17 +239,17 @@
     },
     {
         "name": "topthink/framework",
-        "version": "v5.1.34",
-        "version_normalized": "5.1.34.0",
+        "version": "v5.1.35",
+        "version_normalized": "5.1.35.0",
         "source": {
             "type": "git",
             "url": "https://github.com/top-think/framework.git",
-            "reference": "7c8cd1ea2bd4683a6ef46af415334260c6e2cc15"
+            "reference": "7a1db0bde4bcbb8a477b5b8d2f619e1239c30f12"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/top-think/framework/zipball/7c8cd1ea2bd4683a6ef46af415334260c6e2cc15",
-            "reference": "7c8cd1ea2bd4683a6ef46af415334260c6e2cc15",
+            "url": "https://api.github.com/repos/top-think/framework/zipball/7a1db0bde4bcbb8a477b5b8d2f619e1239c30f12",
+            "reference": "7a1db0bde4bcbb8a477b5b8d2f619e1239c30f12",
             "shasum": "",
             "mirrors": [
                 {
@@ -271,7 +271,7 @@
             "sebastian/phpcpd": "2.*",
             "squizlabs/php_codesniffer": "2.*"
         },
-        "time": "2019-01-30T06:38:38+00:00",
+        "time": "2019-03-02T10:44:52+00:00",
         "type": "think-framework",
         "installation-source": "dist",
         "notification-url": "https://packagist.org/downloads/",
