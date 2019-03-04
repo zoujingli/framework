@@ -36,7 +36,6 @@ class User extends Controller
 
     /**
      * 用户列表
-     * @return array
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -46,7 +45,7 @@ class User extends Controller
     public function index()
     {
         $this->title = '系统用户管理';
-        return $this->_query($this->table)->where(['is_deleted' => '0'])->like('username,phone,mail')->dateBetween('login_at')->equal('status')->page();
+        $this->_query($this->table)->where(['is_deleted' => '0'])->like('username,phone,mail')->dateBetween('login_at')->equal('status')->page();
     }
 
     /**
@@ -55,7 +54,7 @@ class User extends Controller
      */
     public function auth()
     {
-        return $this->_form($this->table, 'auth');
+        $this->_form($this->table, 'auth');
     }
 
     /**
@@ -64,7 +63,7 @@ class User extends Controller
      */
     public function add()
     {
-        return $this->_form($this->table, 'form');
+        $this->_form($this->table, 'form');
     }
 
     /**
@@ -73,7 +72,7 @@ class User extends Controller
      */
     public function edit()
     {
-        return $this->_form($this->table, 'form');
+        $this->_form($this->table, 'form');
     }
 
     /**
@@ -95,8 +94,9 @@ class User extends Controller
         $data = ['id' => $post['id'], 'password' => md5($post['password'])];
         if (Data::save($this->table, $data, 'id')) {
             $this->success('密码修改成功，下次请使用新密码登录！', '');
+        } else {
+            $this->error('密码修改失败，请稍候再试！');
         }
-        $this->error('密码修改失败，请稍候再试！');
     }
 
     /**

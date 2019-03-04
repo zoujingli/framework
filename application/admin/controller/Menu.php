@@ -34,12 +34,11 @@ class Menu extends Controller
 
     /**
      * 系统菜单显示
-     * @return array
      */
     public function index()
     {
         $this->title = '系统菜单管理';
-        return $this->_page($this->table, false);
+        $this->_page($this->table, false);
     }
 
     /**
@@ -59,20 +58,18 @@ class Menu extends Controller
 
     /**
      * 编辑菜单
-     * @return mixed
      */
     public function edit()
     {
-        return $this->_form($this->table, 'form');
+        $this->_form($this->table, 'form');
     }
 
     /**
      * 添加菜单
-     * @return mixed
      */
     public function add()
     {
-        return $this->_form($this->table, 'form');
+        $this->_form($this->table, 'form');
     }
 
     /**

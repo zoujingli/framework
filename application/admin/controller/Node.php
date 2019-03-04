@@ -46,7 +46,7 @@ class Node extends Controller
             $groups[$pnode]['list'][] = $node;
         }
         $this->groups = $groups;
-        return $this->fetch();
+        $this->fetch();
     }
 
     /**

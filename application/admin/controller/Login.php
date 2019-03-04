@@ -36,37 +36,39 @@ class Login extends Controller
     public function index()
     {
         $this->title = '用户登录';
-        if ($this->request->isGet()) return $this->fetch();
-        // 数据输入处理
-        $data = $this->_input([
-            'username' => $this->request->post('username'),
-            'password' => $this->request->post('password'),
-        ], [
-            'username' => 'require|min:4',
-            'password' => 'require|min:4',
-        ], [
-            'username.require' => '登录账号不能为空！',
-            'password.require' => '登录密码不能为空！',
-            'username.min'     => '登录账号长度不能少于4位有效字符！',
-            'password.min'     => '登录密码长度不能少于4位有效字符！',
-        ]);
-        // 用户信息验证
-        $map = ['is_deleted' => '0', 'username' => $data['username']];
-        $user = Db::name('SystemUser')->where($map)->find();
-        if (empty($user)) $this->error('登录账号不存在，请重新输入!');
-        if ($user['password'] !== md5($data['password'])) {
-            $this->error('登录密码与账号不匹配，请重新输入!');
+        if ($this->request->isGet()) {
+            $this->fetch();
+        } else {
+            $data = $this->_input([
+                'username' => $this->request->post('username'),
+                'password' => $this->request->post('password'),
+            ], [
+                'username' => 'require|min:4',
+                'password' => 'require|min:4',
+            ], [
+                'username.require' => '登录账号不能为空！',
+                'password.require' => '登录密码不能为空！',
+                'username.min'     => '登录账号长度不能少于4位有效字符！',
+                'password.min'     => '登录密码长度不能少于4位有效字符！',
+            ]);
+            // 用户信息验证
+            $map = ['is_deleted' => '0', 'username' => $data['username']];
+            $user = Db::name('SystemUser')->where($map)->find();
+            if (empty($user)) $this->error('登录账号不存在，请重新输入!');
+            if ($user['password'] !== md5($data['password'])) {
+                $this->error('登录密码与账号不匹配，请重新输入!');
+            }
+            if (empty($user['status'])) $this->error('账号已经被禁用，请联系管理!');
+            Db::name('SystemUser')->where(['id' => $user['id']])->update([
+                'login_at'  => Db::raw('now()'),
+                'login_ip'  => $this->request->ip(),
+                'login_num' => Db::raw('login_num+1'),
+            ]);
+            session('user', $user);
+            empty($user['authorize']) || \app\admin\service\Auth::applyNode();
+            _syslog('系统管理', '用户登录系统成功');
+            $this->success('登录成功，正在进入系统...', url('@admin'));
         }
-        if (empty($user['status'])) $this->error('账号已经被禁用，请联系管理!');
-        Db::name('SystemUser')->where(['id' => $user['id']])->update([
-            'login_at'  => Db::raw('now()'),
-            'login_ip'  => $this->request->ip(),
-            'login_num' => Db::raw('login_num+1'),
-        ]);
-        session('user', $user);
-        empty($user['authorize']) || \app\admin\service\Auth::applyNode();
-        _syslog('系统管理', '用户登录系统成功');
-        $this->success('登录成功，正在进入系统...', url('@admin'));
     }
 
     /**
@@ -74,7 +76,6 @@ class Login extends Controller
      */
     public function out()
     {
-        if (session('user')) _syslog('系统管理', '用户退出登录成功');
         empty($_SESSION) || $_SESSION = [];
         [session_unset(), session_destroy()];
         $this->success('退出登录成功！', url('@admin/login'));

@@ -74,7 +74,7 @@ class Plugs extends Controller
         $this->field = $this->request->get('field', 'file');
         $this->types = $this->request->get('type', 'jpg,png');
         $this->mimes = File::mine($this->types);
-        return $this->fetch();
+        $this->fetch();
     }
 
     /**
@@ -116,7 +116,6 @@ class Plugs extends Controller
      */
     public function plupload()
     {
-        // 文件接收
         if (!($file = $this->getUploadFile()) || empty($file)) {
             return json(['uploaded' => false, 'error' => ['message' => '文件上传异常，文件可能过大或未上传']]);
         }
@@ -180,7 +179,7 @@ class Plugs extends Controller
     {
         $this->title = '图标选择器';
         $this->field = input('field', 'icon');
-        return $this->fetch();
+        $this->fetch();
     }
 
     /**
@@ -192,9 +191,9 @@ class Plugs extends Controller
      */
     public function message()
     {
-        $where = ['read_state' => '0'];
-        $this->list = Db::name('SystemMessage')->where($where)->order('id desc')->select();
-        return $this->fetch();
+        $this->title = '系统消息';
+        $this->list = Db::name('SystemMessage')->where(['read_state' => '0'])->order('id desc')->select();
+        $this->fetch();
     }
 
 }

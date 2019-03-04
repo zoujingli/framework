@@ -42,7 +42,7 @@ class Message extends Controller
     public function index()
     {
         $this->title = '系统消息管理';
-        return $this->_query($this->table)->like('title,desc')->equal('read_state')->dateBetween('create_at,read_at')->order('id desc')->page();
+        $this->_query($this->table)->like('title,desc')->equal('read_state')->dateBetween('create_at,read_at')->order('id desc')->page();
     }
 
     /**
@@ -70,8 +70,9 @@ class Message extends Controller
     {
         if (Db::name($this->table)->whereRaw('1=1')->delete() !== false) {
             $this->success('系统消息清理成功！');
+        } else {
+            $this->error('系统消息清理失败，请稍候再试！');
         }
-        $this->error('系统消息清理失败，请稍候再试！');
     }
 
     /**
@@ -81,12 +82,12 @@ class Message extends Controller
      */
     public function onoff()
     {
-        $state = intval(sysconf('system_message_state'));
-        sysconf('system_message_state', empty($state) ? 1 : 0);
+        sysconf('system_message_state', sysconf('system_message_state') ? 0 : 1);
         if (sysconf('system_message_state')) {
             $this->success('系统消息提示开启成功！');
+        } else {
+            $this->success('系统消息提示关闭成功！');
         }
-        $this->success('系统消息提示关闭成功！');
     }
 
 }

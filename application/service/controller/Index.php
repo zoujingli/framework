@@ -43,7 +43,7 @@ class Index extends Controller
     public function index()
     {
         $this->title = '微信授权管理';
-        return $this->_query($this->table)
+        $this->_query($this->table)
             ->like('authorizer_appid,nick_name,principal_name')
             ->equal('service_type,status')->dateBetween('create_at')
             ->where(['is_deleted' => '0'])->order('id desc')->page();

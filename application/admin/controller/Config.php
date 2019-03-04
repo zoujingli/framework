@@ -15,7 +15,6 @@
 namespace app\admin\controller;
 
 use library\Controller;
-use library\File;
 
 /**
  * 系统配置
@@ -53,7 +52,7 @@ class Config extends Controller
     public function file()
     {
         if ($this->request->isGet()) {
-            return $this->fetch('file', [
+            $this->fetch('file', [
                 'title' => '文件存储配置',
                 'point' => [
                     'oss-cn-hangzhou.aliyuncs.com'    => '华东 1 杭州',
@@ -77,22 +76,26 @@ class Config extends Controller
                     'oss-me-east-1.aliyuncs.com'      => '中东东部 1 迪拜',
                 ],
             ]);
-        }
-        foreach ($this->request->post() as $k => $v) sysconf($k, $v);
-        if ($this->request->post('storage_type') === 'oss') {
-            try {
-                $local = sysconf('storage_oss_domain');
-                $bucket = $this->request->post('storage_oss_bucket');
-                $domain = File::instance('oss')->setBucket($bucket);
-                if (empty($local) || stripos($local, '.aliyuncs.com') !== false) {
-                    sysconf('storage_oss_domain', $domain);
+        } else {
+            foreach ($this->request->post() as $k => $v) sysconf($k, $v);
+            if ($this->request->post('storage_type') === 'oss') {
+                try {
+                    $local = sysconf('storage_oss_domain');
+                    $bucket = $this->request->post('storage_oss_bucket');
+                    $domain = \library\File::instance('oss')->setBucket($bucket);
+                    if (empty($local) || stripos($local, '.aliyuncs.com') !== false) {
+                        sysconf('storage_oss_domain', $domain);
+                    }
+                    $this->success('阿里云OSS存储动态配置成功！');
+                } catch (\think\exception\HttpResponseException $exception) {
+                    throw $exception;
+                } catch (\Exception $e) {
+                    $this->error('阿里云OSS存储配置失效，' . $e->getMessage());
                 }
-            } catch (\Exception $e) {
-                $this->error('阿里云OSS存储配置失效，' . $e->getMessage());
+            } else {
+                $this->success('文件存储配置保存成功！');
             }
-            $this->success('阿里云OSS存储动态配置成功！');
         }
-        $this->success('文件存储配置保存成功！');
     }
 
 }

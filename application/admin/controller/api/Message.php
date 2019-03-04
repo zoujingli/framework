@@ -44,8 +44,9 @@ class Message extends Controller
         $code = $this->request->post('code');
         if (\app\admin\service\Message::set($code)) {
             $this->success('系统消息状态更新成功！');
+        } else {
+            $this->error('系统消息状态更新失败，请稍候再试！');
         }
-        $this->error('系统消息状态更新失败，请稍候再试！');
     }
 
 }

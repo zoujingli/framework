@@ -15,7 +15,6 @@
 namespace app\admin\controller;
 
 use library\Controller;
-use library\tools\Data;
 use think\Db;
 
 /**
@@ -33,7 +32,6 @@ class Auth extends Controller
 
     /**
      * 权限列表
-     * @return array|string
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -43,7 +41,7 @@ class Auth extends Controller
     public function index()
     {
         $this->title = '系统权限管理';
-        return $this->_query($this->table)->dateBetween('create_at')->order('sort asc,id desc')->like('title,desc')->equal('status')->page();
+        $this->_query($this->table)->dateBetween('create_at')->like('title,desc')->equal('status')->order('sort asc,id desc')->page();
     }
 
     /**
@@ -61,14 +59,14 @@ class Auth extends Controller
                 $nodes = \app\admin\service\Auth::get();
                 $checked = Db::name('SystemAuthNode')->where(['auth' => $auth])->column('node');
                 foreach ($nodes as &$node) $node['checked'] = in_array($node['node'], $checked);
-                $data = $this->_apply_filter(Data::arr2tree($nodes, 'node', 'pnode', '_sub_'));
-                return json(['code' => '1', 'data' => $data]);
+                $data = $this->_apply_filter(\library\tools\Data::arr2tree($nodes, 'node', 'pnode', '_sub_'));
+                return $this->success('获取权限配置成功！', $data);
             case 'save': // 保存权限配置
                 list($post, $data) = [$this->request->post(), []];
                 foreach (isset($post['nodes']) ? $post['nodes'] : [] as $node) $data[] = ['auth' => $auth, 'node' => $node];
                 Db::name('SystemAuthNode')->where(['auth' => $auth])->delete();
                 Db::name('SystemAuthNode')->insertAll($data);
-                return json(['code' => '1', 'info' => '节点授权更新成功！']);
+                return $this->success('节点授权更新成功！');
             default:
                 return $this->_form($this->table, 'apply');
         }
@@ -94,7 +92,7 @@ class Auth extends Controller
      */
     public function add()
     {
-        return $this->_form($this->table, 'form');
+        $this->_form($this->table, 'form');
     }
 
     /**
@@ -103,7 +101,7 @@ class Auth extends Controller
      */
     public function edit()
     {
-        return $this->_form($this->table, 'form');
+        $this->_form($this->table, 'form');
     }
 
     /**
@@ -142,8 +140,9 @@ class Auth extends Controller
             $where = ['auth' => $this->request->post('id')];
             Db::name('SystemAuthNode')->where($where)->delete();
             $this->success("权限删除成功！", '');
+        } else {
+            $this->error("权限删除失败，请稍候再试！");
         }
-        $this->error("权限删除失败，请稍候再试！");
     }
 
 }
