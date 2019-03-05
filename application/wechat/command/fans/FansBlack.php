@@ -29,6 +29,6 @@ class FansBlack extends Fans
     protected function configure()
     {
         $this->module = ['black'];
-        $this->setName('xfans:block')->setDescription('Synchronize black of fans');
+        $this->setName('xfans:black')->setDescription('Synchronize black of fans');
     }
 }
