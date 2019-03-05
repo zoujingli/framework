@@ -32,7 +32,6 @@ class Log extends Controller
 
     /**
      * 日志列表
-     * @return array|string
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException

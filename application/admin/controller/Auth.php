@@ -75,7 +75,7 @@ class Auth extends Controller
     /**
      * 节点数据拼装
      * @param array $nodes
-     * @param int $level
+     * @param integer $level
      * @return array
      */
     private function _apply_filter($nodes, $level = 1)

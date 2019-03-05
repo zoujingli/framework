@@ -18,6 +18,7 @@ use library\Controller;
 use think\Db;
 
 /**
+ * 系统消息任务管理
  * Class Queue
  * @package app\admin\controller
  */
@@ -31,7 +32,6 @@ class Queue extends Controller
 
     /**
      * 任务列表
-     * @return array
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException

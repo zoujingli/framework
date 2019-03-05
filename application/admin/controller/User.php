@@ -85,17 +85,18 @@ class User extends Controller
     {
         if ($this->request->isGet()) {
             $this->verify = false;
-            return $this->_form($this->table, 'pass');
-        }
-        $post = $this->request->post();
-        if ($post['password'] !== $post['repassword']) {
-            $this->error('两次输入的密码不一致！');
-        }
-        $data = ['id' => $post['id'], 'password' => md5($post['password'])];
-        if (Data::save($this->table, $data, 'id')) {
-            $this->success('密码修改成功，下次请使用新密码登录！', '');
+            $this->_form($this->table, 'pass');
         } else {
-            $this->error('密码修改失败，请稍候再试！');
+            $post = $this->request->post();
+            if ($post['password'] !== $post['repassword']) {
+                $this->error('两次输入的密码不一致！');
+            }
+            $data = ['id' => $post['id'], 'password' => md5($post['password'])];
+            if (Data::save($this->table, $data, 'id')) {
+                $this->success('密码修改成功，下次请使用新密码登录！', '');
+            } else {
+                $this->error('密码修改失败，请稍候再试！');
+            }
         }
     }
 

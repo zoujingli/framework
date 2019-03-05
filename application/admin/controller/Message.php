@@ -32,7 +32,6 @@ class Message extends Controller
 
     /***
      * 获取消息列表
-     * @return mixed
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
