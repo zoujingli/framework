@@ -244,12 +244,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/top-think/framework.git",
-            "reference": "7a1db0bde4bcbb8a477b5b8d2f619e1239c30f12"
+            "reference": "c53c0c6132022a87e8ee9c4109939eaf9a8a7adb"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/top-think/framework/zipball/7a1db0bde4bcbb8a477b5b8d2f619e1239c30f12",
-            "reference": "7a1db0bde4bcbb8a477b5b8d2f619e1239c30f12",
+            "url": "https://api.github.com/repos/top-think/framework/zipball/c53c0c6132022a87e8ee9c4109939eaf9a8a7adb",
+            "reference": "c53c0c6132022a87e8ee9c4109939eaf9a8a7adb",
             "shasum": "",
             "mirrors": [
                 {
@@ -271,7 +271,7 @@
             "sebastian/phpcpd": "2.*",
             "squizlabs/php_codesniffer": "2.*"
         },
-        "time": "2019-03-02T10:44:52+00:00",
+        "time": "2019-03-03T00:44:44+00:00",
         "type": "think-framework",
         "installation-source": "dist",
         "notification-url": "https://packagist.org/downloads/",
@@ -525,7 +525,7 @@
         },
         "time": "2019-02-26T06:40:00+00:00",
         "type": "library",
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "files": [
                 "common.php"
@@ -565,10 +565,13 @@
         "require": {
             "ext-curl": "*",
             "ext-json": "*",
+            "ext-libxml": "*",
+            "ext-mbstring": "*",
             "ext-openssl": "*",
+            "ext-simplexml": "*",
             "php": ">=5.4"
         },
-        "time": "2019-01-12T11:40:04+00:00",
+        "time": "2019-02-18T07:47:07+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
