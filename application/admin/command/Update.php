@@ -46,14 +46,14 @@ class Update extends Command
      */
     protected function execute(Input $input, Output $output)
     {
-        $output->comment('prepare to update file information ...');
+        $output->comment('Start Updating Difference Files');
         foreach (self::diff() as $file) foreach ($this->modules as $module) {
             if (stripos($file['name'], $module) === 0) {
                 $this->syncFile($file, $output);
                 break;
             }
         }
-        $output->comment('update of all specified files successful.');
+        $output->comment('Update Difference File Completion');
     }
 
     /**
