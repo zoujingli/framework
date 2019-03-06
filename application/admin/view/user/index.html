@@ -31,10 +31,8 @@
     {/notempty}
     <tbody>
     {foreach $list as $key=>$vo}
-    <tr>
-        <td class='list-table-check-td think-checkbox'>
-            <input class="list-check-box" value='{$vo.id}' type='checkbox'>
-        </td>
+    <tr data-dbclick>
+        <td class='list-table-check-td think-checkbox'><input class="list-check-box" value='{$vo.id}' type='checkbox'></td>
         <td class='text-left nowrap'>
             账号：{$vo.username|default=''}<br>
             手机：{$vo.phone|default='--'}
@@ -56,7 +54,7 @@
             {/if}
 
             {if auth("admin/user/edit")}
-            <a class="layui-btn layui-btn-sm" data-title="编辑用户" data-modal='{:url("edit")}?id={$vo.id}'>编 辑</a>
+            <a data-dbclick class="layui-btn layui-btn-sm" data-title="编辑用户" data-modal='{:url("edit")}?id={$vo.id}'>编 辑</a>
             {/if}
 
             {if $vo.status eq 1 and auth("admin/user/forbid")}

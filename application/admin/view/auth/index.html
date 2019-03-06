@@ -30,7 +30,7 @@
     <!--{/notempty}-->
     <tbody>
     <!--{foreach $list as $key=>$vo}-->
-    <tr>
+    <tr data-dbclick>
         <td class='list-table-check-td think-checkbox'><input class="list-check-box" value='{$vo.id}' type='checkbox'></td>
         <td class='text-left'>{$vo.title}</td>
         <td class='text-left'>{$vo.desc|default="<span class='color-desc'>没有写描述哦！</span>"}</td>
@@ -40,7 +40,7 @@
 
             {if auth("admin/auth/edit")}
             <span class="text-explode">|</span>
-            <a class="layui-btn layui-btn-xs" data-title="编辑权限" data-modal='{:url("admin/auth/edit")}?id={$vo.id}'>编 辑</a>
+            <a data-dbclick class="layui-btn layui-btn-xs" data-title="编辑权限" data-modal='{:url("admin/auth/edit")}?id={$vo.id}'>编 辑</a>
             {/if}
 
             {if auth("admin/auth/apply")}

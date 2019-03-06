@@ -138,8 +138,11 @@ $(function () {
             $.vali.listen(this);
             $dom = $dom || $(this.targetClass);
             $dom.find('[required]').parent().prevAll('label').addClass('label-required');
-            $dom.find('[data-file="btn"]').map(function () {
-                var that = this;
+            $dom.find('[data-date-range]').map(function () {
+                laydate.render({range: true, elem: this});
+                this.setAttribute('autocomplete', 'off');
+            });
+            $dom.find('[data-file="btn"]').map(function (index, that) {
                 require(['upload'], function (apply) {
                     apply(that)
                 });
@@ -489,6 +492,11 @@ $(function () {
     /*! 注册 data-open 事件行为 */
     $body.on('click', '[data-open]', function () {
         $.form.href($(this).attr('data-open'), this);
+    });
+
+    /*! 注册 data-dbclick 事件行为 */
+    $body.on('dblclick', '[data-dbclick]', function () {
+        $(this).find(this.getAttribute('data-dbclick') || '[data-dbclick]').trigger('click');
     });
 
     /*! 注册 data-reload 事件行为 */
