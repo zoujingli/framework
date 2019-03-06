@@ -44,13 +44,13 @@
         <div class="layui-form-item layui-inline">
             <label class="layui-form-label">下单时间</label>
             <div class="layui-input-inline">
-                <input data-datetime-range name="create_at" value="{$Think.get.create_at|default=''}" placeholder="请选择下单时间" class="layui-input">
+                <input data-date-range name="create_at" value="{$Think.get.create_at|default=''}" placeholder="请选择下单时间" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item layui-inline">
             <label class="layui-form-label">支付时间</label>
             <div class="layui-input-inline">
-                <input data-datetime-range name="pay_at" value="{$Think.get.pay_at|default=''}" placeholder="请选择支付时间" class="layui-input">
+                <input data-date-range name="pay_at" value="{$Think.get.pay_at|default=''}" placeholder="请选择支付时间" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item layui-inline">
@@ -98,9 +98,6 @@
         window.form.render();
         $('[data-export-list]').on('click', function () {
             window.location.href = '{:url("@")}?s=store/order/index&' + $(this).parents('form').serialize() + '&action=export'
-        });
-        $('[data-datetime-range]').map(function () {
-            window.laydate.render({range: true, elem: this})
         });
     </script>
 </fieldset>
