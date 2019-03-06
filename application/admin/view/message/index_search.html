@@ -36,14 +36,14 @@
         <div class="layui-form-item layui-inline">
             <label class="layui-form-label">读取时间</label>
             <div class="layui-input-inline">
-                <input data-datetime-range name="read_at" value="{$Think.get.read_at|default=''}" placeholder="请输入读取时间" class="layui-input">
+                <input data-date-range name="read_at" value="{$Think.get.read_at|default=''}" placeholder="请输入读取时间" class="layui-input">
             </div>
         </div>
 
         <div class="layui-form-item layui-inline">
             <label class="layui-form-label">创建时间</label>
             <div class="layui-input-inline">
-                <input data-datetime-range name="create_at" value="{$Think.get.create_at|default=''}" placeholder="请选择创建时间" class="layui-input">
+                <input data-date-range name="create_at" value="{$Think.get.create_at|default=''}" placeholder="请选择创建时间" class="layui-input">
             </div>
         </div>
 
@@ -54,11 +54,4 @@
 
 </fieldset>
 
-<script>
-    $(function () {
-        window.form.render();
-        $('[data-datetime-range]').map(function () {
-            window.laydate.render({range: true, elem: this});
-        });
-    });
-</script>
+<script>form.render()</script>
