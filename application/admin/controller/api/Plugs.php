@@ -27,6 +27,17 @@ class Plugs extends Controller
 {
 
     /**
+     * Plugs constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        if (!\app\admin\service\Auth::isLogin()) {
+            $this->error('需要登录后才能进行文件上传哦！');
+        }
+    }
+
+    /**
      * 文件状态检查
      * @throws \think\Exception
      * @throws \think\exception\PDOException
