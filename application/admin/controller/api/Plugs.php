@@ -99,7 +99,7 @@ class Plugs extends Controller
         if (!($file = $this->getUploadFile()) || empty($file)) {
             $this->error('文件上传异常，文件可能过大或未上传！');
         }
-        if ($file->checkExt('php')) $this->error('禁止传危险的PHP文件');
+        if ($file->checkExt('php')) $this->error('禁止上传危险的PHP文件');
         if (!$file->checkExt(strtolower(sysconf('storage_local_exts')))) {
             $this->error('文件上传类型受限，请在后台配置！');
         }
@@ -131,7 +131,7 @@ class Plugs extends Controller
         if (!($file = $this->getUploadFile()) || empty($file)) {
             return json(['uploaded' => false, 'error' => ['message' => '文件上传异常，文件可能过大或未上传']]);
         }
-        if ($file->checkExt('php')) $this->error('禁止传危险的PHP文件');
+        if ($file->checkExt('php')) $this->error('禁止上传危险的PHP文件');
         if (!$file->checkExt(strtolower(sysconf('storage_local_exts')))) {
             return json(['uploaded' => false, 'error' => ['message' => '文件上传类型受限，请在后台配置']]);
         }
