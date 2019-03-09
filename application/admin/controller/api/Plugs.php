@@ -33,7 +33,7 @@ class Plugs extends Controller
     {
         parent::__construct();
         if (!\app\admin\service\Auth::isLogin()) {
-            $this->error('需要登录后才能进行文件上传哦！');
+            $this->error('访问授权失败，请重新登录授权再试！');
         }
     }
 
