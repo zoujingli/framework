@@ -77,6 +77,11 @@ class Config extends Controller
                 ],
             ]);
         } else {
+            if ($this->request->post('storage_type') === 'local') {
+                if (in_array('php', explode(',', $this->request->post('storage_local_exts', '')))) {
+                    $this->error('可执行文件禁止上传到本地服务器!');
+                }
+            }
             foreach ($this->request->post() as $k => $v) sysconf($k, $v);
             if ($this->request->post('storage_type') === 'oss') {
                 try {
