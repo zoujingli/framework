@@ -400,6 +400,10 @@ $(function () {
                     }
                     return event.preventDefault(), false;
                 });
+                $(form).find('[data-form-loaded]').map(function () {
+                    $(this).html(this.getAttribute('data-form-loaded') || this.innerHTML);
+                    $(this).removeAttr('data-form-loaded').removeClass('layui-disabled');
+                });
                 return $(form).data('validate', this);
             };
         }).check(form, callback, options);
@@ -408,18 +412,12 @@ $(function () {
     /*! 自动监听规则内表单 */
     $.vali.listen = function () {
         $('form[data-auto]').map(function () {
-            if ($(this).attr('data-listen') !== 'true') {
-                $(this).attr('data-listen', 'true').vali(function (data) {
-                    var call = $(this).attr('data-callback') || '_default_callback';
-                    var type = this.getAttribute('method') || 'POST', tips = this.getAttribute('data-tips') || undefined;
-                    var time = this.getAttribute('data-time') || undefined, href = this.getAttribute('action') || window.location.href;
-                    $.form.load(href, data, type, window[call] || undefined, true, tips, time);
-                });
-                $(this).find('[data-form-loaded]').map(function () {
-                    $(this).html(this.getAttribute('data-form-loaded') || this.innerHTML);
-                    $(this).removeAttr('data-form-loaded').removeClass('layui-disabled');
-                });
-            }
+            if ($(this).attr('data-listen') !== 'true') $(this).attr('data-listen', 'true').vali(function (data) {
+                var call = $(this).attr('data-callback') || '_default_callback';
+                var type = this.getAttribute('method') || 'POST', tips = this.getAttribute('data-tips') || undefined;
+                var time = this.getAttribute('data-time') || undefined, href = this.getAttribute('action') || window.location.href;
+                $.form.load(href, data, type, window[call] || undefined, true, tips, time);
+            });
         });
     };
 

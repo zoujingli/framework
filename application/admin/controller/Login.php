@@ -37,6 +37,8 @@ class Login extends Controller
     {
         $this->title = '用户登录';
         if ($this->request->isGet()) {
+            $this->skey = uniqid('skey');
+            session('loginskey', $this->skey);
             $this->fetch();
         } else {
             $data = $this->_input([
@@ -55,7 +57,7 @@ class Login extends Controller
             $map = ['is_deleted' => '0', 'username' => $data['username']];
             $user = Db::name('SystemUser')->where($map)->find();
             if (empty($user)) $this->error('登录账号或密码错误，请重新输入!');
-            if ($user['password'] !== md5($data['password'])) {
+            if (md5($user['password'] . session('loginskey')) !== $data['password']) {
                 $this->error('登录账号或密码错误，请重新输入!');
             }
             if (empty($user['status'])) $this->error('账号已经被禁用，请联系管理!');
@@ -65,6 +67,7 @@ class Login extends Controller
                 'login_num' => Db::raw('login_num+1'),
             ]);
             session('user', $user);
+            session('loginskey', null);
             empty($user['authorize']) || \app\admin\service\Auth::applyNode();
             _syslog('系统管理', '用户登录系统成功');
             $this->success('登录成功，正在进入系统...', url('@admin'));
