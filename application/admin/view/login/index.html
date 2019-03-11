@@ -15,13 +15,13 @@
             <li class="username">
                 <label>
                     <i class="layui-icon layui-icon-username"></i>
-                    <input value="admin" class="layui-input" required pattern="^\S{4,}$" name="username" autofocus placeholder="请输入账号">
+                    <input class="layui-input" required pattern="^\S{4,}$" name="username" autofocus placeholder="请输入账号">
                 </label>
             </li>
             <li class="password">
                 <label>
                     <i class="layui-icon layui-icon-password"></i>
-                    <input value="admin" class="layui-input" required pattern="^\S{4,}$" name="password" type="password" placeholder="请输入密码">
+                    <input class="layui-input" required pattern="^\S{4,}$" name="password" type="password" placeholder="请输入密码">
                 </label>
             </li>
             <li class="text-center padding-top-20">
@@ -38,12 +38,12 @@
 
 {block name='style'}
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<script>if (location.href.indexOf('#') > -1) location.replace(location.href.split('#')[0])</script>
+<script>if(location.href.indexOf('#')>-1)location.replace(location.href.split('#')[0])</script>
 <link rel="stylesheet" href="__ROOT__/static/theme/css/login.css">
 {/block}
 
 {block name='script'}
 <script src="__ROOT__/static/plugs/supersized/supersized.3.2.7.min.js"></script>
-<script>require(["md5","jquery"],function(md5,$){$("form").vali(function(){$.form.load(location.href,{username:$('[name="username"]').val(),password:md5.hash(md5.hash($('[name="password"]').val())+'{$skey|default=""}')},"post")})});</script>
+<script>require(["md5", "jquery"], function (md5, $) {$("form").vali(function () {$.form.load(location.href, {username: $('[name="username"]').val(), password: md5.hash(md5.hash($('[name="password"]').val()) + '{$skey|default=""}')}, "post")})});</script>
 {/block}
 
