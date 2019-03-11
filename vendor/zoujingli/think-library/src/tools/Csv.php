@@ -56,7 +56,7 @@ class Csv
      * @param string $rule 规则，如: order.order_no
      * @return mixed
      */
-    private static function parseKeyDot(array $data, $rule)
+    public static function parseKeyDot(array $data, $rule)
     {
         list($temp, $attr) = [$data, explode('.', trim($rule, '.'))];
         while ($key = array_shift($attr)) $temp = isset($temp[$key]) ? $temp[$key] : $temp;

@@ -19,7 +19,7 @@ namespace library\tools;
  * Class Object
  * @package library\tools
  */
-class Options
+class Options implements \ArrayAccess
 {
     /**
      * 当前数据对象
@@ -96,4 +96,42 @@ class Options
         return $append ? ($this->data = $result) : $result;
     }
 
+    /**
+     * 判断数据是否已经设置
+     * @param string $offset
+     * @return boolean
+     */
+    public function offsetExists($offset)
+    {
+        return $this->has($offset);
+    }
+
+    /**
+     * 获取数据内容
+     * @param string|null $offset
+     * @return mixed|null
+     */
+    public function offsetGet($offset)
+    {
+        return $this->get($offset);
+    }
+
+    /**
+     * 设置数据对象
+     * @param string $offset
+     * @param mixed $value
+     */
+    public function offsetSet($offset, $value)
+    {
+        $this->set($offset, $value);
+    }
+
+    /**
+     * 删除数据内容
+     * @param string $offset
+     */
+    public function offsetUnset($offset)
+    {
+        $this->del($offset);
+    }
 }

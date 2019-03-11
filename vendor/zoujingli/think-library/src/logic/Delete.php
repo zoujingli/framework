@@ -88,8 +88,9 @@ class Delete extends Logic
         // 回复前端结果
         if ($result !== false) {
             $this->controller->success('数据删除成功！', '');
+        } else {
+            $this->controller->error('数据删除失败, 请稍候再试！');
         }
-        $this->controller->error('数据删除失败, 请稍候再试！');
     }
 
 }

@@ -99,13 +99,11 @@ class Data
             $attr[$path] = "{$ppath}-{$attr[$id]}";
             $attr['sub'] = isset($attr['sub']) ? $attr['sub'] : [];
             $attr['spt'] = substr_count($ppath, '-');
-            $attr['spl'] = str_repeat("&nbsp;&nbsp;&nbsp;&nbsp;├&nbsp;", $attr['spt']);
+            $attr['spl'] = str_repeat("　├　", $attr['spt']);
             $sub = $attr['sub'];
             unset($attr['sub']);
             $tree[] = $attr;
-            if (!empty($sub)) {
-                $tree = array_merge($tree, self::arr2table($sub, $id, $pid, $path, $attr[$path]));
-            }
+            if (!empty($sub)) $tree = array_merge($tree, self::arr2table($sub, $id, $pid, $path, $attr[$path]));
         }
         return $tree;
     }

@@ -52,7 +52,7 @@ class Cors
     {
         try {
             if (PHP_SESSION_ACTIVE !== session_status()) Session::init(config('session.'));
-            if ($token = request()->header('CorsToken', input('CorsToken', ''))) {
+            if ($token = request()->header('CorsToken', input('CorsToken', cookie('CorsToken')))) {
                 list($name, $value) = explode('=', Crypt::decode($token) . '=');
                 if (!empty($value) && session_name() === $name && session_id() !== $value) {
                     Session::destroy(); # 注销原来的会话
