@@ -58,7 +58,7 @@ class Login extends Controller
             $user = Db::name('SystemUser')->where($map)->find();
             if (empty($user)) $this->error('登录账号或密码错误，请重新输入!');
             if (md5($user['password'] . session('loginskey')) !== $data['password']) {
-                $this->error('登录账号或密码错误，请重新输入!');
+                $this->error('登录账号或密码错误，请刷新页面重新输入!');
             }
             if (empty($user['status'])) $this->error('账号已经被禁用，请联系管理!');
             Db::name('SystemUser')->where(['id' => $user['id']])->update([
