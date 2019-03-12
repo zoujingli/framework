@@ -51,6 +51,7 @@ class Config extends Controller
      */
     public function file()
     {
+        $this->applyCsrfToken();
         if ($this->request->isGet()) {
             $this->fetch('file', [
                 'title' => '文件存储配置',

@@ -63,6 +63,7 @@ class User extends Controller
      */
     public function add()
     {
+        $this->applyCsrfToken();
         $this->_form($this->table, 'form');
     }
 
@@ -72,6 +73,7 @@ class User extends Controller
      */
     public function edit()
     {
+        $this->applyCsrfToken();
         $this->_form($this->table, 'form');
     }
 

@@ -24,6 +24,11 @@ use think\Db;
  */
 class Login extends Controller
 {
+    /**
+     * 设置页面标题
+     * @var string
+     */
+    public $title = '管理登录';
 
     /**
      * 用户登录
@@ -35,10 +40,9 @@ class Login extends Controller
      */
     public function index()
     {
-        $this->title = '用户登录';
+        $this->applyCsrfToken();
         if ($this->request->isGet()) {
-            $this->skey = uniqid('skey');
-            session('loginskey', $this->skey);
+            session('loginskey', $this->skey = uniqid());
             $this->fetch();
         } else {
             $data = $this->_input([

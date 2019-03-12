@@ -15,6 +15,7 @@
 namespace library;
 
 use library\tools\Cors;
+use library\tools\Csrf;
 
 /**
  * 标准控制器基类
@@ -36,9 +37,16 @@ class Controller extends \stdClass
 {
 
     /**
+     * 当前请求对象
      * @var \think\Request
      */
     public $request;
+
+    /**
+     * 表单CSRF验证
+     * @var boolean
+     */
+    private $_isCsrf = false;
 
     /**
      * Controller constructor.
@@ -77,6 +85,7 @@ class Controller extends \stdClass
     public function success($info, $data = [], $code = 1)
     {
         $result = ['code' => $code, 'info' => $info, 'data' => $data];
+        if ($this->_isCsrf) Csrf::clearFormToken(input('csrf_token_name', '__token__'));
         throw new \think\exception\HttpResponseException(json($result, 200, Cors::getRequestHeader()));
     }
 
@@ -107,11 +116,16 @@ class Controller extends \stdClass
      * 返回视图内容
      * @param string $tpl 模板名称
      * @param array $vars 模板变量
+     * @param string $node CSRF授权节点
      */
-    public function fetch($tpl = '', $vars = [])
+    public function fetch($tpl = '', $vars = [], $node = null)
     {
         foreach ($this as $name => $value) $vars[$name] = $value;
-        throw new \think\exception\HttpResponseException(view($tpl, $vars));
+        if ($this->_isCsrf) {
+            Csrf::fetchTemplate($tpl, $vars, $node);
+        } else {
+            throw new \think\exception\HttpResponseException(view($tpl, $vars));
+        }
     }
 
     /**
@@ -122,8 +136,9 @@ class Controller extends \stdClass
      */
     public function assign($name, $value = '')
     {
-        if (is_string($name)) $this->$name = $value;
-        elseif (is_array($name)) foreach ($name as $k => $v) {
+        if (is_string($name)) {
+            $this->$name = $value;
+        } elseif (is_array($name)) foreach ($name as $k => $v) {
             if (is_string($k)) $this->$k = $v;
         }
         return $this;
@@ -141,6 +156,21 @@ class Controller extends \stdClass
         $methods = [$name, "_{$this->request->action()}{$name}"];
         foreach ($methods as $method) if (method_exists($this, $method)) {
             if (false === $this->$method($one, $two)) return false;
+        }
+        return true;
+    }
+
+    /**
+     * 检查表单令牌验证
+     * @param boolean $isRutrun
+     * @return boolean
+     */
+    protected function applyCsrfToken($isRutrun = false)
+    {
+        $this->_isCsrf = true;
+        if ($this->request->isPost() && !Csrf::checkFormToken()) {
+            if ($isRutrun) return false;
+            $this->error('表单令牌验证失败，请刷新页面再试！');
         }
         return true;
     }

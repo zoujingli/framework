@@ -9,7 +9,7 @@
             <li><a target="_blank" href="http://soft.ftsm-shop.com/19/3911.html">推荐使用谷歌浏览器</a></li>
         </ul>
     </div>
-    <form onsubmit="return false;" data-time="false" method="post" class="layui-anim layui-anim-upbit" autocomplete="off">
+    <form onsubmit="return false;" method="post" class="layui-anim layui-anim-upbit" autocomplete="off">
         <h2 class="notselect">系统管理</h2>
         <ul>
             <li class="username">
@@ -25,6 +25,7 @@
                 </label>
             </li>
             <li class="text-center padding-top-20">
+                <input type="hidden" name="skey" value="{$skey|default=''}">
                 <button type="submit" class="layui-btn layui-disabled full-width" data-form-loaded="立即登入">正在载入</button>
             </li>
         </ul>
@@ -38,12 +39,19 @@
 
 {block name='style'}
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<script>if(location.href.indexOf('#')>-1)location.replace(location.href.split('#')[0])</script>
+<script>if (location.href.indexOf('#') > -1) location.replace(location.href.split('#')[0])</script>
 <link rel="stylesheet" href="__ROOT__/static/theme/css/login.css">
 {/block}
 
 {block name='script'}
 <script src="__ROOT__/static/plugs/supersized/supersized.3.2.7.min.js"></script>
-<script>require(["md5", "jquery"], function (md5, $) {$("form").vali(function () {$.form.load(location.href, {username: $('[name="username"]').val(), password: md5.hash(md5.hash($('[name="password"]').val()) + '{$skey|default=""}')}, "post")})});</script>
+<script>require(["md5", "jquery"], function (md5, $) {
+    $("form").vali(function (ret) {
+        var item = ret.split('&'), data = {};
+        for (var i in item) if (item[i].indexOf('=') > -1) data[item[i].split('=')[0]] = item[i].split('=')[1];
+        data['password'] = md5.hash(md5.hash(data['password']) + data['skey']);
+        $.form.load(location.href, data, "post", null, null, null, 'false');
+    });
+})</script>
 {/block}
 

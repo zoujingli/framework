@@ -19,8 +19,8 @@ $_name_ = 's' . substr(md5(__DIR__), -8);
 
 /* 配置会话参数 */
 return [
-    'prefix'         => 'fw',
-    'path'           => $_path_,
-    'name'           => $_name_,
-    'var_session_id' => $_name_,
+    'prefix' => 'fw',
+    'path'   => $_path_,
+    'name'   => $_name_,
+    // 'var_session_id' => $_name_,
 ];

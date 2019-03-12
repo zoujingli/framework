@@ -6,7 +6,7 @@
 <!--{/if}-->
 
 <!--{if auth("admin/auth/del")}-->
-<button data-action='{:url("del")}' data-rule="id#{key}" data-confirm="确定要删除这些权限吗？" class='layui-btn layui-btn-sm layui-btn-primary'>删除权限</button>
+<button data-action='{:url("del")}' data-rule="id#{key}" data-csrf="{:systoken('admin/auth/del')}" data-confirm="确定要删除这些权限吗？" class='layui-btn layui-btn-sm layui-btn-primary'>删除权限</button>
 <!--{/if}-->
 {/block}
 
@@ -48,13 +48,13 @@
             {/if}
 
             {if $vo.status eq 1 and auth("admin/auth/forbid")}
-            <a class="layui-btn layui-btn-warm layui-btn-xs" data-action="{:url('forbid')}" data-value="id#{$vo.id};status#0">禁 用</a>
+            <a class="layui-btn layui-btn-warm layui-btn-xs" data-action="{:url('forbid')}" data-value="id#{$vo.id};status#0" data-csrf="{:systoken('admin/auth/forbid')}">禁 用</a>
             {elseif auth("admin/auth/resume")}
-            <a class="layui-btn layui-btn-warm layui-btn-xs" data-action="{:url('resume')}" data-value="id#{$vo.id};status#1">启 用</a>
+            <a class="layui-btn layui-btn-warm layui-btn-xs" data-action="{:url('resume')}" data-value="id#{$vo.id};status#1" data-csrf="{:systoken('admin/auth/resume')}">启 用</a>
             {/if}
 
             {if auth("admin/auth/del")}
-            <a class="layui-btn layui-btn-danger layui-btn-xs" data-confirm="确定要删除数据吗?" data-action="{:url('del')}" data-value="id#{$vo.id}">删 除</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" data-confirm="确定要删除数据吗?" data-action="{:url('del')}" data-value="id#{$vo.id}" data-csrf="{:systoken('admin/auth/del')}">删 除</a>
             {/if}
 
         </td>

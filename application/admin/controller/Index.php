@@ -66,6 +66,7 @@ class Index extends Controller
      */
     public function pass($id)
     {
+        $this->applyCsrfToken();
         if (intval($id) !== intval(session('user.id'))) {
             $this->error('只能修改当前用户的密码！');
         }

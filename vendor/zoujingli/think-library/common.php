@@ -40,6 +40,19 @@ if (!function_exists('format_datetime')) {
     }
 }
 
+if (!function_exists('systoken')) {
+    /**
+     * 生成CSRF-TOKEN参数
+     * @param string $node
+     * @return string
+     */
+    function systoken($node = null)
+    {
+        $csrf = \library\tools\Csrf::buildFormToken($node);
+        return "{$csrf['name']}:{$csrf['token']}";
+    }
+}
+
 if (!function_exists('sysconf')) {
     /**
      * 设备或配置系统参数

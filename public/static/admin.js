@@ -512,8 +512,13 @@ $(function () {
 
     /*! 注册 data-action 事件行为 */
     $body.on('click', '[data-action]', function () {
-        var $this = $(this), action = $this.attr('data-action'), time = $this.attr('data-time');
-        var data = {}, meth = $this.attr('data-method') || 'post', loading = $this.attr('data-loading') || false;
+        var $this = $(this), time = $this.attr('data-time'), action = $this.attr('data-action');
+        var loading = $this.attr('data-loading'), data = {}, meth = $this.attr('data-method') || 'post';
+        var csrf = $this.attr('data-token') || $this.attr('data-csrf') || '';
+        if (csrf && csrf.indexOf(':') > -1) {
+            data['csrf_token_name'] = csrf.split(':')[0];
+            data[csrf.split(':')[0]] = csrf.split(':')[1];
+        }
         var rule = $this.attr('data-value') || (function (rule, ids) {
             $($this.attr('data-target') || 'input[type=checkbox].list-check-box').map(function () {
                 (this.checked) && ids.push(this.value);
