@@ -31,7 +31,9 @@ class Csrf
         $field = input('csrf_token_name', '__token__');
         $csrf = session($field, '', 'csrf');
         if (empty($csrf['node'])) return false;
+        if (empty($csrf['time'])) return false;
         if (empty($csrf['token'])) return false;
+        if ($csrf['time'] + 600 < time()) return false;
         if ($csrf['token'] !== input($field)) return false;
         if ($csrf['node'] !== Node::current()) return false;
         return true;
@@ -48,16 +50,19 @@ class Csrf
 
     /**
      * 生成表单CSRF信息
-     * @param null $node
+     * @param null|string $node
      * @return array
      */
     public static function buildFormToken($node = null)
     {
-        $token = md5(uniqid());
-        $name = 'csrf_token_value_' . uniqid();
+        $name = 'csrf_token_' . uniqid();
         if (is_null($node)) $node = Node::current();
-        session($name, ['node' => $node, 'token' => $token], 'csrf');
-        return ['name' => $name, 'token' => $token, 'node' => $node];
+        list($token, $time) = [md5(uniqid()), time()];
+        session($name, ['node' => $node, 'token' => $token, 'time' => $time], 'csrf');
+        foreach (session('', '', 'csrf') as $keys => $item) if (isset($item['time'])) {
+            if ($item['time'] + 600 < $time) self::clearFormToken($keys);
+        }
+        return ['name' => $name, 'token' => $token, 'node' => $node, 'time' => $time];
     }
 
     /**
