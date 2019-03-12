@@ -54,6 +54,7 @@ class User extends Controller
      */
     public function auth()
     {
+        $this->applyCsrfToken();
         $this->_form($this->table, 'auth');
     }
 
@@ -85,6 +86,7 @@ class User extends Controller
      */
     public function pass()
     {
+        $this->applyCsrfToken();
         if ($this->request->isGet()) {
             $this->verify = false;
             $this->_form($this->table, 'pass');
@@ -131,6 +133,7 @@ class User extends Controller
         if (in_array('10000', explode(',', $this->request->post('id')))) {
             $this->error('系统超级账号禁止删除！');
         }
+        $this->applyCsrfToken();
         $this->_delete($this->table);
     }
 
@@ -142,6 +145,7 @@ class User extends Controller
         if (in_array('10000', explode(',', $this->request->post('id')))) {
             $this->error('系统超级账号禁止操作！');
         }
+        $this->applyCsrfToken();
         $this->_save($this->table, ['status' => '0']);
     }
 
@@ -150,6 +154,7 @@ class User extends Controller
      */
     public function resume()
     {
+        $this->applyCsrfToken();
         $this->_save($this->table, ['status' => '1']);
     }
 

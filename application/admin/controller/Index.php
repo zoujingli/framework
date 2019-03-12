@@ -107,6 +107,7 @@ class Index extends Controller
      */
     public function info($id = 0)
     {
+        $this->applyCsrfToken();
         if (intval($id) === intval(session('user.id'))) {
             $this->_form('SystemUser', 'user/form', 'id', [], ['id' => $id]);
         } else {
