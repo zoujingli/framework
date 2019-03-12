@@ -59,8 +59,8 @@ class Csrf
         if (is_null($node)) $node = Node::current();
         list($token, $time) = [md5(uniqid()), time()];
         session($name, ['node' => $node, 'token' => $token, 'time' => $time], 'csrf');
-        foreach (session('', '', 'csrf') as $keys => $item) if (isset($item['time'])) {
-            if ($item['time'] + 600 < $time) self::clearFormToken($keys);
+        foreach (session('', '', 'csrf') as $key => $item) if (isset($item['time'])) {
+            if ($item['time'] + 600 < $time) self::clearFormToken($key);
         }
         return ['name' => $name, 'token' => $token, 'node' => $node, 'time' => $time];
     }
