@@ -91,11 +91,11 @@ if (!function_exists('base64_image')) {
     }
 }
 
-// 注册权限中间键
+// 注册中间键
 \think\facade\Middleware::add('app\admin\service\Auth');
 
 // 注册系统指令
-\think\Console::addDefaultCommands([
+if (PHP_SAPI === 'cli') \think\Console::addDefaultCommands([
     'app\admin\command\Session',
     'app\admin\command\update\UpdateAdmin',
     'app\admin\command\update\UpdatePlugs',
