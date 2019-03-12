@@ -61,6 +61,7 @@ class Menu extends Controller
      */
     public function edit()
     {
+        $this->applyCsrfToken();
         $this->_form($this->table, 'form');
     }
 
@@ -69,6 +70,7 @@ class Menu extends Controller
      */
     public function add()
     {
+        $this->applyCsrfToken();
         $this->_form($this->table, 'form');
     }
 
@@ -106,6 +108,7 @@ class Menu extends Controller
      */
     public function resume()
     {
+        $this->applyCsrfToken();
         $this->_save($this->table, ['status' => '1']);
     }
 
@@ -114,6 +117,7 @@ class Menu extends Controller
      */
     public function forbid()
     {
+        $this->applyCsrfToken();
         $this->_save($this->table, ['status' => '0']);
     }
 
@@ -122,6 +126,7 @@ class Menu extends Controller
      */
     public function del()
     {
+        $this->applyCsrfToken();
         $this->_delete($this->table);
     }
 
