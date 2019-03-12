@@ -63,6 +63,7 @@ class Log extends Controller
      */
     public function del()
     {
+        $this->applyCsrfToken();
         $this->_delete($this->table);
     }
 

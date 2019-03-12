@@ -3,7 +3,7 @@
 {block name="button"}
 
 {if auth("admin/log/del")}
-<button data-action='{:url("del")}' data-rule="id#{key}" data-confirm="确定要删除日志吗？" class='layui-btn layui-btn-sm layui-btn-primary'>删除日志</button>
+<button data-action='{:url("del")}' data-rule="id#{key}" data-csrf="{:systoken('admin/log/del')}" data-confirm="确定要删除日志吗？" class='layui-btn layui-btn-sm layui-btn-primary'>删除日志</button>
 {/if}
 
 {/block}
