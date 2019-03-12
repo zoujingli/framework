@@ -13,6 +13,6 @@
 // +----------------------------------------------------------------------
 
 // 注册系统指令
-\think\Console::addDefaultCommands([
+if (PHP_SAPI === 'cli') \think\Console::addDefaultCommands([
     'app\store\command\AutoRun',
 ]);
