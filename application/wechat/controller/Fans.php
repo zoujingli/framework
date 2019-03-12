@@ -36,13 +36,17 @@ class Fans extends Controller
 
     /**
      * 微信粉丝管理
-     * @return array
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
      */
     public function index()
     {
         $this->title = '微信粉丝管理';
-        $query = $this->_query($this->table)->like('nickname')->equal('subscribe,is_black');
-        return $this->_page($query->dateBetween('subscribe_at')->db()->order('subscribe_time desc'));
+        $this->_query($this->table)->like('nickname')->equal('subscribe,is_black')
+            ->dateBetween('subscribe_at')->order('subscribe_time desc')->page();
     }
 
     /**
