@@ -64,7 +64,7 @@ class Task extends Command
             shell_exec('wmic process call create "' . $cmd . '"');
         } else {
             echo "{$cmd} &" . PHP_EOL;
-            shell_exec("{$cmd} &");
+            // shell_exec("{$cmd} &");
         }
     }
 
