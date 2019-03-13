@@ -2,10 +2,9 @@
 <fieldset class="margin-bottom-10">
     <legend class="layui-bg-cyan">进程守护</legend>
     <div class="layui-code border-0 margin-top-0">
-        <p class="color-desc margin-top-10">1.修改sh文件运行权限</p>
-        chmod +x {:env('root_path')}task.sh
-        <p class="color-desc margin-top-10">2.配置定时任务（建议每分钟执行）</p>
-        {:env('root_path')}task.sh
+        <p class="color-desc margin-top-10">
+        <p class="color-desc margin-top-10">配置定时任务来检查并启动进程（建议每分钟执行）</p>
+        {$Think.const.PHP_BINARY.' '}{:env('root_path')}think xrun:task
     </div>
 </fieldset>
 {/if}
