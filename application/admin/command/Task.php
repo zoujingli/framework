@@ -43,7 +43,7 @@ class Task extends Command
     {
         $cmd = str_replace('\\', '/', 'php ' . env('ROOT_PATH') . 'think queue:listen');
         if ($this->checkProcess($cmd)) {
-            $output->info('Message queue Guardian already exists, no process restart is required!');
+            $output->info('The message queue daemon already exists and does not need to restart the process!');
         } else {
             $this->createProcess($cmd);
             if ($this->checkProcess($cmd)) {
