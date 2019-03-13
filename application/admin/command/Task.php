@@ -41,7 +41,7 @@ class Task extends Command
      */
     protected function execute(Input $input, Output $output)
     {
-        $cmd = str_replace('\\', '/', 'php ' . env('ROOT_PATH') . 'think queue:listen');
+        $cmd = str_replace('\\', '/', PHP_BINARY . ' ' . env('ROOT_PATH') . 'think queue:listen');
         if ($this->checkProcess($cmd)) {
             $output->info('The message queue daemon already exists!');
         } else {
@@ -61,7 +61,7 @@ class Task extends Command
     private function createProcess($cmd)
     {
         if ($this->isWin()) {
-            shell_exec('wmic process call create "' . str_replace('\\', '/', $cmd) . '"');
+            shell_exec('wmic process call create "' . $cmd . '"');
         } else {
             shell_exec("{$cmd} &");
         }
