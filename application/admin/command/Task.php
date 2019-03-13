@@ -63,8 +63,12 @@ class Task extends Command
         if ($this->isWin()) {
             shell_exec('wmic process call create "' . $cmd . '"');
         } else {
-            echo "{$cmd} &" . PHP_EOL;
-            proc_open("{$cmd} &", [["pipe", "r"], ["pipe", "w"], ["pipe", "w"]], $pipes);
+            $process = proc_open("{$cmd} &", [["pipe", "r"], ["pipe", "w"], ["pipe", "w"]], $pipes);
+            if (is_resource($process)) {
+                fclose($pipes[0]);
+                fclose($pipes[1]);
+                proc_close($process);
+            }
         }
     }
 
