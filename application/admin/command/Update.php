@@ -74,11 +74,15 @@ class Update extends Command
         if (in_array($file['type'], ['add', 'mod'])) {
             if (self::down(encode($file['name']))) {
                 $output->writeln("{$file['name']} updated successfully.");
-            } else $output->error("{$file['name']} update failed.");
+            } else {
+                $output->error("{$file['name']} update failed.");
+            }
         } elseif (in_array($file['type'], ['del'])) {
             if (unlink(realpath(env('root_path') . $file['name']))) {
                 $output->writeln("{$file['name']} remove successfully.");
-            } else $output->error("{$file['name']} remove failed.");
+            } else {
+                $output->error("{$file['name']} remove failed.");
+            }
         }
     }
 
@@ -89,6 +93,7 @@ class Update extends Command
     public static function build()
     {
         return self::tree([
+            'think',
             'config/log.php',
             'config/system.php',
             'config/template.php',
