@@ -98,8 +98,6 @@ class Update extends Command
             'public/static/plugs',
             'public/static/theme',
             'public/static/admin.js',
-        ], [
-           // 'application/admin/view/login/index.html',
         ]);
     }
 

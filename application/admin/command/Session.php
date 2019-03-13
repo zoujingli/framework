@@ -31,9 +31,8 @@ class Session extends Command
      */
     protected function configure()
     {
-        $this->setName('xclear:session')->setDescription('Clean up invalid session files');
+        $this->setName('xrun:session')->setDescription('Clean up invalid session files');
     }
-
 
     /**
      * 执行指令
