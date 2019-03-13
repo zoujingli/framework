@@ -61,7 +61,7 @@ class Task extends Command
     private function createProcess($cmd)
     {
         if ($this->isWin()) {
-            shell_exec('wmic process call create "' . $cmd . '"');
+            shell_exec("wmic process call create \"{$cmd}\"");
         } else {
             shell_exec("{$cmd} &");
         }
