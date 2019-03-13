@@ -61,7 +61,7 @@ class Task extends Command
     private function createProcess($cmd)
     {
         if ($this->isWin()) {
-            shell_exec("wmic process call create \"{$cmd}\"");
+            shell_exec('wmic process call create "' . $cmd . '"');
         } else {
             shell_exec("{$cmd} &");
         }
@@ -77,7 +77,7 @@ class Task extends Command
         if ($this->isWin()) {
             $result = shell_exec('wmic process where name="php.exe" get CommandLine');
         } else {
-            $result = shell_exec("ps aux|grep -v grep|grep \"{$cmd}\"");
+            $result = shell_exec('ps aux|grep -v grep|grep "' . $cmd . '"');
         }
         return stripos(str_replace('\\', '/', $result), $cmd) !== false;
     }
