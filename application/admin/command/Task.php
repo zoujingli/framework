@@ -64,7 +64,7 @@ class Task extends Command
             shell_exec('wmic process call create "' . $cmd . '"');
         } else {
             echo "{$cmd} &" . PHP_EOL;
-            // shell_exec("{$cmd} &");
+            proc_open("{$cmd} &", [["pipe", "r"], ["pipe", "w"], ["pipe", "w"]], $pipes);
         }
     }
 
@@ -78,7 +78,6 @@ class Task extends Command
         if ($this->isWin()) {
             $result = shell_exec('wmic process where name="php.exe" get CommandLine');
         } else {
-            echo 'ps aux|grep -v grep|grep "' . $cmd . '"' . PHP_EOL;
             $result = shell_exec('ps aux|grep -v grep|grep "' . $cmd . '"');
         }
         return stripos(str_replace('\\', '/', $result), $cmd) !== false;
