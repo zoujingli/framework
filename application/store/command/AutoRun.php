@@ -31,7 +31,7 @@ class AutoRun extends Command
      */
     protected function configure()
     {
-        $this->setName('xrun:store')->setDescription('Clear up invalid store records');
+        $this->setName('xrun:store')->setDescription('Clean up invalid store records');
     }
 
     /**
