@@ -77,6 +77,7 @@ class Task extends Command
         if ($this->isWin()) {
             $result = shell_exec('wmic process where name="php.exe" get CommandLine');
         } else {
+            echo 'ps aux|grep -v grep|grep "' . $cmd . '"' . PHP_EOL;
             $result = shell_exec('ps aux|grep -v grep|grep "' . $cmd . '"');
         }
         return stripos(str_replace('\\', '/', $result), $cmd) !== false;
