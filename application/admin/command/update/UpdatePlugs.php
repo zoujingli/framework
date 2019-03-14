@@ -29,6 +29,6 @@ class UpdatePlugs extends Update
     protected function configure()
     {
         $this->modules = ['public/static/'];
-        $this->setName('xupdate:plugs')->setDescription('Synchronize update plugs static files');
+        $this->setName('xsync:plugs')->setDescription('Synchronize update plugs static files');
     }
 }

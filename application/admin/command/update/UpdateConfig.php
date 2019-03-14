@@ -29,7 +29,7 @@ class UpdateConfig extends Update
     protected function configure()
     {
         $this->modules = ['config/'];
-        $this->setName('xupdate:config')->setDescription('Synchronize update config .php files');
+        $this->setName('xsync:config')->setDescription('Synchronize update config .php files');
     }
 
 }

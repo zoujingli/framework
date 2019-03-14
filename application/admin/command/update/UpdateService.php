@@ -28,6 +28,6 @@ class UpdateService extends Update
     protected function configure()
     {
         $this->modules = ['application/service/'];
-        $this->setName('xupdate:service')->setDescription('Synchronize update service module files');
+        $this->setName('xsync:service')->setDescription('Synchronize update service module files');
     }
 }
