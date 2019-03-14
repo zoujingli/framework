@@ -641,6 +641,18 @@ $(function () {
         layer.close($(this).attr('index'));
     });
 
+    //
+    $body.find('[data-login-form]').map(function () {
+        require(["md5"], function (md5) {
+            $("form").vali(function (ret) {
+                var item = ret.split('&'), data = {};
+                for (var i in item) if (item[i].indexOf('=') > -1) data[item[i].split('=')[0]] = item[i].split('=')[1];
+                data['password'] = md5.hash(md5.hash(data['password']) + data['skey']);
+                $.form.load(location.href, data, "post", null, null, null, 'false');
+            });
+        })
+    });
+
     /*! 初始化 */
     $.menu.listen();
     $.vali.listen();

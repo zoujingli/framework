@@ -9,7 +9,7 @@
             <li><a target="_blank" href="http://soft.ftsm-shop.com/19/3911.html">推荐使用谷歌浏览器</a></li>
         </ul>
     </div>
-    <form onsubmit="return false;" method="post" class="layui-anim layui-anim-upbit" autocomplete="off">
+    <form data-login-form onsubmit="return false;" method="post" class="layui-anim layui-anim-upbit" autocomplete="off">
         <h2 class="notselect">系统管理</h2>
         <ul>
             <li class="username">
@@ -45,13 +45,5 @@
 
 {block name='script'}
 <script src="__ROOT__/static/plugs/supersized/supersized.3.2.7.min.js"></script>
-<script>require(["md5", "jquery"], function (md5, $) {
-    $("form").vali(function (ret) {
-        var item = ret.split('&'), data = {};
-        for (var i in item) if (item[i].indexOf('=') > -1) data[item[i].split('=')[0]] = item[i].split('=')[1];
-        data['password'] = md5.hash(md5.hash(data['password']) + data['skey']);
-        $.form.load(location.href, data, "post", null, null, null, 'false');
-    });
-})</script>
 {/block}
 

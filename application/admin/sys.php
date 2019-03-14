@@ -95,7 +95,7 @@ if (!function_exists('base64_image')) {
 \think\facade\Middleware::add('app\admin\service\Auth');
 
 // 注册系统指令
-if (PHP_SAPI === 'cli') \think\Console::addDefaultCommands([
+\think\Console::addDefaultCommands([
     'app\admin\command\Task',
     'app\admin\command\Session',
     'app\admin\command\update\UpdateAdmin',
