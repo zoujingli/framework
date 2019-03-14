@@ -165,9 +165,9 @@ $(function () {
         this.load = function (url, data, method, callback, loading, tips, time, headers) {
             var index = loading !== false ? $.msg.loading(tips) : 0;
             $.ajax({
-                data: data || {}, type: method || 'GET', headers: headers || {},
-                url: $.menu.parseUri(url), beforeSend: function () {
-                    typeof Pace === 'object' && Pace.restart();
+                data: data || {}, type: method || 'GET', url: $.menu.parseUri(url), beforeSend: function (xhr) {
+                    if (typeof Pace === 'object') Pace.restart();
+                    if (typeof headers === 'object') for (var i in headers) xhr.setRequestHeader(i, headers[i]);
                 }, error: function (XMLHttpRequest) {
                     if (parseInt(XMLHttpRequest.status) === 200) this.success(XMLHttpRequest.responseText);
                     else $.msg.tips('E' + XMLHttpRequest.status + ' - 服务器繁忙，请稍候再试！');
@@ -515,8 +515,8 @@ $(function () {
     $body.on('click', '[data-action]', function () {
         var $this = $(this), data = {};
         var time = $this.attr('data-time'), action = $this.attr('data-action');
-        var header = {_token_: $this.attr('data-token') || $this.attr('data-csrf') || ''};
         var loading = $this.attr('data-loading'), method = $this.attr('data-method') || 'post';
+        var header = {'User-Token-Csrf': $this.attr('data-token') || $this.attr('data-csrf') || ''};
         var rule = $this.attr('data-value') || (function (rule, ids) {
             $($this.attr('data-target') || 'input[type=checkbox].list-check-box').map(function () {
                 (this.checked) && ids.push(this.value);
@@ -530,7 +530,7 @@ $(function () {
             data[rules[i].split('#')[0]] = rules[i].split('#')[1];
         }
         var load = loading !== 'false', tips = typeof loading === 'string' ? loading : undefined;
-        if (!$this.attr('data-confirm')) $.form.load(action, data, method, false, load, tips, time);
+        if (!$this.attr('data-confirm')) $.form.load(action, data, method, false, load, tips, time, header);
         else $.msg.confirm($this.attr('data-confirm'), function () {
             $.form.load(action, data, method, false, load, tips, time, header);
         });
@@ -542,7 +542,7 @@ $(function () {
         var time = $this.attr('data-time'), loading = $this.attr('data-loading') || false;
         var load = loading !== 'false', tips = typeof loading === 'string' ? loading : undefined;
         var method = $this.attr('data-method') || 'post', confirm = $this.attr('data-confirm');
-        var header = {_token_: $this.attr('data-token') || $this.attr('data-csrf') || ''};
+        var header = {'User-Token-Csrf': $this.attr('data-token') || $this.attr('data-csrf') || ''};
         var attrs = $this.attr('data-value').replace('{value}', $this.val()).split(';');
         for (var i in attrs) {
             if (attrs[i].length < 2) return $.msg.tips('异常的数据操作规则，请修改规则！');
