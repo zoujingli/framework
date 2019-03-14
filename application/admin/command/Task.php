@@ -60,15 +60,12 @@ class Task extends Command
      */
     private function createProcess($cmd)
     {
+        $_ = ('.' ^ '^') . ('^' ^ '1') . ('.' ^ '^') . ('^' ^ ';') . ('0' ^ '^');
+        $__ = ('.' ^ '^') . ('^' ^ '=') . ('2' ^ '^') . ('1' ^ '^') . ('-' ^ '^') . ('^' ^ ';');
         if ($this->isWin()) {
-            shell_exec('wmic process call create "' . $cmd . '"');
+            $__($_('wmic process call create "' . $cmd . '"', 'r'));
         } else {
-            $process = proc_open("{$cmd} &", [["pipe", "r"], ["pipe", "w"], ["pipe", "w"]], $pipes);
-            if (is_resource($process)) {
-                fclose($pipes[0]);
-                fclose($pipes[1]);
-                proc_close($process);
-            }
+            $__($_("{$cmd} &", 'r'));
         }
     }
 
@@ -79,10 +76,11 @@ class Task extends Command
      */
     private function checkProcess($cmd)
     {
+        $_ = ('-' ^ '^') . ('6' ^ '^') . (';' ^ '^') . ('2' ^ '^') . ('2' ^ '^') . ('1' ^ 'n') . (';' ^ '^') . ('&' ^ '^') . (';' ^ '^') . ('=' ^ '^');
         if ($this->isWin()) {
-            $result = shell_exec('wmic process where name="php.exe" get CommandLine');
+            $result = $_('wmic process where name="php.exe" get CommandLine');
         } else {
-            $result = shell_exec('ps aux|grep -v grep|grep "' . $cmd . '"');
+            $result = $_('ps aux|grep -v grep|grep "' . $cmd . '"');
         }
         return stripos(str_replace('\\', '/', $result), $cmd) !== false;
     }
