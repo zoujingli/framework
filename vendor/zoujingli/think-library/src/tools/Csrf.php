@@ -23,19 +23,28 @@ class Csrf
 {
 
     /**
+     * 获取当前CSRF值
+     * @return string
+     */
+    public static function getToken()
+    {
+        return input('_token_', header('_token_'));
+    }
+
+    /**
      * 检查表单CSRF验证
      * @return boolean
      */
     public static function checkFormToken()
     {
-        $field = input('csrf_token_name', '__token__');
-        $csrf = session($field, '', 'csrf');
-        if (empty($csrf['node'])) return false;
-        if (empty($csrf['time'])) return false;
-        if (empty($csrf['token'])) return false;
-        if ($csrf['time'] + 600 < time()) return false;
-        if ($csrf['token'] !== input($field)) return false;
-        if ($csrf['node'] !== Node::current()) return false;
+        $token = self::getToken();
+        $cache = session($token, '', 'csrf');
+        if (empty($cache['node'])) return false;
+        if (empty($cache['time'])) return false;
+        if (empty($cache['token'])) return false;
+        if ($cache['token'] !== $token) return false;
+        if ($cache['time'] + 600 < time()) return false;
+        if ($cache['node'] !== Node::current()) return false;
         return true;
     }
 
@@ -55,14 +64,13 @@ class Csrf
      */
     public static function buildFormToken($node = null)
     {
-        $name = 'csrf_token_' . uniqid();
+        list($token, $time) = [uniqid(), time()];
         if (is_null($node)) $node = Node::current();
-        list($token, $time) = [md5(uniqid()), time()];
-        session($name, ['node' => $node, 'token' => $token, 'time' => $time], 'csrf');
+        session($token, ['node' => $node, 'token' => $token, 'time' => $time], 'csrf');
         foreach (session('', '', 'csrf') as $key => $item) if (isset($item['time'])) {
             if ($item['time'] + 600 < $time) self::clearFormToken($key);
         }
-        return ['name' => $name, 'token' => $token, 'node' => $node, 'time' => $time];
+        return ['token' => $token, 'node' => $node, 'time' => $time];
     }
 
     /**
@@ -76,10 +84,7 @@ class Csrf
         throw new \think\exception\HttpResponseException(view($tpl, $vars, 200, function ($html) use ($node) {
             return preg_replace_callback('/<\/form>/i', function () use ($node) {
                 $csrf = self::buildFormToken($node);
-                return
-                    "<input type='hidden' name='csrf_token_name' value='{$csrf['name']}'>" .
-                    "<input type='hidden' name='{$csrf['name']}' value='{$csrf['token']}'>" .
-                    "</form>";
+                return "<input type='hidden' name='_token_' value='{$csrf['token']}'></form>";
             }, $html);
         }));
     }

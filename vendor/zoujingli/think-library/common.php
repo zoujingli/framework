@@ -49,7 +49,7 @@ if (!function_exists('systoken')) {
     function systoken($node = null)
     {
         $csrf = \library\tools\Csrf::buildFormToken($node);
-        return "{$csrf['name']}:{$csrf['token']}";
+        return $csrf['token'];
     }
 }
 

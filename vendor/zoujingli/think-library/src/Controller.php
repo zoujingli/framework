@@ -85,7 +85,7 @@ class Controller extends \stdClass
     public function success($info, $data = [], $code = 1)
     {
         $result = ['code' => $code, 'info' => $info, 'data' => $data];
-        if ($this->_isCsrf) Csrf::clearFormToken(input('csrf_token_name', '__token__'));
+        if ($this->_isCsrf) Csrf::clearFormToken(Csrf::getToken());
         throw new \think\exception\HttpResponseException(json($result, 200, Cors::getRequestHeader()));
     }
 
@@ -121,11 +121,8 @@ class Controller extends \stdClass
     public function fetch($tpl = '', $vars = [], $node = null)
     {
         foreach ($this as $name => $value) $vars[$name] = $value;
-        if ($this->_isCsrf) {
-            Csrf::fetchTemplate($tpl, $vars, $node);
-        } else {
-            throw new \think\exception\HttpResponseException(view($tpl, $vars));
-        }
+        if ($this->_isCsrf) Csrf::fetchTemplate($tpl, $vars, $node);
+        else throw new \think\exception\HttpResponseException(view($tpl, $vars));
     }
 
     /**

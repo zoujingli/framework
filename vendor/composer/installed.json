@@ -298,17 +298,17 @@
     },
     {
         "name": "topthink/think-helper",
-        "version": "v1.0.7",
-        "version_normalized": "1.0.7.0",
+        "version": "v3.0.0",
+        "version_normalized": "3.0.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/top-think/think-helper.git",
-            "reference": "5f92178606c8ce131d36b37a57c58eb71e55f019"
+            "reference": "8ba5f66e68106369fcc3211e7d2dbaf7bc9ce455"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/top-think/think-helper/zipball/5f92178606c8ce131d36b37a57c58eb71e55f019",
-            "reference": "5f92178606c8ce131d36b37a57c58eb71e55f019",
+            "url": "https://api.github.com/repos/top-think/think-helper/zipball/8ba5f66e68106369fcc3211e7d2dbaf7bc9ce455",
+            "reference": "8ba5f66e68106369fcc3211e7d2dbaf7bc9ce455",
             "shasum": "",
             "mirrors": [
                 {
@@ -317,7 +317,7 @@
                 }
             ]
         },
-        "time": "2018-10-05T00:43:21+00:00",
+        "time": "2019-03-14T09:28:59+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -499,12 +499,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/zoujingli/ThinkLibrary.git",
-            "reference": "e5ac38a207defd0a2675b0c2d6c4b2ad68fa31e4"
+            "reference": "d0d38049ae101c22eb4c66c297d61b6b0a3deb70"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/e5ac38a207defd0a2675b0c2d6c4b2ad68fa31e4",
-            "reference": "e5ac38a207defd0a2675b0c2d6c4b2ad68fa31e4",
+            "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/d0d38049ae101c22eb4c66c297d61b6b0a3deb70",
+            "reference": "d0d38049ae101c22eb4c66c297d61b6b0a3deb70",
             "shasum": "",
             "mirrors": [
                 {
@@ -523,7 +523,7 @@
             "qiniu/php-sdk": "^7.2",
             "topthink/framework": "5.1.*"
         },
-        "time": "2019-03-12T05:30:11+00:00",
+        "time": "2019-03-14T09:58:58+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

@@ -162,10 +162,11 @@ $(function () {
             }
         };
         // 异步加载的数据
-        this.load = function (url, data, method, callback, loading, tips, time) {
+        this.load = function (url, data, method, callback, loading, tips, time, headers) {
             var index = loading !== false ? $.msg.loading(tips) : 0;
             $.ajax({
-                type: method || 'GET', url: $.menu.parseUri(url), data: data || {}, beforeSend: function () {
+                data: data || {}, type: method || 'GET', headers: headers || {},
+                url: $.menu.parseUri(url), beforeSend: function () {
                     typeof Pace === 'object' && Pace.restart();
                 }, error: function (XMLHttpRequest) {
                     if (parseInt(XMLHttpRequest.status) === 200) this.success(XMLHttpRequest.responseText);
@@ -512,13 +513,10 @@ $(function () {
 
     /*! 注册 data-action 事件行为 */
     $body.on('click', '[data-action]', function () {
-        var $this = $(this), time = $this.attr('data-time'), action = $this.attr('data-action');
-        var loading = $this.attr('data-loading'), data = {}, meth = $this.attr('data-method') || 'post';
-        var csrf = $this.attr('data-token') || $this.attr('data-csrf') || '';
-        if (csrf && csrf.indexOf(':') > -1) {
-            data['csrf_token_name'] = csrf.split(':')[0];
-            data[csrf.split(':')[0]] = csrf.split(':')[1];
-        }
+        var $this = $(this), data = {};
+        var time = $this.attr('data-time'), action = $this.attr('data-action');
+        var header = {_token_: $this.attr('data-token') || $this.attr('data-csrf') || ''};
+        var loading = $this.attr('data-loading'), method = $this.attr('data-method') || 'post';
         var rule = $this.attr('data-value') || (function (rule, ids) {
             $($this.attr('data-target') || 'input[type=checkbox].list-check-box').map(function () {
                 (this.checked) && ids.push(this.value);
@@ -532,9 +530,9 @@ $(function () {
             data[rules[i].split('#')[0]] = rules[i].split('#')[1];
         }
         var load = loading !== 'false', tips = typeof loading === 'string' ? loading : undefined;
-        if (!$this.attr('data-confirm')) $.form.load(action, data, meth, false, load, tips, time);
+        if (!$this.attr('data-confirm')) $.form.load(action, data, method, false, load, tips, time);
         else $.msg.confirm($this.attr('data-confirm'), function () {
-            $.form.load(action, data, meth, false, load, tips, time);
+            $.form.load(action, data, method, false, load, tips, time, header);
         });
     });
 
@@ -544,6 +542,7 @@ $(function () {
         var time = $this.attr('data-time'), loading = $this.attr('data-loading') || false;
         var load = loading !== 'false', tips = typeof loading === 'string' ? loading : undefined;
         var method = $this.attr('data-method') || 'post', confirm = $this.attr('data-confirm');
+        var header = {_token_: $this.attr('data-token') || $this.attr('data-csrf') || ''};
         var attrs = $this.attr('data-value').replace('{value}', $this.val()).split(';');
         for (var i in attrs) {
             if (attrs[i].length < 2) return $.msg.tips('异常的数据操作规则，请修改规则！');
@@ -553,9 +552,9 @@ $(function () {
             $this.css('border', (ret && ret.code) ? '1px solid #e6e6e6' : '1px solid red');
             return false;
         };
-        if (!confirm) return $.form.load(action, data, method, that.callback, load, tips, time);
+        if (!confirm) return $.form.load(action, data, method, that.callback, load, tips, time, header);
         $.msg.confirm(confirm, function () {
-            $.form.load(action, data, method, that.callback, load, tips, time);
+            $.form.load(action, data, method, that.callback, load, tips, time, header);
         });
     });
 
