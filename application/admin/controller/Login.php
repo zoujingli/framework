@@ -42,7 +42,7 @@ class Login extends Controller
     {
         $this->applyCsrfToken();
         if ($this->request->isGet()) {
-            session('loginskey', $this->skey = uniqid());
+            session('loginskey', $this->skey = session('loginskey') ? session('loginskey') : uniqid());
             $this->fetch();
         } else {
             $data = $this->_input([
