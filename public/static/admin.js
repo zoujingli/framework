@@ -516,7 +516,7 @@ $(function () {
         var $this = $(this), data = {};
         var time = $this.attr('data-time'), action = $this.attr('data-action');
         var loading = $this.attr('data-loading'), method = $this.attr('data-method') || 'post';
-        var header = {'User-Token-Csrf': $this.attr('data-token') || $this.attr('data-csrf') || ''};
+        var header = {'User-Token-Csrf': $this.attr('data-token') || $this.attr('data-csrf') || '--'};
         var rule = $this.attr('data-value') || (function (rule, ids) {
             $($this.attr('data-target') || 'input[type=checkbox].list-check-box').map(function () {
                 (this.checked) && ids.push(this.value);
@@ -542,7 +542,7 @@ $(function () {
         var time = $this.attr('data-time'), loading = $this.attr('data-loading') || false;
         var load = loading !== 'false', tips = typeof loading === 'string' ? loading : undefined;
         var method = $this.attr('data-method') || 'post', confirm = $this.attr('data-confirm');
-        var header = {'User-Token-Csrf': $this.attr('data-token') || $this.attr('data-csrf') || ''};
+        var header = {'User-Token-Csrf': $this.attr('data-token') || $this.attr('data-csrf') || '--'};
         var attrs = $this.attr('data-value').replace('{value}', $this.val()).split(';');
         for (var i in attrs) {
             if (attrs[i].length < 2) return $.msg.tips('异常的数据操作规则，请修改规则！');
