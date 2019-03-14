@@ -15,10 +15,10 @@
 
 namespace think;
 
+chdir(__DIR__);
+
 require __DIR__ . '/thinkphp/base.php';
 
 Container::get('app')->path(__DIR__ . '/application/')->initialize();
-
-chdir(__DIR__);
 
 Console::init();
