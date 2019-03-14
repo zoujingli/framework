@@ -96,6 +96,7 @@ class Update extends Command
             'think',
             'config/log.php',
             'config/system.php',
+            'config/cookie.php',
             'config/template.php',
             'application/admin',
             'application/wechat',
