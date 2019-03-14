@@ -395,9 +395,10 @@ $(function () {
                 });
                 $(form).bind("submit", function (event) {
                     if (that.checkAllInput() && typeof callback === 'function') {
-                        if (typeof CKEDITOR === 'object' && typeof CKEDITOR.instances === 'object')
+                        if (typeof CKEDITOR === 'object' && typeof CKEDITOR.instances === 'object') {
                             for (var i in CKEDITOR.instances) CKEDITOR.instances[i].updateElement();
-                        callback.call(this, $(form).serialize());
+                        }
+                        callback.call(this, $(form).formToJson());
                     }
                     return event.preventDefault(), false;
                 });
@@ -414,10 +415,12 @@ $(function () {
     $.vali.listen = function () {
         $('form[data-auto]').map(function () {
             if ($(this).attr('data-listen') !== 'true') $(this).attr('data-listen', 'true').vali(function (data) {
+                var header = {'User-Token-Csrf': data['_csrf_'] || '--'};
                 var call = $(this).attr('data-callback') || '_default_callback';
                 var type = this.getAttribute('method') || 'POST', tips = this.getAttribute('data-tips') || undefined;
                 var time = this.getAttribute('data-time') || undefined, href = this.getAttribute('action') || window.location.href;
-                $.form.load(href, data, type, window[call] || undefined, true, tips, time);
+                if (data['_csrf_']) delete data['_csrf_'];
+                $.form.load(href, data, type, window[call] || undefined, true, tips, time, header);
             });
         });
     };
@@ -425,6 +428,17 @@ $(function () {
     /*! 注册对象到JqFn */
     $.fn.vali = function (callback, options) {
         return $.vali(this, callback, options);
+    };
+
+    /*! 表单转JSON */
+    $.fn.formToJson = function () {
+        var object = {};
+        $(this.serializeArray()).each(function () {
+            if (object[this.name]) {
+                object[this.name] = $.isArray(object[this.name]) ? object[this.name].push(this.value) : [object[this.name], this.value];
+            } else object[this.name] = this.value;
+        });
+        return object;
     };
 
     /*! 上传单个图片 */
@@ -640,16 +654,15 @@ $(function () {
         layer.close($(this).attr('index'));
     });
 
-    //
+    /*! 后台加密登录处理 */
     $body.find('[data-login-form]').map(function () {
         require(["md5"], function (md5) {
-            $("form").vali(function (ret) {
-                var item = ret.split('&'), data = {};
-                for (var i in item) if (item[i].indexOf('=') > -1) data[item[i].split('=')[0]] = item[i].split('=')[1];
+            $("form").vali(function (data) {
                 data['password'] = md5.hash(md5.hash(data['password']) + data['skey']);
+                if (data['skey']) delete data['skey'];
                 $.form.load(location.href, data, "post", null, null, null, 'false');
             });
-        })
+        });
     });
 
     /*! 初始化 */
