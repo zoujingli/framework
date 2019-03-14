@@ -13,8 +13,12 @@
 // +----------------------------------------------------------------------
 
 return [
-    'type'        => 'file',
-    'max_files'   => '500',
-    'level'       => ['error', 'alert', 'sql'],
-    'apart_level' => ['error', 'alert', 'sql'],
+    // cookie 保存时间
+    'expire'    => 1800,
+    // cookie 启用安全传输
+    'secure'    => true,
+    // httponly 设置
+    'httponly'  => true,
+    // 是否使用 setcookie
+    'setcookie' => true,
 ];
