@@ -130,7 +130,7 @@
 <script>
     require(['jquery.masonry'], function (Masonry) {
         $('.news-container.layui-hide').removeClass('layui-hide');
-        let msnry = new Masonry($('.news-container').get(0), {itemSelector: '.news-item', columnWidth: 0});
+        var msnry = new Masonry($('.news-container').get(0), {itemSelector: '.news-item', columnWidth: 0});
         msnry.layout();
         // 事件处理
         $('.news-item').on('mouseenter', '.news-container', function () {
@@ -139,7 +139,7 @@
             $(this).removeClass('active');
         });
         // 外部选择器
-        let seletor = '[name="{$Think.get.field|decode|default=0}"]';
+        var seletor = '[name="{$Think.get.field|decode|default=0}"]';
         if (seletor) {
             $('[data-news-id]').on('click', function () {
                 window.top.$(seletor).val($(this).attr('data-news-id')).trigger('change');
@@ -148,7 +148,7 @@
         }
         // 分页事件处理
         $('body').off('change', '.pagination-trigger select').on('change', '.pagination-trigger select', function () {
-            let urls = this.options[this.selectedIndex].getAttribute('data-url').split('#');
+            var urls = this.options[this.selectedIndex].getAttribute('data-url').split('#');
             urls.shift();
             window.location.href = urls.join('#');
         }).off('click', '[data-open]').on('click', '[data-open]', function () {

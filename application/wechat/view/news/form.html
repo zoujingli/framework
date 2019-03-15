@@ -91,11 +91,11 @@
 <script>
     require(['angular', 'ckeditor'], function () {
 
-        let $form = $('form[name="news"]');
-        let $vali = $form.vali().data('validate');
-        let editor = window.createEditor('[name="content"]');
+        var $form = $('form[name="news"]');
+        var $vali = $form.vali().data('validate');
+        var editor = window.createEditor('[name="content"]');
 
-        let app = angular.module("NewsEditor", []).run(callback);
+        var app = angular.module("NewsEditor", []).run(callback);
         angular.bootstrap(document.getElementById(app.name), [app.name]);
 
         function callback($rootScope) {
@@ -116,7 +116,7 @@
                     read_num: 0,
                     local_url: '__ROOT__/static/plugs/uploader/theme/image.png',
                 });
-                for (let i in list) {
+                for (var i in list) {
                     list[i].active = false;
                     list[i].style = "background-image:url('" + list[i].local_url + "')";
                 }
@@ -132,9 +132,9 @@
 
             $rootScope.upItem = function (index, $event) {
                 $event.stopPropagation();
-                let tmp = [], cur = $rootScope.list[index];
+                var tmp = [], cur = $rootScope.list[index];
                 if (index < 1) return false;
-                for (let i in $rootScope.list) {
+                for (var i in $rootScope.list) {
                     (parseInt(i) === parseInt(index) - 1) && tmp.push(cur);
                     (parseInt(i) !== parseInt(index)) && tmp.push($rootScope.list[i]);
                 }
@@ -143,9 +143,9 @@
 
             $rootScope.dnItem = function (index, $event) {
                 $event.stopPropagation();
-                let tmp = [], cur = $rootScope.list[index];
+                var tmp = [], cur = $rootScope.list[index];
                 if (index > $rootScope.list.length - 2) return false;
-                for (let i in $rootScope.list) {
+                for (var i in $rootScope.list) {
                     (parseInt(i) !== parseInt(index)) && tmp.push($rootScope.list[i]);
                     (parseInt(i) === parseInt(index) + 1) && tmp.push(cur);
                 }
@@ -154,8 +154,8 @@
 
             $rootScope.delItem = function (index, $event) {
                 $event.stopPropagation();
-                let list = $rootScope.list, temp = [];
-                for (let i in list) (parseInt(i) !== parseInt(index)) && temp.push(list[i]);
+                var list = $rootScope.list, temp = [];
+                for (var i in list) (parseInt(i) !== parseInt(index)) && temp.push(list[i]);
                 apply(temp);
             };
 
@@ -164,7 +164,7 @@
                 $vali.checkAllInput();
                 if ($form.find('.validate-error').size() > 0) return 0;
                 if (editor.getData().length < 1) return $.msg.tips('文章内容不能为空，请输入文章内容！');
-                for (let i in $rootScope.list) {
+                for (var i in $rootScope.list) {
                     if (parseInt(i) !== parseInt(index)) {
                         $rootScope.list[i].active = false;
                     } else {
@@ -199,8 +199,8 @@
                     return $.msg.tips('表单验证不成功，请输入需要的内容！');
                 }
                 $rootScope.item.content = editor.getData();
-                let data = [];
-                for (let i in $rootScope.list) data.push({
+                var data = [];
+                for (var i in $rootScope.list) data.push({
                     id: $rootScope.list[i].id,
                     title: $rootScope.list[i].title,
                     author: $rootScope.list[i].author,
@@ -215,7 +215,7 @@
             };
 
             $('[name="local_url"]').on('change', function () {
-                let value = this.value;
+                var value = this.value;
                 $rootScope.$apply(function () {
                     $rootScope.setItemValue('local_url', value);
                 });

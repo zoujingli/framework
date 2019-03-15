@@ -11,8 +11,8 @@
             <source src="{:input('url')}">
         </audio>
         <script>
-            let audio = document.getElementById('audio');
-            let button = document.getElementById('audio_btn');
+            var audio = document.getElementById('audio');
+            var button = document.getElementById('audio_btn');
             setInterval(function () {
                 button.className = audio.paused ? 'icon icon-play' : 'icon icon-pause';
             }, 500);
