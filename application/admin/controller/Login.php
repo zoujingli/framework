@@ -81,6 +81,7 @@ class Login extends Controller
                 if (($diff = 10 - $cache['number']) > 0) {
                     $this->error("<strong class='color-red'>登录账号或密码错误！</strong><p class='nowrap'>还有 {$diff} 次尝试机会，将锁定十分钟内禁止登录！</p>");
                 } else {
+                    _syslog('系统管理', "账号{$user['username']}连续10次登录密码错误，请注意账号安全！");
                     $this->error("<strong class='color-red'>登录账号或密码错误！</strong><p class='nowrap'>尝试次数达到上限，锁定十分钟内禁止登录！</p>");
                 }
             }
