@@ -164,6 +164,11 @@ $(function () {
         // 异步加载的数据
         this.load = function (url, data, method, callback, loading, tips, time, headers) {
             var index = loading !== false ? $.msg.loading(tips) : 0;
+            if (typeof data === 'object' && typeof data['_csrf_'] === 'string') {
+                headers = headers || {};
+                headers['User-Token-Csrf'] = data['_csrf_'];
+                delete data['_csrf_'];
+            }
             $.ajax({
                 data: data || {}, type: method || 'GET', url: $.menu.parseUri(url), beforeSend: function (xhr) {
                     if (typeof Pace === 'object') Pace.restart();
@@ -415,12 +420,10 @@ $(function () {
     $.vali.listen = function () {
         $('form[data-auto]').map(function () {
             if ($(this).attr('data-listen') !== 'true') $(this).attr('data-listen', 'true').vali(function (data) {
-                var header = {'User-Token-Csrf': data['_csrf_'] || '--'};
                 var call = $(this).attr('data-callback') || '_default_callback';
                 var type = this.getAttribute('method') || 'POST', tips = this.getAttribute('data-tips') || undefined;
                 var time = this.getAttribute('data-time') || undefined, href = this.getAttribute('action') || window.location.href;
-                if (data['_csrf_']) delete data['_csrf_'];
-                $.form.load(href, data, type, window[call] || undefined, true, tips, time, header);
+                $.form.load(href, data, type, window[call] || undefined, true, tips, time);
             });
         });
     };
@@ -530,7 +533,6 @@ $(function () {
         var $this = $(this), data = {};
         var time = $this.attr('data-time'), action = $this.attr('data-action');
         var loading = $this.attr('data-loading'), method = $this.attr('data-method') || 'post';
-        var header = {'User-Token-Csrf': $this.attr('data-token') || $this.attr('data-csrf') || '--'};
         var rule = $this.attr('data-value') || (function (rule, ids) {
             $($this.attr('data-target') || 'input[type=checkbox].list-check-box').map(function () {
                 (this.checked) && ids.push(this.value);
@@ -543,10 +545,11 @@ $(function () {
             if (rules[i].length < 2) return $.msg.tips('异常的数据操作规则，请修改规则！');
             data[rules[i].split('#')[0]] = rules[i].split('#')[1];
         }
+        data['_csrf_'] = $this.attr('data-token') || $this.attr('data-csrf') || '--';
         var load = loading !== 'false', tips = typeof loading === 'string' ? loading : undefined;
-        if (!$this.attr('data-confirm')) $.form.load(action, data, method, false, load, tips, time, header);
+        if (!$this.attr('data-confirm')) $.form.load(action, data, method, false, load, tips, time);
         else $.msg.confirm($this.attr('data-confirm'), function () {
-            $.form.load(action, data, method, false, load, tips, time, header);
+            $.form.load(action, data, method, false, load, tips, time);
         });
     });
 
@@ -556,7 +559,6 @@ $(function () {
         var time = $this.attr('data-time'), loading = $this.attr('data-loading') || false;
         var load = loading !== 'false', tips = typeof loading === 'string' ? loading : undefined;
         var method = $this.attr('data-method') || 'post', confirm = $this.attr('data-confirm');
-        var header = {'User-Token-Csrf': $this.attr('data-token') || $this.attr('data-csrf') || '--'};
         var attrs = $this.attr('data-value').replace('{value}', $this.val()).split(';');
         for (var i in attrs) {
             if (attrs[i].length < 2) return $.msg.tips('异常的数据操作规则，请修改规则！');
@@ -566,9 +568,10 @@ $(function () {
             $this.css('border', (ret && ret.code) ? '1px solid #e6e6e6' : '1px solid red');
             return false;
         };
-        if (!confirm) return $.form.load(action, data, method, that.callback, load, tips, time, header);
+        data['_csrf_'] = $this.attr('data-token') || $this.attr('data-csrf') || '--';
+        if (!confirm) return $.form.load(action, data, method, that.callback, load, tips, time);
         $.msg.confirm(confirm, function () {
-            $.form.load(action, data, method, that.callback, load, tips, time, header);
+            $.form.load(action, data, method, that.callback, load, tips, time);
         });
     });
 
