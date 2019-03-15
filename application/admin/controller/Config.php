@@ -82,16 +82,16 @@ class Config extends Controller
             $post = $this->request->post();
             if (isset($post['storage_type']) && $post['storage_type'] === 'local') {
                 $exts = array_unique(explode(',', $post['storage_local_exts']));
-                if (in_array('php', $exts)) $this->error('可执行文件禁止上传到本地服务器!');
+                if (in_array('php', $exts)) $this->error('禁止上传可执行文件到本地服务器！');
                 $post['storage_local_exts'] = join(',', $exts);
             }
             foreach ($post as $key => $value) sysconf($key, $value);
             if (isset($post['storage_type']) && $post['storage_type'] === 'oss') {
                 try {
-                    $domain = sysconf('storage_oss_domain');
+                    $local = sysconf('storage_oss_domain');
                     $bucket = $this->request->post('storage_oss_bucket');
                     $domain = \library\File::instance('oss')->setBucket($bucket);
-                    if (empty($domain) || stripos($domain, '.aliyuncs.com') !== false) {
+                    if (empty($local) || stripos($local, '.aliyuncs.com') !== false) {
                         sysconf('storage_oss_domain', $domain);
                     }
                     $this->success('阿里云OSS存储动态配置成功！');
