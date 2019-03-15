@@ -79,25 +79,26 @@ class Config extends Controller
                 ],
             ]);
         } else {
-            if ($this->request->post('storage_type') === 'local') {
-                if (in_array('php', explode(',', $this->request->post('storage_local_exts', '')))) {
-                    $this->error('可执行文件禁止上传到本地服务器!');
-                }
+            $post = $this->request->post();
+            if (isset($post['storage_type']) && $post['storage_type'] === 'local') {
+                $exts = array_unique(explode(',', $post['storage_local_exts']));
+                if (in_array('php', $exts)) $this->error('可执行文件禁止上传到本地服务器!');
+                $post['storage_local_exts'] = join(',', $exts);
             }
-            foreach ($this->request->post() as $k => $v) sysconf($k, $v);
-            if ($this->request->post('storage_type') === 'oss') {
+            foreach ($post as $key => $value) sysconf($key, $value);
+            if (isset($post['storage_type']) && $post['storage_type'] === 'oss') {
                 try {
-                    $local = sysconf('storage_oss_domain');
+                    $domain = sysconf('storage_oss_domain');
                     $bucket = $this->request->post('storage_oss_bucket');
                     $domain = \library\File::instance('oss')->setBucket($bucket);
-                    if (empty($local) || stripos($local, '.aliyuncs.com') !== false) {
+                    if (empty($domain) || stripos($domain, '.aliyuncs.com') !== false) {
                         sysconf('storage_oss_domain', $domain);
                     }
                     $this->success('阿里云OSS存储动态配置成功！');
                 } catch (\think\exception\HttpResponseException $exception) {
                     throw $exception;
                 } catch (\Exception $e) {
-                    $this->error('阿里云OSS存储配置失效，' . $e->getMessage());
+                    $this->error("阿里云OSS存储配置失效，{$e->getMessage()}");
                 }
             } else {
                 $this->success('文件存储配置保存成功！');
