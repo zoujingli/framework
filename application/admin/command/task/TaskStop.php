@@ -27,7 +27,7 @@ class TaskStop extends Task
      */
     protected function configure()
     {
-        $this->setName('xtask:stop')->setDescription('System message queue stop');
+        $this->setName('xtask:stop')->setDescription('System message queue process stop');
     }
 
     /**

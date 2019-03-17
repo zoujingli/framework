@@ -28,7 +28,7 @@ class TaskStart extends Task
      */
     protected function configure()
     {
-        $this->setName('xtask:start')->setDescription('System message queue starting');
+        $this->setName('xtask:start')->setDescription('System message queue process starting');
     }
 
     /**

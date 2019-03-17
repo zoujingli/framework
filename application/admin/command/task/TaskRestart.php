@@ -28,7 +28,7 @@ class TaskRestart extends Task
      */
     protected function configure()
     {
-        $this->setName('xtask:restart')->setDescription('System message queue restart');
+        $this->setName('xtask:restart')->setDescription('System message queue process restart');
     }
 
     /**

@@ -27,7 +27,7 @@ class TaskState extends Task
      */
     protected function configure()
     {
-        $this->setName('xtask:state')->setDescription('System message queue state');
+        $this->setName('xtask:state')->setDescription('System message queue process state');
     }
 
     /**
