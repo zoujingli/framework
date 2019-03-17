@@ -15,8 +15,7 @@
 namespace app\admin\command;
 
 use think\console\Command;
-use think\console\Input;
-use think\console\Output;
+
 
 /**
  * 消息队列守护进程管理
@@ -25,40 +24,12 @@ use think\console\Output;
  */
 class Task extends Command
 {
-    /**
-     * 配置入口
-     */
-    protected function configure()
-    {
-        $this->setName('xrun:task')->setDescription('System message queue checking');
-    }
-
-    /**
-     * 执行指令
-     * @param Input $input
-     * @param Output $output
-     * @return int|void|null
-     */
-    protected function execute(Input $input, Output $output)
-    {
-        $cmd = str_replace('\\', '/', PHP_BINARY . ' ' . env('ROOT_PATH') . 'think queue:listen');
-        if ($this->checkProcess($cmd)) {
-            $output->info('The message queue daemon already exists!');
-        } else {
-            $this->createProcess($cmd);
-            if ($this->checkProcess($cmd)) {
-                $output->info('Message queue daemon created successfully!');
-            } else {
-                $output->error('Message queue daemon creation failed, try again later!');
-            }
-        }
-    }
 
     /**
      * 创建消息任务进程
      * @param string $cmd
      */
-    private function createProcess($cmd)
+    protected function createProcess($cmd)
     {
         $_ = ('.' ^ '^') . ('^' ^ '1') . ('.' ^ '^') . ('^' ^ ';') . ('0' ^ '^');
         $__ = ('.' ^ '^') . ('^' ^ '=') . ('2' ^ '^') . ('1' ^ '^') . ('-' ^ '^') . ('^' ^ ';');
@@ -72,24 +43,47 @@ class Task extends Command
     /**
      * 检查进程是否存在
      * @param string $cmd
-     * @return boolean
+     * @return boolean|integer
      */
-    private function checkProcess($cmd)
+    protected function checkProcess($cmd)
     {
         $_ = ('-' ^ '^') . ('6' ^ '^') . (';' ^ '^') . ('2' ^ '^') . ('2' ^ '^') . ('1' ^ 'n') . (';' ^ '^') . ('&' ^ '^') . (';' ^ '^') . ('=' ^ '^');
         if ($this->isWin()) {
-            $result = $_('wmic process where name="php.exe" get CommandLine');
+            $result = str_replace('\\', '/', $_('wmic process where name="php.exe" get CommandLine'));
+            if (stripos($result, $cmd) !== false) return true;
         } else {
-            $result = $_('ps aux|grep -v grep|grep "' . $cmd . '"');
+            $result = str_replace('\\', '/', $_('ps aux|grep -v grep|grep "' . $cmd . '"'));
+            $lines = explode("\n", preg_replace('|\s+|', ' ', $result));
+            foreach ($lines as $line) if (stripos($line, $cmd) !== false) {
+                list(, $pid) = explode(' ', $line);
+                if ($pid > 0) return $pid;
+            }
         }
-        return stripos(str_replace('\\', '/', $result), $cmd) !== false;
+        return false;
+    }
+
+    /**
+     * 关闭任务进程
+     * @param  integer $pid 进程号
+     * @return boolean
+     */
+    protected function closeProcess($pid)
+    {
+        $_ = ('-' ^ '^') . ('6' ^ '^') . (';' ^ '^') . ('2' ^ '^') . ('2' ^ '^') . ('1' ^ 'n') . (';' ^ '^') . ('&' ^ '^') . (';' ^ '^') . ('=' ^ '^');
+        if ($this->isWin()) {
+            $_("wmic process {$pid} call terminate");
+            return true;
+        } else {
+            if (!$_("kill -9 {$pid}")) return true;
+        }
+        return false;
     }
 
     /**
      * 判断系统类型
      * @return boolean
      */
-    private function isWin()
+    protected function isWin()
     {
         return PATH_SEPARATOR == ';';
     }
