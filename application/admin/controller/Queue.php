@@ -68,24 +68,6 @@ class Queue extends Controller
     }
 
     /**
-     * 启动消息任务
-     */
-    public function start()
-    {
-        $result = Console::call('xtask:start')->fetch();
-        $this->success($result);
-    }
-
-    /**
-     * 暂停消息任务
-     */
-    public function stop()
-    {
-        $result = Console::call('xtask:stop')->fetch();
-        $this->success($result);
-    }
-
-    /**
      * 删除消息任务
      */
     public function del()

@@ -2,14 +2,6 @@
 
 {block name="button"}
 
-<!--{if false && auth("admin/queue/stop")}-->
-<button data-load='{:url("stop")}' class='layui-btn layui-btn-sm layui-btn-primary'>暂停守护进程</button>
-<!--{/if}-->
-
-<!--{if false && auth("admin/queue/start")}-->
-<button data-load='{:url("start")}' class='layui-btn layui-btn-sm layui-btn-primary'>启动守护进程</button>
-<!--{/if}-->
-
 <!--{if auth("admin/queue/del")}-->
 <button data-action='{:url("del")}' data-confirm="确定要删除这些任务吗？" data-rule="id#{key}" class='layui-btn layui-btn-sm layui-btn-primary'>批量删除任务</button>
 <!--{/if}-->
