@@ -187,4 +187,33 @@ class Auth
         return $menus;
     }
 
+    /**
+     * 检查密码是否合法
+     * @param string $password
+     * @return array
+     */
+    public static function checkPassword($password)
+    {
+        if ($password == null) {
+            return ['code' => 0, 'msg' => '密码不能为空'];
+        }
+        $password = trim($password);
+        if (!strlen($password) >= 6) {
+            return ['code' => 0, 'msg' => '密码必须大于6字符！'];
+        }
+        if (preg_match("/^[0-9]+$/", $password)) {
+            return ['code' => 0, 'msg' => '密码需要包含数字大小字母或者特殊字符！'];
+        }
+        if (preg_match("/^[a-zA-Z]+$/", $password)) {
+            return ['code' => 0, 'msg' => '密码需要包含数字大小字母或者特殊字符！'];
+        }
+        if (preg_match("/^[0-9A-Z]+$/", $password)) {
+            return ['code' => 0, 'msg' => '密码需要包含数字大小字母或者特殊字符！'];
+        }
+        if (preg_match("/^[0-9a-z]+$/", $password)) {
+            return ['code' => 0, 'msg' => '密码需要包含数字大小字母或者特殊字符！'];
+        }
+        return ['code' => 1, 'msg' => '密码复杂度通过验证！'];
+    }
+
 }

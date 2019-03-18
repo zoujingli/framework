@@ -93,6 +93,8 @@ class Index extends Controller
             if (md5($data['oldpassword']) !== $user['password']) {
                 $this->error('旧密码验证失败，请重新输入！');
             }
+            $result = \app\admin\service\Auth::checkPassword($data['password']);
+            if (empty($result['code'])) $this->error($result['msg']);
             if (Data::save('SystemUser', ['id' => $user['id'], 'password' => md5($data['password'])])) {
                 $this->success('密码修改成功，下次请使用新密码登录！', '');
             } else {
