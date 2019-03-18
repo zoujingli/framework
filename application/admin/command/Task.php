@@ -36,7 +36,7 @@ class Task extends Command
     public function __construct($name = null)
     {
         parent::__construct($name);
-        $this->cmd = str_replace('\\', '/', PHP_BINARY . ' ' . env('ROOT_PATH') . 'think queue:listen');
+        $this->cmd = str_replace('\\', '/', 'php ' . env('ROOT_PATH') . 'think queue:listen');
     }
 
     /**
@@ -63,16 +63,12 @@ class Task extends Command
         if ($this->isWin()) {
             $result = str_replace('\\', '/', $_('wmic process where name="php.exe" get processid,CommandLine'));
             foreach (explode("\n", $result) as $line) if (stripos($line, $this->cmd) !== false) {
-                echo $line . PHP_EOL;
                 list(, , , $pid) = explode(' ', preg_replace('|\s+|', ' ', $line));
                 if ($pid > 0) return $pid;
             }
         } else {
-            echo 'ps aux|grep -v grep|grep "' . $this->cmd . '"';
             $result = str_replace('\\', '/', $_('ps aux|grep -v grep|grep "' . $this->cmd . '"'));
-            dump($result);
             foreach (explode("\n", $result) as $line) if (stripos($line, $this->cmd) !== false) {
-                echo $line . PHP_EOL;
                 list(, $pid) = explode(' ', preg_replace('|\s+|', ' ', $line));
                 if ($pid > 0) return $pid;
             }
