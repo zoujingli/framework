@@ -2,11 +2,11 @@
 
 {block name="button"}
 
-<!--{if auth("admin/queue/stop")}-->
+<!--{if false && auth("admin/queue/stop")}-->
 <button data-load='{:url("stop")}' class='layui-btn layui-btn-sm layui-btn-primary'>暂停守护进程</button>
 <!--{/if}-->
 
-<!--{if auth("admin/queue/start")}-->
+<!--{if false && auth("admin/queue/start")}-->
 <button data-load='{:url("start")}' class='layui-btn layui-btn-sm layui-btn-primary'>启动守护进程</button>
 <!--{/if}-->
 
