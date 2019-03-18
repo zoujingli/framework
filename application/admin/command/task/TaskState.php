@@ -22,12 +22,10 @@ use app\admin\command\Task;
  */
 class TaskState extends Task
 {
-    /**
-     * 配置入口
-     */
+
     protected function configure()
     {
-        $this->setName('xtask:state')->setDescription('System message queue process state');
+        $this->setName('xtask:state')->setDescription('Message queue daemon process status');
     }
 
     /**
@@ -38,11 +36,10 @@ class TaskState extends Task
      */
     protected function execute(\think\console\Input $input, \think\console\Output $output)
     {
-        $cmd = str_replace('\\', '/', PHP_BINARY . ' ' . env('ROOT_PATH') . 'think queue:listen');
-        if ($this->checkProcess($cmd)) {
-            $output->info("process is runing.");
+        if (($pid = $this->checkProcess()) > 0) {
+            $output->info("Message queue daemon {$pid} is runing.");
         } else {
-            $output->info('process not runing.');
+            $output->info('No message queue daemon is runing.');
         }
     }
 

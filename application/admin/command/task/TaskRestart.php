@@ -23,12 +23,10 @@ use app\admin\command\Task;
  */
 class TaskRestart extends Task
 {
-    /**
-     * 配置入口
-     */
+
     protected function configure()
     {
-        $this->setName('xtask:restart')->setDescription('System message queue process restart');
+        $this->setName('xtask:restart')->setDescription('Message queue daemon process restart');
     }
 
     /**
@@ -39,13 +37,12 @@ class TaskRestart extends Task
      */
     protected function execute(\think\console\Input $input, \think\console\Output $output)
     {
-        $cmd = str_replace('\\', '/', PHP_BINARY . ' ' . env('ROOT_PATH') . 'think queue:listen');
-        if (($pid = $this->checkProcess($cmd)) > 0) {
+        if (($pid = $this->checkProcess()) > 0) {
             $this->closeProcess($pid);
-            $output->info("Process {$pid} close successfully!");
+            $output->info("Message queue daemon {$pid} closed successfully!");
         }
-        $this->createProcess($cmd);
-        if ($pid = $this->checkProcess($cmd)) {
+        $this->createProcess();
+        if ($pid = $this->checkProcess()) {
             $output->info("Message queue daemon {$pid} created successfully!");
         } else {
             $output->error('Message queue daemon creation failed, try again later!');

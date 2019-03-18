@@ -14,7 +14,6 @@
 
 namespace app\admin\command\task;
 
-
 use app\admin\command\Task;
 
 /**
@@ -23,12 +22,10 @@ use app\admin\command\Task;
  */
 class TaskStart extends Task
 {
-    /**
-     * 配置入口
-     */
+
     protected function configure()
     {
-        $this->setName('xtask:start')->setDescription('System message queue process starting');
+        $this->setName('xtask:start')->setDescription('Message queue daemon process start');
     }
 
     /**
@@ -39,13 +36,12 @@ class TaskStart extends Task
      */
     protected function execute(\think\console\Input $input, \think\console\Output $output)
     {
-        $cmd = str_replace('\\', '/', PHP_BINARY . ' ' . env('ROOT_PATH') . 'think queue:listen');
-        if ($this->checkProcess($cmd)) {
-            $output->info('The message queue daemon already exists!');
+        if (($pid = $this->checkProcess()) > 0) {
+            $output->info("The message queue daemon {$pid} already exists!");
         } else {
-            $this->createProcess($cmd);
-            if ($this->checkProcess($cmd)) {
-                $output->info('Message queue daemon created successfully!');
+            $this->createProcess();
+            if (($pid = $this->checkProcess()) > 0) {
+                $output->info("Message queue daemon {$pid} created successfully!");
             } else {
                 $output->error('Message queue daemon creation failed, try again later!');
             }

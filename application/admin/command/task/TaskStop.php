@@ -22,28 +22,23 @@ use app\admin\command\Task;
  */
 class TaskStop extends Task
 {
-    /**
-     * 配置入口
-     */
+
     protected function configure()
     {
-        $this->setName('xtask:stop')->setDescription('System message queue process stop');
+        $this->setName('xtask:stop')->setDescription('Message queue daemon process pause');
     }
 
     /**
-     * 执行指令
      * @param \think\console\Input $input
      * @param \think\console\Output $output
-     * @return int|void|null
      */
     protected function execute(\think\console\Input $input, \think\console\Output $output)
     {
-        $cmd = str_replace('\\', '/', PHP_BINARY . ' ' . env('ROOT_PATH') . 'think queue:listen');
-        if (($pid = $this->checkProcess($cmd)) > 0) {
+        if (($pid = $this->checkProcess()) > 0) {
             $this->closeProcess($pid);
-            $output->info("process $pid close success.");
+            $output->info("Message queue daemon {$pid} closed successfully.");
         } else {
-            $output->info('not process close.');
+            $output->info('No message queue daemon needs to be closed.');
         }
     }
 
