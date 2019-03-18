@@ -15,6 +15,7 @@
 namespace app\admin\controller;
 
 use library\Controller;
+use think\Console;
 use think\Db;
 
 /**
@@ -40,9 +41,10 @@ class Queue extends Controller
      */
     public function index()
     {
-        $this->title = '系统任务管理';
+        $this->title = '消息任务管理';
         $this->uris = Db::name($this->table)->distinct(true)->column('uri');
         $this->cmd = 'php ' . env('root_path') . 'think xrun:task';
+        $this->message = Console::call('xtask:state')->fetch();
         $this->_query($this->table)->equal('status,title,uri')->dateBetween('create_at,status_at')->order('id desc')->page();
     }
 
@@ -66,7 +68,25 @@ class Queue extends Controller
     }
 
     /**
-     * 删除系统任务
+     * 启动消息任务
+     */
+    public function start()
+    {
+        $result = Console::call('xtask:start')->fetch();
+        $this->success($result);
+    }
+
+    /**
+     * 暂停消息任务
+     */
+    public function stop()
+    {
+        $result = Console::call('xtask:stop')->fetch();
+        $this->success($result);
+    }
+
+    /**
+     * 删除消息任务
      */
     public function del()
     {
