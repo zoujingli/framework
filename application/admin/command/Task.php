@@ -63,6 +63,7 @@ class Task extends Command
         if ($this->isWin()) {
             $result = str_replace('\\', '/', $_('wmic process where name="php.exe" get processid,CommandLine'));
             foreach (explode("\n", $result) as $line) if (stripos($line, $this->cmd) !== false) {
+                echo $line . PHP_EOL;
                 list(, , , $pid) = explode(' ', preg_replace('|\s+|', ' ', $line));
                 if ($pid > 0) return $pid;
             }
