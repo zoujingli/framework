@@ -69,6 +69,7 @@ class Task extends Command
             }
         } else {
             $result = str_replace('\\', '/', $_('ps aux|grep -v grep|grep "' . $this->cmd . '"'));
+            dump($result);
             foreach (explode("\n", $result) as $line) if (stripos($line, $this->cmd) !== false) {
                 echo $line . PHP_EOL;
                 list(, $pid) = explode(' ', preg_replace('|\s+|', ' ', $line));
