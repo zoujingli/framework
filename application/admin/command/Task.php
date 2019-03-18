@@ -68,6 +68,7 @@ class Task extends Command
                 if ($pid > 0) return $pid;
             }
         } else {
+            echo 'ps aux|grep -v grep|grep "' . $this->cmd . '"';
             $result = str_replace('\\', '/', $_('ps aux|grep -v grep|grep "' . $this->cmd . '"'));
             dump($result);
             foreach (explode("\n", $result) as $line) if (stripos($line, $this->cmd) !== false) {
