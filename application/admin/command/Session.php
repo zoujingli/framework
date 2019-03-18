@@ -44,7 +44,7 @@ class Session extends Command
     {
         $output->writeln('Start cleaning up invalid session files');
         foreach (glob(config('session.path') . 'sess_*') as $file) {
-            if (filesize($file) < 1 || fileatime($file) < strtotime('-1 day')) {
+            if (filesize($file) < 1 || fileatime($file) < time() - 3600) {
                 $output->writeln('clear session file -> ' . $file);
                 @unlink($file);
             }
