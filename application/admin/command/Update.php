@@ -94,6 +94,7 @@ class Update extends Command
     {
         return self::tree([
             'think',
+            'config/app.php',
             'config/log.php',
             'config/system.php',
             'config/cookie.php',
