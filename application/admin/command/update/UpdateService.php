@@ -22,9 +22,6 @@ use app\admin\command\Update;
  */
 class UpdateService extends Update
 {
-    /**
-     * 配置入口
-     */
     protected function configure()
     {
         $this->modules = ['application/service/'];

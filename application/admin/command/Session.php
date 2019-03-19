@@ -25,10 +25,7 @@ use think\console\Output;
  */
 class Session extends Command
 {
-
-    /**
-     * 配置入口
-     */
+    
     protected function configure()
     {
         $this->setName('xclean:session')->setDescription('Clean up invalid session files');

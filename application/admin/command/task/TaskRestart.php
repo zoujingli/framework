@@ -30,10 +30,8 @@ class TaskRestart extends Task
     }
 
     /**
-     * 执行指令
      * @param \think\console\Input $input
      * @param \think\console\Output $output
-     * @return int|void|null
      */
     protected function execute(\think\console\Input $input, \think\console\Output $output)
     {

@@ -23,13 +23,9 @@ use app\admin\command\Update;
  */
 class UpdateConfig extends Update
 {
-    /**
-     * 配置入口
-     */
     protected function configure()
     {
         $this->modules = ['config/'];
         $this->setName('xsync:config')->setDescription('Synchronize update config .php files');
     }
-
 }

@@ -23,9 +23,6 @@ use app\admin\command\Update;
  */
 class UpdateWechat extends Update
 {
-    /**
-     * 配置入口
-     */
     protected function configure()
     {
         $this->modules = ['application/wechat/'];

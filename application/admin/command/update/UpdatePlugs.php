@@ -23,9 +23,6 @@ use app\admin\command\Update;
  */
 class UpdatePlugs extends Update
 {
-    /**
-     * 配置入口
-     */
     protected function configure()
     {
         $this->modules = ['public/static/'];
