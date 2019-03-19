@@ -39,7 +39,7 @@ class TaskState extends Task
         if (($pid = $this->checkProcess()) > 0) {
             $output->info("Message queue daemon {$pid} is runing.");
         } else {
-            $output->info('No message queue daemon is runing.');
+            $output->info('The message queue daemon is not running.');
         }
     }
 

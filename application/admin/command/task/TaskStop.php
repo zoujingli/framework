@@ -38,7 +38,7 @@ class TaskStop extends Task
             $this->closeProcess($pid);
             $output->info("Message queue daemon {$pid} closed successfully.");
         } else {
-            $output->info('No message queue daemon needs to be closed.');
+            $output->info('The message queue daemon is not running.');
         }
     }
 
