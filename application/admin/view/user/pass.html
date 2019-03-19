@@ -18,6 +18,7 @@
             <label class="layui-form-label">旧的密码</label>
             <div class="layui-input-block">
                 <input autofocus name="oldpassword" value='' pattern="^\S{1,}$" required placeholder="请输入旧的密码" class="layui-input">
+                <p class="help-block">请输入旧密码来验证修改权限，旧密码不限制格式！</p>
             </div>
         </div>
         <!--{/if}-->
@@ -25,14 +26,16 @@
         <div class="layui-form-item">
             <label class="layui-form-label">新的密码</label>
             <div class="layui-input-block">
-                <input name="password" value='' pattern="^\S{1,}$" required placeholder="请输入新的密码" class="layui-input">
+                <input name="password" maxlength="32" pattern="^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+`\-={}:;'<>?,.\/]).{8,32}$" required placeholder="请输入新的密码" class="layui-input">
+                <p class="help-block">密码必需包含大小写字母、数字、符号三者组合，且长度不能少于8位！</p>
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">重复密码</label>
             <div class="layui-input-block">
-                <input name="repassword" value='' pattern="^\S{1,}$" required placeholder="请输入重复密码" class="layui-input">
+                <input name="repassword" maxlength="32" pattern="^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+`\-={}:;'<>?,.\/]).{8,32}$" required placeholder="请输入重复密码" class="layui-input">
+                <p class="help-block">密码必需包含大小写字母、数字、符号三者组合，且长度不能少于8位！</p>
             </div>
         </div>
 

@@ -65,24 +65,24 @@ class Login extends Controller
             // 账号锁定消息
             $cache = cache('user_login_' . $user['username']);
             if (is_array($cache) && !empty($cache['number']) && !empty($cache['time'])) {
-                if ($cache['number'] >= 10 && ($diff = $cache['time'] + 600 - time()) > 0) {
+                if ($cache['number'] >= 10 && ($diff = $cache['time'] + 3600 - time()) > 0) {
                     list($m, $s, $info) = [floor($diff / 60), floor($diff % 60), ''];
                     if ($m > 0) $info = "{$m} 分";
                     $this->error("<strong class='color-red'>抱歉，该账号已经被锁定！</strong><p class='nowrap'>连续 10 次登录错误，请 {$info} {$s} 秒后再登录！</p>");
                 }
             }
             if (md5($user['password'] . session('loginskey')) !== $data['password']) {
-                if (empty($cache) || empty($cache['time']) || empty($cache['number']) || $cache['time'] + 600 < time()) {
+                if (empty($cache) || empty($cache['time']) || empty($cache['number']) || $cache['time'] + 3600 < time()) {
                     $cache = ['time' => time(), 'number' => 1, 'geoip' => $this->request->ip()];
                 } elseif ($cache['number'] + 1 <= 10) {
                     $cache = ['time' => time(), 'number' => $cache['number'] + 1, 'geoip' => $this->request->ip()];
                 }
                 cache('user_login_' . $user['username'], $cache);
                 if (($diff = 10 - $cache['number']) > 0) {
-                    $this->error("<strong class='color-red'>登录账号或密码错误！</strong><p class='nowrap'>还有 {$diff} 次尝试机会，将锁定十分钟内禁止登录！</p>");
+                    $this->error("<strong class='color-red'>登录账号或密码错误！</strong><p class='nowrap'>还有 {$diff} 次尝试机会，将锁定一小时内禁止登录！</p>");
                 } else {
                     _syslog('系统管理', "账号{$user['username']}连续10次登录密码错误，请注意账号安全！");
-                    $this->error("<strong class='color-red'>登录账号或密码错误！</strong><p class='nowrap'>尝试次数达到上限，锁定十分钟内禁止登录！</p>");
+                    $this->error("<strong class='color-red'>登录账号或密码错误！</strong><p class='nowrap'>尝试次数达到上限，锁定一小时内禁止登录！</p>");
                 }
             }
             // 登录成功并更新账号
