@@ -65,12 +65,13 @@ if (!function_exists('sysconf')) {
     function sysconf($name, $value = null)
     {
         static $data = [];
+        list($field, $raw) = explode('|', "{$name}|");
         if ($value !== null) {
-            list($row, $data) = [['name' => $name, 'value' => $value], []];
+            list($row, $data) = [['name' => $field, 'value' => $value], []];
             return \library\tools\Data::save('SystemConfig', $row, 'name');
         }
         if (empty($data)) $data = \think\Db::name('SystemConfig')->column('name,value');
-        return isset($data[$name]) ? $data[$name] : '';
+        return isset($data[$field]) ? (strtolower($raw) === 'raw' ? $data[$field] : htmlspecialchars($data[$field])) : '';
     }
 }
 

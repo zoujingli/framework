@@ -42,6 +42,7 @@ class Index extends Controller
      */
     public function index()
     {
+        $this->applyCsrfToken();
         $this->title = '微信授权管理';
         $this->_query($this->table)
             ->like('authorizer_appid,nick_name,principal_name')
@@ -102,6 +103,7 @@ class Index extends Controller
      */
     public function del()
     {
+        $this->applyCsrfToken();
         $this->_delete($this->table);
     }
 
@@ -110,6 +112,7 @@ class Index extends Controller
      */
     public function forbid()
     {
+        $this->applyCsrfToken();
         $this->_save($this->table, ['status' => '0']);
     }
 
@@ -118,6 +121,7 @@ class Index extends Controller
      */
     public function resume()
     {
+        $this->applyCsrfToken();
         $this->_save($this->table, ['status' => '1']);
     }
 }

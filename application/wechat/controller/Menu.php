@@ -80,8 +80,7 @@ class Menu extends Controller
                 $this->success('删除并取消微信菜单成功！', '');
             }
             try {
-                sysdata('menudata', $this->build_menu($menudata = json_decode($data, true)));
-                p(['button' => sysdata('menudata')]);
+                sysdata('menudata', $this->buildMenu($menudata = json_decode($data, true)));
                 Wechat::WeChatMenu()->create(['button' => sysdata('menudata')]);
             } catch (\Exception $e) {
                 $this->error("微信菜单发布失败，请稍候再试！<br> {$e->getMessage()}");
@@ -95,7 +94,7 @@ class Menu extends Controller
      * @param array $list
      * @return mixed
      */
-    private function build_menu(array $list)
+    private function buildMenu(array $list)
     {
         foreach ($list as &$vo) {
             unset($vo['active'], $vo['show']);

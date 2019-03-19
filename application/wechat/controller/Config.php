@@ -33,6 +33,7 @@ class Config extends Controller
      */
     public function options()
     {
+        $this->applyCsrfToken();
         $this->thrNotify = url('@wechat/api.push', '', false, true);
         if ($this->request->isGet()) {
             $this->title = '公众号授权绑定';
@@ -69,6 +70,7 @@ class Config extends Controller
      */
     public function payment()
     {
+        $this->applyCsrfToken();
         $this->title = '公众号支付配置';
         if ($this->request->isGet()) {
             $file = File::instance('local');

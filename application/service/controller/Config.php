@@ -40,6 +40,7 @@ class Config extends Controller
      */
     public function index()
     {
+        $this->applyCsrfToken();
         $this->title = '开放平台接口配置';
         if ($this->request->isGet()) return $this->fetch();
         foreach ($this->request->post() as $k => $v) sysconf($k, $v);

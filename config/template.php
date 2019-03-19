@@ -14,7 +14,7 @@
 
 return [
     // 去除HTML空格换行
-    'strip_space'        => true,
+    'strip_space'        => false,
     // 开启模板编译缓存
     'tpl_cache'          => !config('app_debug'),
     // 定义模板替换字符串
