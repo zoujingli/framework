@@ -96,11 +96,11 @@ if (!function_exists('base64_image')) {
 
 // 注册系统指令
 \think\Console::addDefaultCommands([
-    'app\admin\command\task\TaskStart',
-    'app\admin\command\task\TaskRestart',
+    'app\admin\command\Session',
     'app\admin\command\task\TaskStop',
     'app\admin\command\task\TaskState',
-    'app\admin\command\Session',
+    'app\admin\command\task\TaskStart',
+    'app\admin\command\task\TaskRestart',
     'app\admin\command\update\UpdateAdmin',
     'app\admin\command\update\UpdatePlugs',
     'app\admin\command\update\UpdateConfig',
