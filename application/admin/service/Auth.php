@@ -198,8 +198,8 @@ class Auth
         if (!strlen($password) >= 6) {
             return ['code' => 0, 'msg' => '密码必须大于6字符！'];
         }
-        if (!preg_match("/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+`\-={}:;'<>?,.\/]).{8,32}$/", $password)) {
-            return ['code' => 0, 'msg' => '密码需要包含数字、大小字母和特殊字符！'];
+        if (!preg_match("/^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{6,32}$/", $password)) {
+            return ['code' => 0, 'msg' => '密码必需包含大小写字母、数字、符号任意两者组合！'];
         }
         return ['code' => 1, 'msg' => '密码复杂度通过验证！'];
     }
