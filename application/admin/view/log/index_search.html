@@ -12,6 +12,13 @@
         </div>
 
         <div class="layui-form-item layui-inline">
+            <label class="layui-form-label">操作节点</label>
+            <div class="layui-input-inline">
+                <input name="node" value="{$Think.get.node|default=''}" placeholder="请输入操作节点" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-inline">
             <label class="layui-form-label">操作行为</label>
             <div class="layui-input-inline">
                 <input name="action" value="{$Think.get.action|default=''}" placeholder="请输入操作行为" class="layui-input">
@@ -19,9 +26,16 @@
         </div>
 
         <div class="layui-form-item layui-inline">
-            <label class="layui-form-label">操作内容</label>
+            <label class="layui-form-label">操作描述</label>
             <div class="layui-input-inline">
                 <input name="content" value="{$Think.get.content|default=''}" placeholder="请输入操作内容" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-inline">
+            <label class="layui-form-label">位置地址</label>
+            <div class="layui-input-inline">
+                <input name="geoip" value="{$Think.get.geoip|default=''}" placeholder="请输入位置地址" class="layui-input">
             </div>
         </div>
 
