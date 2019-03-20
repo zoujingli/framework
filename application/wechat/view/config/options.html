@@ -2,60 +2,40 @@
 
 {block name="content"}
 
-<div class="layui-tab layui-tab-card">
-    <ul class="layui-tab-title">
-        <li data-wechat-type="api">公众平台API模式</li>
-        <li data-wechat-type="thr">第三方平台授权模式</li>
-        <li>接口功能测试</li>
-    </ul>
-    <div class="layui-tab-content">
-        <div class="layui-tab-item">{include file='config/options_api'}</div>
-        <div class="layui-tab-item">{include file='config/options_thr'}</div>
-        <div class="layui-tab-item layui-clear">
-            <div class="layui-elem-quote border-0">
-                <p class="font-s14 margin-bottom-10 color-text">
-                    <strong>第三方平台授权</strong><br>
-                    JSSDK签名测试需要在开放平台配置当前的授权域名：<a data-copy="{:request()->host()}">{:request()->host()}</a>
-                </p>
-                <p class="font-s14 margin-bottom-10 color-text">
-                    <strong>普通接口强制绑定</strong><br>
-                    网页授权及JSSDK签名都需要在公众号平台配置授权域名：<a data-copy="{:request()->host()}">{:request()->host()}</a>
-                </p>
-                <p class="font-s14 color-text">
-                    <strong>支付测试配置</strong><br>
-                    JSAPI支付测试需要在微信商户平台配置支付目录：<a data-copy="{:url('@wechat/api.tools/','','',true)}">{:url('@wechat/api.tools/','','',true)}</a>
-                </p>
-            </div>
-            <div class="pull-left padding-right-15 notselect">
-                <img class="notselect" data-tips-image src="{:url('@wechat/api.tools/oauth_qrc')}" style="width:120px">
-                <p class="text-center">网页授权</p>
-            </div>
-            <div class="pull-left padding-left-0 padding-right-15">
-                <img class="notselect" data-tips-image src="{:url('@wechat/api.tools/jssdk_qrc')}" style="width:120px;">
-                <p class="text-center">JSSDK签名</p>
-            </div>
-            <div class="pull-left padding-left-0 padding-right-15">
-                <img onerror="this.src='__ROOT__/static/theme/img/wechat/qrc_pay_error.jpg'" class="notselect" data-tips-image src="{:url('@wechat/api.tools/jsapiqrc')}" style="width:120px;">
-                <p class="text-center">JSAPI支付</p>
-            </div>
-            <div class="pull-left padding-left-0 padding-right-15">
-                <img onerror="this.src='__ROOT__/static/theme/img/wechat/qrc_pay_error.jpg'" class="notselect" data-tips-image src="{:url('@wechat/api.tools/scanoneqrc')}" style="width:120px;">
-                <p class="text-center">扫码支付①</p>
-            </div>
-            <div class="pull-left padding-left-0">
-                <img onerror="this.src='__ROOT__/static/theme/img/wechat/qrc_pay_error.jpg'" class="notselect" data-tips-image src="{:url('@wechat/api.tools/scanqrc')}" style="width:120px;">
-                <p class="text-center">扫码支付②</p>
+<form class="layui-card layui-form">
+    <div class="layui-card-body">
+        <div class="layui-form-item">
+            <label class="layui-form-label">ApiType<br><span class="nowrap color-desc">对接方式</span></label>
+            <div class="layui-input-block">
+                {foreach ['api'=>'公众号平台API模式','thr'=>'第三方平台授权模式','test'=>'接口功能测试'] as $k=>$v}
+                <input type="radio" data-wechat-type="{$k}" name="wechat_type" value="{$k}" title="{$v}" lay-filter="wechat_type">
+                {/foreach}
+                <p class="help-block">请选择微信对接方式，其中第三方平台授权需要微信开放平台支持，同时需要搭建 SERVICE 服务！</p>
             </div>
         </div>
     </div>
-</div>
+</form>
+
+<div data-type="api">{include file='config/options_api'}</div>
+<div data-type="thr">{include file='config/options_thr'}</div>
+<div data-type="test">{include file='config/options_help'}</div>
 
 {/block}
 
 {block name='script'}
 <script>
     $(function () {
-        $('[data-wechat-type=' + ('{:sysconf("wechat_type")}' || 'api') + ']').trigger('click');
+        apply('{:sysconf("wechat_type")}');
+        window.form.render();
+        window.form.on('radio(wechat_type)', function (data) {
+            apply(data.value);
+        });
+
+        function apply(value) {
+            var $active = $("[data-wechat-type='" + value + "']").trigger('click');
+            if ($active.size() < 1) $("[data-wechat-type]:first").trigger('click');
+            $('[data-type="' + value + '"]').show().siblings('[data-type]').hide();
+        }
     });
 </script>
 {/block}
