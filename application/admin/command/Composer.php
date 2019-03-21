@@ -33,7 +33,22 @@ class Composer extends Command
 
     protected function execute(\think\console\Input $input, \think\console\Output $output)
     {
+        $dirs = [env('VENDOR_PATH'), env('RUNTIME_PATH'), env('THINK_PATH')];
+        foreach ($dirs as $dir) if (strlen($dir) < 10) return;
+        if ($this->isWin()) {
+            passthru("rmdir /s/q " . join(' ', $dirs));
+        } else {
+            passthru("rm -rf " . join(' ', $dirs));
+        }
         passthru(PHP_BINARY . " {$this->bin} update --profile --prefer-dist --optimize-autoloader");
     }
 
+    /**
+     * 判断系统类型
+     * @return boolean
+     */
+    protected function isWin()
+    {
+        return PATH_SEPARATOR === ';';
+    }
 }

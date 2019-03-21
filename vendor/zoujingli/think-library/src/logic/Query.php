@@ -61,7 +61,7 @@ class Query extends Logic
      * @param string $inputType 输入类型 get|post
      * @return $this
      */
-    public function like($fields, $inputType = 'get')
+    public function like($fields, $inputType = 'request')
     {
         $data = $this->controller->request->$inputType();
         foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
@@ -78,7 +78,7 @@ class Query extends Logic
      * @param string $inputType 输入类型 get|post
      * @return $this
      */
-    public function equal($fields, $inputType = 'get')
+    public function equal($fields, $inputType = 'request')
     {
         $data = $this->controller->request->$inputType();
         foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
@@ -96,7 +96,7 @@ class Query extends Logic
      * @param string $inputType 输入类型 get|post
      * @return $this
      */
-    public function in($fields, $split = ',', $inputType = 'get')
+    public function in($fields, $split = ',', $inputType = 'request')
     {
         $data = $this->controller->request->$inputType();
         foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
@@ -115,7 +115,7 @@ class Query extends Logic
      * @param string $inputType 输入类型 get|post
      * @return $this
      */
-    public function dateBetween($fields, $split = ' - ', $inputType = 'get')
+    public function dateBetween($fields, $split = ' - ', $inputType = 'request')
     {
         $data = $this->controller->request->$inputType();
         foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
@@ -136,7 +136,7 @@ class Query extends Logic
      * @param string $inputType 输入类型 get|post
      * @return $this
      */
-    public function valueBetween($fields, $split = ' ', $inputType = 'get')
+    public function valueBetween($fields, $split = ' ', $inputType = 'request')
     {
         $data = $this->controller->request->$inputType();
         foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
