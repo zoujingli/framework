@@ -5,7 +5,7 @@
 <form class="layui-card layui-form">
     <div class="layui-card-body">
         <div class="layui-form-item">
-            <label class="layui-form-label">type<br><span class="nowrap color-desc">对接方式</span></label>
+            <label class="layui-form-label">Type<br><span class="nowrap color-desc">对接方式</span></label>
             <div class="layui-input-block">
                 {foreach ['api'=>'公众号平台API模式','thr'=>'第三方平台授权模式','test'=>'接口功能测试'] as $k=>$v}
                 <input type="radio" data-wechat-type="{$k}" name="wechat_type" value="{$k}" title="{$v}" lay-filter="wechat_type">
