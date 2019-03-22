@@ -25,7 +25,7 @@ class TaskStop extends Task
 
     protected function configure()
     {
-        $this->setName('xtask:stop')->setDescription('Message queue daemon process pause');
+        $this->setName('xtask:stop')->setDescription('message queue daemon process pause');
     }
 
     /**
@@ -36,7 +36,7 @@ class TaskStop extends Task
     {
         if (($pid = $this->checkProcess()) > 0) {
             $this->closeProcess($pid);
-            $output->info("Message queue daemon {$pid} closed successfully.");
+            $output->info("message queue daemon {$pid} closed successfully.");
         } else {
             $output->info('The message queue daemon is not running.');
         }

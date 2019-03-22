@@ -25,7 +25,7 @@ class TaskState extends Task
 
     protected function configure()
     {
-        $this->setName('xtask:state')->setDescription('Message queue daemon process status');
+        $this->setName('xtask:state')->setDescription('message queue daemon process status');
     }
 
     /**
@@ -35,7 +35,7 @@ class TaskState extends Task
     protected function execute(\think\console\Input $input, \think\console\Output $output)
     {
         if (($pid = $this->checkProcess()) > 0) {
-            $output->info("Message queue daemon {$pid} is runing.");
+            $output->info("message queue daemon {$pid} is runing.");
         } else {
             $output->info('The message queue daemon is not running.');
         }

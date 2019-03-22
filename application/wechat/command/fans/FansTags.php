@@ -29,6 +29,6 @@ class FansTags extends Fans
     protected function configure()
     {
         $this->module = ['tags'];
-        $this->setName('xfans:tags')->setDescription('Synchronize tags of fans');
+        $this->setName('xfans:tags')->setDescription('synchronize tags of fans');
     }
 }

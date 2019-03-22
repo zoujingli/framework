@@ -25,7 +25,7 @@ class TaskStart extends Task
 
     protected function configure()
     {
-        $this->setName('xtask:start')->setDescription('Message queue daemon process start');
+        $this->setName('xtask:start')->setDescription('message queue daemon process start');
     }
 
     /**
@@ -40,9 +40,9 @@ class TaskStart extends Task
         } else {
             $this->createProcess();
             if (($pid = $this->checkProcess()) > 0) {
-                $output->info("Message queue daemon {$pid} created successfully!");
+                $output->info("message queue daemon {$pid} created successfully!");
             } else {
-                $output->error('Message queue daemon creation failed, try again later!');
+                $output->error('message queue daemon creation failed, try again later!');
             }
         }
     }

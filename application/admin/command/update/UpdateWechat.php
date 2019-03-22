@@ -26,6 +26,6 @@ class UpdateWechat extends Update
     protected function configure()
     {
         $this->modules = ['application/wechat/'];
-        $this->setName('xsync:wechat')->setDescription('Synchronize update wechat module files');
+        $this->setName('xsync:wechat')->setDescription('synchronize update wechat module files');
     }
 }

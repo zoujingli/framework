@@ -26,7 +26,7 @@ class TaskReset extends Task
 
     protected function configure()
     {
-        $this->setName('xtask:reset')->setDescription('Message queue daemon process restart');
+        $this->setName('xtask:reset')->setDescription('message queue daemon process restart');
     }
 
     /**
@@ -37,13 +37,13 @@ class TaskReset extends Task
     {
         if (($pid = $this->checkProcess()) > 0) {
             $this->closeProcess($pid);
-            $output->info("Message queue daemon {$pid} closed successfully!");
+            $output->info("message queue daemon {$pid} closed successfully!");
         }
         $this->createProcess();
         if ($pid = $this->checkProcess()) {
-            $output->info("Message queue daemon {$pid} created successfully!");
+            $output->info("message queue daemon {$pid} created successfully!");
         } else {
-            $output->error('Message queue daemon creation failed, try again later!');
+            $output->error('message queue daemon creation failed, try again later!');
         }
     }
 }

@@ -20,10 +20,10 @@ use think\console\Output;
 
 /**
  * 文件比对支持
- * Class Update
+ * Class update
  * @package app\admin\logic
  */
-class Update extends Command
+class update extends Command
 {
 
     /**
@@ -46,14 +46,14 @@ class Update extends Command
      */
     protected function execute(Input $input, Output $output)
     {
-        $output->comment('Start updating difference files');
+        $output->comment('start updating difference files');
         foreach (self::diff() as $file) foreach ($this->modules as $module) {
             if (stripos($file['name'], $module) === 0) {
                 $this->syncFile($file, $output);
                 break;
             }
         }
-        $output->comment('Update difference file completion');
+        $output->comment('update difference file completion');
     }
 
     /**
