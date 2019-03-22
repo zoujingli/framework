@@ -26,15 +26,6 @@ class Goods
     /**
      * 同步商品库存信息
      * @param integer $goodsId
-     * @throws \think\Exception
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     * @throws \think\exception\PDOException
-     */
-    /**
-     * 同步商品库存信息
-     * @param integer $goodsId
      * @return boolean
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
