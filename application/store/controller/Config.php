@@ -31,6 +31,7 @@ class Config extends Controller
      */
     public function index()
     {
+        $this->applyCsrfToken();
         $this->title = '商城参数配置';
         if ($this->request->isGet()) {
             $this->query = Extend::querySmsBalance();
