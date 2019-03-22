@@ -72,6 +72,7 @@ class Fans extends Controller
      */
     public function setBlack()
     {
+        $this->applyCsrfToken();
         try {
             foreach (array_chunk(explode(',', $this->request->post('openid')), 20) as $openids) {
                 Wechat::WeChatUser()->batchBlackList($openids);
@@ -90,6 +91,7 @@ class Fans extends Controller
      */
     public function delBlack()
     {
+        $this->applyCsrfToken();
         try {
             foreach (array_chunk(explode(',', $this->request->post('openid')), 20) as $openids) {
                 Wechat::WeChatUser()->batchUnblackList($openids);
@@ -123,6 +125,7 @@ class Fans extends Controller
      */
     public function del()
     {
+        $this->applyCsrfToken();
         $this->_delete($this->table);
     }
 
