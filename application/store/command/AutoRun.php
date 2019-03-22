@@ -31,6 +31,7 @@ class AutoRun extends Command
     }
 
     /**
+     * 执行指令
      * @param \think\console\Input $input
      * @param \think\console\Output $output
      * @return int|void|null
