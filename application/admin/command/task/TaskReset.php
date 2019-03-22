@@ -21,12 +21,12 @@ use app\admin\command\Task;
  * Class TaskRestart
  * @package app\admin\command\task
  */
-class TaskRestart extends Task
+class TaskReset extends Task
 {
 
     protected function configure()
     {
-        $this->setName('xtask:restart')->setDescription('Message queue daemon process restart');
+        $this->setName('xtask:reset')->setDescription('Message queue daemon process restart');
     }
 
     /**

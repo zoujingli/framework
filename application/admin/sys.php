@@ -101,7 +101,7 @@ if (!function_exists('base64_image')) {
     'app\admin\command\task\TaskStop',
     'app\admin\command\task\TaskState',
     'app\admin\command\task\TaskStart',
-    'app\admin\command\task\TaskRestart',
+    'app\admin\command\task\TaskReset',
     'app\admin\command\update\UpdateAdmin',
     'app\admin\command\update\UpdatePlugs',
     'app\admin\command\update\UpdateConfig',
