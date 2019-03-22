@@ -34,7 +34,6 @@ class AutoRun extends Command
      * 执行指令
      * @param \think\console\Input $input
      * @param \think\console\Output $output
-     * @return int|void|null
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
