@@ -52,6 +52,18 @@ class Index extends Controller
     }
 
     /**
+     * 清理接口调用测试
+     * @throws \WeChat\Exceptions\InvalidResponseException
+     * @throws \WeChat\Exceptions\LocalCacheException
+     */
+    public function clearQuota()
+    {
+        $appid = input('appid');
+        $result = Wechat::WeChatLimit($appid)->clearQuota();
+        dump($result);
+    }
+
+    /**
      * 同步获取权限
      */
     public function sync()
