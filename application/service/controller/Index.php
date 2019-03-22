@@ -60,7 +60,13 @@ class Index extends Controller
     {
         $appid = input('appid');
         $result = Wechat::WeChatLimit($appid)->clearQuota();
-        dump($result);
+        if (empty($result['errcode']) && $result['errmsg'] === 'ok') {
+            $this->success('接口调用次数清零成功！');
+        } elseif (isset($result['errmsg'])) {
+            $this->error('接口调用次数清零失败，请稍候再试！' . $result['errmsg']);
+        } else {
+            $this->error('接口调用次数清零失败，请稍候再试！');
+        }
     }
 
     /**
