@@ -58,7 +58,7 @@
             {/if}
 
             {if auth("service/index/clearquota")}
-            <a class="layui-btn layui-btn-sm" data-confirm="每个公众号每个月有10次清零机会，请谨慎使用！" data-load='{:url("service/index/clearquota")}?appid={$vo.authorizer_appid}'>清 零</a>
+            <a class="layui-btn layui-btn-sm layui-btn-primary" data-confirm="每个公众号每个月有10次清零机会，请谨慎使用！" data-load='{:url("service/index/clearquota")}?appid={$vo.authorizer_appid}'>清 零</a>
             {/if}
 
             {if auth("service/index/del")}
