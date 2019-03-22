@@ -30,6 +30,16 @@ class AutoRun extends Command
         $this->setName('xclean:store')->setDescription('clean up invalid store records');
     }
 
+    /**
+     * @param \think\console\Input $input
+     * @param \think\console\Output $output
+     * @return int|void|null
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
+     */
     protected function execute(\think\console\Input $input, \think\console\Output $output)
     {
         # 自动取消30分钟未支付的订单
