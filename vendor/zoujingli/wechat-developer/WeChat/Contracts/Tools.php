@@ -257,6 +257,7 @@ class Tools
             Tools::delCache($file);
             unset(self::$cache_curl[$key]);
         }
+        p($content);
         return $content;
     }
 
