@@ -174,6 +174,7 @@ class Tools
     public static function json2arr($json)
     {
         $result = json_decode($json, true);
+        p($result);
         if (empty($result)) {
             throw new InvalidResponseException('invalid response.', '0');
         }
