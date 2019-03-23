@@ -172,6 +172,7 @@ class BasicWeChat
     protected function httpPostForJson($url, array $data, $buildToJson = true)
     {
         try {
+            p(Tools::post($url, $buildToJson ? Tools::arr2json($data) : $data));
             return Tools::json2arr(Tools::post($url, $buildToJson ? Tools::arr2json($data) : $data));
         } catch (InvalidResponseException $e) {
             if (!$this->isTry && in_array($e->getCode(), ['40014', '40001', '41001', '42001'])) {
