@@ -74,14 +74,15 @@ if (!function_exists('base64_image')) {
     /**
      * base64 图片上传接口
      * @param string $content
+     * @param string $predir
      * @return string
      */
-    function base64_image($content)
+    function base64_image($content, $predir = 'base64/')
     {
         try {
             if (preg_match('|^data:image/(.*?);base64,|i', $content)) {
                 list($ext, $base) = explode('|||', preg_replace('|^data:image/(.*?);base64,|i', '$1|||', $content));
-                $info = \library\File::save('base64image/' . md5($base) . '.' . (empty($ext) ? 'tmp' : $ext), base64_decode($base));
+                $info = \library\File::save($predir . md5($base) . '.' . (empty($ext) ? 'tmp' : $ext), base64_decode($base));
                 return $info['url'];
             }
             return $content;
