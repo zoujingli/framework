@@ -101,11 +101,11 @@ class Plugs extends Controller
         if (!($file = $this->getUploadFile()) || empty($file)) {
             $this->error('文件上传异常，文件可能过大或未上传！');
         }
-        if ($file->checkExt('php')) {
-            $this->error('可执行文件禁止上传到本地服务器！');
-        }
         if (!$file->checkExt(strtolower(sysconf('storage_local_exts')))) {
             $this->error('文件上传类型受限，请在后台配置！');
+        }
+        if ($file->checkExt('php')) {
+            $this->error('可执行文件禁止上传到本地服务器！');
         }
         // 唯一名称
         $ext = strtolower(pathinfo($file->getInfo('name'), PATHINFO_EXTENSION));
@@ -135,11 +135,11 @@ class Plugs extends Controller
         if (!($file = $this->getUploadFile()) || empty($file)) {
             return json(['uploaded' => false, 'error' => ['message' => '文件上传异常，文件可能过大或未上传']]);
         }
-        if ($file->checkExt('php')) {
-            return json(['uploaded' => false, 'error' => ['message' => '可执行文件禁止上传到本地服务器']]);
-        }
         if (!$file->checkExt(strtolower(sysconf('storage_local_exts')))) {
             return json(['uploaded' => false, 'error' => ['message' => '文件上传类型受限，请在后台配置']]);
+        }
+        if ($file->checkExt('php')) {
+            return json(['uploaded' => false, 'error' => ['message' => '可执行文件禁止上传到本地服务器']]);
         }
         $this->safe = $this->getUploadSafe();
         $this->uptype = $this->getUploadType();
