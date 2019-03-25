@@ -44,12 +44,14 @@ class Plugs extends Controller
      */
     public function upstate()
     {
-        $ext = strtolower(pathinfo($this->request->post('filename', ''), 4));
+        $ext = strtolower(pathinfo($this->request->post('filename', ''), PATHINFO_EXTENSION));
         $name = File::name($this->request->post('md5'), $ext, '', 'strtolower');
         // 检查文件是否已上传
         $this->safe = $this->getUploadSafe();
-        if (is_string($site_url = File::url($name))) {
-            $this->success('检测到该文件已经存在，无需再次上传！', ['site_url' => $this->safe ? $name : $site_url]);
+        if (is_string($siteUrl = File::url($name))) {
+            $this->success('检测到该文件已经存在，无需再次上传！', [
+                'site_url' => $this->safe ? $name : $siteUrl,
+            ]);
         }
         // 文件驱动
         $file = File::instance($this->getUploadType());
@@ -99,12 +101,14 @@ class Plugs extends Controller
         if (!($file = $this->getUploadFile()) || empty($file)) {
             $this->error('文件上传异常，文件可能过大或未上传！');
         }
-        if ($file->checkExt('php')) $this->error('可执行文件禁止上传到本地服务器!');
+        if ($file->checkExt('php')) {
+            $this->error('可执行文件禁止上传到本地服务器!');
+        }
         if (!$file->checkExt(strtolower(sysconf('storage_local_exts')))) {
             $this->error('文件上传类型受限，请在后台配置！');
         }
         // 唯一名称
-        $ext = strtolower(pathinfo($file->getInfo('name'), 4));
+        $ext = strtolower(pathinfo($file->getInfo('name'), PATHINFO_EXTENSION));
         $name = File::name($this->request->post('md5'), $ext, '', 'strtolower');
         // Token验证
         if ($this->request->post('token') !== md5($name . session_id())) {
@@ -131,13 +135,15 @@ class Plugs extends Controller
         if (!($file = $this->getUploadFile()) || empty($file)) {
             return json(['uploaded' => false, 'error' => ['message' => '文件上传异常，文件可能过大或未上传']]);
         }
-        if ($file->checkExt('php')) $this->error('可执行文件禁止上传到本地服务器!');
+        if ($file->checkExt('php')) {
+            return json(['uploaded' => false, 'error' => ['message' => '可执行文件禁止上传到本地服务器']]);
+        }
         if (!$file->checkExt(strtolower(sysconf('storage_local_exts')))) {
             return json(['uploaded' => false, 'error' => ['message' => '文件上传类型受限，请在后台配置']]);
         }
         $this->safe = $this->getUploadSafe();
         $this->uptype = $this->getUploadType();
-        $this->ext = pathinfo($file->getInfo('name'), 4);
+        $this->ext = pathinfo($file->getInfo('name'), PATHINFO_EXTENSION);
         $name = File::name($file->getPathname(), $this->ext, '', 'md5_file');
         $info = File::instance($this->uptype)->save($name, file_get_contents($file->getRealPath()), $this->safe);
         if (is_array($info) && isset($info['url'])) {
@@ -145,7 +151,6 @@ class Plugs extends Controller
         }
         return json(['uploaded' => false, 'error' => ['message' => '文件处理失败，请稍候再试！']]);
     }
-
 
     /**
      * 获取文件上传方式
