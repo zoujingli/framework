@@ -110,7 +110,7 @@ class Plugs extends Controller
         // 唯一名称
         $ext = strtolower(pathinfo($file->getInfo('name'), PATHINFO_EXTENSION));
         $name = File::name($this->request->post('md5'), $ext, '', 'strtolower');
-        // Token验证
+        // Token 验证
         if ($this->request->post('token') !== md5($name . session_id())) {
             $this->error('文件上传验证失败，请刷新页面重新上传！');
         }
