@@ -38,10 +38,10 @@ PHP 开发技术交流（ QQ 群 513350915）
 |PluPloader|3.1.2|文件上传工具1|https://github.com/fex-team/webuploader|
 |WebUploader|0.1.5|文件上传工具2|https://github.com/fex-team/webuploader|
 |Font-Awesome|4.7.0|字体图标库|https://github.com/FortAwesome/Font-Awesome|
-|ThinkPHP|5.1.28|PHP基础框架|https://github.com/top-think/framework|
-|ThinkLibrary|1.2.2|ThinkPHP扩展组件|https://github.com/zoujingli/ThinkLibrary|
-|WeChatDeveloper|1.2.2|微信公众号组件|https://github.com/zoujingli/WeChatDeveloper|
-|WeOpenDeveloper|1.1.3|微信开放平台组件|https://github.com/zoujingli/WeOpenDeveloper|
+|ThinkPHP|5.1.35|PHP基础框架|https://github.com/top-think/framework|
+|ThinkLibrary|5.1.x-dev|ThinkPHP扩展组件|https://github.com/zoujingli/ThinkLibrary|
+|WeChatDeveloper|1.2.9|微信公众号组件|https://github.com/zoujingli/WeChatDeveloper|
+|WeOpenDeveloper|dev-master|微信开放平台组件|https://github.com/zoujingli/WeOpenDeveloper|
 
 赞助打赏
 --
