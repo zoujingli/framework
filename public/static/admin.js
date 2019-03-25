@@ -435,13 +435,31 @@ $(function () {
 
     /*! 表单转JSON */
     $.fn.formToJson = function () {
-        var object = {};
-        $(this.serializeArray()).each(function () {
-            if (object[this.name]) {
-                object[this.name] = $.isArray(object[this.name]) ? object[this.name].push(this.value) : [object[this.name], this.value];
-            } else object[this.name] = this.value;
+        var self = this, data = {}, pushCounters = {};
+        var patterns = {"key": /[a-zA-Z0-9_]+|(?=\[\])/g, "push": /^$/, "fixed": /^\d+$/, "named": /^[a-zA-Z0-9_]+$/};
+        this.build = function (base, key, value) {
+            base[key] = value;
+            return base;
+        };
+        this.pushCounter = function (name) {
+            if (pushCounters[name] === undefined) pushCounters[name] = 0;
+            return pushCounters[name]++;
+        };
+        $.each($(this).serializeArray(), function () {
+            var key, keys = this.name.match(patterns.key), merge = this.value, name = this.name;
+            while ((key = keys.pop()) !== undefined) {
+                name = name.replace(new RegExp("\\[" + key + "\\]$"), '');
+                if (key.match(patterns.push)) { // push
+                    merge = self.build([], self.pushCounter(name), merge);
+                } else if (key.match(patterns.fixed)) { // fixed
+                    merge = self.build([], key, merge);
+                } else if (key.match(patterns.named)) { // named
+                    merge = self.build({}, key, merge);
+                }
+            }
+            data = $.extend(true, data, merge);
         });
-        return object;
+        return data;
     };
 
     /*! 上传单个图片 */
