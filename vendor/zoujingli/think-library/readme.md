@@ -18,11 +18,22 @@ ThinkLibrary 是针对 ThinkPHP5.1 版本封装的一套工具类库，方便快
 * 系统参数通用 k-v 配置（快速参数长久化配置）
 * UTF8加密算法支持（安全URL参数传参数）
 * 接口 CORS 跨域默认支持（输出 JSON 标准化）
+* 支持表单CSRF安全验证（自动化form标签替换）
 * 更新功能等待您来发现哦....
 
 ## 参考项目
 * Gitee 仓库：https://gitee.com/zoujingli/framework
 * Github 仓库：https://github.com/zoujingli/framework
+
+代码仓库
+--
+ ThinkLibrary 为 MIT 协议开源项目，安装使用或二次开发不受约束，欢迎 fork 项目。
+ 
+ 部分代码来自互联网，若有异议可以联系作者进行删除。
+ 
+ * 在线体验地址：https://framework.thinkadmin.top （账号和密码都是 admin ）
+ * Gitee仓库地址：https://gitee.com/zoujingli/ThinkLibrary
+ * GitHub仓库地址：https://github.com/zoujingli/ThinkLibrary
 
 ## 使用说明
 * ThinkLibrary 需要Composer支持
@@ -38,7 +49,7 @@ class MyController extend \library\Controller {
     
     // 显示数据列表
     public function index(){
-        return $this->_page($this->dbQuery);
+        $this->_page($this->dbQuery);
     }
     
     // 当前列表数据处理
@@ -53,7 +64,7 @@ class MyController extend \library\Controller {
 * 必要数据库表SQL（sysconf 函数需要用到这个表）
 ```sql
 CREATE TABLE `system_config` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) DEFAULT NULL COMMENT '配置名',
   `value` varchar(500) DEFAULT NULL COMMENT '配置值',
   PRIMARY KEY (`id`) USING BTREE,
@@ -64,31 +75,36 @@ CREATE TABLE `system_config` (
 ## 列表处理
 ```php
 // 列表展示
-return $this->_page($dbQuery, $isPage, $isDisplay, $total);
+$this->_page($dbQuery, $isPage, $isDisplay, $total);
 
 // 列表展示搜索器（按 name、title 模糊搜索；按 status 精确搜索）
-$query = $this->_query($dbQuery)->like('name,title')->equal('status');
-return $this->_page($query->db(), $isPage, $isDisplay, $total);
+$this->_query($dbQuery)->like('name,title')->equal('status')->page();
+
+// 对列表查询器进行二次处理
+$query->_query($dbQuery)->like('name,title')->equal('status');
+$db = $query->db(); // @todo 这里可以对db进行操作
+$this->_page($db); // 显示列表分页
 ```
 
 ## 表单处理
 ```php
 // 表单显示及数据更新
-return $this->_form($dbQuery, $tplFile, $pkField , $where, $data);
+$this->_form($dbQuery, $tplFile, $pkField , $where, $data);
 ```
 
 ## 删除处理
 ```php
 // 数据删除处理
-return $this->_deleted($dbQuery);
+$this->_deleted($dbQuery);
 ```
 
 ## 禁用启用处理
 ```php
 // 数据禁用处理
-return $this->_save($dbQuery,['status'=>'0']);
+$this->_save($dbQuery,['status'=>'0']);
+
 // 数据启用处理
-return $this->_save($dbQuery,['status'=>'1']);
+$this->_save($dbQuery,['status'=>'1']);
 ```
 
 ## 文件存储组件（ oss 及 qiniu 需要配置参数）
@@ -157,11 +173,11 @@ boolean data_save($dbQuery,$data,'pkname',$where);
 ```php
 // 发起get请求
 $result = http_get($url,$query,$options);
-\library\tools\Http::get($url,$query,$options);
+$result = \library\tools\Http::get($url,$query,$options);
 
 // 发起post请求
 $result = http_post($url,$data,$options);
-\library\tools\Http::post($url,$data,$options);
+$result = \library\tools\Http::post($url,$data,$options);
 ```
 
 ## emoji 表情转义（部分数据库不支持可以用这个）
