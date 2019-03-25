@@ -102,7 +102,7 @@ class Plugs extends Controller
             $this->error('文件上传异常，文件可能过大或未上传！');
         }
         if ($file->checkExt('php')) {
-            $this->error('可执行文件禁止上传到本地服务器!');
+            $this->error('可执行文件禁止上传到本地服务器！');
         }
         if (!$file->checkExt(strtolower(sysconf('storage_local_exts')))) {
             $this->error('文件上传类型受限，请在后台配置！');
