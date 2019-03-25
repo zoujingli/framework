@@ -91,7 +91,7 @@ class Plugs extends Controller
     }
 
     /**
-     * WebUpload文件上传
+     * WebUpload 文件上传
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
@@ -125,7 +125,7 @@ class Plugs extends Controller
     }
 
     /**
-     * Plupload插件上传文件
+     * Plupload 插件上传文件
      * @return \think\response\Json
      * @throws \think\Exception
      * @throws \think\exception\PDOException
