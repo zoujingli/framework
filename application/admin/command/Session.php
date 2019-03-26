@@ -15,8 +15,6 @@
 namespace app\admin\command;
 
 use think\console\Command;
-use think\console\Input;
-use think\console\Output;
 
 /**
  * 清理无效的会话文件
@@ -25,19 +23,13 @@ use think\console\Output;
  */
 class Session extends Command
 {
-    
+
     protected function configure()
     {
         $this->setName('xclean:session')->setDescription('clean up invalid session files');
     }
-
-    /**
-     * 执行指令
-     * @param Input $input
-     * @param Output $output
-     * @return int|void|null
-     */
-    protected function execute(Input $input, Output $output)
+    
+    protected function execute(\think\console\Input $input, \think\console\Output $output)
     {
         $output->writeln('Start cleaning up invalid session files');
         foreach (glob(config('session.path') . 'sess_*') as $file) {
