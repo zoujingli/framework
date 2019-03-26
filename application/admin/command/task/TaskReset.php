@@ -26,7 +26,7 @@ class TaskReset extends Task
 
     protected function configure()
     {
-        $this->setName('xtask:reset')->setDescription('message queue daemon process restart');
+        $this->setName('xtask:reset')->setDescription('message queue daemon process reset');
     }
 
     /**

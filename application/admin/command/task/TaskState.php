@@ -25,7 +25,7 @@ class TaskState extends Task
 
     protected function configure()
     {
-        $this->setName('xtask:state')->setDescription('message queue daemon process status');
+        $this->setName('xtask:state')->setDescription('message queue daemon process state');
     }
 
     /**
