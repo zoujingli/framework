@@ -82,28 +82,16 @@ class Push extends Controller
         return $this->request->ip();
     }
 
-    public function __construct()
-    {
-        parent::__construct();
-        p(__METHOD__ . ' 初始化成功 ' . $this->request->ip());
-    }
-
     /**
      * 消息推送处理接口
      * @return string
      */
     public function index()
     {
-        p('---wechat-receive--- ' . $this->request->path());
-        p('---wechat-request-ip--' . $this->request->ip());
-        try {
-            $this->wechat = Wechat::WeChatReceive();
-        } catch (\Exception $e) {
-            p('---wechat-receive--error---');
-            p($e->getMessage());
-        }
+        $this->wechat = Wechat::WeChatReceive();
         try {
             if ($this->request->has('receive', 'post') && Wechat::getType() === 'thr') {
+                $this->forceCustom = true;
                 $this->appid = $this->request->post('appid', '', null);
                 $this->openid = $this->request->post('openid', '', null);
                 $this->encrypt = boolval($this->request->post('encrypt', 0));
@@ -112,6 +100,7 @@ class Push extends Controller
                     throw new \think\Exception('微信API实例缺失必要参数[appid,openid,receive]');
                 }
             } else {
+                $this->forceCustom = false;
                 $this->appid = Wechat::getAppid();
                 $this->openid = $this->wechat->getOpenid();
                 $this->encrypt = $this->wechat->isEncrypt();
