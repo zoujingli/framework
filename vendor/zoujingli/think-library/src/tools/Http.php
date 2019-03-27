@@ -82,6 +82,7 @@ class Http
         p('----http----');
         $content = curl_exec($curl);
         curl_close($curl);
+        p(curl_errno($curl));
         return $content;
     }
 
