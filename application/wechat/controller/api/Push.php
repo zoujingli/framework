@@ -20,6 +20,8 @@ use app\wechat\service\Wechat;
 use library\Controller;
 use think\Db;
 
+p(__FILE__ . '加载成功！');
+
 /**
  * 公众号消息推送处理
  * Class Push
