@@ -81,8 +81,8 @@ class Http
         curl_setopt($curl, CURLOPT_FAILONERROR, true);
         p('----http----');
         $content = curl_exec($curl);
+        p(curl_error($curl));
         curl_close($curl);
-        p(curl_errno($curl));
         return $content;
     }
 
