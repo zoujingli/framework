@@ -150,6 +150,18 @@ class Qiniu extends File
     }
 
     /**
+     * 删除文件
+     * @param string $name
+     * @return boolean
+     */
+    public function remove($name)
+    {
+        $bucket = self::$config->get('storage_qiniu_bucket');
+        $err = (new BucketManager($this->getAuth()))->delete($bucket, $name);
+        return empty($err);
+    }
+
+    /**
      * 获取接口Auth对象
      * @return \Qiniu\Auth
      */

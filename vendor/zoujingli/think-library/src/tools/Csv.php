@@ -30,24 +30,26 @@ class Csv
     {
         header('Content-Type: application/octet-stream');
         header("Content-Disposition: attachment; filename=" . iconv('utf-8', 'gbk//TRANSLIT', $filename));
-        echo @iconv('utf-8', 'gbk//TRANSLIT', "\"" . implode('","', $headers) . "\"\n");
+        $handle = fopen('php://output', 'w');
+        foreach ($headers as $key => $value) $headers[$key] = iconv("utf-8", "gbk//TRANSLIT", $value);
+        fputcsv($handle, $headers);
+        if (is_resource($handle)) fclose($handle);
     }
 
     /**
      * 写入CSV文件内容
      * @param array $list 数据列表(二维数组或多维数组)
-     * @param array $maps 数据规则(一维数组)
+     * @param array $rules 数据规则(一维数组)
      */
-    public static function body(array $list, array $maps)
+    public static function body(array $list, array $rules)
     {
+        $handle = fopen('php://output', 'w');
         foreach ($list as $data) {
             $rows = [];
-            foreach ($maps as $map) {
-                $rows[] = @iconv('utf-8', 'gbk//TRANSLIT', Crypt::emojiClear(self::parseKeyDot($data, $map)));
-            }
-            echo "\"" . implode('","', $rows) . "\"\n";
-            flush();
+            foreach ($rules as $rule) $rows[] = self::parseKeyDotValue($data, $rule);
+            fputcsv($handle, $rows);
         }
+        if (is_resource($handle)) fclose($handle);
     }
 
     /**
@@ -56,10 +58,10 @@ class Csv
      * @param string $rule 规则，如: order.order_no
      * @return mixed
      */
-    public static function parseKeyDot(array $data, $rule)
+    public static function parseKeyDotValue(array $data, $rule)
     {
         list($temp, $attr) = [$data, explode('.', trim($rule, '.'))];
         while ($key = array_shift($attr)) $temp = isset($temp[$key]) ? $temp[$key] : $temp;
-        return (is_string($temp) || is_numeric($temp)) ? str_replace('"', '""', "\t{$temp}") : '';
+        return (is_string($temp) || is_numeric($temp)) ? @iconv('utf-8', 'gbk//TRANSLIT', "{$temp}") : '';
     }
 }

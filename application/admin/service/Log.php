@@ -34,10 +34,10 @@ class Log
     {
         $data = [
             'node'     => Node::current(),
-            'geoip'    => request()->ip(),
+            'geoip'    => PHP_SAPI === 'cli' ? '127.0.0.1' : request()->ip(),
             'action'   => $action,
             'content'  => $content,
-            'username' => PHP_SAPI === 'cli' ? '0.0.0.0' : session('user.username'),
+            'username' => PHP_SAPI === 'cli' ? 'cli' : session('user.username'),
         ];
         return Db::name('SystemLog')->insert($data) !== false;
     }

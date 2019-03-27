@@ -24,8 +24,9 @@ use library\tools\Options;
  * @method array save($name, $content) static 保存二进制文件
  * @method string url($name) static 获取文件对应地址
  * @method string get($name) static 获取文件二进制内容
- * @method string base($name = '') static 获取文件存储基础目录
- * @method string upload($client = '') static 获取文件上传地址
+ * @method string base($name) static 获取文件存储基础目录
+ * @method string remove($name) static 删除已经上传的文件
+ * @method string upload($client) static 获取文件上传地址
  * @method string setBucket($name) static 动态创建指定空间名称
  */
 class File

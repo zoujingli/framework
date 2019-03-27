@@ -169,6 +169,23 @@ class Oss extends File
     }
 
     /**
+     * 删除文件
+     * @param string $name
+     * @return boolean
+     * @throws \Exception
+     */
+    public function remove($name)
+    {
+        try {
+            $bucket = self::$config->get('storage_oss_bucket');
+            $this->getOssClient()->deleteObject($bucket, $name);
+        } catch (\Exception $e) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * 获取OssClient对象
      * @return OssClient
      * @throws \OSS\Core\OssException

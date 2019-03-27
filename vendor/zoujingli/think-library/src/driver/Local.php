@@ -126,4 +126,18 @@ class Local extends File
         return null;
     }
 
+    /**
+     * 删除文件
+     * @param string $name 文件名称
+     * @param boolean $safe 安全模式
+     * @return boolean|null
+     */
+    public function remove($name, $safe = false)
+    {
+        if ($this->has($name, $safe) && is_string($file = $this->path($name, $safe))) {
+            return @unlink($file);
+        }
+        return true;
+    }
+
 }

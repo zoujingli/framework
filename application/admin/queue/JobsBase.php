@@ -92,16 +92,16 @@ class JobsBase
         $this->id = isset($data['_job_id_']) ? $data['_job_id_'] : '';
         $this->title = isset($data['_job_title_']) ? $data['_job_title_'] : '';
         $this->output->newLine();
-        $this->output->writeln("       System Task {$this->id} Execution Start");
+        $this->output->writeln("       system task {$this->id} execution start");
         $this->output->writeln('---------------------------------------------');
         Queue::status($this->id, self::STATUS_PROC, $this->statusDesc);
         if ($this->execute()) {
             $this->output->writeln('---------------------------------------------');
-            $this->output->info("                Successful");
+            $this->output->info("                successful");
             $this->status = self::STATUS_COMP;
         } else {
             $this->output->writeln('---------------------------------------------');
-            $this->output->error("                Failure");
+            $this->output->error("                failure");
             $this->status = self::STATUS_FAIL;
         }
         $job->delete();
