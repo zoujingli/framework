@@ -57,28 +57,38 @@ class Http
     public static function request($method, $url, $options = [])
     {
         $curl = curl_init();
-        // GET参数设置
+        // GET 参数设置
         if (!empty($options['query'])) {
             $url .= (stripos($url, '?') !== false ? '&' : '?') . http_build_query($options['query']);
         }
-        // 设置浏览器代理
+        // 浏览器代理设置
         curl_setopt($curl, CURLOPT_USERAGENT, self::getUserAgent());
-        // CURL头信息设置
+        // CURL 头信息设置
         if (!empty($options['headers'])) {
             curl_setopt($curl, CURLOPT_HTTPHEADER, $options['headers']);
         }
-        // POST数据设置
+        // Cookie 信息设置
+        if (!empty($options['cookie'])) {
+            curl_setopt($curl, CURLOPT_COOKIE, $options['cookie']);
+        }
+        // POST 数据设置
         if (strtolower($method) === 'post') {
             curl_setopt($curl, CURLOPT_POST, true);
             curl_setopt($curl, CURLOPT_POSTFIELDS, self::_buildHttpData($options['data']));
         }
+        // 请求超时设置
+        if (isset($options['timeout']) && is_numeric($options['timeout'])) {
+            curl_setopt($curl, CURLOPT_TIMEOUT, $options['timeout']);
+        } else {
+            curl_setopt($curl, CURLOPT_TIMEOUT, 60);
+        }
         curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_TIMEOUT, 60);
         curl_setopt($curl, CURLOPT_HEADER, false);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-        list($content) = [curl_exec($curl), curl_close($curl)];
+        $content = curl_exec($curl);
+        curl_close($curl);
         return $content;
     }
 
