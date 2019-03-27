@@ -87,7 +87,12 @@ class Push extends Controller
     public function index()
     {
         try {
+
             $this->wechat = Wechat::WeChatReceive();
+        } catch (\Exception $e) {
+            p($e->getMessage());
+        }
+        try {
             if ($this->request->has('receive', 'post') && Wechat::getType() === 'thr') {
                 $this->appid = $this->request->post('appid', '', null);
                 $this->openid = $this->request->post('openid', '', null);
