@@ -114,7 +114,7 @@ class Tools
      */
     public static function arr2xml($data)
     {
-        p('--生成xml--');
+        p('--生成xml--' . request()->path());
         p("<xml>" . self::_arr2xml($data) . "</xml>");
         return "<xml>" . self::_arr2xml($data) . "</xml>";
     }

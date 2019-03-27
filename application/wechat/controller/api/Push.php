@@ -102,7 +102,6 @@ class Push extends Controller
                 $this->encrypt = $this->wechat->isEncrypt();
                 $this->receive = $this->toLower($this->wechat->getReceive());
             }
-            p($this->receive);
             $this->fromOpenid = $this->receive['tousername'];
             // text, event, image, location
             if (method_exists($this, ($method = $this->receive['msgtype']))) {
