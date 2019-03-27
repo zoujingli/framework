@@ -67,6 +67,7 @@ class Receive
         } catch (\Exception $e) {
             \think\facade\Log::error("微信{$appid}接口调用异常，{$e->getMessage()}");
         }
+        p('---service--end---');
         return 'success';
     }
 
