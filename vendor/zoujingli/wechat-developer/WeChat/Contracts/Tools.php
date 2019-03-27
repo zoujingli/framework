@@ -114,8 +114,6 @@ class Tools
      */
     public static function arr2xml($data)
     {
-        p('--生成xml--' . request()->path());
-        p("<xml>" . self::_arr2xml($data) . "</xml>");
         return "<xml>" . self::_arr2xml($data) . "</xml>";
     }
 
@@ -149,8 +147,6 @@ class Tools
      */
     public static function xml2arr($xml)
     {
-        p('---收到xml---' . request()->path());
-        p($xml);
         $entity = libxml_disable_entity_loader(true);
         $data = (array)simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
         libxml_disable_entity_loader($entity);
@@ -165,8 +161,6 @@ class Tools
     public static function arr2json($data)
     {
         $json = json_encode(self::buildEnEmojiData($data), JSON_UNESCAPED_UNICODE);
-        p('--生成json--');
-        p($json === '[]' ? '{}' : $json);
         return $json === '[]' ? '{}' : $json;
     }
 
@@ -240,8 +234,6 @@ class Tools
      */
     public static function json2arr($json)
     {
-        p('--收到json--');
-        p($json);
         $result = json_decode($json, true);
         if (empty($result)) {
             throw new InvalidResponseException('invalid response.', '0');

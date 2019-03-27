@@ -78,11 +78,7 @@ class Http
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($curl, CURLOPT_FAILONERROR, true);
-        p('----http----');
-        $content = curl_exec($curl);
-        p(curl_error($curl));
-        curl_close($curl);
+        list($content) = [curl_exec($curl), curl_close($curl)];
         return $content;
     }
 

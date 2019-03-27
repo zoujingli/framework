@@ -37,12 +37,6 @@ class Receive
      */
     public static function handler($appid)
     {
-        p('');
-        p('');
-        p('');
-        p('');
-        p('---handler--path---  ' . request()->path());
-        p('---handler--ip-----  ' . request()->ip());
         try {
             $service = Wechat::WeChatReceive($appid);
         } catch (\Exception $e) {
@@ -58,16 +52,12 @@ class Receive
             list($data, $openid) = [$service->getReceive(), $service->getOpenid()];
             if (isset($data['EventKey']) && is_object($data['EventKey'])) $data['EventKey'] = (array)$data['EventKey'];
             $input = ['openid' => $openid, 'appid' => $appid, 'receive' => serialize($data), 'encrypt' => intval($service->isEncrypt())];
-            p('---service--post--client---');
             if (is_string($result = http_post($config['appuri'], $input, ['timeout' => 30]))) {
-                p('---收到需要返回的内容---');
-                p($result);
                 return $result;
             }
         } catch (\Exception $e) {
             \think\facade\Log::error("微信{$appid}接口调用异常，{$e->getMessage()}");
         }
-        p('---service--end---');
         return 'success';
     }
 
