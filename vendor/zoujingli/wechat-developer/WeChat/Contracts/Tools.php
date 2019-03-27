@@ -149,7 +149,7 @@ class Tools
      */
     public static function xml2arr($xml)
     {
-        p('---收到xml---');
+        p('---收到xml---' . request()->path());
         p($xml);
         $entity = libxml_disable_entity_loader(true);
         $data = (array)simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
