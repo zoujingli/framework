@@ -37,12 +37,12 @@ class Receive
      */
     public static function handler($appid)
     {
-        p('==================');
-        p('==================');
-        p('==================');
-        p('==================');
+        p('');
+        p('');
+        p('');
+        p('');
         p('---handler--path---  ' . request()->path());
-        p('---handler--ip  ---  ' . request()->ip());
+        p('---handler--ip-----  ' . request()->ip());
         try {
             $service = Wechat::WeChatReceive($appid);
         } catch (\Exception $e) {
