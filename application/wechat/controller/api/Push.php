@@ -279,6 +279,8 @@ class Push extends Controller
         } else switch (strtolower($type)) {
             case 'text': // 发送文本消息
                 p('准备生成text回复');
+                p(['CreateTime' => time(), 'MsgType' => 'text', 'ToUserName' => $this->openid, 'FromUserName' => $this->fromOpenid, 'Content' => $data['content']]);
+                p($this->wechat->reply(['CreateTime' => time(), 'MsgType' => 'text', 'ToUserName' => $this->openid, 'FromUserName' => $this->fromOpenid, 'Content' => $data['content']], true));
                 return $this->wechat->reply(['CreateTime' => time(), 'MsgType' => 'text', 'ToUserName' => $this->openid, 'FromUserName' => $this->fromOpenid, 'Content' => $data['content']], true, $this->encrypt);
             case 'image': // 发送图片消息
                 return $this->buildMessage($type, ['MediaId' => $data['media_id']]);
