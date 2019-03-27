@@ -88,8 +88,8 @@ class Push extends Controller
      */
     public function index()
     {
-        $this->wechat = Wechat::WeChatReceive();
         try {
+            $this->wechat = Wechat::WeChatReceive();
             if ($this->request->has('receive', 'post') && Wechat::getType() === 'thr') {
                 $this->forceCustom = true;
                 $this->appid = $this->request->post('appid', '', null);
