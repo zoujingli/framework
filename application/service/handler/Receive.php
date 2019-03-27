@@ -72,16 +72,13 @@ class Receive
      */
     protected static function post($url, $data)
     {
-        $options = [
+        return file_get_contents($url, false, stream_context_create([
             'http' => [
                 'method'  => 'POST',
                 'header'  => 'Content-type: application/x-www-form-urlencoded',
                 'content' => http_build_query($data),
             ],
-        ];
-        $context = stream_context_create($options);
-        p('-----');
-        return file_get_contents($url, false, $context);
+        ]));
     }
 
 }
