@@ -52,13 +52,35 @@ class Receive
             list($data, $openid) = [$service->getReceive(), $service->getOpenid()];
             if (isset($data['EventKey']) && is_object($data['EventKey'])) $data['EventKey'] = (array)$data['EventKey'];
             $input = ['openid' => $openid, 'appid' => $appid, 'receive' => serialize($data), 'encrypt' => intval($service->isEncrypt())];
-            if (is_string($result = http_post($config['appuri'], $input, ['timeout' => 30]))) {
+            if (is_string($result = self::post($config['appuri'], $input))) {
                 return $result;
             }
+//            if (is_string($result = http_post($config['appuri'], $input, ['timeout' => 30]))) {
+//                return $result;
+//            }
         } catch (\Exception $e) {
             \think\facade\Log::error("微信{$appid}接口调用异常，{$e->getMessage()}");
         }
         return 'success';
+    }
+
+    /**
+     * post 网络请求
+     * @param string $url
+     * @param array $data
+     * @return false|string
+     */
+    protected static function post($url, $data)
+    {
+        $options = [
+            'http' => [
+                'method'  => 'POST',
+                'header'  => 'Content-type: application/x-www-form-urlencoded',
+                'content' => http_build_query($data),
+            ],
+        ];
+        $context = stream_context_create($options);
+        return file_get_contents($url, false, $context);
     }
 
 }
