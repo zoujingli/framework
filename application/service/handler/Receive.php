@@ -80,6 +80,7 @@ class Receive
             ],
         ];
         $context = stream_context_create($options);
+        p('-----');
         return file_get_contents($url, false, $context);
     }
 
