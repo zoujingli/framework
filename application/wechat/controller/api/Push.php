@@ -87,9 +87,9 @@ class Push extends Controller
     public function index()
     {
         try {
-
             $this->wechat = Wechat::WeChatReceive();
         } catch (\Exception $e) {
+            p('在初始化Recr出错！');
             p($e->getMessage());
         }
         try {
