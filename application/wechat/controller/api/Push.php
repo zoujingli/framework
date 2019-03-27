@@ -86,12 +86,11 @@ class Push extends Controller
      */
     public function index()
     {
+        p('---wechat-receive --- ' . $this->request->path());
         try {
             $this->wechat = Wechat::WeChatReceive();
-            p('初始化Receive --- ' . $this->request->path());
-            p($this->request->request());
         } catch (\Exception $e) {
-            p('在初始化Recr出错！');
+            p('---wechat-receive--error---');
             p($e->getMessage());
         }
         try {
