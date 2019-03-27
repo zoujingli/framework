@@ -134,6 +134,8 @@ class BasicPushEvent
      */
     public function reply(array $data = [], $return = false, $isEncrypt = false)
     {
+        p('---收到的reply--数据---');
+        p($data);
         $xml = Tools::arr2xml(empty($data) ? $this->message : $data);
         if ($this->isEncrypt() || $isEncrypt) {
             if (!class_exists('Prpcrypt', false)) {
