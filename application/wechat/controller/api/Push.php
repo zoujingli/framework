@@ -80,6 +80,12 @@ class Push extends Controller
         return $this->request->ip();
     }
 
+    public function __construct()
+    {
+        parent::__construct();
+        p(__METHOD__ . ' 初始化成功 ' . $this->request->ip());
+    }
+
     /**
      * 消息推送处理接口
      * @return string
