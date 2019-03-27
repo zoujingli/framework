@@ -72,7 +72,7 @@ class BasicPushEvent
      * @param array $options
      * @throws InvalidResponseException
      */
-    public function __construct(array $options)
+    public function __construct(array $options, $handly = true)
     {
         if (empty($options['appid'])) {
             throw new InvalidArgumentException("Missing Config -- [appid]");
@@ -87,31 +87,33 @@ class BasicPushEvent
         $this->config = new DataArray($options);
         $this->input = new DataArray($_REQUEST);
         $this->appid = $this->config->get('appid');
-        // 推送消息处理
-        if ($_SERVER['REQUEST_METHOD'] == "POST") {
-            $this->postxml = file_get_contents("php://input");
-            $this->encryptType = $this->input->get('encrypt_type');
-            if ($this->isEncrypt()) {
-                if (empty($options['encodingaeskey'])) {
-                    throw new InvalidArgumentException("Missing Config -- [encodingaeskey]");
+        if ($handly) {
+            // 推送消息处理
+            if ($_SERVER['REQUEST_METHOD'] == "POST") {
+                $this->postxml = file_get_contents("php://input");
+                $this->encryptType = $this->input->get('encrypt_type');
+                if ($this->isEncrypt()) {
+                    if (empty($options['encodingaeskey'])) {
+                        throw new InvalidArgumentException("Missing Config -- [encodingaeskey]");
+                    }
+                    if (!class_exists('Prpcrypt', false)) {
+                        require __DIR__ . '/Prpcrypt.php';
+                    }
+                    $prpcrypt = new \Prpcrypt($this->config->get('encodingaeskey'));
+                    $result = Tools::xml2arr($this->postxml);
+                    $array = $prpcrypt->decrypt($result['Encrypt']);
+                    if (intval($array[0]) > 0) {
+                        throw new InvalidResponseException($array[1], $array[0]);
+                    }
+                    list($this->postxml, $this->appid) = [$array[1], $array[2]];
                 }
-                if (!class_exists('Prpcrypt', false)) {
-                    require __DIR__ . '/Prpcrypt.php';
-                }
-                $prpcrypt = new \Prpcrypt($this->config->get('encodingaeskey'));
-                $result = Tools::xml2arr($this->postxml);
-                $array = $prpcrypt->decrypt($result['Encrypt']);
-                if (intval($array[0]) > 0) {
-                    throw new InvalidResponseException($array[1], $array[0]);
-                }
-                list($this->postxml, $this->appid) = [$array[1], $array[2]];
+                $this->receive = new DataArray(Tools::xml2arr($this->postxml));
+            } elseif ($_SERVER['REQUEST_METHOD'] == "GET" && $this->checkSignature()) {
+                @ob_clean();
+                exit($this->input->get('echostr'));
+            } else {
+                throw new InvalidResponseException('Invalid interface request.', '0');
             }
-            $this->receive = new DataArray(Tools::xml2arr($this->postxml));
-        } elseif ($_SERVER['REQUEST_METHOD'] == "GET" && $this->checkSignature()) {
-            @ob_clean();
-            exit($this->input->get('echostr'));
-        } else {
-            throw new InvalidResponseException('Invalid interface request.', '0');
         }
     }
 
