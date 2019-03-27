@@ -102,7 +102,6 @@ class Push extends Controller
             p('---wechat-receive--error---');
             p($e->getMessage());
         }
-        return 'success';
         try {
             if ($this->request->has('receive', 'post') && Wechat::getType() === 'thr') {
                 $this->appid = $this->request->post('appid', '', null);
