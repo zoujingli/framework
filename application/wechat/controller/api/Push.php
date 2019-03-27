@@ -88,7 +88,8 @@ class Push extends Controller
     {
         try {
             $this->wechat = Wechat::WeChatReceive();
-            p('初始化Receive' . $this->request->path());
+            p('初始化Receive --- ' . $this->request->path());
+            p($this->request->request());
         } catch (\Exception $e) {
             p('在初始化Recr出错！');
             p($e->getMessage());
