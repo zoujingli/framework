@@ -53,6 +53,7 @@ class Receive
             list($data, $openid) = [$service->getReceive(), $service->getOpenid()];
             if (isset($data['EventKey']) && is_object($data['EventKey'])) $data['EventKey'] = (array)$data['EventKey'];
             $input = ['openid' => $openid, 'appid' => $appid, 'receive' => serialize($data), 'encrypt' => intval($service->isEncrypt())];
+            p('---service--post--client---');
             if (is_string($result = http_post($config['appuri'], $input, ['timeout' => 30]))) {
                 p('---收到需要返回的内容---');
                 p($result);
