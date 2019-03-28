@@ -25,7 +25,7 @@ class TaskStop extends Task
 
     protected function configure()
     {
-        $this->setName('xtask:stop')->setDescription('message queue daemon process pause');
+        $this->setName('xtask:stop')->setDescription('stop message queuing daemon');
     }
 
     /**
