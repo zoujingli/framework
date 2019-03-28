@@ -52,7 +52,7 @@ class Csrf
      * 清理表单CSRF信息
      * @param string $name
      */
-    public static function clearFormToken($name)
+    public static function clearFormToken($name = null)
     {
         is_null($name) ? session(null, 'csrf') : session($name, null, 'csrf');
     }
