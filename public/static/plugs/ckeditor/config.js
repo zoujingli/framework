@@ -22,13 +22,9 @@ CKEDITOR.plugins.add("uimage", {
         editor.ui.addButton("UploadImage", {label: "上传本地图片", command: 'uimage', icon: 'image', toolbar: 'insert,10'});
         editor.addCommand('uimage', {
             exec: function (editor) {
-                var field = '_editor_upload_' + Math.floor(Math.random() * 100000);
-                var url = window.ROOT_URL + '?s=admin/api.plugs/upfile.html&mode=one&type=png,jpg,gif,jpeg&field=' + field;
-                $('<input type="hidden">').attr('name', field).appendTo(editor.element.$).on('change', function () {
-                    var element = CKEDITOR.dom.element.createFromHtml('<img style="max-width:100%" src="' + this.value + '" border="0" title="image" />');
-                    editor.insertElement(element), $(this).remove();
+                $.uploadOneFile('png,jpg,gif', function (url) {
+                    editor.insertElement(CKEDITOR.dom.element.createFromHtml('<img style="max-width:100%" src="' + url + '" border="0" title="image">'));
                 });
-                $.form.iframe(url, '插入图片');
             }
         });
     }
@@ -40,13 +36,9 @@ CKEDITOR.plugins.add('umusic', {
         editor.ui.addButton("UploadMusic", {label: "上传MP3文件", command: 'umusic', icon: 'specialchar', toolbar: 'insert,10'});
         editor.addCommand('umusic', {
             exec: function (editor) {
-                var field = '_editor_upload_' + Math.floor(Math.random() * 100000);
-                var url = window.ROOT_URL + '?s=admin/api.plugs/upfile.html&mode=one&type=mp3&field=' + field;
-                $('<input type="hidden">').attr('name', field).appendTo(editor.element.$).on('change', function () {
-                    var element = CKEDITOR.dom.element.createFromHtml('<audio controls="controls"><source src="' + this.value + '" type="audio/mpeg"></audio>');
-                    editor.insertElement(element), $(this).remove();
+                $.uploadOneFile('mp3', function (url) {
+                    editor.insertElement(CKEDITOR.dom.element.createFromHtml('<audio controls="controls"><source src="' + url + '" type="audio/mpeg"></audio>'));
                 });
-                $.form.iframe(url, '上传MP3音频');
             }
         });
     }
@@ -58,13 +50,9 @@ CKEDITOR.plugins.add('uvideo', {
         editor.ui.addButton("UploadVideo", {label: "上传MP4文件", command: 'uvideo', icon: 'flash', toolbar: 'insert,10'});
         editor.addCommand('uvideo', {
             exec: function (editor) {
-                var field = '_editor_upload_' + Math.floor(Math.random() * 100000);
-                var url = window.ROOT_URL + '?s=admin/api.plugs/upfile.html&mode=one&type=mp4&field=' + field;
-                $('<input type="hidden">').attr('name', field).appendTo(editor.element.$).on('change', function () {
-                    var element = CKEDITOR.dom.element.createFromHtml('<video width="100%" controls="controls"><source src="' + this.value + '" type="audio/mp4"></video>');
-                    editor.insertElement(element), $(this).remove();
+                $.uploadOneFile('mp4', function (url) {
+                    editor.insertElement(CKEDITOR.dom.element.createFromHtml('<video width="100%" controls="controls"><source src="' + url + '" type="audio/mp4"></video>'));
                 });
-                $.form.iframe(url, '上传MP4音频');
             }
         });
     }
