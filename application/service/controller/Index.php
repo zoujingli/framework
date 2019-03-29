@@ -101,6 +101,7 @@ class Index extends Controller
             $result = $wechat->getAuthorizerList();
             foreach ($result['list'] as $item) if (!empty($item['refresh_token']) && !empty($item['auth_time'])) {
                 $data = Build::filter($wechat->getAuthorizerInfo($item['authorizer_appid']));
+                $data['is_deleted'] = '0';
                 $data['authorizer_appid'] = $item['authorizer_appid'];
                 $data['authorizer_refresh_token'] = $item['refresh_token'];
                 $data['create_at'] = date('Y-m-d H:i:s', $item['auth_time']);

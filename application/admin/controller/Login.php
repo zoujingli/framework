@@ -105,7 +105,7 @@ class Login extends Controller
      */
     public function out()
     {
-        empty($_SESSION) || $_SESSION = [];
+        if ($_SESSION) $_SESSION = [];
         [session_unset(), session_destroy()];
         $this->success('退出登录成功！', url('@admin/login'));
     }
