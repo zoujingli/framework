@@ -499,12 +499,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/zoujingli/ThinkLibrary.git",
-            "reference": "1a43be6007943a6e9691170a7448aa9c6e14566a"
+            "reference": "10515fbf4c6d56067312cfeb0316c77a732bd7e6"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/1a43be6007943a6e9691170a7448aa9c6e14566a",
-            "reference": "1a43be6007943a6e9691170a7448aa9c6e14566a",
+            "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/10515fbf4c6d56067312cfeb0316c77a732bd7e6",
+            "reference": "10515fbf4c6d56067312cfeb0316c77a732bd7e6",
             "shasum": "",
             "mirrors": [
                 {
@@ -523,7 +523,7 @@
             "qiniu/php-sdk": "^7.2",
             "topthink/framework": "5.1.*"
         },
-        "time": "2019-03-28T01:40:58+00:00",
+        "time": "2019-03-28T07:26:29+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -614,12 +614,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/zoujingli/WeOpenDeveloper.git",
-            "reference": "2a3423619848615d9bf508aa5eac61c6c37e2969"
+            "reference": "f49cdc358d950e173b593992351d8c25272fd265"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zoujingli/WeOpenDeveloper/zipball/2a3423619848615d9bf508aa5eac61c6c37e2969",
-            "reference": "2a3423619848615d9bf508aa5eac61c6c37e2969",
+            "url": "https://api.github.com/repos/zoujingli/WeOpenDeveloper/zipball/f49cdc358d950e173b593992351d8c25272fd265",
+            "reference": "f49cdc358d950e173b593992351d8c25272fd265",
             "shasum": "",
             "mirrors": [
                 {
@@ -635,7 +635,7 @@
             "php": ">=5.4",
             "zoujingli/wechat-developer": "^1.0"
         },
-        "time": "2019-03-22T03:08:11+00:00",
+        "time": "2019-03-29T05:27:43+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

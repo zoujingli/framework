@@ -123,6 +123,7 @@ return array(
     'Symfony\\Component\\OptionsResolver\\Options' => $vendorDir . '/symfony/options-resolver/Options.php',
     'Symfony\\Component\\OptionsResolver\\OptionsResolver' => $vendorDir . '/symfony/options-resolver/OptionsResolver.php',
     'We' => $vendorDir . '/zoujingli/wechat-developer/We.php',
+    'WeChat\\Bind' => $vendorDir . '/zoujingli/weopen-developer/WeChat/Bind.php',
     'WeChat\\Card' => $vendorDir . '/zoujingli/wechat-developer/WeChat/Card.php',
     'WeChat\\Contracts\\BasicAliPay' => $vendorDir . '/zoujingli/wechat-developer/WeChat/Contracts/BasicAliPay.php',
     'WeChat\\Contracts\\BasicPushEvent' => $vendorDir . '/zoujingli/wechat-developer/WeChat/Contracts/BasicPushEvent.php',
