@@ -22,7 +22,7 @@ CKEDITOR.plugins.add("uimage", {
         editor.ui.addButton("UploadImage", {label: "上传本地图片", command: 'uimage', icon: 'image', toolbar: 'insert,10'});
         editor.addCommand('uimage', {
             exec: function (editor) {
-                $.uploadOneFile('png,jpg,gif', function (url) {
+                $.uploadFile('png,jpg,gif', function (url) {
                     editor.insertElement(CKEDITOR.dom.element.createFromHtml('<img style="max-width:100%" src="' + url + '" border="0" title="image">'));
                 });
             }
@@ -36,7 +36,7 @@ CKEDITOR.plugins.add('umusic', {
         editor.ui.addButton("UploadMusic", {label: "上传MP3文件", command: 'umusic', icon: 'specialchar', toolbar: 'insert,10'});
         editor.addCommand('umusic', {
             exec: function (editor) {
-                $.uploadOneFile('mp3', function (url) {
+                $.uploadFile('mp3', function (url) {
                     editor.insertElement(CKEDITOR.dom.element.createFromHtml('<audio controls="controls"><source src="' + url + '" type="audio/mpeg"></audio>'));
                 });
             }
@@ -50,7 +50,7 @@ CKEDITOR.plugins.add('uvideo', {
         editor.ui.addButton("UploadVideo", {label: "上传MP4文件", command: 'uvideo', icon: 'flash', toolbar: 'insert,10'});
         editor.addCommand('uvideo', {
             exec: function (editor) {
-                $.uploadOneFile('mp4', function (url) {
+                $.uploadFile('mp4', function (url) {
                     editor.insertElement(CKEDITOR.dom.element.createFromHtml('<video width="100%" controls="controls"><source src="' + url + '" type="audio/mp4"></video>'));
                 });
             }

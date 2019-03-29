@@ -1,10 +1,10 @@
 define(['plupload'], function (plupload) {
     window.plupload = plupload;
-    return function (element, InitHandler, UploadedHandler) {
+    return function (element, InitHandler, UploadedHandler, CompleteHandler) {
         var $ele = $(element), index = 0;
         if ($ele.data('uploader')) return $ele.data('uploader');
         var loader = new plupload.Uploader({
-            multi_selection: false,
+            multi_selection: $ele.attr('data-multiple') > 0,
             multipart_params: {
                 safe: $ele.attr('data-safe') || '0',
                 uptype: $ele.attr('data-uptype') || '',
@@ -22,10 +22,11 @@ define(['plupload'], function (plupload) {
             loader.bind('Init', InitHandler);
         }
         loader.bind('FilesAdded', function () {
-            if (typeof UploadedHandler === 'function') {
-                index = $.msg.loading();
-            }
             loader.start();
+            if (typeof UploadedHandler === 'function') index = $.msg.loading();
+        });
+        loader.bind('UploadProgress', function (up, file) {
+            $ele.html(parseFloat(file.loaded * 100 / file.total).toFixed(2) + '%');
         });
         loader.bind('FileUploaded', function (up, file, res) {
             if (parseInt(res.status) === 200) {
@@ -38,11 +39,9 @@ define(['plupload'], function (plupload) {
                 }
             }
         });
-        loader.bind('UploadProgress', function (up, file) {
-            $ele.html(parseFloat(file.loaded * 100 / file.total).toFixed(2) + '%');
-        });
         loader.bind('UploadComplete', function () {
             $.msg.close(index), $ele.html($ele.data('html'));
+            if (typeof CompleteHandler === 'function') CompleteHandler();
         });
         $ele.data('html', $ele.html()), loader.init();
         return $ele.data('uploader', loader), loader;

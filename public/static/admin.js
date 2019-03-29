@@ -12,9 +12,6 @@
 
 // IE兼容提示
 (function (w) {
-    w.onerror = function () {
-        return true;
-    };
     if (!("WebSocket" in w && 2 === w.WebSocket.CLOSING)) {
         document.body.innerHTML = '<div class="version-debug">您使用的浏览器已经<strong>过时</strong>，建议使用最新版本的谷歌浏览器。<a target="_blank" href="https://pc.qq.com/detail/1/detail_2661.html" class="layui-btn layui-btn-primary">立即下载</a></div>';
     }
@@ -43,7 +40,7 @@ require.config({
         'base64': ['plugs/jquery/base64.min'],
         'angular': ['plugs/angular/angular.min'],
         'ckeditor': ['plugs/ckeditor/ckeditor'],
-        'plupload': ['plugs/plupload/plupload.min'],
+        'plupload': ['plugs/plupload/plupload.full.min'],
         'websocket': ['plugs/socket/websocket'],
         'pcasunzips': ['plugs/jquery/pcasunzips'],
         'jquery.ztree': ['plugs/ztree/ztree.all.min'],
@@ -52,7 +49,6 @@ require.config({
     },
     shim: {
         'spop': {deps: ['css!' + baseRoot + 'plugs/spop/spop.min.css']},
-        'plupload': {deps: [baseRoot + 'plugs/plupload/moxie.min.js']},
         'websocket': {deps: [baseRoot + 'plugs/socket/swfobject.min.js']},
         'jquery.ztree': {deps: ['jquery', 'css!' + baseRoot + 'plugs/ztree/zTreeStyle/zTreeStyle.css']},
         'jquery.autocompleter': {deps: ['jquery', 'css!' + baseRoot + 'plugs/jquery/autocompleter.css']},
@@ -75,7 +71,7 @@ $(function () {
         this.close = function (index) {
             return layer.close(index);
         };
-        // 弹出警告消息框
+        // 弹出警告框
         this.alert = function (msg, callback) {
             var index = layer.alert(msg, {end: callback, scrollbar: false});
             return this.indexs.push(index), index;
@@ -463,52 +459,69 @@ $(function () {
     /*! 上传单个图片 */
     $.fn.uploadOneImage = function () {
         var name = $(this).attr('name') || 'image', type = $(this).data('type') || 'png,jpg,gif';
-        var $tpl = $('<a data-file="btn" data-field="' + name + '" data-type="' + type + '" class="uploadimage"></a>');
+        var $tpl = $('<a data-file="btn" class="uploadimage"></a>').attr('data-field', name).attr('data-type', type);
         $(this).attr('name', name).after($tpl).on('change', function () {
-            !!this.value && $tpl.css('backgroundImage', 'url(' + this.value + ')');
+            if (this.value) $tpl.css('backgroundImage', 'url(' + this.value + ')');
         }).trigger('change');
     };
 
-    /*! 上传单个文件 */
-    $.uploadOneFile = function (type, callback, uptype, safe) {
-        var field = '_editor_upload_' + Math.floor(Math.random() * 100000);
-        var input = $('<input type="hidden">').attr('name', field).attr('data-type', type || 'png,jpg,gif').attr('data-safe', safe || 0);
+    /*! 全局文件上传入口 */
+    $.uploadFile = function (type, callback, multiple, uptype, safe) {
+        var field = '_upload_input_' + Math.floor(Math.random() * 100000);
+        var input = $('<input type="hidden">').attr('name', field).attr('data-safe', safe || 0).attr('data-type', type || 'png,jpg,gif').attr('data-multiple', multiple ? 1 : 0);
         if (typeof uptype === 'string') input.attr('data-uptype', uptype);
         $body.find($.form.targetClass).append(input);
         require(['upload'], function (apply, uploader) {
             uploader = apply(input, function () {
                 input.trigger('click');
-            }, function (url) {
-                if (typeof callback === 'function') callback(url);
+            }, callback, function () {
                 input.remove();
-                uploader.destroy();
+                try {
+                    uploader.destroy();
+                } catch (e) {
+                }
             });
         });
     };
 
     /*! 上传多个图片 */
     $.fn.uploadMultipleImage = function () {
-        var type = $(this).data('type') || 'png,jpg', name = $(this).attr('name') || 'umt-image';
-        var $tpl = $('<a data-file="btn" data-field="' + name + '" data-type="' + type + '" class="uploadimage"></a>');
+        var type = $(this).data('type') || 'png,jpg,gif', name = $(this).attr('name') || 'umt-image';
+        var $tpl = $('<a class="uploadimage"></a>').attr('data-file', 'mul').attr('data-field', name).attr('data-type', type);
         $(this).attr('name', name).after($tpl).on('change', function () {
-            var input = this, values = [], srcs = this.value.split('|');
-            $(this).prevAll('.uploadimage').map(function () {
-                values.push($(this).attr('data-tips-image'));
-            }), $(this).prevAll('.uploadimage').remove(), values.reverse();
-            for (var i in srcs) srcs[i] && values.push(srcs[i]);
-            this.value = values.join('|');
-            for (var i in values) {
-                var tpl = '<div class="uploadimage uploadimagemtl"><a class="layui-icon">&#x1006;</a></div>';
-                var $tpl = $(tpl).attr('data-tips-image', values[i]).css('backgroundImage', 'url(' + values[i] + ')');
-                $tpl.data('input', input).data('srcs', values).data('index', i).on('click', 'a', function (e) {
+            var input = this;
+            this.setImageData = function () {
+                input.value = input.getImageData().join('|');
+            };
+            this.getImageData = function () {
+                var values = [];
+                $(input).prevAll('.uploadimage').map(function () {
+                    values.push($(this).attr('data-tips-image'));
+                });
+                return values.reverse(), values;
+            };
+            var urls = this.getImageData(), srcs = this.value.split('|');
+            for (var i in srcs) if (srcs[i]) urls.push(srcs[i]);
+            $(this).prevAll('.uploadimage').remove();
+            this.value = urls.join('|');
+            for (var i in urls) {
+                var tpl = '<div class="uploadimage uploadimagemtl"><a class="layui-icon margin-right-5">&#xe602;</a><a class="layui-icon margin-right-5">&#x1006;</a><a class="layui-icon margin-right-5">&#xe603;</a></div>';
+                var $tpl = $(tpl).attr('data-tips-image', urls[i]).css('backgroundImage', 'url(' + urls[i] + ')').on('click', 'a', function (e) {
                     e.stopPropagation();
                     var $cur = $(this).parent();
-                    $.msg.confirm('确定要移除这张图片吗？', function (index) {
-                        var data = $cur.data('srcs'), temp = [];
-                        for (var i in data) if (i !== $cur.data('index')) temp.push(data[i]);
-                        $cur.data('input').value = temp.join('|');
-                        $cur.remove(), $.msg.close(index);
-                    });
+                    switch ($(this).index()) {
+                        case 1:// remove
+                            return $.msg.confirm('确定要移除这张图片吗？', function (index) {
+                                $cur.remove(), input.setImageData(), $.msg.close(index);
+                            });
+                        case 0: // right
+                            var lenght = $cur.siblings('div.uploadimagemtl').length;
+                            if ($cur.index() !== lenght) $cur.next().after($cur);
+                            return input.setImageData();
+                        case 2: // left
+                            if ($cur.index() !== 0) $cur.prev().before($cur);
+                            return input.setImageData();
+                    }
                 });
                 $(this).before($tpl);
             }
@@ -616,15 +629,16 @@ $(function () {
 
     /*! 注册 data-file 事件行为 */
     $body.on('click', '[data-file]', function () {
-        var uptype = $(this).attr('data-uptype') || '';
-        var safe = $(this).attr('data-safe') || '0', mode = $(this).attr('data-file') || 'one';
-        var field = $(this).attr('data-field') || 'file', type = $(this).attr('data-type') || 'jpg,png';
-        if (mode === 'btn') {
-            $.uploadOneFile(type, function (url) {
-                $('input[name="' + field + '"]').val(url).trigger('change');
-            }, uptype, safe);
+        var safe = $(this).attr('data-safe') || '0';
+        var mode = $(this).attr('data-file') || 'one', uptype = $(this).attr('data-uptype') || '';
+        var field = $(this).attr('data-field') || 'file', type = $(this).attr('data-type') || 'jpg,png,gif';
+        var input = $('input[name="' + field + '"]'), multiple = (mode !== 'btn' && mode !== 'one');
+        if (mode !== 'max') {
+            $.uploadFile(type, function (url) {
+                input.val(url).trigger('change');
+            }, multiple, uptype, safe);
         } else {
-            var params = $.param({mode: mode, uptype: uptype, type: type, field: field, safe: safe});
+            var params = $.param({mode: 'one', uptype: uptype, type: type, field: field, safe: safe});
             var location = window.ROOT_URL + '?s=admin/api.plugs/upfile.html&' + params;
             $.form.iframe(location, $(this).attr('data-title') || '文件上传');
         }
