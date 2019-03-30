@@ -1,24 +1,24 @@
 <?php
 
 // +----------------------------------------------------------------------
-// | framework
+// | Library for ThinkAdmin
 // +----------------------------------------------------------------------
 // | 版权所有 2014~2018 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
 // +----------------------------------------------------------------------
-// | 官方网站: http://framework.thinkadmin.top
+// | 官方网站: http://library.thinkadmin.top
 // +----------------------------------------------------------------------
 // | 开源协议 ( https://mit-license.org )
 // +----------------------------------------------------------------------
-// | github开源项目：https://github.com/zoujingli/framework
+// | github 仓库地址 ：https://github.com/zoujingli/ThinkLibrary
 // +----------------------------------------------------------------------
 
-namespace app\admin\command;
+namespace library\command\update;
 
 use think\console\Command;
 
 /**
  * Class Composer
- * @package app\admin\command
+ * @package library\command
  */
 class Composer extends Command
 {
@@ -27,7 +27,7 @@ class Composer extends Command
 
     protected function configure()
     {
-        $this->bin = __DIR__ . DIRECTORY_SEPARATOR . 'bin' . DIRECTORY_SEPARATOR . 'composer.phar';
+        $this->bin = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'bin' . DIRECTORY_SEPARATOR . 'composer.phar';
         $this->setName('xsync:composer')->setDescription('Synchronize update composer plugs');
     }
 
@@ -43,10 +43,6 @@ class Composer extends Command
         passthru(PHP_BINARY . " {$this->bin} update --profile --prefer-dist --optimize-autoloader");
     }
 
-    /**
-     * 判断系统类型
-     * @return boolean
-     */
     protected function isWin()
     {
         return PATH_SEPARATOR === ';';

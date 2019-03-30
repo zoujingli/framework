@@ -1,30 +1,31 @@
 <?php
 
 // +----------------------------------------------------------------------
-// | framework
+// | Library for ThinkAdmin
 // +----------------------------------------------------------------------
 // | 版权所有 2014~2018 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
 // +----------------------------------------------------------------------
-// | 官方网站: http://framework.thinkadmin.top
+// | 官方网站: http://library.thinkadmin.top
 // +----------------------------------------------------------------------
 // | 开源协议 ( https://mit-license.org )
 // +----------------------------------------------------------------------
-// | github开源项目：https://github.com/zoujingli/framework
+// | github 仓库地址 ：https://github.com/zoujingli/ThinkLibrary
 // +----------------------------------------------------------------------
 
-namespace app\admin\command\update;
+namespace library\command\update;
 
-use app\admin\command\Update;
+use library\command\Update;
 
 /**
- * Class UpdateService
- * @package app\admin\logic\update
+ * 更新系统配置指令
+ * Class UpdateConfig
+ * @package library\command\update
  */
-class UpdateService extends Update
+class Config extends Update
 {
     protected function configure()
     {
-        $this->modules = ['application/service/'];
-        $this->setName('xsync:service')->setDescription('synchronize update service module files');
+        $this->modules = ['config/'];
+        $this->setName('xsync:config')->setDescription('synchronize update config php files');
     }
 }

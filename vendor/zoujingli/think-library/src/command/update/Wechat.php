@@ -1,27 +1,27 @@
 <?php
 
 // +----------------------------------------------------------------------
-// | framework
+// | Library for ThinkAdmin
 // +----------------------------------------------------------------------
 // | 版权所有 2014~2018 广州楚才信息科技有限公司 [ http://www.cuci.cc ]
 // +----------------------------------------------------------------------
-// | 官方网站: http://framework.thinkadmin.top
+// | 官方网站: http://library.thinkadmin.top
 // +----------------------------------------------------------------------
 // | 开源协议 ( https://mit-license.org )
 // +----------------------------------------------------------------------
-// | github开源项目：https://github.com/zoujingli/framework
+// | github 仓库地址 ：https://github.com/zoujingli/ThinkLibrary
 // +----------------------------------------------------------------------
 
-namespace app\admin\command\update;
+namespace library\command\update;
 
-use app\admin\command\Update;
+use library\command\Update;
 
 /**
  * 更新微信模块指令
  * Class UpdateWechat
  * @package app\admin\logic\update
  */
-class UpdateWechat extends Update
+class Wechat extends Update
 {
     protected function configure()
     {

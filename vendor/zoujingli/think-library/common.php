@@ -198,3 +198,26 @@ if (!function_exists('emoji_clear')) {
         return \library\tools\Crypt::emojiClear($string);
     }
 }
+
+// 注册系统指令
+\think\Console::addDefaultCommands([
+    'library\command\Session',
+    'library\command\task\Stop',
+    'library\command\task\State',
+    'library\command\task\Start',
+    'library\command\task\Reset',
+    'library\command\update\Admin',
+    'library\command\update\Plugs',
+    'library\command\update\Config',
+    'library\command\update\Wechat',
+    'library\command\update\Service',
+    'library\command\update\Composer',
+]);
+
+// 动态加载模块配置文件
+if (function_exists('think\__include_file')) {
+    $ds = DIRECTORY_SEPARATOR;
+    foreach (glob(env('app_path') . "{$ds}*{$ds}sys.php") as $file) {
+        \think\__include_file($file);
+    }
+}

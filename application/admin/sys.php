@@ -94,18 +94,3 @@ if (!function_exists('base64_image')) {
 
 // 注册中间键
 \think\facade\Middleware::add('app\admin\service\Auth');
-
-// 注册系统指令
-\think\Console::addDefaultCommands([
-    'app\admin\command\Session',
-    'app\admin\command\Composer',
-    'app\admin\command\task\TaskStop',
-    'app\admin\command\task\TaskState',
-    'app\admin\command\task\TaskStart',
-    'app\admin\command\task\TaskReset',
-    'app\admin\command\update\UpdateAdmin',
-    'app\admin\command\update\UpdatePlugs',
-    'app\admin\command\update\UpdateConfig',
-    'app\admin\command\update\UpdateWechat',
-    'app\admin\command\update\UpdateService',
-]);
