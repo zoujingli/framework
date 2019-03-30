@@ -33,9 +33,9 @@ class Session extends Command
     {
         $output->writeln('Start cleaning up invalid session files');
         foreach (glob(config('session.path') . 'sess_*') as $file) {
-            $fileatime = fileatime($file);
-            if (filesize($file) < 1 || $fileatime < time() - 3600) {
-                $output->writeln('clear session file -> [ ' . date('Y-m-d H:i:s', $fileatime) . ' ] ' . basename($file));
+            list($fileatime, $filesize) = [fileatime($file), filesize($file)];
+            if ($filesize < 1 || $fileatime < time() - 3600) {
+                $output->writeln('clear session file -> [ ' . date('Y-m-d H:i:s', $fileatime) . ' ] ' . basename($file) . " {$filesize}");
                 @unlink($file);
             }
         }
