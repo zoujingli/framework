@@ -66,8 +66,11 @@ class Index extends Controller
         }
         $this->list = [
             [
-                'title'   => 'Clear runtime file',
+                'title'   => 'Clean up running cached files',
                 'message' => nl2br(Console::call('clear')->fetch()),
+            ], [
+                'title'   => 'Clean up invalid session files',
+                'message' => nl2br(Console::call('xclean:session')->fetch()),
             ],
         ];
         $this->fetch('admin@index/command');
@@ -94,23 +97,6 @@ class Index extends Controller
             ], [
                 'title'   => 'Build config and common file cache',
                 'message' => nl2br(Console::call('optimize:config')->fetch()),
-            ],
-        ];
-        $this->fetch('admin@index/command');
-    }
-
-    /**
-     * 清理无效的会话文件
-     */
-    public function clearSession()
-    {
-        if (!\app\admin\service\Auth::isLogin()) {
-            $this->error('需要登录才能操作哦！');
-        }
-        $this->list = [
-            [
-                'title'   => 'Clean up invalid session files',
-                'message' => nl2br(Console::call('xclean:session')->fetch()),
             ],
         ];
         $this->fetch('admin@index/command');
