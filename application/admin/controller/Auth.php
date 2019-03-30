@@ -52,7 +52,7 @@ class Auth extends Controller
      */
     public function apply()
     {
-        $this->title = '权限授权节点';
+        $this->title = '权限授权配置';
         $auth = $this->request->post('id', '0');
         switch (strtolower($this->request->post('action'))) {
             case 'get': // 获取权限配置
@@ -66,7 +66,7 @@ class Auth extends Controller
                 foreach (isset($post['nodes']) ? $post['nodes'] : [] as $node) $data[] = ['auth' => $auth, 'node' => $node];
                 Db::name('SystemAuthNode')->where(['auth' => $auth])->delete();
                 Db::name('SystemAuthNode')->insertAll($data);
-                return $this->success('节点授权更新成功！');
+                return $this->success('权限授权配置更新成功！');
             default:
                 return $this->_form($this->table, 'apply');
         }
