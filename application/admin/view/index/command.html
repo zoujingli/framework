@@ -1,0 +1,8 @@
+<div class="layui-code border-0 margin-0 padding-20">
+    {foreach $list as $vo}
+    <fieldset class="margin-bottom-10">
+        <legend>{$vo.title|default='--'}</legend>
+        <div class="padding-bottom-10">{$vo.message|raw|default=''}</div>
+    </fieldset>
+    {/foreach}
+</div>

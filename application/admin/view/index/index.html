@@ -39,6 +39,14 @@
         </ul>
         <ul class="layui-nav layui-layout-right">
             <li lay-unselect class="layui-nav-item"><a data-reload><i class="layui-icon layui-icon-refresh-3"></i></a></li>
+            <li class="layui-nav-item">
+                <dl class="layui-nav-child">
+                    <dd lay-unselect><a data-modal="{:url('admin/index/buildOptimize')}"><i class="layui-icon layui-icon-release margin-right-5"></i>发布缓存</a></dd>
+                    <dd lay-unselect><a data-modal="{:url('admin/index/clearRuntime')}"><i class="layui-icon layui-icon-fonts-clear margin-right-5"></i>清理缓存</a></dd>
+                    <dd lay-unselect><a data-modal="{:url('admin/index/clearSession')}"><i class="layui-icon layui-icon-template-1 margin-right-5"></i>清理会话</a></dd>
+                </dl>
+                <a><span>系统指令</span></a>
+            </li>
             {notempty name='Think.session.user'}
             <li class="layui-nav-item">
                 <dl class="layui-nav-child">

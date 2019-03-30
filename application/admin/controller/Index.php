@@ -16,6 +16,7 @@ namespace app\admin\controller;
 
 use library\Controller;
 use library\tools\Data;
+use think\Console;
 use think\Db;
 
 /**
@@ -56,6 +57,57 @@ class Index extends Controller
     }
 
     /**
+     * 清理系统运行缓存
+     */
+    public function clearRuntime()
+    {
+        $this->list = [
+            [
+                'title'   => 'Clear runtime file',
+                'message' => nl2br(Console::call('clear')->fetch()),
+            ],
+        ];
+        $this->fetch('admin@index/command');
+    }
+
+    /**
+     * 压缩发布系统
+     */
+    public function buildOptimize()
+    {
+        $this->list = [
+            [
+                'title'   => 'Build route cache',
+                'message' => nl2br(Console::call('optimize:route')->fetch()),
+            ], [
+                'title'   => 'Build database schema cache',
+                'message' => nl2br(Console::call('optimize:schema')->fetch()),
+            ], [
+                'title'   => 'Optimizes PSR0 and PSR4 packages',
+                'message' => nl2br(Console::call('optimize:autoload')->fetch()),
+            ], [
+                'title'   => 'Build config and common file cache',
+                'message' => nl2br(Console::call('optimize:config')->fetch()),
+            ],
+        ];
+        $this->fetch('admin@index/command');
+    }
+
+    /**
+     * 清理无效的会话文件
+     */
+    public function clearSession()
+    {
+        $this->list = [
+            [
+                'title'   => 'Clean up invalid session files',
+                'message' => nl2br(Console::call('xclean:session')->fetch()),
+            ],
+        ];
+        $this->fetch('admin@index/command');
+    }
+
+    /**
      * 修改密码
      * @param integer $id
      * @throws \think\Exception
@@ -72,7 +124,7 @@ class Index extends Controller
         }
         if ($this->request->isGet()) {
             $this->verify = true;
-            $this->_form('SystemUser', 'user/pass', 'id', [], ['id' => $id]);
+            $this->_form('SystemUser', 'admin@user/pass', 'id', [], ['id' => $id]);
         } else {
             $data = $this->_input([
                 'password'    => $this->request->post('password'),
