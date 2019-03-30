@@ -211,7 +211,6 @@ if (!function_exists('emoji_clear')) {
     'library\command\update\Config',
     'library\command\update\Wechat',
     'library\command\update\Service',
-    'library\command\update\Composer',
 ]);
 
 // 动态加载模块配置文件

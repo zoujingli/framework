@@ -499,12 +499,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/zoujingli/ThinkLibrary.git",
-            "reference": "e3d7307718295fcc48866d1ddb9e1e05b8d03a60"
+            "reference": "44732ba9fb37161be859de7ff3723e592f2bd6cf"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/e3d7307718295fcc48866d1ddb9e1e05b8d03a60",
-            "reference": "e3d7307718295fcc48866d1ddb9e1e05b8d03a60",
+            "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/44732ba9fb37161be859de7ff3723e592f2bd6cf",
+            "reference": "44732ba9fb37161be859de7ff3723e592f2bd6cf",
             "shasum": "",
             "mirrors": [
                 {
@@ -523,9 +523,9 @@
             "qiniu/php-sdk": "^7.2",
             "topthink/framework": "5.1.*"
         },
-        "time": "2019-03-30T05:42:38+00:00",
+        "time": "2019-03-30T06:03:24+00:00",
         "type": "library",
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "files": [
                 "common.php"
@@ -614,12 +614,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/zoujingli/WeOpenDeveloper.git",
-            "reference": "f49cdc358d950e173b593992351d8c25272fd265"
+            "reference": "99a8daa7458a9c5421ecc44daba6783278fc5a6d"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zoujingli/WeOpenDeveloper/zipball/f49cdc358d950e173b593992351d8c25272fd265",
-            "reference": "f49cdc358d950e173b593992351d8c25272fd265",
+            "url": "https://api.github.com/repos/zoujingli/WeOpenDeveloper/zipball/99a8daa7458a9c5421ecc44daba6783278fc5a6d",
+            "reference": "99a8daa7458a9c5421ecc44daba6783278fc5a6d",
             "shasum": "",
             "mirrors": [
                 {
@@ -635,7 +635,7 @@
             "php": ">=5.4",
             "zoujingli/wechat-developer": "^1.0"
         },
-        "time": "2019-03-29T05:27:43+00:00",
+        "time": "2019-03-30T05:58:15+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

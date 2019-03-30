@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit2756e3fff5af43aa29f37b5e7ff1b5df
+class ComposerStaticInitbf9e9ccd628d2e5e8805c8398337dc81
 {
     public static $files = array (
         '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
@@ -292,7 +292,6 @@ class ComposerStaticInit2756e3fff5af43aa29f37b5e7ff1b5df
         'library\\command\\task\\Stop' => __DIR__ . '/..' . '/zoujingli/think-library/src/command/task/Stop.php',
         'library\\command\\update' => __DIR__ . '/..' . '/zoujingli/think-library/src/command/Update.php',
         'library\\command\\update\\Admin' => __DIR__ . '/..' . '/zoujingli/think-library/src/command/update/Admin.php',
-        'library\\command\\update\\Composer' => __DIR__ . '/..' . '/zoujingli/think-library/src/command/update/Composer.php',
         'library\\command\\update\\Config' => __DIR__ . '/..' . '/zoujingli/think-library/src/command/update/Config.php',
         'library\\command\\update\\Plugs' => __DIR__ . '/..' . '/zoujingli/think-library/src/command/update/Plugs.php',
         'library\\command\\update\\Service' => __DIR__ . '/..' . '/zoujingli/think-library/src/command/update/Service.php',
@@ -347,9 +346,9 @@ class ComposerStaticInit2756e3fff5af43aa29f37b5e7ff1b5df
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit2756e3fff5af43aa29f37b5e7ff1b5df::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit2756e3fff5af43aa29f37b5e7ff1b5df::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit2756e3fff5af43aa29f37b5e7ff1b5df::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitbf9e9ccd628d2e5e8805c8398337dc81::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitbf9e9ccd628d2e5e8805c8398337dc81::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitbf9e9ccd628d2e5e8805c8398337dc81::$classMap;
 
         }, null, ClassLoader::class);
     }

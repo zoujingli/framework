@@ -187,7 +187,6 @@ return array(
     'library\\command\\task\\Stop' => $vendorDir . '/zoujingli/think-library/src/command/task/Stop.php',
     'library\\command\\update' => $vendorDir . '/zoujingli/think-library/src/command/Update.php',
     'library\\command\\update\\Admin' => $vendorDir . '/zoujingli/think-library/src/command/update/Admin.php',
-    'library\\command\\update\\Composer' => $vendorDir . '/zoujingli/think-library/src/command/update/Composer.php',
     'library\\command\\update\\Config' => $vendorDir . '/zoujingli/think-library/src/command/update/Config.php',
     'library\\command\\update\\Plugs' => $vendorDir . '/zoujingli/think-library/src/command/update/Plugs.php',
     'library\\command\\update\\Service' => $vendorDir . '/zoujingli/think-library/src/command/update/Service.php',
