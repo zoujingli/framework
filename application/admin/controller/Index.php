@@ -61,6 +61,9 @@ class Index extends Controller
      */
     public function clearRuntime()
     {
+        if (!\app\admin\service\Auth::isLogin()) {
+            $this->error('需要登录才能操作哦！');
+        }
         $this->list = [
             [
                 'title'   => 'Clear runtime file',
@@ -75,6 +78,9 @@ class Index extends Controller
      */
     public function buildOptimize()
     {
+        if (!\app\admin\service\Auth::isLogin()) {
+            $this->error('需要登录才能操作哦！');
+        }
         $this->list = [
             [
                 'title'   => 'Build route cache',
@@ -98,6 +104,9 @@ class Index extends Controller
      */
     public function clearSession()
     {
+        if (!\app\admin\service\Auth::isLogin()) {
+            $this->error('需要登录才能操作哦！');
+        }
         $this->list = [
             [
                 'title'   => 'Clean up invalid session files',
