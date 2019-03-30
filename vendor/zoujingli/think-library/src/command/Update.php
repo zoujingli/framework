@@ -78,11 +78,24 @@ class update extends Command
                 $output->error("{$file['name']} update failed.");
             }
         } elseif (in_array($file['type'], ['del'])) {
-            if (unlink(realpath(env('root_path') . $file['name']))) {
+            $realfile = realpath(env('root_path') . $file['name']);
+            if (is_file($realfile) && unlink($realfile)) {
+                self::removeEmptyDir(dirname($realfile));
                 $output->writeln("{$file['name']} remove successfully.");
             } else {
                 $output->error("{$file['name']} remove failed.");
             }
+        }
+    }
+
+    /**
+     * 清理指定的空目录
+     * @param string $dir
+     */
+    private static function removeEmptyDir($dir)
+    {
+        if (is_dir($dir) && count(scandir($dir)) === 2) {
+            rmdir($dir);
         }
     }
 
@@ -96,7 +109,6 @@ class update extends Command
             'think',
             'config/app.php',
             'config/log.php',
-            'config/system.php',
             'config/cookie.php',
             'config/template.php',
             'application/admin',
