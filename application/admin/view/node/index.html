@@ -177,17 +177,17 @@
         // 数据自动更新
         function update(self) {
             var $item = $(self).parents('tr'), data = {list: []};
-            selectedItem.find('input').map(function () {
+            $item.find('input').map(function () {
                 var value = this.type === 'text' ? this.value : (this.checked ? 1 : 0);
                 data.list.push({name: this.name, value: value, node: this.getAttribute('data-node')});
             });
-            selectedItem.find('.loading-tips').html('<p class="color-green"><i class="fa fa-spinner fa-spin"></i> 更新数据...</p>');
+            $item.find('.loading-tips').html('<p class="color-green"><i class="fa fa-spinner fa-spin"></i> 更新数据...</p>');
             $.form.load('{:url("save")}', data, 'post', function (ret) {
                 if (ret.code === 0) {
                     var tips = '<p class="color-red"><i class="fa fa-close"></i> 更新异常</p>';
-                    return selectedItem.find('.loading-tips').html(tips), false;
+                    return $item.find('.loading-tips').html(tips), false;
                 }
-                return selectedItem.find('.loading-tips').html(''), false;
+                return $item.find('.loading-tips').html(''), false;
             }, false);
             return syncLoginGroup(), syncMenuGroup(), syncAuthGroup();
         }
