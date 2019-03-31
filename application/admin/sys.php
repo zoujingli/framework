@@ -24,19 +24,6 @@ if (!function_exists('auth')) {
     }
 }
 
-if (!function_exists('_syslog')) {
-    /**
-     * 写入系统日志
-     * @param string $action 日志行为
-     * @param string $content 日志内容
-     * @return boolean
-     */
-    function _syslog($action, $content)
-    {
-        return \app\admin\service\Log::write($action, $content);
-    }
-}
-
 if (!function_exists('sysdata')) {
     /**
      * JSON 数据读取与存储
@@ -53,6 +40,35 @@ if (!function_exists('sysdata')) {
             return empty($data) ? [] : $data;
         }
         return data_save('SystemData', ['name' => $name, 'value' => json_encode($value, 256)], 'name');
+    }
+}
+
+if (!function_exists('_sysmsg')) {
+    /**
+     * 增加系统消息
+     * @param string $title 消息标题
+     * @param string $desc 消息描述
+     * @param string $url 访问链接
+     * @param string $node 权限节点
+     * @return boolean
+     */
+    function _sysmsg($title, $desc, $url, $node)
+    {
+        return \app\admin\service\Message::add($title, $desc, $url, $node);
+
+    }
+}
+
+if (!function_exists('_syslog')) {
+    /**
+     * 写入系统日志
+     * @param string $action 日志行为
+     * @param string $content 日志内容
+     * @return boolean
+     */
+    function _syslog($action, $content)
+    {
+        return \app\admin\service\Log::write($action, $content);
     }
 }
 
