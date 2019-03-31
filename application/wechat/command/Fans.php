@@ -69,7 +69,7 @@ class Fans extends Command
                 if (is_array($list = $wechat->getBatchUserInfo($chunk)) && !empty($list['user_info_list'])) {
                     foreach ($list['user_info_list'] as $user) {
                         $indexString = str_pad(++$index, strlen($result['total']), '0', STR_PAD_LEFT);
-                        $this->output->writeln("({$indexString}/{$result['total']}) updating wechat user {$user['openid']}");
+                        $this->output->writeln("({$indexString}/{$result['total']}) updating wechat user {$user['openid']} {$user['nickname']}");
                         \app\wechat\service\Fans::set($user, $appid);
                     }
                 }
@@ -83,19 +83,24 @@ class Fans extends Command
     /**
      * 同步粉丝黑名单列表
      * @param string $next
+     * @param integer $index
      * @throws \WeChat\Exceptions\InvalidResponseException
      * @throws \WeChat\Exceptions\LocalCacheException
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
-    public function _black($next = '')
+    public function _black($next = '', $index = 0)
     {
         $wechat = Wechat::WeChatUser();
         $this->output->comment('prepare synchronize fans black ...');
         while (true) if (is_array($result = $wechat->getBlackList($next)) && !empty($result['data']['openid'])) {
             foreach (array_chunk($result['data']['openid'], 100) as $chunk) {
+                foreach ($chunk as $openid) {
+                    $indexString = str_pad(++$index, strlen($result['total']), '0', STR_PAD_LEFT);
+                    $this->output->writeln("({$indexString}/{$result['total']}) updating wechat black {$openid}");
+                }
                 $where = [['is_black', 'eq', '0'], ['openid', 'in', $chunk]];
-                Db::name('WechatFans')->failException(true)->where($where)->update(['is_black' => '1']);
+                Db::name('WechatFans')->where($where)->update(['is_black' => '1']);
             }
             if (in_array($result['next_openid'], $result['data']['openid'])) break;
             else $next = $result['next_openid'];
@@ -105,19 +110,25 @@ class Fans extends Command
 
     /**
      * 同步粉丝标签列表
+     * @param integer $index
      * @throws \WeChat\Exceptions\InvalidResponseException
      * @throws \WeChat\Exceptions\LocalCacheException
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
-    public function _tags()
+    public function _tags($index = 0)
     {
         $appid = Wechat::getAppid();
         $wechat = Wechat::WeChatTags();
         $this->output->comment('prepare synchronize fans tags ...');
         if (is_array($list = $wechat->getTags()) && !empty($list['tags'])) {
-            foreach ($list['tags'] as &$tag) $tag['appid'] = $appid;
-            Db::name('WechatFansTags')->where('1=1')->delete();
+            $count = count($list['tags']);
+            foreach ($list['tags'] as &$tag) {
+                $tag['appid'] = $appid;
+                $indexString = str_pad(++$index, strlen($count), '0', STR_PAD_LEFT);
+                $this->output->writeln("({$indexString}/{$count}) updating wechat tags {$tag['name']}");
+            }
+            Db::name('WechatFansTags')->where(['appid' => $appid])->delete();
             Db::name('WechatFansTags')->insertAll($list['tags']);
         }
         $this->output->comment('synchronized fans tags successful.');
