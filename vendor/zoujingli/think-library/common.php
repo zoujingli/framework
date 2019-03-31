@@ -68,10 +68,17 @@ if (!function_exists('sysconf')) {
         static $data = [];
         list($field, $raw) = explode('|', "{$name}|");
         if ($value !== null) {
+            \think\facade\Cache::tag('system')->rm('_sysconf_');
             list($row, $data) = [['name' => $field, 'value' => $value], []];
             return \library\tools\Data::save('SystemConfig', $row, 'name');
         }
-        if (empty($data)) $data = \think\Db::name('SystemConfig')->column('name,value');
+        if (empty($data)) {
+            $data = \think\facade\Cache::tag('system')->get('_sysconf_',[]);
+            if (empty($data)) {
+                $data = \think\Db::name('SystemConfig')->column('name,value');
+                \think\facade\Cache::tag('system')->set('_sysconf_', $data, 3600);
+            }
+        }
         return isset($data[$field]) ? (strtolower($raw) === 'raw' ? $data[$field] : htmlspecialchars($data[$field])) : '';
     }
 }

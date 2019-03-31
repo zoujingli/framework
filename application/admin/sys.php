@@ -55,7 +55,6 @@ if (!function_exists('_sysmsg')) {
     function _sysmsg($title, $desc, $url, $node)
     {
         return \app\admin\service\Message::add($title, $desc, $url, $node);
-
     }
 }
 
