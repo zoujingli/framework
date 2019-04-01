@@ -616,7 +616,7 @@ $(function () {
         var href = $(this).attr('data-href');
         if (href && href.indexOf('#') !== 0) window.location.href = href;
     });
-    
+
     /*! 注册 data-iframe 事件行为 */
     $body.on('click', '[data-iframe]', function () {
         var index = $.form.iframe($(this).attr('data-iframe'), $(this).attr('data-title') || '窗口');
@@ -704,7 +704,7 @@ $(function () {
         setTimeout(initUploadPlugs, 500);
     })();
 
-    /*! 初始化 */
+    /*! 初始化事件 */
     $.menu.listen();
     $.vali.listen();
 });

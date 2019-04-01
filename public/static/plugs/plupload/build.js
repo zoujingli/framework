@@ -23,21 +23,28 @@ define(['plupload'], function (plupload) {
         }
         loader.bind('FilesAdded', function () {
             loader.start();
-            index = $.msg.loading();
+            index = $.msg.loading('文件上传进度 <span data-upload-progress></span>');
         });
         loader.bind('UploadProgress', function (up, file) {
-            $element.html(parseFloat(file.loaded * 100 / file.total).toFixed(2) + '%');
+            $('[data-upload-progress]').html(parseFloat(file.loaded * 100 / file.total).toFixed(2) + '%');
         });
         loader.bind('FileUploaded', function (up, file, res) {
             if (parseInt(res.status) === 200) {
                 var ret = JSON.parse(res.response);
-                if (typeof UploadedHandler === 'function') {
-                    UploadedHandler(ret.url);
+                if (ret.uploaded) {
+                    if (typeof UploadedHandler === 'function') {
+                        UploadedHandler(ret.url);
+                    } else {
+                        var field = $element.data('field') || 'file';
+                        $('[name="' + field + '"]').val(ret.url).trigger('change');
+                    }
                 } else {
-                    var field = $element.data('field') || 'file';
-                    $('[name="' + field + '"]').val(ret.url).trigger('change');
+                    $.msg.error(ret.error.message || '文件上传出错！');
                 }
             }
+        });
+        loader.bind('Error', function () {
+            console.log(arguments);
         });
         loader.bind('UploadComplete', function () {
             $.msg.close(index), $element.html($element.data('html'));
