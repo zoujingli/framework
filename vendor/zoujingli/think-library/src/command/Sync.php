@@ -42,7 +42,6 @@ class Sync extends Command
      * 执行指令
      * @param Input $input
      * @param Output $output
-     * @return int|void|null
      */
     protected function execute(Input $input, Output $output)
     {
@@ -61,7 +60,9 @@ class Sync extends Command
      */
     public static function sync()
     {
-        foreach (self::diff() as $file) self::syncFile($file, new Output());
+        foreach (self::diff() as $file) {
+            self::syncFile($file, new Output());
+        }
     }
 
     /**

@@ -14,7 +14,7 @@
 
 namespace library\command\sync;
 
-use library\command\sync;
+use library\command\Sync;
 
 /**
  * 系统模块更新指令

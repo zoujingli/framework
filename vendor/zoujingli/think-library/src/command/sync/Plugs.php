@@ -14,7 +14,7 @@
 
 namespace library\command\sync;
 
-use library\command\sync;
+use library\command\Sync;
 
 /**
  * 更新插件指令
