@@ -458,7 +458,9 @@ $(function () {
 
     /*! 全局文件上传入口 */
     $.fn.uploadFile = function (callback) {
+        if (this.attr('data-inited')) return false;
         var that = this, mode = $(this).attr('data-file') || 'one';
+        this.attr('data-inited', true);
         this.attr('data-multiple', (mode !== 'btn' && mode !== 'one') ? 1 : 0);
         require(['upload'], function (apply) {
             apply(that, null, callback);
@@ -694,7 +696,7 @@ $(function () {
 
     /*! 初始化文件上传插件 */
     (function initUploadPlugs() {
-        $body.find('[data-file]:not([data-init])').map(function (index, elem, $this, field) {
+        $body.find('[data-file]:not([data-inited])').map(function (index, elem, $this, field) {
             $this = $(elem), field = $this.attr('data-field') || 'file';
             if (!$this.data('input')) $this.data('input', $('[name="' + field + '"]').get(0));
             $this.uploadFile(function (url) {
