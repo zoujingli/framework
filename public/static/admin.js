@@ -616,25 +616,7 @@ $(function () {
         var href = $(this).attr('data-href');
         if (href && href.indexOf('#') !== 0) window.location.href = href;
     });
-
-    // /*! 注册 data-file 事件行为 */
-    // $body.on('click', '[data-file]', function () {
-    //     var mode = $(this).attr('data-file') || 'one', mult = (mode !== 'btn' && mode !== 'one');
-    //     var uptype = $(this).attr('data-uptype') || '', field = $(this).attr('data-field') || 'file';
-    //     var safe = $(this).attr('data-safe') || '0', type = $(this).attr('data-type') || 'jpg,png,gif';
-    //     var elem = $($(this).data('input') || 'input[name="' + field + '"]');
-    //     if (mode !== 'max') {
-    //         $.uploadFile(this, type, function (url) {
-    //             elem.val(url).trigger('change');
-    //         }, mult, uptype, safe);
-    //     } else {
-    //         var params = $.param({mode: 'one', uptype: uptype, type: type, field: field, safe: safe});
-    //         var location = window.ROOT_URL + '?s=admin/api.plugs/upfile.html&' + params;
-    //         $.form.iframe(location, $(this).attr('data-title') || '文件上传');
-    //     }
-    // });
-
-
+    
     /*! 注册 data-iframe 事件行为 */
     $body.on('click', '[data-iframe]', function () {
         var index = $.form.iframe($(this).attr('data-iframe'), $(this).attr('data-title') || '窗口');
