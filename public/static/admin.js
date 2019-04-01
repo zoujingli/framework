@@ -629,15 +629,14 @@ $(function () {
 
     /*! 注册 data-file 事件行为 */
     $body.on('click', '[data-file]', function () {
-        var safe = $(this).attr('data-safe') || '0';
+        var bind = $(this).attr('data-bind') || ('_b' + (Math.random() + '').replace('.', ''));
         var mode = $(this).attr('data-file') || 'one', uptype = $(this).attr('data-uptype') || '';
-        var field = $(this).attr('data-field') || 'file', type = $(this).attr('data-type') || 'jpg,png,gif';
-        var input = $('input[name="' + field + '"]'), multiple = (mode !== 'btn' && mode !== 'one');
-        if (mode !== 'max') {
-            $.uploadFile(type, function (url) {
-                input.val(url).trigger('change');
-            }, multiple, uptype, safe);
-        } else {
+        var safe = $(this).attr('data-safe') || '0', multiple = (mode !== 'btn' && mode !== 'one');
+        var type = $(this).attr('data-type') || 'jpg,png,gif', field = $(this).attr('data-field') || 'file';
+        $(this).attr('data-bind-name', bind);
+        if (mode !== 'max') $.uploadFile(type, function (url) {
+            $('input[data-bind="' + bind + '"]').val(url).trigger('change');
+        }, multiple, uptype, safe); else {
             var params = $.param({mode: 'one', uptype: uptype, type: type, field: field, safe: safe});
             var location = window.ROOT_URL + '?s=admin/api.plugs/upfile.html&' + params;
             $.form.iframe(location, $(this).attr('data-title') || '文件上传');
