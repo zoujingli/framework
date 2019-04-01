@@ -11,7 +11,7 @@
  Target Server Version : 50562
  File Encoding         : 65001
 
- Date: 01/04/2019 18:27:23
+ Date: 01/04/2019 18:42:42
 */
 
 SET NAMES utf8mb4;
@@ -282,9 +282,9 @@ CREATE TABLE `store_order`  (
   `price_goods` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '商品费用统计',
   `price_express` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '快递费用统计',
   `price_rate_amount` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '返利金额统计',
-  `pay_state` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '支付状态',
+  `pay_state` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '支付状态(0未支付,1已支付)',
   `pay_type` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '支付方式',
-  `pay_price` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '支付价格',
+  `pay_price` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '支付金额',
   `pay_no` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '支付单号',
   `pay_at` datetime NULL DEFAULT NULL COMMENT '支付时间',
   `cancel_state` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '取消状态',
@@ -296,7 +296,7 @@ CREATE TABLE `store_order`  (
   `refund_price` decimal(20, 2) NULL DEFAULT 0.00 COMMENT '退款金额',
   `refund_desc` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '退款描述',
   `express_state` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '发货状态(0未发货,1已发货,2已签收)',
-  `express_company_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '发货快递公司代号',
+  `express_company_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '发货快递公司编码',
   `express_company_title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '发货快递公司名称',
   `express_send_no` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '发货单号',
   `express_send_at` datetime NULL DEFAULT NULL COMMENT '发货时间',
@@ -627,7 +627,8 @@ CREATE TABLE `system_message`  (
   `read_at` datetime NULL DEFAULT NULL COMMENT '读取时间',
   `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '消息状态',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  PRIMARY KEY (`id`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `index_system_message_code`(`code`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统-消息' ROW_FORMAT = Compact;
 
 -- ----------------------------
@@ -643,7 +644,10 @@ CREATE TABLE `system_node`  (
   `is_login` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '是否启动登录控制',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_system_node_node`(`node`) USING BTREE
+  INDEX `index_system_node_node`(`node`) USING BTREE,
+  INDEX `index_system_node_is_menu`(`is_menu`) USING BTREE,
+  INDEX `index_system_node_is_auth`(`is_auth`) USING BTREE,
+  INDEX `index_system_node_is_login`(`is_login`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 187 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统-节点' ROW_FORMAT = Compact;
 
 -- ----------------------------
@@ -877,7 +881,9 @@ CREATE TABLE `wechat_keys`  (
   `create_by` bigint(20) UNSIGNED NULL DEFAULT NULL COMMENT '创建人',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_wechat_keys_appid`(`appid`) USING BTREE
+  INDEX `index_wechat_keys_appid`(`appid`) USING BTREE,
+  INDEX `index_wechat_keys_type`(`type`) USING BTREE,
+  INDEX `index_wechat_keys_keys`(`keys`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '微信-关键字' ROW_FORMAT = Compact;
 
 -- ----------------------------
@@ -893,7 +899,11 @@ CREATE TABLE `wechat_media`  (
   `local_url` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '本地文件链接',
   `media_url` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '远程图片链接',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  PRIMARY KEY (`id`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `index_wechat_media_appid`(`appid`) USING BTREE,
+  INDEX `index_wechat_media_md5`(`md5`) USING BTREE,
+  INDEX `index_wechat_media_type`(`type`) USING BTREE,
+  INDEX `index_wechat_media_media_id`(`media_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '微信-素材' ROW_FORMAT = Compact;
 
 -- ----------------------------
