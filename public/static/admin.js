@@ -141,6 +141,13 @@ $(function () {
                 laydate.render({range: true, elem: this});
                 this.setAttribute('autocomplete', 'off');
             });
+            $dom.find('[data-file]:not([data-inited])').map(function (index, elem, $this, field) {
+                $this = $(elem), field = $this.attr('data-field') || 'file';
+                if (!$this.data('input')) $this.data('input', $('[name="' + field + '"]').get(0));
+                $this.uploadFile(function (url) {
+                    $($this.data('input')).val(url).trigger('change');
+                });
+            });
         };
         // 在内容区显示视图
         this.show = function (html) {
@@ -693,18 +700,6 @@ $(function () {
             });
         });
     });
-
-    /*! 初始化文件上传插件 */
-    (function initUploadPlugs() {
-        $body.find('[data-file]:not([data-inited])').map(function (index, elem, $this, field) {
-            $this = $(elem), field = $this.attr('data-field') || 'file';
-            if (!$this.data('input')) $this.data('input', $('[name="' + field + '"]').get(0));
-            $this.uploadFile(function (url) {
-                $($this.data('input')).val(url).trigger('change');
-            });
-        });
-        setTimeout(initUploadPlugs, 500);
-    })();
 
     /*! 初始化事件 */
     $.menu.listen();
