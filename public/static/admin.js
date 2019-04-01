@@ -456,15 +456,6 @@ $(function () {
         return data;
     };
 
-    /*! 上传单个图片 */
-    $.fn.uploadOneImage = function () {
-        var name = $(this).attr('name') || 'image', type = $(this).data('type') || 'png,jpg,gif';
-        var $tpl = $('<a data-file="btn" class="uploadimage"></a>').attr('data-field', name).attr('data-type', type);
-        $(this).attr('name', name).after($tpl).on('change', function () {
-            if (this.value) $tpl.css('backgroundImage', 'url(' + this.value + ')');
-        }).trigger('change');
-    };
-
     /*! 全局文件上传入口 */
     $.uploadFile = function (type, callback, multiple, uptype, safe) {
         var field = '_upload_input_' + Math.floor(Math.random() * 100000);
@@ -484,11 +475,20 @@ $(function () {
         });
     };
 
+    /*! 上传单个图片 */
+    $.fn.uploadOneImage = function () {
+        var name = $(this).attr('name') || 'image', type = $(this).data('type') || 'png,jpg,gif';
+        var $tpl = $('<a data-file="btn" class="uploadimage"></a>').attr('data-field', name).attr('data-type', type);
+        $(this).attr('name', name).after($tpl.data('input', this)).on('change', function () {
+            if (this.value) $tpl.css('backgroundImage', 'url(' + this.value + ')');
+        }).trigger('change');
+    };
+
     /*! 上传多个图片 */
     $.fn.uploadMultipleImage = function () {
         var type = $(this).data('type') || 'png,jpg,gif', name = $(this).attr('name') || 'umt-image';
         var $tpl = $('<a class="uploadimage"></a>').attr('data-file', 'mul').attr('data-field', name).attr('data-type', type);
-        $(this).attr('name', name).after($tpl).on('change', function () {
+        $(this).attr('name', name).after($tpl.data('input', this)).on('change', function () {
             var input = this;
             this.setImageData = function () {
                 input.value = input.getImageData().join('|');
@@ -629,13 +629,12 @@ $(function () {
 
     /*! 注册 data-file 事件行为 */
     $body.on('click', '[data-file]', function () {
-        var bind = $(this).attr('data-bind') || ('_b' + (Math.random() + '').replace('.', ''));
         var mode = $(this).attr('data-file') || 'one', uptype = $(this).attr('data-uptype') || '';
         var safe = $(this).attr('data-safe') || '0', multiple = (mode !== 'btn' && mode !== 'one');
         var type = $(this).attr('data-type') || 'jpg,png,gif', field = $(this).attr('data-field') || 'file';
-        $(this).attr('data-bind-name', bind);
+        var elem = $($(this).data('input') || 'input[name="' + field + '"]');
         if (mode !== 'max') $.uploadFile(type, function (url) {
-            $('input[data-bind="' + bind + '"]').val(url).trigger('change');
+            elem.val(url).trigger('change');
         }, multiple, uptype, safe); else {
             var params = $.param({mode: 'one', uptype: uptype, type: type, field: field, safe: safe});
             var location = window.ROOT_URL + '?s=admin/api.plugs/upfile.html&' + params;
