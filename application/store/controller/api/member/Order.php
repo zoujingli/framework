@@ -36,23 +36,19 @@ class Order extends Member
      */
     public function set()
     {
-        // 订单类型
-        $type = $this->request->post('type', '1'); # 1 普通订单,2 免费领取订单
-        if (!in_array($type, ['1', '2'])) $this->error('订单类型错误！');
-        if (intval($type) === 2 && $this->member['times_count'] <= $this->member['times_used']) {
-            $this->error('本月免费领取额度已经用完了，下个月再来领取吧！');
-        }
         // 商品规则
         $rule = $this->request->post('rule', '');
         if (empty($rule)) $this->error('下单商品规则不能为空！');
         // 订单处理
-        list($order, $orderList, $goodsIds) = [[], [], []];
-        $order['order_no'] = Data::uniqidNumberCode(12);
-        list($order['mid'], $order['type'], $order['status']) = [$this->mid, $type, '1'];
-        // 推荐人会员ID处理
-        $order['from_mid'] = $this->request->post('from_mid', '0');
-        if (intval($order['from_mid']) === intval($this->mid)) $order['from_mid'] = '0';
-        if ($order['from_mid'] > 0) {
+        list($orderList, $order) = [[], [
+            'status'   => '1', 'mid' => $this->mid,
+            'order_no' => Data::uniqidNumberCode(12),
+            'from_mid' => $this->request->post('from_mid', '0'),
+        ]];
+        // 推荐人处理
+        if (intval($order['from_mid']) === intval($this->mid)) {
+            $order['from_mid'] = '0';
+        } elseif ($order['from_mid'] > 0) {
             if (Db::name('StoreMember')->where(['id' => $order['from_mid']])->count() < 1) {
                 $this->error('无效的推荐会员ID，稍候再试！');
             }
@@ -62,57 +58,43 @@ class Order extends Member
             // 商品信息检查
             $goods = Db::name('StoreGoods')->where(['id' => $goods_id, 'status' => '1', 'is_deleted' => '0'])->find();
             if (empty($goods)) $this->error('查询商品主体信息失败，请稍候再试！');
-            $goodsSpec = Db::name('StoreGoodsList')->where(['goods_id' => $goods_id, 'goods_spec' => $goods_spec])->find();
-            if (empty($goodsSpec)) $this->error('查询商品规则信息失败，请稍候再试！');
-            $goodsIds[] = $goods_id;
+            $spec = Db::name('StoreGoodsList')->where(['goods_id' => $goods_id, 'goods_spec' => $goods_spec])->find();
+            if (empty($spec)) $this->error('查询商品规则信息失败，请稍候再试！');
             // 商品库存检查
-            if ($goodsSpec['number_sales'] + $number > $goodsSpec['number_stock']) {
+            if ($spec['number_sales'] + $number > $spec['number_stock']) {
                 $this->error('商品库存不足，请购买其它商品！');
-            }
-            // 会员升级状态处理（ 普通订单 & 礼包商品 & VIP1）
-            $isUpdate = false;
-            if (intval($type) === 1 && intval($goods['vip_mod']) === 2) {
-                if (intval($this->member['vip_level']) === 2) $isUpdate = true;
-            }
-            // 根据会员升级状态及商品类型，计算商品实际金额
-            $priceReal = $goodsSpec['price_selling'] * $number;
-            if ($isUpdate && intval($type) === 1) {
-                $priceReal -= $goods['vip_discount'];
-                if ($priceReal < 0) $priceReal = '0';
             }
             // 订单详情处理
             array_push($orderList, [
-                'mid'            => $order['mid'],
-                'type'           => $order['type'],
-                'order_no'       => $order['order_no'],
-                'goods_id'       => $goods_id,
-                'goods_spec'     => $goods_spec,
-                'goods_logo'     => $goods['logo'],
-                'goods_title'    => $goods['title'],
-                'number'         => $number,
-                'vip_mod'        => $goods['vip_mod'],
-                'vip_month'      => $goods['vip_month'],
-                'vip_discount'   => $goods['vip_discount'],
-                'price_market'   => $goodsSpec['price_market'],
-                'price_selling'  => $goodsSpec['price_selling'],
-                // 服务费，普通订单不收服务费
-                'price_real'     => intval($type) === 1 ? $priceReal : '0',
-                'price_service'  => intval($type) === 1 ? '0' : $goods['price_service'],
-                'price_express'  => intval($type) === 1 ? $goods['price_express1'] : $goods['price_express2'],
-                // VIP1升VIP2优惠金额处理
-                'discount_desc'  => $isUpdate ? 'VIP1升VIP2优惠金额' : '',
-                'discount_price' => $isUpdate ? $goods['vip_discount'] : '0',
+                'mid'               => $order['mid'],
+                'from_mid'          => $order['from_mid'],
+                'order_no'          => $order['order_no'],
+                // 商品信息字段管理
+                'number'            => $number,
+                'goods_id'          => $goods_id,
+                'goods_spec'        => $goods_spec,
+                'goods_logo'        => $goods['logo'],
+                'goods_title'       => $goods['title'],
+                // 费用字段处理
+                'price_market'      => $spec['price_market'],
+                'price_selling'     => $spec['price_selling'],
+                'price_real'        => $spec['price_selling'] * $number,
+                'price_express'     => $goods['price_express'],
+                // 返利字段处理
+                'price_rate'        => $goods['price_rate'],
+                'price_rate_amount' => $spec['price_selling'] * $number * $goods['price_rate'] / 100,
             ]);
         }
         $order['price_goods'] = array_sum(array_column($orderList, 'price_real')) + 0;
         $order['price_express'] = max(array_column($orderList, 'price_express')) + 0;
-        $order['price_service'] = array_sum(array_column($orderList, 'price_service')) + 0;
-        $order['price_total'] = $order['price_goods'] + $order['price_express'] + $order['price_service'];
+        $order['price_total'] = $order['price_goods'] + $order['price_express'];
+        $order['price_rate_amount'] = array_sum(array_column($orderList, 'price_rate_amount')) + 0;
         try {
+            // 订单数据写入
             Db::name('StoreOrder')->insert($order);
             Db::name('StoreOrderList')->insertAll($orderList);
             // 同步商品库存及销量
-            foreach (array_unique($goodsIds) as $goods_id) Goods::syncStock($goods_id);
+            foreach (array_unique(array_column($orderList, 'goods_id')) as $goodsId) Goods::syncStock($goodsId);
             $this->success('订单创建成功，请补全收货信息后支付！', ['order' => $order]);
         } catch (\think\exception\HttpResponseException $exception) {
             throw $exception;

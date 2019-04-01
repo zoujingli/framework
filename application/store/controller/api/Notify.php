@@ -34,7 +34,7 @@ class Notify
     public function wxpay()
     {
         $wechat = \We::WePayOrder(config('wechat.miniapp'));
-        p($notify = $wechat->getNotify());
+        $notify = $wechat->getNotify();
         if ($notify['result_code'] == 'SUCCESS' && $notify['return_code'] == 'SUCCESS') {
             if ($this->update($notify['out_trade_no'], $notify['transaction_id'], $notify['cash_fee'] / 100, 'wechat')) {
                 return $wechat->getNotifySuccessReply();
@@ -64,7 +64,7 @@ class Notify
             'pay_price' => $pay_price, 'pay_state' => '1', 'pay_at' => date('Y-m-d H:i:s'),
         ]);
         // 调用会员升级机制
-        Order::update($order['mid'], $order['order_no']);
+        Order::update($order['order_no']);
         return $result !== false;
     }
 
