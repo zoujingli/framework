@@ -45,7 +45,7 @@ CKEDITOR.plugins.add('uvideo', {
     init: function (editor) {
         editor.ui.addButton("UploadVideo", {label: "上传MP4文件", command: 'uvideo', icon: 'flash', toolbar: 'insert,10'});
         setTimeout(function () {
-            $('.cke_button__uploadmusic_label').parent().attr('data-type', 'mp4').uploadFile(function (url) {
+            $('.cke_button__uploadvideo_label').parent().attr('data-type', 'mp4').uploadFile(function (url) {
                 editor.insertElement(CKEDITOR.dom.element.createFromHtml('<video width="100%" controls="controls"><source src="' + url + '" type="audio/mp4"></video>'));
             });
         }, 100);
