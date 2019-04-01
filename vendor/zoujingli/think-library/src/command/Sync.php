@@ -23,7 +23,7 @@ use think\console\Output;
  * Class update
  * @package app\admin\logic
  */
-class update extends Command
+class Sync extends Command
 {
 
     /**
@@ -107,7 +107,6 @@ class update extends Command
     {
         return self::tree([
             'think',
-            'config/app.php',
             'config/log.php',
             'config/cookie.php',
             'config/template.php',

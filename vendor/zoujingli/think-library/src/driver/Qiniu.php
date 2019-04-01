@@ -19,7 +19,6 @@ use Qiniu\Storage\BucketManager;
 use Qiniu\Storage\UploadManager;
 use think\facade\Log;
 
-
 /**
  * 七牛云文件驱动
  * Class Qiniu

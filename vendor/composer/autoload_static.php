@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit34ea3b9875b079b336bcd43e9db33233
+class ComposerStaticInitca59abb13b596ba69e5ee88eb4b2b333
 {
     public static $files = array (
         '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
@@ -284,18 +284,18 @@ class ComposerStaticInit34ea3b9875b079b336bcd43e9db33233
         'WePay\\TransfersBank' => __DIR__ . '/..' . '/zoujingli/wechat-developer/WePay/TransfersBank.php',
         'library\\Controller' => __DIR__ . '/..' . '/zoujingli/think-library/src/Controller.php',
         'library\\File' => __DIR__ . '/..' . '/zoujingli/think-library/src/File.php',
-        'library\\command\\Session' => __DIR__ . '/..' . '/zoujingli/think-library/src/command/Session.php',
+        'library\\command\\Sess' => __DIR__ . '/..' . '/zoujingli/think-library/src/command/Sess.php',
+        'library\\command\\Sync' => __DIR__ . '/..' . '/zoujingli/think-library/src/command/Sync.php',
         'library\\command\\Task' => __DIR__ . '/..' . '/zoujingli/think-library/src/command/Task.php',
+        'library\\command\\sync\\Admin' => __DIR__ . '/..' . '/zoujingli/think-library/src/command/sync/Admin.php',
+        'library\\command\\sync\\Config' => __DIR__ . '/..' . '/zoujingli/think-library/src/command/sync/Config.php',
+        'library\\command\\sync\\Plugs' => __DIR__ . '/..' . '/zoujingli/think-library/src/command/sync/Plugs.php',
+        'library\\command\\sync\\Service' => __DIR__ . '/..' . '/zoujingli/think-library/src/command/sync/Service.php',
+        'library\\command\\sync\\Wechat' => __DIR__ . '/..' . '/zoujingli/think-library/src/command/sync/Wechat.php',
         'library\\command\\task\\Reset' => __DIR__ . '/..' . '/zoujingli/think-library/src/command/task/Reset.php',
         'library\\command\\task\\Start' => __DIR__ . '/..' . '/zoujingli/think-library/src/command/task/Start.php',
         'library\\command\\task\\State' => __DIR__ . '/..' . '/zoujingli/think-library/src/command/task/State.php',
         'library\\command\\task\\Stop' => __DIR__ . '/..' . '/zoujingli/think-library/src/command/task/Stop.php',
-        'library\\command\\update' => __DIR__ . '/..' . '/zoujingli/think-library/src/command/Update.php',
-        'library\\command\\update\\Admin' => __DIR__ . '/..' . '/zoujingli/think-library/src/command/update/Admin.php',
-        'library\\command\\update\\Config' => __DIR__ . '/..' . '/zoujingli/think-library/src/command/update/Config.php',
-        'library\\command\\update\\Plugs' => __DIR__ . '/..' . '/zoujingli/think-library/src/command/update/Plugs.php',
-        'library\\command\\update\\Service' => __DIR__ . '/..' . '/zoujingli/think-library/src/command/update/Service.php',
-        'library\\command\\update\\Wechat' => __DIR__ . '/..' . '/zoujingli/think-library/src/command/update/Wechat.php',
         'library\\driver\\Local' => __DIR__ . '/..' . '/zoujingli/think-library/src/driver/Local.php',
         'library\\driver\\Oss' => __DIR__ . '/..' . '/zoujingli/think-library/src/driver/Oss.php',
         'library\\driver\\Qiniu' => __DIR__ . '/..' . '/zoujingli/think-library/src/driver/Qiniu.php',
@@ -346,9 +346,9 @@ class ComposerStaticInit34ea3b9875b079b336bcd43e9db33233
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit34ea3b9875b079b336bcd43e9db33233::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit34ea3b9875b079b336bcd43e9db33233::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit34ea3b9875b079b336bcd43e9db33233::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitca59abb13b596ba69e5ee88eb4b2b333::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitca59abb13b596ba69e5ee88eb4b2b333::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitca59abb13b596ba69e5ee88eb4b2b333::$classMap;
 
         }, null, ClassLoader::class);
     }

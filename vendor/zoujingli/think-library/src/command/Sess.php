@@ -21,7 +21,7 @@ use think\console\Command;
  * Class Session
  * @package library\command
  */
-class Session extends Command
+class Sess extends Command
 {
 
     protected function configure()

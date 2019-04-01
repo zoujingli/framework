@@ -31,7 +31,8 @@ class Message extends Controller
      */
     public function gets()
     {
-        $this->success('获取系统消息成功！', \app\admin\service\Message::gets());
+        $list = \app\admin\service\Message::gets();
+        $this->success('获取系统消息成功！', $list);
     }
 
     /**

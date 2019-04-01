@@ -50,8 +50,7 @@ class Input extends Logic
      */
     public function __construct($data, $rule = [], $info = [])
     {
-        $this->rule = $rule;
-        $this->info = $info;
+        list($this->rule, $this->info) = [$rule, $info];
         $this->data = $this->parse($data);
     }
 
@@ -67,12 +66,12 @@ class Input extends Logic
         if (is_string($data)) {
             foreach (explode(',', $data) as $field) {
                 if (strpos($field, '|') === false) {
-                    $arr = explode('.', $field);
-                    $result[array_pop($arr)] = input($field);
+                    $array = explode('.', $field);
+                    $result[array_pop($array)] = input($field);
                 } else {
-                    list($f, $v) = explode('|', $field);
-                    $arr = explode('.', $f);
-                    $result[array_pop($arr)] = input($f, $v);
+                    list($key, $value) = explode('|', $field);
+                    $array = explode('.', $key);
+                    $result[array_pop($array)] = input($key, $value);
                 }
             }
             return $result;
