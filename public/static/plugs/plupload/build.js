@@ -23,7 +23,7 @@ define(['plupload'], function (plupload) {
         }
         loader.bind('FilesAdded', function () {
             loader.start();
-            index = $.msg.loading('文件上传进度 <span data-upload-progress></span>');
+            index = $.msg.loading('上传进度 <span data-upload-progress></span>');
         });
         loader.bind('UploadProgress', function (up, file) {
             $('[data-upload-progress]').html(parseFloat(file.loaded * 100 / file.total).toFixed(2) + '%');
