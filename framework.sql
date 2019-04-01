@@ -11,7 +11,7 @@
  Target Server Version : 50562
  File Encoding         : 65001
 
- Date: 01/04/2019 17:12:14
+ Date: 01/04/2019 18:11:11
 */
 
 SET NAMES utf8mb4;
@@ -144,22 +144,17 @@ CREATE TABLE `store_goods`  (
   `content` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '商品内容',
   `number_sales` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '销售数量',
   `number_stock` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '库库数量',
-  `vip_mod` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '入会权限(0没有权限,1临时会员,2普通会员)',
-  `vip_month` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '入会月份',
-  `vip_discount` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '会员升级优惠',
-  `price_service` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '服务费用',
-  `price_express1` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '直接下单运费',
-  `price_express2` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '免费领取运费',
+  `price_rate` decimal(20, 4) UNSIGNED NULL DEFAULT 0.0000 COMMENT '返利比例',
+  `price_express` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '统一运费',
   `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '销售状态',
   `sort` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '排序权重',
   `is_deleted` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '删除状态',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_store_goods_vip_mod`(`vip_mod`) USING BTREE,
   INDEX `index_store_goods_status`(`status`) USING BTREE,
   INDEX `index_store_goods_cate_id`(`cate_id`) USING BTREE,
   INDEX `index_store_goods_is_deleted`(`is_deleted`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商品-记录' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 64821247663 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商品-记录' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for store_goods_cate
@@ -233,9 +228,9 @@ CREATE TABLE `store_member`  (
   INDEX `index_store_member_openid`(`openid`) USING BTREE,
   INDEX `index_store_member_phone`(`phone`) USING BTREE,
   INDEX `index_store_member_vip_level`(`vip_level`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '会员-记录' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 44 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '会员-记录' ROW_FORMAT = Compact;
 
--- ----------------------------
+------------------
 -- Table structure for store_member_address
 -- ----------------------------
 DROP TABLE IF EXISTS `store_member_address`;
@@ -253,7 +248,7 @@ CREATE TABLE `store_member_address`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_store_member_address_mid`(`mid`) USING BTREE,
   INDEX `index_store_member_address_is_default`(`is_default`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '会员-收货地址' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '会员-收货地址' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for store_member_history
@@ -272,7 +267,13 @@ CREATE TABLE `store_member_history`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_store_member_history_mid`(`mid`) USING BTREE,
   INDEX `index_store_member_history_order_no`(`order_no`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '会员-级别-变更' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '会员-级别-变更' ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of store_member_history
+-- ----------------------------
+INSERT INTO `store_member_history` VALUES (1, 1, 651407043386, 0, NULL, 1, '2019-08-01', '游客会员购买临时礼包升级临时会员', '2019-03-01 10:25:25');
+INSERT INTO `store_member_history` VALUES (2, 2, 651412915079, 0, NULL, 2, '2020-03-01', '游客会员购买普通礼包升级VIP1', '2019-03-01 12:01:46');
 
 -- ----------------------------
 -- Table structure for store_member_sms_history
@@ -288,7 +289,26 @@ CREATE TABLE `store_member_sms_history`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_store_member_sms_history_phone`(`phone`) USING BTREE,
   INDEX `index_store_member_sms_history_mid`(`mid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '会员-短信' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '会员-短信' ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of store_member_sms_history
+-- ----------------------------
+INSERT INTO `store_member_sms_history` VALUES (2, 0, '13617343801', '您的验证码为1089，请在十分钟内完成操作！', '1,201901241720524154', '2019-01-24 17:20:32');
+INSERT INTO `store_member_sms_history` VALUES (3, 0, '13617343800', '您的验证码为4557，请在十分钟内完成操作！', '1,201901241751153256', '2019-01-24 17:50:55');
+INSERT INTO `store_member_sms_history` VALUES (4, 0, '13617343800', '您的验证码为7398，请在十分钟内完成操作！', '1,201901241756240145', '2019-01-24 17:56:04');
+INSERT INTO `store_member_sms_history` VALUES (5, 1, '13126419195', '您的验证码为5114，请在十分钟内完成操作！', '1,201901241915347392', '2019-01-24 19:15:14');
+INSERT INTO `store_member_sms_history` VALUES (6, 1, '13126419195', '您的验证码为2198，请在十分钟内完成操作！', '1,201901261157502337', '2019-01-26 11:57:26');
+INSERT INTO `store_member_sms_history` VALUES (7, 1, '13126419195', '您的验证码为5049，请在十分钟内完成操作！', '1,201901261352164868', '2019-01-26 13:51:52');
+INSERT INTO `store_member_sms_history` VALUES (8, 10, '18122377655', '您的验证码为2526，请在十分钟内完成操作！', '1,201901271537379946', '2019-01-27 15:37:11');
+INSERT INTO `store_member_sms_history` VALUES (9, 10, '18122377655', '您的验证码为6297，请在十分钟内完成操作！', '1,201901271540058183', '2019-01-27 15:39:40');
+INSERT INTO `store_member_sms_history` VALUES (10, 9, '18922374818', '您的验证码为1665，请在十分钟内完成操作！', '1,201901271831094825', '2019-01-27 18:30:43');
+INSERT INTO `store_member_sms_history` VALUES (11, 13, '18102835286', '您的验证码为3146，请在十分钟内完成操作！', '1,201902251736148323', '2019-02-25 17:35:32');
+INSERT INTO `store_member_sms_history` VALUES (12, 1, '13126419195', '您的验证码为1343，请在十分钟内完成操作！', '1,201903011013371521', '2019-03-01 10:12:48');
+INSERT INTO `store_member_sms_history` VALUES (13, 3, '18922374818', '您的验证码为7240，请在十分钟内完成操作！', '1,201903011118416238', '2019-03-01 11:17:51');
+INSERT INTO `store_member_sms_history` VALUES (14, 2, '18122377655', '您的验证码为9748，请在十分钟内完成操作！', '1,201903011137533427', '2019-03-01 11:37:04');
+INSERT INTO `store_member_sms_history` VALUES (15, 8, '18102835286', '您的验证码为7039，请在十分钟内完成操作！', '1,201903162158439648', '2019-03-16 21:57:38');
+INSERT INTO `store_member_sms_history` VALUES (16, 11, '18819821750', '您的验证码为3507，请在十分钟内完成操作！', '1,201903261044404972', '2019-03-26 10:43:15');
 
 -- ----------------------------
 -- Table structure for store_order
@@ -297,13 +317,12 @@ DROP TABLE IF EXISTS `store_order`;
 CREATE TABLE `store_order`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `mid` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '会员ID',
-  `type` tinyint(255) UNSIGNED NULL DEFAULT 1 COMMENT '订单类型(1普通订单,2免费领取订单)',
   `order_no` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '订单单号',
   `from_mid` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '推荐会员ID',
   `price_total` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '待付金额统计',
   `price_goods` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '商品费用统计',
   `price_express` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '快递费用统计',
-  `price_service` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '服务费用统计',
+  `price_rate_amount` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '返利金额统计',
   `pay_state` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '支付状态',
   `pay_type` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '支付方式',
   `pay_price` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '支付价格',
@@ -317,8 +336,6 @@ CREATE TABLE `store_order`  (
   `refund_no` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '退款单号',
   `refund_price` decimal(20, 2) NULL DEFAULT 0.00 COMMENT '退款金额',
   `refund_desc` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '退款描述',
-  `api_order_no` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '平台订单编号',
-  `api_tracking_no` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '平台跟踪号',
   `express_state` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '发货状态(0未发货,1已发货,2已签收)',
   `express_company_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '发货快递公司代号',
   `express_company_title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '发货快递公司名称',
@@ -351,8 +368,9 @@ DROP TABLE IF EXISTS `store_order_list`;
 CREATE TABLE `store_order_list`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `mid` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '会员ID',
-  `type` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '订单类型',
+  `from_id` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '推荐会员',
   `order_no` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '订单单号',
+  `number` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '交易数量',
   `goods_id` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '商品标识',
   `goods_title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '商品标题',
   `goods_logo` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '商品图标',
@@ -361,13 +379,8 @@ CREATE TABLE `store_order_list`  (
   `price_selling` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '销售价格',
   `price_market` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '市场价格',
   `price_express` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '快递费用',
-  `price_service` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '服务费用',
-  `discount_price` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '优惠金额',
-  `discount_desc` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '优惠描述',
-  `vip_mod` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '入会权限(0没有权限,1临时会员,2普通会员)',
-  `vip_month` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '入会月数',
-  `vip_discount` decimal(20, 0) UNSIGNED NULL DEFAULT 0 COMMENT '会员升级优惠',
-  `number` bigint(20) UNSIGNED NOT NULL DEFAULT 0 COMMENT '交易数量',
+  `price_rate` decimal(20, 4) UNSIGNED NULL DEFAULT 0.0000 COMMENT '分成比例',
+  `price_rate_amount` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '分成金额',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_store_goods_list_id`(`goods_id`) USING BTREE,
@@ -388,7 +401,7 @@ CREATE TABLE `store_page`  (
   `sort` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '排序权重',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '页面-管理' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '页面-管理' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for store_profit_record
@@ -442,12 +455,7 @@ CREATE TABLE `system_auth`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_system_auth_status`(`status`) USING BTREE,
   INDEX `index_system_auth_title`(`title`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统-权限' ROW_FORMAT = Compact;
-
--- ----------------------------
--- Records of system_auth
--- ----------------------------
-INSERT INTO `system_auth` VALUES (1, 'test', 1, 0, 'test', '2019-03-30 16:44:36');
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统-权限' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for system_auth_node
@@ -558,7 +566,7 @@ CREATE TABLE `system_jobs`  (
   INDEX `index_system_jobs_reserved_at`(`reserved_at`) USING BTREE,
   INDEX `index_system_jobs_available_at`(`available_at`) USING BTREE,
   INDEX `index_system_jobs_create_at`(`created_at`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统-任务' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统-任务' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for system_jobs_log

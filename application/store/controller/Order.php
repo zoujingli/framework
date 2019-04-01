@@ -53,10 +53,11 @@ class Order extends Controller
      */
     protected function _page_filter(array &$data)
     {
-        $memberList = Db::name('StoreMember')->whereIn('id', array_unique(array_column($data, 'mid')))->select();
         $goodsList = Db::name('StoreOrderList')->whereIn('order_no', array_unique(array_column($data, 'order_no')))->select();
+        $mids = array_unique(array_merge(array_column($data, 'mid'), array_column($data, 'from_mid')));
+        $memberList = Db::name('StoreMember')->whereIn('id', $mids)->select();
         foreach ($data as &$vo) {
-            list($vo['member'], $vo['list']) = [[], []];
+            list($vo['member'], $vo['from_member'], $vo['list']) = [[], [], []];
             foreach ($goodsList as $goods) if ($goods['order_no'] === $vo['order_no']) {
                 $vo['list'][] = $goods;
             }
