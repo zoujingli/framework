@@ -20,13 +20,11 @@ CKEDITOR.editorConfig = function (config) {
 CKEDITOR.plugins.add("uimage", {
     init: function (editor) {
         editor.ui.addButton("UploadImage", {label: "上传本地图片", command: 'uimage', icon: 'image', toolbar: 'insert,10'});
-        editor.addCommand('uimage', {
-            exec: function (editor) {
-                $.uploadFile('png,jpg,gif', function (url) {
-                    editor.insertElement(CKEDITOR.dom.element.createFromHtml('<img style="max-width:100%" src="' + url + '" border="0" title="image">'));
-                });
-            }
-        });
+        setTimeout(function () {
+            $('.cke_button__uploadimage_label').parent().attr('data-type', 'png,jpg,gif').uploadFile(function (url) {
+                editor.insertElement(CKEDITOR.dom.element.createFromHtml('<img style="max-width:100%" src="' + url + '" border="0" title="image">'));
+            });
+        }, 100);
     }
 });
 
@@ -34,13 +32,11 @@ CKEDITOR.plugins.add("uimage", {
 CKEDITOR.plugins.add('umusic', {
     init: function (editor) {
         editor.ui.addButton("UploadMusic", {label: "上传MP3文件", command: 'umusic', icon: 'specialchar', toolbar: 'insert,10'});
-        editor.addCommand('umusic', {
-            exec: function (editor) {
-                $.uploadFile('mp3', function (url) {
-                    editor.insertElement(CKEDITOR.dom.element.createFromHtml('<audio controls="controls"><source src="' + url + '" type="audio/mpeg"></audio>'));
-                });
-            }
-        });
+        setTimeout(function () {
+            $('.cke_button__uploadmusic_label').parent().attr('data-type', 'mp3').uploadFile(function (url) {
+                editor.insertElement(CKEDITOR.dom.element.createFromHtml('<audio controls="controls"><source src="' + url + '" type="audio/mpeg"></audio>'));
+            });
+        }, 100);
     }
 });
 
@@ -48,13 +44,11 @@ CKEDITOR.plugins.add('umusic', {
 CKEDITOR.plugins.add('uvideo', {
     init: function (editor) {
         editor.ui.addButton("UploadVideo", {label: "上传MP4文件", command: 'uvideo', icon: 'flash', toolbar: 'insert,10'});
-        editor.addCommand('uvideo', {
-            exec: function (editor) {
-                $.uploadFile('mp4', function (url) {
-                    editor.insertElement(CKEDITOR.dom.element.createFromHtml('<video width="100%" controls="controls"><source src="' + url + '" type="audio/mp4"></video>'));
-                });
-            }
-        });
+        setTimeout(function () {
+            $('.cke_button__uploadmusic_label').parent().attr('data-type', 'mp4').uploadFile(function (url) {
+                editor.insertElement(CKEDITOR.dom.element.createFromHtml('<video width="100%" controls="controls"><source src="' + url + '" type="audio/mp4"></video>'));
+            });
+        }, 100);
     }
 });
 

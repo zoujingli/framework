@@ -457,21 +457,11 @@ $(function () {
     };
 
     /*! 全局文件上传入口 */
-    $.uploadFile = function (type, callback, multiple, uptype, safe) {
-        var field = '_upload_input_' + Math.floor(Math.random() * 100000);
-        var input = $('<input type="hidden">').attr('name', field).attr('data-safe', safe || 0).attr('data-type', type || 'png,jpg,gif').attr('data-multiple', multiple ? 1 : 0);
-        if (typeof uptype === 'string') input.attr('data-uptype', uptype);
-        $body.find($.form.targetClass).append(input);
-        require(['upload'], function (apply, uploader) {
-            uploader = apply(input, function () {
-                input.trigger('click');
-            }, callback, function () {
-                input.remove();
-                try {
-                    uploader.destroy();
-                } catch (e) {
-                }
-            });
+    $.fn.uploadFile = function (callback) {
+        var that = this, mode = $(this).attr('data-file') || 'one';
+        this.attr('data-multiple', (mode !== 'btn' && mode !== 'one') ? 1 : 0);
+        require(['upload'], function (apply) {
+            apply(that, null, callback);
         });
     };
 
@@ -627,22 +617,23 @@ $(function () {
         if (href && href.indexOf('#') !== 0) window.location.href = href;
     });
 
-    /*! 注册 data-file 事件行为 */
-    $body.on('click', '[data-file]', function () {
-        var safe = $(this).attr('data-safe') || '0', type = $(this).attr('data-type') || 'jpg,png,gif';
-        var uptype = $(this).attr('data-uptype') || '', field = $(this).attr('data-field') || 'file';
-        var mode = $(this).attr('data-file') || 'one', mult = (mode !== 'btn' && mode !== 'one');
-        var elem = $($(this).data('input') || 'input[name="' + field + '"]');
-        if (mode !== 'max') {
-            $.uploadFile(type, function (url) {
-                elem.val(url).trigger('change');
-            }, mult, uptype, safe);
-        } else {
-            var params = $.param({mode: 'one', uptype: uptype, type: type, field: field, safe: safe});
-            var location = window.ROOT_URL + '?s=admin/api.plugs/upfile.html&' + params;
-            $.form.iframe(location, $(this).attr('data-title') || '文件上传');
-        }
-    });
+    // /*! 注册 data-file 事件行为 */
+    // $body.on('click', '[data-file]', function () {
+    //     var mode = $(this).attr('data-file') || 'one', mult = (mode !== 'btn' && mode !== 'one');
+    //     var uptype = $(this).attr('data-uptype') || '', field = $(this).attr('data-field') || 'file';
+    //     var safe = $(this).attr('data-safe') || '0', type = $(this).attr('data-type') || 'jpg,png,gif';
+    //     var elem = $($(this).data('input') || 'input[name="' + field + '"]');
+    //     if (mode !== 'max') {
+    //         $.uploadFile(this, type, function (url) {
+    //             elem.val(url).trigger('change');
+    //         }, mult, uptype, safe);
+    //     } else {
+    //         var params = $.param({mode: 'one', uptype: uptype, type: type, field: field, safe: safe});
+    //         var location = window.ROOT_URL + '?s=admin/api.plugs/upfile.html&' + params;
+    //         $.form.iframe(location, $(this).attr('data-title') || '文件上传');
+    //     }
+    // });
+
 
     /*! 注册 data-iframe 事件行为 */
     $body.on('click', '[data-iframe]', function () {
@@ -718,6 +709,18 @@ $(function () {
             });
         });
     });
+
+    /*! 初始化文件上传插件 */
+    (function initUploadPlugs() {
+        $body.find('[data-file]:not([data-init])').map(function (index, elem, $this, field) {
+            $this = $(elem), field = $this.attr('data-field') || 'file';
+            if (!$this.data('input')) $this.data('input', $('[name="' + field + '"]').get(0));
+            $this.uploadFile(function (url) {
+                $($this.data('input')).val(url).trigger('change');
+            });
+        });
+        setTimeout(initUploadPlugs, 500);
+    })();
 
     /*! 初始化 */
     $.menu.listen();
