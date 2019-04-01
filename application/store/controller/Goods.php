@@ -55,12 +55,10 @@ class Goods extends Controller
      */
     protected function _index_page_filter(&$data)
     {
-        $maps = ['普通商品', '临时礼包', '会员礼包'];
         $this->clist = Db::name('StoreGoodsCate')->where(['is_deleted' => '0', 'status' => '1'])->select();
         $list = Db::name('StoreGoodsList')->where('status', '1')->whereIn('goods_id', array_unique(array_column($data, 'id')))->select();
         foreach ($data as &$vo) {
             list($vo['list'], $vo['cate']) = [[], []];
-            $vo['type'] = isset($maps[$vo['vip_mod']]) ? "{$maps[$vo['vip_mod']]}" : '类型异常';
             foreach ($list as $goods) if ($goods['goods_id'] === $vo['id']) array_push($vo['list'], $goods);
             foreach ($this->clist as $cate) if ($cate['id'] === $vo['cate_id']) $vo['cate'] = $cate;
         }

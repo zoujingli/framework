@@ -23,20 +23,6 @@
             </div>
         </div>
         <div class="layui-form-item layui-inline">
-            <label class="layui-form-label">商品类型</label>
-            <div class="layui-input-inline">
-                <select class="layui-select" name="vip_mod">
-                    {foreach [''=>'- 全部商品 -','0'=>'普通商品','1'=>'临时礼包','2'=>'会员礼包'] as $k=>$v}
-                    <!--{eq name='Think.get.vip_mod' value='$k.""'}-->
-                    <option selected value="{$k}">{$v}</option>
-                    <!--{else}-->
-                    <option value="{$k}">{$v}</option>
-                    <!--{/eq}-->
-                    {/foreach}
-                </select>
-            </div>
-        </div>
-        <div class="layui-form-item layui-inline">
             <label class="layui-form-label">销售状态</label>
             <div class="layui-input-inline">
                 <select class="layui-select" name="status">
