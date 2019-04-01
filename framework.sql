@@ -11,7 +11,7 @@
  Target Server Version : 50562
  File Encoding         : 65001
 
- Date: 01/04/2019 18:25:02
+ Date: 01/04/2019 18:27:23
 */
 
 SET NAMES utf8mb4;
@@ -601,7 +601,6 @@ INSERT INTO `system_menu` VALUES (37, 0, '开放平台', '', '', '#', '', '_self
 INSERT INTO `system_menu` VALUES (38, 40, '开放平台配置', '', 'layui-icon layui-icon-set', 'service/config/index', '', '_self', 0, 1, '2018-12-28 13:29:44');
 INSERT INTO `system_menu` VALUES (39, 40, '公众授权管理', '', 'layui-icon layui-icon-template-1', 'service/index/index', '', '_self', 0, 1, '2018-12-28 13:30:07');
 INSERT INTO `system_menu` VALUES (40, 37, '开放平台管理', '', '', '#', '', '_self', 0, 1, '2018-12-28 16:05:46');
-INSERT INTO `system_menu` VALUES (41, 47, '页面管理', '', 'layui-icon layui-icon-template-1', 'store/page/index', '', '_self', 20, 1, '2019-01-18 09:58:55');
 INSERT INTO `system_menu` VALUES (42, 48, '会员管理', '', 'layui-icon layui-icon-username', 'store/member/index', '', '_self', 50, 1, '2019-01-22 14:24:23');
 INSERT INTO `system_menu` VALUES (43, 48, '订单管理', '', 'layui-icon layui-icon-template-1', 'store/order/index', '', '_self', 40, 1, '2019-01-22 14:46:22');
 INSERT INTO `system_menu` VALUES (44, 48, '商品分类', '', 'layui-icon layui-icon-app', 'store/goods_cate/index', '', '_self', 20, 1, '2019-01-23 10:41:06');
