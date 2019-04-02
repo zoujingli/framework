@@ -158,7 +158,6 @@
                 }).then(function (md5) {
                     file.md5 = md5;
                     var data = {id: file.id, md5: md5, uptype: '{$uptype}', filename: file.name, safe: '{$safe}' || 0};
-                    console.log(data)
                     $.ajax("{:url('@')}?s=admin/api.plugs/upstate", {
                         dataType: 'json', method: 'post', data: data, success: function (ret) {
                             if (parseInt(ret.code) === 1) {
