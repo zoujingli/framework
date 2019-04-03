@@ -40,7 +40,7 @@ PHP 开发技术交流（ QQ 群 513350915）
 
 * 线上代码更新
 >* 执行 `php think xsync:admin` 从线上服务更新 `admin` 模块的所有文件（注意文件安全）
->* 执行 `php think xsync:wechat` 从线上服务更新 `wehcat` 模块的所有文件（注意文件安全）
+>* 执行 `php think xsync:wechat` 从线上服务更新 `wechat` 模块的所有文件（注意文件安全）
 >* 执行 `php think xysnc:service` 从线上服务更新 `service` 模块的所有文件（注意文件安全）
 >* 执行 `php think xysnc:plugs` 从线上服务更新 `plugs` 静态插件的部分文件（注意文件安全）
 >* 执行 `php think xysnc:config` 从线上服务更新 `config` 项目配置的部分文件（注意文件安全）
@@ -50,14 +50,16 @@ PHP 开发技术交流（ QQ 群 513350915）
 >* 执行 `php think xfans:black` 更新已经对接的公众号黑名单列表
 >* 执行 `php think xfans:list` 更新已经对接的公众号粉丝列表
 >* 执行 `php think xfans:tags` 更新已经对接的公众号煯标签列表
->* 执行 `php think xclean:session` 清理无效的会话文件
->* 执行 `php think xclean:store` 清理无效的订单信息及定时任务
 
 * 守护进程管理
 >* 执行 `php think xtask:reset` 重启消息任务守护进程
 >* 执行 `php think xtask:start` 启动消息任务守护进程
 >* 执行 `php think xtask:state` 查询消息任务守护进程
 >* 执行 `php think xtask:stop` 暂停消息任务守护进程
+
+* 其它自定工具
+>* 执行 `php think xclean:session` 清理无效的会话SESSION文件
+>* 执行 `php think xclean:store` 清理无效的订单信息及定时任务
  
 特别感谢
 --
