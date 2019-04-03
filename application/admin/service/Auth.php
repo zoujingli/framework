@@ -76,15 +76,14 @@ class Auth
      */
     public static function get($nodes = [])
     {
-        $ignore = self::getIgnore();
-        $classMap = Node::getClassTreeNode(env('app_path'));
+        list($ignore, $map) = [self::getIgnore(), Node::getClassTreeNode(env('app_path'))];
         $alias = Db::name('SystemNode')->column('node,is_menu,is_auth,is_login,title');
         foreach (Node::getMethodTreeNode(env('app_path')) as $thr => $title) {
             foreach ($ignore as $str) if (stripos($thr, $str) === 0) continue 2;
             $tmp = explode('/', $thr);
             list($one, $two) = ["{$tmp[0]}", "{$tmp[0]}/{$tmp[1]}"];
             $nodes[$one] = array_merge(isset($alias[$one]) ? $alias[$one] : ['node' => $one, 'title' => '', 'is_menu' => 0, 'is_auth' => 0, 'is_login' => 0], ['pnode' => '']);
-            $nodes[$two] = array_merge(isset($alias[$two]) ? $alias[$two] : ['node' => $two, 'title' => isset($classMap[$two]) ? $classMap[$two] : '', 'is_menu' => 0, 'is_auth' => 0, 'is_login' => 0], ['pnode' => $one]);
+            $nodes[$two] = array_merge(isset($alias[$two]) ? $alias[$two] : ['node' => $two, 'title' => isset($map[$two]) ? $map[$two] : '', 'is_menu' => 0, 'is_auth' => 0, 'is_login' => 0], ['pnode' => $one]);
             $nodes[$thr] = array_merge(isset($alias[$thr]) ? $alias[$thr] : ['node' => $thr, 'title' => $title, 'is_menu' => 0, 'is_auth' => 0, 'is_login' => 0], ['pnode' => $two]);
         }
         foreach ($nodes as &$node) list($node['is_auth'], $node['is_menu'], $node['is_login']) = [intval($node['is_auth']), intval($node['is_menu']), empty($node['is_auth']) ? intval($node['is_login']) : 1];
