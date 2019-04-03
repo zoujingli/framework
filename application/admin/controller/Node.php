@@ -33,7 +33,7 @@ class Node extends Controller
 
     /**
      * 显示节点列表
-     * @return mixed
+     * @throws \ReflectionException
      */
     public function index()
     {
@@ -51,6 +51,7 @@ class Node extends Controller
 
     /**
      * 清理无效的节点数据
+     * @throws \ReflectionException
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */

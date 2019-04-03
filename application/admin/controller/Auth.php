@@ -47,6 +47,7 @@ class Auth extends Controller
     /**
      * 权限授权节点
      * @return mixed
+     * @throws \ReflectionException
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
