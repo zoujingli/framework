@@ -1,8 +1,10 @@
 大道至简 · 原生框架
 --
-framework 是一个基于 ThinkPHP5.1 开发的后台管理系统，集成常用功能及封装。
+framework V1.0 是一个基于 ThinkPHP5.1 开发的后台管理系统。
 
-项目安装及二次开发可以参考 ThinkPHP 官方文档，数据库文件摆放在项目根目录下。
+我们致力于二次开发底层框架，提供完整的组件及API，基于此框架可以快速开发应用。
+
+另外项目安装及二次开发可以参考 ThinkPHP 官方文档，数据库文件摆放在项目根目录下。
 
 #### 注意事项
 * 项目测试需要自行搭建环境导入数据库( framework.sql )并修改配置( config/database.php )；
@@ -12,7 +14,9 @@ framework 是一个基于 ThinkPHP5.1 开发的后台管理系统，集成常用
 
 技术支持
 --
-开发前认真阅读 ThinkPHP 官方文档会对您有帮助哦！
+开发前请认真阅读 ThinkPHP 官方文档会对您有帮助哦！
+
+本地开发命令`php think run`，使用`http://127.0.0.1:8000`访问项目。
 
 PHP 开发技术交流（ QQ 群 513350915）
 
@@ -25,9 +29,35 @@ PHP 开发技术交流（ QQ 群 513350915）
  
  部分代码来自互联网，若有异议可以联系作者进行删除。
  
- * 在线体验地址：https://framework.thinkadmin.top （体验账号和密码都是 admin ）
+ * 在线体验地址：https://framework.thinkadmin.top （账号和密码都是 admin ）
  * Gitee仓库地址：https://gitee.com/zoujingli/framework
  * GitHub仓库地址：https://github.com/zoujingli/framework
+ 
+框架指令
+--
+* 执行 `build.cmd` 可更新 `Composer` 插件，会删除并替换 `vendor` 目录
+* 执行 `php think run` 启用本地开发环境，访问 `http://127.0.0.1:8000`
+
+* 线上代码更新
+>* 执行 `php think xsync:admin` 从线上服务更新 `admin` 模块的所有文件（注意文件安全）
+>* 执行 `php think xsync:wechat` 从线上服务更新 `wehcat` 模块的所有文件（注意文件安全）
+>* 执行 `php think xysnc:service` 从线上服务更新 `service` 模块的所有文件（注意文件安全）
+>* 执行 `php think xysnc:plugs` 从线上服务更新 `plugs` 静态插件的部分文件（注意文件安全）
+>* 执行 `php think xysnc:config` 从线上服务更新 `config` 项目配置的部分文件（注意文件安全）
+
+* 微信资料管理
+>* 执行 `php think xfans:all` 更新已经对接的公众号粉丝全部列表
+>* 执行 `php think xfans:black` 更新已经对接的公众号黑名单列表
+>* 执行 `php think xfans:list` 更新已经对接的公众号粉丝列表
+>* 执行 `php think xfans:tags` 更新已经对接的公众号煯标签列表
+>* 执行 `php think xclean:session` 清理无效的会话文件
+>* 执行 `php think xclean:store` 清理无效的订单信息及定时任务
+
+* 守护进程管理
+>* 执行 `php think xtask:reset` 重启消息任务守护进程
+>* 执行 `php think xtask:start` 启动消息任务守护进程
+>* 执行 `php think xtask:state` 查询消息任务守护进程
+>* 执行 `php think xtask:stop` 暂停消息任务守护进程
  
 特别感谢
 --
