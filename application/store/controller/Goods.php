@@ -19,7 +19,7 @@ use library\tools\Data;
 use think\Db;
 
 /**
- * 商城商品管理
+ * 商品信息管理
  * Class Goods
  * @package app\store\controller
  */
@@ -32,7 +32,7 @@ class Goods extends Controller
     protected $table = 'StoreGoods';
 
     /**
-     * 商城商品管理
+     * 商品信息管理
      * @return mixed
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
@@ -43,7 +43,7 @@ class Goods extends Controller
     public function index()
     {
         $this->title = '商品管理';
-        return $this->_query($this->table)->equal('status,vip_mod,cate_id')->like('title')->where(['is_deleted' => '0'])->order('sort asc,id desc')->page();
+        $this->_query($this->table)->equal('status,vip_mod,cate_id')->like('title')->where(['is_deleted' => '0'])->order('sort asc,id desc')->page();
     }
 
     /**
@@ -87,7 +87,7 @@ class Goods extends Controller
             foreach (array_keys($post['goods_id']) as $key) if ($post['number'][$key] > 0) array_push($data, [
                 'goods_id'     => $post['goods_id'][$key],
                 'goods_spec'   => $post['goods_spec'][$key],
-                'number_stock' => $post['number'][$key],
+                'number_stock' => $post['goods_number'][$key],
             ]);
             if (!empty($data)) {
                 Db::name('StoreGoodsStock')->insertAll($data);
@@ -163,7 +163,7 @@ class Goods extends Controller
     }
 
     /**
-     * 禁用商城商品
+     * 禁用商品信息
      */
     public function forbid()
     {
@@ -171,7 +171,7 @@ class Goods extends Controller
     }
 
     /**
-     * 启用商城商品
+     * 启用商品信息
      */
     public function resume()
     {
@@ -179,7 +179,7 @@ class Goods extends Controller
     }
 
     /**
-     * 删除商城商品
+     * 删除商品信息
      */
     public function del()
     {
