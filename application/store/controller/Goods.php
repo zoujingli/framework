@@ -43,7 +43,7 @@ class Goods extends Controller
     public function index()
     {
         $this->title = '商城商品管理';
-        $this->_query($this->table)->equal('status,vip_mod,cate_id')->like('title')->where(['is_deleted' => '0'])->order('sort asc,id desc')->page();
+        $this->_query($this->table)->equal('status,cate_id')->like('title')->where(['is_deleted' => '0'])->order('sort asc,id desc')->page();
     }
 
     /**
