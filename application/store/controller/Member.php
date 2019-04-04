@@ -30,7 +30,7 @@ class Member extends Controller
     protected $table = 'StoreMember';
 
     /**
-     * 显示会员列表
+     * 商城会员管理
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException

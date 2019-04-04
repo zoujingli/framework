@@ -31,6 +31,7 @@ class Express extends Controller
     protected $table = 'StoreExpress';
 
     /**
+     * 快递公司管理
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException

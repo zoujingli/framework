@@ -30,7 +30,7 @@ class Message extends Controller
     protected $table = 'StoreMemberSmsHistory';
 
     /**
-     * 短信消息列表
+     * 短信消息管理
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException

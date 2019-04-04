@@ -32,7 +32,7 @@ class Goods extends Controller
     protected $table = 'StoreGoods';
 
     /**
-     * 商品列表
+     * 商城商品管理
      * @return mixed
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
@@ -163,7 +163,7 @@ class Goods extends Controller
     }
 
     /**
-     * 商品禁用
+     * 禁用商城商品
      */
     public function forbid()
     {
@@ -171,7 +171,7 @@ class Goods extends Controller
     }
 
     /**
-     * 商品禁用
+     * 启用商城商品
      */
     public function resume()
     {
@@ -179,7 +179,7 @@ class Goods extends Controller
     }
 
     /**
-     * 删除商品
+     * 删除商城商品
      */
     public function del()
     {
