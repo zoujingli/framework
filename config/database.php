@@ -25,6 +25,8 @@ return [
     'username' => 'framework',
     // 密码
     'password' => 'x5RDsnwX8EcLkXCN',
+    // 编码
+    'charset'  => 'utf8mb4',
     // 端口
     'hostport' => '3306',
 ];
