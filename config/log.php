@@ -18,7 +18,7 @@ return [
     // 设置日志文件名
     'single'    => 'signle',
     // 最多保留100个文件
-    'max_files' => 100,
+    'max_files' => 50,
     // 日志每10兆分割文件
     'file_size' => 10485760,
 ];
