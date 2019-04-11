@@ -1,0 +1,97 @@
+{extend name='admin@main'}
+
+{block name="button"}
+
+<!--{if auth("store/area/add")}-->
+<button data-modal='{:url("add")}' data-title="添加省份" class='layui-btn layui-btn-sm layui-btn-primary'>添加省份</button>
+<!--{/if}-->
+
+<!--{if auth("store/area/del")}-->
+<button data-action='{:url("del")}' data-csrf="{:systoken('store/area/del')}" data-rule="id#{key}" class='layui-btn layui-btn-sm layui-btn-primary'>删除区域</button>
+<!--{/if}-->
+
+{/block}
+
+{block name="content"}
+<!--{empty name='list'}-->
+<blockquote class="layui-elem-quote">没 有 记 录 哦！</blockquote>
+<!--{else}-->
+<input type="hidden" value="resort" name="action">
+<table class="layui-table" lay-skin="line">
+    <caption class="margin-bottom-10 text-left">{include file='area/index_search'}</caption>
+    <thead>
+    <tr>
+        <th class='list-table-check-td think-checkbox'>
+            <input data-auto-none data-check-target='.list-check-box' type='checkbox'>
+        </th>
+        <th>级别</th>
+        <th>省份</th>
+        <th>城市</th>
+        <th>区域</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {foreach $list as $key=>$vo}
+    <tr>
+        <td class='list-table-check-td think-checkbox'>
+            <input class="list-check-box" value='{$vo.id}' type='checkbox'>
+        </td>
+        <td class="nowrap">
+            {if $vo.level eq 1}省级{elseif $vo.level eq 2}　├　市级{else}　├　　├　区级{/if}
+        </td>
+        <td class="nowrap">
+            {if $vo.level eq 1} {$vo.title|default='-'} {notempty name='vo.code'}<span class="color-desc">({$vo.code|default=''})</span>{/notempty}
+            {else} {$vo.parent.parent.title|default='-'} {notempty name='vo.parent.parent.code'}<span class="color-desc">({$vo.parent.parent.code|default=''})</span>{/notempty}
+            {/if}
+        </td>
+        <td class="nowrap">
+            {if $vo.level eq 2} {$vo.title|default='-'} {notempty name='vo.code'}<span class="color-desc">({$vo.code|default=''})</span>{/notempty}
+            {elseif $vo.level eq 3} {$vo.parent.title|default='-'} {notempty name='vo.parent.code'}<span class="color-desc">({$vo.parent.code|default=''})</span>{/notempty}
+            {else} - {/if}
+        </td>
+        <td class="nowrap">
+            {if $vo.level eq 3} {$vo.title|default='-'} {notempty name='vo.code'}<span class="color-desc">({$vo.code|default=''})</span>{/notempty}
+            {else} - {/if}
+        </td>
+        <td class='text-center nowrap'>
+            {eq name='vo.status' value='0'}<span class="layui-badge">已禁用</span>{else}<span class="layui-badge layui-bg-green">使用中</span>{/eq}
+        </td>
+        <td class='text-center nowrap notselect'>
+
+            {if auth("store/area/add")}
+            <span class="text-explode">|</span>
+            <!--{if $vo.level eq 1}-->
+            <a class="layui-btn layui-btn-xs layui-btn-primary" data-tips-text="添加城市" data-title="添加城市" data-modal='{:url("add")}?pid={$vo.id}'>添加城市</a>
+            <!--{elseif $vo.level eq 2}-->
+            <a class="layui-btn layui-btn-xs layui-btn-primary" data-tips-text="添加区域" data-title="添加区域" data-modal='{:url("add")}?pid={$vo.id}'>添加区域</a>
+            <!--{else}-->
+            <a class="layui-btn layui-btn-xs layui-btn-disabled">不能添加</a>
+            <!--{/if}-->
+            {/if}
+
+            {if auth("store/area/edit")}
+            <a class="layui-btn layui-btn-xs" data-title="编辑区域" data-modal='{:url("store/area/edit")}?id={$vo.id}'>编 辑</a>
+            {/if}
+
+            {if $vo.status eq 1 and auth("store/area/forbid")}
+            <a class="layui-btn layui-btn-warm layui-btn-xs" data-action="{:url('forbid')}" data-value="id#{$vo.id};status#0" data-csrf="{:systoken('store/area/forbid')}">禁 用</a>
+            {elseif auth("store/area/resume")}
+            <a class="layui-btn layui-btn-warm layui-btn-xs" data-action="{:url('resume')}" data-value="id#{$vo.id};status#1" data-csrf="{:systoken('store/area/resume')}">启 用</a>
+            {/if}
+
+            {if auth("store/area/del")}
+            <a class="layui-btn layui-btn-danger layui-btn-xs" data-confirm="确定要删除数据吗?" data-action="{:url('del')}" data-value="id#{$vo.id}" data-csrf="{:systoken('store/area/del')}">删 除</a>
+            {/if}
+        </td>
+    </tr>
+
+    {/foreach}
+    </tbody>
+</table>
+<!--{/empty}-->
+
+{empty name='list'}<span class="notdata">没有记录哦</span>{else}{$pagehtml|raw|default=''}{/empty}
+
+{/block}
