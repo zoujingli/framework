@@ -53,19 +53,23 @@ class Area extends Controller
      */
     protected function _index_page_filter(&$data)
     {
-        $cityList = Db::name($this->table)->whereIn('id', array_unique(array_column($data, 'pid')))->order('sort asc,id desc')->select();
-        $provList = Db::name($this->table)->whereIn('id', array_unique(array_column($cityList, 'pid')))->order('sort asc,id desc')->select();
-        foreach ($cityList as &$vo) {
-            $vo['parent'] = [];
-            foreach ($provList as $prov) if ($prov['id'] === $vo['pid']) $vo['parent'] = $prov;
-        }
-        foreach ($data as &$vo) {
-            $vo['parent'] = [];
-            foreach ($cityList as $city) if ($city['id'] === $vo['pid']) {
-                if ($city['level'] === 1) $vo['parent'] = ['parent' => $city];
-                elseif ($city['level'] === 2) $vo['parent'] = $city;
+        $lines = Db::name($this->table)->column('*', 'code');
+        foreach ($lines as &$vo) {
+            list($c1, $c2, $c3) = str_split($vo['code'], 2);
+            if ($c2 . $c3 === '0000') { # 省份
+                $vo['level'] = 1;
+                $vo['parent'] = [];
+            } elseif ($c3 === '00') { # 城市
+                $vo['level'] = 2;
+                $in = "{$c1}0000";
+                $vo['parent'] = isset($lines[$in]) ? $lines[$in] : [];
+            } else { # 区域
+                $vo['level'] = 3;
+                $in = "{$c1}{$c2}00";
+                $vo['parent'] = isset($lines[$in]) ? $lines[$in] : [];
             }
         }
+        foreach ($data as &$vo) foreach ($lines as $line) if ($line['id'] === $vo['id']) $vo = $line;
     }
 
     /**
@@ -98,12 +102,10 @@ class Area extends Controller
         if ($this->request->isGet()) {
             $this->typedesc = '省份';
             if (empty($vo['pid'])) $vo['pid'] = input('pid', '0');
-            if (isset($vo['pid']) && $vo['pid'] > 0) {
-                $vo['parent'] = Db::name($this->table)->where(['id' => $vo['pid']])->find();
-                if (!empty($vo['parent'])) {
-                    if ($vo['parent']['level'] === 1) $this->typedesc = '城市';
-                    if ($vo['parent']['level'] === 2) $this->typedesc = '区域';
-                }
+            $vo['parent'] = Db::name($this->table)->where(['id' => $vo['pid']])->find();
+            if (!empty($vo['parent'])) {
+                if ($vo['parent']['level'] === 1) $this->typedesc = '城市';
+                if ($vo['parent']['level'] === 2) $this->typedesc = '区域';
             }
         }
     }
@@ -159,11 +161,11 @@ class Area extends Controller
      */
     private function getWhere()
     {
-        $id = $this->request->post('id', 0);
-        if (count($pids = Db::name($this->table)->where(['pid' => $id])->column('id')) > 0) {
+        $ids = explode(',', $this->request->post('id', '0'));
+        if (count($pids = Db::name($this->table)->whereIn('pid', $ids)->column('id')) > 0) {
             $pids = array_merge($pids, Db::name($this->table)->whereIn('pid', $pids)->column('id'));
         }
-        return [['id', 'in', array_unique(array_merge($pids, [$id]))]];
+        return [['id', 'in', array_unique(array_merge($pids, $ids))]];
     }
 
 }

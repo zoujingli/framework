@@ -42,18 +42,24 @@
             {if $vo.level eq 1}省级{elseif $vo.level eq 2}　├　市级{else}　├　　├　区级{/if}
         </td>
         <td class="nowrap">
-            {if $vo.level eq 1} {$vo.title|default='-'} {notempty name='vo.code'}<span class="color-desc">({$vo.code|default=''})</span>{/notempty}
-            {else} {$vo.parent.parent.title|default='-'} {notempty name='vo.parent.parent.code'}<span class="color-desc">({$vo.parent.parent.code|default=''})</span>{/notempty}
-            {/if}
+            {switch name='vo.level'}
+            {case value='1'} {$vo.title|default='-'} {notempty name='vo.code'}<span class="color-desc">({$vo.code|default=''})</span>{/notempty} {/case}
+            {case value='2'} {$vo.parent.title|default='-'} {notempty name='vo.parent.code'}<span class="color-desc">({$vo.parent.code|default=''})</span>{/notempty} {/case}
+            {case value='3'} {$vo.parent.parent.title|default='-'} {notempty name='vo.parent.parent.code'}<span class="color-desc">({$vo.parent.parent.code|default=''})</span>{/notempty} {/case}
+            {/switch}
         </td>
         <td class="nowrap">
-            {if $vo.level eq 2} {$vo.title|default='-'} {notempty name='vo.code'}<span class="color-desc">({$vo.code|default=''})</span>{/notempty}
-            {elseif $vo.level eq 3} {$vo.parent.title|default='-'} {notempty name='vo.parent.code'}<span class="color-desc">({$vo.parent.code|default=''})</span>{/notempty}
-            {else} - {/if}
+            {switch name='vo.level'}
+            {case value='2'} {$vo.title|default='-'} {notempty name='vo.code'}<span class="color-desc">({$vo.code|default=''})</span>{/notempty} {/case}
+            {case value='3'} {$vo.parent.title|default='-'} {notempty name='vo.parent.code'}<span class="color-desc">({$vo.parent.code|default=''})</span>{/notempty} {/case}
+            {default}-
+            {/switch}
         </td>
         <td class="nowrap">
-            {if $vo.level eq 3} {$vo.title|default='-'} {notempty name='vo.code'}<span class="color-desc">({$vo.code|default=''})</span>{/notempty}
-            {else} - {/if}
+            {switch name='vo.level'}
+            {case value='3'} {$vo.title|default='-'} {notempty name='vo.code'}<span class="color-desc">({$vo.code|default=''})</span>{/notempty} {/case}
+            {default}-
+            {/switch}
         </td>
         <td class='text-center nowrap'>
             {eq name='vo.status' value='0'}<span class="layui-badge">已禁用</span>{else}<span class="layui-badge layui-bg-green">使用中</span>{/eq}
