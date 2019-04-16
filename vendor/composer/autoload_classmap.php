@@ -210,6 +210,8 @@ return array(
     'library\\tools\\Http' => $vendorDir . '/zoujingli/think-library/src/tools/Http.php',
     'library\\tools\\Node' => $vendorDir . '/zoujingli/think-library/src/tools/Node.php',
     'library\\tools\\Options' => $vendorDir . '/zoujingli/think-library/src/tools/Options.php',
+    'library\\tools\\express\\Deppon' => $vendorDir . '/zoujingli/think-library/src/tools/express/Deppon.php',
+    'library\\tools\\express\\Sto' => $vendorDir . '/zoujingli/think-library/src/tools/express/Sto.php',
     'think\\Queue' => $vendorDir . '/topthink/think-queue/src/Queue.php',
     'think\\composer\\Plugin' => $vendorDir . '/topthink/think-installer/src/Plugin.php',
     'think\\composer\\ThinkExtend' => $vendorDir . '/topthink/think-installer/src/ThinkExtend.php',
