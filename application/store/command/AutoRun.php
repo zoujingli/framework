@@ -15,6 +15,8 @@
 namespace app\store\command;
 
 use think\console\Command;
+use think\console\Input;
+use think\console\Output;
 use think\Db;
 
 /**
@@ -32,13 +34,15 @@ class AutoRun extends Command
 
     /**
      * 业务指令执行
+     * @param Input $input
+     * @param Output $output
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      * @throws \think\exception\PDOException
      */
-    protected function execute()
+    protected function execute(Input $input, Output $output)
     {
         // 自动取消30分钟未支付的订单
         $this->autoCancelOrder();
