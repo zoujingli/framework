@@ -215,7 +215,7 @@ if (!function_exists('emoji_clear')) {
         header('Access-Control-Expose-Headers:User-Token-Csrf');
         header('Access-Control-Allow-Headers:Content-Type,X-Requested-With');
     }
-    return $request->isOptions() ? \think\facade\Response::create() : $next($request);
+    return $request->isOptions() ? response() : $next($request);
 });
 
 // 注册系统常用指令
