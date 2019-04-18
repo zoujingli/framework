@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitadaa028e246a89482a7a7acf7004f2e1
+class ComposerStaticInit6ad0554da6b02d9a870d1a35c9b903c1
 {
     public static $files = array (
         '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
@@ -306,7 +306,6 @@ class ComposerStaticInitadaa028e246a89482a7a7acf7004f2e1
         'library\\logic\\Page' => __DIR__ . '/..' . '/zoujingli/think-library/src/logic/Page.php',
         'library\\logic\\Query' => __DIR__ . '/..' . '/zoujingli/think-library/src/logic/Query.php',
         'library\\logic\\Save' => __DIR__ . '/..' . '/zoujingli/think-library/src/logic/Save.php',
-        'library\\tools\\Cors' => __DIR__ . '/..' . '/zoujingli/think-library/src/tools/Cors.php',
         'library\\tools\\Crypt' => __DIR__ . '/..' . '/zoujingli/think-library/src/tools/Crypt.php',
         'library\\tools\\Csrf' => __DIR__ . '/..' . '/zoujingli/think-library/src/tools/Csrf.php',
         'library\\tools\\Csv' => __DIR__ . '/..' . '/zoujingli/think-library/src/tools/Csv.php',
@@ -315,8 +314,6 @@ class ComposerStaticInitadaa028e246a89482a7a7acf7004f2e1
         'library\\tools\\Http' => __DIR__ . '/..' . '/zoujingli/think-library/src/tools/Http.php',
         'library\\tools\\Node' => __DIR__ . '/..' . '/zoujingli/think-library/src/tools/Node.php',
         'library\\tools\\Options' => __DIR__ . '/..' . '/zoujingli/think-library/src/tools/Options.php',
-        'library\\tools\\express\\Deppon' => __DIR__ . '/..' . '/zoujingli/think-library/src/tools/express/Deppon.php',
-        'library\\tools\\express\\Sto' => __DIR__ . '/..' . '/zoujingli/think-library/src/tools/express/Sto.php',
         'think\\Queue' => __DIR__ . '/..' . '/topthink/think-queue/src/Queue.php',
         'think\\composer\\Plugin' => __DIR__ . '/..' . '/topthink/think-installer/src/Plugin.php',
         'think\\composer\\ThinkExtend' => __DIR__ . '/..' . '/topthink/think-installer/src/ThinkExtend.php',
@@ -348,9 +345,9 @@ class ComposerStaticInitadaa028e246a89482a7a7acf7004f2e1
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitadaa028e246a89482a7a7acf7004f2e1::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitadaa028e246a89482a7a7acf7004f2e1::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitadaa028e246a89482a7a7acf7004f2e1::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit6ad0554da6b02d9a870d1a35c9b903c1::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit6ad0554da6b02d9a870d1a35c9b903c1::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit6ad0554da6b02d9a870d1a35c9b903c1::$classMap;
 
         }, null, ClassLoader::class);
     }
