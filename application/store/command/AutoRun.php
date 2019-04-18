@@ -124,7 +124,6 @@ class AutoRun extends Command
                 }
             } catch (\Exception $e) {
                 $this->output->writeln("订单 {$order['order_no']} 执行退款失败，{$e->getMessage()}！");
-                p("订单 {$order['order_no']} 退款失败，{$e->getMessage()}");
                 Db::name('StoreOrder')->where(['order_no' => $order['order_no']])->update(['refund_desc' => $e->getMessage()]);
             }
         }
