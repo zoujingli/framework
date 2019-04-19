@@ -4,6 +4,7 @@ namespace app\wechat\controller\api;
 
 use app\wechat\service\Wechat;
 use library\Controller;
+use think\facade\Response;
 
 /**
  * 前端JS获取控制器
@@ -13,7 +14,8 @@ use library\Controller;
 class Js extends Controller
 {
     /**
-     * @return string
+     * 返回生成的JS内容
+     * @return \think\response
      * @throws \WeChat\Exceptions\InvalidResponseException
      * @throws \WeChat\Exceptions\LocalCacheException
      * @throws \think\Exception
@@ -27,7 +29,7 @@ class Js extends Controller
         $unionid = empty($wechat['fansinfo']['unionid']) ? '' : $wechat['fansinfo']['unionid'];
         $configJson = json_encode(Wechat::getWebJssdkSign($url), JSON_UNESCAPED_UNICODE);
         $fansinfoJson = json_encode(isset($wechat['fansinfo']) ? $wechat['fansinfo'] : [], JSON_UNESCAPED_UNICODE);
-        return <<<EOF
+        $html = <<<EOF
 if(typeof wx==='object'){
     wx.openid="{$openid}";
     wx.unionid="{$unionid}";
@@ -39,6 +41,7 @@ if(typeof wx==='object'){
     });
 }
 EOF;
+        return Response::create($html)->contentType('application/x-javascript');
     }
 
 }

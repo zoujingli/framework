@@ -19,3 +19,6 @@
     'app\wechat\command\fans\FansList',
     'app\wechat\command\fans\FansBlack',
 ]);
+
+// 注册接口路由
+\think\facade\Route::rule('wechat/api.js', 'wechat/api.js/index');
