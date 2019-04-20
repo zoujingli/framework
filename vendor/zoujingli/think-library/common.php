@@ -77,7 +77,7 @@ if (!function_exists('sysconf')) {
             $data = \think\facade\Cache::tag('system')->get('_sysconf_', []);
             if (empty($data)) {
                 $data = \think\Db::name('SystemConfig')->column('name,value');
-                \think\facade\Cache::tag('system')->set('_sysconf_', $data, 3600);
+                \think\facade\Cache::tag('system')->set('_sysconf_', $data, 60);
             }
         }
         return isset($data[$field]) ? (strtolower($raw) === 'raw' ? $data[$field] : htmlspecialchars($data[$field])) : '';
