@@ -3,11 +3,11 @@
 {block name="button"}
 
 <!--{if auth("store/express_template/add")}-->
-<button data-modal='{:url("add")}' data-title="添加模板" class='layui-btn layui-btn-sm layui-btn-primary'>添加模板</button>
+<button data-open='{:url("add")}' data-title="添加邮费模板" class='layui-btn layui-btn-sm layui-btn-primary'>添加模板</button>
 <!--{/if}-->
 
 <!--{if auth("store/express_template/del")}-->
-<button data-action='{:url("del")}' data-csrf="{:systoken('store/express_template/del')}" data-rule="id#{key}" class='layui-btn layui-btn-sm layui-btn-primary'>删除区域</button>
+<button data-action='{:url("del")}' data-csrf="{:systoken('store/express_template/del')}" data-rule="id#{key}" class='layui-btn layui-btn-sm layui-btn-primary'>删除模板</button>
 <!--{/if}-->
 
 {/block}
@@ -75,7 +75,7 @@
             {/if}
 
             {if auth("store/express_template/edit")}
-            <a data-dbclick class="layui-btn layui-btn-xs" data-title="编辑区域" data-modal='{:url("store/express_template/edit")}?id={$vo.id}'>编 辑</a>
+            <a data-dbclick class="layui-btn layui-btn-xs" data-title="编辑邮费模板" data-open='{:url("store/express_template/edit")}?id={$vo.id}'>编 辑</a>
             {/if}
 
             {if $vo.status eq 1 and auth("store/express_template/forbid")}

@@ -31,6 +31,7 @@ class ExpressTemplate extends Controller
      */
     public function add()
     {
+        $this->title = '添加邮费模板';
         $this->_form($this->table, 'form');
     }
 
@@ -39,6 +40,7 @@ class ExpressTemplate extends Controller
      */
     public function edit()
     {
+        $this->title = '编辑邮费模板';
         $this->_form($this->table, 'form');
     }
 
