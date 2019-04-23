@@ -22,13 +22,13 @@ use think\Db;
  * Class Area
  * @package app\store\controller
  */
-class Area extends Controller
+class ExpressArea extends Controller
 {
     /**
      * 绑定数据表
      * @var string
      */
-    protected $table = 'StoreArea';
+    protected $table = 'StoreExpressArea';
 
     /**
      * 区域信息管理

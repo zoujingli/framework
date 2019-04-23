@@ -22,13 +22,13 @@ use think\Db;
  * Class Express
  * @package app\store\controller
  */
-class Express extends Controller
+class ExpressCompany extends Controller
 {
     /**
      * 指定数据表
      * @var string
      */
-    protected $table = 'StoreExpress';
+    protected $table = 'StoreExpressCompany';
 
     /**
      * 快递公司管理
