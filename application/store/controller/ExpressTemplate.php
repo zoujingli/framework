@@ -53,9 +53,8 @@ class ExpressTemplate extends Controller
     /**
      * 表单数据处理
      * @param array $vo
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
      */
     protected function _form_filter(&$vo)
     {
@@ -64,6 +63,9 @@ class ExpressTemplate extends Controller
             $this->provinces = Db::name('StoreExpressArea')->where($where)->order('code asc')->column('title');
             $vo['rule'] = isset($vo['rule']) ? explode(',', $vo['rule']) : [];
         } else {
+            if (!empty($vo['is_default'])) {
+                Db::name($this->table)->where('1=1')->update(['is_default' => '0']);
+            }
             if (isset($vo['rule']) && is_array($vo['rule'])) {
                 $vo['rule'] = join(',', $vo['rule']);
             } else {

@@ -53,7 +53,14 @@
         <td class="nowrap">
             首件 {$vo.first_number|default=0} 个邮费 {$vo.first_price|default='0.00'} 元，续件 {$vo.next_number|default='0'} 个邮费 {$vo.next_price|default='0.00'} 元
         </td>
-        <td class='text-center nowrap'>{eq name='vo.status' value='0'}<span class="layui-badge">已禁用</span>{else}<span class="layui-badge layui-bg-green">使用中</span>{/eq}</td>
+        <td class='text-center nowrap'>
+            {eq name='vo.status' value='0'}<span class="layui-badge">已禁用</span>{else}<span class="layui-badge layui-bg-green">使用中</span>{/eq}
+            <!--{eq name='vo.is_default' value='0'}-->
+            <span class="layui-badge layui-bg-gray margin-left-5">不是默认</span>
+            <!--{else}-->
+            <span class="layui-badge layui-bg-green margin-left-5">默认模板</span>
+            <!--{/eq}-->
+        </td>
         <td class='text-center nowrap notselect'>
 
             {if auth("store/express_template/edit")}
