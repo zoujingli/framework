@@ -7,13 +7,7 @@
 
         <fieldset>
 
-            <legend class="layui-bg-cyan">平台短信配置</legend>
-
-            {if empty($query.code)}
-            <div class="layui-code border-0">{$query.msg|default=''}</div>
-            {elseif $query.code eq 1}
-            <div class="layui-code border-0">平台剩余 {$query.num|default=0} 条可用短信，{$query.msg|default=''}</div>
-            {/if}
+            <legend class="layui-bg-cyan">邮费模板编辑</legend>
 
             <div class="layui-form-item">
                 <label>
@@ -55,10 +49,11 @@
                 <p class="help-block">会员注册短信模板，验证码变量使用 {code} 代替。</p>
             </div>
 
-
             <div class="layui-form-item text-center margin-top-20">
                 <div class="layui-row">
                     <div class="layui-col-sm8 layui-col-md6">
+                        {notempty name='vo.id'}<input type='hidden' value='{$vo.id}' name='id'>{/notempty}
+                        <button class="layui-btn layui-btn-danger" data-form-history-back type="button">取消编辑</button>
                         <button class="layui-btn" type="submit">保存配置</button>
                     </div>
                 </div>

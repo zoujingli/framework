@@ -689,6 +689,15 @@ $(function () {
         layer.close($(this).attr('index'));
     });
 
+    /*! 表单编辑返回操作 */
+    $body.on('click', '[data-form-history-back]', function () {
+        var title = this.getAttribute('data-formpage-back') || '确定要取消编辑吗？';
+        $.msg.confirm(title, function (index) {
+            history.back();
+            $.msg.close(index);
+        })
+    });
+
     /*! 后台加密登录处理 */
     $body.find('[data-login-form]').map(function () {
         require(["md5"], function (md5) {
