@@ -67,7 +67,7 @@ class ExpressTemplate extends Controller
             if (isset($vo['rule']) && is_array($vo['rule'])) {
                 $vo['rule'] = join(',', $vo['rule']);
             } else {
-                $vo['rule'] = '';
+                $this->error('配置配送规则省份不能为空!');
             }
         }
     }
