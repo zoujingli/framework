@@ -2,22 +2,22 @@
     <legend>条件搜索</legend>
     <form class="layui-form layui-form-pane form-search" action="{:request()->url()}" onsubmit="return false" method="get" autocomplete="off">
         <div class="layui-form-item layui-inline">
-            <label class="layui-form-label">快递名称</label>
+            <label class="layui-form-label">模板名称</label>
             <div class="layui-input-inline">
-                <input name="express_title" value="{$Think.get.express_title|default=''}" placeholder="请输入快递名称" class="layui-input">
+                <input name="title" value="{$Think.get.title|default=''}" placeholder="请输入模板名称" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item layui-inline">
-            <label class="layui-form-label">快递编码</label>
+            <label class="layui-form-label">送达省份</label>
             <div class="layui-input-inline">
-                <input name="express_code" value="{$Think.get.express_code|default=''}" placeholder="请输入快递编码" class="layui-input">
+                <input name="rule" value="{$Think.get.rule|default=''}" placeholder="请输入送达省份" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item layui-inline">
             <label class="layui-form-label">使用状态</label>
             <div class="layui-input-inline">
                 <select class="layui-select" name="status">
-                    {foreach [''=>'- 全部 -','1'=>'使用中的快递','0'=>'已禁用的快递'] as $k=>$v}
+                    {foreach [''=>'- 全部 -','1'=>'使用中的模板','0'=>'已禁用的模板'] as $k=>$v}
                     <!--{eq name='Think.get.status' value='$k.""'}-->
                     <option selected value="{$k}">{$v}</option>
                     <!--{else}-->

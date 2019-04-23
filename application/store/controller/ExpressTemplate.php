@@ -3,6 +3,7 @@
 namespace app\store\controller;
 
 use library\Controller;
+use think\Db;
 
 /**
  * 邮费模板管理
@@ -19,11 +20,16 @@ class ExpressTemplate extends Controller
 
     /**
      * 邮费模板管理
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
      */
     public function index()
     {
         $this->title = '邮费模板管理';
-        $this->_page($this->table);
+        $this->_query($this->table)->like('title,rule')->equal('status')->dateBetween('create_at')->order('sort asc,id desc')->page();
     }
 
     /**
@@ -42,6 +48,39 @@ class ExpressTemplate extends Controller
     {
         $this->title = '编辑邮费模板';
         $this->_form($this->table, 'form');
+    }
+
+    /**
+     * 表单数据处理
+     * @param array $vo
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    protected function _form_filter(&$vo)
+    {
+        if ($this->request->isGet()) {
+            $where = [['code', 'like', '%0000'], ['status', 'eq', '1']];
+            $this->provinces = Db::name('StoreExpressArea')->where($where)->order('code asc')->column('title');
+            $vo['rule'] = isset($vo['rule']) ? explode(',', $vo['rule']) : [];
+        } else {
+            if (isset($vo['rule']) && is_array($vo['rule'])) {
+                $vo['rule'] = join(',', $vo['rule']);
+            } else {
+                $vo['rule'] = '';
+            }
+        }
+    }
+
+    /**
+     * 表单结果处理
+     * @param boolean $result
+     */
+    protected function _form_result($result)
+    {
+        if ($result) {
+            $this->success('邮费模板修改成功！', 'javascript:history.back()');
+        }
     }
 
     /**

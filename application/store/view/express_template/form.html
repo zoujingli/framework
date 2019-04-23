@@ -5,62 +5,96 @@
 
     <div class="layui-card-body" style="padding-left:40px">
 
-        <fieldset>
+        <label class="layui-form-item block relative padding-bottom-10">
+            <span class="color-green font-s14">模板名称</span>
+            <span class="color-desc margin-left-5">TemplateTitle</span>
+            <input name="title" value="{$vo.title|default=''}" required placeholder="请输入邮费模板名称" class="layui-input">
+            <span class="color-desc block">请尽量保持模板名称不重复，方便其它模块调用及选择</span>
+        </label>
 
-            <legend class="layui-bg-cyan">邮费模板编辑</legend>
-
-            <div class="layui-form-item">
-                <label>
-                    <span class="color-green margin-right-10 font-s14">短信平台账号</span><span class="nowrap color-desc">Username</span>
-                    <span class="block relative">
-                        <input name="sms_zt_username" required placeholder="请输入助通短信平台账号" value="{:sysconf('sms_zt_username')}" class="layui-input">
-                    </span>
+        <div class="layui-form-item block relative padding-bottom-10">
+            <span class="color-green font-s14">配送订单满减</span>
+            <span class="color-desc margin-left-5">OrderReduction</span>
+            <span class="block relative margin-bottom-10">
+                {php}isset($vo['order_reduction_state']) or $vo['order_reduction_state']=0;{/php}
+                {foreach ['0' => '关闭','1' => '开启'] as $k => $v}
+                <label class="think-radio">
+                    <!--{eq name='vo.order_reduction_state' value='$k'}-->
+                    <input type="radio" value="{$k}" name="order_reduction_state" title="{$v}" checked lay-ignore> {$v}
+                    <!--{else}-->
+                    <input type="radio" value="{$k}" name="order_reduction_state" title="{$v}" lay-ignore> {$v}
+                    <!--{/eq}-->
                 </label>
-                <p class="help-block">助通短信平台账号，可以联系客服获取账号与密码。</p>
-            </div>
+                {/foreach}
+            </span>
+            <input class="layui-input" name="order_reduction_price" data-blur-number="2" value="{$vo.order_reduction_price|default='0.00'}">
+            <span class="color-desc block">订单总金额达到这个金额时，将减免该订单的所有邮费</span>
+        </div>
 
-            <div class="layui-form-item">
-                <label>
-                    <span class="color-green margin-right-10 font-s14">短信平台密码</span><span class="nowrap color-desc">Password</span>
-                    <span class="block relative">
-                        <input name="sms_zt_password" required placeholder="请输入助通短信平台密码" value="{:sysconf('sms_zt_password')}" class="layui-input">
-                    </span>
-                </label>
-                <p class="help-block">助通短信平台账号，可以联系客服获取账号与密码。</p>
-            </div>
+        <div class="layui-form-item">
+            <span class="color-green font-s14">配送规则配置</span>
+            <span class="color-desc margin-left-5">TemplateAreaRule</span>
+            <table class="layui-table" lay-skin="line">
+                <tr class="layui-bg-gray">
+                    <th class="text-center">可配送区域</th>
+                </tr>
+                <tr>
+                    <td>
+                        {foreach $provinces as $p}
+                        <label class="think-checkbox layui-elip" style="width:100px" data-tips-text="{$p}">
+                            {if isset($vo.rule) and is_array($vo.rule) and in_array($p,$vo.rule)}
+                            <input checked type="checkbox" name="rule[]" value="{$p}" lay-ignore> {$p|default=''}
+                            {else}
+                            <input type="checkbox" name="rule[]" value="{$p}" lay-ignore> {$p|default=''}
+                            {/if}
+                        </label>
+                        {/foreach}
+                    </td>
+                </tr>
+            </table>
+            <table class="layui-table" lay-skin="line">
+                <tr class="layui-bg-gray">
+                    <th class="text-center" width="80px">首件（个）</th>
+                    <th class="text-center" width="80px">运费（元）</th>
+                    <th class="text-center" width="80px">续件（个）</th>
+                    <th class="text-center" width="80px">续费（元）</th>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <label>
+                            <input name="first_number" value="{$vo.first_number|default=1}" data-blur-number="0" class="layui-input text-center padding-left-0">
+                        </label>
+                    </td>
+                    <td class="text-center">
+                        <label>
+                            <input name="first_price" value="{$vo.first_price|default='0.00'}" data-blur-number="2" class="layui-input text-center padding-left-0">
+                        </label>
+                    </td>
+                    <td class="text-center">
+                        <label>
+                            <input name="next_number" value="{$vo.next_number|default=1}" data-blur-number="0" class="layui-input text-center padding-left-0">
+                        </label>
+                    </td>
+                    <td class="text-center">
+                        <label>
+                            <input name="next_price" value="{$vo.next_price|default='0.00'}" data-blur-number="2" class="layui-input text-center padding-left-0">
+                        </label>
+                    </td>
+                </tr>
+            </table>
+        </div>
 
-            <div class="layui-form-item">
-                <label>
-                    <span class="color-green margin-right-10 font-s14">短信发送安全码</span><span class="nowrap color-desc">Secure</span>
-                    <span class="block relative">
-                        <input name="sms_secure" required placeholder="请输入短信发送安全码" value="{:sysconf('sms_secure')}" class="layui-input">
-                    </span>
-                </label>
-                <p class="help-block">短信发送安全码，调用接口发短信时需要传入此参数。</p>
-            </div>
-
-            <div class="layui-form-item">
-                <label>
-                    <span class="color-green margin-right-10 font-s14">注册短信模板</span><span class="nowrap color-desc">Template</span>
-                    <span class="block relative">
-                    <textarea class="layui-textarea" required name="sms_reg_template" placeholder="请输入助通短信平台密码">{:sysconf('sms_reg_template')}</textarea>
-                    </span>
-                </label>
-                <p class="help-block">会员注册短信模板，验证码变量使用 {code} 代替。</p>
-            </div>
-
-            <div class="layui-form-item text-center margin-top-20">
-                <div class="layui-row">
-                    <div class="layui-col-sm8 layui-col-md6">
-                        {notempty name='vo.id'}<input type='hidden' value='{$vo.id}' name='id'>{/notempty}
-                        <button class="layui-btn layui-btn-danger" data-form-history-back type="button">取消编辑</button>
-                        <button class="layui-btn" type="submit">保存配置</button>
-                    </div>
+        <div class="layui-form-item text-center margin-top-20">
+            <div class="layui-row">
+                <div class="layui-col-sm8 layui-col-md6">
+                    {notempty name='vo.id'}<input type='hidden' value='{$vo.id}' name='id'>{/notempty}
+                    <button class="layui-btn layui-btn-danger" data-form-history-back type="button">取消编辑</button>
+                    <button class="layui-btn" type="submit">保存配置</button>
                 </div>
             </div>
-
-        </fieldset>
+        </div>
 
     </div>
+    <script>form.render()</script>
 </form>
 {/block}

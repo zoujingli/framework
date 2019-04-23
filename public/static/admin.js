@@ -698,6 +698,12 @@ $(function () {
         })
     });
 
+    /*! 表单元素失去焦点处理 */
+    $body.on('blur', '[data-blur-number]', function () {
+        var fiexd = this.getAttribute('data-blur-number') || 0;
+        this.value = (parseFloat(this.value) || 0).toFixed(fiexd);
+    });
+
     /*! 后台加密登录处理 */
     $body.find('[data-login-form]').map(function () {
         require(["md5"], function (md5) {
