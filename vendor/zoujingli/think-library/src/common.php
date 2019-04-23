@@ -129,7 +129,6 @@ if (!function_exists('data_save')) {
     }
 }
 
-
 if (!function_exists('data_batch_save')) {
     /**
      * 批量更新数据
