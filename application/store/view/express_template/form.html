@@ -5,29 +5,58 @@
 
     <div class="layui-card-body" style="padding-left:40px">
 
+        <div class="layui-form-item block relative padding-bottom-10">
+            <span class="color-green font-s14">默认模板配置</span>
+            <span class="color-desc margin-left-5">TemplateDefault</span>
+            <span class="block relative margin-bottom-10">
+                {php}isset($vo['is_default']) or $vo['is_default']=0;{/php}
+                {foreach ['0' => '普通邮费模板','1' => '默认邮费模板'] as $k => $v}
+                <label class="think-radio">
+                    <!--{eq name='vo.is_default' value='$k'}-->
+                    <input type="radio" value="{$k}" name="is_default" title="{$v}" checked lay-ignore> {$v}
+                    <!--{else}-->
+                    <input type="radio" value="{$k}" name="is_default" title="{$v}" lay-ignore> {$v}
+                    <!--{/eq}-->
+                </label>
+                {/foreach}
+            </span>
+            <span class="color-desc block">设置是否为默认邮费模板，默认邮费模板只能保留一份规则</span>
+        </div>
+
         <label class="layui-form-item block relative padding-bottom-10">
             <span class="color-green font-s14">模板名称</span>
             <span class="color-desc margin-left-5">TemplateTitle</span>
-            <input name="title" value="{$vo.title|default=''}" required placeholder="请输入邮费模板名称" class="layui-input">
+            <input style="max-width:500px" name="title" value="{$vo.title|default=''}" required placeholder="请输入邮费模板名称" class="layui-input">
             <span class="color-desc block">请尽量保持模板名称不重复，方便其它模块调用及选择</span>
         </label>
 
         <div class="layui-form-item block relative padding-bottom-10">
             <span class="color-green font-s14">配送订单满减</span>
             <span class="color-desc margin-left-5">OrderReduction</span>
-            <span class="block relative margin-bottom-10">
-                {php}isset($vo['order_reduction_state']) or $vo['order_reduction_state']=0;{/php}
-                {foreach ['0' => '关闭','1' => '开启'] as $k => $v}
-                <label class="think-radio">
-                    <!--{eq name='vo.order_reduction_state' value='$k'}-->
-                    <input type="radio" value="{$k}" name="order_reduction_state" title="{$v}" checked lay-ignore> {$v}
-                    <!--{else}-->
-                    <input type="radio" value="{$k}" name="order_reduction_state" title="{$v}" lay-ignore> {$v}
-                    <!--{/eq}-->
-                </label>
-                {/foreach}
-            </span>
-            <input class="layui-input" name="order_reduction_price" data-blur-number="2" value="{$vo.order_reduction_price|default='0.00'}">
+            <table>
+                <tr>
+                    <td>
+                        <div class="layui-input text-center" style="width:150px">
+                            {php}isset($vo['order_reduction_state']) or $vo['order_reduction_state']=0;{/php}
+                            {foreach ['0' => '关闭','1' => '开启'] as $k => $v}
+                            <!--{eq name='vo.order_reduction_state' value='$k'}-->
+                            <label class="think-radio"><input type="radio" value="{$k}" name="order_reduction_state" title="{$v}" checked lay-ignore> {$v}</label>
+                            <!--{else}-->
+                            <label class="think-radio"><input type="radio" value="{$k}" name="order_reduction_state" title="{$v}" lay-ignore> {$v}</label>
+                            <!--{/eq}-->
+                            {/foreach}
+                        </div>
+                    </td>
+                    <td width='20px'></td>
+                    <td>
+                        <label class="text-center nowrap">
+                            订单满
+                            <input style="width:100px" class="layui-input inline-block" name="order_reduction_price" data-blur-number="2" value="{$vo.order_reduction_price|default='0.00'}">
+                            元免邮费
+                        </label>
+                    </td>
+                </tr>
+            </table>
             <span class="color-desc block">订单总金额达到这个金额时，将减免该订单的所有邮费</span>
         </div>
 
