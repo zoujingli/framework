@@ -129,6 +129,17 @@ class ExpressTemplate extends Controller
     }
 
     /**
+     * 表单结果处理
+     * @param boolean $resule
+     */
+    protected function _form_result($resule)
+    {
+        if ($resule) {
+            $this->success('邮费规则配置成功！', 'javascript:history.back()');
+        }
+    }
+
+    /**
      * 禁用邮费模板
      */
     public function forbid()
