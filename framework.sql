@@ -11,7 +11,7 @@
  Target Server Version : 50562
  File Encoding         : 65001
 
- Date: 24/04/2019 11:15:22
+ Date: 24/04/2019 15:31:51
 */
 
 SET NAMES utf8mb4;
@@ -3374,19 +3374,62 @@ INSERT INTO `store_express_company` VALUES (95, '中通快运', 'zhongtongkuaiyu
 INSERT INTO `store_express_company` VALUES (96, '德邦快递', 'debangkuaidi', '', 1, 0, 0, '2019-03-28 15:05:30');
 
 -- ----------------------------
+-- Table structure for store_express_province
+-- ----------------------------
+DROP TABLE IF EXISTS `store_express_province`;
+CREATE TABLE `store_express_province`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `title` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '地区名称',
+  `sort` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '排序权限',
+  `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '数据状态',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `index_store_express_province_title`(`title`) USING BTREE,
+  INDEX `index_store_express_province_status`(`status`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3261 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商城-快递-省份' ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of store_express_province
+-- ----------------------------
+INSERT INTO `store_express_province` VALUES (1, '北京市', 1, 1, '2017-09-12 11:53:40');
+INSERT INTO `store_express_province` VALUES (19, '天津市', 2, 1, '2017-09-12 11:53:40');
+INSERT INTO `store_express_province` VALUES (37, '河北省', 3, 1, '2017-09-12 11:53:40');
+INSERT INTO `store_express_province` VALUES (217, '山西省', 4, 1, '2017-09-12 11:53:40');
+INSERT INTO `store_express_province` VALUES (348, '内蒙古自治区', 5, 1, '2017-09-12 11:53:40');
+INSERT INTO `store_express_province` VALUES (464, '辽宁省', 6, 1, '2017-09-12 11:53:40');
+INSERT INTO `store_express_province` VALUES (579, '吉林省', 7, 1, '2017-09-12 11:53:40');
+INSERT INTO `store_express_province` VALUES (649, '黑龙江省', 8, 1, '2017-09-12 11:53:40');
+INSERT INTO `store_express_province` VALUES (792, '上海市', 9, 1, '2017-09-12 11:53:40');
+INSERT INTO `store_express_province` VALUES (810, '江苏省', 10, 1, '2017-09-12 11:53:40');
+INSERT INTO `store_express_province` VALUES (920, '浙江省', 11, 1, '2017-09-12 11:53:40');
+INSERT INTO `store_express_province` VALUES (1021, '安徽省', 12, 1, '2017-09-12 11:53:40');
+INSERT INTO `store_express_province` VALUES (1143, '福建省', 13, 1, '2017-09-12 11:53:40');
+INSERT INTO `store_express_province` VALUES (1238, '江西省', 14, 1, '2017-09-12 11:53:40');
+INSERT INTO `store_express_province` VALUES (1350, '山东省', 15, 1, '2017-09-12 11:53:40');
+INSERT INTO `store_express_province` VALUES (1505, '河南省', 16, 1, '2017-09-12 11:53:40');
+INSERT INTO `store_express_province` VALUES (1681, '湖北省', 17, 1, '2017-09-12 11:53:40');
+INSERT INTO `store_express_province` VALUES (1798, '湖南省', 18, 1, '2017-09-12 11:53:40');
+INSERT INTO `store_express_province` VALUES (1935, '广东省', 19, 1, '2017-09-12 11:53:40');
+INSERT INTO `store_express_province` VALUES (2079, '广西壮族自治区', 20, 1, '2017-09-12 11:53:40');
+INSERT INTO `store_express_province` VALUES (2205, '海南省', 21, 1, '2017-09-12 11:53:40');
+INSERT INTO `store_express_province` VALUES (2236, '重庆市', 22, 1, '2017-09-12 11:53:40');
+INSERT INTO `store_express_province` VALUES (2277, '四川省', 23, 1, '2017-09-12 11:53:40');
+INSERT INTO `store_express_province` VALUES (2482, '贵州省', 24, 1, '2017-09-12 11:53:40');
+INSERT INTO `store_express_province` VALUES (2580, '云南省', 25, 1, '2017-09-12 11:53:40');
+INSERT INTO `store_express_province` VALUES (2726, '西藏自治区', 26, 1, '2017-09-12 11:53:40');
+INSERT INTO `store_express_province` VALUES (2808, '陕西省', 27, 1, '2017-09-12 11:53:40');
+INSERT INTO `store_express_province` VALUES (2926, '甘肃省', 28, 1, '2017-09-12 11:53:40');
+INSERT INTO `store_express_province` VALUES (3027, '青海省', 29, 1, '2017-09-12 11:53:40');
+INSERT INTO `store_express_province` VALUES (3080, '宁夏回族自治区', 30, 1, '2017-09-12 11:53:40');
+INSERT INTO `store_express_province` VALUES (3108, '新疆维吾尔自治区', 31, 1, '2017-09-12 11:53:40');
+
+-- ----------------------------
 -- Table structure for store_express_template
 -- ----------------------------
 DROP TABLE IF EXISTS `store_express_template`;
 CREATE TABLE `store_express_template`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '快递公司名称',
-  `order_reduction_state` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '订单满减状态',
-  `order_reduction_price` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '订单满减金额',
-  `first_number` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '首件数量',
-  `first_price` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '首件邮费',
-  `next_number` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '续件数量',
-  `next_price` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '续件邮费',
-  `rule` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '规则内容',
   `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '状态(0.无效,1.有效)',
   `sort` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '排序权重',
   `is_default` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '默认模板',
@@ -3396,6 +3439,27 @@ CREATE TABLE `store_express_template`  (
   INDEX `index_store_express_template_status`(`status`) USING BTREE,
   INDEX `index_store_express_template_deleted`(`is_deleted`) USING BTREE,
   INDEX `index_store_express_template_default`(`is_default`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商城-快递-模板' ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Table structure for store_express_template_rule
+-- ----------------------------
+DROP TABLE IF EXISTS `store_express_template_rule`;
+CREATE TABLE `store_express_template_rule`  (
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `template_id` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '模板ID',
+  `order_reduction_state` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '订单满减状态',
+  `order_reduction_price` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '订单满减金额',
+  `first_number` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '首件数量',
+  `first_price` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '首件邮费',
+  `next_number` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '续件数量',
+  `next_price` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '续件邮费',
+  `rule` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '规则内容',
+  `is_default` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '默认规则',
+  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `index_store_express_template_rule_template_id`(`template_id`) USING BTREE,
+  INDEX `index_store_express_template_rule_is_default`(`is_default`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商城-快递-模板' ROW_FORMAT = Compact;
 
 -- ----------------------------
@@ -3456,6 +3520,7 @@ CREATE TABLE `store_goods_list`  (
   `number_sales` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '销售数量',
   `number_stock` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '商品库存',
   `number_virtual` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '虚拟销量',
+  `number_express` bigint(20) UNSIGNED NULL DEFAULT 1 COMMENT '快递数量',
   `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '商品状态',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
@@ -3595,7 +3660,6 @@ CREATE TABLE `store_order_list`  (
   `mid` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '会员ID',
   `from_id` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '推荐会员',
   `order_no` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '订单单号',
-  `number` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '交易数量',
   `goods_id` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '商品标识',
   `goods_title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '商品标题',
   `goods_logo` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '商品图标',
@@ -3606,6 +3670,8 @@ CREATE TABLE `store_order_list`  (
   `price_express` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '快递费用',
   `price_rate` decimal(20, 4) UNSIGNED NULL DEFAULT 0.0000 COMMENT '分成比例',
   `price_rate_amount` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '分成金额',
+  `number_goods` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '商品数量',
+  `number_express` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '快递数量',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_store_goods_list_id`(`goods_id`) USING BTREE,
@@ -3834,7 +3900,7 @@ CREATE TABLE `system_menu`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_system_menu_node`(`node`(191)) USING BTREE,
   INDEX `index_system_menu_status`(`status`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 53 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-菜单' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 54 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-菜单' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of system_menu
@@ -3879,6 +3945,7 @@ INSERT INTO `system_menu` VALUES (49, 4, '系统日志', '', 'layui-icon layui-i
 INSERT INTO `system_menu` VALUES (50, 47, '快递公司', '', 'layui-icon layui-icon-form', 'store/express_company/index', '', '_self', 40, 1, '2019-04-01 17:10:59');
 INSERT INTO `system_menu` VALUES (51, 47, '地域管理', '', 'layui-icon layui-icon-star', 'store/express_area/index', '', '_self', 50, 1, '2019-04-10 15:01:12');
 INSERT INTO `system_menu` VALUES (52, 47, '邮费模板', '', 'layui-icon layui-icon-util', 'store/express_template/index', '', '_self', 60, 1, '2019-04-23 13:17:10');
+INSERT INTO `system_menu` VALUES (53, 47, '邮费省份', '', 'layui-icon layui-icon-util', 'store/express_province/index', '', '_self', 55, 1, '2019-04-24 14:47:27');
 
 -- ----------------------------
 -- Table structure for system_message
@@ -3917,7 +3984,7 @@ CREATE TABLE `system_node`  (
   INDEX `index_system_node_is_menu`(`is_menu`) USING BTREE,
   INDEX `index_system_node_is_auth`(`is_auth`) USING BTREE,
   INDEX `index_system_node_is_login`(`is_login`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 211 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-节点' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 218 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-节点' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of system_node
@@ -4051,6 +4118,13 @@ INSERT INTO `system_node` VALUES (207, 'store/express_template/edit', '编辑邮
 INSERT INTO `system_node` VALUES (208, 'store/express_template/forbid', '禁用邮费模板', 0, 1, 1, '2019-04-23 13:16:06');
 INSERT INTO `system_node` VALUES (209, 'store/express_template/resume', '启用邮费模板', 0, 1, 1, '2019-04-23 13:16:06');
 INSERT INTO `system_node` VALUES (210, 'store/express_template/remove', '删除邮费模板', 0, 1, 1, '2019-04-23 13:16:06');
+INSERT INTO `system_node` VALUES (211, 'store/express_province/index', '邮费省份管理', 1, 1, 1, '2019-04-24 14:46:34');
+INSERT INTO `system_node` VALUES (212, 'store/express_province/add', '添加邮费省份', 0, 1, 1, '2019-04-24 14:46:35');
+INSERT INTO `system_node` VALUES (213, 'store/express_province/edit', '编辑邮费省份', 0, 1, 1, '2019-04-24 14:46:35');
+INSERT INTO `system_node` VALUES (214, 'store/express_province/resume', '启用邮费省份', 0, 1, 1, '2019-04-24 14:46:35');
+INSERT INTO `system_node` VALUES (215, 'store/express_province/forbid', '禁用邮费省份', 0, 1, 1, '2019-04-24 14:46:35');
+INSERT INTO `system_node` VALUES (216, 'store/express_province/del', '删除邮费省份', 0, 1, 1, '2019-04-24 14:46:35');
+INSERT INTO `system_node` VALUES (217, 'store/express_template/defaults', '编辑默认邮费', 0, 1, 1, '2019-04-24 14:46:37');
 
 -- ----------------------------
 -- Table structure for system_user
