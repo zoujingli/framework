@@ -59,14 +59,15 @@ class Query extends Logic
      * 设置Like查询条件
      * @param string|array $fields 查询字段
      * @param string $inputType 输入类型 get|post
+     * @param string $aliasSplit 别名分割符
      * @return $this
      */
-    public function like($fields, $inputType = 'request')
+    public function like($fields, $inputType = 'request', $aliasSplit = '#')
     {
         $data = $this->controller->request->$inputType();
         foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
             list($dk, $qk) = [$field, $field];
-            if (stripos($field, '|') !== false) list($dk, $qk) = explode('|', $field);
+            if (stripos($field, $aliasSplit) !== false) list($dk, $qk) = explode($aliasSplit, $field);
             if (isset($data[$qk]) && $data[$qk] !== '') $this->query->whereLike($dk, "%{$data[$qk]}%");
         }
         return $this;
@@ -76,14 +77,15 @@ class Query extends Logic
      * 设置Equal查询条件
      * @param string|array $fields 查询字段
      * @param string $inputType 输入类型 get|post
+     * @param string $aliasSplit 别名分割符
      * @return $this
      */
-    public function equal($fields, $inputType = 'request')
+    public function equal($fields, $inputType = 'request', $aliasSplit = '#')
     {
         $data = $this->controller->request->$inputType();
         foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
             list($dk, $qk) = [$field, $field];
-            if (stripos($field, '|') !== false) list($dk, $qk) = explode('|', $field);
+            if (stripos($field, $aliasSplit) !== false) list($dk, $qk) = explode($aliasSplit, $field);
             if (isset($data[$qk]) && $data[$qk] !== '') $this->query->where($dk, "{$data[$qk]}");
         }
         return $this;
@@ -94,14 +96,15 @@ class Query extends Logic
      * @param string $fields 查询字段
      * @param string $split 输入分隔符
      * @param string $inputType 输入类型 get|post
+     * @param string $aliasSplit 别名分割符
      * @return $this
      */
-    public function in($fields, $split = ',', $inputType = 'request')
+    public function in($fields, $split = ',', $inputType = 'request', $aliasSplit = '#')
     {
         $data = $this->controller->request->$inputType();
         foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
             list($dk, $qk) = [$field, $field];
-            if (stripos($field, '|') !== false) list($dk, $qk) = explode('|', $field);
+            if (stripos($field, $aliasSplit) !== false) list($dk, $qk) = explode($aliasSplit, $field);
             if (isset($data[$qk]) && $data[$qk] !== '') $this->query->whereIn($dk, explode($split, $data[$qk]));
         }
         return $this;
@@ -113,14 +116,15 @@ class Query extends Logic
      * @param string|array $fields 查询字段
      * @param string $split 输入分隔符
      * @param string $inputType 输入类型 get|post
+     * @param string $aliasSplit 别名分割符
      * @return $this
      */
-    public function dateBetween($fields, $split = ' - ', $inputType = 'request')
+    public function dateBetween($fields, $split = ' - ', $inputType = 'request', $aliasSplit = '#')
     {
         $data = $this->controller->request->$inputType();
         foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
             list($dk, $qk) = [$field, $field];
-            if (stripos($field, '|') !== false) list($dk, $qk) = explode('|', $field);
+            if (stripos($field, $aliasSplit) !== false) list($dk, $qk) = explode($aliasSplit, $field);
             if (isset($data[$qk]) && $data[$qk] !== '') {
                 list($start, $end) = explode($split, $data[$qk]);
                 $this->query->whereBetween($dk, ["{$start} 00:00:00", "{$end} 23:59:59"]);
@@ -134,14 +138,15 @@ class Query extends Logic
      * @param string|array $fields 查询字段
      * @param string $split 输入分隔符
      * @param string $inputType 输入类型 get|post
+     * @param string $aliasSplit 别名分割符
      * @return $this
      */
-    public function valueBetween($fields, $split = ' ', $inputType = 'request')
+    public function valueBetween($fields, $split = ' ', $inputType = 'request', $aliasSplit = '#')
     {
         $data = $this->controller->request->$inputType();
         foreach (is_array($fields) ? $fields : explode(',', $fields) as $field) {
             list($dk, $qk) = [$field, $field];
-            if (stripos($field, '|') !== false) list($dk, $qk) = explode('|', $field);
+            if (stripos($field, $aliasSplit) !== false) list($dk, $qk) = explode($aliasSplit, $field);
             if (isset($data[$qk]) && $data[$qk] !== '') {
                 list($start, $end) = explode($split, $data[$field]);
                 $this->query->whereBetween($dk, ["{$start}", "{$end}"]);
