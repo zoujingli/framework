@@ -60,10 +60,9 @@
                         <div style="max-height:45px;overflow:auto">{$v.rule|default=''}</div>
                     </td>
                     <td class="nowrap">
-                        订单满减：{if isset($v.order_reduction_state)}
-                        {if $v.order_reduction_state eq 1}
+                        订单满减：{if $v.order_reduction_state eq 1}
                         {eq name='v.order_reduction_price' value='0'}全包邮{else}订单满 {$v.order_reduction_price} 可免邮费{/eq}
-                        {else}<span class="color-desc">不使用订单满减</span>{/if}{/if}<br>
+                        {else}<span class="color-desc">不使用订单满减</span>{/if}<br>
                         续件规则：首件 {$v.first_number|default=0} 个邮费 {$v.first_price|default='0.00'} 元，续件 {$v.next_number|default='0'} 个邮费 {$v.next_price|default='0.00'} 元
                     </td>
                 </tr>
