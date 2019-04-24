@@ -569,6 +569,7 @@ $(function () {
         var checked = !!this.checked;
         $($(this).attr('data-check-target')).map(function () {
             this.checked = checked;
+            $(this).trigger('change');
         });
     });
 

@@ -41,7 +41,7 @@ class ExpressArea extends Controller
     public function index()
     {
         $this->title = '区域信息管理';
-        $this->_query($this->table)->like('title')->equal('level')->order('code asc')->page();
+        $this->_query($this->table)->like('title')->equal('level,status')->order('code asc')->page();
     }
 
     /**

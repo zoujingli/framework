@@ -2,16 +2,16 @@
     <legend>条件搜索</legend>
     <form class="layui-form layui-form-pane form-search" action="{:request()->url()}" onsubmit="return false" method="get" autocomplete="off">
         <div class="layui-form-item layui-inline">
-            <label class="layui-form-label">区域名称</label>
+            <label class="layui-form-label">省份名称</label>
             <div class="layui-input-inline">
-                <input name="title" value="{$Think.get.title|default=''}" placeholder="请输入区域名称" class="layui-input">
+                <input name="title" value="{$Think.get.title|default=''}" placeholder="请输入省份名称" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item layui-inline">
             <label class="layui-form-label">使用状态</label>
             <div class="layui-input-inline">
                 <select class="layui-select" name="status">
-                    {foreach [''=>'- 全部 -','1'=>'使用中的模板','0'=>'已禁用的模板'] as $k=>$v}
+                    {foreach [''=>'- 全部状态 -','1'=>'使用中的模板','0'=>'已禁用的模板'] as $k=>$v}
                     <!--{eq name='Think.get.status' value='$k.""'}-->
                     <option selected value="{$k}">{$v}</option>
                     <!--{else}-->
@@ -22,17 +22,9 @@
             </div>
         </div>
         <div class="layui-form-item layui-inline">
-            <label class="layui-form-label">区域级别</label>
+            <label class="layui-form-label">创建时间</label>
             <div class="layui-input-inline">
-                <select class="layui-select" name="level">
-                    {foreach [''=>'- 全部记录 -','1'=>'显示省级记录','2'=>'显示城市记录','3'=>'显示区域记录'] as $k=>$v}
-                    <!--{eq name='Think.get.level' value='$k.""'}-->
-                    <option selected value="{$k}">{$v}</option>
-                    <!--{else}-->
-                    <option value="{$k}">{$v}</option>
-                    <!--{/eq}-->
-                    {/foreach}
-                </select>
+                <input data-date-range name="create_at" value="{$Think.get.create_at|default=''}" placeholder="请选择创建时间" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item layui-inline">

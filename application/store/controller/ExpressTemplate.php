@@ -90,8 +90,7 @@ class ExpressTemplate extends Controller
     {
         if (empty($vo['id'])) $vo['id'] = Data::uniqidNumberCode(10);
         if ($this->request->isGet()) {
-            $where = [['code', 'like', '%0000'], ['status', 'eq', '1']];
-            $this->provinces = Db::name('StoreExpressArea')->where($where)->order('code asc')->column('title');
+            $this->provinces = Db::name('StoreExpressProvince')->where(['status' => '1'])->order('sort asc,id desc')->column('title');
             $vo['list'] = Db::name('StoreExpressTemplateRule')->where(['template_id' => $vo['id']])->select();
             foreach ($vo['list'] as &$item) $item['rule'] = explode(',', $item['rule']);
         } else {

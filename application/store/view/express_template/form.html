@@ -48,17 +48,19 @@
         $('[data-item-container]').append(this.html);
     }
 
-    $('body').off('click', 'input[type=checkbox][data-province-input]').on('click', 'input[type=checkbox][data-province-input]', function () {
-        if (this.checked) $('input[data-province-input][type=checkbox][value="' + this.value + '"]').not(this).map(function () {
-            this.checked = false;
-        });
-    });
-
     function checkRuleItem() {
         if ($('[data-item-container] fieldset').length < 1) {
             addRuleItem();
         }
     }
+
+    $('input[type=checkbox][data-province-input]').on('change', function () {
+        if (this.checked) {
+            $('input[data-province-input][type=checkbox][value="' + this.value + '"]').not(this).map(function () {
+                if (this.checked) $(this).trigger('click');
+            });
+        }
+    });
 
 </script>
 
