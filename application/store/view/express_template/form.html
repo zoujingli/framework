@@ -14,7 +14,7 @@
             <table>
                 <tr>
                     <td>
-                        <div class="layui-input text-center" style="width:150px">
+                        <div class="layui-input text-center" style="width:130px">
                             {php}isset($vo['order_reduction_state']) or $vo['order_reduction_state']=0;{/php}
                             {foreach ['0' => '关闭','1' => '开启'] as $k => $v}
                             <!--{eq name='vo.order_reduction_state' value='$k'}-->
@@ -68,7 +68,7 @@
             {else}
             <input type="hidden" name="is_default" value="1">
             {/empty}
-            
+
             <table class="layui-table" lay-skin="line">
                 <tr class="layui-bg-gray">
                     <th class="text-center" width="80px">首件（个）</th>
