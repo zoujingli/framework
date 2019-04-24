@@ -11,7 +11,7 @@
  Target Server Version : 50562
  File Encoding         : 65001
 
- Date: 23/04/2019 18:43:19
+ Date: 24/04/2019 11:15:22
 */
 
 SET NAMES utf8mb4;
@@ -31,10 +31,10 @@ CREATE TABLE `store_express_area`  (
   `sort` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '排序权限',
   `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '数据状态',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_store_area_code`(`code`) USING BTREE,
-  INDEX `index_store_area_level`(`level`) USING BTREE,
-  INDEX `index_store_area_pid`(`pid`) USING BTREE,
-  INDEX `index_store_area_title`(`title`) USING BTREE
+  INDEX `index_store_express_area_code`(`code`) USING BTREE,
+  INDEX `index_store_express_area_level`(`level`) USING BTREE,
+  INDEX `index_store_express_area_title`(`title`) USING BTREE,
+  INDEX `index_store_express_area_pid`(`pid`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 3260 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商城-快递-地区' ROW_FORMAT = Compact;
 
 -- ----------------------------
@@ -3272,9 +3272,9 @@ CREATE TABLE `store_express_company`  (
   `is_deleted` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '删除状态(1删除,0未删除)',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_store_express_code`(`express_code`) USING BTREE,
-  INDEX `index_store_express_status`(`status`) USING BTREE,
-  INDEX `index_store_express_deleted`(`is_deleted`) USING BTREE
+  INDEX `index_store_express_company_code`(`express_code`) USING BTREE,
+  INDEX `index_store_express_company_deleted`(`is_deleted`) USING BTREE,
+  INDEX `index_store_express_company_status`(`status`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 97 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商城-快递-公司' ROW_FORMAT = Compact;
 
 -- ----------------------------
@@ -3382,8 +3382,6 @@ CREATE TABLE `store_express_template`  (
   `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '快递公司名称',
   `order_reduction_state` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '订单满减状态',
   `order_reduction_price` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '订单满减金额',
-  `express_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '快递公司代码',
-  `express_desc` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '快递公司描述',
   `first_number` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '首件数量',
   `first_price` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '首件邮费',
   `next_number` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '续件数量',
@@ -3391,12 +3389,13 @@ CREATE TABLE `store_express_template`  (
   `rule` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '规则内容',
   `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '状态(0.无效,1.有效)',
   `sort` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '排序权重',
+  `is_default` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '默认模板',
   `is_deleted` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '删除状态(1删除,0未删除)',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_store_express_code`(`express_code`) USING BTREE,
-  INDEX `index_store_express_status`(`status`) USING BTREE,
-  INDEX `index_store_express_deleted`(`is_deleted`) USING BTREE
+  INDEX `index_store_express_template_status`(`status`) USING BTREE,
+  INDEX `index_store_express_template_deleted`(`is_deleted`) USING BTREE,
+  INDEX `index_store_express_template_default`(`is_default`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商城-快递-模板' ROW_FORMAT = Compact;
 
 -- ----------------------------
@@ -3518,7 +3517,7 @@ CREATE TABLE `store_member_address`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_store_member_address_mid`(`mid`) USING BTREE,
   INDEX `index_store_member_address_is_default`(`is_default`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员-收货地址' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员-地址' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for store_member_sms_history
@@ -4060,10 +4059,10 @@ DROP TABLE IF EXISTS `system_user`;
 CREATE TABLE `system_user`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '用户账号',
-  `password` char(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '用户密码',
+  `password` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '用户密码',
   `qq` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '联系QQ',
   `mail` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '联系邮箱',
-  `phone` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '联系手机号',
+  `phone` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '联系手机',
   `login_at` datetime NULL DEFAULT NULL COMMENT '登录时间',
   `login_ip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '登录IP',
   `login_num` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '登录次数',
@@ -4081,7 +4080,7 @@ CREATE TABLE `system_user`  (
 -- ----------------------------
 -- Records of system_user
 -- ----------------------------
-INSERT INTO `system_user` VALUES (10000, 'admin', '21232f297a57a5a743894a0e4a801fc3', '22222222', '', '', '2019-04-23 12:54:15', '127.0.0.1', 538, '', '', 1, 0, '2015-11-13 15:14:22');
+INSERT INTO `system_user` VALUES (10000, 'admin', '21232f297a57a5a743894a0e4a801fc3', '22222222', '', '', '2019-04-24 09:53:53', '127.0.0.1', 539, '', '', 1, 0, '2015-11-13 15:14:22');
 INSERT INTO `system_user` VALUES (10001, 'test', '662af1cd1976f09a9f8cecc868ccc0a2', '', '', '', '2019-04-18 13:28:57', '127.0.0.1', 1, '1', '', 1, 0, '2019-04-18 13:28:23');
 
 -- ----------------------------
