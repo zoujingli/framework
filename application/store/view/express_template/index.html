@@ -53,7 +53,7 @@
             模板名称：{$vo.title|default=''}
         </td>
         <td class="padding-0">
-            <table>
+            <table class="layui-table margin-0" lay-skin="line">
                 {foreach $vo.list as $v}
                 <tr>
                     <td class="padding-right-0">
@@ -96,6 +96,21 @@
     </tbody>
     {/notempty}
 </table>
+
+<style>
+    table table {
+        border-top: none !important;
+        border-bottom: none !important;
+    }
+
+    table table tr td {
+        min-width: 200px;
+    }
+
+    table table tr:last-child td {
+        border-bottom: none !important;
+    }
+</style>
 
 {empty name='list'}<span class="notdata">没有记录哦</span>{else}{$pagehtml|raw|default=''}{/empty}
 
