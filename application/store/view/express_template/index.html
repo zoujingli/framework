@@ -3,11 +3,11 @@
 {block name="button"}
 
 {if auth("store/express_template/defaults")}
-<button data-modal='{:url("defaults")}' data-title="编辑默认模板" class='layui-btn layui-btn-sm layui-btn-primary'>默认模板</button>
+<button data-open='{:url("defaults")}' data-title="编辑默认模板" class='layui-btn layui-btn-sm layui-btn-primary'>默认模板</button>
 {/if}
 
 {if auth("store/express_template/add")}
-<button data-modal='{:url("add")}' data-title="添加邮费模板" class='layui-btn layui-btn-sm layui-btn-primary'>添加模板</button>
+<button data-open='{:url("add")}' data-title="添加邮费模板" class='layui-btn layui-btn-sm layui-btn-primary'>添加模板</button>
 {/if}
 
 {if auth("store/express_template/remove")}
@@ -34,7 +34,6 @@
             <button type="button" data-reload class="layui-btn layui-btn-xs">刷 新</button>
         </th>
         <th class="nowrap">模板信息</th>
-        <th class="nowrap">送达省份</th>
         <th class="nowrap">邮费规则</th>
         <th></th>
         <th></th>
@@ -53,14 +52,23 @@
             模板编号：{$vo.id|default='--'}<br>
             模板名称：{$vo.title|default=''}
         </td>
-        <td class="padding-right-0">
-            <div style="max-height:45px;overflow:auto">{$vo.rule|default=''}</div>
-        </td>
-        <td class="nowrap">
-            订单满减：{if $vo.order_reduction_state eq 1}
-            {eq name='vo.order_reduction_price' value='0'}全包邮{else}订单满 {$vo.order_reduction_price} 可免邮费{/eq}
-            {else}<span class="color-desc">不使用订单满减</span>{/if}<br>
-            续件规则：首件 {$vo.first_number|default=0} 个邮费 {$vo.first_price|default='0.00'} 元，续件 {$vo.next_number|default='0'} 个邮费 {$vo.next_price|default='0.00'} 元
+        <td class="padding-0">
+            <table>
+                {foreach $vo.list as $v}
+                <tr>
+                    <td class="padding-right-0">
+                        <div style="max-height:45px;overflow:auto">{$v.rule|default=''}</div>
+                    </td>
+                    <td class="nowrap">
+                        订单满减：{if isset($v.order_reduction_state)}
+                        {if $v.order_reduction_state eq 1}
+                        {eq name='v.order_reduction_price' value='0'}全包邮{else}订单满 {$v.order_reduction_price} 可免邮费{/eq}
+                        {else}<span class="color-desc">不使用订单满减</span>{/if}{/if}<br>
+                        续件规则：首件 {$v.first_number|default=0} 个邮费 {$v.first_price|default='0.00'} 元，续件 {$v.next_number|default='0'} 个邮费 {$v.next_price|default='0.00'} 元
+                    </td>
+                </tr>
+                {/foreach}
+            </table>
         </td>
         <td class='text-left nowrap'>
             使用状态：{eq name='vo.status' value='0'}<span class="layui-badge">已禁用</span>{else}<span class="layui-badge layui-bg-green">使用中</span>{/eq}<br>
@@ -69,7 +77,7 @@
         <td class='text-center nowrap notselect'>
 
             {if auth("store/express_template/edit")}
-            <a data-dbclick class="layui-btn layui-btn-sm" data-title="编辑邮费模板" data-modal='{:url("edit")}?id={$vo.id}'>编 辑</a>
+            <a data-dbclick class="layui-btn layui-btn-sm" data-title="编辑邮费模板" data-open='{:url("edit")}?id={$vo.id}'>编 辑</a>
             {/if}
 
             {if $vo.status eq 1 and auth("store/express_template/forbid")}

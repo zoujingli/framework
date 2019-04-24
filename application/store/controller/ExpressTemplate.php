@@ -35,6 +35,22 @@ class ExpressTemplate extends Controller
     }
 
     /**
+     * 页面列表处理
+     * @param array $data
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    protected function _page_filter(&$data)
+    {
+        $ruleList = Db::name('StoreExpressTemplateRule')->whereIn('template_id', array_unique(array_column($data, 'id')))->select();
+        foreach ($data as &$vo) {
+            $vo['list'] = [];
+            foreach ($ruleList as $rule) if ($rule['template_id'] === $vo['id']) $vo['list'][] = $rule;
+        }
+    }
+
+    /**
      * 添加邮费模板
      */
     public function add()
@@ -76,15 +92,39 @@ class ExpressTemplate extends Controller
         if ($this->request->isGet()) {
             $where = [['code', 'like', '%0000'], ['status', 'eq', '1']];
             $this->provinces = Db::name('StoreExpressArea')->where($where)->order('code asc')->column('title');
-            $vo['rule'] = isset($vo['rule']) ? explode(',', $vo['rule']) : [];
+            $vo['list'] = Db::name('StoreExpressTemplateRule')->where(['template_id' => $vo['id']])->select();
+            foreach ($vo['list'] as &$item) $item['rule'] = explode(',', $item['rule']);
         } else {
-            if (empty($vo['is_default'])) {
-                if (isset($vo['rule']) && is_array($vo['rule'])) {
-                    $vo['rule'] = join(',', $vo['rule']);
-                } else {
-                    $this->error('配置配送规则省份不能为空!');
-                }
+            list($list, $idxs) = [[], []];
+            foreach (array_keys($vo) as $key) if (stripos($key, 'order_reduction_state_') !== false) {
+                $idxs[] = str_replace('order_reduction_state_', '', $key);
             }
+            foreach (array_unique($idxs) as $index) if (!empty($vo["rule_{$index}"])) $list[] = [
+                'template_id'           => $vo['id'],
+                'rule'                  => join(',', $vo["rule_{$index}"]),
+                'order_reduction_state' => $vo["order_reduction_state_{$index}"],
+                'order_reduction_price' => $vo["order_reduction_price_{$index}"],
+                'first_number'          => $vo["first_number_{$index}"],
+                'first_price'           => $vo["first_price_{$index}"],
+                'next_number'           => $vo["first_number_{$index}"],
+                'next_price'            => $vo["first_price_{$index}"],
+                'is_default'            => $vo['is_default'],
+            ];
+            // 默认邮费模板
+            if (!empty($vo['is_default'])) $list = [[
+                'template_id'           => $vo['id'],
+                'rule'                  => '默认邮费规则',
+                'order_reduction_state' => $vo["order_reduction_state_0"],
+                'order_reduction_price' => $vo["order_reduction_price_0"],
+                'first_number'          => $vo["first_number_0"],
+                'first_price'           => $vo["first_price_0"],
+                'next_number'           => $vo["first_number_0"],
+                'next_price'            => $vo["first_price_0"],
+                'is_default'            => $vo['is_default'],
+            ]];
+            if (empty($list)) $this->error('请配置有效的邮费规则');
+            Db::name('StoreExpressTemplateRule')->where(['template_id' => $vo['id']])->delete();
+            Db::name('StoreExpressTemplateRule')->insertAll($list);
         }
     }
 

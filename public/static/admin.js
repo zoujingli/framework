@@ -690,8 +690,8 @@ $(function () {
     });
 
     /*! 表单编辑返回操作 */
-    $body.on('click', '[data-form-history-back]', function () {
-        var title = this.getAttribute('data-formpage-back') || '确定要取消编辑吗？';
+    $body.on('click', '[data-history-back]', function () {
+        var title = this.getAttribute('data-history-back') || '确定要返回上一页吗？';
         $.msg.confirm(title, function (index) {
             history.back();
             $.msg.close(index);
