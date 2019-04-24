@@ -2,19 +2,28 @@
 
 {block name="button"}
 
-<!--{if auth("store/express_template/add")}-->
-<button data-open='{:url("add")}' data-title="添加邮费模板" class='layui-btn layui-btn-sm layui-btn-primary'>添加模板</button>
-<!--{/if}-->
+{if auth("store/express_template/defaults")}
+<button data-modal='{:url("defaults")}' data-title="编辑默认模板" class='layui-btn layui-btn-sm layui-btn-primary'>默认模板</button>
+{/if}
 
-<!--{if auth("store/express_template/del")}-->
-<button data-action='{:url("del")}' data-csrf="{:systoken('store/express_template/del')}" data-rule="id#{key}" class='layui-btn layui-btn-sm layui-btn-primary'>删除模板</button>
-<!--{/if}-->
+{if auth("store/express_template/add")}
+<button data-modal='{:url("add")}' data-title="添加邮费模板" class='layui-btn layui-btn-sm layui-btn-primary'>添加模板</button>
+{/if}
+
+{if auth("store/express_template/remove")}
+<button data-action='{:url("remove")}' data-csrf="{:systoken('store/express_template/remove')}" data-rule="id#{key}" class='layui-btn layui-btn-sm layui-btn-primary'>删除模板</button>
+{/if}
 
 {/block}
 
 {block name="content"}
 <table class="layui-table" lay-skin="line">
-    <caption class="margin-bottom-10 text-left">{include file='express_template/index_search'}</caption>
+    <caption class="margin-bottom-10 text-left">
+        {include file='express_template/index_search'}
+        <div class="layui-code" style="border:1px solid #e6e6e6">
+            <strong>注意</strong>：收货地址的省份不能与已有邮费模板规则匹配时，将取默认邮费规则进行计算！
+        </div>
+    </caption>
     {notempty name='list'}
     <thead>
     <tr>
@@ -24,10 +33,9 @@
         <th class='list-table-sort-td'>
             <button type="button" data-reload class="layui-btn layui-btn-xs">刷 新</button>
         </th>
-        <th class="nowrap">模板名称</th>
-        <th class="nowrap">满减规则</th>
-        <th>送达省份</th>
-        <th>续件规则</th>
+        <th class="nowrap">模板信息</th>
+        <th class="nowrap">送达省份</th>
+        <th class="nowrap">邮费规则</th>
         <th></th>
         <th></th>
     </tr>
@@ -41,40 +49,37 @@
         <td class='list-table-sort-td'>
             <input data-action-blur="{:request()->url()}" data-value="id#{$vo.id};action#sort;sort#{value}" data-loading="false" value="{$vo.sort}" class="list-sort-input">
         </td>
-        <td class="nowrap">{$vo.title|default=''}</td>
         <td class="nowrap">
-            {if $vo.order_reduction_state eq 1}
-            {eq name='vo.order_reduction_price' value='0'} 全包邮 {else} 订单满 {$vo.order_reduction_price} 可免邮费 {/eq}
-            {else}
-            <span class="color-desc">不免邮</span>
-            {/if}
+            模板编号：{$vo.id|default='--'}<br>
+            模板名称：{$vo.title|default=''}
         </td>
-        <td>{$vo.rule|default=''}</td>
+        <td class="padding-right-0">
+            <div style="max-height:45px;overflow:auto">{$vo.rule|default=''}</div>
+        </td>
         <td class="nowrap">
-            首件 {$vo.first_number|default=0} 个邮费 {$vo.first_price|default='0.00'} 元，续件 {$vo.next_number|default='0'} 个邮费 {$vo.next_price|default='0.00'} 元
+            订单满减：{if $vo.order_reduction_state eq 1}
+            {eq name='vo.order_reduction_price' value='0'}全包邮{else}订单满 {$vo.order_reduction_price} 可免邮费{/eq}
+            {else}<span class="color-desc">不免邮</span>{/if}<br>
+            续件规则：首件 {$vo.first_number|default=0} 个邮费 {$vo.first_price|default='0.00'} 元，续件 {$vo.next_number|default='0'} 个邮费 {$vo.next_price|default='0.00'} 元
         </td>
-        <td class='text-center nowrap'>
-            {eq name='vo.status' value='0'}<span class="layui-badge">已禁用</span>{else}<span class="layui-badge layui-bg-green">使用中</span>{/eq}
-            <!--{eq name='vo.is_default' value='0'}-->
-            <span class="layui-badge layui-bg-gray margin-left-5">不是默认</span>
-            <!--{else}-->
-            <span class="layui-badge layui-bg-green margin-left-5">默认模板</span>
-            <!--{/eq}-->
+        <td class='text-left nowrap'>
+            使用状态：{eq name='vo.status' value='0'}<span class="layui-badge">已禁用</span>{else}<span class="layui-badge layui-bg-green">使用中</span>{/eq}<br>
+            创建时间：{$vo.create_at|format_datetime}
         </td>
         <td class='text-center nowrap notselect'>
 
             {if auth("store/express_template/edit")}
-            <a data-dbclick class="layui-btn layui-btn-xs" data-title="编辑邮费模板" data-open='{:url("store/express_template/edit")}?id={$vo.id}'>编 辑</a>
+            <a data-dbclick class="layui-btn layui-btn-sm" data-title="编辑邮费模板" data-modal='{:url("edit")}?id={$vo.id}'>编 辑</a>
             {/if}
 
             {if $vo.status eq 1 and auth("store/express_template/forbid")}
-            <a class="layui-btn layui-btn-warm layui-btn-xs" data-action="{:url('forbid')}" data-value="id#{$vo.id};status#0" data-csrf="{:systoken('store/express_template/forbid')}">禁 用</a>
+            <a class="layui-btn layui-btn-warm layui-btn-sm" data-action="{:url('forbid')}" data-value="id#{$vo.id};status#0" data-csrf="{:systoken('store/express_template/forbid')}">禁 用</a>
             {elseif auth("store/express_template/resume")}
-            <a class="layui-btn layui-btn-warm layui-btn-xs" data-action="{:url('resume')}" data-value="id#{$vo.id};status#1" data-csrf="{:systoken('store/express_template/resume')}">启 用</a>
+            <a class="layui-btn layui-btn-warm layui-btn-sm" data-action="{:url('resume')}" data-value="id#{$vo.id};status#1" data-csrf="{:systoken('store/express_template/resume')}">启 用</a>
             {/if}
 
-            {if auth("store/express_template/del")}
-            <a class="layui-btn layui-btn-danger layui-btn-xs" data-confirm="确定要删除数据吗?" data-action="{:url('del')}" data-value="id#{$vo.id}" data-csrf="{:systoken('store/express_template/del')}">删 除</a>
+            {if auth("store/express_template/remove")}
+            <a class="layui-btn layui-btn-danger layui-btn-sm" data-confirm="确定要删除数据吗?" data-action="{:url('remove')}" data-value="id#{$vo.id}" data-csrf="{:systoken('store/express_template/remove')}">删 除</a>
             {/if}
 
         </td>
