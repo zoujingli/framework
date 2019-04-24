@@ -59,7 +59,7 @@
         <td class="nowrap">
             订单满减：{if $vo.order_reduction_state eq 1}
             {eq name='vo.order_reduction_price' value='0'}全包邮{else}订单满 {$vo.order_reduction_price} 可免邮费{/eq}
-            {else}<span class="color-desc">不免邮</span>{/if}<br>
+            {else}<span class="color-desc">不使用订单满减</span>{/if}<br>
             续件规则：首件 {$vo.first_number|default=0} 个邮费 {$vo.first_price|default='0.00'} 元，续件 {$vo.next_number|default='0'} 个邮费 {$vo.next_price|default='0.00'} 元
         </td>
         <td class='text-left nowrap'>
