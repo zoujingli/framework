@@ -29,140 +29,53 @@ class ExpressTemplate extends Controller
      */
     public function index()
     {
-        $this->title = '邮费模板管理';
-        $where = ['is_deleted' => '0', 'is_default' => '0'];
-        $this->_query($this->table)->like('title,rule')->equal('status')->dateBetween('create_at')->where($where)->order('sort asc,id desc')->page();
+        $this->title = '邮费规则管理';
     }
 
     /**
-     * 页面列表处理
-     * @param array $data
+     * 显示邮费模板
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      */
-    protected function _page_filter(&$data)
+    protected function _index_get()
     {
-        $ruleList = Db::name('StoreExpressTemplateRule')->whereIn('template_id', array_unique(array_column($data, 'id')))->select();
-        foreach ($data as &$vo) {
-            $vo['list'] = [];
-            foreach ($ruleList as $rule) if ($rule['template_id'] === $vo['id']) $vo['list'][] = $rule;
-        }
+        $this->provinces = Db::name('StoreExpressProvince')->where(['status' => '1'])->order('sort asc,id desc')->column('title');
+        $this->list = Db::name($this->table)->where(['is_default' => '0'])->select();
+        foreach ($this->list as &$item) $item['rule'] = explode(',', $item['rule']);
+        $this->default = Db::name($this->table)->where(['is_default' => '1'])->find();
+        $this->fetch();
     }
 
     /**
-     * 添加邮费模板
-     */
-    public function add()
-    {
-        $this->title = '添加邮费模板';
-        $this->_form($this->table, 'form');
-    }
-
-    /**
-     * 编辑邮费模板
-     */
-    public function edit()
-    {
-        $this->title = '编辑邮费模板';
-        $this->_form($this->table, 'form');
-    }
-
-
-    /**
-     * 编辑默认邮费
-     */
-    public function defaults()
-    {
-        $this->title = '编辑默认邮费模板';
-        $this->is_default = true;
-        $where = ['is_default' => '1'];
-        $this->_form($this->table, 'form', 'is_default', $where, $where);
-    }
-
-    /**
-     * 表单数据处理
-     * @param array $vo
+     * 保存邮费模板
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
-    protected function _form_filter(&$vo)
+    protected function _index_post()
     {
-        if (empty($vo['id'])) $vo['id'] = Data::uniqidNumberCode(10);
-        if ($this->request->isGet()) {
-            $this->provinces = Db::name('StoreExpressProvince')->where(['status' => '1'])->order('sort asc,id desc')->column('title');
-            $vo['list'] = Db::name('StoreExpressTemplateRule')->where(['template_id' => $vo['id']])->select();
-            foreach ($vo['list'] as &$item) $item['rule'] = explode(',', $item['rule']);
-        } else {
-            list($list, $idxs) = [[], []];
-            foreach (array_keys($vo) as $key) if (stripos($key, 'order_reduction_state_') !== false) {
-                $idxs[] = str_replace('order_reduction_state_', '', $key);
-            }
-            foreach (array_unique($idxs) as $index) if (!empty($vo["rule_{$index}"])) $list[] = [
-                'template_id'           => $vo['id'],
-                'rule'                  => join(',', $vo["rule_{$index}"]),
-                'order_reduction_state' => $vo["order_reduction_state_{$index}"],
-                'order_reduction_price' => $vo["order_reduction_price_{$index}"],
-                'first_number'          => $vo["first_number_{$index}"],
-                'first_price'           => $vo["first_price_{$index}"],
-                'next_number'           => $vo["first_number_{$index}"],
-                'next_price'            => $vo["first_price_{$index}"],
-                'is_default'            => $vo['is_default'],
-            ];
-            // 默认邮费模板
-            if (!empty($vo['is_default'])) $list = [[
-                'template_id'           => $vo['id'],
-                'rule'                  => '默认邮费规则',
-                'order_reduction_state' => $vo["order_reduction_state_0"],
-                'order_reduction_price' => $vo["order_reduction_price_0"],
-                'first_number'          => $vo["first_number_0"],
-                'first_price'           => $vo["first_price_0"],
-                'next_number'           => $vo["first_number_0"],
-                'next_price'            => $vo["first_price_0"],
-                'is_default'            => $vo['is_default'],
-            ]];
-            if (empty($list)) $this->error('请配置有效的邮费规则');
-            Db::name('StoreExpressTemplateRule')->where(['template_id' => $vo['id']])->delete();
-            Db::name('StoreExpressTemplateRule')->insertAll($list);
+        list($list, $idxs, $post) = [[], [], $this->request->post()];
+        foreach (array_keys($post) as $key) if (stripos($key, 'order_reduction_state_') !== false) {
+            $idxs[] = str_replace('order_reduction_state_', '', $key);
         }
-    }
-
-    /**
-     * 表单结果处理
-     * @param boolean $resule
-     */
-    protected function _form_result($resule)
-    {
-        if ($resule) {
-            $this->success('邮费规则配置成功！', 'javascript:history.back()');
-        }
-    }
-
-    /**
-     * 禁用邮费模板
-     */
-    public function forbid()
-    {
-        $this->applyCsrfToken();
-        $this->_save($this->table, ['status' => '0']);
-    }
-
-    /**
-     * 启用邮费模板
-     */
-    public function resume()
-    {
-        $this->applyCsrfToken();
-        $this->_save($this->table, ['status' => '1']);
-    }
-
-    /**
-     * 删除邮费模板
-     */
-    public function remove()
-    {
-        $this->applyCsrfToken();
-        $this->_delete($this->table);
+        foreach (array_unique($idxs) as $index) if (!empty($post["rule_{$index}"])) $list[] = [
+            'rule'                  => join(',', $post["rule_{$index}"]),
+            // 订单满减配置
+            'order_reduction_state' => $post["order_reduction_state_{$index}"],
+            'order_reduction_price' => $post["order_reduction_price_{$index}"],
+            // 首件邮费配置
+            'first_number'          => $post["first_number_{$index}"],
+            'first_price'           => $post["first_price_{$index}"],
+            // 首件邮费配置
+            'next_number'           => $post["next_number_{$index}"],
+            'next_price'            => $post["next_price_{$index}"],
+            // 默认邮费规则
+            'is_default'            => $post["is_default_{$index}"],
+        ];
+        if (empty($list)) $this->error('请配置有效的邮费规则');
+        Db::name($this->table)->where('1=1')->delete();
+        Db::name($this->table)->insertAll($list);
+        $this->success('邮费规则配置成功！');
     }
 
 }

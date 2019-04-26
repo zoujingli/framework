@@ -41,7 +41,8 @@ class ExpressCompany extends Controller
     public function index()
     {
         $this->title = '快递公司管理';
-        $this->_query($this->table)->equal('status')->like('express_title,express_code')->dateBetween('create_at')->order('status desc,sort asc,id desc')->page();
+        $query = $this->_query($this->table)->equal('status')->like('express_title,express_code');
+        $query->dateBetween('create_at')->order('status desc,sort asc,id desc')->page();
     }
 
     /**

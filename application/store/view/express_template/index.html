@@ -1,116 +1,76 @@
-{extend name='admin@main'}
-
-{block name="button"}
-
-{if auth("store/express_template/defaults")}
-<button data-open='{:url("defaults")}' data-title="编辑默认模板" class='layui-btn layui-btn-sm layui-btn-primary'>默认模板</button>
-{/if}
-
-{if auth("store/express_template/add")}
-<button data-open='{:url("add")}' data-title="添加邮费模板" class='layui-btn layui-btn-sm layui-btn-primary'>添加模板</button>
-{/if}
-
-{if auth("store/express_template/remove")}
-<button data-action='{:url("remove")}' data-csrf="{:systoken('store/express_template/remove')}" data-rule="id#{key}" class='layui-btn layui-btn-sm layui-btn-primary'>删除模板</button>
-{/if}
-
-{/block}
+{extend name="admin@main"}
 
 {block name="content"}
-<table class="layui-table" lay-skin="line">
-    <caption class="margin-bottom-10 text-left">
-        {include file='express_template/index_search'}
-        <div class="layui-code" style="border:1px solid #e6e6e6">
-            <strong>注意</strong>：收货地址的省份不能与已有邮费模板规则匹配时，将取默认邮费规则进行计算！
+<form onsubmit="return false;" data-auto="true" action="{:request()->url()}" method="post" class='layui-form layui-card' autocomplete="off">
+
+    <div class="layui-card-body" style="padding-left:40px">
+
+        <div data-item-container>
+            {foreach $list as $index=>$item}
+            {assign name='is_default' value='0'}
+            {assign name='index' value='$index+1'}
+            {assign name='group_title' value='邮费规则分组'}
+            {include file='express_template/index_item'}
+            {/foreach}
         </div>
-    </caption>
-    {notempty name='list'}
-    <thead>
-    <tr>
-        <th class='list-table-check-td think-checkbox'>
-            <input data-auto-none data-check-target='.list-check-box' type='checkbox'>
-        </th>
-        <th class='list-table-sort-td padding-left-0 padding-right-0'>
-            <button type="button" data-reload class="layui-btn layui-btn-xs">刷 新</button>
-        </th>
-        <th class="nowrap">模板信息</th>
-        <th class="nowrap">邮费规则</th>
-        <th></th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    {foreach $list as $key=>$vo}
-    <tr data-dbclick>
-        <td class='list-table-check-td think-checkbox'>
-            <input class="list-check-box" value='{$vo.id}' type='checkbox'>
-        </td>
-        <td class='list-table-sort-td padding-left-0 padding-right-0'>
-            <input data-action-blur="{:request()->url()}" data-value="id#{$vo.id};action#sort;sort#{value}" data-loading="false" value="{$vo.sort}" class="list-sort-input">
-        </td>
-        <td class="nowrap">
-            模板编号：{$vo.id|default='--'}<br>
-            模板名称：{$vo.title|default=''}
-        </td>
-        <td class="padding-0">
-            <table class="layui-table margin-0" lay-skin="line">
-                {foreach $vo.list as $v}
-                <tr>
-                    <td class="padding-right-0">
-                        <div style="max-height:45px;overflow:auto">{$v.rule|default=''}</div>
-                    </td>
-                    <td class="nowrap">
-                        订单满减：{if $v.order_reduction_state eq 1}
-                        {eq name='v.order_reduction_price' value='0'}全包邮{else}订单满 {$v.order_reduction_price} 可免邮费{/eq}
-                        {else}<span class="color-desc">不使用订单满减</span>{/if}<br>
-                        续件规则：首件 {$v.first_number|default=0} 个邮费 {$v.first_price|default='0.00'} 元，续件 {$v.next_number|default='0'} 个邮费 {$v.next_price|default='0.00'} 元
-                    </td>
-                </tr>
-                {/foreach}
-            </table>
-        </td>
-        <td class='text-left nowrap'>
-            使用状态：{eq name='vo.status' value='0'}<span class="layui-badge">已禁用</span>{else}<span class="layui-badge layui-bg-green">使用中</span>{/eq}<br>
-            创建时间：{$vo.create_at|format_datetime}
-        </td>
-        <td class='text-center nowrap notselect'>
 
-            {if auth("store/express_template/edit")}
-            <a data-dbclick class="layui-btn layui-btn-sm" data-title="编辑邮费模板" data-open='{:url("edit")}?id={$vo.id}'>编 辑</a>
-            {/if}
+        <div class="margin-bottom-20"><a onclick="addRuleItem()" class="layui-btn layui-btn-warm">添加邮费规则分组</a></div>
 
-            {if $vo.status eq 1 and auth("store/express_template/forbid")}
-            <a class="layui-btn layui-btn-warm layui-btn-sm" data-action="{:url('forbid')}" data-value="id#{$vo.id};status#0" data-csrf="{:systoken('store/express_template/forbid')}">禁 用</a>
-            {elseif auth("store/express_template/resume")}
-            <a class="layui-btn layui-btn-warm layui-btn-sm" data-action="{:url('resume')}" data-value="id#{$vo.id};status#1" data-csrf="{:systoken('store/express_template/resume')}">启 用</a>
-            {/if}
+        {assign name='index' value='0'}
+        {assign name='is_default' value='1'}
+        {assign name='group_title' value='默认邮费规则'}
+        {assign name="item" value="$default"}
+        {include file='express_template/index_item'}
 
-            {if auth("store/express_template/remove")}
-            <a class="layui-btn layui-btn-danger layui-btn-sm" data-confirm="确定要删除数据吗?" data-action="{:url('remove')}" data-value="id#{$vo.id}" data-csrf="{:systoken('store/express_template/remove')}">删 除</a>
-            {/if}
+        <div class="hr-line-dashed"></div>
 
-        </td>
-    </tr>
-    {/foreach}
-    </tbody>
-    {/notempty}
-</table>
+        <div class="layui-form-item text-center">
+            <button class="layui-btn" type='submit'>保存数据</button>
+        </div>
 
-<style>
-    table table {
-        border-top: none !important;
-        border-bottom: none !important;
+    </div>
+
+</form>
+
+<script>
+    form.render();
+    checkRuleItem();
+
+    function delRuleItem(that) {
+        $.msg.confirm('确定要移除这个邮费规则吗？', function (index) {
+            $(that).parent('fieldset').remove(), $.msg.close(index);
+            checkRuleItem();
+        })
     }
 
-    table table tr td {
-        min-width: 200px;
+    function addRuleItem() {
+        this.itemIndex = $('[data-item-container] fieldset:last').attr('data-max-index') || 0;
+        this.html = $('#template').html().replace(/\[index\]/gi, parseInt(this.itemIndex) + 1);
+        $('[data-item-container]').append(this.html);
     }
 
-    table table tr:last-child td {
-        border-bottom: none !important;
+    function checkRuleItem() {
+        if ($('[data-item-container] fieldset').length < 1) {
+            //  addRuleItem();
+        }
     }
-</style>
 
-{empty name='list'}<span class="notdata">没有记录哦</span>{else}{$pagehtml|raw|default=''}{/empty}
+    (function (opt) {
+        opt.selecter = 'input[type=checkbox][data-province-input]';
+        $('body').off('change', opt.selecter).on('change', opt.selecter, function () {
+            if (this.checked) $(opt.selecter + '[value="' + this.value + '"]').not(this).map(function () {
+                if (this.checked) $(this).trigger('click');
+            });
+        });
+    })({});
 
+</script>
+
+{assign name='is_default' value='0'}
+{assign name='index' value='[index]'}
+{assign name='group_title' value='邮费规则分组'}
+{php}$item=[];{/php}
+<div class="layui-hide" id="template">
+    {include file='express_template/index_item'}
+</div>
 {/block}

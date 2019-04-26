@@ -39,9 +39,10 @@ class Goods
         $fields = "goods_id,goods_spec,ifnull(sum(number_stock),0) number_stock";
         $stockList = Db::name('StoreGoodsStock')->field($fields)->where(['goods_id' => $goodsId])->group('goods_id,goods_spec')->select();
         // 商品销量统计
-        $where = [['b.goods_id', 'eq', $goodsId], ['a.status', 'in', ['1', '2', '3', '4', '5']]];
-        $fields = 'b.goods_id,b.goods_spec,ifnull(sum(b.number_goods),0) number_sales';
-        $salesList = Db::table('store_order a')->field($fields)->leftJoin('store_order_list b', 'a.order_no=b.order_no')->where($where)->group('b.goods_id,b.goods_spec')->select();
+        $fields = 'goods_id,goods_spec,ifnull(sum(number_goods),0) number_sales';
+        $salesList = Db::name('StoreOrderList')->whereIn('order_no', function (\think\db\Query $query) use ($goodsId) {
+            $query->name('StoreOrder')->field('order_no')->where(['id' => $goodsId])->whereIn('status', ['1', '2', '3', '4', '5']);
+        })->field($fields)->where(['goods_id' => $goodsId])->group('goods_id,goods_spec')->select();
         // 组装更新数据
         $dataList = [];
         foreach (array_merge($stockList, $salesList) as $vo) {

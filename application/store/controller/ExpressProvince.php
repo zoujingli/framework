@@ -68,7 +68,7 @@ class ExpressProvince extends Controller
     public function resume()
     {
         $this->applyCsrfToken();
-        $this->_save($this->table, ['status' => '0']);
+        $this->_save($this->table, ['status' => '1']);
     }
 
     /**
@@ -77,7 +77,7 @@ class ExpressProvince extends Controller
     public function forbid()
     {
         $this->applyCsrfToken();
-        $this->_save($this->table, ['status' => '1']);
+        $this->_save($this->table, ['status' => '0']);
     }
 
     /**

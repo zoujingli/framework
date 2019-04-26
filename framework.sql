@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : server.cuci.cc
+ Source Server         : local.server.cuci.cc
  Source Server Type    : MySQL
  Source Server Version : 50562
  Source Host           : server.cuci.cc:3306
@@ -11,7 +11,7 @@
  Target Server Version : 50562
  File Encoding         : 65001
 
- Date: 24/04/2019 15:31:51
+ Date: 26/04/2019 16:50:24
 */
 
 SET NAMES utf8mb4;
@@ -3264,18 +3264,15 @@ INSERT INTO `store_express_area` VALUES (3224, 3217, '654326', '吉木乃县', 3
 DROP TABLE IF EXISTS `store_express_company`;
 CREATE TABLE `store_express_company`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `express_title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '快递公司名称',
-  `express_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '快递公司代码',
-  `express_desc` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '快递公司描述',
+  `express_title` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '快递公司名称',
+  `express_code` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '快递公司代码',
+  `express_desc` varchar(512) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '快递公司描述',
   `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '状态(0.无效,1.有效)',
   `sort` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '排序权重',
   `is_deleted` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '删除状态(1删除,0未删除)',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_store_express_company_code`(`express_code`) USING BTREE,
-  INDEX `index_store_express_company_deleted`(`is_deleted`) USING BTREE,
-  INDEX `index_store_express_company_status`(`status`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 97 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商城-快递-公司' ROW_FORMAT = Compact;
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 95 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商城-快递-公司' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of store_express_company
@@ -3289,7 +3286,7 @@ INSERT INTO `store_express_company` VALUES (10, '百福东方国际物流', 'bai
 INSERT INTO `store_express_company` VALUES (11, '中国东方（COE）', 'coe', NULL, 0, 0, 0, '2017-09-13 16:05:48');
 INSERT INTO `store_express_company` VALUES (12, '长宇物流', 'changyuwuliu', NULL, 0, 0, 0, '2017-09-13 16:05:58');
 INSERT INTO `store_express_company` VALUES (13, '大田物流', 'datianwuliu', NULL, 0, 0, 0, '2017-09-13 16:06:06');
-INSERT INTO `store_express_company` VALUES (14, '德邦物流', 'debangwuliu', NULL, 1, 1, 0, '2017-09-13 16:06:14');
+INSERT INTO `store_express_company` VALUES (14, '德邦物流', 'debangwuliu', '', 1, 1, 0, '2017-09-13 16:06:14');
 INSERT INTO `store_express_company` VALUES (15, 'DHL', 'dhl', NULL, 0, 0, 0, '2017-09-13 16:06:24');
 INSERT INTO `store_express_company` VALUES (16, 'DPEX', 'dpex', NULL, 0, 0, 0, '2017-09-13 16:06:29');
 INSERT INTO `store_express_company` VALUES (17, 'd速快递', 'dsukuaidi', NULL, 0, 0, 0, '2017-09-13 16:06:34');
@@ -3303,7 +3300,7 @@ INSERT INTO `store_express_company` VALUES (24, '国通快递', 'guotongkuaidi',
 INSERT INTO `store_express_company` VALUES (25, '港中能达物流', 'ganzhongnengda', NULL, 0, 0, 0, '2017-09-13 16:07:33');
 INSERT INTO `store_express_company` VALUES (26, '广东邮政物流', 'guangdongyouzhengwuliu', NULL, 0, 0, 0, '2017-09-13 16:08:22');
 INSERT INTO `store_express_company` VALUES (27, '共速达', 'gongsuda', NULL, 0, 0, 0, '2017-09-13 16:08:48');
-INSERT INTO `store_express_company` VALUES (28, '汇通快运', 'huitongkuaidi', NULL, 1, 0, 0, '2017-09-13 16:08:56');
+INSERT INTO `store_express_company` VALUES (28, '汇通快运', 'huitongkuaidi', NULL, 0, 0, 0, '2017-09-13 16:08:56');
 INSERT INTO `store_express_company` VALUES (29, '恒路物流', 'hengluwuliu', NULL, 0, 0, 0, '2017-09-13 16:09:02');
 INSERT INTO `store_express_company` VALUES (30, '华夏龙物流', 'huaxialongwuliu', NULL, 0, 0, 0, '2017-09-13 16:09:12');
 INSERT INTO `store_express_company` VALUES (31, '海红', 'haihongwangsong', NULL, 0, 0, 0, '2017-09-13 16:09:20');
@@ -3335,13 +3332,13 @@ INSERT INTO `store_express_company` VALUES (56, '全一快递', 'quanyikuaidi', 
 INSERT INTO `store_express_company` VALUES (57, '如风达', 'rufengda', NULL, 0, 0, 0, '2017-09-13 16:13:03');
 INSERT INTO `store_express_company` VALUES (58, '三态速递', 'santaisudi', NULL, 0, 0, 0, '2017-09-13 16:13:15');
 INSERT INTO `store_express_company` VALUES (59, '盛辉物流', 'shenghuiwuliu', NULL, 0, 0, 0, '2017-09-13 16:13:22');
-INSERT INTO `store_express_company` VALUES (60, '申通', 'shentong', NULL, 1, 0, 0, '2017-09-13 16:13:34');
+INSERT INTO `store_express_company` VALUES (60, '申通', 'shentong', NULL, 0, 0, 0, '2017-09-13 16:13:34');
 INSERT INTO `store_express_company` VALUES (61, '顺丰', 'shunfeng', '', 0, 0, 0, '2017-09-13 16:13:41');
-INSERT INTO `store_express_company` VALUES (62, '速尔物流', 'sue', '', 1, 0, 0, '2017-09-13 16:13:48');
+INSERT INTO `store_express_company` VALUES (62, '速尔物流', 'sue', NULL, 0, 0, 0, '2017-09-13 16:13:48');
 INSERT INTO `store_express_company` VALUES (63, '盛丰物流', 'shengfeng', NULL, 0, 0, 0, '2017-09-13 16:13:55');
 INSERT INTO `store_express_company` VALUES (64, '赛澳递', 'saiaodi', NULL, 0, 0, 0, '2017-09-13 16:14:02');
 INSERT INTO `store_express_company` VALUES (65, '天地华宇', 'tiandihuayu', NULL, 0, 0, 0, '2017-09-13 16:14:11');
-INSERT INTO `store_express_company` VALUES (66, '天天快递', 'tiantian', NULL, 1, 0, 0, '2017-09-13 16:14:19');
+INSERT INTO `store_express_company` VALUES (66, '天天快递', 'tiantian', NULL, 0, 0, 0, '2017-09-13 16:14:19');
 INSERT INTO `store_express_company` VALUES (67, 'TNT', 'tnt', NULL, 0, 0, 0, '2017-09-13 16:14:26');
 INSERT INTO `store_express_company` VALUES (68, 'UPS', 'ups', NULL, 0, 0, 0, '2017-09-13 16:14:29');
 INSERT INTO `store_express_company` VALUES (69, '万家物流', 'wanjiawuliu', NULL, 0, 0, 0, '2017-09-13 16:14:37');
@@ -3354,24 +3351,22 @@ INSERT INTO `store_express_company` VALUES (75, '亚风速递', 'yafengsudi', NU
 INSERT INTO `store_express_company` VALUES (76, '一邦速递', 'yibangwuliu', NULL, 0, 0, 0, '2017-09-13 16:15:30');
 INSERT INTO `store_express_company` VALUES (77, '优速物流', 'youshuwuliu', NULL, 0, 0, 0, '2017-09-13 16:15:36');
 INSERT INTO `store_express_company` VALUES (78, '邮政包裹挂号信', 'youzhengguonei', NULL, 0, 3, 0, '2017-09-13 16:15:44');
-INSERT INTO `store_express_company` VALUES (79, '邮政国际包裹挂号信', 'youzhengguoji', NULL, 1, 2, 0, '2017-09-13 16:15:51');
+INSERT INTO `store_express_company` VALUES (79, '邮政国际包裹挂号信', 'youzhengguoji', NULL, 0, 2, 0, '2017-09-13 16:15:51');
 INSERT INTO `store_express_company` VALUES (80, '远成物流', 'yuanchengwuliu', NULL, 0, 0, 0, '2017-09-13 16:15:57');
-INSERT INTO `store_express_company` VALUES (81, '圆通速递', 'yuantong', NULL, 1, 1, 0, '2017-09-13 16:16:03');
+INSERT INTO `store_express_company` VALUES (81, '圆通速递', 'yuantong', '', 1, 1, 0, '2017-09-13 16:16:03');
 INSERT INTO `store_express_company` VALUES (82, '源伟丰快递', 'yuanweifeng', NULL, 0, 0, 0, '2017-09-13 16:16:10');
 INSERT INTO `store_express_company` VALUES (83, '元智捷诚快递', 'yuanzhijiecheng', NULL, 0, 0, 0, '2017-09-13 16:16:17');
-INSERT INTO `store_express_company` VALUES (84, '韵达快运', 'yunda', NULL, 1, 0, 0, '2017-09-13 16:16:24');
+INSERT INTO `store_express_company` VALUES (84, '韵达快运', 'yunda', NULL, 0, 0, 0, '2017-09-13 16:16:24');
 INSERT INTO `store_express_company` VALUES (85, '运通快递', 'yuntongkuaidi', NULL, 0, 0, 0, '2017-09-13 16:16:33');
 INSERT INTO `store_express_company` VALUES (86, '越丰物流', 'yuefengwuliu', NULL, 0, 0, 0, '2017-09-13 16:16:40');
 INSERT INTO `store_express_company` VALUES (87, '源安达', 'yad', NULL, 0, 0, 0, '2017-09-13 16:16:47');
 INSERT INTO `store_express_company` VALUES (88, '银捷速递', 'yinjiesudi', NULL, 0, 0, 0, '2017-09-13 16:16:56');
 INSERT INTO `store_express_company` VALUES (89, '宅急送', 'zhaijisong', NULL, 0, 0, 0, '2017-09-13 16:17:03');
 INSERT INTO `store_express_company` VALUES (90, '中铁快运', 'zhongtiekuaiyun', NULL, 0, 0, 0, '2017-09-13 16:17:10');
-INSERT INTO `store_express_company` VALUES (91, '中通速递', 'zhongtong', '', 1, 0, 0, '2017-09-13 16:17:16');
+INSERT INTO `store_express_company` VALUES (91, '中通速递', 'zhongtong', '', 0, 0, 0, '2017-09-13 16:17:16');
 INSERT INTO `store_express_company` VALUES (92, '中邮物流', 'zhongyouwuliu', NULL, 0, 0, 0, '2017-09-13 16:17:27');
 INSERT INTO `store_express_company` VALUES (93, '忠信达', 'zhongxinda', NULL, 0, 0, 0, '2017-09-13 16:17:34');
-INSERT INTO `store_express_company` VALUES (94, '芝麻开门', 'zhimakaimen', NULL, 1, 0, 1, '2017-09-13 16:17:41');
-INSERT INTO `store_express_company` VALUES (95, '中通快运', 'zhongtongkuaiyun', '', 1, 0, 0, '2019-03-28 15:04:41');
-INSERT INTO `store_express_company` VALUES (96, '德邦快递', 'debangkuaidi', '', 1, 0, 0, '2019-03-28 15:05:30');
+INSERT INTO `store_express_company` VALUES (94, '芝麻开门', 'zhimakaimen', '', 0, 0, 0, '2017-09-13 16:17:41');
 
 -- ----------------------------
 -- Table structure for store_express_province
@@ -3429,37 +3424,17 @@ INSERT INTO `store_express_province` VALUES (3108, '新疆维吾尔自治区', 3
 DROP TABLE IF EXISTS `store_express_template`;
 CREATE TABLE `store_express_template`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '快递公司名称',
-  `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '状态(0.无效,1.有效)',
-  `sort` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '排序权重',
-  `is_default` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '默认模板',
-  `is_deleted` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '删除状态(1删除,0未删除)',
-  `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_store_express_template_status`(`status`) USING BTREE,
-  INDEX `index_store_express_template_deleted`(`is_deleted`) USING BTREE,
-  INDEX `index_store_express_template_default`(`is_default`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商城-快递-模板' ROW_FORMAT = Compact;
-
--- ----------------------------
--- Table structure for store_express_template_rule
--- ----------------------------
-DROP TABLE IF EXISTS `store_express_template_rule`;
-CREATE TABLE `store_express_template_rule`  (
-  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `template_id` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '模板ID',
+  `rule` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '省份规则内容',
   `order_reduction_state` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '订单满减状态',
   `order_reduction_price` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '订单满减金额',
   `first_number` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '首件数量',
   `first_price` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '首件邮费',
   `next_number` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '续件数量',
   `next_price` decimal(20, 2) UNSIGNED NULL DEFAULT 0.00 COMMENT '续件邮费',
-  `rule` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '规则内容',
   `is_default` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '默认规则',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_store_express_template_rule_template_id`(`template_id`) USING BTREE,
-  INDEX `index_store_express_template_rule_is_default`(`is_default`) USING BTREE
+  INDEX `index_store_express_template_is_default`(`is_default`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商城-快递-模板' ROW_FORMAT = Compact;
 
 -- ----------------------------
@@ -4113,18 +4088,12 @@ INSERT INTO `system_node` VALUES (202, 'store/express_company/forbid', '禁用�
 INSERT INTO `system_node` VALUES (203, 'store/express_company/resume', '启用快递公司', 0, 1, 1, '2019-04-23 13:11:00');
 INSERT INTO `system_node` VALUES (204, 'store/express_company/del', '删除快递公司', 0, 1, 1, '2019-04-23 13:11:00');
 INSERT INTO `system_node` VALUES (205, 'store/express_template/index', '邮费模板管理', 1, 1, 1, '2019-04-23 13:16:05');
-INSERT INTO `system_node` VALUES (206, 'store/express_template/add', '添加邮费模板', 0, 1, 1, '2019-04-23 13:16:05');
-INSERT INTO `system_node` VALUES (207, 'store/express_template/edit', '编辑邮费模板', 0, 1, 1, '2019-04-23 13:16:06');
-INSERT INTO `system_node` VALUES (208, 'store/express_template/forbid', '禁用邮费模板', 0, 1, 1, '2019-04-23 13:16:06');
-INSERT INTO `system_node` VALUES (209, 'store/express_template/resume', '启用邮费模板', 0, 1, 1, '2019-04-23 13:16:06');
-INSERT INTO `system_node` VALUES (210, 'store/express_template/remove', '删除邮费模板', 0, 1, 1, '2019-04-23 13:16:06');
 INSERT INTO `system_node` VALUES (211, 'store/express_province/index', '邮费省份管理', 1, 1, 1, '2019-04-24 14:46:34');
 INSERT INTO `system_node` VALUES (212, 'store/express_province/add', '添加邮费省份', 0, 1, 1, '2019-04-24 14:46:35');
 INSERT INTO `system_node` VALUES (213, 'store/express_province/edit', '编辑邮费省份', 0, 1, 1, '2019-04-24 14:46:35');
 INSERT INTO `system_node` VALUES (214, 'store/express_province/resume', '启用邮费省份', 0, 1, 1, '2019-04-24 14:46:35');
 INSERT INTO `system_node` VALUES (215, 'store/express_province/forbid', '禁用邮费省份', 0, 1, 1, '2019-04-24 14:46:35');
 INSERT INTO `system_node` VALUES (216, 'store/express_province/del', '删除邮费省份', 0, 1, 1, '2019-04-24 14:46:35');
-INSERT INTO `system_node` VALUES (217, 'store/express_template/defaults', '编辑默认邮费', 0, 1, 1, '2019-04-24 14:46:37');
 
 -- ----------------------------
 -- Table structure for system_user
@@ -4154,7 +4123,7 @@ CREATE TABLE `system_user`  (
 -- ----------------------------
 -- Records of system_user
 -- ----------------------------
-INSERT INTO `system_user` VALUES (10000, 'admin', '21232f297a57a5a743894a0e4a801fc3', '22222222', '', '', '2019-04-24 09:53:53', '127.0.0.1', 539, '', '', 1, 0, '2015-11-13 15:14:22');
+INSERT INTO `system_user` VALUES (10000, 'admin', '21232f297a57a5a743894a0e4a801fc3', '22222222', '', '', '2019-04-26 14:12:08', '127.0.0.1', 540, '', '', 1, 0, '2015-11-13 15:14:22');
 INSERT INTO `system_user` VALUES (10001, 'test', '662af1cd1976f09a9f8cecc868ccc0a2', '', '', '', '2019-04-18 13:28:57', '127.0.0.1', 1, '1', '', 1, 0, '2019-04-18 13:28:23');
 
 -- ----------------------------
