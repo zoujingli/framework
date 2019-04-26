@@ -499,12 +499,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/zoujingli/ThinkLibrary.git",
-            "reference": "7fafc02fb63f0cc795a430322769db0b5e08bd32"
+            "reference": "6658977aa1b73792f7b8d491d967a2a6fb7a8557"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/7fafc02fb63f0cc795a430322769db0b5e08bd32",
-            "reference": "7fafc02fb63f0cc795a430322769db0b5e08bd32",
+            "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/6658977aa1b73792f7b8d491d967a2a6fb7a8557",
+            "reference": "6658977aa1b73792f7b8d491d967a2a6fb7a8557",
             "shasum": "",
             "mirrors": [
                 {
@@ -523,7 +523,7 @@
             "qiniu/php-sdk": "^7.2",
             "topthink/framework": "5.1.*"
         },
-        "time": "2019-04-24T09:58:55+00:00",
+        "time": "2019-04-25T06:25:37+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

@@ -207,14 +207,17 @@ if (!function_exists('emoji_clear')) {
 }
 
 // 注册跨域中间键
-\think\facade\Middleware::add(function (\think\Request $request, \Closure $next) {
+\think\facade\Middleware::add(function (\think\Request $request, \Closure $next, $header = []) {
     if (($origin = $request->header('origin', '*')) !== '*') {
-        header("Access-Control-Allow-Origin:{$origin}");
-        header('Access-Control-Allow-Methods:GET,POST');
-        header('Access-Control-Expose-Headers:User-Token-Csrf');
-        header('Access-Control-Allow-Headers:Content-Type,X-Requested-With');
+        $header['Access-Control-Allow-Origin'] = $origin;
+        $header['Access-Control-Allow-Methods'] = 'GET, POST, PATCH, PUT, DELETE';
+        $header['Access-Control-Allow-Headers'] = 'Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since, X-Requested-With';
+        $header['Access-Control-Expose-Headers'] = 'User-Token-Csrf';
     }
-    return $request->isOptions() ? response() : $next($request);
+    if ($request->isOptions()) {
+        return \think\Response::create()->code(204)->header($header);
+    }
+    return $next($request)->header($header);
 });
 
 // 注册系统常用指令
