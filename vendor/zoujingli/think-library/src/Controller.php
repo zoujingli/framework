@@ -64,10 +64,10 @@ class Controller extends \stdClass
     public function __destruct()
     {
         $this->request = request();
-        $active = $this->request->action();
+        $action = $this->request->action();
         $method = strtolower($this->request->method());
-        if (is_callable($callable = [$this, "_{$active}_{$method}"])) {
-            call_user_func_array($callable, $this->request->route());
+        if (method_exists($this, $callback = "_{$action}_{$method}")) {
+            call_user_func_array([$this, $callback], $this->request->route());
         }
     }
 
@@ -84,8 +84,8 @@ class Controller extends \stdClass
         if (class_exists($name = "library\\logic\\" . ucfirst(ltrim($method, '_')))) {
             return (new \ReflectionClass($name))->newInstanceArgs($arguments)->init($this);
         }
-        if (is_callable($callable = [$this, $method])) {
-            return call_user_func_array($callable, $arguments);
+        if (method_exists($this, $name)) {
+            return call_user_func_array([$this, $name], $arguments);
         }
         throw new \think\Exception('method not exists:' . get_class($this) . '->' . $method);
     }
