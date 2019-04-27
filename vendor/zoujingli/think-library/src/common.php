@@ -42,19 +42,6 @@ if (!function_exists('format_datetime')) {
     }
 }
 
-if (!function_exists('systoken')) {
-    /**
-     * 生成CSRF-TOKEN参数
-     * @param string $node
-     * @return string
-     */
-    function systoken($node = null)
-    {
-        $csrf = \library\tools\Csrf::buildFormToken($node);
-        return $csrf['token'];
-    }
-}
-
 if (!function_exists('sysconf')) {
     /**
      * 设备或配置系统参数
@@ -81,6 +68,19 @@ if (!function_exists('sysconf')) {
             }
         }
         return isset($data[$field]) ? (strtolower($raw) === 'raw' ? $data[$field] : htmlspecialchars($data[$field])) : '';
+    }
+}
+
+if (!function_exists('systoken')) {
+    /**
+     * 生成CSRF-TOKEN参数
+     * @param string $node
+     * @return string
+     */
+    function systoken($node = null)
+    {
+        $csrf = \library\tools\Csrf::buildFormToken($node);
+        return $csrf['token'];
     }
 }
 
@@ -148,61 +148,61 @@ if (!function_exists('data_batch_save')) {
 
 if (!function_exists('encode')) {
     /**
-     * UTF8 字符串加密
-     * @param string $string
+     * 加密 UTF8 字符串
+     * @param string $content
      * @return string
      */
-    function encode($string)
+    function encode($content)
     {
-        return \library\tools\Crypt::encode($string);
+        return \library\tools\Crypt::encode($content);
     }
 }
 
 if (!function_exists('decode')) {
     /**
-     * UTF8 字符串解密
-     * @param string $string
+     * 解密 UTF8 字符串
+     * @param string $content
      * @return string
      */
-    function decode($string)
+    function decode($content)
     {
-        return \library\tools\Crypt::decode($string);
+        return \library\tools\Crypt::decode($content);
     }
 }
 
 if (!function_exists('emoji_encode')) {
     /**
-     * Emoji 表情编码
-     * @param string $string
+     * 编码 Emoji 表情
+     * @param string $content
      * @return string
      */
-    function emoji_encode($string)
+    function emoji_encode($content)
     {
-        return \library\tools\Crypt::emojiEncode($string);
+        return \library\tools\Emoji::encode($content);
     }
 }
 
 if (!function_exists('emoji_decode')) {
     /**
-     * Emoji 表情解析
-     * @param string $string
+     * 解析 Emoji 表情
+     * @param string $content
      * @return string
      */
-    function emoji_decode($string)
+    function emoji_decode($content)
     {
-        return \library\tools\Crypt::emojiDecode($string);
+        return \library\tools\Emoji::decode($content);
     }
 }
 
 if (!function_exists('emoji_clear')) {
     /**
-     * Emoji 表情清除
-     * @param string $string
+     * 清除 Emoji 表情
+     * @param string $content
      * @return string
      */
-    function emoji_clear($string)
+    function emoji_clear($content)
     {
-        return \library\tools\Crypt::emojiClear($string);
+        return \library\tools\Emoji::clear($content);
     }
 }
 

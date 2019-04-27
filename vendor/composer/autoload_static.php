@@ -4,13 +4,13 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitdab077800ae233941678885585f6a0e0
+class ComposerStaticInit6f9f5f13241e49af6aeb9f9033cc0dc3
 {
     public static $files = array (
         '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
         '9b552a3cc426e3287cc811caefa3cf53' => __DIR__ . '/..' . '/topthink/think-helper/src/helper.php',
-        'cc56288302d9df745d97c934d6a6e5f0' => __DIR__ . '/..' . '/topthink/think-queue/src/common.php',
         '8dafcc6956460bc297e00381fed53e11' => __DIR__ . '/..' . '/zoujingli/think-library/src/common.php',
+        'cc56288302d9df745d97c934d6a6e5f0' => __DIR__ . '/..' . '/topthink/think-queue/src/common.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -310,6 +310,7 @@ class ComposerStaticInitdab077800ae233941678885585f6a0e0
         'library\\tools\\Csrf' => __DIR__ . '/..' . '/zoujingli/think-library/src/tools/Csrf.php',
         'library\\tools\\Csv' => __DIR__ . '/..' . '/zoujingli/think-library/src/tools/Csv.php',
         'library\\tools\\Data' => __DIR__ . '/..' . '/zoujingli/think-library/src/tools/Data.php',
+        'library\\tools\\Emoji' => __DIR__ . '/..' . '/zoujingli/think-library/src/tools/Emoji.php',
         'library\\tools\\Express' => __DIR__ . '/..' . '/zoujingli/think-library/src/tools/Express.php',
         'library\\tools\\Http' => __DIR__ . '/..' . '/zoujingli/think-library/src/tools/Http.php',
         'library\\tools\\Node' => __DIR__ . '/..' . '/zoujingli/think-library/src/tools/Node.php',
@@ -345,9 +346,9 @@ class ComposerStaticInitdab077800ae233941678885585f6a0e0
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitdab077800ae233941678885585f6a0e0::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitdab077800ae233941678885585f6a0e0::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitdab077800ae233941678885585f6a0e0::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit6f9f5f13241e49af6aeb9f9033cc0dc3::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit6f9f5f13241e49af6aeb9f9033cc0dc3::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit6f9f5f13241e49af6aeb9f9033cc0dc3::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -64,9 +64,10 @@ class Controller extends \stdClass
     public function __destruct()
     {
         $this->request = request();
-        list($active, $method) = [$this->request->action(), $this->request->method()];
-        if (method_exists($this, $callback = strtolower("_{$active}_{$method}"))) {
-            call_user_func_array([$this, $callback], $this->request->route());
+        $active = $this->request->action();
+        $method = strtolower($this->request->method());
+        if (is_callable($callable = [$this, "_{$active}_{$method}"])) {
+            call_user_func_array($callable, $this->request->route());
         }
     }
 
@@ -83,10 +84,22 @@ class Controller extends \stdClass
         if (class_exists($name = "library\\logic\\" . ucfirst(ltrim($method, '_')))) {
             return (new \ReflectionClass($name))->newInstanceArgs($arguments)->init($this);
         }
-        if (method_exists($this, $method)) {
-            return call_user_func_array([$this, $method], $arguments);
+        if (is_callable($callable = [$this, $method])) {
+            return call_user_func_array($callable, $arguments);
         }
         throw new \think\Exception('method not exists:' . get_class($this) . '->' . $method);
+    }
+
+    /**
+     * 返回失败的操作
+     * @param mixed $info 消息内容
+     * @param array $data 返回数据
+     * @param integer $code 返回代码
+     */
+    public function error($info, $data = [], $code = 0)
+    {
+        $result = ['code' => $code, 'info' => $info, 'data' => $data];
+        throw new \think\exception\HttpResponseException(json($result));
     }
 
     /**
@@ -99,18 +112,6 @@ class Controller extends \stdClass
     {
         $result = ['code' => $code, 'info' => $info, 'data' => $data];
         if ($this->_isCsrf) Csrf::clearFormToken(Csrf::getToken());
-        throw new \think\exception\HttpResponseException(json($result));
-    }
-
-    /**
-     * 返回失败的请求
-     * @param mixed $info 消息内容
-     * @param array $data 返回数据
-     * @param integer $code 返回代码
-     */
-    public function error($info, $data = [], $code = 0)
-    {
-        $result = ['code' => $code, 'info' => $info, 'data' => $data];
         throw new \think\exception\HttpResponseException(json($result));
     }
 
