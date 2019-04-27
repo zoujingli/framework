@@ -210,34 +210,29 @@ if (!function_exists('emoji_clear')) {
 \think\facade\Middleware::add(function (\think\Request $request, \Closure $next, $header = []) {
     if (($origin = $request->header('origin', '*')) !== '*') {
         $header['Access-Control-Allow-Origin'] = $origin;
-        $header['Access-Control-Allow-Methods'] = 'GET, POST, PATCH, PUT, DELETE';
-        $header['Access-Control-Allow-Headers'] = 'Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since, X-Requested-With';
+        $header['Access-Control-Allow-Methods'] = 'GET,POST,PATCH,PUT,DELETE';
+        $header['Access-Control-Allow-Headers'] = 'Authorization,Content-Type,If-Match,If-Modified-Since,If-None-Match,If-Unmodified-Since,X-Requested-With';
         $header['Access-Control-Expose-Headers'] = 'User-Token-Csrf';
     }
     if ($request->isOptions()) {
         return \think\Response::create()->code(204)->header($header);
+    } else {
+        return $next($request)->header($header);
     }
-    return $next($request)->header($header);
 });
 
 // 注册系统常用指令
 \think\Console::addDefaultCommands([
     'library\command\Sess',
-    'library\command\task\Stop',
-    'library\command\task\State',
-    'library\command\task\Start',
-    'library\command\task\Reset',
+    'library\command\task\Stop', 'library\command\task\State',
+    'library\command\task\Start', 'library\command\task\Reset',
     'library\command\sync\Admin',
-    'library\command\sync\Plugs',
-    'library\command\sync\Config',
-    'library\command\sync\Wechat',
-    'library\command\sync\Service',
+    'library\command\sync\Plugs', 'library\command\sync\Config',
+    'library\command\sync\Wechat', 'library\command\sync\Service',
 ]);
 
-// 动态加载模块配置文件
+// 动态加载模块配置
 if (function_exists('think\__include_file')) {
-    $ds = DIRECTORY_SEPARATOR;
-    foreach (glob(env('app_path') . "{$ds}*{$ds}sys.php") as $file) {
-        \think\__include_file($file);
-    }
+    $root = rtrim(str_replace('\\', '/', env('app_path')), '/');
+    foreach (glob("{$root}/*/sys.php") as $file) \think\__include_file($file);
 }

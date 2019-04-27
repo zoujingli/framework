@@ -68,12 +68,12 @@ class Http
             curl_setopt($curl, CURLOPT_HTTPHEADER, $options['headers']);
         }
         // Cookie 信息设置
+        if (!empty($options['cookie'])) {
+            curl_setopt($curl, CURLOPT_COOKIE, $options['cookie']);
+        }
         if (!empty($options['cookie_file'])) {
             curl_setopt($curl, CURLOPT_COOKIEJAR, $options['cookie_file']);
             curl_setopt($curl, CURLOPT_COOKIEFILE, $options['cookie_file']);
-        }
-        if (!empty($options['cookie'])) {
-            curl_setopt($curl, CURLOPT_COOKIE, $options['cookie']);
         }
         // POST 数据设置
         if (strtolower($method) === 'post') {
