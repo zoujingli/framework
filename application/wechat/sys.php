@@ -12,6 +12,9 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
+// 注册接口路由
+\think\facade\Route::rule('wechat/api.js', 'wechat/api.js/index');
+
 // 注册系统指令
 \think\Console::addDefaultCommands([
     'app\wechat\command\fans\FansAll',
@@ -19,6 +22,3 @@
     'app\wechat\command\fans\FansList',
     'app\wechat\command\fans\FansBlack',
 ]);
-
-// 注册接口路由
-\think\facade\Route::rule('wechat/api.js', 'wechat/api.js/index');
