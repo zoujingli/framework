@@ -44,18 +44,18 @@ class Express
     {
         // 异常规则
         if (empty($rule)) return [
-            'express_price' => 0.00, 'template_type' => '未知模板', 'express_desc' => '未匹配到邮费模板',
+            'express_price' => 0.00, 'express_type' => '未知模板', 'express_desc' => '未匹配到邮费模板',
         ];
         // 满减免邮
         if ($rule['order_reduction_state'] && $amount >= $rule['order_reduction_price']) {
             return [
-                'express_price' => 0.00, 'template_type' => $type,
+                'express_price' => 0.00, 'express_type' => $type,
                 'express_desc'  => "订单总金额满{$rule['order_reduction_price']}元减免全部邮费",
             ];
         }
         // 首重计费
         if ($number <= $rule['first_number']) return [
-            'express_price' => $rule['first_price'], 'template_type' => $type,
+            'express_price' => $rule['first_price'], 'express_type' => $type,
             'express_desc'  => "首件计费，{$rule['first_number']}件及{$rule['first_number']}以内计费{$rule['first_price']}元",
         ];
         // 续重计费
@@ -64,7 +64,7 @@ class Express
             $price2 = $rule['next_price'] * ceil(($number - $rule['first_number']) / $rule['next_number']);
         }
         return [
-            'express_price' => $price1 + $price2, 'template_type' => $type,
+            'express_price' => $price1 + $price2, 'express_type' => $type,
             'express_desc'  => "续件计费，超出{$rule['first_number']}件，首件费用{$rule['first_price']}元 + 续件费用{$price2}元",
         ];
     }
