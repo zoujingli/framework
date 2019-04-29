@@ -136,8 +136,13 @@ $(function () {
         this.reInit = function ($dom) {
             $.vali.listen(this);
             $dom = $dom || $(this.targetClass);
-            $dom.find('[required]').parent('label').addClass('label-required-prev');
-            $dom.find('[required]').parent().prevAll('label').addClass('label-required-next');
+            $dom.find('[required]').map(function ($parent) {
+                if (($parent = $(this).parent()) && $parent.is('label')) {
+                    $parent.addClass('label-required-prev')
+                } else {
+                    $parent.prevAll('label').addClass('label-required-next')
+                }
+            });
             $dom.find('[data-date-range]').map(function () {
                 laydate.render({range: true, elem: this});
                 this.setAttribute('autocomplete', 'off');
