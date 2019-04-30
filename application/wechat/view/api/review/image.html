@@ -5,7 +5,7 @@
 <div class="container">
     <div class="logo">A</div>
     <div class="content">
-        <img style="max-width:100%" src="{:input('content')}">
+        <img style="max-width:100%" src="{$content|default=''}">
     </div>
 </div>
 {/block}
