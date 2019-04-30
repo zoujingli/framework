@@ -17,7 +17,7 @@ namespace app\store\controller;
 use library\Controller;
 
 /**
- * 商城邮费省份管理
+ * 配送省份管理
  * Class Area
  * @package app\store\controller
  */
@@ -30,7 +30,7 @@ class ExpressProvince extends Controller
     protected $table = 'StoreExpressProvince';
 
     /**
-     * 邮费省份管理
+     * 配送省份管理
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -39,13 +39,13 @@ class ExpressProvince extends Controller
      */
     public function index()
     {
-        $this->title = '邮费省份管理';
+        $this->title = '配送省份管理';
         $this->_query($this->table)->like('title')->equal('status')->dateBetween('create_at')->order('sort asc,id desc')->page();
     }
 
 
     /**
-     * 添加邮费省份
+     * 添加配送省份
      */
     public function add()
     {
@@ -54,7 +54,7 @@ class ExpressProvince extends Controller
     }
 
     /**
-     * 编辑邮费省份
+     * 编辑配送省份
      */
     public function edit()
     {
@@ -63,7 +63,7 @@ class ExpressProvince extends Controller
     }
 
     /**
-     * 启用邮费省份
+     * 启用配送省份
      */
     public function resume()
     {
@@ -72,7 +72,7 @@ class ExpressProvince extends Controller
     }
 
     /**
-     * 禁用邮费省份
+     * 禁用配送省份
      */
     public function forbid()
     {
@@ -81,7 +81,7 @@ class ExpressProvince extends Controller
     }
 
     /**
-     * 删除邮费省份
+     * 删除配送省份
      */
     public function del()
     {

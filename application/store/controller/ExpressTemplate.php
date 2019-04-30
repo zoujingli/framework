@@ -29,7 +29,7 @@ class ExpressTemplate extends Controller
      */
     public function index()
     {
-        $this->title = '邮费规则管理';
+        $this->title = '邮费模板管理';
     }
 
     /**

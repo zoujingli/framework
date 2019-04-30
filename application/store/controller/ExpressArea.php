@@ -18,7 +18,7 @@ use library\Controller;
 use think\Db;
 
 /**
- * 商城区域管理
+ * 区域信息管理
  * Class Area
  * @package app\store\controller
  */
