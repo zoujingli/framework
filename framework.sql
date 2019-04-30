@@ -11,7 +11,7 @@
  Target Server Version : 50562
  File Encoding         : 65001
 
- Date: 30/04/2019 13:19:45
+ Date: 30/04/2019 17:23:53
 */
 
 SET NAMES utf8mb4;
@@ -35,7 +35,7 @@ CREATE TABLE `store_express_area`  (
   INDEX `index_store_express_area_level`(`level`) USING BTREE,
   INDEX `index_store_express_area_title`(`title`) USING BTREE,
   INDEX `index_store_express_area_pid`(`pid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3260 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商城-快递-地区';
+) ENGINE = InnoDB AUTO_INCREMENT = 3260 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商城-快递-地区' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of store_express_area
@@ -3272,7 +3272,7 @@ CREATE TABLE `store_express_company`  (
   `is_deleted` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '删除状态(1删除,0未删除)',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 95 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商城-快递-公司';
+) ENGINE = InnoDB AUTO_INCREMENT = 95 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商城-快递-公司' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of store_express_company
@@ -3381,7 +3381,7 @@ CREATE TABLE `store_express_province`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_store_express_province_title`(`title`) USING BTREE,
   INDEX `index_store_express_province_status`(`status`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3261 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商城-快递-省份';
+) ENGINE = InnoDB AUTO_INCREMENT = 3261 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商城-快递-省份' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of store_express_province
@@ -3435,7 +3435,7 @@ CREATE TABLE `store_express_template`  (
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_store_express_template_is_default`(`is_default`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商城-快递-模板';
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商城-快递-模板' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for store_goods
@@ -3462,7 +3462,7 @@ CREATE TABLE `store_goods`  (
   INDEX `index_store_goods_status`(`status`) USING BTREE,
   INDEX `index_store_goods_cate_id`(`cate_id`) USING BTREE,
   INDEX `index_store_goods_is_deleted`(`is_deleted`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品-记录';
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品-记录' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for store_goods_cate
@@ -3480,7 +3480,7 @@ CREATE TABLE `store_goods_cate`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_store_goods_cate_is_deleted`(`is_deleted`) USING BTREE,
   INDEX `index_store_goods_cate_status`(`status`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品-分类';
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品-分类' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for store_goods_list
@@ -3502,7 +3502,7 @@ CREATE TABLE `store_goods_list`  (
   INDEX `index_store_goods_list_id`(`goods_id`) USING BTREE,
   INDEX `index_store_goods_list_spec`(`goods_spec`) USING BTREE,
   INDEX `index_store_goods_list_status`(`status`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品-详情';
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品-详情' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for store_goods_stock
@@ -3517,7 +3517,7 @@ CREATE TABLE `store_goods_stock`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_store_goods_stock_gid`(`goods_id`) USING BTREE,
   INDEX `index_store_goods_stock_spec`(`goods_spec`(191)) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品-入库';
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品-入库' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for store_member
@@ -3537,7 +3537,7 @@ CREATE TABLE `store_member`  (
   INDEX `index_store_member_openid`(`openid`) USING BTREE,
   INDEX `index_store_member_phone`(`phone`) USING BTREE,
   INDEX `index_store_member_vip_level`(`vip_level`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员-记录';
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员-记录' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for store_member_address
@@ -3557,7 +3557,7 @@ CREATE TABLE `store_member_address`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_store_member_address_mid`(`mid`) USING BTREE,
   INDEX `index_store_member_address_is_default`(`is_default`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员-地址';
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员-地址' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for store_member_sms_history
@@ -3573,7 +3573,7 @@ CREATE TABLE `store_member_sms_history`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_store_member_sms_history_phone`(`phone`) USING BTREE,
   INDEX `index_store_member_sms_history_mid`(`mid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员-短信';
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '会员-短信' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for store_order
@@ -3624,7 +3624,7 @@ CREATE TABLE `store_order`  (
   INDEX `index_store_groups_order_refund_state`(`refund_state`) USING BTREE,
   INDEX `index_store_groups_order_status`(`status`) USING BTREE,
   INDEX `index_store_groups_order_pay_no`(`pay_no`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '订单-记录';
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '订单-记录' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for store_order_list
@@ -3651,7 +3651,7 @@ CREATE TABLE `store_order_list`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_store_goods_list_id`(`goods_id`) USING BTREE,
   INDEX `index_store_goods_list_spec`(`goods_spec`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '订单-详情';
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '订单-详情' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for store_profit_record
@@ -3667,7 +3667,7 @@ CREATE TABLE `store_profit_record`  (
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_store_member_phone`(`profit_price`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '拥金-记录';
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '拥金-记录' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for store_profit_used
@@ -3691,7 +3691,7 @@ CREATE TABLE `store_profit_used`  (
   INDEX `index_store_profit_used_mid`(`mid`) USING BTREE,
   INDEX `index_store_profit_used_appid`(`appid`) USING BTREE,
   INDEX `index_store_profit_used_status`(`status`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '拥金-提现';
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '拥金-提现' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for system_auth
@@ -3707,7 +3707,7 @@ CREATE TABLE `system_auth`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_system_auth_status`(`status`) USING BTREE,
   INDEX `index_system_auth_title`(`title`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-权限';
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-权限' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for system_auth_node
@@ -3720,7 +3720,7 @@ CREATE TABLE `system_auth_node`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_system_auth_auth`(`auth`) USING BTREE,
   INDEX `index_system_auth_node`(`node`(191)) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-权限-授权';
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-权限-授权' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for system_config
@@ -3732,7 +3732,7 @@ CREATE TABLE `system_config`  (
   `value` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '配置值',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_system_config_name`(`name`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 70 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-配置';
+) ENGINE = InnoDB AUTO_INCREMENT = 70 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-配置' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of system_config
@@ -3792,7 +3792,7 @@ CREATE TABLE `system_data`  (
   `value` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '配置值',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_system_data_name`(`name`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-数据';
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-数据' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of system_data
@@ -3819,7 +3819,7 @@ CREATE TABLE `system_jobs`  (
   INDEX `index_system_jobs_available_at`(`available_at`) USING BTREE,
   INDEX `index_system_jobs_create_at`(`created_at`) USING BTREE,
   INDEX `index_system_jobs_queue`(`queue`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-任务';
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-任务' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for system_jobs_log
@@ -3839,7 +3839,7 @@ CREATE TABLE `system_jobs_log`  (
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_system_jobs_log_status`(`status`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-任务-日志';
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-任务-日志' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for system_log
@@ -3854,7 +3854,13 @@ CREATE TABLE `system_log`  (
   `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '操作人用户名',
   `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-日志';
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-日志' ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of system_log
+-- ----------------------------
+INSERT INTO `system_log` VALUES (1, 'admin/login/index', '127.0.0.1', '系统管理', '用户登录系统成功', 'admin', '2019-04-30 13:49:46');
+INSERT INTO `system_log` VALUES (2, 'admin/login/index', '127.0.0.1', '系统管理', '用户登录系统成功', 'admin', '2019-04-30 17:14:22');
 
 -- ----------------------------
 -- Table structure for system_menu
@@ -3875,7 +3881,7 @@ CREATE TABLE `system_menu`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_system_menu_node`(`node`(191)) USING BTREE,
   INDEX `index_system_menu_status`(`status`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 54 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-菜单';
+) ENGINE = InnoDB AUTO_INCREMENT = 54 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-菜单' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of system_menu
@@ -3909,7 +3915,7 @@ INSERT INTO `system_menu` VALUES (37, 0, '开放平台', '', '', '#', '', '_self
 INSERT INTO `system_menu` VALUES (38, 40, '开放平台配置', '', 'layui-icon layui-icon-set', 'service/config/index', '', '_self', 0, 1, '2018-12-28 13:29:44');
 INSERT INTO `system_menu` VALUES (39, 40, '公众授权管理', '', 'layui-icon layui-icon-template-1', 'service/index/index', '', '_self', 0, 1, '2018-12-28 13:30:07');
 INSERT INTO `system_menu` VALUES (40, 37, '开放平台管理', '', '', '#', '', '_self', 0, 1, '2018-12-28 16:05:46');
-INSERT INTO `system_menu` VALUES (42, 48, '会员信息管理', '', 'layui-icon layui-icon-username', 'store/member/index', '', '_self', 50, 1, '2019-01-22 14:24:23');
+INSERT INTO `system_menu` VALUES (42, 48, '会员信息管理', '', 'layui-icon layui-icon-user', 'store/member/index', '', '_self', 50, 1, '2019-01-22 14:24:23');
 INSERT INTO `system_menu` VALUES (43, 48, '订单记录管理', '', 'layui-icon layui-icon-template-1', 'store/order/index', '', '_self', 40, 1, '2019-01-22 14:46:22');
 INSERT INTO `system_menu` VALUES (44, 48, '商品分类管理', '', 'layui-icon layui-icon-app', 'store/goods_cate/index', '', '_self', 20, 1, '2019-01-23 10:41:06');
 INSERT INTO `system_menu` VALUES (45, 47, '商城参数配置', '', 'layui-icon layui-icon-set', 'store/config/index', '', '_self', 10, 1, '2019-01-24 16:47:33');
@@ -3940,7 +3946,7 @@ CREATE TABLE `system_message`  (
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_system_message_code`(`code`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-消息';
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-消息' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for system_node
@@ -3959,141 +3965,120 @@ CREATE TABLE `system_node`  (
   INDEX `index_system_node_is_menu`(`is_menu`) USING BTREE,
   INDEX `index_system_node_is_auth`(`is_auth`) USING BTREE,
   INDEX `index_system_node_is_login`(`is_login`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 218 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-节点';
+) ENGINE = InnoDB AUTO_INCREMENT = 110 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-节点' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of system_node
 -- ----------------------------
-INSERT INTO `system_node` VALUES (1, 'admin', '系统管理', 0, 1, 1, '2018-09-06 14:20:42');
-INSERT INTO `system_node` VALUES (2, 'admin/menu', '菜单管理', 0, 1, 1, '2018-09-06 14:23:01');
-INSERT INTO `system_node` VALUES (3, 'admin/menu/index', '菜单列表', 1, 1, 1, '2018-09-06 14:23:01');
-INSERT INTO `system_node` VALUES (4, 'admin/menu/edit', '编辑菜单', 0, 1, 1, '2018-09-06 14:23:01');
-INSERT INTO `system_node` VALUES (5, 'admin/menu/add', '添加菜单', 0, 1, 1, '2018-09-06 14:23:01');
-INSERT INTO `system_node` VALUES (6, 'admin/menu/resume', '启用菜单', 0, 1, 1, '2018-09-06 14:23:01');
-INSERT INTO `system_node` VALUES (7, 'admin/menu/forbid', '禁用菜单', 0, 1, 1, '2018-09-06 14:23:02');
-INSERT INTO `system_node` VALUES (8, 'admin/menu/del', '删除菜单', 0, 1, 1, '2018-09-06 14:23:02');
-INSERT INTO `system_node` VALUES (9, 'admin/node/index', '节点列表', 1, 1, 1, '2018-09-06 14:24:20');
-INSERT INTO `system_node` VALUES (10, 'admin/node/clear', '清理节点', 0, 1, 1, '2018-09-06 14:24:20');
-INSERT INTO `system_node` VALUES (11, 'admin/node/save', '更新节点', 0, 1, 1, '2018-09-06 14:24:20');
-INSERT INTO `system_node` VALUES (12, 'admin/user/index', '用户列表', 1, 1, 1, '2018-09-06 14:24:21');
-INSERT INTO `system_node` VALUES (13, 'admin/user/auth', '用户授权', 0, 1, 1, '2018-09-06 14:24:21');
-INSERT INTO `system_node` VALUES (14, 'admin/user/add', '添加用户', 0, 1, 1, '2018-09-06 14:24:21');
-INSERT INTO `system_node` VALUES (15, 'admin/user/edit', '编辑用户', 0, 1, 1, '2018-09-06 14:24:21');
-INSERT INTO `system_node` VALUES (16, 'admin/user/pass', '修改密码', 0, 1, 1, '2018-09-06 14:24:22');
-INSERT INTO `system_node` VALUES (17, 'admin/user/del', '删除用户', 0, 1, 1, '2018-09-06 14:24:22');
-INSERT INTO `system_node` VALUES (18, 'admin/user/forbid', '禁用用户', 0, 1, 1, '2018-09-06 14:24:22');
-INSERT INTO `system_node` VALUES (19, 'admin/user/resume', '启用用户', 0, 1, 1, '2018-09-06 14:24:22');
-INSERT INTO `system_node` VALUES (20, 'admin/node', '节点管理', 0, 1, 1, '2018-09-06 14:35:36');
-INSERT INTO `system_node` VALUES (21, 'admin/user', '用户管理', 0, 1, 1, '2018-09-06 14:36:09');
-INSERT INTO `system_node` VALUES (22, 'admin/auth', '权限管理', 0, 1, 1, '2018-09-06 15:16:10');
-INSERT INTO `system_node` VALUES (23, 'admin/auth/index', '权限列表', 1, 1, 1, '2018-09-06 15:16:10');
-INSERT INTO `system_node` VALUES (24, 'admin/auth/apply', '节点授权', 0, 1, 1, '2018-09-06 15:16:10');
-INSERT INTO `system_node` VALUES (25, 'admin/auth/add', '添加授权', 0, 1, 1, '2018-09-06 15:16:10');
-INSERT INTO `system_node` VALUES (26, 'admin/auth/edit', '编辑权限', 0, 1, 1, '2018-09-06 15:16:10');
-INSERT INTO `system_node` VALUES (27, 'admin/auth/forbid', '禁用权限', 0, 1, 1, '2018-09-06 15:16:11');
-INSERT INTO `system_node` VALUES (28, 'admin/auth/resume', '启用权限', 0, 1, 1, '2018-09-06 15:16:11');
-INSERT INTO `system_node` VALUES (29, 'admin/auth/del', '删除权限', 0, 1, 1, '2018-09-06 15:16:11');
-INSERT INTO `system_node` VALUES (30, 'admin/config', '参数配置', 0, 1, 1, '2018-09-06 16:41:18');
-INSERT INTO `system_node` VALUES (32, 'admin/config/file', '文件存储', 1, 1, 1, '2018-09-06 16:41:19');
-INSERT INTO `system_node` VALUES (34, 'admin/config/info', '系统信息', 1, 1, 1, '2018-09-06 16:42:10');
-INSERT INTO `system_node` VALUES (36, 'store/goods/index', '商品列表', 1, 1, 1, '2018-10-12 13:54:45');
-INSERT INTO `system_node` VALUES (37, 'store/goods/add', '添加商品', 0, 1, 1, '2018-10-12 13:54:45');
-INSERT INTO `system_node` VALUES (38, 'store/goods/edit', '编辑商品', 0, 1, 1, '2018-10-12 13:54:46');
-INSERT INTO `system_node` VALUES (39, 'store', '商城管理', 0, 1, 1, '2018-10-12 13:54:53');
-INSERT INTO `system_node` VALUES (40, 'store/goods', '商品管理', 0, 1, 1, '2018-10-12 13:55:20');
-INSERT INTO `system_node` VALUES (41, 'store/goods/forbid', '禁用商品', 0, 1, 1, '2018-10-12 16:49:02');
-INSERT INTO `system_node` VALUES (42, 'store/goods/resume', '启用商品', 0, 1, 1, '2018-10-16 18:31:42');
-INSERT INTO `system_node` VALUES (43, 'store/goods/del', '删除商品', 0, 1, 1, '2018-10-16 18:31:50');
-INSERT INTO `system_node` VALUES (44, 'store/goods/stock', '商品入库', 0, 1, 1, '2018-10-22 17:58:37');
-INSERT INTO `system_node` VALUES (45, 'wechat', '微信模块', 0, 1, 1, '2018-10-31 15:13:55');
-INSERT INTO `system_node` VALUES (46, 'wechat/config', '微信配置', 0, 1, 1, '2018-10-31 15:14:00');
-INSERT INTO `system_node` VALUES (51, 'wechat/config/payment', '微信支付', 1, 1, 1, '2018-11-01 11:19:37');
-INSERT INTO `system_node` VALUES (53, 'wechat/config/options', '授权配置', 1, 1, 1, '2018-11-01 11:27:55');
-INSERT INTO `system_node` VALUES (54, 'wechat/news/index', '图文列表', 1, 1, 1, '2018-11-13 11:45:46');
-INSERT INTO `system_node` VALUES (56, 'wechat/news/select', '选择图文', 0, 1, 1, '2018-11-13 11:45:46');
-INSERT INTO `system_node` VALUES (57, 'wechat/news/add', '添加图文', 0, 1, 1, '2018-11-13 11:45:47');
-INSERT INTO `system_node` VALUES (58, 'wechat/news/edit', '编辑图文', 0, 1, 1, '2018-11-13 11:45:47');
-INSERT INTO `system_node` VALUES (59, 'wechat/news/del', '删除图文', 0, 1, 1, '2018-11-13 11:45:47');
-INSERT INTO `system_node` VALUES (61, 'wechat/fans/index', '粉丝列表', 1, 1, 1, '2018-11-15 09:50:28');
-INSERT INTO `system_node` VALUES (62, 'wechat/fans', '微信粉丝', 0, 1, 1, '2018-11-15 09:50:34');
-INSERT INTO `system_node` VALUES (63, 'wechat/news', '微信图文', 0, 1, 1, '2018-11-15 11:31:16');
-INSERT INTO `system_node` VALUES (64, 'wechat/fans/sync', '同步粉丝', 0, 1, 1, '2018-11-22 11:27:26');
-INSERT INTO `system_node` VALUES (65, 'wechat/keys/index', '回复规则列表', 1, 1, 1, '2018-11-22 11:27:27');
-INSERT INTO `system_node` VALUES (66, 'wechat/keys/add', '添加回复规则', 0, 1, 1, '2018-11-22 11:27:27');
-INSERT INTO `system_node` VALUES (67, 'wechat/keys/edit', '编辑回复规则', 0, 1, 1, '2018-11-22 11:27:27');
-INSERT INTO `system_node` VALUES (68, 'wechat/keys/del', '删除回复规则', 0, 1, 1, '2018-11-22 11:27:27');
-INSERT INTO `system_node` VALUES (69, 'wechat/keys/forbid', '禁用回复规则', 0, 1, 1, '2018-11-22 11:27:27');
-INSERT INTO `system_node` VALUES (70, 'wechat/keys/resume', '启用回复规则', 0, 1, 1, '2018-11-22 11:27:28');
-INSERT INTO `system_node` VALUES (71, 'wechat/keys', '回复规则管理', 0, 1, 1, '2018-11-23 10:26:06');
-INSERT INTO `system_node` VALUES (72, 'wechat/keys/subscribe', '关注回复规则', 1, 1, 1, '2018-11-27 11:43:27');
-INSERT INTO `system_node` VALUES (73, 'wechat/keys/defaults', '默认回复规则', 1, 1, 1, '2018-11-27 11:43:27');
-INSERT INTO `system_node` VALUES (74, 'wechat/fans/setblack', '拉黑粉丝', 0, 1, 1, '2018-11-27 16:23:21');
-INSERT INTO `system_node` VALUES (75, 'wechat/fans/delblack', '取消拉黑', 0, 1, 1, '2018-11-27 16:23:21');
-INSERT INTO `system_node` VALUES (76, 'wechat/menu/index', '微信菜单显示', 1, 1, 1, '2018-11-27 17:56:28');
-INSERT INTO `system_node` VALUES (77, 'wechat/menu/edit', '更新微信菜单', 0, 1, 1, '2018-11-27 17:56:28');
-INSERT INTO `system_node` VALUES (78, 'wechat/menu/cancel', '取消微信菜单', 0, 1, 1, '2018-11-27 17:56:29');
-INSERT INTO `system_node` VALUES (79, 'wechat/menu', '微信菜单管理', 0, 1, 1, '2018-11-28 16:03:03');
-INSERT INTO `system_node` VALUES (80, 'admin/queue/index', '任务列表', 1, 1, 1, '2018-11-29 11:12:54');
-INSERT INTO `system_node` VALUES (81, 'admin/queue', '任务管理', 0, 1, 1, '2018-11-29 11:13:05');
-INSERT INTO `system_node` VALUES (82, 'admin/queue/redo', '重启任务', 0, 1, 1, '2018-11-29 15:17:43');
-INSERT INTO `system_node` VALUES (83, 'admin/queue/del', '删除任务', 0, 1, 1, '2018-12-04 15:16:59');
-INSERT INTO `system_node` VALUES (114, 'admin/message/index', '消息管理', 1, 1, 1, '2018-12-24 14:03:09');
-INSERT INTO `system_node` VALUES (115, 'admin/message', '消息管理', 0, 1, 1, '2018-12-24 14:03:14');
-INSERT INTO `system_node` VALUES (116, 'admin/message/state', '消息状态', 0, 1, 1, '2018-12-24 18:41:37');
-INSERT INTO `system_node` VALUES (117, 'admin/message/del', '删除消息', 0, 1, 1, '2018-12-24 18:41:37');
-INSERT INTO `system_node` VALUES (118, 'service', '开放平台', 0, 1, 1, '2018-12-28 13:27:38');
-INSERT INTO `system_node` VALUES (119, 'service/config', '开放平台', 0, 1, 1, '2018-12-28 13:27:41');
-INSERT INTO `system_node` VALUES (120, 'service/config/index', '开放平台配置', 1, 1, 1, '2018-12-28 13:27:42');
-INSERT INTO `system_node` VALUES (121, 'service/index/index', '公众号授权列表', 1, 1, 1, '2018-12-28 13:27:42');
-INSERT INTO `system_node` VALUES (122, 'service/index/sync', '同步公众号授权', 0, 1, 1, '2018-12-28 13:27:42');
-INSERT INTO `system_node` VALUES (123, 'service/index/syncall', '公众号所有授权', 0, 1, 1, '2018-12-28 13:27:43');
-INSERT INTO `system_node` VALUES (124, 'service/index/del', '删除公众号授权', 0, 1, 1, '2018-12-28 13:27:43');
-INSERT INTO `system_node` VALUES (125, 'service/index/forbid', '禁用公众号授权', 0, 1, 1, '2018-12-28 13:27:43');
-INSERT INTO `system_node` VALUES (126, 'service/index/resume', '启用公众号授权', 0, 1, 1, '2018-12-28 13:27:43');
-INSERT INTO `system_node` VALUES (127, 'service/index', '公众号授权管理', 0, 1, 1, '2018-12-28 13:27:59');
-INSERT INTO `system_node` VALUES (147, 'admin/message/clear', '清理消息', 0, 1, 1, '2019-01-05 13:23:49');
-INSERT INTO `system_node` VALUES (148, 'admin/message/onoff', '消息开关', 0, 1, 1, '2019-01-05 13:23:49');
-INSERT INTO `system_node` VALUES (156, 'store/member/index', '商城会员管理', 1, 1, 1, '2019-01-22 14:23:55');
-INSERT INTO `system_node` VALUES (157, 'store/member', '商城会员管理', 0, 1, 1, '2019-01-22 14:24:02');
-INSERT INTO `system_node` VALUES (158, 'store/order/index', '商城订单管理', 1, 1, 1, '2019-01-22 14:45:52');
-INSERT INTO `system_node` VALUES (159, 'store/order', '商城订单管理', 0, 1, 1, '2019-01-22 14:45:59');
-INSERT INTO `system_node` VALUES (160, 'store/goods_cate/index', '商品分类管理', 1, 1, 1, '2019-01-23 10:39:54');
-INSERT INTO `system_node` VALUES (161, 'store/goods_cate/add', '添加商品分类', 0, 1, 1, '2019-01-23 10:39:54');
-INSERT INTO `system_node` VALUES (162, 'store/goods_cate/edit', '编辑商品分类', 0, 1, 1, '2019-01-23 10:39:54');
-INSERT INTO `system_node` VALUES (163, 'store/goods_cate/forbid', '禁用商品分类', 0, 1, 1, '2019-01-23 10:39:55');
-INSERT INTO `system_node` VALUES (164, 'store/goods_cate/resume', '启用商品分类', 0, 1, 1, '2019-01-23 10:39:55');
-INSERT INTO `system_node` VALUES (165, 'store/goods_cate/del', '删除商品分类', 0, 1, 1, '2019-01-23 10:39:55');
-INSERT INTO `system_node` VALUES (166, 'store/goods_cate', '商品分类', 0, 1, 1, '2019-01-23 10:40:01');
-INSERT INTO `system_node` VALUES (167, 'store/config/index', '商城配置', 1, 1, 1, '2019-01-24 16:47:01');
-INSERT INTO `system_node` VALUES (168, 'store/config', '商城配置', 0, 1, 1, '2019-01-24 16:47:09');
-INSERT INTO `system_node` VALUES (169, 'store/message/index', '短信消息', 1, 1, 1, '2019-01-24 18:09:05');
-INSERT INTO `system_node` VALUES (170, 'store/message', '短信消息', 0, 1, 1, '2019-01-24 18:09:12');
-INSERT INTO `system_node` VALUES (171, 'admin/log/index', '日志管理列表', 1, 1, 1, '2019-02-18 12:56:07');
-INSERT INTO `system_node` VALUES (172, 'admin/log/del', '删除日志管理', 0, 1, 1, '2019-02-18 12:56:07');
-INSERT INTO `system_node` VALUES (173, 'admin/log', '系统日志管理', 0, 1, 1, '2019-02-18 12:56:15');
-INSERT INTO `system_node` VALUES (176, 'wechat/fans/del', '删除粉丝', 0, 1, 1, '2019-03-18 10:58:10');
-INSERT INTO `system_node` VALUES (177, 'service/index/clearquota', '清空调用次数', 0, 1, 1, '2019-03-30 16:39:17');
-INSERT INTO `system_node` VALUES (184, 'store/order/express', '商城订单发货', 0, 1, 1, '2019-04-01 17:09:30');
-INSERT INTO `system_node` VALUES (185, 'store/order/expressquery', '商城快递查询', 0, 1, 1, '2019-04-01 17:09:30');
-INSERT INTO `system_node` VALUES (193, 'store/express_area/index', '区域信息管理', 1, 1, 1, '2019-04-23 13:10:58');
-INSERT INTO `system_node` VALUES (194, 'store/express_area/add', '添加区域信息', 0, 1, 1, '2019-04-23 13:10:58');
-INSERT INTO `system_node` VALUES (195, 'store/express_area/edit', '编辑区域信息', 0, 1, 1, '2019-04-23 13:10:59');
-INSERT INTO `system_node` VALUES (196, 'store/express_area/resume', '启用区域信息', 0, 1, 1, '2019-04-23 13:10:59');
-INSERT INTO `system_node` VALUES (197, 'store/express_area/forbid', '禁用区域信息', 0, 1, 1, '2019-04-23 13:10:59');
-INSERT INTO `system_node` VALUES (198, 'store/express_area/del', '删除区域信息', 0, 1, 1, '2019-04-23 13:10:59');
-INSERT INTO `system_node` VALUES (199, 'store/express_company/index', '快递公司管理', 1, 1, 1, '2019-04-23 13:10:59');
-INSERT INTO `system_node` VALUES (200, 'store/express_company/add', '添加快递公司', 0, 1, 1, '2019-04-23 13:10:59');
-INSERT INTO `system_node` VALUES (201, 'store/express_company/edit', '编辑快递公司', 0, 1, 1, '2019-04-23 13:11:00');
-INSERT INTO `system_node` VALUES (202, 'store/express_company/forbid', '禁用快递公司', 0, 1, 1, '2019-04-23 13:11:00');
-INSERT INTO `system_node` VALUES (203, 'store/express_company/resume', '启用快递公司', 0, 1, 1, '2019-04-23 13:11:00');
-INSERT INTO `system_node` VALUES (204, 'store/express_company/del', '删除快递公司', 0, 1, 1, '2019-04-23 13:11:00');
-INSERT INTO `system_node` VALUES (205, 'store/express_template/index', '邮费模板管理', 1, 1, 1, '2019-04-23 13:16:05');
-INSERT INTO `system_node` VALUES (211, 'store/express_province/index', '邮费省份管理', 1, 1, 1, '2019-04-24 14:46:34');
-INSERT INTO `system_node` VALUES (212, 'store/express_province/add', '添加邮费省份', 0, 1, 1, '2019-04-24 14:46:35');
-INSERT INTO `system_node` VALUES (213, 'store/express_province/edit', '编辑邮费省份', 0, 1, 1, '2019-04-24 14:46:35');
-INSERT INTO `system_node` VALUES (214, 'store/express_province/resume', '启用邮费省份', 0, 1, 1, '2019-04-24 14:46:35');
-INSERT INTO `system_node` VALUES (215, 'store/express_province/forbid', '禁用邮费省份', 0, 1, 1, '2019-04-24 14:46:35');
-INSERT INTO `system_node` VALUES (216, 'store/express_province/del', '删除邮费省份', 0, 1, 1, '2019-04-24 14:46:35');
+INSERT INTO `system_node` VALUES (1, 'admin', '系统管理', 0, 1, 1, '2019-04-30 17:18:30');
+INSERT INTO `system_node` VALUES (2, 'admin/auth/index', '系统权限管理', 1, 1, 1, '2019-04-30 17:18:32');
+INSERT INTO `system_node` VALUES (3, 'admin/auth/apply', '权限配置节点', 0, 1, 1, '2019-04-30 17:18:33');
+INSERT INTO `system_node` VALUES (4, 'admin/auth/add', '添加系统权限', 0, 1, 1, '2019-04-30 17:18:33');
+INSERT INTO `system_node` VALUES (5, 'admin/auth/edit', '编辑系统权限', 0, 1, 1, '2019-04-30 17:18:33');
+INSERT INTO `system_node` VALUES (6, 'admin/auth/forbid', '禁用系统权限', 0, 1, 1, '2019-04-30 17:18:33');
+INSERT INTO `system_node` VALUES (7, 'admin/auth/resume', '启用系统权限', 0, 1, 1, '2019-04-30 17:18:33');
+INSERT INTO `system_node` VALUES (8, 'admin/auth/del', '删除系统权限', 0, 1, 1, '2019-04-30 17:18:33');
+INSERT INTO `system_node` VALUES (9, 'admin/config/info', '系统参数配置', 1, 1, 1, '2019-04-30 17:18:34');
+INSERT INTO `system_node` VALUES (10, 'admin/config/file', '文件存储配置', 1, 1, 1, '2019-04-30 17:18:34');
+INSERT INTO `system_node` VALUES (11, 'admin/log/index', '系统操作日志', 1, 1, 1, '2019-04-30 17:18:35');
+INSERT INTO `system_node` VALUES (12, 'admin/log/del', '删除系统日志', 0, 1, 1, '2019-04-30 17:18:35');
+INSERT INTO `system_node` VALUES (13, 'admin/menu/index', '系统菜单管理', 1, 1, 1, '2019-04-30 17:18:36');
+INSERT INTO `system_node` VALUES (14, 'admin/menu/add', '添加系统菜单', 0, 1, 1, '2019-04-30 17:18:36');
+INSERT INTO `system_node` VALUES (15, 'admin/menu/edit', '编辑系统菜单', 0, 1, 1, '2019-04-30 17:18:37');
+INSERT INTO `system_node` VALUES (16, 'admin/menu/resume', '启用系统菜单', 0, 1, 1, '2019-04-30 17:18:37');
+INSERT INTO `system_node` VALUES (17, 'admin/menu/forbid', '禁用系统菜单', 0, 1, 1, '2019-04-30 17:18:37');
+INSERT INTO `system_node` VALUES (18, 'admin/menu/del', '删除系统菜单', 0, 1, 1, '2019-04-30 17:18:37');
+INSERT INTO `system_node` VALUES (19, 'admin/message/index', '', 1, 1, 1, '2019-04-30 17:18:38');
+INSERT INTO `system_node` VALUES (20, 'admin/message/state', '设置消息状态', 0, 1, 1, '2019-04-30 17:18:38');
+INSERT INTO `system_node` VALUES (21, 'admin/message/del', '删除系统消息', 0, 1, 1, '2019-04-30 17:18:38');
+INSERT INTO `system_node` VALUES (22, 'admin/message/clear', '清理所有消息', 0, 1, 1, '2019-04-30 17:18:38');
+INSERT INTO `system_node` VALUES (23, 'admin/message/onoff', '设置消息开关', 0, 1, 1, '2019-04-30 17:18:38');
+INSERT INTO `system_node` VALUES (24, 'admin/node/index', '系统节点管理', 1, 1, 1, '2019-04-30 17:18:40');
+INSERT INTO `system_node` VALUES (25, 'admin/node/clear', '清理无效的节点', 0, 1, 1, '2019-04-30 17:18:40');
+INSERT INTO `system_node` VALUES (26, 'admin/node/save', '更新节点数据', 0, 1, 1, '2019-04-30 17:18:40');
+INSERT INTO `system_node` VALUES (27, 'admin/queue/index', '系统消息任务', 1, 1, 1, '2019-04-30 17:18:40');
+INSERT INTO `system_node` VALUES (28, 'admin/queue/redo', '重置失败的任务', 0, 1, 1, '2019-04-30 17:18:41');
+INSERT INTO `system_node` VALUES (29, 'admin/queue/del', '删除消息任务', 0, 1, 1, '2019-04-30 17:18:41');
+INSERT INTO `system_node` VALUES (30, 'admin/user/index', '系统用户管理', 1, 1, 1, '2019-04-30 17:18:42');
+INSERT INTO `system_node` VALUES (31, 'admin/user/auth', '用户授权管理', 0, 1, 1, '2019-04-30 17:18:42');
+INSERT INTO `system_node` VALUES (32, 'admin/user/add', '添加系统用户', 0, 1, 1, '2019-04-30 17:18:42');
+INSERT INTO `system_node` VALUES (33, 'admin/user/edit', '编辑系统用户', 0, 1, 1, '2019-04-30 17:18:43');
+INSERT INTO `system_node` VALUES (34, 'admin/user/pass', '修改用户密码', 0, 1, 1, '2019-04-30 17:18:43');
+INSERT INTO `system_node` VALUES (35, 'admin/user/del', '删除系统用户', 0, 1, 1, '2019-04-30 17:18:43');
+INSERT INTO `system_node` VALUES (36, 'admin/user/forbid', '禁用系统用户', 0, 1, 1, '2019-04-30 17:18:43');
+INSERT INTO `system_node` VALUES (37, 'admin/user/resume', '启用系统用户', 0, 1, 1, '2019-04-30 17:18:43');
+INSERT INTO `system_node` VALUES (38, 'service', '开放平台', 0, 1, 1, '2019-04-30 17:20:46');
+INSERT INTO `system_node` VALUES (39, 'service/config/index', '开放平台参数配置', 1, 1, 1, '2019-04-30 17:20:47');
+INSERT INTO `system_node` VALUES (40, 'service/index/index', '授权公众号管理', 1, 1, 1, '2019-04-30 17:20:48');
+INSERT INTO `system_node` VALUES (41, 'service/index/clearquota', '清理调用次数', 0, 1, 1, '2019-04-30 17:20:48');
+INSERT INTO `system_node` VALUES (42, 'service/index/sync', '同步指定授权公众号', 0, 1, 1, '2019-04-30 17:20:48');
+INSERT INTO `system_node` VALUES (43, 'service/index/syncall', '同步所有授权公众号', 0, 1, 1, '2019-04-30 17:20:49');
+INSERT INTO `system_node` VALUES (44, 'service/index/del', '删除公众号授权', 0, 1, 1, '2019-04-30 17:20:49');
+INSERT INTO `system_node` VALUES (45, 'service/index/forbid', '禁用公众号授权', 0, 1, 1, '2019-04-30 17:20:49');
+INSERT INTO `system_node` VALUES (46, 'service/index/resume', '启用公众号授权', 0, 1, 1, '2019-04-30 17:20:49');
+INSERT INTO `system_node` VALUES (47, 'store', '商城管理', 0, 1, 1, '2019-04-30 17:20:56');
+INSERT INTO `system_node` VALUES (48, 'store/config/index', '商城参数配置', 1, 1, 1, '2019-04-30 17:20:57');
+INSERT INTO `system_node` VALUES (49, 'store/express_area/index', '区域信息管理', 1, 1, 1, '2019-04-30 17:20:58');
+INSERT INTO `system_node` VALUES (50, 'store/express_area/add', '添加区域信息', 0, 1, 1, '2019-04-30 17:20:58');
+INSERT INTO `system_node` VALUES (51, 'store/express_area/edit', '编辑区域信息', 0, 1, 1, '2019-04-30 17:20:58');
+INSERT INTO `system_node` VALUES (52, 'store/express_area/resume', '启用区域信息', 0, 1, 1, '2019-04-30 17:20:58');
+INSERT INTO `system_node` VALUES (53, 'store/express_area/forbid', '禁用区域信息', 0, 1, 1, '2019-04-30 17:20:58');
+INSERT INTO `system_node` VALUES (54, 'store/express_area/del', '删除区域信息', 0, 1, 1, '2019-04-30 17:20:58');
+INSERT INTO `system_node` VALUES (55, 'store/express_company/index', '快递公司管理', 1, 1, 1, '2019-04-30 17:20:59');
+INSERT INTO `system_node` VALUES (56, 'store/express_company/add', '添加快递公司', 0, 1, 1, '2019-04-30 17:20:59');
+INSERT INTO `system_node` VALUES (57, 'store/express_company/edit', '编辑快递公司', 0, 1, 1, '2019-04-30 17:20:59');
+INSERT INTO `system_node` VALUES (58, 'store/express_company/forbid', '禁用快递公司', 0, 1, 1, '2019-04-30 17:20:59');
+INSERT INTO `system_node` VALUES (59, 'store/express_company/resume', '启用快递公司', 0, 1, 1, '2019-04-30 17:20:59');
+INSERT INTO `system_node` VALUES (60, 'store/express_company/del', '删除快递公司', 0, 1, 1, '2019-04-30 17:20:59');
+INSERT INTO `system_node` VALUES (61, 'store/express_province/index', '配送省份管理', 1, 1, 1, '2019-04-30 17:21:00');
+INSERT INTO `system_node` VALUES (62, 'store/express_province/add', '添加配送省份', 0, 1, 1, '2019-04-30 17:21:00');
+INSERT INTO `system_node` VALUES (63, 'store/express_province/edit', '编辑配送省份', 0, 1, 1, '2019-04-30 17:21:00');
+INSERT INTO `system_node` VALUES (64, 'store/express_province/resume', '启用配送省份', 0, 1, 1, '2019-04-30 17:21:00');
+INSERT INTO `system_node` VALUES (65, 'store/express_province/forbid', '禁用配送省份', 0, 1, 1, '2019-04-30 17:21:00');
+INSERT INTO `system_node` VALUES (66, 'store/express_province/del', '删除配送省份', 0, 1, 1, '2019-04-30 17:21:00');
+INSERT INTO `system_node` VALUES (67, 'store/express_template/index', '邮费模板管理', 1, 1, 1, '2019-04-30 17:21:01');
+INSERT INTO `system_node` VALUES (68, 'store/goods/index', '商品信息管理', 1, 1, 1, '2019-04-30 17:21:02');
+INSERT INTO `system_node` VALUES (69, 'store/goods/stock', '商品库存入库', 0, 1, 1, '2019-04-30 17:21:02');
+INSERT INTO `system_node` VALUES (70, 'store/goods/add', '添加商品信息', 0, 1, 1, '2019-04-30 17:21:02');
+INSERT INTO `system_node` VALUES (71, 'store/goods/edit', '编辑商品信息', 0, 1, 1, '2019-04-30 17:21:02');
+INSERT INTO `system_node` VALUES (72, 'store/goods/forbid', '禁用商品信息', 0, 1, 1, '2019-04-30 17:21:02');
+INSERT INTO `system_node` VALUES (73, 'store/goods/resume', '启用商品信息', 0, 1, 1, '2019-04-30 17:21:02');
+INSERT INTO `system_node` VALUES (74, 'store/goods/del', '删除商品信息', 0, 1, 1, '2019-04-30 17:21:03');
+INSERT INTO `system_node` VALUES (75, 'store/goods_cate/index', '商品分类管理', 1, 1, 1, '2019-04-30 17:21:03');
+INSERT INTO `system_node` VALUES (76, 'store/goods_cate/add', '添加商品分类', 0, 1, 1, '2019-04-30 17:21:03');
+INSERT INTO `system_node` VALUES (77, 'store/goods_cate/edit', '编辑添加商品分类', 0, 1, 1, '2019-04-30 17:21:03');
+INSERT INTO `system_node` VALUES (78, 'store/goods_cate/forbid', '禁用添加商品分类', 0, 1, 1, '2019-04-30 17:21:03');
+INSERT INTO `system_node` VALUES (79, 'store/goods_cate/resume', '启用商品分类', 0, 1, 1, '2019-04-30 17:21:04');
+INSERT INTO `system_node` VALUES (80, 'store/goods_cate/del', '删除商品分类', 0, 1, 1, '2019-04-30 17:21:04');
+INSERT INTO `system_node` VALUES (81, 'store/member/index', '会员信息管理', 1, 1, 1, '2019-04-30 17:21:04');
+INSERT INTO `system_node` VALUES (82, 'store/message/index', '短信发送管理', 1, 1, 1, '2019-04-30 17:21:05');
+INSERT INTO `system_node` VALUES (83, 'store/order/index', '订单记录管理', 1, 1, 1, '2019-04-30 17:21:06');
+INSERT INTO `system_node` VALUES (84, 'store/order/express', '修改快递管理', 0, 1, 1, '2019-04-30 17:21:07');
+INSERT INTO `system_node` VALUES (85, 'store/order/expressquery', '', 0, 1, 1, '2019-04-30 17:21:07');
+INSERT INTO `system_node` VALUES (86, 'wechat/config/options', '公众号授权绑定', 1, 1, 1, '2019-04-30 17:21:28');
+INSERT INTO `system_node` VALUES (87, 'wechat/config/payment', '公众号支付配置', 1, 1, 1, '2019-04-30 17:21:28');
+INSERT INTO `system_node` VALUES (88, 'wechat/fans/index', '微信粉丝管理', 1, 1, 1, '2019-04-30 17:21:29');
+INSERT INTO `system_node` VALUES (89, 'wechat/fans/setblack', '批量拉黑粉丝', 0, 1, 1, '2019-04-30 17:21:29');
+INSERT INTO `system_node` VALUES (90, 'wechat/fans/delblack', '取消拉黑粉丝', 0, 1, 1, '2019-04-30 17:21:29');
+INSERT INTO `system_node` VALUES (91, 'wechat/fans/sync', '同步粉丝列表', 0, 1, 1, '2019-04-30 17:21:29');
+INSERT INTO `system_node` VALUES (92, 'wechat/fans/del', '删除粉丝信息', 0, 1, 1, '2019-04-30 17:21:29');
+INSERT INTO `system_node` VALUES (93, 'wechat/keys/index', '回复规则管理', 1, 1, 1, '2019-04-30 17:21:30');
+INSERT INTO `system_node` VALUES (94, 'wechat/keys/add', '添加关键字', 0, 1, 1, '2019-04-30 17:21:30');
+INSERT INTO `system_node` VALUES (95, 'wechat/keys/edit', '编辑关键字', 0, 1, 1, '2019-04-30 17:21:30');
+INSERT INTO `system_node` VALUES (96, 'wechat/keys/del', '删除关键字', 0, 1, 1, '2019-04-30 17:21:30');
+INSERT INTO `system_node` VALUES (97, 'wechat/keys/forbid', '禁用关键字', 0, 1, 1, '2019-04-30 17:21:30');
+INSERT INTO `system_node` VALUES (98, 'wechat/keys/resume', '启用关键字', 0, 1, 1, '2019-04-30 17:21:31');
+INSERT INTO `system_node` VALUES (99, 'wechat/keys/subscribe', '关注默认回复', 0, 1, 1, '2019-04-30 17:21:31');
+INSERT INTO `system_node` VALUES (100, 'wechat/keys/defaults', '无配置默认回复', 0, 1, 1, '2019-04-30 17:21:31');
+INSERT INTO `system_node` VALUES (101, 'wechat/menu/index', '微信菜单管理', 1, 1, 1, '2019-04-30 17:21:31');
+INSERT INTO `system_node` VALUES (102, 'wechat/menu/edit', '编辑微信菜单', 0, 1, 1, '2019-04-30 17:21:31');
+INSERT INTO `system_node` VALUES (103, 'wechat/menu/cancel', '取消微信菜单', 0, 1, 1, '2019-04-30 17:21:31');
+INSERT INTO `system_node` VALUES (104, 'wechat/news/index', '微信图文管理', 1, 1, 1, '2019-04-30 17:21:32');
+INSERT INTO `system_node` VALUES (105, 'wechat/news/select', '图文选择器', 0, 1, 1, '2019-04-30 17:21:33');
+INSERT INTO `system_node` VALUES (106, 'wechat/news/add', '添加微信图文', 0, 1, 1, '2019-04-30 17:21:33');
+INSERT INTO `system_node` VALUES (107, 'wechat/news/edit', '编辑微信图文', 0, 1, 1, '2019-04-30 17:21:33');
+INSERT INTO `system_node` VALUES (108, 'wechat/news/del', '删除微信图文', 0, 1, 1, '2019-04-30 17:21:33');
+INSERT INTO `system_node` VALUES (109, 'wechat', '微信管理', 0, 1, 1, '2019-04-30 17:21:53');
 
 -- ----------------------------
 -- Table structure for system_user
@@ -4118,12 +4103,12 @@ CREATE TABLE `system_user`  (
   UNIQUE INDEX `index_system_user_username`(`username`) USING BTREE,
   INDEX `index_system_user_status`(`status`) USING BTREE,
   INDEX `index_system_user_deleted`(`is_deleted`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10002 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-用户';
+) ENGINE = InnoDB AUTO_INCREMENT = 10002 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-用户' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of system_user
 -- ----------------------------
-INSERT INTO `system_user` VALUES (10000, 'admin', '21232f297a57a5a743894a0e4a801fc3', '22222222', '', '', '2019-04-30 13:02:18', '127.0.0.1', 546, '', '', 1, 0, '2015-11-13 15:14:22');
+INSERT INTO `system_user` VALUES (10000, 'admin', '21232f297a57a5a743894a0e4a801fc3', '22222222', '', '', '2019-04-30 17:14:22', '127.0.0.1', 548, '', '', 1, 0, '2015-11-13 15:14:22');
 INSERT INTO `system_user` VALUES (10001, 'test', '662af1cd1976f09a9f8cecc868ccc0a2', '', '', '', '2019-04-18 13:28:57', '127.0.0.1', 1, '1', '', 1, 0, '2019-04-18 13:28:23');
 
 -- ----------------------------
@@ -4157,7 +4142,7 @@ CREATE TABLE `wechat_fans`  (
   INDEX `index_wechat_fans_unionid`(`unionid`) USING BTREE,
   INDEX `index_wechat_fans_is_back`(`is_black`) USING BTREE,
   INDEX `index_wechat_fans_subscribe`(`subscribe`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信-粉丝';
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信-粉丝' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for wechat_fans_tags
@@ -4171,7 +4156,7 @@ CREATE TABLE `wechat_fans_tags`  (
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建日期',
   INDEX `index_wechat_fans_tags_id`(`id`) USING BTREE,
   INDEX `index_wechat_fans_tags_appid`(`appid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信-粉丝-标签';
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信-粉丝-标签' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for wechat_keys
@@ -4201,7 +4186,7 @@ CREATE TABLE `wechat_keys`  (
   INDEX `index_wechat_keys_appid`(`appid`) USING BTREE,
   INDEX `index_wechat_keys_type`(`type`) USING BTREE,
   INDEX `index_wechat_keys_keys`(`keys`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信-关键字';
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信-关键字' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for wechat_media
@@ -4221,7 +4206,7 @@ CREATE TABLE `wechat_media`  (
   INDEX `index_wechat_media_md5`(`md5`) USING BTREE,
   INDEX `index_wechat_media_type`(`type`) USING BTREE,
   INDEX `index_wechat_media_media_id`(`media_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信-素材';
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信-素材' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for wechat_news
@@ -4238,7 +4223,7 @@ CREATE TABLE `wechat_news`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_wechat_news_artcle_id`(`article_id`) USING BTREE,
   INDEX `index_wechat_news_media_id`(`media_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信-图文';
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信-图文' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for wechat_news_article
@@ -4256,7 +4241,7 @@ CREATE TABLE `wechat_news_article`  (
   `read_num` bigint(20) UNSIGNED NULL DEFAULT 0 COMMENT '阅读量',
   `create_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信-图文-文章';
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信-图文-文章' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for wechat_service_config
@@ -4293,6 +4278,6 @@ CREATE TABLE `wechat_service_config`  (
   UNIQUE INDEX `index_wechat_service_config_authorizer_appid`(`authorizer_appid`) USING BTREE,
   INDEX `index_wechat_service_config_status`(`status`) USING BTREE,
   INDEX `index_wechat_service_config_is_deleted`(`is_deleted`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信-授权';
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信-授权' ROW_FORMAT = Compact;
 
 SET FOREIGN_KEY_CHECKS = 1;
