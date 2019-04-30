@@ -127,7 +127,7 @@ $(function () {
     $.form = new function () {
         var that = this;
         // 内容区选择器
-        this.targetClass = '.layui-layout-admin>.layui-body';
+        this.selecter = '.layui-layout-admin>.layui-body';
         // 刷新当前页面
         this.reload = function () {
             window.onhashchange.call(this);
@@ -135,7 +135,7 @@ $(function () {
         // 内容区域动态加载后初始化
         this.reInit = function ($dom) {
             $.vali.listen(this);
-            $dom = $dom || $(this.targetClass);
+            $dom = $dom || $(this.selecter);
             $dom.find('[required]').map(function ($parent) {
                 if (($parent = $(this).parent()) && $parent.is('label')) {
                     $parent.addClass('label-required-prev')
@@ -157,11 +157,10 @@ $(function () {
         };
         // 在内容区显示视图
         this.show = function (html) {
-            $(this.targetClass).html(html);
-            $([0, 500, 1000]).map(function () {
-                console.log(arguments)
+            $(this.selecter).html(html);
+            $([0, 500, 1000]).map(function (index, time) {
+                setTimeout(that.reInit, time)
             });
-            this.reInit(), setTimeout(this.reInit, 500), setTimeout(this.reInit, 1000);
         };
         // 以hash打开网页
         this.href = function (url, obj) {
