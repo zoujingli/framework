@@ -46,6 +46,7 @@ class Controller extends \stdClass
 
     /**
      * Controller constructor.
+     * @throws \think\Exception
      */
     public function __construct()
     {
@@ -53,6 +54,7 @@ class Controller extends \stdClass
         if (in_array($this->request->action(), get_class_methods(__CLASS__))) {
             $this->error('Access without permission.');
         }
+        get_instance($this);
     }
 
     /**
@@ -161,9 +163,15 @@ class Controller extends \stdClass
      */
     public function callback($name, &$one = [], &$two = [])
     {
-        $methods = [$name, "_{$this->request->action()}{$name}"];
-        foreach ($methods as $method) if (method_exists($this, $method)) {
-            if (false === $this->$method($one, $two)) return false;
+        if (is_callable($name)) {
+            return call_user_func($name, $this, $one, $two);
+        }
+        foreach ([$name, "_{$this->request->action()}{$name}"] as $method) {
+            if (method_exists($this, $method)) {
+                if (false === $this->$method($one, $two)) {
+                    return false;
+                }
+            }
         }
         return true;
     }

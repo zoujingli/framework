@@ -194,6 +194,26 @@ if (!function_exists('emoji_decode')) {
     }
 }
 
+if (!function_exists('get_instance')) {
+    /**
+     * 获取控制器实例
+     * @param \library\Controller $controller
+     * @return \library\Controller|string
+     * @throws \think\Exception
+     */
+    function get_instance($controller = null)
+    {
+        static $cache;
+        if ($controller instanceof \library\Controller) {
+            $cache = $controller;
+        }
+        if (empty($cache)) {
+            throw new \think\Exception('No Controller');
+        }
+        return $cache;
+    }
+}
+
 if (!function_exists('emoji_clear')) {
     /**
      * 清除 Emoji 表情
