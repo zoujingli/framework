@@ -54,7 +54,6 @@ class Controller extends \stdClass
         if (in_array($this->request->action(), get_class_methods(__CLASS__))) {
             $this->error('Access without permission.');
         }
-        get_instance($this);
     }
 
     /**

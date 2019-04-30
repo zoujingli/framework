@@ -158,6 +158,9 @@ $(function () {
         // 在内容区显示视图
         this.show = function (html) {
             $(this.targetClass).html(html);
+            $([0, 500, 1000]).map(function () {
+                console.log(arguments)
+            });
             this.reInit(), setTimeout(this.reInit, 500), setTimeout(this.reInit, 1000);
         };
         // 以hash打开网页

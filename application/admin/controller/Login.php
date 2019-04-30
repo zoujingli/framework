@@ -41,8 +41,10 @@ class Login extends Controller
         if (\app\admin\service\Auth::isLogin()) {
             $this->redirect('@admin');
         } else {
-            if (!($this->loginskey = session('loginskey'))) {
-                session('loginskey', $this->loginskey = uniqid());
+            $this->loginskey = session('loginskey');
+            if (empty($this->loginskey)) {
+                $this->loginskey = uniqid();
+                session('loginskey', $this->loginskey);
             }
             $this->fetch();
         }
