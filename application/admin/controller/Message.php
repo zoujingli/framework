@@ -30,7 +30,7 @@ class Message extends Controller
      */
     protected $table = 'SystemMessage';
 
-    /***
+    /**
      * 系统消息管理
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException

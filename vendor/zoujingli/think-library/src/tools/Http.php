@@ -78,7 +78,7 @@ class Http
         // POST 数据设置
         if (strtolower($method) === 'post') {
             curl_setopt($curl, CURLOPT_POST, true);
-            curl_setopt($curl, CURLOPT_POSTFIELDS, self::_buildHttpData($options['data']));
+            curl_setopt($curl, CURLOPT_POSTFIELDS, self::buildQueryData($options['data']));
         }
         // 请求超时设置
         if (isset($options['timeout']) && is_numeric($options['timeout'])) {
@@ -104,7 +104,7 @@ class Http
      * @param boolean $build 是否编译数据
      * @return array|string
      */
-    private static function _buildHttpData($data, $build = true)
+    private static function buildQueryData($data, $build = true)
     {
         if (!is_array($data)) return $data;
         foreach ($data as $key => $value) if (is_object($value) && $value instanceof \CURLFile) {

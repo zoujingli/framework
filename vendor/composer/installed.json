@@ -177,8 +177,8 @@
     },
     {
         "name": "symfony/options-resolver",
-        "version": "v3.4.26",
-        "version_normalized": "3.4.26.0",
+        "version": "v3.4.27",
+        "version_normalized": "3.4.27.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/options-resolver.git",
@@ -499,12 +499,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/zoujingli/ThinkLibrary.git",
-            "reference": "ccdc4561f06fe30c9b470bc8e4539b90dd41bae3"
+            "reference": "00585bd6214a0539165de8cf4bfefff798e49787"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/ccdc4561f06fe30c9b470bc8e4539b90dd41bae3",
-            "reference": "ccdc4561f06fe30c9b470bc8e4539b90dd41bae3",
+            "url": "https://api.github.com/repos/zoujingli/ThinkLibrary/zipball/00585bd6214a0539165de8cf4bfefff798e49787",
+            "reference": "00585bd6214a0539165de8cf4bfefff798e49787",
             "shasum": "",
             "mirrors": [
                 {
@@ -523,7 +523,7 @@
             "qiniu/php-sdk": "^7.2",
             "topthink/framework": "5.1.*"
         },
-        "time": "2019-04-30T05:01:10+00:00",
+        "time": "2019-04-30T05:59:26+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
