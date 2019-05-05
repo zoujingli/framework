@@ -119,11 +119,11 @@ fieldset{margin:0;border:1px solid #e6e6e6;padding:10px 20px 5px 20px}
 .uploadimagemtl:hover a{cursor:pointer;display:inline-block}
 .uploadimagemtl:hover a:hover{color:#fff;text-decoration:none}
 /** Layui样式调整 */
-.laydate-footer-btns span{line-height:24px!important}
-.layui-btn-sm.layui-btn-primary{line-height:28px}
-.layui-btn-xs.layui-btn-primary{line-height:20px}
 .layui-input,.layui-select{line-height:38px}
 .layui-table td,.layui-table th{font-size:12px}
+.layui-btn-sm.layui-btn-primary{line-height:28px}
+.layui-btn-xs.layui-btn-primary{line-height:20px}
+.laydate-footer-btns span{line-height:24px!important}
 .layui-table td .text-explode{color:#ccc!important;margin:0 4px!important}
 .layui-table td .text-explode:first-child{display:none;opacity:0}
 .layui-table td .background-image{float:left;width:40px;height:40px;display:inline-block;margin-right:5px;background:no-repeat center center;background-size:cover;vertical-align:middle}
