@@ -197,7 +197,7 @@ $(function () {
         // 加载HTML到目标位置
         this.open = function (url, data, callback, loading, tips) {
             this.load(url, data, 'get', function (ret) {
-                return typeof ret === 'object' ? $.msg.auto(ret) : that.show(ret);
+                return (typeof ret === 'object' ? $.msg.auto(ret) : that.show(ret)), false;
             }, loading, tips);
         };
         // 打开一个iframe窗口
@@ -207,7 +207,7 @@ $(function () {
         // 加载HTML到弹出层
         this.modal = function (url, data, title, callback, loading, tips) {
             this.load(url, data, 'GET', function (res) {
-                if (typeof (res) === 'object') return $.msg.auto(res);
+                if (typeof (res) === 'object') return $.msg.auto(res), false;
                 var index = layer.open({
                     type: 1, btn: false, area: "800px", content: res, title: title || '', success: function (dom, index) {
                         $(dom).find('[data-close]').off('click').on('click', function () {
@@ -220,7 +220,7 @@ $(function () {
                     }
                 });
                 $.msg.indexs.push(index);
-                return (typeof callback === 'function') && callback.call(this);
+                return (typeof callback === 'function') && callback.call(that);
             }, loading, tips);
         };
     };
