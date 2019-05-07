@@ -131,7 +131,7 @@ fieldset{margin:0;border:1px solid #e6e6e6;padding:10px 20px 5px 20px}
 .layui-table .list-table-sort-td{width:60px!important;text-align:center!important}
 .layui-table .list-table-sort-td button{width:56px;background:#009688}
 .layui-table .list-table-sort-td input{width:50px;color:#666;padding:2px;border:1px solid #e6e6e6;text-align:center;font-size:9pt;line-height:18px}
-.layui-table .list-table-check-td{width:30px!important;text-align:center}
+.layui-table .list-table-check-td{width:10px!important;text-align:center;padding-left:15px!important;padding-right:5px!important;}
 .layui-table .list-table-check-td input{margin:0!important;vertical-align:middle}
 /** checkbox 优化 */
 label.think-checkbox,label.think-radio{display:inline-block;margin-right:10px}
