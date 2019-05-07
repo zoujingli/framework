@@ -58,7 +58,7 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}.mo
 .layui-layout.layui-layout-left-mini>.layui-side .layui-nav-item .layui-nav-child{padding:0;display:block!important;background-color:rgba(0,0,0,.3)!important}
 .layui-layout.layui-layout-left-mini>.layui-side .layui-nav-tree-top i{display:inline-block;-webkit-transform:rotate(180deg);transform:rotate(180deg);-ms-transform:rotate(180deg)}
 .layui-layout.layui-layout-left-mini>.layui-side .layui-nav-more{display:none!important}
-/* 下拉 */
+/* 下拉样式 */
 .layui-nav .layui-nav-item .layui-nav-more{top:0;border:none;right:15px;width:auto;height:auto;margin-top:0;font-size:14px;font-style:normal;font-family:layui-icon!important;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
 .layui-nav .layui-nav-item .layui-nav-mored,.layui-nav .layui-nav-itemed .layui-nav-more{border:none;margin-top:0;transform:rotate(180deg);-o-transform:rotate(180deg);-ms-transform:rotate(180deg);-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg)}
 .layui-nav .layui-nav-item .layui-nav-more::before{content:"\e619"}
