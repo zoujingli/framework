@@ -163,12 +163,11 @@ $(function () {
                 that.reInit($(that.selecter));
             }, 500);
         };
-        // 以hash打开网页
+        // 以HASH打开新网页
         this.href = function (url, obj) {
             if (url !== '#') window.location.href = '#' + $.menu.parseUri(url, obj);
             else if (obj && obj.getAttribute('data-menu-node')) {
-                var node = obj.getAttribute('data-menu-node');
-                $('[data-menu-node^="' + node + '-"][data-open!="#"]:first').trigger('click');
+                $('[data-menu-node^="' + obj.getAttribute('data-menu-node') + '-"][data-open!="#"]:first').trigger('click');
             }
         };
         // 异步加载的数据
@@ -250,7 +249,7 @@ $(function () {
                 var attrs = uri.split('?')[1].split('&');
                 for (var i in attrs) if (attrs[i].indexOf('=') > -1) {
                     var tmp = attrs[i].split('=').slice();
-                    params[tmp[0]] = decodeURI(tmp[1].replace(/%2B/ig, '%20'));
+                    params[tmp[0]] = decodeURIComponent(tmp[1].replace(/%2B/ig, '%20'));
                 }
             }
             delete params[""];
@@ -344,17 +343,16 @@ $(function () {
             };
             // 判断表单元素是否为空
             this.isEmpty = function (ele, value) {
-                var trimValue = this.trim(ele.value);
+                var trim = this.trim(ele.value);
                 value = value || ele.getAttribute('placeholder');
-                return (trimValue === "" || trimValue === value);
+                return (trim === "" || trim === value);
             };
             // 正则验证表单元素
             this.isRegex = function (ele, regex, params) {
-                var inputValue = $(ele).val();
-                var realValue = this.trim(inputValue);
+                var input = $(ele).val(), real = this.trim(input);
                 regex = regex || ele.getAttribute('pattern');
-                if (realValue === "" || !regex) return true;
-                return new RegExp(regex, params || 'i').test(realValue);
+                if (real === "" || !regex) return true;
+                return new RegExp(regex, params || 'i').test(real);
             };
             // 检侧所的表单元素
             this.checkAllInput = function () {
@@ -584,8 +582,7 @@ $(function () {
 
     /*! 注册 data-action 事件行为 */
     $body.on('click', '[data-action]', function () {
-        var $this = $(this), data = {};
-        var time = $this.attr('data-time'), action = $this.attr('data-action');
+        var $this = $(this), data = {}, time = $this.attr('data-time'), action = $this.attr('data-action');
         var loading = $this.attr('data-loading'), method = $this.attr('data-method') || 'post';
         var rule = $this.attr('data-value') || (function (rule, ids) {
             $($this.attr('data-target') || 'input[type=checkbox].list-check-box').map(function () {
