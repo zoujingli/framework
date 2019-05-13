@@ -20,7 +20,7 @@ use library\Controller;
 use think\Db;
 
 /**
- * Class Index
+ * 授权公众号管理
  * @package app\service\controller
  */
 class Index extends Controller
