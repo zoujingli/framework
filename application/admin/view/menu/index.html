@@ -45,7 +45,7 @@
         <td class='text-center'><i class="{$vo.icon} font-s18"></i></td>
         <td class="nowrap"><span class="color-desc">{$vo.spl|raw}</span>{$vo.title}</td>
         <td class='layui-hide-xs'>{$vo.url}</td>
-        <td class='text-center nowrap'>{eq name='vo.status' value='0'}<span class="layui-badge">已禁用</span>{else}<span class="layui-badge layui-bg-green">使用中</span>{/eq}</td>
+        <td class='text-center nowrap'>{eq name='vo.status' value='0'}<span class="color-red">已禁用</span>{else}<span class="color-green">使用中</span>{/eq}</td>
         <td class='text-center nowrap notselect'>
 
             {if auth("admin/menu/add")}

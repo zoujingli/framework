@@ -35,11 +35,11 @@
         <td class='list-table-check-td think-checkbox'><input class="list-check-box" value='{$vo.id}' type='checkbox'></td>
         <td class='text-left nowrap'>
             用户账号：{$vo.username|default=''}<br>
-            联系手机：{$vo.phone|default='--'}
+            联系手机：{$vo.phone|default='-'}
         </td>
         <td class='text-left nowrap'>
             登录次数：{$vo.login_num|default=0}<br>
-            使用状态：{eq name='vo.status' value='0'}<span class="layui-badge">已禁用</span>{else}<span class="layui-badge layui-bg-green">使用中</span>{/eq}
+            使用状态：{eq name='vo.status' value='0'}<span class="color-red">已禁用</span>{else}<span class="color-green">使用中</span>{/eq}
         </td>
         <td class='text-left nowrap'>日期：{$vo.create_at|format_datetime|str_replace=' ','<br>时间：',###|raw}</td>
         <td class='text-left nowrap'>{if $vo.login_num>0}日期：{$vo.login_at|format_datetime|str_replace=' ','<br>时间：',###|raw}{else} -- {/if}</td>
