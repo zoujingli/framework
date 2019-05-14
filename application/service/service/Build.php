@@ -12,12 +12,12 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-namespace app\service\logic;
+namespace app\service\service;
 
 /**
- * 公众号授权数据处理
- * Class BuildService
- * @package app\wechat\service
+ * 授权数据处理
+ * Class Build
+ * @package app\service\service
  */
 class Build
 {

@@ -12,14 +12,14 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-namespace app\service\logic;
+namespace app\service\service;
 
 use think\Db;
 
 /**
  * 微信数据服务
  * Class Wechat
- * @package app\service\logic
+ * @package app\service\service
  * @method \WeChat\Card WeChatCard($appid) static 微信卡券管理
  * @method \WeChat\Custom WeChatCustom($appid) static 微信客服消息
  * @method \WeChat\Limit WeChatLimit($appid) static 接口调用频次限制
