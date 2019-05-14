@@ -27,7 +27,6 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}.mo
 .layui-layout>.layui-body>.layui-card>.layui-card-body{padding:15px 15px}
 .layui-layout>.layui-body,.layui-layout>.layui-side{top:50px;bottom:0;overflow:auto}
 .layui-layout>.layui-body>.layui-card>.layui-card-header{height:50px;border:none;line-height:50px;box-shadow:0 2px 3px 0 rgba(0,0,0,.1);background:#fff}
-.think-box-shadow{box-shadow:0 2px 3px 0 rgba(0,0,0,.1);background:#fff;padding:20px}
 
 /* 页面布局 - 头部 */
 .layui-header{height:50px;background:#009688!important}
@@ -143,6 +142,7 @@ label.think-checkbox,label.think-radio{display:inline-block;margin-right:10px}
 .think-checkbox input[type=checkbox]:checked:after{color:#666;padding:2px;display:block;content:"\e605";font-size:12px;font-style:normal;font-weight:700;position:absolute;font-family:layui-icon!important;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 .think-radio input[type=radio]{width:18px;height:18px;cursor:pointer;margin:0 5px 0 0;position:relative;border:1px solid #dcdcdc;display:inline-block!important;box-sizing:border-box!important;appearance:none;background:#fff;border-radius:1em;vertical-align:bottom;-webkit-appearance:none}
 .think-radio input[type=radio]:checked:after{top:4px;left:4px;width:8px;height:8px;content:'';display:block;position:relative;background:#666;border-radius:1em}
+.think-box-shadow{box-shadow:0 2px 3px 0 rgba(0,0,0,.1);background:#fff;padding:20px}
 /** 手机盒子及微信菜单 */
 .mobile-preview{width:317px;height:580px;position:relative;background:url(../img/wechat/mobile_head.png) no-repeat 0 0}
 .mobile-preview .mobile-header{color:#fff;width:auto;margin:0 30px;overflow:hidden;font-size:15px;padding-top:30px;text-align:center;white-space:nowrap;text-overflow:ellipsis;word-wrap:normal;user-select:none;pointer-events:none;-moz-user-select:none;-webkit-user-select:none;-webkit-pointer-events:none}
