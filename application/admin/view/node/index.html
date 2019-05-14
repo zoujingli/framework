@@ -27,7 +27,7 @@
 
 {block name="content"}
 <div class="layui-tab layui-tab-card layui-box padding-bottom-10" style="background:#fff">
-    <ul class="layui-tab-title">
+    <ul class="layui-tab-title notselect">
         {foreach $groups as $key=>$group}
         <li data-type='{$key}'>{$group.node.title|default='<span class="color-desc">未配置名称</span>'|raw}（{$key}）</li>
         {/foreach}
