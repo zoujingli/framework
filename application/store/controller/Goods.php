@@ -104,7 +104,7 @@ class Goods extends Controller
      */
     public function add()
     {
-        $this->title = '添加商品';
+        $this->title = '添加商品信息';
         $this->isAddMode = '1';
         return $this->_form($this->table, 'form');
     }
@@ -115,7 +115,7 @@ class Goods extends Controller
      */
     public function edit()
     {
-        $this->title = '编辑商品';
+        $this->title = '编辑商品信息';
         $this->isAddMode = '0';
         return $this->_form($this->table, 'form');
     }
