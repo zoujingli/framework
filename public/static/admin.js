@@ -17,7 +17,7 @@
     }
 }(window));
 
-// Layui及jQuery兼容处理
+// Layui & jQuery
 if (typeof jQuery === 'undefined') window.$ = window.jQuery = layui.$;
 window.form = layui.form, window.layer = layui.layer, window.laydate = layui.laydate;
 
