@@ -2,6 +2,10 @@
 
 {block name="button"}
 
+{if auth("admin/log/clear")}
+<button data-load='{:url("clear")}' data-confirm="确定要消除所有日志吗？" class='layui-btn layui-btn-sm layui-btn-primary'>清理日志</button>
+{/if}
+
 {if auth("admin/log/del")}
 <button data-action='{:url("del")}' data-rule="id#{key}" data-csrf="{:systoken('admin/log/del')}" data-confirm="确定要删除日志吗？" class='layui-btn layui-btn-sm layui-btn-primary'>删除日志</button>
 {/if}

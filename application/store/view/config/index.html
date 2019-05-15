@@ -3,7 +3,7 @@
 {block name="content"}
 <form onsubmit="return false;" data-auto="true" action="{:request()->url()}" method="post" class='layui-form layui-card' style="max-width:1000px" autocomplete="off">
 
-    <div class="layui-card-body think-box-shadow padding-bottom-20" style="padding-left:40px">
+    <div class="layui-card-body think-box-shadow padding-left-40">
 
         {if empty($query.code)}
         <div class="layui-code border-0">{$query.msg|default=''}</div>
@@ -11,50 +11,34 @@
         <div class="layui-code border-0">平台剩余 {$query.num|default=0} 条可用短信，{$query.msg|default=''}</div>
         {/if}
 
-        <div class="layui-form-item">
-            <label>
-                <span class="color-green margin-right-10 font-s14">短信平台账号</span><span class="nowrap color-desc">Username</span>
-                <span class="block relative">
-                        <input name="sms_zt_username" required placeholder="请输入助通短信平台账号" value="{:sysconf('sms_zt_username')}" class="layui-input">
-                    </span>
-            </label>
+        <label class="layui-form-item margin-top-20 block relative">
+            <span class="color-green margin-right-10 font-s14">短信平台账号</span><span class="nowrap color-desc">Username</span>
+            <input name="sms_zt_username" required placeholder="请输入助通短信平台账号" value="{:sysconf('sms_zt_username')}" class="layui-input">
             <p class="help-block">助通短信平台账号，可以联系客服获取账号与密码。</p>
-        </div>
+        </label>
 
-        <div class="layui-form-item">
-            <label>
-                <span class="color-green margin-right-10 font-s14">短信平台密码</span><span class="nowrap color-desc">Password</span>
-                <span class="block relative">
-                        <input name="sms_zt_password" required placeholder="请输入助通短信平台密码" value="{:sysconf('sms_zt_password')}" class="layui-input">
-                    </span>
-            </label>
+        <label class="layui-form-item margin-top-20 block relative">
+            <span class="color-green margin-right-10 font-s14">短信平台密码</span><span class="nowrap color-desc">Password</span>
+            <input name="sms_zt_password" required placeholder="请输入助通短信平台密码" value="{:sysconf('sms_zt_password')}" class="layui-input">
             <p class="help-block">助通短信平台账号，可以联系客服获取账号与密码。</p>
-        </div>
+        </label>
 
-        <div class="layui-form-item">
-            <label>
-                <span class="color-green margin-right-10 font-s14">短信发送安全码</span><span class="nowrap color-desc">Secure</span>
-                <span class="block relative">
-                        <input name="sms_secure" required placeholder="请输入短信发送安全码" value="{:sysconf('sms_secure')}" class="layui-input">
-                    </span>
-            </label>
+        <label class="layui-form-item margin-top-20 block relative">
+            <span class="color-green margin-right-10 font-s14">短信发送安全码</span><span class="nowrap color-desc">Secure</span>
+            <input name="sms_secure" required placeholder="请输入短信发送安全码" value="{:sysconf('sms_secure')}" class="layui-input">
             <p class="help-block">短信发送安全码，调用接口发短信时需要传入此参数。</p>
-        </div>
+        </label>
 
-        <div class="layui-form-item">
-            <label>
-                <span class="color-green margin-right-10 font-s14">注册短信模板</span><span class="nowrap color-desc">Template</span>
-                <span class="block relative">
-                    <textarea class="layui-textarea" required name="sms_reg_template" placeholder="请输入助通短信平台密码">{:sysconf('sms_reg_template')}</textarea>
-                    </span>
-            </label>
+        <label class="layui-form-item margin-top-20 block relative">
+            <span class="color-green margin-right-10 font-s14">注册短信模板</span><span class="nowrap color-desc">Template</span>
+            <textarea class="layui-textarea" required name="sms_reg_template" placeholder="请输入助通短信平台密码">{:sysconf('sms_reg_template')}</textarea>
             <p class="help-block">会员注册短信模板，验证码变量使用 {code} 代替。</p>
-        </div>
+        </label>
 
-
-        <div class="layui-form-item text-center margin-top-20">
+        <div class="layui-form-item text-center margin-top-20 padding-bottom-20">
             <button class="layui-btn" type="submit">保存配置</button>
         </div>
+
     </div>
 </form>
 {/block}
