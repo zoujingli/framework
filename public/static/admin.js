@@ -10,7 +10,7 @@
 // | github开源项目：https://github.com/zoujingli/framework
 // +----------------------------------------------------------------------
 
-// IE兼容提示
+// 浏览器兼容提示
 (function (w) {
     if (!("WebSocket" in w && 2 === w.WebSocket.CLOSING)) {
         document.body.innerHTML = '<div class="version-debug">您使用的浏览器已经<strong>过时</strong>，建议使用最新版本的谷歌浏览器。<a target="_blank" href="https://pc.qq.com/detail/1/detail_2661.html" class="layui-btn layui-btn-primary">立即下载</a></div>';
@@ -22,8 +22,8 @@ if (typeof jQuery === 'undefined') window.$ = window.jQuery = layui.$;
 window.form = layui.form, window.layer = layui.layer, window.laydate = layui.laydate;
 
 // 当前资源URL目录
-window.baseRoot = (function () {
-    var src = document.scripts[document.scripts.length - 1].src;
+window.baseRoot = (function (src) {
+    src = document.scripts[document.scripts.length - 1].src;
     return src.substring(0, src.lastIndexOf("/") + 1);
 })();
 
@@ -63,8 +63,8 @@ define('jquery', [], function () {
 $(function () {
     window.$body = $('body');
     /*! 消息组件实例 */
-    $.msg = new function () {
-        var that = this;
+    $.msg = new function (that) {
+        that = this;
         this.indexs = [];
         this.shade = [0.02, '#000'];
         // 关闭消息框
@@ -124,8 +124,8 @@ $(function () {
     };
 
     /*! 表单自动化组件 */
-    $.form = new function () {
-        var that = this;
+    $.form = new function (that) {
+        that = this;
         // 内容区选择器
         this.selecter = '.layui-layout-admin>.layui-body';
         // 刷新当前页面
@@ -138,14 +138,18 @@ $(function () {
             $dom = $dom || $(this.selecter);
             $dom.find('[required]').map(function ($parent) {
                 if (($parent = $(this).parent()) && $parent.is('label')) {
-                    $parent.addClass('label-required-prev')
+                    $parent.addClass('label-required-prev');
                 } else {
-                    $parent.prevAll('label').addClass('label-required-next')
+                    $parent.prevAll('label').addClass('label-required-next');
                 }
             });
-            $dom.find('[data-date-range]').map(function () {
-                laydate.render({range: true, elem: this});
+            $dom.find('input[data-date-range]').map(function () {
                 this.setAttribute('autocomplete', 'off');
+                laydate.render({
+                    range: true, elem: this, done: function (value) {
+                        $(this.elem).val(value).trigger('change');
+                    }
+                });
             });
             $dom.find('[data-file]:not([data-inited])').map(function (index, elem, $this, field) {
                 $this = $(elem), field = $this.attr('data-field') || 'file';
@@ -225,8 +229,8 @@ $(function () {
     };
 
     /*! 后台菜单辅助插件 */
-    $.menu = new function () {
-        var self = this;
+    $.menu = new function (that) {
+        that = this;
         // 计算URL地址中有效的URI
         this.getUri = function (uri) {
             uri = uri || window.location.href;
@@ -281,7 +285,7 @@ $(function () {
             })($('.layui-layout-admin'), 'layui-layout-left-mini');
             // 左则二级菜单展示
             $('[data-submenu-layout]>a').on('click', function () {
-                self.syncOpenStatus(1);
+                that.syncOpenStatus(1);
             });
             // 同步二级菜单展示状态
             this.syncOpenStatus = function (mode) {
@@ -294,9 +298,9 @@ $(function () {
             window.onhashchange = function () {
                 var hash = window.location.hash || '';
                 if (hash.length < 1) return $('[data-menu-node][data-open!="#"]:first').trigger('click');
-                $.form.load(hash), self.syncOpenStatus(2);
+                $.form.load(hash), that.syncOpenStatus(2);
                 // 菜单选择切换
-                var node = self.queryNode(self.getUri());
+                var node = that.queryNode(that.getUri());
                 if (/^m-/.test(node)) {
                     var $all = $('a[data-menu-node]').parent(), tmp = node.split('-'), tmpNode = tmp.shift();
                     while (tmp.length > 0) {
@@ -311,7 +315,7 @@ $(function () {
                         $('[data-menu-node="' + node + '"]').parent().parent().parent().addClass('layui-nav-itemed');
                         $('.layui-layout-admin').removeClass('layui-layout-left-hide');
                     } else $('.layui-layout-admin').addClass('layui-layout-left-hide');
-                    self.syncOpenStatus(1);
+                    that.syncOpenStatus(1);
                 }
             };
             // URI初始化动作
@@ -321,8 +325,8 @@ $(function () {
 
     /*! 注册对象到Jq */
     $.vali = function (form, callback, options) {
-        return (new function () {
-            var that = this;
+        return (new function (that) {
+            that = this;
             // 表单元素
             this.tags = 'input,textarea,select';
             // 检测元素事件
@@ -659,6 +663,13 @@ $(function () {
         }, 100);
     };
 
+    /*! 注册 data-tips-text 事件行为 */
+    $body.on('mouseenter', '[data-tips-text]', function () {
+        $(this).attr('index', layer.tips($(this).attr('data-tips-text'), this, {tips: [$(this).attr('data-tips-type') || 3, '#78BA32']}));
+    }).on('mouseleave', '[data-tips-text]', function () {
+        layer.close($(this).attr('index'));
+    });
+
     /*! 注册 data-tips-image 事件行为 */
     $body.on('click', '[data-tips-image]', function () {
         $.previewImage(this.getAttribute('data-tips-image') || this.src, this.getAttribute('data-width'));
@@ -688,13 +699,6 @@ $(function () {
         var tpl = '<div><div class="mobile-preview pull-left"><div class="mobile-header">_TITLE_</div><div class="mobile-body"><iframe id="phone-preview" src="_URL_" frameborder="0" marginheight="0" marginwidth="0"></iframe></div></div></div>';
         layer.style(layer.open({type: true, scrollbar: false, area: ['320px', '600px'], title: false, closeBtn: true, shadeClose: false, skin: 'layui-layer-nobg', content: $(tpl.replace('_TITLE_', title || '公众号').replace('_URL_', href)).html(),}), {boxShadow: 'none'});
     };
-
-    /*! 注册 data-tips-text 事件行为 */
-    $body.on('mouseenter', '[data-tips-text]', function () {
-        $(this).attr('index', layer.tips($(this).attr('data-tips-text'), this, {tips: [$(this).attr('data-tips-type') || 3, '#78BA32']}));
-    }).on('mouseleave', '[data-tips-text]', function () {
-        layer.close($(this).attr('index'));
-    });
 
     /*! 表单编辑返回操作 */
     $body.on('click', '[data-history-back]', function () {
