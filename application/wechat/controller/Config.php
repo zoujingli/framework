@@ -27,16 +27,15 @@ class Config extends Controller
 {
     /**
      * 公众号授权绑定
-     * @return mixed
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
     public function options()
     {
         $this->applyCsrfToken();
+        $this->title = '公众号授权绑定';
         $this->thrNotify = url('@wechat/api.push', '', false, true);
         if ($this->request->isGet()) {
-            $this->title = '公众号授权绑定';
             if (!($this->geoip = cache('mygeoip'))) {
                 cache('mygeoip', $this->geoip = gethostbyname($this->request->host()), 360);
             }
@@ -53,13 +52,15 @@ class Config extends Controller
             } catch (\Exception $e) {
                 $this->wechat = [];
             }
-            return $this->fetch();
+            $this->fetch();
+        } else {
+            foreach ($this->request->post() as $k => $v) sysconf($k, $v);
+            if ($this->request->post('wechat_type') === 'thr') {
+                Wechat::wechat()->setApiNotifyUri($this->thrNotify);
+            }
+            $uri = url('wechat/config/options');
+            $this->success('公众号参数获取成功！', url('@admin') . "#{$uri}");
         }
-        foreach ($this->request->post() as $k => $v) sysconf($k, $v);
-        if ($this->request->post('wechat_type') === 'thr') {
-            Wechat::wechat()->setApiNotifyUri($this->thrNotify);
-        }
-        $this->success('公众号参数获取成功！', url('@admin') . '#' . url('wechat/config/options'));
     }
 
     /**

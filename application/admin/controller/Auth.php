@@ -145,9 +145,9 @@ class Auth extends Controller
         if ($result) {
             $where = ['auth' => $this->request->post('id')];
             Db::name('SystemAuthNode')->where($where)->delete();
-            $this->success("权限删除成功！", '');
+            $this->success("删除权限成功！", '');
         } else {
-            $this->error("权限删除失败，请稍候再试！");
+            $this->error("删除权限失败，请稍候再试！");
         }
     }
 

@@ -45,8 +45,8 @@ class User extends Controller
     public function index()
     {
         $this->title = '系统用户管理';
-        $query = $this->_query($this->table)->like('username,phone,mail')->dateBetween('login_at')->equal('status');
-        $query->where(['is_deleted' => '0'])->order('id desc')->page();
+        $query = $this->_query($this->table)->like('username,phone,mail')->dateBetween('login_at');
+        $query->equal('status')->where(['is_deleted' => '0'])->order('id desc')->page();
     }
 
     /**
