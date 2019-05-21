@@ -35,11 +35,16 @@ class News extends Controller
     /**
      * 微信图文管理
      * @return array|string
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
      */
     public function index()
     {
         $this->title = '微信图文列表';
-        $this->_query($this->table)->where(['is_deleted' => '0'])->order('id desc');
+        $this->_query($this->table)->where(['is_deleted' => '0'])->order('id desc')->page();
     }
 
     /**
@@ -57,6 +62,11 @@ class News extends Controller
     /**
      * 图文选择器
      * @return string
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
      */
     public function select()
     {
