@@ -20,6 +20,9 @@ if (!function_exists('auth')) {
      */
     function auth($node)
     {
+        list($req, $num) = [request(), count(explode('/', $node))];
+        if ($num === 1) $node = "{$req->module()}/{$req->controller()}/{$node}";
+        if ($num === 2) $node = "{$req->module()}/{$node}";
         return \app\admin\service\Auth::checkAuthNode($node);
     }
 }
