@@ -55,16 +55,17 @@ if (!function_exists('sysconf')) {
     {
         static $data = [];
         list($field, $raw) = explode('|', "{$name}|");
+        $key = md5(config('database.hostname') . '#' . config('database.database'));
         if ($value !== null) {
-            \think\facade\Cache::tag('system')->rm('_sysconf_');
+            \think\facade\Cache::tag('system')->rm("_sysconfig_{$key}");
             list($row, $data) = [['name' => $field, 'value' => $value], []];
             return \library\tools\Data::save('SystemConfig', $row, 'name');
         }
         if (empty($data)) {
-            $data = \think\facade\Cache::tag('system')->get('_sysconf_', []);
+            $data = \think\facade\Cache::tag('system')->get("_sysconfig_{$key}", []);
             if (empty($data)) {
                 $data = \think\Db::name('SystemConfig')->column('name,value');
-                \think\facade\Cache::tag('system')->set('_sysconf_', $data, 60);
+                \think\facade\Cache::tag('system')->set("_sysconfig_{$key}", $data, 60);
             }
         }
         return isset($data[$field]) ? (strtolower($raw) === 'raw' ? $data[$field] : htmlspecialchars($data[$field])) : '';

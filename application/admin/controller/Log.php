@@ -41,7 +41,8 @@ class Log extends Controller
     public function index()
     {
         $this->title = '系统操作日志';
-        $this->_query($this->table)->like('action,node,content,username,geoip')->dateBetween('create_at')->order('id desc')->page();
+        $query = $this->_query($this->table)->like('action,node,content,username,geoip');
+        $query->dateBetween('create_at')->order('id desc')->page();
     }
 
     /**

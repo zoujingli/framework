@@ -41,7 +41,8 @@ class Message extends Controller
     public function index()
     {
         $this->title = '系统消息管理';
-        $this->_query($this->table)->like('title,desc')->equal('read_state')->dateBetween('create_at,read_at')->order('id desc')->page();
+        $query = $this->_query($this->table)->like('title,desc')->equal('read_state');
+        $query->dateBetween('create_at,read_at')->order('id desc')->page();
     }
 
     /**

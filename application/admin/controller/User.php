@@ -129,18 +129,6 @@ class User extends Controller
     }
 
     /**
-     * 删除系统用户
-     */
-    public function del()
-    {
-        if (in_array('10000', explode(',', $this->request->post('id')))) {
-            $this->error('系统超级账号禁止删除！');
-        }
-        $this->applyCsrfToken();
-        $this->_delete($this->table);
-    }
-
-    /**
      * 禁用系统用户
      */
     public function forbid()
@@ -159,6 +147,18 @@ class User extends Controller
     {
         $this->applyCsrfToken();
         $this->_save($this->table, ['status' => '1']);
+    }
+
+    /**
+     * 删除系统用户
+     */
+    public function del()
+    {
+        if (in_array('10000', explode(',', $this->request->post('id')))) {
+            $this->error('系统超级账号禁止删除！');
+        }
+        $this->applyCsrfToken();
+        $this->_delete($this->table);
     }
 
 }

@@ -25,7 +25,7 @@ use think\Db;
  */
 class Auth
 {
-    
+
     /**
      * 权限节点忽略规则
      * @return array
