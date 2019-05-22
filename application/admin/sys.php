@@ -42,7 +42,7 @@ if (!function_exists('sysdata')) {
             $data = json_decode(\think\Db::name('SystemData')->where('name', $name)->value('value'), true);
             return empty($data) ? [] : $data;
         }
-        return data_save('SystemData', ['name' => $name, 'value' => json_encode($value, 256)], 'name');
+        return data_save('SystemData', ['name' => $name, 'value' => json_encode($value, JSON_UNESCAPED_UNICODE)], 'name');
     }
 }
 
