@@ -62,13 +62,15 @@ class Auth extends Controller
                 $checked = Db::name('SystemAuthNode')->where(['auth' => $auth])->column('node');
                 foreach ($nodes as &$node) $node['checked'] = in_array($node['node'], $checked);
                 $data = $this->_apply_filter(\library\tools\Data::arr2tree($nodes, 'node', 'pnode', '_sub_'));
-                return $this->success('获取权限配置成功！', $data);
+                return $this->success('获取权限节点成功！', $data);
             case 'save': // 保存权限配置
                 list($post, $data) = [$this->request->post(), []];
-                foreach (isset($post['nodes']) ? $post['nodes'] : [] as $node) $data[] = ['auth' => $auth, 'node' => $node];
+                foreach (isset($post['nodes']) ? $post['nodes'] : [] as $node) {
+                    $data[] = ['auth' => $auth, 'node' => $node];
+                }
                 Db::name('SystemAuthNode')->where(['auth' => $auth])->delete();
                 Db::name('SystemAuthNode')->insertAll($data);
-                return $this->success('权限授权配置更新成功！');
+                return $this->success('权限授权更新成功！');
             default:
                 return $this->_form($this->table, 'apply');
         }
@@ -146,9 +148,9 @@ class Auth extends Controller
         if ($result) {
             $where = ['auth' => $this->request->post('id')];
             Db::name('SystemAuthNode')->where($where)->delete();
-            $this->success("删除权限成功！", '');
+            $this->success("权限删除成功！", '');
         } else {
-            $this->error("删除权限失败，请稍候再试！");
+            $this->error("权限删除失败，请稍候再试！");
         }
     }
 
