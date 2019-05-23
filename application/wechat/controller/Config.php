@@ -33,9 +33,9 @@ class Config extends Controller
     public function options()
     {
         $this->applyCsrfToken();
-        $this->title = '公众号授权绑定';
         $this->thrNotify = url('@wechat/api.push', '', false, true);
         if ($this->request->isGet()) {
+            $this->title = '公众号授权绑定';
             if (!($this->geoip = cache('mygeoip'))) {
                 cache('mygeoip', $this->geoip = gethostbyname($this->request->host()), 360);
             }
@@ -72,8 +72,8 @@ class Config extends Controller
     public function payment()
     {
         $this->applyCsrfToken();
-        $this->title = '公众号支付配置';
         if ($this->request->isGet()) {
+            $this->title = '公众号支付配置';
             $file = File::instance('local');
             $this->wechat_mch_ssl_cer = sysconf('wechat_mch_ssl_cer');
             $this->wechat_mch_ssl_key = sysconf('wechat_mch_ssl_key');
@@ -81,19 +81,20 @@ class Config extends Controller
             if (!$file->has($this->wechat_mch_ssl_cer, true)) $this->wechat_mch_ssl_cer = '';
             if (!$file->has($this->wechat_mch_ssl_key, true)) $this->wechat_mch_ssl_key = '';
             if (!$file->has($this->wechat_mch_ssl_p12, true)) $this->wechat_mch_ssl_p12 = '';
-            return $this->fetch();
-        }
-        if ($this->request->post('wechat_mch_ssl_type') === 'p12') {
-            if (!($sslp12 = $this->request->post('wechat_mch_ssl_p12'))) {
-                $mchid = $this->request->post('wechat_mch_id');
-                $content = File::instance('local')->get($sslp12, true);
-                if (!openssl_pkcs12_read($content, $certs, $mchid)) {
-                    $this->error('商户MCH_ID与支付P12证书不匹配！');
+            $this->fetch();
+        } else {
+            if ($this->request->post('wechat_mch_ssl_type') === 'p12') {
+                if (!($sslp12 = $this->request->post('wechat_mch_ssl_p12'))) {
+                    $mchid = $this->request->post('wechat_mch_id');
+                    $content = File::instance('local')->get($sslp12, true);
+                    if (!openssl_pkcs12_read($content, $certs, $mchid)) {
+                        $this->error('商户MCH_ID与支付P12证书不匹配！');
+                    }
                 }
             }
+            foreach ($this->request->post() as $k => $v) sysconf($k, $v);
+            $this->success('公众号支付配置成功！');
         }
-        foreach ($this->request->post() as $k => $v) sysconf($k, $v);
-        $this->success('公众号支付配置成功！');
     }
 
 }

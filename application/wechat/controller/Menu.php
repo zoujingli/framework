@@ -74,9 +74,9 @@ class Menu extends Controller
                 try {
                     Wechat::WeChatMenu()->delete();
                 } catch (\Exception $e) {
-                    $this->error('删除取消微信菜单失败，请稍候再试！' . $e->getMessage());
+                    $this->error('删除微信菜单失败，请稍候再试！' . $e->getMessage());
                 }
-                $this->success('删除并取消微信菜单成功！', '');
+                $this->success('删除微信菜单成功！', '');
             }
             try {
                 sysdata('menudata', $this->buildMenu($menudata = json_decode($data, true)));

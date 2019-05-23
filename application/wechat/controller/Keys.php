@@ -18,7 +18,6 @@ use app\wechat\service\Wechat;
 use library\Controller;
 use think\Db;
 
-
 /**
  * 回复规则管理
  * Class Keys
