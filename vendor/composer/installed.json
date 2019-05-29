@@ -177,8 +177,8 @@
     },
     {
         "name": "symfony/options-resolver",
-        "version": "v3.4.27",
-        "version_normalized": "3.4.27.0",
+        "version": "v3.4.28",
+        "version_normalized": "3.4.28.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/options-resolver.git",
@@ -239,17 +239,17 @@
     },
     {
         "name": "topthink/framework",
-        "version": "v5.1.36",
-        "version_normalized": "5.1.36.0",
+        "version": "v5.1.37",
+        "version_normalized": "5.1.37.0",
         "source": {
             "type": "git",
             "url": "https://github.com/top-think/framework.git",
-            "reference": "135eee67ce9ee0b07da201f743d7dd88ec431abb"
+            "reference": "04cb0b7a4872fb7ebfd2d3af34074ac12bbfa31a"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/top-think/framework/zipball/135eee67ce9ee0b07da201f743d7dd88ec431abb",
-            "reference": "135eee67ce9ee0b07da201f743d7dd88ec431abb",
+            "url": "https://api.github.com/repos/top-think/framework/zipball/04cb0b7a4872fb7ebfd2d3af34074ac12bbfa31a",
+            "reference": "04cb0b7a4872fb7ebfd2d3af34074ac12bbfa31a",
             "shasum": "",
             "mirrors": [
                 {
@@ -271,7 +271,7 @@
             "sebastian/phpcpd": "2.*",
             "squizlabs/php_codesniffer": "2.*"
         },
-        "time": "2019-04-28T08:56:58+00:00",
+        "time": "2019-05-26T04:54:04+00:00",
         "type": "think-framework",
         "installation-source": "dist",
         "notification-url": "https://packagist.org/downloads/",
