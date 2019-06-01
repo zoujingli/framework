@@ -205,7 +205,7 @@ $(function () {
         };
         // 打开一个iframe窗口
         this.iframe = function (url, title, area) {
-            return layer.open({title: title || '窗口', type: 2, area: area || ['800px', '550px'], fix: true, maxmin: false, content: url});
+            return layer.open({title: title || '窗口', type: 2, area: area || ['800px', '580px'], fix: true, maxmin: false, content: url});
         };
         // 加载HTML到弹出层
         this.modal = function (url, data, title, callback, loading, tips) {
