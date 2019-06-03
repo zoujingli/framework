@@ -726,6 +726,14 @@ $(function () {
         });
     });
 
+    /*! 图片加载异常处理 */
+    document.addEventListener('error', function (e, elem) {
+        elem = e.target;
+        if (elem.tagName.toLowerCase() === 'img') {
+            elem.src = baseRoot + 'theme/img/404_icon.png';
+        }
+    }, true);
+
     /*! 初始化事件 */
     $.menu.listen();
     $.vali.listen();
