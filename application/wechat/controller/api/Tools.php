@@ -34,8 +34,9 @@ class Tools extends Controller
      */
     public function oauth()
     {
-        $this->fans = Wechat::getWebOauthInfo($this->request->url(true), 1);
-        return $this->fetch();
+        $this->url = $this->request->url(true);
+        $this->fans = Wechat::getWebOauthInfo($this->url, 1);
+        $this->fetch();
     }
 
     /**
@@ -61,7 +62,8 @@ class Tools extends Controller
      */
     public function jssdk()
     {
-        return $this->fetch('', ['options' => Wechat::getWebJssdkSign()]);
+        $this->options = Wechat::getWebJssdkSign();
+        $this->fetch();
     }
 
     /**
@@ -73,8 +75,8 @@ class Tools extends Controller
      */
     public function jssdk_qrc()
     {
-        $url = url('@wechat/api.tools/jssdk', '', true, true);
-        return $this->createQrc($url);
+        $this->url = url('@wechat/api.tools/jssdk', '', true, true);
+        return $this->createQrc($this->url);
     }
 
     /**
@@ -181,8 +183,8 @@ class Tools extends Controller
      */
     public function jsapiQrc()
     {
-        $url = url('@wechat/api.tools/jsapi', '', true, true);
-        return $this->createQrc($url);
+        $this->url = url('@wechat/api.tools/jsapi', '', true, true);
+        return $this->createQrc($this->url);
     }
 
     /**
