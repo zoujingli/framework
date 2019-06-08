@@ -36,7 +36,7 @@ if (!function_exists('format_datetime')) {
      */
     function format_datetime($datetime, $format = 'Y年m月d日 H:i:s')
     {
-        if (empty($datetime)) return '--';
+        if (empty($datetime)) return '-';
         if (is_numeric($datetime)) return date($format, $datetime);
         return date($format, strtotime($datetime));
     }
@@ -225,11 +225,15 @@ if (!function_exists('emoji_clear')) {
 // 注册系统常用指令
 \think\Console::addDefaultCommands([
     'library\command\Sess',
-    'library\command\task\Stop', 'library\command\task\State',
-    'library\command\task\Start', 'library\command\task\Reset',
+    'library\command\task\Stop',
+    'library\command\task\State',
+    'library\command\task\Start',
+    'library\command\task\Reset',
     'library\command\sync\Admin',
-    'library\command\sync\Plugs', 'library\command\sync\Config',
-    'library\command\sync\Wechat', 'library\command\sync\Service',
+    'library\command\sync\Plugs',
+    'library\command\sync\Config',
+    'library\command\sync\Wechat',
+    'library\command\sync\Service',
 ]);
 
 // 动态加载模块配置
