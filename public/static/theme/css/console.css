@@ -68,7 +68,7 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}.mo
 .text-top{vertical-align:top!important}.text-left{text-align:left!important}.text-right{text-align:right!important}.text-center{text-align:center!important}.text-middle{vertical-align:middle!important}.text-bottom{vertical-align:bottom!important}
 .nowrap{white-space:nowrap!important}.help-block{color:#999;font-size:12px}.inline-block{display:inline-block!important}.block{display:block!important}.pointer{cursor:pointer!important}
 .full-width{width:100%!important}.full-height{height:100%!important}.color-red{color:#ec494e!important}.color-blue{color:#2494f2!important}.color-desc{color:#999!important}.color-text{color:#333!important}.color-green{color:#090!important}
-.notdata{display:block;margin-bottom:10px;padding:15px;border:1px solid #e6e6e6;border-radius:0 2px 2px 0;background-color:#f2f2f2;text-align:center;letter-spacing:8px;font-size:13px;line-height:22px}
+.notdata{display:block;padding:15px;border:1px solid #e6e6e6;border-radius:0 2px 2px 0;background-color:#f2f2f2;text-align:center;letter-spacing:8px;font-size:13px;line-height:22px}
 [data-tips-image]{cursor:zoom-in!important}.notselect{user-select:none;-ms-user-select:none;-moz-user-select:none;-webkit-user-select:none}.transition{-webkit-transition:all .2s linear;-moz-transition:all .2s linear;-o-transition:all .2s linear;transition:all .2s linear}
 /* 文字大小 */
 .font-s10{font-size:10px!important}.font-s11{font-size:11px!important}.font-s12{font-size:12px!important}.font-s13{font-size:13px!important}.font-s14{font-size:14px!important}.font-s16{font-size:16px!important}.font-s18{font-size:18px!important}.font-s20{font-size:20px!important}
