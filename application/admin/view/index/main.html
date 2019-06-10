@@ -1,6 +1,120 @@
 {extend name='main'}
 
 {block name='content'}
+
+<style>
+    .store-total-bar {
+        font-size: 14px;
+        margin-bottom: 20px;
+        letter-spacing: 1px;
+    }
+
+    .store-total-bar .store-total-title {
+        margin-bottom: 15px;
+    }
+
+    .store-total-bar div.layui-col-xs3 > div {
+        color: #fff;
+        line-height: 4em;
+        padding: 10px 25px;
+        position: relative;
+    }
+
+    .store-total-bar div.layui-col-xs3 > div::after {
+        top: 35%;
+        right: 8%;
+        font-size: 65px;
+        position: absolute;
+        font-style: normal;
+        color: rgba(255, 255, 255, 0.3);
+        font-family: layui-icon !important;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .store-total-bar div.layui-col-xs3:nth-child(1) > div {
+        background: linear-gradient(-125deg, #57bdbf, #2f9de2)
+    }
+
+    .store-total-bar div.layui-col-xs3:nth-child(2) > div {
+        background: linear-gradient(-125deg, #ff7d7d, #fb2c95)
+    }
+
+
+    .store-total-bar div.layui-col-xs3:nth-child(3) > div {
+        background: linear-gradient(-113deg, #c543d8, #925cc3)
+    }
+
+    .store-total-bar div.layui-col-xs3:nth-child(4) > div {
+        background: linear-gradient(-141deg, #ecca1b, #f39526)
+    }
+
+    .store-total-bar div.layui-col-xs3:nth-child(1) > div:after {
+        content: "\e656";
+    }
+
+    .store-total-bar div.layui-col-xs3:nth-child(2) > div:after {
+        content: "\e770";
+    }
+
+    .store-total-bar div.layui-col-xs3:nth-child(3) > div:after {
+        content: "\e705";
+    }
+
+    .store-total-bar div.layui-col-xs3:nth-child(4) > div:after {
+        content: "\e6b2";
+    }
+
+    .store-total-bar .store-total-item-title {
+        font-weight: 300;
+    }
+
+    .store-total-bar .store-total-item-number {
+        font-size: 46px;
+        font-weight: 300;
+        line-height: 46px;
+    }
+
+    .store-total-bar .store-total-item-desc {
+        font-weight: 300;
+    }
+
+</style>
+
+<div class="think-box-shadow store-total-bar">
+    <div class="store-total-title">商城统计</div>
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-xs3">
+            <div class="store-total-item">
+                <div class="store-total-item-title nowrap">商品总量</div>
+                <div class="store-total-item-number nowrap">63</div>
+                <div class="store-total-item-desc nowrap">当前商品总数量</div>
+            </div>
+        </div>
+        <div class="layui-col-xs3">
+            <div class="store-total-item">
+                <div class="store-total-item-title nowrap">用户总量</div>
+                <div class="store-total-item-number nowrap">1,634</div>
+                <div class="store-total-item-desc nowrap">当前用户总数量</div>
+            </div>
+        </div>
+        <div class="layui-col-xs3">
+            <div class="store-total-item">
+                <div class="store-total-item-title nowrap">订单总量</div>
+                <div class="store-total-item-number nowrap">148</div>
+                <div class="store-total-item-desc nowrap">已付款订单总数量</div>
+            </div>
+        </div>
+        <div class="layui-col-xs3">
+            <div class="store-total-item">
+                <div class="store-total-item-title nowrap">评价总量</div>
+                <div class="store-total-item-number nowrap">0</div>
+                <div class="store-total-item-desc nowrap">订单评价总数量</div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="layui-row layui-col-space10">
     <div class="layui-col-md6">
         <fieldset class="think-box-shadow">
