@@ -16,7 +16,7 @@ namespace app\wechat\service;
 
 /**
  * 微信处理管理
- * Class Wechat
+ * Class WechatService
  * @package app\wechat\service
  *
  * ----- WeOpen for Open -----
@@ -34,7 +34,7 @@ namespace app\wechat\service;
  * ----- ThinkService -----
  * @method mixed wechat() static 第三方微信工具
  */
-class Wechat extends \We
+class WechatService extends \We
 {
 
     /**
@@ -181,7 +181,7 @@ class Wechat extends \We
         $appid = self::getAppid();
         list($openid, $fansinfo) = [session("{$appid}_openid"), session("{$appid}_fansinfo")];
         if ((empty($isfull) && !empty($openid)) || (!empty($isfull) && !empty($openid) && !empty($fansinfo))) {
-            empty($fansinfo) || Fans::set($fansinfo);
+            empty($fansinfo) || FansService::set($fansinfo);
             return ['openid' => $openid, 'fansinfo' => $fansinfo];
         }
         if (self::getType() === 'api') {
@@ -199,7 +199,7 @@ class Wechat extends \We
                     redirect(decode(request()->get('rcode')), [], 301)->send();
                 }
                 session("{$appid}_fansinfo", $fansinfo = $wechat->getUserInfo($token['access_token'], $openid));
-                empty($fansinfo) || Fans::set($fansinfo);
+                empty($fansinfo) || FansService::set($fansinfo);
             }
             redirect(decode(request()->get('rcode')), [], 301)->send();
         } else {
@@ -207,7 +207,7 @@ class Wechat extends \We
             session("{$appid}_openid", $openid = $result['openid']);
             session("{$appid}_fansinfo", $fansinfo = $result['fans']);
             if ((empty($isfull) && !empty($openid)) || (!empty($isfull) && !empty($openid) && !empty($fansinfo))) {
-                empty($fansinfo) || Fans::set($fansinfo);
+                empty($fansinfo) || FansService::set($fansinfo);
                 return ['openid' => $openid, 'fansinfo' => $fansinfo];
             }
             if ($isRedirect && !empty($result['url'])) {

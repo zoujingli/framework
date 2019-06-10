@@ -14,16 +14,16 @@
 
 namespace app\wechat\queue;
 
-use app\admin\queue\JobsBase;
-use app\wechat\service\Fans;
-use app\wechat\service\Wechat;
+use app\admin\queue\JobsQueue;
+use app\wechat\service\FansService;
+use app\wechat\service\WechatService;
 use think\Db;
 
 /**
  * Class Jobs
  * @package app\wechat
  */
-class Jobs extends JobsBase
+class WechatQueue extends JobsQueue
 {
     /**
      * 当前任务URI
@@ -37,14 +37,14 @@ class Jobs extends JobsBase
     public function execute()
     {
         try {
-            $appid = Wechat::getAppid();
-            $wechat = Wechat::WeChatUser();
+            $appid = WechatService::getAppid();
+            $wechat = WechatService::WeChatUser();
             $next = ''; // 获取远程粉丝
             $this->output->writeln('Start synchronizing fans from the Wechat server');
             while (is_array($result = $wechat->getUserList($next)) && !empty($result['data']['openid'])) {
                 foreach (array_chunk($result['data']['openid'], 100) as $chunk)
                     if (is_array($list = $wechat->getBatchUserInfo($chunk)) && !empty($list['user_info_list']))
-                        foreach ($list['user_info_list'] as $user) Fans::set($user, $appid);
+                        foreach ($list['user_info_list'] as $user) FansService::set($user, $appid);
                 if (in_array($result['next_openid'], $result['data']['openid'])) break;
                 $next = $result['next_openid'];
             }
@@ -60,7 +60,7 @@ class Jobs extends JobsBase
             }
             // 同步粉丝标签列表
             $this->output->writeln('Start synchronizing tags from the Wechat server');
-            if (is_array($list = Wechat::WeChatTags()->getTags()) && !empty($list['tags'])) {
+            if (is_array($list = WechatService::WeChatTags()->getTags()) && !empty($list['tags'])) {
                 foreach ($list['tags'] as &$tag) $tag['appid'] = $appid;
                 Db::name('WechatFansTags')->where('1=1')->delete();
                 Db::name('WechatFansTags')->insertAll($list['tags']);

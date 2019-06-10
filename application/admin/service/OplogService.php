@@ -19,10 +19,10 @@ use think\Db;
 
 /**
  * 系统日志服务管理
- * Class Log
+ * Class LogService
  * @package app\admin\service
  */
-class Log
+class OplogService
 {
     /**
      * 写入操作日志

@@ -18,7 +18,7 @@ use think\Db;
 
 /**
  * 微信数据服务
- * Class Wechat
+ * Class WechatService
  * @package app\service\service
  * @method \WeChat\Card WeChatCard($appid) static 微信卡券管理
  * @method \WeChat\Custom WeChatCustom($appid) static 微信客服消息
@@ -70,7 +70,7 @@ use think\Db;
  * @method mixed wechat() static 第三方微信工具
  * @method mixed config() static 第三方配置工具
  */
-class Wechat
+class WechatService
 {
 
     /**

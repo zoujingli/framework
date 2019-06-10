@@ -19,10 +19,10 @@ use think\Db;
 
 /**
  * 系统消息管理
- * Class Message
+ * Class MessageService
  * @package app\admin\service
  */
-class Message
+class MessageService
 {
     /**
      * 增加系统消息

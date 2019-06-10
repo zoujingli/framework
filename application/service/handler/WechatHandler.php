@@ -14,7 +14,7 @@
 
 namespace app\service\handler;
 
-use app\service\service\Wechat as WechatLogic;
+use app\service\service\WechatService as WechatLogic;
 use think\Db;
 
 /**
@@ -23,7 +23,7 @@ use think\Db;
  * @package app\wechat\handler
  * @author Anyon <zoujingli@qq.com>
  */
-class Wechat
+class WechatHandler
 {
     /**
      * 当前微信APPID

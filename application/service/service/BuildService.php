@@ -19,7 +19,7 @@ namespace app\service\service;
  * Class Build
  * @package app\service\service
  */
-class Build
+class BuildService
 {
 
     /**

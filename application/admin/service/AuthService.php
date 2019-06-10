@@ -20,10 +20,10 @@ use think\Db;
 
 /**
  * 权限访问及菜单管理
- * Class Auth
+ * Class AuthService
  * @package app\admin\service
  */
-class Auth
+class AuthService
 {
 
     /**

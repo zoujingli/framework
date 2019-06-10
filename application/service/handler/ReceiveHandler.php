@@ -14,7 +14,7 @@
 
 namespace app\service\handler;
 
-use app\service\service\Wechat;
+use app\service\service\WechatService;
 use think\Db;
 
 /**
@@ -23,7 +23,7 @@ use think\Db;
  * @author Anyon <zoujingli@qq.com>
  * @date 2016/10/27 14:14
  */
-class Receive
+class ReceiveHandler
 {
 
     /**
@@ -38,7 +38,7 @@ class Receive
     public static function handler($appid)
     {
         try {
-            $service = Wechat::WeChatReceive($appid);
+            $service = WechatService::WeChatReceive($appid);
         } catch (\Exception $e) {
             return "Wechat message handling failed, {$e->getMessage()}";
         }

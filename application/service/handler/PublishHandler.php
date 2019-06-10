@@ -14,7 +14,7 @@
 
 namespace app\service\handler;
 
-use app\service\service\Wechat;
+use app\service\service\WechatService;
 
 /**
  * 第三方平台测试上线
@@ -22,7 +22,7 @@ use app\service\service\Wechat;
  * @author Anyon <zoujingli@qq.com>
  * @date 2016/10/27 14:14
  */
-class Publish
+class PublishHandler
 {
 
     /**
@@ -42,7 +42,7 @@ class Publish
     public static function handler($appid)
     {
         try {
-            $wechat = Wechat::WeChatReceive($appid);
+            $wechat = WechatService::WeChatReceive($appid);
         } catch (\Exception $e) {
             return "Wechat message handling failed, {$e->getMessage()}";
         }
@@ -54,7 +54,7 @@ class Publish
                     return $wechat->text('TESTCOMPONENT_MSG_TYPE_TEXT_callback')->reply([], true);
                 }
                 $key = str_replace("QUERY_AUTH_CODE:", '', $receive['Content']);
-                Wechat::instance('Service')->getQueryAuthorizerInfo($key);
+                WechatService::instance('Service')->getQueryAuthorizerInfo($key);
                 return $wechat->text("{$key}_from_api")->reply([], true);
             case 'event':
                 $receive = $wechat->getReceive();

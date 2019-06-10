@@ -14,14 +14,14 @@
 
 namespace app\admin\queue;
 
-use app\admin\service\Queue;
+use app\admin\service\QueueService;
 
 /**
  * 基础指令公共类
  * Class QueueBase
  * @package app\admin
  */
-class JobsBase
+class JobsQueue
 {
     /**
      * 待处理
@@ -94,7 +94,7 @@ class JobsBase
         $this->output->newLine();
         $this->output->writeln("       system task {$this->id} execution start");
         $this->output->writeln('---------------------------------------------');
-        Queue::status($this->id, self::STATUS_PROC, $this->statusDesc);
+        QueueService::status($this->id, self::STATUS_PROC, $this->statusDesc);
         if ($this->execute()) {
             $this->output->writeln('---------------------------------------------');
             $this->output->info("                successful");
@@ -105,7 +105,7 @@ class JobsBase
             $this->status = self::STATUS_FAIL;
         }
         $job->delete();
-        Queue::status($this->id, $this->status, $this->statusDesc);
+        QueueService::status($this->id, $this->status, $this->statusDesc);
         $this->output->writeln('---------------------------------------------');
         $this->output->newLine();
     }

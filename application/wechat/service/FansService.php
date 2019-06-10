@@ -18,10 +18,10 @@ use think\Db;
 
 /**
  * 微信粉丝信息
- * Class Fans
+ * Class FansService
  * @package app\wechat\service
  */
-class Fans
+class FansService
 {
 
     /**

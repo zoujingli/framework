@@ -14,7 +14,7 @@
 
 namespace app\store\controller;
 
-use app\store\service\Extend;
+use app\store\service\ExtendService;
 use library\Controller;
 
 /**
@@ -35,7 +35,7 @@ class Config extends Controller
         $this->applyCsrfToken();
         $this->title = '商城参数配置';
         if ($this->request->isGet()) {
-            $this->query = Extend::querySmsBalance();
+            $this->query = ExtendService::querySmsBalance();
             $this->fetch();
         } else {
             foreach ($this->request->post() as $k => $v) sysconf($k, $v);

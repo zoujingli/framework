@@ -18,10 +18,10 @@ use think\Db;
 
 /**
  * 任务管理器
- * Class Queue
+ * Class QueueService
  * @package app\admin\service
  */
-class Queue
+class QueueService
 {
     /**
      * 待处理

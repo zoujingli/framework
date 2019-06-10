@@ -20,10 +20,10 @@ use WeChat\Contracts\MyCurlFile;
 
 /**
  * 微信素材管理
- * Class Media
+ * Class MediaService
  * @package app\wechat\service
  */
-class Media
+class MediaService
 {
     /**
      * 通过图文ID读取图文信息
@@ -59,11 +59,11 @@ class Media
      */
     public static function upload($url, $type = 'image', $videoInfo = [])
     {
-        $where = ['md5' => md5($url), 'appid' => Wechat::getAppid()];
+        $where = ['md5' => md5($url), 'appid' => WechatService::getAppid()];
         if (($mediaId = Db::name('WechatMedia')->where($where)->value('media_id'))) return $mediaId;
-        $result = Wechat::WeChatMedia()->addMaterial(self::getServerPath($url), $type, $videoInfo);
+        $result = WechatService::WeChatMedia()->addMaterial(self::getServerPath($url), $type, $videoInfo);
         data_save('WechatMedia', [
-            'local_url' => $url, 'md5' => $where['md5'], 'appid' => Wechat::getAppid(), 'type' => $type,
+            'local_url' => $url, 'md5' => $where['md5'], 'appid' => WechatService::getAppid(), 'type' => $type,
             'media_url' => isset($result['url']) ? $result['url'] : '', 'media_id' => $result['media_id'],
         ], 'type', $where);
         return $result['media_id'];
