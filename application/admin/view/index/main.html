@@ -3,24 +3,24 @@
 {block name='content'}
 
 <style>
-    .store-total-bar {
+    .store-total-container {
         font-size: 14px;
         margin-bottom: 20px;
         letter-spacing: 1px;
     }
 
-    .store-total-bar .store-total-title {
+    .store-total-container .store-total-title {
         margin-bottom: 15px;
     }
 
-    .store-total-bar div.layui-col-xs3 > div {
+    .store-total-container div.layui-col-xs3 > div {
         color: #fff;
         line-height: 4em;
         padding: 10px 25px;
         position: relative;
     }
 
-    .store-total-bar div.layui-col-xs3 > div::after {
+    .store-total-container div.layui-col-xs3 > div::after {
         top: 35%;
         right: 8%;
         font-size: 65px;
@@ -32,56 +32,56 @@
         -moz-osx-font-smoothing: grayscale;
     }
 
-    .store-total-bar div.layui-col-xs3:nth-child(1) > div {
+    .store-total-container div.layui-col-xs3:nth-child(1) > div {
         background: linear-gradient(-125deg, #57bdbf, #2f9de2)
     }
 
-    .store-total-bar div.layui-col-xs3:nth-child(2) > div {
+    .store-total-container div.layui-col-xs3:nth-child(2) > div {
         background: linear-gradient(-125deg, #ff7d7d, #fb2c95)
     }
 
 
-    .store-total-bar div.layui-col-xs3:nth-child(3) > div {
+    .store-total-container div.layui-col-xs3:nth-child(3) > div {
         background: linear-gradient(-113deg, #c543d8, #925cc3)
     }
 
-    .store-total-bar div.layui-col-xs3:nth-child(4) > div {
+    .store-total-container div.layui-col-xs3:nth-child(4) > div {
         background: linear-gradient(-141deg, #ecca1b, #f39526)
     }
 
-    .store-total-bar div.layui-col-xs3:nth-child(1) > div:after {
+    .store-total-container div.layui-col-xs3:nth-child(1) > div:after {
         content: "\e656";
     }
 
-    .store-total-bar div.layui-col-xs3:nth-child(2) > div:after {
+    .store-total-container div.layui-col-xs3:nth-child(2) > div:after {
         content: "\e770";
     }
 
-    .store-total-bar div.layui-col-xs3:nth-child(3) > div:after {
+    .store-total-container div.layui-col-xs3:nth-child(3) > div:after {
         content: "\e705";
     }
 
-    .store-total-bar div.layui-col-xs3:nth-child(4) > div:after {
+    .store-total-container div.layui-col-xs3:nth-child(4) > div:after {
         content: "\e6b2";
     }
 
-    .store-total-bar .store-total-item-title {
+    .store-total-container .store-total-item-title {
         font-weight: 300;
     }
 
-    .store-total-bar .store-total-item-number {
+    .store-total-container .store-total-item-number {
         font-size: 46px;
         font-weight: 300;
         line-height: 46px;
     }
 
-    .store-total-bar .store-total-item-desc {
+    .store-total-container .store-total-item-desc {
         font-weight: 300;
     }
 
 </style>
 
-<div class="think-box-shadow store-total-bar">
+<div class="think-box-shadow store-total-container">
     <div class="store-total-title">商城统计</div>
     <div class="layui-row layui-col-space15">
         <div class="layui-col-xs3">
@@ -115,7 +115,7 @@
     </div>
 </div>
 
-<div class="think-box-shadow store-total-bar">
+<div class="think-box-shadow store-total-container">
     <div class="store-total-title">实时概况</div>
     <div class="layui-row layui-col-space15 padding-bottom-20">
         <div class="layui-col-xs1 text-center padding-top-30">
