@@ -42,10 +42,11 @@ class Queue extends Controller
     public function index()
     {
         $this->title = '消息任务管理';
-        $this->uris = Db::name($this->table)->distinct(true)->column('uri');
         $this->cmd = 'php ' . env('root_path') . 'think xtask:start';
         $this->message = Console::call('xtask:state')->fetch();
-        $this->_query($this->table)->equal('status,title,uri')->dateBetween('create_at,status_at')->order('id desc')->page();
+        $this->uris = Db::name($this->table)->distinct(true)->column('uri');
+        $query = $this->_query($this->table)->dateBetween('create_at,status_at');
+        $query->equal('status,title,uri')->order('id desc')->page();
     }
 
     /**

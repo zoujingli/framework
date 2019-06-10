@@ -4,13 +4,13 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitd33b7204186314fce1720a23d6958835
+class ComposerStaticInit972bc707042c4f0b284b8c0b99a6ed09
 {
     public static $files = array (
         '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
         '9b552a3cc426e3287cc811caefa3cf53' => __DIR__ . '/..' . '/topthink/think-helper/src/helper.php',
-        'cc56288302d9df745d97c934d6a6e5f0' => __DIR__ . '/..' . '/topthink/think-queue/src/common.php',
         '8dafcc6956460bc297e00381fed53e11' => __DIR__ . '/..' . '/zoujingli/think-library/src/common.php',
+        'cc56288302d9df745d97c934d6a6e5f0' => __DIR__ . '/..' . '/topthink/think-queue/src/common.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -346,9 +346,9 @@ class ComposerStaticInitd33b7204186314fce1720a23d6958835
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitd33b7204186314fce1720a23d6958835::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitd33b7204186314fce1720a23d6958835::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitd33b7204186314fce1720a23d6958835::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit972bc707042c4f0b284b8c0b99a6ed09::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit972bc707042c4f0b284b8c0b99a6ed09::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit972bc707042c4f0b284b8c0b99a6ed09::$classMap;
 
         }, null, ClassLoader::class);
     }
