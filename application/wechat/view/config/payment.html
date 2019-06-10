@@ -3,9 +3,9 @@
 {block name="content"}
 <form onsubmit="return false;" data-auto="true" method="post" class='layui-form layui-card ' autocomplete="off" lay-filter="payment" style="max-width:1000px">
 
-    <div class="layui-card-body think-box-shadow padding-bottom-20">
+    <div class="layui-card-body think-box-shadow">
 
-        <div class="layui-form-item margin-top-20">
+        <div class="layui-form-item padding-right-30 margin-top-20">
             <label class="layui-form-label">MchId<br><span class="nowrap color-desc">微信商户ID</span></label>
             <div class="layui-input-block">
                 <input name="wechat_mch_id" required placeholder="请输入微信商户ID（必填）" value="{:sysconf('wechat_mch_id')}" class="layui-input">
@@ -13,7 +13,7 @@
             </div>
         </div>
 
-        <div class="layui-form-item">
+        <div class="layui-form-item padding-right-30">
             <label class="layui-form-label">MchKey<br><span class="nowrap color-desc">微信商户KEY</span></label>
             <div class="layui-input-block">
                 <input name="wechat_mch_key" placeholder="请输入微信商户密钥（必填）" maxlength="32" required value="{:sysconf('wechat_mch_key')}" class="layui-input">
