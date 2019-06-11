@@ -14,7 +14,7 @@
 
     <table class="layui-table" lay-skin="line">
         <caption class="margin-bottom-10 text-left">{include file='queue/index_search'}</caption>
-        <!--{notempty name='list'}-->
+        {notempty name='list'}
         <thead>
         <tr>
             <th class='list-table-check-td think-checkbox'>
@@ -25,9 +25,9 @@
             <th class='text-left nowrap'>任务状态</th>
         </tr>
         </thead>
-        <!--{/notempty}-->
+        {/notempty}
         <tbody>
-        <!--{foreach $list as $key=>$vo}-->
+        {foreach $list as $key=>$vo}
         <tr>
             <td class='list-table-check-td think-checkbox'>
                 <input class="list-check-box" value='{$vo.id}' type='checkbox'>
@@ -72,7 +72,7 @@
                 <span class="layui-badge layui-bg-gray">{$vo.status_desc|raw|default="<span class='color-desc'>没有获取到状态描述</span>"}</span>
             </td>
         </tr>
-        <!--{/foreach}-->
+        {/foreach}
         </tbody>
     </table>
 

@@ -3,120 +3,75 @@
 {block name='content'}
 
 <style>
+
     .store-total-container {
         font-size: 14px;
         margin-bottom: 20px;
         letter-spacing: 1px;
     }
 
-    .store-total-container .store-total-title {
-        margin-bottom: 15px;
-    }
-
-    .store-total-container div.layui-col-xs3 > div {
-        color: #fff;
-        line-height: 4em;
-        padding: 10px 25px;
-        position: relative;
-    }
-
-    .store-total-container div.layui-col-xs3 > div::after {
-        top: 35%;
+    .store-total-container .store-total-icon {
+        top: 45%;
         right: 8%;
         font-size: 65px;
         position: absolute;
-        font-style: normal;
-        color: rgba(255, 255, 255, 0.3);
-        font-family: layui-icon !important;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
+        color: rgba(255, 255, 255, 0.4);
     }
 
-    .store-total-container div.layui-col-xs3:nth-child(1) > div {
-        background: linear-gradient(-125deg, #57bdbf, #2f9de2)
+    .store-total-container .store-total-item {
+        color: #fff;
+        line-height: 4em;
+        padding: 15px 25px;
+        position: relative;
     }
 
-    .store-total-container div.layui-col-xs3:nth-child(2) > div {
-        background: linear-gradient(-125deg, #ff7d7d, #fb2c95)
-    }
-
-
-    .store-total-container div.layui-col-xs3:nth-child(3) > div {
-        background: linear-gradient(-113deg, #c543d8, #925cc3)
-    }
-
-    .store-total-container div.layui-col-xs3:nth-child(4) > div {
-        background: linear-gradient(-141deg, #ecca1b, #f39526)
-    }
-
-    .store-total-container div.layui-col-xs3:nth-child(1) > div:after {
-        content: "\e656";
-    }
-
-    .store-total-container div.layui-col-xs3:nth-child(2) > div:after {
-        content: "\e770";
-    }
-
-    .store-total-container div.layui-col-xs3:nth-child(3) > div:after {
-        content: "\e705";
-    }
-
-    .store-total-container div.layui-col-xs3:nth-child(4) > div:after {
-        content: "\e6b2";
-    }
-
-    .store-total-container .store-total-item-title {
-        font-weight: 300;
-    }
-
-    .store-total-container .store-total-item-number {
+    .store-total-container .store-total-item > div:nth-child(2) {
         font-size: 46px;
-        font-weight: 300;
         line-height: 46px;
-    }
-
-    .store-total-container .store-total-item-desc {
-        font-weight: 300;
     }
 
 </style>
 
-<div class="think-box-shadow store-total-container">
-    <div class="store-total-title">商城统计</div>
+<div class="think-box-shadow store-total-container notselect">
+    <div class="margin-bottom-15">商城统计</div>
     <div class="layui-row layui-col-space15">
-        <div class="layui-col-xs3">
-            <div class="store-total-item">
-                <div class="store-total-item-title nowrap">商品总量</div>
-                <div class="store-total-item-number nowrap">63</div>
-                <div class="store-total-item-desc nowrap">当前商品总数量</div>
+        <div class="layui-col-sm6 layui-col-md3">
+            <div class="store-total-item nowrap" style="background:linear-gradient(-125deg,#57bdbf,#2f9de2)">
+                <div>商品总量</div>
+                <div>63</div>
+                <div>当前商品总数量</div>
             </div>
+            <i class="store-total-icon layui-icon layui-icon-template-1"></i>
         </div>
-        <div class="layui-col-xs3">
-            <div class="store-total-item">
-                <div class="store-total-item-title nowrap">用户总量</div>
-                <div class="store-total-item-number nowrap">1,634</div>
-                <div class="store-total-item-desc nowrap">当前用户总数量</div>
+        <div class="layui-col-sm6 layui-col-md3">
+            <div class="store-total-item nowrap" style=" background:linear-gradient(-125deg,#ff7d7d,#fb2c95)">
+                <div>用户总量</div>
+                <div>1,634</div>
+                <div>当前用户总数量</div>
             </div>
+            <i class="store-total-icon layui-icon layui-icon-user"></i>
         </div>
-        <div class="layui-col-xs3">
-            <div class="store-total-item">
-                <div class="store-total-item-title nowrap">订单总量</div>
-                <div class="store-total-item-number nowrap">148</div>
-                <div class="store-total-item-desc nowrap">已付款订单总数量</div>
+        <div class="layui-col-sm6 layui-col-md3">
+            <div class="store-total-item nowrap" style="background:linear-gradient(-113deg,#c543d8,#925cc3)">
+                <div>订单总量</div>
+                <div>148</div>
+                <div>已付款订单总数量</div>
             </div>
+            <i class="store-total-icon layui-icon layui-icon-read"></i>
         </div>
-        <div class="layui-col-xs3">
-            <div class="store-total-item">
-                <div class="store-total-item-title nowrap">评价总量</div>
-                <div class="store-total-item-number nowrap">0</div>
-                <div class="store-total-item-desc nowrap">订单评价总数量</div>
+        <div class="layui-col-sm6 layui-col-md3">
+            <div class="store-total-item nowrap" style="background:linear-gradient(-141deg,#ecca1b,#f39526)">
+                <div>评价总量</div>
+                <div>0</div>
+                <div>订单评价总数量</div>
             </div>
+            <i class="store-total-icon layui-icon layui-icon-survey"></i>
         </div>
     </div>
 </div>
 
 <div class="think-box-shadow store-total-container">
-    <div class="store-total-title">实时概况</div>
+    <div class="margin-bottom-15">实时概况</div>
     <div class="layui-row layui-col-space15 padding-bottom-20">
         <div class="layui-col-xs1 text-center padding-top-30">
             <i class="layui-icon color-blue font-s30">&#xe65e;</i>

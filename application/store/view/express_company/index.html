@@ -13,7 +13,7 @@
 <div class="think-box-shadow">
     <table class="layui-table" lay-skin="line">
         <caption class="margin-bottom-10 text-left">{include file='express_company/index_search'}</caption>
-        <!--{notempty name='list'}-->
+        {notempty name='list'}
         <thead>
         <tr>
             <th class='list-table-check-td think-checkbox'>
@@ -29,9 +29,9 @@
             <th></th>
         </tr>
         </thead>
-        <!--{/notempty}-->
+        {/notempty}
         <tbody>
-        <!--{foreach $list as $key=>$vo}-->
+        {foreach $list as $key=>$vo}
         <tr data-dbclick>
             <td class='list-table-check-td think-checkbox'>
                 <input class="list-check-box" value='{$vo.id}' type='checkbox'>
@@ -63,7 +63,7 @@
 
             </td>
         </tr>
-        <!--{/foreach}-->
+        {/foreach}
         </tbody>
     </table>
     {empty name='list'}<span class="notdata">没有记录哦</span>{else}{$pagehtml|raw|default=''}{/empty}
