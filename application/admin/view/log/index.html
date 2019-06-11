@@ -30,7 +30,7 @@
         </tr>
         </thead>
         <tbody>
-        <!--{foreach $list as $key=>$vo}-->
+        {foreach $list as $key=>$vo}
         <tr data-dbclick>
             <td class='list-table-check-td think-checkbox'>
                 <input class="list-check-box" value='{$vo.id}' type='checkbox'>
@@ -56,7 +56,7 @@
                 {/if}
             </td>
         </tr>
-        <!--{/foreach}-->
+        {/foreach}
         </tbody>
         {/notempty}
     </table>

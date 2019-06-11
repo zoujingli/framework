@@ -14,9 +14,9 @@
 
 {block name="content"}
 <div style="background:#fff">
-    <!--{empty name='list'}-->
+    {empty name='list'}
     <blockquote class="layui-elem-quote">没 有 记 录 哦！</blockquote>
-    <!--{else}-->
+    {else}
     <table class="layui-table" lay-skin="line">
         <thead>
         <tr>
@@ -33,7 +33,7 @@
         </tr>
         </thead>
         <tbody>
-        <!--{foreach $list as $key=>$vo}-->
+        {foreach $list as $key=>$vo}
         <tr data-dbclick>
             <td class='list-table-check-td think-checkbox'>
                 <input class="list-check-box" value='{$vo.ids}' type='checkbox'>
@@ -72,9 +72,9 @@
 
             </td>
         </tr>
-        <!--{/foreach}-->
+        {/foreach}
         </tbody>
     </table>
-    <!--{/empty}-->
+    {/empty}
 </div>
 {/block}
