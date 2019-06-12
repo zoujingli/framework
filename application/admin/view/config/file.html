@@ -35,8 +35,8 @@
         });
 
         function apply(value) {
-            var $active = $("[data-storagetype='" + value + "']").trigger('click');
-            if ($active.size() < 1) $("[data-storagetype]:first").trigger('click');
+            this.$active = $("[data-storagetype='" + value + "']").trigger('click');
+            if (this.$active.size() < 1) $("[data-storagetype]:first").trigger('click');
             $('[data-type="' + value + '"]').show().siblings('[data-type]').hide();
         }
     });
