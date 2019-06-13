@@ -42,7 +42,10 @@ class Node
             $preNode = Request::module() . '/' . Request::controller();
             return self::parseString($preNode) . '/' . strtolower($node);
         }
-        return $node;
+        if (count($attr = explode('/', $node)) >= 3) {
+            $attr[1] = self::parseString($attr[1]);
+        }
+        return strtolower(join('/', $attr));
     }
 
     /**
