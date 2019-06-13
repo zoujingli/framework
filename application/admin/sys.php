@@ -20,10 +20,8 @@ if (!function_exists('auth')) {
      */
     function auth($node)
     {
-        list($req, $num) = [request(), count(explode('/', $node))];
-        if ($num === 1) $node = "{$req->module()}/{$req->controller()}/{$node}";
-        if ($num === 2) $node = "{$req->module()}/{$node}";
-        return \app\admin\service\AuthService::checkAuthNode($node);
+        $real = \library\tools\Node::get($node);
+        return \app\admin\service\AuthService::checkAuthNode($real);
     }
 }
 
@@ -39,10 +37,11 @@ if (!function_exists('sysdata')) {
     function sysdata($name, array $value = null)
     {
         if (is_null($value)) {
-            $data = json_decode(\think\Db::name('SystemData')->where('name', $name)->value('value'), true);
+            $data = json_decode(\think\Db::name('SystemData')->where(['name' => $name])->value('value'), true);
             return empty($data) ? [] : $data;
+        } else {
+            return data_save('SystemData', ['name' => $name, 'value' => json_encode($value, JSON_UNESCAPED_UNICODE)], 'name');
         }
-        return data_save('SystemData', ['name' => $name, 'value' => json_encode($value, JSON_UNESCAPED_UNICODE)], 'name');
     }
 }
 
@@ -83,8 +82,11 @@ if (!function_exists('local_image')) {
     function local_image($url)
     {
         $result = \library\File::down($url);
-        if (isset($result['url'])) return $result['url'];
-        return $url;
+        if (isset($result['url'])) {
+            return $result['url'];
+        } else {
+            return $url;
+        }
     }
 }
 
@@ -102,8 +104,9 @@ if (!function_exists('base64_image')) {
                 list($ext, $base) = explode('|||', preg_replace('|^data:image/(.*?);base64,|i', '$1|||', $content));
                 $info = \library\File::save($predir . md5($base) . '.' . (empty($ext) ? 'tmp' : $ext), base64_decode($base));
                 return $info['url'];
+            } else {
+                return $content;
             }
-            return $content;
         } catch (\Exception $e) {
             return $content;
         }
@@ -128,6 +131,7 @@ if (!function_exists('base64_image')) {
     // 访问权限检查
     if (!empty($info['is_auth']) && !\app\admin\service\AuthService::checkAuthNode($node)) {
         return json(['code' => 0, 'msg' => '抱歉，您没有访问该模块的权限！']);
+    } else {
+        return $next($request);
     }
-    return $next($request);
 });
