@@ -11,7 +11,6 @@
 // +----------------------------------------------------------------------
 // | github开源项目：https://github.com/zoujingli/framework
 // +--------------------------------------------------------------------*/
-
 ::-webkit-input-placeholder{color:#aaa}
 ::-webkit-scrollbar{width:3px;height:3px}
 ::-webkit-scrollbar-track{background:#ccc!important}
@@ -134,6 +133,10 @@ fieldset{margin:0;border:1px solid #e6e6e6;padding:10px 20px 5px 20px}
 .layui-table .list-table-sort-td input{width:50px;color:#666;padding:2px;border:1px solid #e6e6e6;text-align:center;font-size:9pt;line-height:18px}
 .layui-table .list-table-check-td{width:10px!important;text-align:center;padding-left:15px!important;padding-right:15px!important}
 .layui-table .list-table-check-td input{margin:0!important;vertical-align:middle}
+/** 自定义表单样式 */
+.think-form-label{padding:9px 15px;font-weight:400;line-height:20px;text-align:right}
+.think-form-group-right{border-top-left-radius:0;border-bottom-left-radius:0;border-left:none}
+.think-form-group-left input{border-top-right-radius:0;border-bottom-right-radius:0;border-right:none}
 .think-box-shadow{box-shadow:0 2px 3px 0 rgba(0,0,0,.1);background:#fff;padding:20px!important}
 /** checkbox & radio */
 label.think-checkbox,label.think-radio{display:inline-block;margin-right:10px}

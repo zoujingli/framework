@@ -8,9 +8,9 @@
 
     <div class="layui-card-body think-box-shadow padding-left-40">
 
-        <div class="layui-form-item layui-row">
+        <div class="layui-form-item layui-row layui-col-space15">
             <label class="layui-col-xs3 relative">
-                <span class="color-green font-s14">所属分类</span>
+                <span class="color-green">商品分类</span>
                 <select class="layui-select" required name="cate_id" lay-search>
                     {foreach $cates as $cate}
                     {if isset($vo.cate_id) and $vo.cate_id eq $cate.id}
@@ -21,15 +21,15 @@
                     {/foreach}
                 </select>
             </label>
-            <label class="layui-col-xs9 relative padding-left-10">
-                <span class="color-green font-s14">商品名称</span>
+            <label class="layui-col-xs9 relative">
+                <span class="color-green">商品名称</span>
                 <input name="title" required class="layui-input" placeholder="请输入商品名称" value="{$vo.title|default=''}">
             </label>
         </div>
 
 
         <div class="layui-form-item">
-            <span class="color-green font-s14 label-required-prev">商品LOGO及轮播展示图片</span>
+            <span class="color-green label-required-prev">商品LOGO及轮播展示图片</span>
             <table class="layui-table">
                 <thead>
                 <tr>
@@ -46,7 +46,7 @@
         </div>
 
         <div class="layui-form-item">
-            <span class="color-green label-required-prev font-s14">商品规格及商品SKU绑定<span class="color-red font-s12">（规格填写后不允许再次修改）</span></span>
+            <span class="color-green label-required-prev">商品规格及商品SKU绑定<span class="color-red font-s12">（规格填写后不允许再次修改）</span></span>
             <div ng-repeat="x in specs track by $index" style="display:none" class="margin-bottom-10" ng-class="{true:'layui-show'}[isAddMode&&specs.length>0]">
                 <div class="goods-spec-box padding-10 margin-0 relative" style="background:#ddd">
                     <span class="text-center goods-spec-title">分组</span>
@@ -119,7 +119,7 @@
         </div>
 
         <div class="layui-form-item block">
-            <span class="label-required-prev color-green font-s14">商品详细内容</span>
+            <span class="label-required-prev color-green">商品详细内容</span>
             <textarea name="content">{$vo.content|default=''|raw}</textarea>
         </div>
 
