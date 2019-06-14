@@ -169,8 +169,9 @@ $(function () {
         };
         // 以HASH打开新网页
         this.href = function (url, obj) {
-            if (url !== '#') window.location.href = '#' + $.menu.parseUri(url, obj);
-            else if (obj && obj.getAttribute('data-menu-node')) {
+            if (url !== '#') {
+                window.location.href = '#' + $.menu.parseUri(url, obj);
+            } else if (obj && obj.getAttribute('data-menu-node')) {
                 $('[data-menu-node^="' + obj.getAttribute('data-menu-node') + '-"][data-open!="#"]:first').trigger('click');
             }
         };
@@ -253,13 +254,18 @@ $(function () {
                 var attrs = uri.split('?')[1].split('&');
                 for (var i in attrs) if (attrs[i].indexOf('=') > -1) {
                     var tmp = attrs[i].split('=').slice();
-                    params[tmp[0]] = decodeURIComponent(tmp[1].replace(/%2B/ig, '%20'));
+                    if (typeof tmp[0] === 'string' && tmp[0].length > 0) {
+                        params[tmp[0]] = decodeURIComponent(tmp[1].replace(/%2B/ig, '%20'));
+                    }
                 }
             }
-            delete params[""];
             uri = this.getUri(uri);
-            params.spm = obj && obj.getAttribute('data-menu-node') || this.queryNode(uri);
-            if (params.spm === '' || typeof params.spm !== 'string') delete params.spm;
+            if (typeof params.spm !== 'string') {
+                params.spm = obj && obj.getAttribute('data-menu-node') || this.queryNode(uri);
+            }
+            if (typeof params.spm !== 'string' || params.spm.length < 1) {
+                delete params.spm;
+            }
             var query = '?' + $.param(params);
             return uri + (query === '?' ? '' : query);
         };
@@ -272,8 +278,8 @@ $(function () {
                 $body.on('click', '[data-target-menu-type]', function () {
                     $menu.toggleClass(miniClass);
                     layui.data('menu', {key: 'type-min', value: $menu.hasClass(miniClass)});
-                }).on('resize', function () {
-                    var isMini = $('.layui-layout-left-mini').size() > 0;
+                }).on('resize', function (isMini) {
+                    isMini = $('.layui-layout-left-mini').size() > 0;
                     $body.width() > 1000 ? isMini && $menu.toggleClass(miniClass) : isMini || $menu.toggleClass(miniClass);
                 }).trigger('resize');
                 //  Mini 菜单模式时TIPS文字显示
@@ -289,8 +295,8 @@ $(function () {
             });
             // 同步二级菜单展示状态
             this.syncOpenStatus = function (mode) {
-                $('[data-submenu-layout]').map(function () {
-                    var node = $(this).attr('data-submenu-layout');
+                $('[data-submenu-layout]').map(function (node) {
+                    node = $(this).attr('data-submenu-layout');
                     if (mode === 1) layui.data('menu', {key: node, value: $(this).hasClass('layui-nav-itemed') ? 2 : 1});
                     else if ((layui.data('menu')[node] || 2) === 2) $(this).addClass('layui-nav-itemed');
                 });
