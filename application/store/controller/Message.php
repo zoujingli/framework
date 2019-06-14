@@ -44,4 +44,12 @@ class Message extends Controller
         $query->dateBetween('create_at')->order('id desc')->page();
     }
 
+    /**
+     * 删除短信记录
+     */
+    public function remove()
+    {
+        $this->_delete($this->table);
+    }
+
 }

@@ -14,6 +14,7 @@
             <th class='text-left nowrap'>短信内容</th>
             <th class='text-left nowrap'>返回结果</th>
             <th class='text-left nowrap'>发送时间</th>
+            <th></th>
         </tr>
         </thead>
         {/notempty}
@@ -25,6 +26,11 @@
             <td>{$vo.content|default=''}</td>
             <td>{$vo.result|default=''}</td>
             <td>{$vo.create_at|default=''}<br></td>
+            <td>
+                {if auth("store/member/remove")}
+                <a class="layui-btn layui-btn-sm layui-btn-danger" data-confirm="确定要删除数据吗?" data-action="{:url('remove')}" data-value="id#{$vo.id}">删 除</a>
+                {/if}
+            </td>
         </tr>
         {/foreach}
         </tbody>
