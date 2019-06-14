@@ -22,10 +22,9 @@
             <th class='list-table-check-td think-checkbox'>
                 <input data-auto-none data-check-target='.list-check-box' type='checkbox'>
             </th>
-            <th class='text-left nowrap'>操作行为</th>
-            <th class='text-left nowrap'>操作描述</th>
             <th class='text-left nowrap'>操作账号</th>
             <th class='text-left nowrap'>权限节点</th>
+            <th class='text-left nowrap'>操作行为</th>
             <th class='text-left nowrap'>操作地址</th>
             <th class='text-left nowrap'>操作时间</th>
             <th></th>
@@ -37,10 +36,12 @@
             <td class='list-table-check-td think-checkbox'>
                 <input class="list-check-box" value='{$vo.id}' type='checkbox'>
             </td>
-            <td class='text-left nowrap'>{$vo.action|default='--'}</td>
-            <td class="text-left nowrap">{$vo.content|default='--'}</td>
-            <td class="text-left nowrap">{$vo.username|default='--'}</td>
-            <td class="text-left nowrap">{$vo.node|default='--'}</td>
+            <td class="text-left nowrap">{$vo.username|default='-'}</td>
+            <td class="text-left nowrap">{$vo.node|default='-'}</td>
+            <td class='text-left nowrap'>
+                <p class="color-text">{$vo.action|default='-'}</p>
+                <p class="color-desc">{$vo.content|default='-'}</p>
+            </td>
             <td class='text-left nowrap'>
                 <p class="color-text">{$vo.geoip|default='-'}</p>
                 <p class="color-desc">{$vo.isp|default='-'}</p>
