@@ -4,32 +4,22 @@
 <form onsubmit="return false;" data-auto="true" method="post" class='layui-form layui-card ' autocomplete="off" lay-filter="payment" style="max-width:1000px">
 
     <div class="layui-card-body think-box-shadow">
-
-        <div class=" margin-bottom-20" style="padding:30px 30px 10px 30px">
-            微信支付参数配置，当商户向微信付款时需要用到双向证书
-        </div>
-
-        <div class="layui-form-item padding-right-30 margin-top-20">
-            <label class="layui-form-label">MchId<br><span class="nowrap color-desc">微信商户ID</span></label>
-            <div class="layui-input-block">
+        <div class="padding-left-40 padding-right-30">
+            <label class="layui-form-item margin-top-20 block relative">
+                <span class="color-green margin-right-10">微信商户ID</span><span class="nowrap color-desc">MCH_ID</span>
                 <input name="wechat_mch_id" required placeholder="请输入微信商户ID（必填）" value="{:sysconf('wechat_mch_id')}" class="layui-input">
-                <p class="help-block">微信商户ID，可以在微信商户平台或开通时的邮件中获取</p>
-            </div>
-        </div>
-
-        <div class="layui-form-item padding-right-30">
-            <label class="layui-form-label">MchKey<br><span class="nowrap color-desc">微信商户KEY</span></label>
-            <div class="layui-input-block">
+                <p class="help-block">微信商户ID，需要在微信商户平台获取，MCH_ID 与 APPID 匹配</p>
+            </label>
+            <label class="layui-form-item margin-top-20 block relative">
+                <span class="color-green margin-right-10">微信商户KEY</span><span class="nowrap color-desc">MCH_KEY</span>
                 <input name="wechat_mch_key" placeholder="请输入微信商户密钥（必填）" maxlength="32" required value="{:sysconf('wechat_mch_key')}" class="layui-input">
-                <p class="help-block">微信商户密钥，需要在微信商户平台操作设置密码并获取</p>
-            </div>
+                <p class="help-block">微信商户密钥，需要在微信商户平台操作设置密码并获取密钥</p>
+            </label>
         </div>
-
         <div class="hr-line-dashed"></div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">MchCert<br><span class="nowrap color-desc">微信商户证书</span></label>
-            <div class="layui-input-block">
+        <div class="padding-left-40 padding-right-30">
+            <span class="color-green margin-right-10">微信商户证书</span><span class="nowrap color-desc">MCH_CERT</span>
+            <div class="">
                 {foreach ['p12'=>'上传 P12 证书','pem'=>'上传 PEM 证书'] as $k=>$v}
                 <input type="radio" data-pem-type="{$k}" name="wechat_mch_ssl_type" value="{$k}" title="{$v}" lay-filter="data-mch-type">
                 {/foreach}
@@ -54,13 +44,10 @@
                 </div>
             </div>
         </div>
-
         <div class="hr-line-dashed"></div>
-
         <div class="layui-form-item text-center">
             <button class="layui-btn" type="submit">保存配置</button>
         </div>
-
     </div>
 
 </form>
