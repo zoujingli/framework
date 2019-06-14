@@ -182,7 +182,7 @@ class Goods extends Controller
     /**
      * 删除商品信息
      */
-    public function del()
+    public function remove()
     {
         $this->_delete($this->table);
     }

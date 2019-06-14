@@ -40,7 +40,8 @@ class Message extends Controller
     public function index()
     {
         $this->title = '短信发送管理';
-        $this->_query($this->table)->like('phone,content,result')->dateBetween('create_at')->order('id desc')->page();
+        $query = $this->_query($this->table)->like('phone,content,result');
+        $query->dateBetween('create_at')->order('id desc')->page();
     }
 
 }

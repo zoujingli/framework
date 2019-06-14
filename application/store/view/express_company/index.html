@@ -4,8 +4,8 @@
 {if auth("store/express_company/add")}
 <button data-modal='{:url("add")}' data-title="添加快递" class='layui-btn layui-btn-sm layui-btn-primary'>添加快递</button>
 {/if}
-{if auth("store/express_company/del")}
-<button data-action='{:url("del")}' data-rule="id#{key}" class='layui-btn layui-btn-sm layui-btn-primary'>删除快递</button>
+{if auth("store/express_company/remove")}
+<button data-action='{:url("remove")}' data-rule="id#{key}" class='layui-btn layui-btn-sm layui-btn-primary'>删除快递</button>
 {/if}
 {/block}
 
@@ -57,8 +57,8 @@
                 <a class="layui-btn layui-btn-xs layui-btn-warm" data-action="{:url('resume')}" data-value="id#{$vo.id};status#1">启 用</a>
                 {/if}
 
-                {if auth("store/express_company/del")}
-                <a class="layui-btn layui-btn-xs layui-btn-danger" data-confirm="确定要删除数据吗?" data-action="{:url('del')}" data-value="id#{$vo.id}">删 除</a>
+                {if auth("store/express_company/remove")}
+                <a class="layui-btn layui-btn-xs layui-btn-danger" data-confirm="确定要删除数据吗?" data-action="{:url('remove')}" data-value="id#{$vo.id}">删 除</a>
                 {/if}
 
             </td>
