@@ -19,10 +19,10 @@ use think\Db;
 
 /**
  * 系统日志管理
- * Class Log
+ * Class Oplog
  * @package app\admin\controller
  */
-class Log extends Controller
+class Oplog extends Controller
 {
 
     /**
