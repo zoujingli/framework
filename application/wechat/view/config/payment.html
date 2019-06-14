@@ -23,7 +23,7 @@
                 {foreach ['p12'=>'上传 P12 证书','pem'=>'上传 PEM 证书'] as $k=>$v}
                 <input type="radio" data-pem-type="{$k}" name="wechat_mch_ssl_type" value="{$k}" title="{$v}" lay-filter="data-mch-type">
                 {/foreach}
-                <p class="help-block">请选择需要上传证书类型，P12 和 PEM 二选一，证书需要从微信商户平台获取！</p>
+                <p class="help-block">请选择需要上传证书类型，P12 和 PEM 二选一，证书需要从微信商户平台获取</p>
                 <div data-mch-type="p12" class="layui-tab-item padding-top-15 padding-bottom-15">
                     <input name="wechat_mch_ssl_p12" value="{$wechat_mch_ssl_p12|default=''}" type="hidden">
                     <button data-file="btn" data-uptype="local" data-safe="true" data-type="p12" data-field="wechat_mch_ssl_p12" type="button" class="layui-btn layui-btn-primary">
