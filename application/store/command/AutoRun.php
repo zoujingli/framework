@@ -58,8 +58,7 @@ class AutoRun extends \think\console\Command
      */
     private function autoCancelOrder()
     {
-        $minutes = sysconf('store_order_wait_time') * 60;
-        $datetime = date('Y-m-d H:i:s', strtotime("-{$minutes} minutes"));
+        $datetime = $this->getDatetime('store_order_wait_time');
         $where = [['status', 'in', ['1', '2']], ['pay_state', 'eq', '0'], ['create_at', '<', $datetime]];
         $count = Db::name('StoreOrder')->where($where)->update([
             'status'       => '0',
@@ -84,8 +83,7 @@ class AutoRun extends \think\console\Command
      */
     private function autoRemoveOrder()
     {
-        $minutes = sysconf('store_order_clear_time') * 60;
-        $datetime = date('Y-m-d H:i:s', strtotime("-{$minutes} minutes"));
+        $datetime = $this->getDatetime('store_order_clear_time');
         $where = [['status', 'eq', '0'], ['pay_state', 'eq', '0'], ['create_at', '<', $datetime]];
         $list = Db::name('StoreOrder')->where($where)->limit(20)->select();
         if (count($orderNos = array_unique(array_column($list, 'order_no'))) > 0) {
@@ -171,6 +169,19 @@ class AutoRun extends \think\console\Command
                 Db::name('StoreProfitUsed')->where(['trs_no' => $vo['trs_no']])->update(['pay_desc' => $e->getMessage()]);
             }
         }
+    }
+
+    /**
+     * 获取配置时间
+     * @param string $code
+     * @return string
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     */
+    private function getDatetime($code)
+    {
+        $minutes = intval(sysconf($code) * 60);
+        return date('Y-m-d H:i:s', strtotime("-{$minutes} minutes"));
     }
 
 }
