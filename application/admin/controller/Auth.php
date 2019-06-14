@@ -131,7 +131,7 @@ class Auth extends Controller
     /**
      * 删除系统权限
      */
-    public function del()
+    public function remove()
     {
         $this->applyCsrfToken();
         $this->_delete($this->table);
@@ -143,7 +143,7 @@ class Auth extends Controller
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
-    protected function _del_delete_result($result)
+    protected function _remove_delete_result($result)
     {
         if ($result) {
             $where = ['auth' => $this->request->post('id')];

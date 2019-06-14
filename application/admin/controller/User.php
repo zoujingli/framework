@@ -152,7 +152,7 @@ class User extends Controller
     /**
      * 删除系统用户
      */
-    public function del()
+    public function remove()
     {
         if (in_array('10000', explode(',', $this->request->post('id')))) {
             $this->error('系统超级账号禁止删除！');

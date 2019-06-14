@@ -125,7 +125,7 @@ class Menu extends Controller
     /**
      * 删除系统菜单
      */
-    public function del()
+    public function remove()
     {
         $this->applyCsrfToken();
         $this->_delete($this->table);

@@ -77,7 +77,7 @@ class Oplog extends Controller
     /**
      * 删除系统日志
      */
-    public function del()
+    public function remove()
     {
         $this->applyCsrfToken();
         $this->_delete($this->table);

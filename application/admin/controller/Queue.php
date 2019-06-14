@@ -71,7 +71,7 @@ class Queue extends Controller
     /**
      * 删除消息任务
      */
-    public function del()
+    public function remove()
     {
         try {
             $isNot = false;
