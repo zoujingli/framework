@@ -137,7 +137,7 @@ fieldset{margin:0;border:1px solid #e6e6e6;padding:10px 20px 5px 20px}
 .think-form-label{padding:9px 15px;font-weight:400;line-height:20px;text-align:right}
 .think-form-group-right{border-top-left-radius:0;border-bottom-left-radius:0;border-left:none}
 .think-form-group-left input{border-top-right-radius:0;border-bottom-right-radius:0;border-right:none}
-.think-box-shadow{box-shadow:0 2px 3px 0 rgba(0,0,0,.1);background:#fff;padding:20px!important}
+.think-box-shadow{box-shadow:0 2px 3px 0 rgba(0,0,0,.1);background:#fff;padding:20px 30px!important}
 /** checkbox & radio */
 label.think-checkbox,label.think-radio{display:inline-block;margin-right:10px}
 .think-checkbox,.think-radio{margin-top:10px;font-weight:400;line-height:17px;cursor:pointer}
