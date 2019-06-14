@@ -5,11 +5,15 @@
 
     <div class="layui-card-body think-box-shadow">
 
+        <div class=" margin-bottom-20" style="padding:30px 30px 10px 30px">
+            微信支付参数配置，当商户向微信付款时需要用到双向证书
+        </div>
+
         <div class="layui-form-item padding-right-30 margin-top-20">
             <label class="layui-form-label">MchId<br><span class="nowrap color-desc">微信商户ID</span></label>
             <div class="layui-input-block">
                 <input name="wechat_mch_id" required placeholder="请输入微信商户ID（必填）" value="{:sysconf('wechat_mch_id')}" class="layui-input">
-                <p class="help-block">微信商户ID，可以在微信商户平台或开通时的邮件中获取。</p>
+                <p class="help-block">微信商户ID，可以在微信商户平台或开通时的邮件中获取</p>
             </div>
         </div>
 
@@ -17,7 +21,7 @@
             <label class="layui-form-label">MchKey<br><span class="nowrap color-desc">微信商户KEY</span></label>
             <div class="layui-input-block">
                 <input name="wechat_mch_key" placeholder="请输入微信商户密钥（必填）" maxlength="32" required value="{:sysconf('wechat_mch_key')}" class="layui-input">
-                <p class="help-block">微信商户密钥，需要在微信商户平台操作设置密码并获取。</p>
+                <p class="help-block">微信商户密钥，需要在微信商户平台操作设置密码并获取</p>
             </div>
         </div>
 
@@ -35,7 +39,7 @@
                     <button data-file="btn" data-uptype="local" data-safe="true" data-type="p12" data-field="wechat_mch_ssl_p12" type="button" class="layui-btn layui-btn-primary">
                         <i class="layui-icon layui-icon-vercode font-s14"></i> 上传 P12 证书
                     </button>
-                    <p class="help-block margin-top-10">微信商户支付 P12 证书，实现订单退款、打款、发红包等支出功能都使用证书。</p>
+                    <p class="help-block margin-top-10">微信商户支付 P12 证书，实现订单退款、打款、发红包等支出功能都使用证书</p>
                 </div>
                 <div data-mch-type="pem" class="layui-tab-item padding-top-15 padding-bottom-15">
                     <input name="wechat_mch_ssl_key" value="{$wechat_mch_ssl_key|default=''}" type="hidden">
@@ -46,7 +50,7 @@
                     <button data-file="btn" data-uptype="local" data-safe="true" data-type="pem" data-field="wechat_mch_ssl_cer" type="button" class="layui-btn layui-btn-primary">
                         <i class="layui-icon layui-icon-vercode font-s14"></i> 上传CERT证书
                     </button>
-                    <p class="help-block margin-top-10">微信商户支付 PEM 双向证书，实现订单退款、打款、发红包等支出功能都使用证书。</p>
+                    <p class="help-block margin-top-10">微信商户支付 PEM 双向证书，实现订单退款、打款、发红包等支出功能都使用证书</p>
                 </div>
             </div>
         </div>
