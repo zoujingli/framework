@@ -21,20 +21,13 @@ class ExpressTemplate extends Controller
 
     /**
      * 邮费模板管理
-     */
-    public function index()
-    {
-        $this->title = '邮费模板管理';
-    }
-
-    /**
-     * 显示邮费模板
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      */
-    protected function _index_get()
+    public function index()
     {
+        $this->title = '邮费模板管理';
         $this->provinces = Db::name('StoreExpressProvince')->where(['status' => '1'])->order('sort asc,id desc')->column('title');
         $this->list = Db::name($this->table)->where(['is_default' => '0'])->select();
         foreach ($this->list as &$item) $item['rule'] = explode(',', $item['rule']);
@@ -42,12 +35,13 @@ class ExpressTemplate extends Controller
         $this->fetch();
     }
 
+
     /**
      * 保存邮费模板
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
-    protected function _index_post()
+    public function save()
     {
         list($list, $idxs, $post) = [[], [], $this->request->post()];
         foreach (array_keys($post) as $key) if (stripos($key, 'order_reduction_state_') !== false) {

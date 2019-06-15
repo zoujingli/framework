@@ -31,20 +31,29 @@ class Config extends Controller
     public $table = 'WechatServiceConfig';
 
     /**
-     * 开放平台参数配置
-     * @throws \think\Exception
-     * @throws \think\exception\PDOException
+     * 开放平台接口配置
      */
     public function index()
     {
-        $this->applyCsrfToken();
+        $this->applyCsrfToken('save');
         $this->title = '开放平台接口配置';
-        if ($this->request->isGet()) {
-            $this->fetch();
-        } else {
+        $this->fetch();
+    }
+
+    /**
+     * 保存平台参数数据
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     */
+    public function save()
+    {
+        $this->applyCsrfToken('save');
+        if ($this->request->post()) {
             $post = $this->request->post();
             foreach ($post as $k => $v) sysconf($k, $v);
             $this->success('开放平台参数修改成功！');
+        } else {
+            $this->error('开放平台参数修改失败！');
         }
     }
 
