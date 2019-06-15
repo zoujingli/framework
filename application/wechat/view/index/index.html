@@ -78,7 +78,7 @@
             tooltip: {trigger: 'axis'},
             grid: {top: '10%', left: '3%', right: '4%', bottom: '3%', containLabel: true},
             xAxis: [{type: 'category', boundaryGap: false, scale: false, data: eval('{:json_encode($totalJson.xs)}')}],
-            yAxis: [{type: 'value', scale: true}],
+            yAxis: [{type: 'value', scale: false}],
             legend: {data: ['粉丝数量', '拉黑粉丝']},
             series: [
                 {
