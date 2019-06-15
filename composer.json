@@ -1,6 +1,7 @@
 {
   "type": "project",
   "name": "zoujingli/framework",
+  "license": "MIT",
   "authors": [
     {
       "name": "Anyon",
