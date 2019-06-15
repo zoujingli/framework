@@ -84,14 +84,16 @@
                 {
                     name: '粉丝数量',
                     type: 'line',
-                    areaStyle: {},
-                    label: {normal: {show: true, position: 'top'}},
+                    lineStyle: {color: '#9e9'},
+                    areaStyle: {color: '#9e9'},
+                    label: {normal: {show: true, position: 'right', formatter: "{c}人"}},
                     data: eval('{:json_encode($totalJson.ys._0)}')
                 }, {
                     name: '拉黑粉丝',
                     type: 'line',
-                    areaStyle: {},
-                    label: {normal: {show: true, position: 'top'}},
+                    lineStyle: {color: '#f00'},
+                    areaStyle: {color: '#f00'},
+                    label: {normal: {show: true, position: 'right', formatter: "{c}人"}},
                     data: eval('{:json_encode($totalJson.ys._1)}')
                 }
             ]
