@@ -38,6 +38,7 @@ require.config({
         'json': ['plugs/jquery/json.min'],
         'upload': ['plugs/plupload/build'],
         'base64': ['plugs/jquery/base64.min'],
+        'echarts': ['plugs/echarts/echarts.min'],
         'angular': ['plugs/angular/angular.min'],
         'ckeditor': ['plugs/ckeditor/ckeditor'],
         'plupload': ['plugs/plupload/plupload.full.min'],

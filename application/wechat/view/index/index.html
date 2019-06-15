@@ -1,0 +1,108 @@
+{extend name='admin@main'}
+
+{block name='content'}
+
+<style>
+
+    .store-total-container {
+        font-size: 14px;
+        margin-bottom: 20px;
+        letter-spacing: 1px;
+    }
+
+    .store-total-container .store-total-icon {
+        top: 45%;
+        right: 8%;
+        font-size: 65px;
+        position: absolute;
+        color: rgba(255, 255, 255, 0.4);
+    }
+
+    .store-total-container .store-total-item {
+        color: #fff;
+        line-height: 4em;
+        padding: 15px 25px;
+        position: relative;
+    }
+
+    .store-total-container .store-total-item > div:nth-child(2) {
+        font-size: 46px;
+        line-height: 46px;
+    }
+
+</style>
+
+<div class="think-box-shadow store-total-container notselect">
+    <div class="margin-bottom-15">微信统计</div>
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-sm6 layui-col-md3">
+            <div class="store-total-item nowrap" style="background:linear-gradient(-125deg,#57bdbf,#2f9de2)">
+                <div>微信粉丝数量</div>
+                <div>{$totalFans|default='0'}</div>
+                <div>当前微信粉丝数量</div>
+            </div>
+            <i class="store-total-icon layui-icon layui-icon-user"></i>
+        </div>
+        <div class="layui-col-sm6 layui-col-md3">
+            <div class="store-total-item nowrap" style="background:linear-gradient(-125deg,#ff7d7d,#fb2c95)">
+                <div>微信拉黑粉丝</div>
+                <div>{$totalBlack|default='0'}</div>
+                <div>已拉黑的粉丝数量</div>
+            </div>
+            <i class="store-total-icon layui-icon layui-icon-auz"></i>
+        </div>
+        <div class="layui-col-sm6 layui-col-md3">
+            <div class="store-total-item nowrap" style="background:linear-gradient(-113deg,#c543d8,#925cc3)">
+                <div>图文总数</div>
+                <div>{$totalNews|default='0'}</div>
+                <div>已经配置图文素材数量</div>
+            </div>
+            <i class="store-total-icon layui-icon layui-icon-read"></i>
+        </div>
+        <div class="layui-col-sm6 layui-col-md3">
+            <div class="store-total-item nowrap" style="background:linear-gradient(-141deg,#ecca1b,#f39526)">
+                <div>回复规格</div>
+                <div>{$totalRule|default='0'}</div>
+                <div>消息回复规格数量</div>
+            </div>
+            <i class="store-total-icon layui-icon layui-icon-survey"></i>
+        </div>
+    </div>
+</div>
+
+<div class="think-box-shadow store-total-container">
+    <div class="margin-bottom-15">最近六个月粉丝数</div>
+    <div id="main" style="height:500px"></div>
+    <script>
+        var option = {
+            tooltip: {trigger: 'axis'},
+            grid: {top: '10%', left: '3%', right: '4%', bottom: '3%', containLabel: true},
+            xAxis: [{type: 'category', boundaryGap: false, scale: false, data: eval('{:json_encode($totalJson.xs)}')}],
+            yAxis: [{type: 'value', scale: true}],
+            legend: {data: ['粉丝数量', '拉黑粉丝']},
+            series: [
+                {
+                    name: '粉丝数量',
+                    type: 'line',
+                    areaStyle: {},
+                    label: {normal: {show: true, position: 'top'}},
+                    data: eval('{:json_encode($totalJson.ys._0)}')
+                }, {
+                    name: '拉黑粉丝',
+                    type: 'line',
+                    areaStyle: {},
+                    label: {normal: {show: true, position: 'top'}},
+                    data: eval('{:json_encode($totalJson.ys._1)}')
+                }
+            ]
+        };
+        require(['echarts'], function (echarts, chart) {
+            chart = echarts.init(document.getElementById('main'));
+            chart.setOption(option);
+            window.onresize = function () {
+                chart.resize();
+            };
+        });
+    </script>
+</div>
+{/block}
