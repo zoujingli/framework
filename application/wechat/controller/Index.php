@@ -15,6 +15,9 @@ class Index extends Controller
 {
     /**
      * 微信数据统计
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
     public function index()
     {
