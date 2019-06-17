@@ -28,7 +28,9 @@ class Node
      * 控制器忽略函数
      * @var array
      */
-    protected static $ignore = ['initialize', 'success', 'error', 'redirect', 'fetch', 'assign', 'callback'];
+    protected static $ignore = [
+        'initialize', 'success', 'error', 'fetch', 'redirect', 'assign', 'callback',
+    ];
 
     /**
      * 获取标准访问节点
@@ -39,13 +41,9 @@ class Node
     {
         if (empty($node)) return self::current();
         if (count(explode('/', $node)) === 1) {
-            $preNode = Request::module() . '/' . Request::controller();
-            return self::parseString($preNode) . '/' . strtolower($node);
+            $node = Request::module() . '/' . Request::controller() . '/' . $node;
         }
-        if (count($attr = explode('/', $node)) >= 3) {
-            $attr[1] = self::parseString($attr[1]);
-        }
-        return strtolower(join('/', $attr));
+        return self::parseString(trim($node));
     }
 
     /**
@@ -54,32 +52,26 @@ class Node
      */
     public static function current()
     {
-        $preNode = Request::module() . '/' . Request::controller();
-        return self::parseString($preNode) . '/' . strtolower(Request::action());
+        return self::parseString(Request::module() . '/' . Request::controller() . '/' . Request::action());
     }
 
     /**
-     * 获取方法节点列表
+     * 获取节点列表
      * @param string $dir 控制器根路径
      * @param array $nodes 额外数据
      * @return array
-     * @throws \ReflectionException
      */
-    public static function getMethodTreeNode($dir, $nodes = [])
+    public static function getTree($dir, $nodes = [])
     {
         foreach (self::scanDir($dir) as $file) {
             list($matches, $filename) = [[], str_replace(DIRECTORY_SEPARATOR, '/', $file)];
             if (!preg_match('|/(\w+)/controller/(.+)|', $filename, $matches)) continue;
-            if (class_exists($classname = env('app_namespace') . str_replace('/', '\\', substr($matches[0], 0, -4)))) {
-                foreach ((new \ReflectionClass($classname))->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
-                    list($function, $comment) = [$method->getName(), $method->getDocComment()];
-                    if (stripos($function, '_') === 0 || in_array($function, self::$ignore)) continue;
-                    $controller = str_replace('/', '.', substr($matches[2], 0, -4));
-                    if (stripos($controller, 'api.') !== false || stripos($controller, 'wap.') !== false) continue;
-                    $node = self::parseString("{$matches[1]}/{$controller}") . '/' . strtolower($function);
-                    $nodes[$node] = preg_replace('/^\/\*\*\*(.*?)\*.*?$/', '$1', preg_replace("/\s/", '', $comment));
-                    if (stripos($nodes[$node], '@') !== false) $nodes[$node] = '';
-                }
+            $classname = env('app_namespace') . str_replace('/', '\\', substr($matches[0], 0, -4));
+            if (class_exists($classname)) foreach (get_class_methods($classname) as $function) {
+                if (stripos($function, '_') === 0 || in_array($function, self::$ignore)) continue;
+                $controller = str_replace('/', '.', substr($matches[2], 0, -4));
+                if (stripos($controller, 'api.') !== false || stripos($controller, 'wap.') !== false) continue;
+                $nodes[] = self::parseString("{$matches[1]}/{$controller}/{$function}");
             }
         }
         return $nodes;
@@ -110,22 +102,27 @@ class Node
     }
 
     /**
-     * 获取节点列表
+     * 获取方法节点列表
      * @param string $dir 控制器根路径
      * @param array $nodes 额外数据
      * @return array
+     * @throws \ReflectionException
      */
-    public static function getTree($dir, $nodes = [])
+    public static function getMethodTreeNode($dir, $nodes = [])
     {
         foreach (self::scanDir($dir) as $file) {
             list($matches, $filename) = [[], str_replace(DIRECTORY_SEPARATOR, '/', $file)];
             if (!preg_match('|/(\w+)/controller/(.+)|', $filename, $matches)) continue;
-            $classname = env('app_namespace') . str_replace('/', '\\', substr($matches[0], 0, -4));
-            if (class_exists($classname)) foreach (get_class_methods($classname) as $function) {
-                if (stripos($function, '_') === 0 || in_array($function, self::$ignore)) continue;
-                $controller = str_replace('/', '.', substr($matches[2], 0, -4));
-                if (stripos($controller, 'api.') !== false || stripos($controller, 'wap.') !== false) continue;
-                $nodes[] = self::parseString("{$matches[1]}/{$controller}") . '/' . strtolower($function);
+            if (class_exists($classname = env('app_namespace') . str_replace('/', '\\', substr($matches[0], 0, -4)))) {
+                foreach ((new \ReflectionClass($classname))->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
+                    list($function, $comment) = [$method->getName(), $method->getDocComment()];
+                    if (stripos($function, '_') === 0 || in_array($function, self::$ignore)) continue;
+                    $controller = str_replace('/', '.', substr($matches[2], 0, -4));
+                    if (stripos($controller, 'api.') !== false || stripos($controller, 'wap.') !== false) continue;
+                    $node = self::parseString("{$matches[1]}/{$controller}/{$function}");
+                    $nodes[$node] = preg_replace('/^\/\*\*\*(.*?)\*.*?$/', '$1', preg_replace("/\s/", '', $comment));
+                    if (stripos($nodes[$node], '@') !== false) $nodes[$node] = '';
+                }
             }
         }
         return $nodes;
@@ -138,13 +135,14 @@ class Node
      */
     public static function parseString($node)
     {
-        $nodes = [];
-        foreach (explode('/', $node) as $str) {
+        if (count($nodes = explode('/', $node)) > 1) {
             $dots = [];
-            foreach (explode('.', $str) as $dot) array_push($dots, strtolower(trim(preg_replace("/[A-Z]/", "_\\0", $dot), "_")));
-            $nodes[] = join('.', $dots);
+            foreach (explode('.', $nodes[1]) as $dot) {
+                $dots[] = trim(preg_replace("/[A-Z]/", "_\\0", $dot), "_");
+            }
+            $nodes[1] = join('.', $dots);
         }
-        return trim(join('/', $nodes), '/');
+        return strtolower(join('/', $nodes));
     }
 
     /**
