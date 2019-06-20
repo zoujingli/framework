@@ -22,7 +22,7 @@
 
 <script>
     wx.error(function (err) {
-        $.toptip(err.errMsg, 100000, 'error');
+        alert(err.errMsg || '配置出错');
     });
     wx.ready(function () {
         $('#show-alert').removeClass('weui-btn_disabled').on('click', function () {
