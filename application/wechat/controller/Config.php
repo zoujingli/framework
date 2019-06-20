@@ -41,7 +41,7 @@ class Config extends Controller
             }
             $code = encode(url('@admin', '', true, true) . '#' . $this->request->url());
             $this->authurl = config('wechat.service_url') . "/service/api.push/auth/{$code}";
-            if ($this->request->has('appid', 'get', true) && $this->request->has('appkey', 'get', true)) {
+            if (input('?appid') && input('?appkey')) {
                 sysconf('wechat_type', 'thr');
                 sysconf('wechat_thr_appid', input('appid'));
                 sysconf('wechat_thr_appkey', input('appkey'));

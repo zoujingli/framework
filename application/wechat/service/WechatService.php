@@ -128,11 +128,12 @@ class WechatService extends \We
      */
     public static function instance($name, $type = 'WeChat', $config = [])
     {
-        if (!in_array($type, ['WeChat', 'WeMini', 'WePay', 'AliPay'])) $type = self::$type;
-        if (self::getType() === 'api' || in_array($type, ['WePay', 'AliPay'])) {
-            $class = "\\{$type}\\" . ucfirst(strtolower($name));
-            if (class_exists($class)) return new $class(empty($config) ? self::config() : $config);
-            throw new \think\Exception("Class '{$class}' not found");
+        if (in_array($type, ['WePay', 'AliPay']) || "{$type}{$name}" === 'WeChatPay') {
+            if (class_exists($class = "\\{$type}\\" . ucfirst(strtolower($name)))) {
+                return new $class(empty($config) ? self::config() : $config);
+            } else {
+                throw new \think\Exception("Class {$class} not found");
+            }
         }
         set_time_limit(3600);
         list($appid, $appkey) = [sysconf('wechat_thr_appid'), sysconf('wechat_thr_appkey')];
@@ -144,7 +145,7 @@ class WechatService extends \We
             $location = config('wechat.service_url') . "/service/api.client/soap/{$token}";
             return new \SoapClient(null, ['uri' => strtolower($name), 'location' => $location]);
         }
-        throw new \think\Exception("Yar or soap extensions are not installed.");
+        throw new \think\Exception("Yar or Soap extensions are not installed.");
     }
 
     /**
