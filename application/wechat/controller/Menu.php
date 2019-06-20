@@ -78,7 +78,7 @@ class Menu extends Controller
                 } catch (\think\exception\HttpResponseException $exception) {
                     throw $exception;
                 } catch (\Exception $e) {
-                    _syslog('微信管理', '删除微信菜单失败');
+                    _syslog('微信管理', "删除微信菜单失败:{$e->getMessage()}");
                     $this->error('删除微信菜单失败，请稍候再试！' . $e->getMessage());
                 }
             } else {
@@ -90,7 +90,7 @@ class Menu extends Controller
                 } catch (\think\exception\HttpResponseException $exception) {
                     throw $exception;
                 } catch (\Exception $e) {
-                    _syslog('微信管理', '发布微信菜单失败');
+                    _syslog('微信管理', "发布微信菜单失败:{$e->getMessage()}");
                     $this->error("微信菜单发布失败，请稍候再试！<br> {$e->getMessage()}");
                 }
             }
