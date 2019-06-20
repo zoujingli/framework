@@ -73,10 +73,12 @@ class Menu extends Controller
             if (empty($data)) { // 删除菜单
                 try {
                     WechatService::WeChatMenu()->delete();
+                    _syslog('微信管理', '删除微信菜单成功');
                     $this->success('删除微信菜单成功！', '');
                 } catch (\think\exception\HttpResponseException $exception) {
                     throw $exception;
                 } catch (\Exception $e) {
+                    _syslog('微信管理', '删除微信菜单失败');
                     $this->error('删除微信菜单失败，请稍候再试！' . $e->getMessage());
                 }
             } else {
