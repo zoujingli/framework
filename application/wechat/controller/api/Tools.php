@@ -18,7 +18,7 @@ use app\wechat\service\WechatService;
 use library\Controller;
 
 /**
- * 公众号测试工具
+ * 微信测试工具
  * Class Tools
  * @package app\wechat\controller\api
  */
@@ -175,7 +175,7 @@ class Tools extends Controller
 
 
     /**
-     * 公众号JSAPI支付二维码
+     * 微信JSAPI支付二维码
      * @return \think\Response
      * @throws \Endroid\QrCode\Exceptions\ImageFunctionFailedException
      * @throws \Endroid\QrCode\Exceptions\ImageFunctionUnknownException
@@ -188,7 +188,7 @@ class Tools extends Controller
     }
 
     /**
-     * 公众号JSAPI支付测试
+     * 微信JSAPI支付测试
      * @link wx-demo-jsapi
      * @throws \WeChat\Exceptions\InvalidResponseException
      * @throws \WeChat\Exceptions\LocalCacheException

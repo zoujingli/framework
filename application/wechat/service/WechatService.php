@@ -170,7 +170,7 @@ class WechatService extends \We
     /**
      * 初始化进入授权
      * @param string $url 授权页面URL地址
-     * @param integer $isfull 授权公众号模式
+     * @param integer $isfull 授权微信模式
      * @param boolean $isRedirect 是否进行跳转
      * @return array
      * @throws \WeChat\Exceptions\InvalidResponseException
@@ -220,7 +220,7 @@ class WechatService extends \We
     }
 
     /**
-     * 获取当前公众号APPID
+     * 获取当前微信APPID
      * @return bool|string
      * @throws \think\Exception
      * @throws \think\exception\PDOException
