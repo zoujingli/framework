@@ -136,6 +136,7 @@ class Menu extends Controller
             case 'pic_photo_or_album':
                 return ['name' => $item['name'], 'type' => $item['type'], 'key' => isset($item['key']) ? $item['key'] : $item['type']];
             case 'click':
+                if ($item['key']) $this->error('匹配规则存在空选项');
                 return ['name' => $item['name'], 'type' => $item['type'], 'key' => $item['key']];
             case 'view':
                 return ['name' => $item['name'], 'type' => $item['type'], 'url' => $item['url']];
