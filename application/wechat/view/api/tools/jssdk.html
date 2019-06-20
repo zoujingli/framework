@@ -25,7 +25,7 @@
     });
     wx.config(JSON.parse('{$options|json_encode|raw}'));
     wx.ready(function () {
-        alert('- JSSDK 初始化成功 -');
+        alert('- 初始化成功 -');
         document.getElementById('show-alert').onclick = function () {
             wx.scanQRCode({
                 needResult: 1,
