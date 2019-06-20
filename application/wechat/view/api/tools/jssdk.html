@@ -6,8 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <link rel="stylesheet" href="__ROOT__/static/theme/css/mobile.css">
-    <script src="//res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
-    <script>wx.config(JSON.parse('{$options|json_encode|raw}'));</script>
 </head>
 
 <body>
@@ -17,13 +15,15 @@
 </header>
 
 <div style="padding:15px">
-    <button type="button" id='show-alert'>调起摄像头扫码</button>
+    <button type="button" style="padding:5px" id='show-alert'>调起摄像头扫码</button>
 </div>
 
+<script src="//res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script>
     wx.error(function (err) {
         alert(err.errMsg || '配置出错');
     });
+    wx.config(JSON.parse('{$options|json_encode|raw}'));
     wx.ready(function () {
         document.getElementById('show-alert').onclick = function () {
             wx.scanQRCode({
