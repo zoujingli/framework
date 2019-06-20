@@ -42,7 +42,6 @@ class Keys extends Controller
 
     /**
      * 回复规则管理
-     * @return array|string
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -75,36 +74,30 @@ class Keys extends Controller
      */
     protected function _index_page_filter(&$data)
     {
-        try {
-            foreach ($data as &$vo) {
-                $vo['qrc'] = url('@wechat/keys/index') . "?action=qrc&keys={$vo['keys']}";
-                $vo['type'] = isset($this->types[$vo['type']]) ? $this->types[$vo['type']] : $vo['type'];
-            }
-        } catch (\Exception $e) {
-            $this->error($e->getMessage());
+        foreach ($data as &$vo) {
+            $vo['qrc'] = url('@wechat/keys/index') . "?action=qrc&keys={$vo['keys']}";
+            $vo['type'] = isset($this->types[$vo['type']]) ? $this->types[$vo['type']] : $vo['type'];
         }
     }
 
     /**
      * 添加关键字
-     * @return string
      */
     public function add()
     {
         $this->applyCsrfToken();
         $this->title = '添加关键字规则';
-        return $this->_form($this->table, 'form');
+        $this->_form($this->table, 'form');
     }
 
     /**
      * 编辑关键字
-     * @return string
      */
     public function edit()
     {
         $this->applyCsrfToken();
         $this->title = '编辑关键字规则';
-        return $this->_form($this->table, 'form');
+        $this->_form($this->table, 'form');
     }
 
     /**
@@ -136,25 +129,22 @@ class Keys extends Controller
 
     /**
      * 配置关注回复
-     * @return array|string
      */
     public function subscribe()
     {
         $this->applyCsrfToken();
         $this->title = '编辑关注回复规则';
-        return $this->_form($this->table, 'form', 'keys', [], ['keys' => 'subscribe']);
+        $this->_form($this->table, 'form', 'keys', [], ['keys' => 'subscribe']);
     }
-
 
     /**
      * 配置默认回复
-     * @return array|string
      */
     public function defaults()
     {
         $this->applyCsrfToken();
         $this->title = '编辑默认回复规则';
-        return $this->_form($this->table, 'form', 'keys', [], ['keys' => 'default']);
+        $this->_form($this->table, 'form', 'keys', [], ['keys' => 'default']);
     }
 
     /**
@@ -166,7 +156,9 @@ class Keys extends Controller
         if ($this->request->isPost() && isset($data['keys'])) {
             $db = Db::name($this->table)->where('keys', $data['keys']);
             empty($data['id']) || $db->where('id', 'neq', $data['id']);
-            if ($db->count() > 0) $this->error('关键字已经存在，请使用其它关键字！');
+            if ($db->count() > 0) {
+                $this->error('关键字已经存在，请使用其它关键字！');
+            }
         }
         if ($this->request->isGet()) {
             $this->msgTypes = $this->types;

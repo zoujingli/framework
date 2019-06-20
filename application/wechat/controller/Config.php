@@ -65,7 +65,6 @@ class Config extends Controller
 
     /**
      * 公众号支付配置
-     * @return mixed
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */

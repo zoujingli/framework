@@ -92,7 +92,7 @@ class Menu extends Controller
     /**
      * 菜单数据处理
      * @param array $list
-     * @return mixed
+     * @return array
      */
     private function buildMenu(array $list)
     {
