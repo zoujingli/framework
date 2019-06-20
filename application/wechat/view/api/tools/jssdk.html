@@ -12,12 +12,12 @@
 
 <body>
 
-<header style="padding: 35px 0">
-    <h1 style=" text-align: center;font-size: 34px;color: #3cc51f;font-weight:400;">JSSDK 功能测试</h1>
+<header style="padding:35px 0">
+    <h1 style="text-align:center;font-size:34px;color:#3cc51f;font-weight:400;">JSSDK 功能测试</h1>
 </header>
 
 <div style="padding:15px">
-    <a id='show-alert' class="weui-btn weui-btn_primary weui-btn_disabled">调起摄像头扫码</a>
+    <button type="button" id='show-alert'>调起摄像头扫码</button>
 </div>
 
 <script>
@@ -25,7 +25,7 @@
         alert(err.errMsg || '配置出错');
     });
     wx.ready(function () {
-        $('#show-alert').removeClass('weui-btn_disabled').on('click', function () {
+        document.getElementById('show-alert').onclick = function () {
             wx.scanQRCode({
                 needResult: 1,
                 scanType: ["qrCode", "barCode"],
@@ -33,7 +33,7 @@
                     alert(res.resultStr);
                 }
             });
-        });
+        }
     });
 </script>
 </body>
