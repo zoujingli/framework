@@ -80,21 +80,6 @@ class Tools extends Controller
     }
 
     /**
-     * 创建二维码响应对应
-     * @param string $url 二维码内容
-     * @return \think\Response
-     * @throws \Endroid\QrCode\Exceptions\ImageFunctionFailedException
-     * @throws \Endroid\QrCode\Exceptions\ImageFunctionUnknownException
-     * @throws \Endroid\QrCode\Exceptions\ImageTypeInvalidException
-     */
-    protected function createQrc($url)
-    {
-        $qrCode = new \Endroid\QrCode\QrCode();
-        $qrCode->setText($url)->setSize(300)->setPadding(20)->setImageType('png');
-        return \think\facade\Response::header('Content-Type', 'image/png')->data($qrCode->get());
-    }
-
-    /**
      * 微信扫码支付模式一二维码显示
      * @return \think\Response
      * @throws \Endroid\QrCode\Exceptions\ImageFunctionFailedException
@@ -189,11 +174,11 @@ class Tools extends Controller
 
     /**
      * 微信JSAPI支付测试
-     * @link wx-demo-jsapi
      * @throws \WeChat\Exceptions\InvalidResponseException
      * @throws \WeChat\Exceptions\LocalCacheException
      * @throws \think\Exception
      * @throws \think\exception\PDOException
+     * @link wx-demo-jsapi
      */
     public function jsapi()
     {
@@ -251,6 +236,21 @@ class Tools extends Controller
         $wechat = WechatService::WePayOrder();
         p($wechat->getNotify());
         return 'SUCCESS';
+    }
+
+    /**
+     * 创建二维码响应对应
+     * @param string $url 二维码内容
+     * @return \think\Response
+     * @throws \Endroid\QrCode\Exceptions\ImageFunctionFailedException
+     * @throws \Endroid\QrCode\Exceptions\ImageFunctionUnknownException
+     * @throws \Endroid\QrCode\Exceptions\ImageTypeInvalidException
+     */
+    protected function createQrc($url)
+    {
+        $qrCode = new \Endroid\QrCode\QrCode();
+        $qrCode->setText($url)->setSize(300)->setPadding(20)->setImageType('png');
+        return response($qrCode->get(), 200, ['Content-Type' => 'image/png']);
     }
 
 }
