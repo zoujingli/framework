@@ -91,6 +91,7 @@ class WechatService extends \We
      * @param string $name 静态类名
      * @param array $arguments 参数集合
      * @return mixed
+     * @throws \SoapFault
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
