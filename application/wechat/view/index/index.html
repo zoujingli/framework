@@ -1,7 +1,6 @@
 {extend name='admin@main'}
 
 {block name='content'}
-
 <style>
 
     .store-total-container {
@@ -71,40 +70,57 @@
 </div>
 
 <div class="think-box-shadow store-total-container">
-    <div class="margin-bottom-15">最近六个月粉丝数</div>
-    <div id="main" style="height:500px"></div>
-    <script>
-        var option = {
+    <div class="margin-bottom-15">近六月粉丝趋势</div>
+    <div id="main" style="height:390px"></div>
+</div>
+
+<script>
+    require(['echarts'], function (echarts, chart) {
+        chart = echarts.init(document.getElementById('main'));
+        window.onresize = chart.resize;
+        chart.setOption({
             tooltip: {trigger: 'axis'},
-            grid: {top: '10%', left: '3%', right: '4%', bottom: '3%', containLabel: true},
-            xAxis: [{type: 'category', boundaryGap: false, scale: false, data: eval('{:json_encode($totalJson.xs)}')}],
-            yAxis: [{type: 'value', scale: false}],
+            grid: {top: '10%', left: '3%', right: '5%', bottom: '3%', containLabel: true},
+            xAxis: [{
+                type: 'category', scale: false,
+                boundaryGap: false,
+                axisLabel: {
+                    color: '#2f9de2',
+                },
+                data: eval('{:json_encode($totalJson.xs)}')
+            }],
+            yAxis: [{
+                type: 'value',
+                scale: true,
+                max: function (value) {
+                    return Math.ceil(value.max / 50) * 50 + 100;
+                },
+                axisLabel: {
+                    color: '#2f9de2',
+                    formatter: "{value}人"
+                },
+                splitLine: {
+                    lineStyle: {
+                        type: 'dashed',
+                        color: '#cccccc'
+                    }
+                }
+            }],
             legend: {data: ['粉丝数量', '拉黑粉丝']},
             series: [
                 {
-                    name: '粉丝数量',
                     type: 'line',
-                    lineStyle: {color: '#f6f'},
-                    areaStyle: {color: '#f9f'},
-                    label: {normal: {show: true, position: 'right', formatter: "{c}人"}},
+                    name: '粉丝数量',
+                    label: {normal: {show: true, position: ['30%', '-100%'], offset: [10, -10], formatter: "粉丝{c}人"}},
                     data: eval('{:json_encode($totalJson.ys._0)}')
                 }, {
-                    name: '拉黑粉丝',
                     type: 'line',
-                    lineStyle: {color: '#f00'},
-                    areaStyle: {color: '#f00'},
-                    label: {normal: {show: true, position: 'right', formatter: "{c}人"}},
+                    name: '拉黑粉丝',
+                    label: {normal: {show: true, position: ['30%', '-100%'], offset: [10, -10], formatter: "拉黑{c}人"}},
                     data: eval('{:json_encode($totalJson.ys._1)}')
                 }
             ]
-        };
-        require(['echarts'], function (echarts, chart) {
-            chart = echarts.init(document.getElementById('main'));
-            chart.setOption(option);
-            window.onresize = function () {
-                chart.resize();
-            };
         });
-    </script>
-</div>
+    });
+</script>
 {/block}
