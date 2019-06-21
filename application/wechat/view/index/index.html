@@ -36,17 +36,17 @@
     <div class="layui-row layui-col-space15">
         <div class="layui-col-sm6 layui-col-md3">
             <div class="store-total-item nowrap" style="background:linear-gradient(-125deg,#57bdbf,#2f9de2)">
-                <div>微信粉丝数量</div>
+                <div>粉丝数量</div>
                 <div>{$totalFans|default='0'}</div>
-                <div>已经关注微信的粉丝数量</div>
+                <div>关注的粉丝数量</div>
             </div>
             <i class="store-total-icon layui-icon layui-icon-user"></i>
         </div>
         <div class="layui-col-sm6 layui-col-md3">
             <div class="store-total-item nowrap" style="background:linear-gradient(-125deg,#ff7d7d,#fb2c95)">
-                <div>微信拉黑粉丝</div>
+                <div>黑粉数量</div>
                 <div>{$totalBlack|default='0'}</div>
-                <div>已被拉黑的粉丝数量</div>
+                <div>拉黑的粉丝数量</div>
             </div>
             <i class="store-total-icon layui-icon layui-icon-auz"></i>
         </div>
@@ -54,15 +54,15 @@
             <div class="store-total-item nowrap" style="background:linear-gradient(-113deg,#c543d8,#925cc3)">
                 <div>图文总数</div>
                 <div>{$totalNews|default='0'}</div>
-                <div>已经配置图文素材数量</div>
+                <div>图文素材的数量</div>
             </div>
             <i class="store-total-icon layui-icon layui-icon-read"></i>
         </div>
         <div class="layui-col-sm6 layui-col-md3">
             <div class="store-total-item nowrap" style="background:linear-gradient(-141deg,#ecca1b,#f39526)">
-                <div>回复规格</div>
+                <div>回复规则</div>
                 <div>{$totalRule|default='0'}</div>
-                <div>消息回复规格数量</div>
+                <div>消息回复规则数量</div>
             </div>
             <i class="store-total-icon layui-icon layui-icon-survey"></i>
         </div>
@@ -113,7 +113,8 @@
                     name: '粉丝数量',
                     label: {normal: {show: true, position: ['30%', '-100%'], offset: [10, -10], formatter: "粉丝{c}人"}},
                     data: eval('{:json_encode($totalJson.ys._0)}')
-                }, {
+                },
+                {
                     type: 'line',
                     name: '拉黑粉丝',
                     label: {normal: {show: true, position: ['30%', '-100%'], offset: [10, -10], formatter: "拉黑{c}人"}},
