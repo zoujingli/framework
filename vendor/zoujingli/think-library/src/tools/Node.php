@@ -28,7 +28,7 @@ class Node
      * 忽略控制名的前缀
      * @var array
      */
-    protected static $ignoreController = [
+    private static $ignoreController = [
         'api.', 'wap.', 'web.',
     ];
 
@@ -36,8 +36,8 @@ class Node
      * 忽略控制的方法名
      * @var array
      */
-    protected static $ignoreAction = [
-        'redirect', 'assign', 'callback',
+    private static $ignoreAction = [
+        '_', 'redirect', 'assign', 'callback',
         'initialize', 'success', 'error', 'fetch',
     ];
 
@@ -69,20 +69,17 @@ class Node
      * @param string $dir 控制器根路径
      * @param array $nodes 额外数据
      * @return array
+     * @throws \ReflectionException
      */
     public static function getTree($dir, $nodes = [])
     {
-        foreach (self::scanDir($dir) as $file) {
-            if (!preg_match('|/(\w+)/controller/(.+)|', str_replace('\\', '/', $file), $matches)) continue;
-            if (class_exists($classname = env('app_namespace') . str_replace('/', '\\', substr($matches[0], 0, -4)))) {
-                $controller = str_replace('/', '.', substr($matches[2], 0, -4));
-                foreach (self::$ignoreController as $ignore) if (stripos($controller, $ignore) !== false) continue 2;
-                foreach (get_class_methods($classname) as $action) {
-                    if (stripos($action, '_') === 0 || in_array($action, self::$ignoreAction)) continue;
-                    $nodes[] = self::parseString("{$matches[1]}/{$controller}/{$action}");
-                }
-            }
-        }
+        self::eachController($dir, function (\ReflectionClass $reflection, $prenode) use (&$nodes) {
+            foreach ($reflection->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
+                $action = strtolower($method->getName());
+                foreach (self::$ignoreAction as $ignore) if (stripos($action, $ignore) === 0) continue 2;
+                $nodes[] = $prenode . $action;
+            };
+        });
         return $nodes;
     }
 
@@ -95,17 +92,11 @@ class Node
      */
     public static function getClassTreeNode($dir, $nodes = [])
     {
-        foreach (self::scanDir($dir) as $file) {
-            if (!preg_match('|/(\w+)/controller/(.+)|', str_replace('\\', '/', $file), $matches)) continue;
-            if (class_exists($classname = env('app_namespace') . str_replace('/', '\\', substr($matches[0], 0, -4)))) {
-                $controller = str_replace('/', '.', substr($matches[2], 0, -4));
-                foreach (self::$ignoreController as $ignore) if (stripos($controller, $ignore) !== false) continue 2;
-                $node = self::parseString("{$matches[1]}/{$controller}");
-                $comment = (new \ReflectionClass($classname))->getDocComment();
-                $nodes[$node] = preg_replace('/^\/\*\*\*(.*?)\*.*?$/', '$1', preg_replace("/\s/", '', $comment));
-                if (stripos($nodes[$node], '@') !== false) $nodes[$node] = '';
-            }
-        }
+        self::eachController($dir, function (\ReflectionClass $reflection, $prenode) use (&$nodes) {
+            list($node, $comment) = [trim($prenode, '/'), $reflection->getDocComment()];
+            $nodes[$node] = preg_replace('/^\/\*\*\*(.*?)\*.*?$/', '$1', preg_replace("/\s/", '', $comment));
+            if (stripos($nodes[$node], '@') !== false) $nodes[$node] = '';
+        });
         return $nodes;
     }
 
@@ -118,21 +109,34 @@ class Node
      */
     public static function getMethodTreeNode($dir, $nodes = [])
     {
-        foreach (self::scanDir($dir) as $file) {
-            if (!preg_match('|/(\w+)/controller/(.+)|', str_replace('\\', '/', $file), $matches)) continue;
-            if (class_exists($classname = env('app_namespace') . str_replace('/', '\\', substr($matches[0], 0, -4)))) {
-                $controller = str_replace('/', '.', substr($matches[2], 0, -4));
-                foreach (self::$ignoreController as $ignore) if (stripos($controller, $ignore) === 0) continue 2;
-                foreach ((new \ReflectionClass($classname))->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
-                    list($action, $comment) = [$method->getName(), $method->getDocComment()];
-                    if (stripos($action, '_') === 0 || in_array($action, self::$ignoreAction)) continue;
-                    $node = self::parseString("{$matches[1]}/{$controller}/{$action}");
-                    $nodes[$node] = preg_replace('/^\/\*\*\*(.*?)\*.*?$/', '$1', preg_replace("/\s/", '', $comment));
-                    if (stripos($nodes[$node], '@') !== false) $nodes[$node] = '';
-                }
+        self::eachController($dir, function (\ReflectionClass $reflection, $prenode) use (&$nodes) {
+            foreach ($reflection->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
+                $action = strtolower($method->getName());
+                foreach (self::$ignoreAction as $ignore) if (stripos($action, $ignore) === 0) continue 2;
+                $node = $prenode . $action;
+                $nodes[$node] = preg_replace('/^\/\*\*\*(.*?)\*.*?$/', '$1', preg_replace("/\s/", '', $method->getDocComment()));
+                if (stripos($nodes[$node], '@') !== false) $nodes[$node] = '';
+            }
+        });
+        return $nodes;
+    }
+
+    /**
+     * 控制器扫描回调
+     * @param string $dir
+     * @param callable $callable
+     * @throws \ReflectionException
+     */
+    public static function eachController($dir, $callable)
+    {
+        foreach (Node::scanDir($dir) as $file) {
+            if (!preg_match("|/(\w+)/controller/(.+)\.php$|", strtr($file, '\\', '/'), $matches)) continue;
+            list($module, $controller) = [$matches[1], strtr($matches[2], '/', '.')];
+            foreach (self::$ignoreController as $ignore) if (stripos($controller, $ignore) === 0) continue 2;
+            if (class_exists($class = substr(strtr(env('app_namespace') . $matches[0], '/', '\\'), 0, -4))) {
+                call_user_func($callable, new \ReflectionClass($class), Node::parseString("{$module}/{$controller}/"));
             }
         }
-        return $nodes;
     }
 
     /**

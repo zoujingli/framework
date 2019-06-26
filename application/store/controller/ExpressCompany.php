@@ -42,7 +42,7 @@ class ExpressCompany extends Controller
     {
         $this->title = '快递公司管理';
         $query = $this->_query($this->table)->equal('status')->like('express_title,express_code');
-        $query->dateBetween('create_at')->order('status desc,sort asc,id desc')->page();
+        $query->dateBetween('create_at')->order('status desc,sort desc,id desc')->page();
     }
 
     /**

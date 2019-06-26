@@ -86,7 +86,7 @@ class Menu extends Controller
     {
         if ($this->request->isGet()) {
             // 上级菜单处理
-            $_menus = Db::name($this->table)->where(['status' => '1'])->order('sort asc,id asc')->select();
+            $_menus = Db::name($this->table)->where(['status' => '1'])->order('sort desc,id asc')->select();
             $_menus[] = ['title' => '顶级菜单', 'id' => '0', 'pid' => '-1'];
             $menus = Data::arr2table($_menus);
             foreach ($menus as $key => &$menu) if (substr_count($menu['path'], '-') > 3) unset($menus[$key]); # 移除三级以下的菜单

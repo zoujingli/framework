@@ -78,7 +78,7 @@ class Order extends Controller
     {
         if ($this->request->isGet()) {
             $where = ['is_deleted' => '0', 'status' => '1'];
-            $this->expressList = Db::name('StoreExpress')->where($where)->order('sort asc,id desc')->select();
+            $this->expressList = Db::name('StoreExpress')->where($where)->order('sort desc,id desc')->select();
         }
         $this->_form($this->table);
     }

@@ -65,7 +65,7 @@ class Keys extends Controller
         // 关键字列表显示
         $this->title = '回复规则管理';
         $query = $this->_query($this->table)->like('keys,type')->equal('status')->dateBetween('create_at');
-        $query->whereNotIn('keys', ['subscribe', 'default'])->order('sort asc,id desc')->page();
+        $query->whereNotIn('keys', ['subscribe', 'default'])->order('sort desc,id desc')->page();
     }
 
     /**

@@ -41,7 +41,7 @@ class GoodsCate extends Controller
     {
         $this->title = '商品分类管理';
         $where = ['is_deleted' => '0'];
-        $this->_query($this->table)->like('title')->equal('status')->where($where)->order('sort asc,id desc')->page();
+        $this->_query($this->table)->like('title')->equal('status')->where($where)->order('sort desc,id desc')->page();
     }
 
     /**

@@ -43,7 +43,7 @@ class Goods extends Controller
     public function index()
     {
         $this->title = '商品信息管理';
-        $this->_query($this->table)->equal('status,cate_id')->like('title')->where(['is_deleted' => '0'])->order('sort asc,id desc')->page();
+        $this->_query($this->table)->equal('status,cate_id')->like('title')->where(['is_deleted' => '0'])->order('sort desc,id desc')->page();
     }
 
     /**
@@ -137,7 +137,7 @@ class Goods extends Controller
             $fields = 'goods_spec,goods_id,status,price_market market,price_selling selling,number_virtual `virtual`,number_express express';
             $defaultValues = Db::name('StoreGoodsList')->where(['goods_id' => $data['id']])->column($fields);
             $this->defaultValues = json_encode($defaultValues, JSON_UNESCAPED_UNICODE);
-            $this->cates = Db::name('StoreGoodsCate')->where(['is_deleted' => '0', 'status' => '1'])->order('sort asc,id desc')->select();
+            $this->cates = Db::name('StoreGoodsCate')->where(['is_deleted' => '0', 'status' => '1'])->order('sort desc,id desc')->select();
         } elseif ($this->request->isPost()) {
             Db::name('StoreGoodsList')->where(['goods_id' => $data['id']])->update(['status' => '0']);
             foreach (json_decode($data['lists'], true) as $vo) Data::save('StoreGoodsList', [

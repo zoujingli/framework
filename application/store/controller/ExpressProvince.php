@@ -40,7 +40,7 @@ class ExpressProvince extends Controller
     public function index()
     {
         $this->title = '配送省份管理';
-        $this->_query($this->table)->like('title')->equal('status')->dateBetween('create_at')->order('sort asc,id desc')->page();
+        $this->_query($this->table)->like('title')->equal('status')->dateBetween('create_at')->order('sort desc,id desc')->page();
     }
 
 

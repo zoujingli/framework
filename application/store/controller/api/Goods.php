@@ -66,7 +66,7 @@ class Goods extends Controller
             $where[] = ['cate_id', 'eq', $this->request->post('cate_id')];
         }
         $field = 'id,title,logo,cate_id,image,number_sales,number_stock,content,specs,lists';
-        $list = Db::name('StoreGoods')->field($field)->where($where)->order('sort asc,id desc')->select();
+        $list = Db::name('StoreGoods')->field($field)->where($where)->order('sort desc,id desc')->select();
         $goodsList = Db::name('StoreGoodsList')->whereIn('goods_id', array_unique(array_column($list, 'id')))->select();
         foreach ($list as &$vo) {
             $vo['list'] = [];
@@ -111,7 +111,7 @@ class Goods extends Controller
     {
         $where = ['is_deleted' => '0', 'status' => '1'];
         $field = 'id cate_id,logo cate_logo,title cate_title';
-        $list = Db::name('StoreGoodsCate')->field($field)->where($where)->order('sort asc,id desc')->select();
+        $list = Db::name('StoreGoodsCate')->field($field)->where($where)->order('sort desc,id desc')->select();
         $this->success('获取商品分类成功！', ['list' => $list]);
     }
 

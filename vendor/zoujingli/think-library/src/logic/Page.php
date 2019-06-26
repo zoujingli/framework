@@ -82,7 +82,7 @@ class Page extends Logic
         if ($this->controller->request->isPost()) $this->_sort();
         // 未配置 order 规则时自动按 sort 字段排序
         if (!$this->query->getOptions('order') && method_exists($this->query, 'getTableFields')) {
-            if (in_array('sort', $this->query->getTableFields())) $this->query->order('sort asc');
+            if (in_array('sort', $this->query->getTableFields())) $this->query->order('sort desc');
         }
         // 列表分页及结果集处理
         if ($this->isPage) {

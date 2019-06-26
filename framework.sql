@@ -11,7 +11,7 @@
  Target Server Version : 50562
  File Encoding         : 65001
 
- Date: 14/06/2019 16:55:44
+ Date: 26/06/2019 11:37:11
 */
 
 SET NAMES utf8mb4;
@@ -45,7 +45,7 @@ INSERT INTO `store_express_company` VALUES (10, '百福东方国际物流', 'bai
 INSERT INTO `store_express_company` VALUES (11, '中国东方（COE）', 'coe', NULL, 0, 0, 0, '2017-09-13 16:05:48');
 INSERT INTO `store_express_company` VALUES (12, '长宇物流', 'changyuwuliu', NULL, 0, 0, 0, '2017-09-13 16:05:58');
 INSERT INTO `store_express_company` VALUES (13, '大田物流', 'datianwuliu', NULL, 0, 0, 0, '2017-09-13 16:06:06');
-INSERT INTO `store_express_company` VALUES (14, '德邦物流', 'debangwuliu', '', 1, 1, 0, '2017-09-13 16:06:14');
+INSERT INTO `store_express_company` VALUES (14, '德邦物流', 'debangwuliu', '', 0, 1, 0, '2017-09-13 16:06:14');
 INSERT INTO `store_express_company` VALUES (15, 'DHL', 'dhl', NULL, 0, 0, 0, '2017-09-13 16:06:24');
 INSERT INTO `store_express_company` VALUES (16, 'DPEX', 'dpex', NULL, 0, 0, 0, '2017-09-13 16:06:29');
 INSERT INTO `store_express_company` VALUES (17, 'd速快递', 'dsukuaidi', NULL, 0, 0, 0, '2017-09-13 16:06:34');
@@ -125,7 +125,7 @@ INSERT INTO `store_express_company` VALUES (90, '中铁快运', 'zhongtiekuaiyun
 INSERT INTO `store_express_company` VALUES (91, '中通速递', 'zhongtong', '', 0, 0, 0, '2017-09-13 16:17:16');
 INSERT INTO `store_express_company` VALUES (92, '中邮物流', 'zhongyouwuliu', NULL, 0, 0, 0, '2017-09-13 16:17:27');
 INSERT INTO `store_express_company` VALUES (93, '忠信达', 'zhongxinda', NULL, 0, 0, 0, '2017-09-13 16:17:34');
-INSERT INTO `store_express_company` VALUES (94, '芝麻开门', 'zhimakaimen', '', 0, 0, 0, '2017-09-13 16:17:41');
+INSERT INTO `store_express_company` VALUES (94, '芝麻开门', 'zhimakaimen', '', 1, 0, 0, '2017-09-13 16:17:41');
 
 -- ----------------------------
 -- Table structure for store_express_province
@@ -467,7 +467,7 @@ INSERT INTO `system_config` VALUES (1, 'app_name', 'framework');
 INSERT INTO `system_config` VALUES (2, 'site_name', 'framework');
 INSERT INTO `system_config` VALUES (3, 'app_version', 'v1.0');
 INSERT INTO `system_config` VALUES (4, 'site_copy', '©版权所有 2014-2018 楚才科技');
-INSERT INTO `system_config` VALUES (5, 'site_icon', 'http://127.0.0.1:8000/upload/f47b8fe06e38ae99/08e8398da45583b9.png');
+INSERT INTO `system_config` VALUES (5, 'site_icon', 'http://127.0.0.1:8000/upload/decb0fe26fa3f486/b3f6521bf29403c8.png');
 INSERT INTO `system_config` VALUES (7, 'miitbeian', '粤ICP备16006642号-2');
 INSERT INTO `system_config` VALUES (8, 'storage_type', 'local');
 INSERT INTO `system_config` VALUES (9, 'storage_local_exts', 'doc,gif,icon,jpg,mp3,mp4,p12,pem,png,rar');
@@ -496,7 +496,7 @@ INSERT INTO `system_config` VALUES (54, 'wechat_encodingaeskey', '');
 INSERT INTO `system_config` VALUES (55, 'wechat_push_url', '消息推送地址：http://127.0.0.1:8000/wechat/api.push');
 INSERT INTO `system_config` VALUES (56, 'wechat_type', 'thr');
 INSERT INTO `system_config` VALUES (57, 'wechat_thr_appid', 'wx60a43dd8161666d4');
-INSERT INTO `system_config` VALUES (58, 'wechat_thr_appkey', '6d1116ba978018ceb84d24d6dda4fed0');
+INSERT INTO `system_config` VALUES (58, 'wechat_thr_appkey', 'f48d07902eb189bec5bd26938f6f71ee');
 INSERT INTO `system_config` VALUES (60, 'wechat_thr_appurl', '消息推送地址：http://127.0.0.1:8000/wechat/api.push');
 INSERT INTO `system_config` VALUES (61, 'component_appid', 'wx28b58798480874f9');
 INSERT INTO `system_config` VALUES (62, 'component_appsecret', '87ddce1cc24e4cd691039f926febd942');
@@ -527,7 +527,7 @@ CREATE TABLE `system_data`  (
 -- ----------------------------
 -- Records of system_data
 -- ----------------------------
-INSERT INTO `system_data` VALUES (1, 'menudata', '[]');
+INSERT INTO `system_data` VALUES (1, 'menudata', '[{\"name\":\"请输入名称\",\"type\":\"view\",\"url\":\"https:\\/\\/baidu.com\"}]');
 
 -- ----------------------------
 -- Table structure for system_jobs
@@ -605,52 +605,53 @@ CREATE TABLE `system_menu`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `index_system_menu_node`(`node`(191)) USING BTREE,
   INDEX `index_system_menu_status`(`status`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 55 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-菜单';
+) ENGINE = InnoDB AUTO_INCREMENT = 56 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-菜单';
 
 -- ----------------------------
 -- Records of system_menu
 -- ----------------------------
-INSERT INTO `system_menu` VALUES (1, 0, '后台首页', '', '', 'admin/index/main', '', '_self', 100, 1, '2018-09-05 17:59:38');
-INSERT INTO `system_menu` VALUES (2, 0, '系统管理', '', '', '#', '', '_self', 300, 1, '2018-09-05 18:04:52');
-INSERT INTO `system_menu` VALUES (3, 12, '系统菜单管理', '', 'layui-icon layui-icon-layouts', 'admin/menu/index', '', '_self', 2, 1, '2018-09-05 18:05:26');
-INSERT INTO `system_menu` VALUES (4, 2, '系统配置', '', '', '#', '', '_self', 10, 1, '2018-09-05 18:07:17');
-INSERT INTO `system_menu` VALUES (5, 12, '系统用户管理', '', 'layui-icon layui-icon-username', 'admin/user/index', '', '_self', 4, 1, '2018-09-06 11:10:42');
-INSERT INTO `system_menu` VALUES (6, 12, '功能节点管理', '', 'layui-icon layui-icon-template', 'admin/node/index', '', '_self', 1, 1, '2018-09-06 14:16:13');
-INSERT INTO `system_menu` VALUES (7, 12, '访问权限管理', '', 'layui-icon layui-icon-vercode', 'admin/auth/index', '', '_self', 3, 1, '2018-09-06 15:17:14');
-INSERT INTO `system_menu` VALUES (10, 4, '文件存储配置', '', 'layui-icon layui-icon-template-1', 'admin/config/file', '', '_self', 2, 1, '2018-09-06 16:43:19');
-INSERT INTO `system_menu` VALUES (11, 4, '系统参数配置', '', 'layui-icon layui-icon-set', 'admin/config/info', '', '_self', 1, 1, '2018-09-06 16:43:47');
-INSERT INTO `system_menu` VALUES (12, 2, '权限管理', '', '', '#', '', '_self', 20, 1, '2018-09-06 18:01:31');
-INSERT INTO `system_menu` VALUES (13, 0, '商城管理', '', '', '#', '', '_self', 200, 1, '2018-10-12 13:56:29');
-INSERT INTO `system_menu` VALUES (14, 48, '商品信息管理', '', 'layui-icon layui-icon-component', 'store/goods/index', '', '_self', 30, 1, '2018-10-12 13:56:48');
-INSERT INTO `system_menu` VALUES (16, 0, '微信管理', '', '', '#', '', '_self', 210, 1, '2018-10-31 15:15:27');
-INSERT INTO `system_menu` VALUES (17, 16, '微信管理', '', '', '#', '', '_self', 10, 1, '2018-10-31 15:16:46');
-INSERT INTO `system_menu` VALUES (18, 17, '微信授权配置', '', 'layui-icon layui-icon-set', 'wechat/config/options', '', '_self', 1, 1, '2018-10-31 15:17:11');
-INSERT INTO `system_menu` VALUES (19, 17, '微信支付配置', '', 'layui-icon layui-icon-rmb', 'wechat/config/payment', '', '_self', 2, 1, '2018-10-31 18:28:09');
-INSERT INTO `system_menu` VALUES (20, 16, '微信定制', '', '', '#', '', '_self', 20, 1, '2018-11-13 11:46:27');
-INSERT INTO `system_menu` VALUES (21, 20, '图文素材管理', '', 'layui-icon layui-icon-template', 'wechat/news/index', '', '_self', 1, 1, '2018-11-13 11:46:55');
-INSERT INTO `system_menu` VALUES (22, 20, '粉丝信息管理', '', 'layui-icon layui-icon-user', 'wechat/fans/index', '', '_self', 2, 1, '2018-11-15 09:51:13');
-INSERT INTO `system_menu` VALUES (23, 20, '回复规则管理', '', 'layui-icon layui-icon-engine', 'wechat/keys/index', '', '_self', 3, 1, '2018-11-22 11:29:08');
-INSERT INTO `system_menu` VALUES (24, 20, '关注回复配置', '', 'layui-icon layui-icon-senior', 'wechat/keys/subscribe', '', '_self', 4, 1, '2018-11-27 11:45:28');
-INSERT INTO `system_menu` VALUES (25, 20, '默认回复配置', '', 'layui-icon layui-icon-survey', 'wechat/keys/defaults', '', '_self', 5, 1, '2018-11-27 11:45:58');
-INSERT INTO `system_menu` VALUES (26, 20, '微信菜单管理', '', 'layui-icon layui-icon-cellphone', 'wechat/menu/index', '', '_self', 6, 1, '2018-11-27 17:56:56');
+INSERT INTO `system_menu` VALUES (1, 0, '后台首页', '', '', 'admin/index/main', '', '_self', 500, 1, '2018-09-05 17:59:38');
+INSERT INTO `system_menu` VALUES (2, 0, '系统管理', '', '', '#', '', '_self', 100, 1, '2018-09-05 18:04:52');
+INSERT INTO `system_menu` VALUES (3, 12, '系统菜单管理', '', 'layui-icon layui-icon-layouts', 'admin/menu/index', '', '_self', 3, 1, '2018-09-05 18:05:26');
+INSERT INTO `system_menu` VALUES (4, 2, '系统配置', '', '', '#', '', '_self', 20, 1, '2018-09-05 18:07:17');
+INSERT INTO `system_menu` VALUES (5, 12, '系统用户管理', '', 'layui-icon layui-icon-username', 'admin/user/index', '', '_self', 1, 1, '2018-09-06 11:10:42');
+INSERT INTO `system_menu` VALUES (6, 12, '功能节点管理', '', 'layui-icon layui-icon-template', 'admin/node/index', '', '_self', 4, 1, '2018-09-06 14:16:13');
+INSERT INTO `system_menu` VALUES (7, 12, '访问权限管理', '', 'layui-icon layui-icon-vercode', 'admin/auth/index', '', '_self', 2, 1, '2018-09-06 15:17:14');
+INSERT INTO `system_menu` VALUES (10, 4, '文件存储配置', '', 'layui-icon layui-icon-template-1', 'admin/config/file', '', '_self', 4, 1, '2018-09-06 16:43:19');
+INSERT INTO `system_menu` VALUES (11, 4, '系统参数配置', '', 'layui-icon layui-icon-set', 'admin/config/info', '', '_self', 5, 1, '2018-09-06 16:43:47');
+INSERT INTO `system_menu` VALUES (12, 2, '权限管理', '', '', '#', '', '_self', 10, 1, '2018-09-06 18:01:31');
+INSERT INTO `system_menu` VALUES (13, 0, '商城管理', '', '', '#', '', '_self', 400, 1, '2018-10-12 13:56:29');
+INSERT INTO `system_menu` VALUES (14, 48, '商品信息管理', '', 'layui-icon layui-icon-component', 'store/goods/index', '', '_self', 3, 1, '2018-10-12 13:56:48');
+INSERT INTO `system_menu` VALUES (16, 0, '微信管理', '', '', '#', '', '_self', 300, 1, '2018-10-31 15:15:27');
+INSERT INTO `system_menu` VALUES (17, 16, '微信管理', '', '', '#', '', '_self', 20, 1, '2018-10-31 15:16:46');
+INSERT INTO `system_menu` VALUES (18, 17, '微信授权配置', '', 'layui-icon layui-icon-set', 'wechat/config/options', '', '_self', 2, 1, '2018-10-31 15:17:11');
+INSERT INTO `system_menu` VALUES (19, 17, '微信支付配置', '', 'layui-icon layui-icon-rmb', 'wechat/config/payment', '', '_self', 1, 1, '2018-10-31 18:28:09');
+INSERT INTO `system_menu` VALUES (20, 16, '微信定制', '', '', '#', '', '_self', 10, 1, '2018-11-13 11:46:27');
+INSERT INTO `system_menu` VALUES (21, 20, '图文素材管理', '', 'layui-icon layui-icon-template', 'wechat/news/index', '', '_self', 6, 1, '2018-11-13 11:46:55');
+INSERT INTO `system_menu` VALUES (22, 20, '粉丝信息管理', '', 'layui-icon layui-icon-user', 'wechat/fans/index', '', '_self', 5, 1, '2018-11-15 09:51:13');
+INSERT INTO `system_menu` VALUES (23, 20, '回复规则管理', '', 'layui-icon layui-icon-engine', 'wechat/keys/index', '', '_self', 4, 1, '2018-11-22 11:29:08');
+INSERT INTO `system_menu` VALUES (24, 20, '关注回复配置', '', 'layui-icon layui-icon-senior', 'wechat/keys/subscribe', '', '_self', 3, 1, '2018-11-27 11:45:28');
+INSERT INTO `system_menu` VALUES (25, 20, '默认回复配置', '', 'layui-icon layui-icon-survey', 'wechat/keys/defaults', '', '_self', 2, 1, '2018-11-27 11:45:58');
+INSERT INTO `system_menu` VALUES (26, 20, '微信菜单管理', '', 'layui-icon layui-icon-cellphone', 'wechat/menu/index', '', '_self', 1, 1, '2018-11-27 17:56:56');
 INSERT INTO `system_menu` VALUES (27, 4, '系统任务管理', '', 'layui-icon layui-icon-log', 'admin/queue/index', '', '_self', 3, 1, '2018-11-29 11:13:34');
-INSERT INTO `system_menu` VALUES (35, 4, '系统消息管理', '', 'layui-icon layui-icon-notice', 'admin/message/index', '', '_self', 4, 1, '2018-12-24 14:03:52');
-INSERT INTO `system_menu` VALUES (37, 0, '开放平台', '', '', '#', '', '_self', 220, 1, '2018-12-28 13:29:25');
+INSERT INTO `system_menu` VALUES (35, 4, '系统消息管理', '', 'layui-icon layui-icon-notice', 'admin/message/index', '', '_self', 2, 1, '2018-12-24 14:03:52');
+INSERT INTO `system_menu` VALUES (37, 0, '开放平台', '', '', '#', '', '_self', 200, 1, '2018-12-28 13:29:25');
 INSERT INTO `system_menu` VALUES (38, 40, '开放平台配置', '', 'layui-icon layui-icon-set', 'service/config/index', '', '_self', 0, 1, '2018-12-28 13:29:44');
 INSERT INTO `system_menu` VALUES (39, 40, '公众授权管理', '', 'layui-icon layui-icon-template-1', 'service/index/index', '', '_self', 0, 1, '2018-12-28 13:30:07');
 INSERT INTO `system_menu` VALUES (40, 37, '开放平台管理', '', '', '#', '', '_self', 0, 1, '2018-12-28 16:05:46');
-INSERT INTO `system_menu` VALUES (42, 48, '会员信息管理', '', 'layui-icon layui-icon-user', 'store/member/index', '', '_self', 50, 1, '2019-01-22 14:24:23');
-INSERT INTO `system_menu` VALUES (43, 48, '订单记录管理', '', 'layui-icon layui-icon-template-1', 'store/order/index', '', '_self', 40, 1, '2019-01-22 14:46:22');
-INSERT INTO `system_menu` VALUES (44, 48, '商品分类管理', '', 'layui-icon layui-icon-app', 'store/goods_cate/index', '', '_self', 20, 1, '2019-01-23 10:41:06');
-INSERT INTO `system_menu` VALUES (45, 47, '商城参数配置', '', 'layui-icon layui-icon-set', 'store/config/index', '', '_self', 10, 1, '2019-01-24 16:47:33');
-INSERT INTO `system_menu` VALUES (46, 47, '短信发送记录', '', 'layui-icon layui-icon-console', 'store/message/index', '', '_self', 30, 1, '2019-01-24 18:09:58');
-INSERT INTO `system_menu` VALUES (47, 13, '商城配置', '', '', '#', '', '_self', 10, 1, '2019-01-25 16:47:49');
-INSERT INTO `system_menu` VALUES (48, 13, '数据管理', '', '', '#', '', '_self', 20, 1, '2019-01-25 16:48:35');
-INSERT INTO `system_menu` VALUES (49, 4, '系统日志管理', '', 'layui-icon layui-icon-form', 'admin/oplog/index', '', '_self', 5, 1, '2019-02-18 12:56:56');
-INSERT INTO `system_menu` VALUES (50, 47, '快递公司管理', '', 'layui-icon layui-icon-form', 'store/express_company/index', '', '_self', 40, 1, '2019-04-01 17:10:59');
-INSERT INTO `system_menu` VALUES (52, 47, '邮费模板管理', '', 'layui-icon layui-icon-fonts-clear', 'store/express_template/index', '', '_self', 60, 1, '2019-04-23 13:17:10');
-INSERT INTO `system_menu` VALUES (53, 47, '配送省份管理', '', 'layui-icon layui-icon-location', 'store/express_province/index', '', '_self', 55, 1, '2019-04-24 14:47:27');
-INSERT INTO `system_menu` VALUES (54, 47, '商城短信配置', '', 'layui-icon layui-icon-dialogue', 'store/config/sms', '', '_self', 0, 1, '2019-06-14 14:21:19');
+INSERT INTO `system_menu` VALUES (42, 48, '会员信息管理', '', 'layui-icon layui-icon-user', 'store/member/index', '', '_self', 1, 1, '2019-01-22 14:24:23');
+INSERT INTO `system_menu` VALUES (43, 48, '订单记录管理', '', 'layui-icon layui-icon-template-1', 'store/order/index', '', '_self', 2, 1, '2019-01-22 14:46:22');
+INSERT INTO `system_menu` VALUES (44, 48, '商品分类管理', '', 'layui-icon layui-icon-app', 'store/goods_cate/index', '', '_self', 4, 1, '2019-01-23 10:41:06');
+INSERT INTO `system_menu` VALUES (45, 47, '商城参数配置', '', 'layui-icon layui-icon-set', 'store/config/index', '', '_self', 5, 1, '2019-01-24 16:47:33');
+INSERT INTO `system_menu` VALUES (46, 47, '短信发送记录', '', 'layui-icon layui-icon-console', 'store/message/index', '', '_self', 4, 1, '2019-01-24 18:09:58');
+INSERT INTO `system_menu` VALUES (47, 13, '商城配置', '', '', '#', '', '_self', 20, 1, '2019-01-25 16:47:49');
+INSERT INTO `system_menu` VALUES (48, 13, '数据管理', '', '', '#', '', '_self', 10, 1, '2019-01-25 16:48:35');
+INSERT INTO `system_menu` VALUES (49, 4, '系统日志管理', '', 'layui-icon layui-icon-form', 'admin/oplog/index', '', '_self', 1, 1, '2019-02-18 12:56:56');
+INSERT INTO `system_menu` VALUES (50, 47, '快递公司管理', '', 'layui-icon layui-icon-form', 'store/express_company/index', '', '_self', 3, 1, '2019-04-01 17:10:59');
+INSERT INTO `system_menu` VALUES (52, 47, '邮费模板管理', '', 'layui-icon layui-icon-fonts-clear', 'store/express_template/index', '', '_self', 1, 1, '2019-04-23 13:17:10');
+INSERT INTO `system_menu` VALUES (53, 47, '配送省份管理', '', 'layui-icon layui-icon-location', 'store/express_province/index', '', '_self', 2, 1, '2019-04-24 14:47:27');
+INSERT INTO `system_menu` VALUES (54, 47, '商城短信配置', '', 'layui-icon layui-icon-dialogue', 'store/config/sms', '', '_self', 6, 1, '2019-06-14 14:21:19');
+INSERT INTO `system_menu` VALUES (55, 17, '微信数据统计', '', 'layui-icon layui-icon-chart-screen', 'wechat/index/index', '', '_self', 3, 1, '2019-06-15 15:03:51');
 
 -- ----------------------------
 -- Table structure for system_message
@@ -689,7 +690,7 @@ CREATE TABLE `system_node`  (
   INDEX `index_system_node_is_menu`(`is_menu`) USING BTREE,
   INDEX `index_system_node_is_auth`(`is_auth`) USING BTREE,
   INDEX `index_system_node_is_login`(`is_login`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 106 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-节点';
+) ENGINE = InnoDB AUTO_INCREMENT = 110 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统-节点';
 
 -- ----------------------------
 -- Records of system_node
@@ -799,6 +800,10 @@ INSERT INTO `system_node` VALUES (102, 'wechat/news/select', '图文选择器', 
 INSERT INTO `system_node` VALUES (103, 'wechat/news/add', '添加微信图文', 0, 1, 1, '2019-06-14 16:52:27');
 INSERT INTO `system_node` VALUES (104, 'wechat/news/edit', '编辑微信图文', 0, 1, 1, '2019-06-14 16:52:27');
 INSERT INTO `system_node` VALUES (105, 'wechat/news/del', '删除微信图文', 0, 1, 1, '2019-06-14 16:52:28');
+INSERT INTO `system_node` VALUES (106, 'store/message/remove', '删除短信记录', 0, 1, 1, '2019-06-14 16:55:02');
+INSERT INTO `system_node` VALUES (107, 'service/config/save', '保存平台参数数据', 0, 1, 1, '2019-06-15 14:55:49');
+INSERT INTO `system_node` VALUES (108, 'store/express_template/save', '保存邮费模板', 0, 1, 1, '2019-06-15 14:58:22');
+INSERT INTO `system_node` VALUES (109, 'wechat/index/index', '微信数据统计', 1, 1, 1, '2019-06-15 15:03:19');
 
 -- ----------------------------
 -- Table structure for system_user
@@ -828,7 +833,7 @@ CREATE TABLE `system_user`  (
 -- ----------------------------
 -- Records of system_user
 -- ----------------------------
-INSERT INTO `system_user` VALUES (10000, 'admin', '21232f297a57a5a743894a0e4a801fc3', '22222222', '', '', '2019-06-14 10:19:46', '127.0.0.1', 569, '', '', 1, 0, '2015-11-13 15:14:22');
+INSERT INTO `system_user` VALUES (10000, 'admin', '21232f297a57a5a743894a0e4a801fc3', '22222222', '', '', '2019-06-26 11:30:03', '127.0.0.1', 578, '', '', 1, 0, '2015-11-13 15:14:22');
 
 -- ----------------------------
 -- Table structure for wechat_fans

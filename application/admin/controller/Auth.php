@@ -42,7 +42,7 @@ class Auth extends Controller
     {
         $this->title = '系统权限管理';
         $query = $this->_query($this->table)->dateBetween('create_at');
-        $query->like('title,desc')->equal('status')->order('sort asc,id desc')->page();
+        $query->like('title,desc')->equal('status')->order('sort desc,id desc')->page();
     }
 
     /**

@@ -20,17 +20,23 @@ use library\tools\Options;
  * 文件管理逻辑
  * Class File
  * @package library
- * @method bool has($name) static 判断文件上否已经上传
- * @method array save($name, $content) static 保存二进制文件
- * @method string url($name) static 获取文件对应地址
- * @method string get($name) static 获取文件二进制内容
- * @method string base($name) static 获取文件存储基础目录
- * @method string remove($name) static 删除已经上传的文件
- * @method string upload($client) static 获取文件上传地址
- * @method string setBucket($name) static 动态创建指定空间名称
+ * @method bool has($name, $safe = false) static 判断文件是否已经上传
+ * @method array save($name, $content, $safe = false) static 保存二进制文件
+ * @method array info($name, $safe = false) static 获取文件信息
+ * @method string url($name, $safe = false) static 获取文件URL地址
+ * @method string get($name, $safe = false) static 获取文件二进制内容
+ * @method string base($name, $safe = false) static 获取文件存储根目录
+ * @method string path($name, $safe = false) static 获取文件存储物理路径
+ * @method string remove($name, $safe = false) static 删除已经上传的文件
+ * @method string upload($client = false) static 获取文件上传目标地址
+ * @method string setBucket($name) static 阿里云OSS专属创建Bucket空间
  */
 class File
 {
+    const DEVER_LOCAL = 'local';
+    const DERVER_QINIU = 'qiniu';
+    const DERVER_ALIOSS = 'oss';
+
     /**
      * 当前配置对象
      * @var Options
@@ -181,7 +187,11 @@ class File
     public static function init($data = [])
     {
         if (empty(self::$config) && function_exists('sysconf')) {
-            foreach (self::$params as $arr) foreach (array_keys($arr) as $key) $data[$key] = sysconf($key);
+            foreach (self::$params as $arr) {
+                foreach (array_keys($arr) as $key) {
+                    $data[$key] = sysconf($key);
+                }
+            }
         }
         self::$config = new Options($data);
     }

@@ -28,7 +28,7 @@ class ExpressTemplate extends Controller
     public function index()
     {
         $this->title = '邮费模板管理';
-        $this->provinces = Db::name('StoreExpressProvince')->where(['status' => '1'])->order('sort asc,id desc')->column('title');
+        $this->provinces = Db::name('StoreExpressProvince')->where(['status' => '1'])->order('sort desc,id desc')->column('title');
         $this->list = Db::name($this->table)->where(['is_default' => '0'])->select();
         foreach ($this->list as &$item) $item['rule'] = explode(',', $item['rule']);
         $this->default = Db::name($this->table)->where(['is_default' => '1'])->find();

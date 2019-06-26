@@ -46,7 +46,6 @@ class Controller extends \stdClass
 
     /**
      * Controller constructor.
-     * @throws \think\Exception
      */
     public function __construct()
     {

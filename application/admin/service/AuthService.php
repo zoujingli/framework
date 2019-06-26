@@ -129,7 +129,7 @@ class AuthService
     public static function getAuthMenu()
     {
         self::applyNode();
-        $list = Db::name('SystemMenu')->where('status', '1')->order('sort asc,id asc')->select();
+        $list = Db::name('SystemMenu')->where('status', '1')->order('sort desc,id asc')->select();
         return self::buildMenuData(Data::arr2tree($list), self::get(), self::isLogin());
     }
 
