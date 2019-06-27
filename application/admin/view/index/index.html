@@ -38,16 +38,16 @@
         </ul>
         <ul class="layui-nav layui-layout-right">
             <li lay-unselect class="layui-nav-item"><a data-reload><i class="layui-icon layui-icon-refresh-3"></i></a></li>
-            {notempty name='Think.session.user'}
+            {notempty name='Think.session.admin_user'}
             <li class="layui-nav-item">
                 <dl class="layui-nav-child">
-                    <dd lay-unselect><a data-modal="{:url('admin/index/info',['id'=>session('user.id')])}"><i class="layui-icon layui-icon-set-fill margin-right-5"></i>基本资料</a></dd>
-                    <dd lay-unselect><a data-modal="{:url('admin/index/pass',['id'=>session('user.id')])}"><i class="layui-icon layui-icon-component margin-right-5"></i>安全设置</a></dd>
+                    <dd lay-unselect><a data-modal="{:url('admin/index/info',['id'=>session('admin_user.id')])}"><i class="layui-icon layui-icon-set-fill margin-right-5"></i>基本资料</a></dd>
+                    <dd lay-unselect><a data-modal="{:url('admin/index/pass',['id'=>session('admin_user.id')])}"><i class="layui-icon layui-icon-component margin-right-5"></i>安全设置</a></dd>
                     <dd lay-unselect><a data-modal="{:url('admin/index/buildOptimize')}"><i class="layui-icon layui-icon-template-1 margin-right-5"></i>压缩发布</a></dd>
                     <dd lay-unselect><a data-modal="{:url('admin/index/clearRuntime')}"><i class="layui-icon layui-icon-fonts-clear margin-right-5"></i>清理缓存</a></dd>
                     <dd lay-unselect><a data-confirm="确定要退出登录吗？" data-load="{:url('admin/login/out')}"><i class="layui-icon layui-icon-release margin-right-5"></i>退出登录</a></dd>
                 </dl>
-                <a><span><i class="layui-icon layui-icon-username margin-right-5"></i> {:session('user.username')}</span></a>
+                <a><span><i class="layui-icon layui-icon-username margin-right-5"></i> {:session('admin_user.username')}</span></a>
             </li>
             {else}
             <li class="layui-nav-item">
@@ -111,22 +111,6 @@
 <script src="__ROOT__/static/plugs/require/require.js"></script>
 <script src="__ROOT__/static/admin.js"></script>
 {block name='script'}{/block}
-{if session('user.id') and sysconf('system_message_state')}
-<script>
-    require(['spop'], function () {
-        (function syncMessage() {
-            $.get('{:url("@admin/api.message/gets")}').then(function (ret) {
-                if (ret.code && ret.data.length > 0) for (var i in ret.data) if ($('[data-message-code=' + ret.data[i].code + ']').size() < 1) spop({
-                    template: '<h4 data-message-code="' + ret.data[i].code + '" class="spop-title">' + ret.data[i].title + '</h4>' + ret.data[i].desc + '<span class="font-s10 color-desc pull-right"> ' + ret.data[i].create_at + ' </span>', position: 'bottom-right', style: 'success', group: ret.data[i].code, onClose: function () {
-                        $.post('{:url("@admin/api.message/set")}', {code: this.group});
-                    }
-                });
-                setTimeout(syncMessage, 3000)
-            });
-        })();
-    });
-</script>
-{/if}
 </body>
 
 </html>

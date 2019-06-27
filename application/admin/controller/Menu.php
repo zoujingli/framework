@@ -14,6 +14,7 @@
 
 namespace app\admin\controller;
 
+use app\admin\service\NodeService;
 use library\Controller;
 use library\tools\Data;
 use think\Db;
@@ -34,6 +35,8 @@ class Menu extends Controller
 
     /**
      * 系统菜单管理
+     * @auth true
+     * @menu true
      */
     public function index()
     {
@@ -58,6 +61,7 @@ class Menu extends Controller
 
     /**
      * 添加系统菜单
+     * @auth true
      */
     public function add()
     {
@@ -67,6 +71,7 @@ class Menu extends Controller
 
     /**
      * 编辑系统菜单
+     * @auth true
      */
     public function edit()
     {
@@ -85,27 +90,26 @@ class Menu extends Controller
     protected function _form_filter(&$vo)
     {
         if ($this->request->isGet()) {
-            // 上级菜单处理
-            $_menus = Db::name($this->table)->where(['status' => '1'])->order('sort desc,id asc')->select();
-            $_menus[] = ['title' => '顶级菜单', 'id' => '0', 'pid' => '-1'];
-            $menus = Data::arr2table($_menus);
-            foreach ($menus as $key => &$menu) if (substr_count($menu['path'], '-') > 3) unset($menus[$key]); # 移除三级以下的菜单
-            elseif (isset($vo['pid']) && $vo['pid'] !== '' && $cur = "-{$vo['pid']}-{$vo['id']}")
-                if (stripos("{$menu['path']}-", "{$cur}-") !== false || $menu['path'] === $cur) unset($menus[$key]); # 移除与自己相关联的菜单
-            // 选择自己的上级菜单
-            if (!isset($vo['pid']) && $this->request->get('pid', '0')) $vo['pid'] = $this->request->get('pid', '0');
-            // 读取系统功能节点
-            $nodes = \app\admin\service\AuthService::get();
-            foreach ($nodes as $key => $node) {
-                if (empty($node['is_menu'])) unset($nodes[$key]);
-                unset($nodes[$key]['pnode'], $nodes[$key]['is_login'], $nodes[$key]['is_menu'], $nodes[$key]['is_auth']);
+            $menus = Db::name($this->table)->where(['status' => '1'])->order('sort desc,id asc')->select();
+            $menus[] = ['title' => '顶级菜单', 'id' => '0', 'pid' => '-1'];
+            foreach ($this->menus = Data::arr2table($menus) as $key => &$menu) {
+                if (substr_count($menu['path'], '-') > 3) unset($this->menus[$key]); # 移除三级以下的菜单
+                elseif (isset($vo['pid']) && $vo['pid'] !== '' && $cur = "-{$vo['pid']}-{$vo['id']}") {
+                    if (stripos("{$menu['path']}-", "{$cur}-") !== false || $menu['path'] === $cur) unset($this->menus[$key]); # 移除与自己相关联的菜单
+                }
             }
-            list($this->menus, $this->nodes) = [$menus, array_values($nodes)];
+            // 选择自己的上级菜单
+            if (empty($vo['pid']) && $this->request->get('pid', '0')) {
+                $vo['pid'] = $this->request->get('pid', '0');
+            }
+            // 读取系统功能节点
+            $this->nodes = NodeService::getMenuNodeList();
         }
     }
 
     /**
      * 启用系统菜单
+     * @auth true
      */
     public function resume()
     {
@@ -115,6 +119,7 @@ class Menu extends Controller
 
     /**
      * 禁用系统菜单
+     * @auth true
      */
     public function forbid()
     {
@@ -124,6 +129,7 @@ class Menu extends Controller
 
     /**
      * 删除系统菜单
+     * @auth true
      */
     public function remove()
     {

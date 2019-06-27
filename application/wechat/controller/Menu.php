@@ -44,6 +44,7 @@ class Menu extends Controller
 
     /**
      * 微信菜单管理
+     * @auth true
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -65,6 +66,7 @@ class Menu extends Controller
 
     /**
      * 编辑微信菜单
+     * @auth true
      */
     public function edit()
     {
@@ -73,24 +75,24 @@ class Menu extends Controller
             if (empty($data)) { // 删除菜单
                 try {
                     WechatService::WeChatMenu()->delete();
-                    _syslog('微信管理', '删除微信菜单成功');
+                    sysoplog('微信管理', '删除微信菜单成功');
                     $this->success('删除微信菜单成功！', '');
                 } catch (\think\exception\HttpResponseException $exception) {
                     throw $exception;
                 } catch (\Exception $e) {
-                    _syslog('微信管理', "删除微信菜单失败:{$e->getMessage()}");
+                    sysoplog('微信管理', "删除微信菜单失败:{$e->getMessage()}");
                     $this->error('删除微信菜单失败，请稍候再试！' . $e->getMessage());
                 }
             } else {
                 try {
                     sysdata('menudata', $this->_buildMenuData($menudata = json_decode($data, true)));
                     WechatService::WeChatMenu()->create(['button' => sysdata('menudata')]);
-                    _syslog('微信管理', '发布微信菜单成功');
+                    sysoplog('微信管理', '发布微信菜单成功');
                     $this->success('保存发布菜单成功！', '');
                 } catch (\think\exception\HttpResponseException $exception) {
                     throw $exception;
                 } catch (\Exception $e) {
-                    _syslog('微信管理', "发布微信菜单失败:{$e->getMessage()}");
+                    sysoplog('微信管理', "发布微信菜单失败:{$e->getMessage()}");
                     $this->error("微信菜单发布失败，请稍候再试！<br> {$e->getMessage()}");
                 }
             }
@@ -147,6 +149,7 @@ class Menu extends Controller
 
     /**
      * 取消微信菜单
+     * @auth true
      */
     public function cancel()
     {

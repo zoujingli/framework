@@ -31,6 +31,8 @@ class Member extends Controller
 
     /**
      * 会员信息管理
+     * @auth true
+     * @menu true
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException

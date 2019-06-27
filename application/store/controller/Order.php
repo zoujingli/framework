@@ -32,6 +32,8 @@ class Order extends Controller
 
     /**
      * 订单记录管理
+     * @auth true
+     * @menu true
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -70,6 +72,7 @@ class Order extends Controller
 
     /**
      * 修改快递管理
+     * @auth true
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
@@ -85,6 +88,7 @@ class Order extends Controller
 
     /**
      * 快递追踪查询
+     * @auth true
      */
     public function expressQuery()
     {

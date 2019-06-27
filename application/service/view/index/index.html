@@ -1,9 +1,11 @@
 {extend name="admin@main"}
 
 {block name="button"}
-<!--{if auth("service/index/syncall")}-->
+
+{if auth("service/index/syncall")}
 <button data-load="{:url('syncall')}" class='layui-btn layui-btn-sm layui-btn-primary'>同步授权信息</button>
-<!--{/if}-->
+{/if}
+
 {/block}
 
 {block name="content"}
@@ -62,8 +64,8 @@
                 <a class="layui-btn layui-btn-sm" data-load='{:url("service/index/sync")}?appid={$vo.authorizer_appid}'>同 步</a>
                 {/if}
 
-                {if auth("service/index/del")}
-                <a class="layui-btn layui-btn-sm layui-btn-danger" data-confirm="确定要删除该公众号吗？" data-action="{:url('del')}" data-csrf="{:systoken('service/index/del')}" data-value="id#{$vo.id}">删 除</a>
+                {if auth("service/index/remove")}
+                <a class="layui-btn layui-btn-sm layui-btn-danger" data-confirm="确定要删除该公众号吗？" data-action="{:url('remove')}" data-csrf="{:systoken('service/index/remove')}" data-value="id#{$vo.id}">删 除</a>
                 {/if}
 
                 {if auth("service/index/clearquota")}

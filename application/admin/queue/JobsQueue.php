@@ -15,10 +15,11 @@
 namespace app\admin\queue;
 
 use app\admin\service\QueueService;
+use think\console\Output;
 
 /**
  * 基础指令公共类
- * Class QueueBase
+ * Class JobsQueue
  * @package app\admin
  */
 class JobsQueue
@@ -68,7 +69,7 @@ class JobsQueue
     protected $status;
 
     /**
-     * @var \think\console\Output
+     * @var Output
      */
     protected $output;
 
@@ -88,7 +89,7 @@ class JobsQueue
     public function fire(\think\queue\Job $job, $data = [])
     {
         $this->data = $data;
-        $this->output = new \think\console\Output();
+        $this->output = new Output();
         $this->id = isset($data['_job_id_']) ? $data['_job_id_'] : '';
         $this->title = isset($data['_job_title_']) ? $data['_job_title_'] : '';
         $this->output->newLine();

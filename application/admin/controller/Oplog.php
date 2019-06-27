@@ -33,6 +33,8 @@ class Oplog extends Controller
 
     /**
      * 系统操作日志
+     * @auth true
+     * @menu true
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -47,6 +49,7 @@ class Oplog extends Controller
 
     /**
      * 列表数据处理
+     * @auth true
      * @param array $data
      * @throws \Exception
      */
@@ -62,6 +65,7 @@ class Oplog extends Controller
 
     /**
      * 清理系统日志
+     * @auth true
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
@@ -76,6 +80,7 @@ class Oplog extends Controller
 
     /**
      * 删除系统日志
+     * @auth true
      */
     public function remove()
     {

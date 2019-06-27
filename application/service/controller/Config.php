@@ -32,6 +32,8 @@ class Config extends Controller
 
     /**
      * 开放平台接口配置
+     * @auth true
+     * @menu true
      */
     public function index()
     {
@@ -42,6 +44,7 @@ class Config extends Controller
 
     /**
      * 保存平台参数数据
+     * @auth true
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */

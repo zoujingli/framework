@@ -14,7 +14,7 @@
 
 namespace app\admin\controller;
 
-use app\admin\service\AuthService;
+use app\admin\service\NodeService;
 use library\Controller;
 use library\tools\Data;
 use think\Console;
@@ -37,8 +37,10 @@ class Index extends Controller
      */
     public function index()
     {
+        NodeService::applyUserAuth();
+
         $this->title = '系统管理后台';
-        $this->menus = AuthService::getAuthMenu();
+        $this->menus = NodeService::getMenuDataTree();
         if (empty($this->menus) && !session('user.id')) {
             $this->redirect('@admin/login');
         } else {
@@ -48,7 +50,6 @@ class Index extends Controller
 
     /**
      * 后台环境信息
-     * @return mixed
      */
     public function main()
     {
@@ -62,7 +63,7 @@ class Index extends Controller
      */
     public function clearRuntime()
     {
-        if (!AuthService::isLogin()) {
+        if (!NodeService::islogin()) {
             $this->error('需要登录才能操作哦！');
         }
         $this->list = [
@@ -82,7 +83,7 @@ class Index extends Controller
      */
     public function buildOptimize()
     {
-        if (!AuthService::isLogin()) {
+        if (!NodeService::islogin()) {
             $this->error('需要登录才能操作哦！');
         }
         $this->list = [
@@ -141,7 +142,7 @@ class Index extends Controller
             if (md5($data['oldpassword']) !== $user['password']) {
                 $this->error('旧密码验证失败，请重新输入！');
             }
-            $result = AuthService::checkPassword($data['password']);
+            $result = NodeService::checkpwd($data['password']);
             if (empty($result['code'])) $this->error($result['msg']);
             if (Data::save('SystemUser', ['id' => $user['id'], 'password' => md5($data['password'])])) {
                 $this->success('密码修改成功，下次请使用新密码登录！', '');

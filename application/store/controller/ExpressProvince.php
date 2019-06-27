@@ -31,6 +31,8 @@ class ExpressProvince extends Controller
 
     /**
      * 配送省份管理
+     * @auth true
+     * @menu true
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -46,6 +48,7 @@ class ExpressProvince extends Controller
 
     /**
      * 添加配送省份
+     * @auth true
      */
     public function add()
     {
@@ -55,6 +58,7 @@ class ExpressProvince extends Controller
 
     /**
      * 编辑配送省份
+     * @auth true
      */
     public function edit()
     {
@@ -64,6 +68,7 @@ class ExpressProvince extends Controller
 
     /**
      * 启用配送省份
+     * @auth true
      */
     public function resume()
     {
@@ -73,6 +78,7 @@ class ExpressProvince extends Controller
 
     /**
      * 禁用配送省份
+     * @auth true
      */
     public function forbid()
     {
@@ -82,6 +88,7 @@ class ExpressProvince extends Controller
 
     /**
      * 删除配送省份
+     * @auth true
      */
     public function remove()
     {

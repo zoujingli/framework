@@ -14,6 +14,7 @@
 
 namespace app\admin\controller;
 
+use app\admin\service\NodeService;
 use library\Controller;
 use think\Db;
 
@@ -32,6 +33,8 @@ class Auth extends Controller
 
     /**
      * 系统权限管理
+     * @auth true
+     * @menu true
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -47,7 +50,7 @@ class Auth extends Controller
 
     /**
      * 权限配置节点
-     * @return mixed
+     * @auth true
      * @throws \ReflectionException
      * @throws \think\Exception
      * @throws \think\exception\PDOException
@@ -58,11 +61,8 @@ class Auth extends Controller
         $auth = $this->request->post('id', '0');
         switch (strtolower($this->request->post('action'))) {
             case 'get': // 获取权限配置
-                $nodes = \app\admin\service\AuthService::get();
-                $checked = Db::name('SystemAuthNode')->where(['auth' => $auth])->column('node');
-                foreach ($nodes as &$node) $node['checked'] = in_array($node['node'], $checked);
-                $data = $this->_apply_filter(\library\tools\Data::arr2tree($nodes, 'node', 'pnode', '_sub_'));
-                return $this->success('获取权限节点成功！', $data);
+                $checks = Db::name('SystemAuthNode')->where(['auth' => $auth])->column('node');
+                return $this->success('获取权限节点成功！', NodeService::getAuthTree($checks));
             case 'save': // 保存权限配置
                 list($post, $data) = [$this->request->post(), []];
                 foreach (isset($post['nodes']) ? $post['nodes'] : [] as $node) {
@@ -70,6 +70,7 @@ class Auth extends Controller
                 }
                 Db::name('SystemAuthNode')->where(['auth' => $auth])->delete();
                 Db::name('SystemAuthNode')->insertAll($data);
+                NodeService::applyUserAuth();
                 return $this->success('权限授权更新成功！');
             default:
                 return $this->_form($this->table, 'apply');
@@ -77,22 +78,8 @@ class Auth extends Controller
     }
 
     /**
-     * 节点数据拼装
-     * @param array $nodes
-     * @param integer $level
-     * @return array
-     */
-    private function _apply_filter($nodes, $level = 1)
-    {
-        foreach ($nodes as $key => $node) if (!empty($node['_sub_']) && is_array($node['_sub_'])) {
-            $node[$key]['_sub_'] = $this->_apply_filter($node['_sub_'], $level + 1);
-        }
-        return $nodes;
-    }
-
-    /**
      * 添加系统权限
-     * @return array|string
+     * @auth true
      */
     public function add()
     {
@@ -102,7 +89,7 @@ class Auth extends Controller
 
     /**
      * 编辑系统权限
-     * @return array|string
+     * @auth true
      */
     public function edit()
     {
@@ -112,6 +99,7 @@ class Auth extends Controller
 
     /**
      * 禁用系统权限
+     * @auth true
      */
     public function forbid()
     {
@@ -121,6 +109,7 @@ class Auth extends Controller
 
     /**
      * 启用系统权限
+     * @auth true
      */
     public function resume()
     {
@@ -130,6 +119,7 @@ class Auth extends Controller
 
     /**
      * 删除系统权限
+     * @auth true
      */
     public function remove()
     {
@@ -146,8 +136,8 @@ class Auth extends Controller
     protected function _remove_delete_result($result)
     {
         if ($result) {
-            $where = ['auth' => $this->request->post('id')];
-            Db::name('SystemAuthNode')->where($where)->delete();
+            $map = ['auth' => $this->request->post('id')];
+            Db::name('SystemAuthNode')->where($map)->delete();
             $this->success("权限删除成功！", '');
         } else {
             $this->error("权限删除失败，请稍候再试！");

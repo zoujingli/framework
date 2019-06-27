@@ -31,6 +31,8 @@ class GoodsCate extends Controller
 
     /**
      * 商品分类管理
+     * @auth true
+     * @menu true
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -46,26 +48,27 @@ class GoodsCate extends Controller
 
     /**
      * 添加商品分类
-     * @return mixed
+     * @auth true
      */
     public function add()
     {
         $this->title = '添加商品分类';
-        return $this->_form($this->table, 'form');
+        $this->_form($this->table, 'form');
     }
 
     /**
      * 编辑添加商品分类
-     * @return mixed
+     * @auth true
      */
     public function edit()
     {
         $this->title = '编辑商品分类';
-        return $this->_form($this->table, 'form');
+        $this->_form($this->table, 'form');
     }
 
     /**
      * 禁用添加商品分类
+     * @auth true
      */
     public function forbid()
     {
@@ -74,6 +77,7 @@ class GoodsCate extends Controller
 
     /**
      * 启用商品分类
+     * @auth true
      */
     public function resume()
     {
@@ -82,6 +86,7 @@ class GoodsCate extends Controller
 
     /**
      * 删除商品分类
+     * @auth true
      */
     public function remove()
     {

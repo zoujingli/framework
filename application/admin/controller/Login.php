@@ -14,7 +14,7 @@
 
 namespace app\admin\controller;
 
-use app\admin\service\AuthService;
+use app\admin\service\NodeService;
 use library\Controller;
 use think\Db;
 
@@ -39,7 +39,7 @@ class Login extends Controller
      */
     protected function _index_get()
     {
-        if (AuthService::isLogin()) {
+        if (NodeService::islogin()) {
             $this->redirect('@admin');
         } else {
             $this->loginskey = session('loginskey');
@@ -97,7 +97,7 @@ class Login extends Controller
             if (($diff = 10 - $cache['number']) > 0) {
                 $this->error("<strong class='color-red'>登录账号或密码错误！</strong><p class='nowrap'>还有 {$diff} 次尝试机会，将锁定一小时内禁止登录！</p>");
             } else {
-                _syslog('系统管理', "账号{$user['username']}连续10次登录密码错误，请注意账号安全！");
+                sysoplog('系统管理', "账号{$user['username']}连续10次登录密码错误，请注意账号安全！");
                 $this->error("<strong class='color-red'>登录账号或密码错误！</strong><p class='nowrap'>尝试次数达到上限，锁定一小时内禁止登录！</p>");
             }
         }
@@ -106,10 +106,10 @@ class Login extends Controller
         Db::name('SystemUser')->where(['id' => $user['id']])->update([
             'login_at' => Db::raw('now()'), 'login_ip' => $this->request->ip(), 'login_num' => Db::raw('login_num+1'),
         ]);
-        session('user', $user);
         session('loginskey', null);
-        _syslog('系统管理', '用户登录系统成功');
-        empty($user['authorize']) || AuthService::applyNode();
+        session('admin_user', $user);
+        sysoplog('系统管理', '用户登录系统成功');
+        empty($user['authorize']) || NodeService::applyUserAuth();
         $this->success('登录成功，正在进入系统...', url('@admin'));
     }
 

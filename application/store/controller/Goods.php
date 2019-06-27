@@ -33,7 +33,8 @@ class Goods extends Controller
 
     /**
      * 商品信息管理
-     * @return mixed
+     * @auth true
+     * @menu true
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -43,7 +44,8 @@ class Goods extends Controller
     public function index()
     {
         $this->title = '商品信息管理';
-        $this->_query($this->table)->equal('status,cate_id')->like('title')->where(['is_deleted' => '0'])->order('sort desc,id desc')->page();
+        $query = $this->_query($this->table)->equal('status,cate_id')->like('title');
+        $query->where(['is_deleted' => '0'])->order('sort desc,id desc')->page();
     }
 
     /**
@@ -66,7 +68,7 @@ class Goods extends Controller
 
     /**
      * 商品库存入库
-     * @return mixed
+     * @auth true
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -80,44 +82,45 @@ class Goods extends Controller
             $goods = Db::name('StoreGoods')->where(['id' => $GoodsId])->find();
             empty($goods) && $this->error('无效的商品信息，请稍候再试！');
             $goods['list'] = Db::name('StoreGoodsList')->where(['goods_id' => $GoodsId])->select();
-            return $this->fetch('', ['vo' => $goods]);
-        }
-        list($post, $data) = [$this->request->post(), []];
-        if (isset($post['id']) && isset($post['goods_id']) && is_array($post['goods_id'])) {
-            foreach (array_keys($post['goods_id']) as $key) if ($post['goods_number'][$key] > 0) array_push($data, [
-                'goods_id'     => $post['goods_id'][$key],
-                'goods_spec'   => $post['goods_spec'][$key],
-                'number_stock' => $post['goods_number'][$key],
-            ]);
-            if (!empty($data)) {
-                Db::name('StoreGoodsStock')->insertAll($data);
-                \app\store\service\GoodsService::syncStock($post['id']);
-                $this->success('商品信息入库成功！');
+            $this->fetch('', ['vo' => $goods]);
+        } else {
+            list($post, $data) = [$this->request->post(), []];
+            if (isset($post['id']) && isset($post['goods_id']) && is_array($post['goods_id'])) {
+                foreach (array_keys($post['goods_id']) as $key) if ($post['goods_number'][$key] > 0) array_push($data, [
+                    'goods_id'     => $post['goods_id'][$key],
+                    'goods_spec'   => $post['goods_spec'][$key],
+                    'number_stock' => $post['goods_number'][$key],
+                ]);
+                if (!empty($data)) {
+                    Db::name('StoreGoodsStock')->insertAll($data);
+                    \app\store\service\GoodsService::syncStock($post['id']);
+                    $this->success('商品信息入库成功！');
+                }
             }
+            $this->error('没有需要商品入库的数据！');
         }
-        $this->error('没有需要商品入库的数据！');
     }
 
     /**
      * 添加商品信息
-     * @return mixed
+     * @auth true
      */
     public function add()
     {
         $this->title = '添加商品信息';
         $this->isAddMode = '1';
-        return $this->_form($this->table, 'form');
+        $this->_form($this->table, 'form');
     }
 
     /**
      * 编辑商品信息
-     * @return mixed
+     * @auth true
      */
     public function edit()
     {
         $this->title = '编辑商品信息';
         $this->isAddMode = '0';
-        return $this->_form($this->table, 'form');
+        $this->_form($this->table, 'form');
     }
 
     /**
@@ -165,6 +168,7 @@ class Goods extends Controller
 
     /**
      * 禁用商品信息
+     * @auth true
      */
     public function forbid()
     {
@@ -173,6 +177,7 @@ class Goods extends Controller
 
     /**
      * 启用商品信息
+     * @auth true
      */
     public function resume()
     {
@@ -181,6 +186,7 @@ class Goods extends Controller
 
     /**
      * 删除商品信息
+     * @auth true
      */
     public function remove()
     {

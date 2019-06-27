@@ -27,6 +27,8 @@ class Config extends Controller
 
     /**
      * 商城参数配置
+     * @auth true
+     * @menu true
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
@@ -45,6 +47,7 @@ class Config extends Controller
 
     /**
      * 商城短信配置
+     * @auth true
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */

@@ -14,6 +14,7 @@
 
 namespace app\admin\controller;
 
+use app\admin\service\NodeService;
 use library\Controller;
 use library\tools\Data;
 use think\Db;
@@ -36,6 +37,8 @@ class User extends Controller
 
     /**
      * 系统用户管理
+     * @auth true
+     * @menu true
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -51,7 +54,7 @@ class User extends Controller
 
     /**
      * 用户授权管理
-     * @return mixed
+     * @auth true
      */
     public function auth()
     {
@@ -61,7 +64,7 @@ class User extends Controller
 
     /**
      * 添加系统用户
-     * @return mixed
+     * @auth true
      */
     public function add()
     {
@@ -71,7 +74,7 @@ class User extends Controller
 
     /**
      * 编辑系统用户
-     * @return mixed
+     * @auth true
      */
     public function edit()
     {
@@ -81,7 +84,7 @@ class User extends Controller
 
     /**
      * 修改用户密码
-     * @return mixed
+     * @auth true
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
@@ -96,7 +99,7 @@ class User extends Controller
             if ($post['password'] !== $post['repassword']) {
                 $this->error('两次输入的密码不一致！');
             }
-            $result = \app\admin\service\AuthService::checkPassword($post['password']);
+            $result = NodeService::checkpwd($post['password']);
             if (empty($result['code'])) $this->error($result['msg']);
             $data = ['id' => $post['id'], 'password' => md5($post['password'])];
             if (Data::save($this->table, $data, 'id')) {
@@ -130,6 +133,7 @@ class User extends Controller
 
     /**
      * 禁用系统用户
+     * @auth true
      */
     public function forbid()
     {
@@ -142,6 +146,7 @@ class User extends Controller
 
     /**
      * 启用系统用户
+     * @auth true
      */
     public function resume()
     {
@@ -151,6 +156,7 @@ class User extends Controller
 
     /**
      * 删除系统用户
+     * @auth true
      */
     public function remove()
     {

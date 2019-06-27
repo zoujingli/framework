@@ -33,6 +33,8 @@ class Queue extends Controller
 
     /**
      * 系统消息任务
+     * @auth true
+     * @menu true
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -51,6 +53,7 @@ class Queue extends Controller
 
     /**
      * 重置失败的任务
+     * @auth true
      */
     public function redo()
     {
@@ -70,6 +73,7 @@ class Queue extends Controller
 
     /**
      * 删除消息任务
+     * @auth true
      */
     public function remove()
     {

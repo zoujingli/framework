@@ -14,6 +14,7 @@
 
 namespace app\index\controller;
 
+use app\admin\service\NodeService;
 use library\Controller;
 
 /**
@@ -29,6 +30,15 @@ class Index extends Controller
     public function index()
     {
         $this->redirect('@admin/login');
+    }
+
+    public function test()
+    {
+        $classMap = NodeService::getAuthTree();
+//        dump($classMap);
+        // $classMap = NodeService::getMenuTree();
+        dump($classMap);
+        exit;
     }
 
 }
