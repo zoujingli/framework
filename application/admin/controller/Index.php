@@ -118,6 +118,9 @@ class Index extends Controller
         if (intval($id) !== intval(session('admin_user.id'))) {
             $this->error('只能修改当前用户的密码！');
         }
+        if (!NodeService::islogin()) {
+            $this->error('需要登录才能操作哦！');
+        }
         if ($this->request->isGet()) {
             $this->verify = true;
             $this->_form('SystemUser', 'admin@user/pass', 'id', [], ['id' => $id]);
@@ -157,6 +160,9 @@ class Index extends Controller
      */
     public function info($id = 0)
     {
+        if (!NodeService::islogin()) {
+            $this->error('需要登录才能操作哦！');
+        }
         $this->applyCsrfToken();
         if (intval($id) === intval(session('admin_user.id'))) {
             $this->_form('SystemUser', 'admin@user/form', 'id', [], ['id' => $id]);
