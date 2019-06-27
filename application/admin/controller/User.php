@@ -120,6 +120,7 @@ class User extends Controller
     public function _form_filter(&$data)
     {
         if ($this->request->isPost()) {
+            NodeService::applyUserAuth();
             $data['authorize'] = (isset($data['authorize']) && is_array($data['authorize'])) ? join(',', $data['authorize']) : '';
             if (isset($data['id'])) unset($data['username']);
             elseif (Db::name($this->table)->where(['username' => $data['username']])->count() > 0) {

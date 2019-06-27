@@ -27,6 +27,21 @@ use think\facade\Request;
  */
 class NodeService
 {
+
+    /**
+     * 获取标准访问节点
+     * @param string $node
+     * @return string
+     */
+    public static function full($node = null)
+    {
+        if (empty($node)) return self::current();
+        if (count(explode('/', $node)) === 1) {
+            $node = Request::module() . '/' . Request::controller() . '/' . $node;
+        }
+        return self::parseString(trim($node, " /"));
+    }
+
     /**
      * 判断是否已经登录
      * @return boolean
@@ -34,6 +49,15 @@ class NodeService
     public static function islogin()
     {
         return session('admin_user.id') ? true : false;
+    }
+
+    /**
+     * 获取当前访问节点
+     * @return string
+     */
+    public static function current()
+    {
+        return self::parseString(Request::module() . '/' . Request::controller() . '/' . Request::action());
     }
 
     /**
@@ -54,26 +78,18 @@ class NodeService
     }
 
     /**
-     * 获取当前访问节点
-     * @return string
+     * 获取可选菜单节点
+     * @return array
+     * @throws \ReflectionException
      */
-    public static function current()
+    public static function getMenuNodeList()
     {
-        return self::parseString(Request::module() . '/' . Request::controller() . '/' . Request::action());
-    }
-
-    /**
-     * 获取标准访问节点
-     * @param string $node
-     * @return string
-     */
-    public static function full($node = null)
-    {
-        if (empty($node)) return self::current();
-        if (count(explode('/', $node)) === 1) {
-            $node = Request::module() . '/' . Request::controller() . '/' . $node;
+        static $nodes = [];
+        if (count($nodes) > 0) return $nodes;
+        foreach (self::getMethodList() as $node => $method) if ($method['menu']) {
+            $nodes[] = ['node' => $node, 'title' => $method['title']];
         }
-        return self::parseString(trim($node, " /"));
+        return $nodes;
     }
 
     /**
@@ -84,7 +100,7 @@ class NodeService
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      */
-    public static function getMenuDataTree()
+    public static function getMenuNodeTree()
     {
         $list = Db::name('SystemMenu')->where(['status' => '1'])->order('sort desc,id asc')->select();
         return self::buildMenuData(Data::arr2tree($list), self::getMethodList());
@@ -114,21 +130,6 @@ class NodeService
     }
 
     /**
-     * 获取可选菜单节点
-     * @return array
-     * @throws \ReflectionException
-     */
-    public static function getMenuNodeList()
-    {
-        static $nodes = [];
-        if (count($nodes) > 0) return $nodes;
-        foreach (self::getMethodList() as $node => $method) if ($method['menu']) {
-            $nodes[] = ['node' => $node, 'title' => $method['title']];
-        }
-        return $nodes;
-    }
-
-    /**
      * 获取授权节点列表
      * @return array
      * @throws \ReflectionException
@@ -137,12 +138,12 @@ class NodeService
     {
         static $nodes = [];
         if (count($nodes) > 0) return $nodes;
-        $nodes = Cache::tag('system')->get('nodeauth', []);
+        $nodes = Cache::tag('system')->get('nodeauthlist', []);
         if (count($nodes) > 0) return $nodes;
         foreach (self::getMethodList() as $key => $node) {
             if ($node['auth']) $nodes[$key] = $node['title'];
         }
-        Cache::tag('system')->get('nodeauth', $nodes);
+        Cache::tag('system')->set('nodeauthlist', $nodes);
         return $nodes;
     }
 
@@ -156,6 +157,8 @@ class NodeService
     {
         static $nodes = [];
         if (count($nodes) > 0) return $nodes;
+        $nodes = Cache::tag('system')->get('nodeauthtree', []);
+        if (count($nodes) > 0) return $nodes;
         foreach (self::getAuthList() as $node => $title) {
             $pnode = substr($node, 0, strripos($node, '/'));
             $nodes[$node] = ['node' => $node, 'title' => $title, 'pnode' => $pnode, 'checked' => in_array($node, $checkeds)];
@@ -167,7 +170,9 @@ class NodeService
                 $nodes[$pnode] = ['node' => $pnode, 'title' => ucfirst($pnode), 'checked' => in_array($pnode, $checkeds)];
             }
         }
-        return $nodes = Data::arr2tree($nodes, 'node', 'pnode', '_sub_');
+        $nodes = Data::arr2tree($nodes, 'node', 'pnode', '_sub_');
+        Cache::tag('system')->set('nodeauthtree', $nodes);
+        return $nodes;
     }
 
     /**
@@ -179,6 +184,8 @@ class NodeService
     public static function applyUserAuth()
     {
         Cache::tag('system')->rm('nodedata');
+        Cache::tag('system')->rm('nodeauthlist');
+        Cache::tag('system')->rm('nodeauthtree');
         if (($uid = session('admin_user.id'))) {
             session('admin_user', Db::name('SystemUser')->where(['id' => $uid])->find());
         }

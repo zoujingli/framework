@@ -37,10 +37,9 @@ class Index extends Controller
      */
     public function index()
     {
-        NodeService::applyUserAuth();
-
         $this->title = '系统管理后台';
-        $this->menus = NodeService::getMenuDataTree();
+        NodeService::applyUserAuth();
+        $this->menus = NodeService::getMenuNodeTree();
         if (empty($this->menus) && !session('user.id')) {
             $this->redirect('@admin/login');
         } else {
