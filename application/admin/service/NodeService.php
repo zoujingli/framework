@@ -177,15 +177,18 @@ class NodeService
 
     /**
      * 初始化用户权限
+     * @param boolean $force 是否重置系统权限
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      */
-    public static function applyUserAuth()
+    public static function applyUserAuth($force = false)
     {
-        Cache::tag('system')->rm('NodeData');
-        Cache::tag('system')->rm('NodeAuthList');
-        Cache::tag('system')->rm('NodeAuthTree');
+        if ($force) {
+            Cache::tag('system')->rm('NodeData');
+            Cache::tag('system')->rm('NodeAuthList');
+            Cache::tag('system')->rm('NodeAuthTree');
+        }
         if (($uid = session('admin_user.id'))) {
             session('admin_user', Db::name('SystemUser')->where(['id' => $uid])->find());
         }
