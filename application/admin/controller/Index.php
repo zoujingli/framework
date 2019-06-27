@@ -115,7 +115,7 @@ class Index extends Controller
     public function pass($id)
     {
         $this->applyCsrfToken();
-        if (intval($id) !== intval(session('user.id'))) {
+        if (intval($id) !== intval(session('admin_user.id'))) {
             $this->error('只能修改当前用户的密码！');
         }
         if ($this->request->isGet()) {
@@ -158,7 +158,7 @@ class Index extends Controller
     public function info($id = 0)
     {
         $this->applyCsrfToken();
-        if (intval($id) === intval(session('user.id'))) {
+        if (intval($id) === intval(session('admin_user.id'))) {
             $this->_form('SystemUser', 'admin@user/form', 'id', [], ['id' => $id]);
         } else {
             $this->error('只能修改登录用户的资料！');

@@ -138,12 +138,12 @@ class NodeService
     {
         static $nodes = [];
         if (count($nodes) > 0) return $nodes;
-        $nodes = Cache::tag('system')->get('nodeauthlist', []);
+        $nodes = Cache::tag('system')->get('NodeAuthList', []);
         if (count($nodes) > 0) return $nodes;
         foreach (self::getMethodList() as $key => $node) {
             if ($node['auth']) $nodes[$key] = $node['title'];
         }
-        Cache::tag('system')->set('nodeauthlist', $nodes);
+        Cache::tag('system')->set('NodeAuthList', $nodes);
         return $nodes;
     }
 
@@ -157,7 +157,7 @@ class NodeService
     {
         static $nodes = [];
         if (count($nodes) > 0) return $nodes;
-        $nodes = Cache::tag('system')->get('nodeauthtree', []);
+        $nodes = Cache::tag('system')->get('NodeAuthTree', []);
         if (count($nodes) > 0) return $nodes;
         foreach (self::getAuthList() as $node => $title) {
             $pnode = substr($node, 0, strripos($node, '/'));
@@ -171,7 +171,7 @@ class NodeService
             }
         }
         $nodes = Data::arr2tree($nodes, 'node', 'pnode', '_sub_');
-        Cache::tag('system')->set('nodeauthtree', $nodes);
+        Cache::tag('system')->set('NodeAuthTree', $nodes);
         return $nodes;
     }
 
@@ -183,9 +183,9 @@ class NodeService
      */
     public static function applyUserAuth()
     {
-        Cache::tag('system')->rm('nodedata');
-        Cache::tag('system')->rm('nodeauthlist');
-        Cache::tag('system')->rm('nodeauthtree');
+        Cache::tag('system')->rm('NodeData');
+        Cache::tag('system')->rm('NodeAuthList');
+        Cache::tag('system')->rm('NodeAuthTree');
         if (($uid = session('admin_user.id'))) {
             session('admin_user', Db::name('SystemUser')->where(['id' => $uid])->find());
         }
@@ -244,7 +244,7 @@ class NodeService
     {
         static $nodes = [];
         if (count($nodes) > 0) return $nodes;
-        $nodes = Cache::tag('system')->get('nodedata', []);
+        $nodes = Cache::tag('system')->get('NodeData', []);
         if (count($nodes) > 0) return $nodes;
         self::eachController(function (\ReflectionClass $reflection, $prenode) use (&$nodes) {
             foreach ($reflection->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
@@ -260,7 +260,7 @@ class NodeService
                 }
             }
         });
-        Cache::tag('system')->set('nodedata', $nodes);
+        Cache::tag('system')->set('NodeData', $nodes);
         return $nodes;
     }
 
