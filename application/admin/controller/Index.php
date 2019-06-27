@@ -40,7 +40,7 @@ class Index extends Controller
         $this->title = '系统管理后台';
         NodeService::applyUserAuth(true);
         $this->menus = NodeService::getMenuNodeTree();
-        if (empty($this->menus) && !session('user.id')) {
+        if (empty($this->menus) && !NodeService::islogin()) {
             $this->redirect('@admin/login');
         } else {
             $this->fetch();
