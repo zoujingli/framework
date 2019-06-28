@@ -148,6 +148,23 @@ class NodeService
     }
 
     /**
+     * 检查节点授权
+     * @param null|string $node
+     * @return boolean
+     * @throws \ReflectionException
+     */
+    public static function checkAuth($node = null)
+    {
+        if (session('admin_user.username') === 'admin') return true;
+        $real = is_null($node) ? self::current() : self::full($node);
+        if (isset(self::getAuthList()[$real])) {
+            return in_array($real, (array)session('admin_user.nodes'));
+        } else {
+            return true;
+        }
+    }
+
+    /**
      * 获取授权节点列表
      * @param array $checkeds
      * @return array
@@ -196,25 +213,6 @@ class NodeService
             } else {
                 session('admin_user.nodes', Db::name('SystemAuthNode')->whereIn('auth', $auths)->column('node'));
             }
-        }
-    }
-
-    /**
-     * 检查节点授权
-     * @param null|string $node
-     * @return boolean
-     * @throws \ReflectionException
-     */
-    public static function checkAuth($node = null)
-    {
-        if (session('admin_user.username') === 'admin') {
-            return true;
-        }
-        if (is_null($node)) $node = self::current();
-        if (isset(self::getAuthList()[$node])) {
-            return in_array($node, (array)session('admin_user.nodes'));
-        } else {
-            return true;
         }
     }
 

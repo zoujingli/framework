@@ -26,7 +26,7 @@ if (!function_exists('auth')) {
      */
     function auth($node)
     {
-        return NodeService::checkAuth(NodeService::full($node));
+        return NodeService::checkAuth($node);
     }
 }
 

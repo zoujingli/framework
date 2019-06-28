@@ -1,13 +1,15 @@
 {extend name='main'}
 
 {block name="button"}
-<!--{if auth("admin/auth/add")}-->
-<button data-modal='{:url("add")}' data-title="添加权限" class='layui-btn layui-btn-sm layui-btn-primary'>添加权限</button>
-<!--{/if}-->
 
-<!--{if auth("admin/auth/remove")}-->
+{if auth("admin/auth/add")}
+<button data-modal='{:url("add")}' data-title="添加权限" class='layui-btn layui-btn-sm layui-btn-primary'>添加权限</button>
+{/if}
+
+{if auth("admin/auth/remove")}
 <button data-action='{:url("remove")}' data-rule="id#{key}" data-csrf="{:systoken('admin/auth/remove')}" data-confirm="确定要删除这些权限吗？" class='layui-btn layui-btn-sm layui-btn-primary'>删除权限</button>
-<!--{/if}-->
+{/if}
+
 {/block}
 
 {block name="content"}
