@@ -38,12 +38,6 @@ class WechatService extends \We
 {
 
     /**
-     * 接口类型模式
-     * @var string
-     */
-    private static $type = 'WeChat';
-
-    /**
      * 获取微信支付配置
      * @param array|null $options
      * @return array
