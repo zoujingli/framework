@@ -157,8 +157,6 @@ class NodeService
     {
         static $nodes = [];
         if (count($nodes) > 0) return $nodes;
-        $nodes = Cache::tag('system')->get('NodeAuthTree', []);
-        if (count($nodes) > 0) return $nodes;
         foreach (self::getAuthList() as $node => $title) {
             $pnode = substr($node, 0, strripos($node, '/'));
             $nodes[$node] = ['node' => $node, 'title' => $title, 'pnode' => $pnode, 'checked' => in_array($node, $checkeds)];
@@ -170,9 +168,7 @@ class NodeService
                 $nodes[$pnode] = ['node' => $pnode, 'title' => ucfirst($pnode), 'checked' => in_array($pnode, $checkeds)];
             }
         }
-        $nodes = Data::arr2tree($nodes, 'node', 'pnode', '_sub_');
-        Cache::tag('system')->set('NodeAuthTree', $nodes);
-        return $nodes;
+        return $nodes = Data::arr2tree($nodes, 'node', 'pnode', '_sub_');
     }
 
     /**
@@ -185,15 +181,16 @@ class NodeService
     public static function applyUserAuth($force = false)
     {
         if ($force) {
-            Cache::tag('system')->rm('NodeData');
             Cache::tag('system')->rm('NodeAuthList');
-            Cache::tag('system')->rm('NodeAuthTree');
+            Cache::tag('system')->rm('NodeClassData');
+            Cache::tag('system')->rm('NodeMethodData');
         }
         if (($uid = session('admin_user.id'))) {
             session('admin_user', Db::name('SystemUser')->where(['id' => $uid])->find());
         }
-        if (session('admin_user.authorize') && ($ids = explode(',', session('admin_user.authorize')))) {
-            $auths = Db::name('SystemAuth')->whereIn('id', $ids)->where(['status' => '1'])->column('id');
+        $authorize = session('admin_user.authorize');
+        if (!empty($authorize) && $authids = explode(',', $authorize)) {
+            $auths = Db::name('SystemAuth')->where(['status' => '1'])->whereIn('id', $authids)->column('id');
             if (empty($auths)) {
                 session('admin_user.nodes', []);
             } else {
@@ -230,11 +227,14 @@ class NodeService
     {
         static $nodes = [];
         if (count($nodes) > 0) return $nodes;
+        $nodes = Cache::tag('system')->get('NodeClassData', []);
+        if (count($nodes) > 0) return $nodes;
         self::eachController(function (\ReflectionClass $reflection, $prenode) use (&$nodes) {
             list($node, $comment) = [trim($prenode, ' / '), $reflection->getDocComment()];
             $nodes[$node] = preg_replace('/^\/\*\*\*(.*?)\*.*?$/', '$1', preg_replace("/\s/", '', $comment));
             if (stripos($nodes[$node], '@') !== false) $nodes[$node] = '';
         });
+        Cache::tag('system')->set('NodeClassData', $nodes);
         return $nodes;
     }
 
@@ -247,7 +247,7 @@ class NodeService
     {
         static $nodes = [];
         if (count($nodes) > 0) return $nodes;
-        $nodes = Cache::tag('system')->get('NodeData', []);
+        $nodes = Cache::tag('system')->get('NodeMethodData', []);
         if (count($nodes) > 0) return $nodes;
         self::eachController(function (\ReflectionClass $reflection, $prenode) use (&$nodes) {
             foreach ($reflection->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
@@ -258,12 +258,10 @@ class NodeService
                     'menu'  => stripos($comment, '@menutrue') !== false,
                     'title' => preg_replace('/^\/\*\*\*(.*?)\*.*?$/', '$1', $comment),
                 ];
-                if (stripos($nodes[$node]['title'], '@') !== false) {
-                    $nodes[$node]['title'] = '';
-                }
+                if (stripos($nodes[$node]['title'], '@') !== false) $nodes[$node]['title'] = '';
             }
         });
-        Cache::tag('system')->set('NodeData', $nodes);
+        Cache::tag('system')->set('NodeMethodData', $nodes);
         return $nodes;
     }
 
@@ -274,7 +272,7 @@ class NodeService
      */
     public static function eachController($callable)
     {
-        foreach (self::scanDirname(env('app_path') . "*/controller/") as $file) {
+        foreach (self::scanPath(env('app_path') . "*/controller/") as $file) {
             if (!preg_match("|/(\w+)/controller/(.+)\.php$|", $file, $matches)) continue;
             list($module, $controller) = [$matches[1], strtr($matches[2], '/', '.')];
             if (class_exists($class = substr(strtr(env('app_namespace') . $matches[0], '/', '\\'), 0, -4))) {
@@ -307,11 +305,11 @@ class NodeService
      * @param string $ext 有文件后缀
      * @return array
      */
-    private static function scanDirname($dirname, $data = [], $ext = 'php')
+    private static function scanPath($dirname, $data = [], $ext = 'php')
     {
         foreach (glob("{$dirname}*") as $file) {
             if (is_dir($file)) {
-                $data = array_merge($data, self::scanDirname("{$file}/"));
+                $data = array_merge($data, self::scanPath("{$file}/"));
             } elseif (is_file($file) && pathinfo($file, 4) === $ext) {
                 $data[] = str_replace('\\', '/', $file);
             }
