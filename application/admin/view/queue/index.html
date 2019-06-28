@@ -2,9 +2,9 @@
 
 {block name="button"}
 
-<!--{if auth("admin/queue/remove")}-->
+{if auth("admin/queue/remove")}
 <button data-action='{:url("remove")}' data-confirm="确定要删除这些任务吗？" data-rule="id#{key}" class='layui-btn layui-btn-sm layui-btn-primary'>删除任务</button>
-<!--{/if}-->
+{/if}
 
 {/block}
 
