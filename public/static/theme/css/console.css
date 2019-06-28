@@ -86,7 +86,7 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}.mo
 fieldset legend{color:#666;padding:0 10px;font-size:14px}
 fieldset{margin:0;border:1px solid #e6e6e6;padding:10px 20px 5px 20px}
 .layui-form.layui-card{box-shadow:none}
-.layui-form.layui-card .layui-card-body{padding:20px 20px 0 0}
+.layui-layer-content .layui-form.layui-card .layui-card-body{padding:20px 40px 0 0}
 .layui-layer-dialog .layui-layer-content .layui-layer-ico{top:50%!important;margin-top:-15px!important}
 .form-search .layui-btn{height:32px;line-height:28px;font-size:12px;padding:0 10px}
 .form-search .layui-form-label{width:auto!important;padding:0 8px;height:32px;line-height:30px}

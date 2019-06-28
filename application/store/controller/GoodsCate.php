@@ -42,8 +42,8 @@ class GoodsCate extends Controller
     public function index()
     {
         $this->title = '商品分类管理';
-        $where = ['is_deleted' => '0'];
-        $this->_query($this->table)->like('title')->equal('status')->where($where)->order('sort desc,id desc')->page();
+        $query = $this->_query($this->table)->like('title')->equal('status');
+        $query->where(['is_deleted' => '0'])->order('sort desc,id desc')->page();
     }
 
     /**
@@ -57,7 +57,7 @@ class GoodsCate extends Controller
     }
 
     /**
-     * 编辑添加商品分类
+     * 编辑商品分类
      * @auth true
      */
     public function edit()
@@ -67,7 +67,7 @@ class GoodsCate extends Controller
     }
 
     /**
-     * 禁用添加商品分类
+     * 禁用商品分类
      * @auth true
      */
     public function forbid()

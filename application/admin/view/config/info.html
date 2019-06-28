@@ -20,12 +20,12 @@
             layui.data('website-config', {key: 'type', value: this.getAttribute('data-type')});
         });
 
-        (function () {
+        (new function () {
             this.selectedType = layui.data('website-config')['type'] || '';
             this.selectedItem = $('.layui-tab ul.layui-tab-title li[data-type="' + this.selectedType + '"]');
             if (this.selectedItem.length < 1) this.selectedItem = $('.layui-tab ul.layui-tab-title li:first');
             this.selectedItem.trigger('click');
-        }).call({});
+        });
 
         apply('{:sysconf("storage_type")}');
         window.form.render();
