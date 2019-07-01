@@ -16,20 +16,17 @@
 <script>
     $(function () {
 
-        $('.layui-tab ul.layui-tab-title li').on('click', function () {
+        $('.layui-tab ul.layui-tab-title li[data-type]').on('click', function () {
             layui.data('website-config-type', {key: 'type', value: this.getAttribute('data-type')});
         });
-
-        (new function () {
-            this.selectedType = layui.data('website-config-type')['type'] || '';
-            this.selectedItem = $('.layui-tab ul.layui-tab-title li[data-type="' + this.selectedType + '"]');
-            if (this.selectedItem.length < 1) this.selectedItem = $('.layui-tab ul.layui-tab-title li:first');
-            this.selectedItem.trigger('click');
-        });
+        (function (type, $checked, $default) {
+            $default = $('.layui-tab ul.layui-tab-title li:first');
+            $checked = $('.layui-tab ul.layui-tab-title li[data-type="' + type + '"]');
+            ($checked.length > 0 ? $checked : $default).trigger('click');
+        })(layui.data('website-config-type')['type'] || '');
 
         apply('{:sysconf("storage_type")}');
-        window.form.render();
-        window.form.on('radio(storage_type)', function (data) {
+        form.render().on('radio(storage_type)', function (data) {
             apply(data.value);
         });
 
@@ -38,6 +35,7 @@
             if (this.$active.size() < 1) $("[data-storagetype]:first").trigger('click');
             $('[data-type="' + value + '"]').show().siblings('[data-type]').hide();
         }
+
     });
 </script>
 
