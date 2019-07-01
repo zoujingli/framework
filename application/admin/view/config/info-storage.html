@@ -16,3 +16,16 @@
     <div data-type="local">{include file='config/info-storage-local'}</div>
     <div data-type="qiniu">{include file='config/info-storage-qiniu'}</div>
 </div>
+
+<script>
+    apply('{:sysconf("storage_type")}');
+    form.render().on('radio(storage_type)', function (data) {
+        apply(data.value);
+    });
+
+    function apply(value) {
+        this.$active = $("[data-storagetype='" + value + "']").trigger('click');
+        if (this.$active.size() < 1) $("[data-storagetype]:first").trigger('click');
+        $('[data-type="' + value + '"]').show().siblings('[data-type]').hide();
+    }
+</script>

@@ -14,29 +14,16 @@
 </div>
 
 <script>
-    $(function () {
-
-        $('.layui-tab ul.layui-tab-title li[data-type]').on('click', function () {
-            layui.data('website-config-type', {key: 'type', value: this.getAttribute('data-type')});
-        });
-        (function (type, $checked, $default) {
+    (function (configType) {
+        (function (type, $default, $checked) {
             $default = $('.layui-tab ul.layui-tab-title li:first');
             $checked = $('.layui-tab ul.layui-tab-title li[data-type="' + type + '"]');
             ($checked.length > 0 ? $checked : $default).trigger('click');
-        })(layui.data('website-config-type')['type'] || '');
-
-        apply('{:sysconf("storage_type")}');
-        form.render().on('radio(storage_type)', function (data) {
-            apply(data.value);
+        })(layui.data(configType)['type'] || '');
+        $('.layui-tab ul.layui-tab-title li[data-type]').on('click', function () {
+            layui.data(configType, {key: 'type', value: this.getAttribute('data-type')});
         });
-
-        function apply(value) {
-            this.$active = $("[data-storagetype='" + value + "']").trigger('click');
-            if (this.$active.size() < 1) $("[data-storagetype]:first").trigger('click');
-            $('[data-type="' + value + '"]').show().siblings('[data-type]').hide();
-        }
-
-    });
+    })('website-config-type');
 </script>
 
 {/block}
