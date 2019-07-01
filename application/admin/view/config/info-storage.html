@@ -1,6 +1,6 @@
-<form class="layui-card layui-form" action="{:url('save')}">
+<div class="layui-card layui-form">
     <div class="layui-card-body">
-        <div class="layui-form-item margin-bottom-0">
+        <div class="layui-form-item padding-top-20">
             <label class="layui-form-label">Storage<br><span class="nowrap color-desc">存储类型</span></label>
             <div class="layui-input-block">
                 {foreach ['local'=>'本地服务器存储','qiniu'=>'七牛云对象存储','oss'=>'阿里云OSS存储'] as $k=>$v}
@@ -10,7 +10,7 @@
             </div>
         </div>
     </div>
-</form>
+</div>
 <div class="padding-bottom-10">
     <div data-type="oss">{include file='config/info-storage-oss'}</div>
     <div data-type="local">{include file='config/info-storage-local'}</div>
