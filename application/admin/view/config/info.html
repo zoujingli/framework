@@ -14,14 +14,14 @@
 </div>
 
 <script>
-    (function (configType) {
+    (function (storage) {
         (function (type, $default, $checked) {
             $default = $('.layui-tab ul.layui-tab-title li:first');
             $checked = $('.layui-tab ul.layui-tab-title li[data-type="' + type + '"]');
             ($checked.length > 0 ? $checked : $default).trigger('click');
-        })(layui.data(configType)['type'] || '');
+        })(layui.data(storage)['type'] || '');
         $('.layui-tab ul.layui-tab-title li[data-type]').on('click', function () {
-            layui.data(configType, {key: 'type', value: this.getAttribute('data-type')});
+            layui.data(storage, {key: 'type', value: this.getAttribute('data-type')});
         });
     })('website-config-type');
 </script>
