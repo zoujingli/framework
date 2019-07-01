@@ -23,10 +23,12 @@
             <th class='list-table-check-td think-checkbox'>
                 <input data-auto-none data-check-target='.list-check-box' type='checkbox'>
             </th>
-            <th class='text-left nowrap' style="width:120px">用户名</th>
-            <th class='text-left nowrap' style="width:120px">账号状态</th>
+            <th class='text-left nowrap' style="width:120px">用户账号</th>
+            <th class='text-left nowrap' style="width:120px">联系手机</th>
+            <th class='text-left nowrap' style="width:120px">登录次数</th>
+            <th class='text-left nowrap' style="width:120px">使用状态</th>
             <th class='text-left nowrap' style="width:180px">创建时间</th>
-            <th class='text-left nowrap' style="width:150px">最后登录</th>
+            <th class='text-left nowrap' style="width:150px">登录时间</th>
             <th class='text-left nowrap'></th>
         </tr>
         </thead>
@@ -35,21 +37,13 @@
         {foreach $list as $key=>$vo}
         <tr data-dbclick>
             <td class='list-table-check-td think-checkbox'><input class="list-check-box" value='{$vo.id}' type='checkbox'></td>
+            <td class='text-left nowrap'>{$vo.username|default=''}</td>
+            <td class='text-left nowrap'>{$vo.phone|default='-'}</td>
+            <td class='text-left nowrap'>{$vo.login_num|default=0}</td>
+            <td class='text-left nowrap'>{eq name='vo.status' value='0'}<span class="color-red">已禁用</span>{else}<span class="color-green">使用中</span>{/eq}</td>
+            <td class='text-left nowrap'>{$vo.create_at|format_datetime}</td>
+            <td class='text-left nowrap'>{if $vo.login_num>0}{$vo.login_at|format_datetime}{else} - {/if}</td>
             <td class='text-left nowrap'>
-                用户账号：{$vo.username|default=''}<br>
-                联系手机：{$vo.phone|default='-'}
-            </td>
-            <td class='text-left nowrap'>
-                登录次数：{$vo.login_num|default=0}<br>
-                使用状态：{eq name='vo.status' value='0'}<span class="color-red">已禁用</span>{else}<span class="color-green">使用中</span>{/eq}
-            </td>
-            <td class='text-left nowrap'>日期：{$vo.create_at|format_datetime|str_replace=' ','<br>时间：',###|raw}</td>
-            <td class='text-left nowrap'>{if $vo.login_num>0}日期：{$vo.login_at|format_datetime|str_replace=' ','<br>时间：',###|raw}{else} -- {/if}</td>
-            <td class='text-left nowrap'>
-
-                {if auth("admin/user/auth")}
-                <a class="layui-btn layui-btn-primary layui-btn-sm" data-title="用户授权" data-modal='{:url("auth")}?id={$vo.id}'>授 权</a>
-                {/if}
 
                 {if auth("admin/user/pass")}
                 <a class="layui-btn layui-btn-normal layui-btn-sm" data-title="设置密码" data-modal='{:url("pass")}?id={$vo.id}'>密 码</a>

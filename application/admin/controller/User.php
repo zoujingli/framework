@@ -53,16 +53,6 @@ class User extends Controller
     }
 
     /**
-     * 用户授权管理
-     * @auth true
-     */
-    public function auth()
-    {
-        $this->applyCsrfToken();
-        $this->_form($this->table, 'auth');
-    }
-
-    /**
      * 添加系统用户
      * @auth true
      */
@@ -121,8 +111,9 @@ class User extends Controller
         if ($this->request->isPost()) {
             NodeService::applyUserAuth();
             $data['authorize'] = (isset($data['authorize']) && is_array($data['authorize'])) ? join(',', $data['authorize']) : '';
-            if (isset($data['id'])) unset($data['username']);
-            elseif (Db::name($this->table)->where(['username' => $data['username']])->count() > 0) {
+            if (isset($data['id'])) {
+                unset($data['username']);
+            } elseif (Db::name($this->table)->where(['username' => $data['username']])->count() > 0) {
                 $this->error('用户账号已经存在，请使用其它账号！');
             }
         } else {

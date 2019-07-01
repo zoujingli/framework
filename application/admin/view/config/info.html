@@ -17,11 +17,11 @@
     $(function () {
 
         $('.layui-tab ul.layui-tab-title li').on('click', function () {
-            layui.data('website-config', {key: 'type', value: this.getAttribute('data-type')});
+            layui.data('website-config-type', {key: 'type', value: this.getAttribute('data-type')});
         });
 
         (new function () {
-            this.selectedType = layui.data('website-config')['type'] || '';
+            this.selectedType = layui.data('website-config-type')['type'] || '';
             this.selectedItem = $('.layui-tab ul.layui-tab-title li[data-type="' + this.selectedType + '"]');
             if (this.selectedItem.length < 1) this.selectedItem = $('.layui-tab ul.layui-tab-title li:first');
             this.selectedItem.trigger('click');
