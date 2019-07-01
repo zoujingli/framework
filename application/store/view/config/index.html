@@ -14,19 +14,16 @@
 </div>
 
 <script>
-    $(function () {
-
-        $('.layui-tab ul.layui-tab-title li').on('click', function () {
-            layui.data('store-config-type', {key: 'type', value: this.getAttribute('data-type')});
+    (function (storage) {
+        (function (type, $default, $checked) {
+            $default = $('.layui-tab ul.layui-tab-title li:first');
+            $checked = $('.layui-tab ul.layui-tab-title li[data-type="' + type + '"]');
+            ($checked.length > 0 ? $checked : $default).trigger('click');
+        })(layui.data(storage)['type'] || '');
+        $('.layui-tab ul.layui-tab-title li[data-type]').on('click', function () {
+            layui.data(storage, {key: 'type', value: this.getAttribute('data-type')});
         });
-
-        (new function () {
-            this.selectedType = layui.data('store-config-type')['type'] || '';
-            this.selectedItem = $('.layui-tab ul.layui-tab-title li[data-type="' + this.selectedType + '"]');
-            if (this.selectedItem.length < 1) this.selectedItem = $('.layui-tab ul.layui-tab-title li:first');
-            this.selectedItem.trigger('click');
-        });
-    });
+    })('store-config-type');
 </script>
 
 
