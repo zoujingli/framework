@@ -286,14 +286,14 @@ class NodeService
      */
     public static function parseString($node)
     {
-        if (count($nodes = explode(' / ', $node)) > 1) {
+        if (count($nodes = explode('/', $node)) > 1) {
             $dots = [];
-            foreach (explode(' . ', $nodes[1]) as $dot) {
+            foreach (explode('.', $nodes[1]) as $dot) {
                 $dots[] = trim(preg_replace("/[A-Z]/", "_\\0", $dot), "_");
             }
-            $nodes[1] = join(' . ', $dots);
+            $nodes[1] = join('.', $dots);
         }
-        return strtolower(join(' / ', $nodes));
+        return strtolower(join('/', $nodes));
     }
 
     /**
