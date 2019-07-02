@@ -23,8 +23,6 @@ use think\Db;
  * 系统用户管理
  * Class User
  * @package app\admin\controller
- * @author Anyon <zoujingli@qq.com>
- * @date 2017/02/15 18:12
  */
 class User extends Controller
 {
@@ -48,8 +46,8 @@ class User extends Controller
     public function index()
     {
         $this->title = '系统用户管理';
-        $query = $this->_query($this->table)->like('username,phone,mail')->dateBetween('login_at');
-        $query->equal('status')->where(['is_deleted' => '0'])->order('id desc')->page();
+        $query = $this->_query($this->table)->like('username,phone,mail')->equal('status');
+        $query->dateBetween('login_at')->where(['is_deleted' => '0'])->order('id desc')->page();
     }
 
     /**

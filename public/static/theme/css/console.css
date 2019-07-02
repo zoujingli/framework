@@ -64,10 +64,11 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}.mo
 .layui-nav .layui-nav-item .layui-nav-more::before{content:"\e619"}
 /* 对齐及颜色 */
 .absolute{position:absolute!important}.relative{position:relative!important}.pull-left{float:left!important}.pull-right{float:right!important}
-.text-top{vertical-align:top!important}.text-left{text-align:left!important}.text-right{text-align:right!important}.text-center{text-align:center!important}.text-middle{vertical-align:middle!important}.text-bottom{vertical-align:bottom!important}
-.nowrap{white-space:nowrap!important}.help-block{color:#999;font-size:12px}.inline-block{display:inline-block!important}.block{display:block!important}.pointer{cursor:pointer!important}
 .notdata{display:block;padding:15px;border:1px solid #e6e6e6;border-radius:0 2px 2px 0;background-color:#f2f2f2;text-align:center;letter-spacing:8px;font-size:13px;line-height:22px}
+.nowrap{white-space:nowrap!important}.help-block{color:#999;font-size:12px}.inline-block{display:inline-block!important}.block{display:block!important}.pointer{cursor:pointer!important}
 .full-width{width:100%!important}.full-height{height:100%!important}.color-red{color:#ec494e!important}.color-blue{color:#2494f2!important}.color-desc{color:#999!important}.color-text{color:#333!important}.color-green{color:#090!important}
+.text-top{vertical-align:top!important}.text-left{text-align:left!important}.text-right{text-align:right!important}.text-center{text-align:center!important}.text-middle{vertical-align:middle!important}.text-bottom{vertical-align:bottom!important}
+.think-bg-white{background:white!important}.think-bg-blue{background:linear-gradient(-125deg,#57bdbf,#2f9de2)!important}.think-bg-orig{background:linear-gradient(-141deg,#ecca1b,#f39526)!important}.think-bg-red{background:linear-gradient(-125deg,#ff7d7d,#fb2c95)!important}.think-bg-violet{background:linear-gradient(-113deg,#c543d8,#925cc3)!important}
 [data-tips-image]{cursor:zoom-in!important}.notselect{user-select:none;-ms-user-select:none;-moz-user-select:none;-webkit-user-select:none}.transition{-webkit-transition:all .2s linear;-moz-transition:all .2s linear;-o-transition:all .2s linear;transition:all .2s linear}
 /* 文字大小 */
 .border-0{border:0!important}.border-radius-0{border-radius:0!important}.border-radius-left-0{border-top-left-radius:0!important;border-bottom-left-radius:0!important}.border-radius-right-0{border-top-right-radius:0!important;border-bottom-right-radius:0!important}
