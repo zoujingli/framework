@@ -40,7 +40,7 @@
                 <p class="color-desc">权限描述：{$vo.desc|default="没有写描述哦！"}</p>
             </td>
             <td class="text-left nowrap">
-                日期：{$vo.create_at|format_datetime|str_replace=' ','<br>时间：',###|raw}
+                日期：{$vo.create_at|format_datetime|str_replace=' ','<br><span class="color-desc">时间：',###|raw}</span>
             </td>
             <td class='text-center nowrap'>
                 {eq name='vo.status' value='0'}<span class="color-red">已禁用</span>{else}<span class="color-green">使用中</span>{/eq}
