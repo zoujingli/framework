@@ -34,7 +34,9 @@
         <tbody>
         {foreach $list as $key=>$vo}
         <tr data-dbclick>
-            <td class='list-table-check-td think-checkbox'><input class="list-check-box" value='{$vo.id}' type='checkbox'></td>
+            <td class='list-table-check-td think-checkbox'>
+                <label><input class="list-check-box" value='{$vo.id}' type='checkbox'></label>
+            </td>
             <td class='text-left'>
                 权限名称：{$vo.title|default='-'}<br>
                 <p class="color-desc">权限描述：{$vo.desc|default="没有写描述哦！"}</p>
