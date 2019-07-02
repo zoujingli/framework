@@ -211,8 +211,10 @@ class NodeService
             if (empty($auths)) {
                 session('admin_user.nodes', []);
             } else {
-                session('admin_user.nodes', Db::name('SystemAuthNode')->whereIn('auth', $auths)->column('node'));
+                session('admin_user.nodes', array_unique(Db::name('SystemAuthNode')->whereIn('auth', $auths)->column('node')));
             }
+        } else {
+            session('admin_user.nodes', []);
         }
     }
 
