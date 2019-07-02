@@ -61,8 +61,9 @@ class Plugs extends Controller
         $info = File::instance($this->uptype)->save($name, file_get_contents($file->getRealPath()), $this->safe);
         if (is_array($info) && isset($info['url'])) {
             return json(['uploaded' => true, 'filename' => $name, 'url' => $this->safe ? $name : $info['url']]);
+        } else {
+            return json(['uploaded' => false, 'error' => ['message' => '文件处理失败，请稍候再试！']]);
         }
-        return json(['uploaded' => false, 'error' => ['message' => '文件处理失败，请稍候再试！']]);
     }
 
     /**
