@@ -38,13 +38,12 @@
                 任务指令：{$vo.uri}
             </td>
             <td class='text-left nowrap'>
-                创建时间：<span class="layui-badge layui-bg-gray">{$vo.create_at|format_datetime|raw}</span>
+                创建时间：{$vo.create_at|format_datetime|raw}
                 <br>
-                跟进时间：<span class="layui-badge layui-bg-gray">{$vo.status_at|format_datetime|raw}</span>
+                跟进时间：{$vo.status_at|format_datetime|raw}
             </td>
             <td class='text-left nowrap'>
-                任务状态：
-                {eq name='vo.double' value='1'}
+                任务状态：{eq name='vo.double' value='1'}
                 <span class="layui-badge layui-bg-green margin-right-5">复</span>
                 {else}
                 <span class="layui-badge layui-bg-blue margin-right-5">单</span>
@@ -68,8 +67,7 @@
                 </a>
                 {/if}
                 <br>
-                状态描述：
-                <span class="layui-badge layui-bg-gray">{$vo.status_desc|raw|default="<span class='color-desc'>没有获取到状态描述</span>"}</span>
+                状态描述：<span class="color-desc">{$vo.status_desc|raw|default="没有获取到状态描述"}</span>
             </td>
         </tr>
         {/foreach}
