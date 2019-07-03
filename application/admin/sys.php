@@ -16,6 +16,8 @@ use app\admin\service\NodeService;
 use app\admin\service\OplogService;
 use library\File;
 use think\Db;
+use think\facade\Middleware;
+use think\Request;
 
 if (!function_exists('auth')) {
     /**
@@ -104,7 +106,7 @@ if (!function_exists('base64_image')) {
 }
 
 // 访问权限检查中间键
-\think\facade\Middleware::add(function (\think\Request $request, \Closure $next) {
+Middleware::add(function (Request $request, \Closure $next) {
     // 访问权限检查
     if (!NodeService::checkAuth()) {
         return json(['code' => 0, 'msg' => '抱歉，没有访问该操作的权限！']);

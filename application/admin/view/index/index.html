@@ -38,7 +38,7 @@
         </ul>
         <ul class="layui-nav layui-layout-right">
             <li lay-unselect class="layui-nav-item"><a data-reload><i class="layui-icon layui-icon-refresh-3"></i></a></li>
-            {notempty name='Think.session.admin_user'}
+            {notempty name='Think.session.admin_user.username'}
             <li class="layui-nav-item">
                 <dl class="layui-nav-child">
                     <dd lay-unselect><a data-modal="{:url('admin/index/info',['id'=>session('admin_user.id')])}"><i class="layui-icon layui-icon-set-fill margin-right-5"></i>基本资料</a></dd>
@@ -62,7 +62,11 @@
     <div class="layui-side layui-bg-black notselect">
         <div class="layui-side-scroll">
             <ul class="layui-nav layui-nav-tree layui-nav-tree-top">
-                <li class="layui-nav-item" lay-unselect><a class="text-center" data-target-menu-type><i class="layui-icon layui-icon-spread-left"></i></a></li>
+                <li class="layui-nav-item" lay-unselect>
+                    <a class="text-center" data-target-menu-type>
+                        <i class="layui-icon layui-icon-spread-left"></i>
+                    </a>
+                </li>
             </ul>
             {foreach $menus as $oneMenu}
             {notempty name='oneMenu.sub'}
