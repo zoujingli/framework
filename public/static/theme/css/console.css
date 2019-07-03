@@ -41,9 +41,6 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}.mo
 .layui-header .layui-nav-item .layui-nav-child.layui-show+a span{color:#333}
 .layui-header .layui-nav-item .layui-nav-child dd a{padding:0;color:#333;text-align:center;border-top:1px solid #eaedf1}
 /* 页面布局 - 左则 */
-.layui-layout.layui-layout-left-mini>.layui-body{left:50px}
-.layui-layout.layui-layout-left-hide>.layui-side{display:none}
-.layui-layout.layui-layout-left-hide>.layui-body{left:0!important}
 .layui-layout>.layui-side .layui-nav-bar{display:none!important}
 .layui-layout>.layui-side .layui-side-scroll{width:100%!important}
 .layui-layout>.layui-side .layui-nav-item{border-bottom:1px solid #333}
@@ -51,6 +48,9 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}.mo
 .layui-layout>.layui-side .layui-nav-item a{height:45px;display:block;color:#fff!important;line-height:45px}
 .layui-layout>.layui-side .layui-nav-item a:hover{background:hsla(0,0%,39%,.2)!important}
 .layui-layout>.layui-side .layui-nav-tree-top a{height:28px!important;line-height:28px!important}
+.layui-layout.layui-layout-left-mini>.layui-body{left:50px}
+.layui-layout.layui-layout-left-hide>.layui-side{display:none}
+.layui-layout.layui-layout-left-hide>.layui-body{left:0!important}
 .layui-layout.layui-layout-left-mini>.layui-side,
 .layui-layout.layui-layout-left-mini>.layui-side .layui-nav-tree,
 .layui-layout.layui-layout-left-mini>.layui-side .layui-side-scroll{width:50px;text-align:center}
