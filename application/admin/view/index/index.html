@@ -27,6 +27,11 @@
     <div class="layui-header notselect">
         <a href="{:url('@')}" class="layui-logo layui-elip">{:sysconf('app_name')} {if sysconf('app_version')}<sup class="padding-left-5">{:sysconf('app_version')}</sup>{/if}</a>
         <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item" lay-unselect>
+                <a class="text-center" data-target-menu-type>
+                    <i class="layui-icon layui-icon-spread-left"></i>
+                </a>
+            </li>
             {foreach $menus as $oneMenu}
             <li class="layui-nav-item">
                 <a data-menu-node="m-{$oneMenu.id}" data-open="{$oneMenu.url}">
@@ -61,13 +66,7 @@
     <!-- 左则菜单 开始 -->
     <div class="layui-side layui-bg-black notselect">
         <div class="layui-side-scroll">
-            <ul class="layui-nav layui-nav-tree layui-nav-tree-top">
-                <li class="layui-nav-item" lay-unselect>
-                    <a class="text-center" data-target-menu-type>
-                        <i class="layui-icon layui-icon-spread-left"></i>
-                    </a>
-                </li>
-            </ul>
+
             {foreach $menus as $oneMenu}
             {notempty name='oneMenu.sub'}
             <ul class="layui-nav layui-nav-tree layui-hide" data-menu-layout="m-{$oneMenu.id}">

@@ -17,7 +17,7 @@
 ::-webkit-scrollbar-thumb{background-color:#666!important}
 ::selection{color:#fff!important;background-color:#ec494e!important}
 ::-moz-selection{color:#fff!important;background-color:#ec494e!important}
-:-webkit-autofill, :-webkit-autofill:active, :-webkit-autofill:focus, :-webkit-autofill:hover{box-shadow:0 2px 3px 0 rgba(0, 0, 0, .1) inset!important;-webkit-transition:color 9999s ease-out, background-color 9999s ease-out!important;-webkit-transition-delay:9999s!important;-webkit-text-fill-color:#333!important}
+:-webkit-autofill,:-webkit-autofill:hover,:-webkit-autofill:focus,:-webkit-autofill:active{box-shadow:0 2px 3px 0 rgba(0, 0, 0, .1) inset!important;-webkit-transition:color 9999s ease-out, background-color 9999s ease-out!important;-webkit-transition-delay:9999s!important;-webkit-text-fill-color:#333!important}
 body{color:#333;font-size:12px;font-family:'\5FAE\8F6F\96C5\9ED1','Microsoft YaHei','Helvetica Neue','Luxi Sans','DejaVu Sans','Hiragino Sans GB',serif}
 a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}.moxie-shim{display:none!important}
 .version-debug{width:100%;color:#fff;height:100px;font-size:20px;text-align:center;line-height:100px;margin-bottom:40px;background-color:#E90D24}
@@ -58,8 +58,8 @@ a{color:#06C;cursor:pointer}a:hover{color:#039}input::-ms-clear{display:none}.mo
 .layui-layout.layui-layout-left-mini>.layui-side .layui-nav-item .nav-text{display:none}
 .layui-layout.layui-layout-left-mini>.layui-side .layui-nav-item .nav-icon{display:inline-block!important;padding:0!important}
 .layui-layout.layui-layout-left-mini>.layui-side .layui-nav-item .layui-nav-child{padding:0;display:block!important;background-color:rgba(0,0,0,.3)!important}
-.layui-layout.layui-layout-left-mini>.layui-side .layui-nav-tree-top i{display:inline-block;-webkit-transform:rotate(180deg);transform:rotate(180deg);-ms-transform:rotate(180deg)}
 .layui-layout.layui-layout-left-mini>.layui-side .layui-nav-more{display:none!important}
+.layui-layout.layui-layout-left-mini [data-target-menu-type] i{display:inline-block;-webkit-transform:rotate(180deg);transform:rotate(180deg);-ms-transform:rotate(180deg)}
 /* 下拉样式 */
 .layui-nav .layui-nav-item .layui-nav-more{top:0;border:none;right:15px;width:auto;height:auto;margin-top:0;font-size:14px;font-style:normal;font-family:layui-icon!important;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
 .layui-nav .layui-nav-item .layui-nav-mored,.layui-nav .layui-nav-itemed .layui-nav-more{border:none;margin-top:0;transform:rotate(180deg);-o-transform:rotate(180deg);-ms-transform:rotate(180deg);-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg)}

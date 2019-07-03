@@ -275,13 +275,16 @@ $(function () {
             // 菜单模式切换
             (function ($menu, miniClass) {
                 // Mini 菜单模式切换及显示
-                if (layui.data('menu')['type-min']) $menu.addClass(miniClass);
+                if (layui.data('admin-menu-type')['type-min']) $menu.addClass(miniClass);
                 $body.on('click', '[data-target-menu-type]', function () {
                     $menu.toggleClass(miniClass);
-                    layui.data('menu', {key: 'type-min', value: $menu.hasClass(miniClass)});
-                }).on('resize', function (isMini) {
-                    isMini = $('.layui-layout-left-mini').size() > 0;
-                    $body.width() > 1000 ? isMini && $menu.toggleClass(miniClass) : isMini || $menu.toggleClass(miniClass);
+                    layui.data('admin-menu-type', {key: 'type-min', value: $menu.hasClass(miniClass)});
+                }).on('resize', function () {
+                    if ($body.width() > 1000) {
+                        layui.data('admin-menu-type')['type-min'] ? $menu.addClass(miniClass) : $menu.removeClass(miniClass);
+                    } else {
+                        $menu.addClass(miniClass);
+                    }
                 }).trigger('resize');
                 //  Mini 菜单模式时TIPS文字显示
                 $('[data-target-tips]').mouseenter(function () {
