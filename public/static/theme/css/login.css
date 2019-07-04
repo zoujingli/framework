@@ -76,6 +76,10 @@ body {
   position: absolute;
   font-size: 18px;
 }
+.login-container form ul li span {
+  letter-spacing: 1px;
+  color: #ff0 !important;
+}
 .login-container form ul li input {
   color: #fff;
   height: 45px;
@@ -88,10 +92,6 @@ body {
   background: rgba(0, 0, 0, 0.1);
   text-shadow: #000 0.1em 0.1em 0.1em;
   box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.3) inset;
-}
-.login-container form ul li span {
-  letter-spacing: 1px;
-  color: #ff0 !important;
 }
 .login-container form ul li button {
   color: #333 !important;

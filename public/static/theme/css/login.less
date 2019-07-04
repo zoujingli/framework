@@ -23,8 +23,7 @@ body {
 
 .login-container {
   form input {
-    &, &:-webkit-autofill, &:-webkit-autofill:active,
-    &:-webkit-autofill:focus, &:-webkit-autofill:hover {
+    &, &:-webkit-autofill, &:-webkit-autofill:active, &:-webkit-autofill:focus, &:-webkit-autofill:hover {
       box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .3) inset;
       -webkit-text-fill-color: #fff !important;
       -webkit-transition-delay: 9999s !important;
@@ -98,6 +97,11 @@ body {
         font-size: 18px;
       }
 
+      span {
+        letter-spacing: 1px;
+        color: #ff0 !important;
+      }
+
       input {
         color: #fff;
         height: 45px;
@@ -110,11 +114,6 @@ body {
         background: rgba(0, 0, 0, .1);
         text-shadow: #000 .1em .1em .1em;
         box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .3) inset;
-      }
-
-      span {
-        letter-spacing: 1px;
-        color: #ff0 !important;
       }
 
       button {
