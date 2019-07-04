@@ -31,6 +31,8 @@ class Message extends Controller
 
     /**
      * 短信发送管理
+     * @auth true
+     * @menu true
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -46,6 +48,7 @@ class Message extends Controller
 
     /**
      * 删除短信记录
+     * @auth true
      */
     public function remove()
     {

@@ -34,6 +34,8 @@ class News extends Controller
 
     /**
      * 微信图文管理
+     * @auth true
+     * @menu true
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -61,6 +63,7 @@ class News extends Controller
     /**
      * 图文选择器
      * @return string
+     * @auth true
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -86,6 +89,7 @@ class News extends Controller
 
     /**
      * 添加微信图文
+     * @auth true
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
@@ -108,6 +112,7 @@ class News extends Controller
 
     /**
      * 编辑微信图文
+     * @auth true
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
@@ -164,7 +169,7 @@ class News extends Controller
     /**
      * 删除微信图文
      */
-    public function del()
+    public function remove()
     {
         $this->_delete($this->table);
     }

@@ -27,6 +27,8 @@ class Config extends Controller
 {
     /**
      * 微信授权绑定
+     * @auth true
+     * @menu true
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
@@ -65,6 +67,8 @@ class Config extends Controller
 
     /**
      * 微信支付配置
+     * @auth true
+     * @menu true
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */

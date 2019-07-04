@@ -32,6 +32,8 @@ class ExpressCompany extends Controller
 
     /**
      * 快递公司管理
+     * @auth true
+     * @menu true
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -47,6 +49,7 @@ class ExpressCompany extends Controller
 
     /**
      * 添加快递公司
+     * @auth true
      */
     public function add()
     {
@@ -55,6 +58,7 @@ class ExpressCompany extends Controller
 
     /**
      * 编辑快递公司
+     * @auth true
      */
     public function edit()
     {
@@ -64,6 +68,7 @@ class ExpressCompany extends Controller
     /**
      * 表单数据处理
      * @param array $data
+     * @auth true
      */
     protected function _form_filter(array $data)
     {
@@ -78,6 +83,7 @@ class ExpressCompany extends Controller
 
     /**
      * 禁用快递公司
+     * @auth true
      */
     public function forbid()
     {
@@ -86,6 +92,7 @@ class ExpressCompany extends Controller
 
     /**
      * 启用快递公司
+     * @auth true
      */
     public function resume()
     {
@@ -94,6 +101,7 @@ class ExpressCompany extends Controller
 
     /**
      * 删除快递公司
+     * @auth true
      */
     public function remove()
     {

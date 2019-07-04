@@ -42,6 +42,8 @@ class Keys extends Controller
 
     /**
      * 回复规则管理
+     * @auth true
+     * @menu true
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -82,6 +84,7 @@ class Keys extends Controller
 
     /**
      * 添加关键字
+     * @auth true
      */
     public function add()
     {
@@ -92,6 +95,7 @@ class Keys extends Controller
 
     /**
      * 编辑关键字
+     * @auth true
      */
     public function edit()
     {
@@ -102,8 +106,9 @@ class Keys extends Controller
 
     /**
      * 删除关键字
+     * @auth true
      */
-    public function del()
+    public function remove()
     {
         $this->applyCsrfToken();
         $this->_delete($this->table);
@@ -111,6 +116,7 @@ class Keys extends Controller
 
     /**
      * 禁用关键字
+     * @auth true
      */
     public function forbid()
     {
@@ -120,6 +126,7 @@ class Keys extends Controller
 
     /**
      * 启用关键字
+     * @auth true
      */
     public function resume()
     {
@@ -129,6 +136,7 @@ class Keys extends Controller
 
     /**
      * 配置关注回复
+     * @auth true
      */
     public function subscribe()
     {
@@ -139,6 +147,7 @@ class Keys extends Controller
 
     /**
      * 配置默认回复
+     * @auth true
      */
     public function defaults()
     {

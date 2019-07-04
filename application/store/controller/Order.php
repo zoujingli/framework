@@ -15,6 +15,7 @@
 namespace app\store\controller;
 
 use library\Controller;
+use library\tools\Express;
 use think\Db;
 
 /**
@@ -32,6 +33,8 @@ class Order extends Controller
 
     /**
      * 订单记录管理
+     * @auth true
+     * @menu true
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -70,6 +73,7 @@ class Order extends Controller
 
     /**
      * 修改快递管理
+     * @auth true
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
@@ -85,13 +89,14 @@ class Order extends Controller
 
     /**
      * 快递追踪查询
+     * @auth true
      */
     public function expressQuery()
     {
         list($code, $no) = [input('code', ''), input('no', '')];
         if (empty($no)) $this->error('快递编号不能为空！');
         if (empty($code)) $this->error('快递公司编码不能为空！');
-        $this->result = \library\tools\Express::query($code, $no);
+        $this->result = Express::query($code, $no);
         $this->fetch();
     }
 

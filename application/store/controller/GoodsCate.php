@@ -31,6 +31,8 @@ class GoodsCate extends Controller
 
     /**
      * 商品分类管理
+     * @auth true
+     * @menu true
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -40,32 +42,33 @@ class GoodsCate extends Controller
     public function index()
     {
         $this->title = '商品分类管理';
-        $where = ['is_deleted' => '0'];
-        $this->_query($this->table)->like('title')->equal('status')->where($where)->order('sort desc,id desc')->page();
+        $query = $this->_query($this->table)->like('title')->equal('status');
+        $query->where(['is_deleted' => '0'])->order('sort desc,id desc')->page();
     }
 
     /**
      * 添加商品分类
-     * @return mixed
+     * @auth true
      */
     public function add()
     {
         $this->title = '添加商品分类';
-        return $this->_form($this->table, 'form');
+        $this->_form($this->table, 'form');
     }
 
     /**
-     * 编辑添加商品分类
-     * @return mixed
+     * 编辑商品分类
+     * @auth true
      */
     public function edit()
     {
         $this->title = '编辑商品分类';
-        return $this->_form($this->table, 'form');
+        $this->_form($this->table, 'form');
     }
 
     /**
-     * 禁用添加商品分类
+     * 禁用商品分类
+     * @auth true
      */
     public function forbid()
     {
@@ -74,6 +77,7 @@ class GoodsCate extends Controller
 
     /**
      * 启用商品分类
+     * @auth true
      */
     public function resume()
     {
@@ -82,6 +86,7 @@ class GoodsCate extends Controller
 
     /**
      * 删除商品分类
+     * @auth true
      */
     public function remove()
     {

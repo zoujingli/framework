@@ -33,6 +33,8 @@ class Queue extends Controller
 
     /**
      * 系统消息任务
+     * @auth true
+     * @menu true
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -42,15 +44,18 @@ class Queue extends Controller
     public function index()
     {
         $this->title = '消息任务管理';
-        $this->cmd = 'php ' . env('root_path') . 'think xtask:start';
-        $this->message = Console::call('xtask:state')->fetch();
+        if (session('admin_user.username') === 'admin') {
+            $this->cmd = 'php ' . env('root_path') . 'think xtask:start';
+            $this->message = Console::call('xtask:state')->fetch();
+        }
         $this->uris = Db::name($this->table)->distinct(true)->column('uri');
         $query = $this->_query($this->table)->dateBetween('create_at,status_at');
         $query->equal('status,title,uri')->order('id desc')->page();
     }
 
     /**
-     * 重置失败的任务
+     * 重置失败任务
+     * @auth true
      */
     public function redo()
     {
@@ -70,6 +75,7 @@ class Queue extends Controller
 
     /**
      * 删除消息任务
+     * @auth true
      */
     public function remove()
     {

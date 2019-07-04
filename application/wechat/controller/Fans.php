@@ -36,6 +36,8 @@ class Fans extends Controller
 
     /**
      * 微信粉丝管理
+     * @auth true
+     * @menu true
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -69,6 +71,7 @@ class Fans extends Controller
 
     /**
      * 批量拉黑粉丝
+     * @auth true
      */
     public function setBlack()
     {
@@ -88,6 +91,7 @@ class Fans extends Controller
 
     /**
      * 取消拉黑粉丝
+     * @auth true
      */
     public function delBlack()
     {
@@ -107,6 +111,7 @@ class Fans extends Controller
 
     /**
      * 同步粉丝列表
+     * @auth true
      */
     public function sync()
     {
@@ -122,8 +127,9 @@ class Fans extends Controller
 
     /**
      * 删除粉丝信息
+     * @auth true
      */
-    public function del()
+    public function remove()
     {
         $this->applyCsrfToken();
         $this->_delete($this->table);

@@ -16,6 +16,7 @@ namespace app\store\controller\api;
 
 use library\Controller;
 use think\Db;
+use think\exception\HttpResponseException;
 
 /**
  * Class Wechat
@@ -44,9 +45,10 @@ class Wechat extends Controller
                 data_save('StoreMember', ['openid' => $result['openid']], 'openid');
                 $result['member'] = Db::name('StoreMember')->where(['openid' => $result['openid']])->find();
                 $this->success('授权CODE信息换取成功！', $result);
+            } else {
+                $this->error("[{$result['errcode']}] {$result['errmsg']}");
             }
-            $this->error("[{$result['errcode']}] {$result['errmsg']}");
-        } catch (\think\exception\HttpResponseException $exception) {
+        } catch (HttpResponseException $exception) {
             throw $exception;
         } catch (\Exception $exception) {
             $this->error("授权CODE信息换取失败，{$exception->getMessage()}");
@@ -76,13 +78,14 @@ class Wechat extends Controller
                 ], 'openid');
                 $result['member'] = Db::name('StoreMember')->where(['openid' => $result['openId']])->find();
                 $this->success('小程序加密数据解密成功！', $result);
+            } else {
+                $this->error('小程序加密数据解密失败，请稍候再试！');
             }
-        } catch (\think\exception\HttpResponseException $exception) {
+        } catch (HttpResponseException $exception) {
             throw $exception;
         } catch (\Exception $e) {
             $this->error("小程序加密数据解密失败，{$e->getMessage()}");
         }
-        $this->error('小程序加密数据解密失败，请稍候再试！');
     }
 
 }

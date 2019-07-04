@@ -1,6 +1,6 @@
 大道至简 · 原生框架
 --
-framework V1.0 是一个基于 ThinkPHP5.1 开发的后台管理系统。
+framework V2.0 是一个基于 ThinkPHP5.1 开发的后台管理系统。
 
 我们致力于二次开发底层框架，提供完整的组件及API，基于此框架可以快速开发应用。
 
@@ -11,6 +11,22 @@ framework V1.0 是一个基于 ThinkPHP5.1 开发的后台管理系统。
 * 若操作提示“测试系统禁止操作”等字样，需要删除演示路由配置( route/demo.php )或清空路由文件；
 * 当前版本使用 ThinkPHP5.1.x，对 PHP 版本标注不低于 PHP5.6，具体请阅读 ThinkPHP 官方文档；
 * 环境需开启 PATHINFO，不再支持 ThinkPHP 的 URL 兼容模式运行（源于如何优雅的展示）；
+
+#### 权限管理
+* 此版本的权限使用注解实现管理
+* 注释必需使用标准的块注释，如：
+```php
+/**
+* 操作的名称
+* @auth true  # 表示需要验证权限
+* @menu true  # 在菜单编辑的节点可选项
+*/
+public function index(){
+   // @todo
+}
+```
+* 其中`@auth true`表示需要权限验证
+* 其中`@menu true`显示在菜单编辑的节点可选项
 
 技术支持
 --
@@ -29,7 +45,7 @@ PHP 开发技术交流（ QQ 群 513350915）
  
  部分代码来自互联网，若有异议可以联系作者进行删除。
  
- * 在线体验地址：https://framework.thinkadmin.top （账号和密码都是 admin ）
+ * 在线体验地址：https://v2.framework.thinkadmin.top （账号和密码都是 admin ）
  * Gitee仓库地址：https://gitee.com/zoujingli/framework
  * GitHub仓库地址：https://github.com/zoujingli/framework
  

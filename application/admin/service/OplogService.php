@@ -34,16 +34,16 @@ class OplogService
     {
         $data = [
             'node'     => Node::current(),
-            'geoip'    => PHP_SAPI === 'cli' ? '127.0.0.1' : request()->ip(),
             'action'   => $action,
             'content'  => $content,
-            'username' => PHP_SAPI === 'cli' ? 'cli' : (string)session('user.username'),
+            'geoip'    => PHP_SAPI === 'cli' ? '127.0.0.1' : request()->ip(),
+            'username' => PHP_SAPI === 'cli' ? 'cli' : (string)session('admin_user.username'),
         ];
         return Db::name('SystemLog')->insert($data) !== false;
     }
 
     /**
-     * 清理系统日志数据
+     * 清理系统日志
      * @return boolean
      * @throws \think\Exception
      * @throws \think\exception\PDOException

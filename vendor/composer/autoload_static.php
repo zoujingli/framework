@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit05a7fb3a49304a25b2f784e3ee5d40c7
+class ComposerStaticInitf12cc2cc08093229b2746b23cedc7886
 {
     public static $files = array (
         '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
@@ -208,7 +208,9 @@ class ComposerStaticInit05a7fb3a49304a25b2f784e3ee5d40c7
         'Qiniu\\Processing\\ImageUrlBuilder' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/Processing/ImageUrlBuilder.php',
         'Qiniu\\Processing\\Operation' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/Processing/Operation.php',
         'Qiniu\\Processing\\PersistentFop' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/Processing/PersistentFop.php',
+        'Qiniu\\Region' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/Region.php',
         'Qiniu\\Rtc\\AppClient' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/Rtc/AppClient.php',
+        'Qiniu\\Sms\\Sms' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/Sms/Sms.php',
         'Qiniu\\Storage\\ArgusManager' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/Storage/ArgusManager.php',
         'Qiniu\\Storage\\BucketManager' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/Storage/BucketManager.php',
         'Qiniu\\Storage\\FormUploader' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/Storage/FormUploader.php',
@@ -346,9 +348,9 @@ class ComposerStaticInit05a7fb3a49304a25b2f784e3ee5d40c7
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit05a7fb3a49304a25b2f784e3ee5d40c7::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit05a7fb3a49304a25b2f784e3ee5d40c7::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit05a7fb3a49304a25b2f784e3ee5d40c7::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitf12cc2cc08093229b2746b23cedc7886::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitf12cc2cc08093229b2746b23cedc7886::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitf12cc2cc08093229b2746b23cedc7886::$classMap;
 
         }, null, ClassLoader::class);
     }

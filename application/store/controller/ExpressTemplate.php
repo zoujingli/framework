@@ -21,6 +21,8 @@ class ExpressTemplate extends Controller
 
     /**
      * 邮费模板管理
+     * @auth true
+     * @menu true
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
@@ -28,16 +30,17 @@ class ExpressTemplate extends Controller
     public function index()
     {
         $this->title = '邮费模板管理';
-        $this->provinces = Db::name('StoreExpressProvince')->where(['status' => '1'])->order('sort desc,id desc')->column('title');
+        $filename = env('root_path') . 'public/static/plugs/jquery/area/area.json';
+        $this->provinces = array_column(json_decode(file_get_contents($filename), true), 'name');
         $this->list = Db::name($this->table)->where(['is_default' => '0'])->select();
         foreach ($this->list as &$item) $item['rule'] = explode(',', $item['rule']);
         $this->default = Db::name($this->table)->where(['is_default' => '1'])->find();
         $this->fetch();
     }
 
-
     /**
      * 保存邮费模板
+     * @auth true
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
