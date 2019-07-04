@@ -121,8 +121,9 @@ class QueueService
         if (Db::name('SystemJobsLog')->where($where)->delete() > 0) {
             Db::name('SystemJobs')->whereLike('payload', '%"_job_id_":"' . $jobId . '"%')->delete();
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
 }
