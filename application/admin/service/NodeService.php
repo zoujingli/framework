@@ -73,8 +73,9 @@ class NodeService
         }
         if (!preg_match("/^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{6,32}$/", $password)) {
             return ['code' => 0, 'msg' => '密码必需包含大小写字母、数字、符号任意两者组合！'];
+        } else {
+            return ['code' => 1, 'msg' => '密码复杂度通过验证！'];
         }
-        return ['code' => 1, 'msg' => '密码复杂度通过验证！'];
     }
 
     /**

@@ -32,14 +32,11 @@ class OplogService
      */
     public static function write($action = '行为', $content = "内容描述")
     {
-        $data = [
-            'node'     => Node::current(),
-            'action'   => $action,
-            'content'  => $content,
+        return Db::name('SystemLog')->insert([
+            'node'     => Node::current(), 'action' => $action, 'content' => $content,
             'geoip'    => PHP_SAPI === 'cli' ? '127.0.0.1' : request()->ip(),
             'username' => PHP_SAPI === 'cli' ? 'cli' : (string)session('admin_user.username'),
-        ];
-        return Db::name('SystemLog')->insert($data) !== false;
+        ]);
     }
 
     /**
