@@ -17,6 +17,7 @@ namespace app\wechat\controller;
 use app\wechat\service\WechatService;
 use library\Controller;
 use think\Db;
+use think\exception\HttpResponseException;
 
 /**
  * 微信菜单管理
@@ -77,7 +78,7 @@ class Menu extends Controller
                     WechatService::WeChatMenu()->delete();
                     sysoplog('微信管理', '删除微信菜单成功');
                     $this->success('删除微信菜单成功！', '');
-                } catch (\think\exception\HttpResponseException $exception) {
+                } catch (HttpResponseException $exception) {
                     throw $exception;
                 } catch (\Exception $e) {
                     sysoplog('微信管理', "删除微信菜单失败:{$e->getMessage()}");
@@ -89,7 +90,7 @@ class Menu extends Controller
                     WechatService::WeChatMenu()->create(['button' => sysdata('menudata')]);
                     sysoplog('微信管理', '发布微信菜单成功');
                     $this->success('保存发布菜单成功！', '');
-                } catch (\think\exception\HttpResponseException $exception) {
+                } catch (HttpResponseException $exception) {
                     throw $exception;
                 } catch (\Exception $e) {
                     sysoplog('微信管理', "发布微信菜单失败:{$e->getMessage()}");
@@ -156,7 +157,8 @@ class Menu extends Controller
         try {
             WechatService::WeChatMenu()->delete();
             $this->success('菜单取消成功，重新关注可立即生效！', '');
-        } catch (\think\exception\HttpResponseException $exception) {
+        } catch (HttpResponseException $exception) {
+            sysoplog('微信管理', '取消微信菜单成功');
             throw $exception;
         } catch (\Exception $e) {
             $this->error("菜单取消失败，请稍候再试！<br> {$e->getMessage()}");
