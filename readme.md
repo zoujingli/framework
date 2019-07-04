@@ -12,6 +12,22 @@ framework V1.0 是一个基于 ThinkPHP5.1 开发的后台管理系统。
 * 当前版本使用 ThinkPHP5.1.x，对 PHP 版本标注不低于 PHP5.6，具体请阅读 ThinkPHP 官方文档；
 * 环境需开启 PATHINFO，不再支持 ThinkPHP 的 URL 兼容模式运行（源于如何优雅的展示）；
 
+#### 权限管理
+* 此版本的权限使用注解实现管理
+* 注释必需使用标准的块注释，如：
+```php
+/**
+* 操作的名称
+* @auth true  # 表示需要验证权限
+* @menu true  # 在菜单编辑的节点可选项
+*/
+public function index(){
+   // @todo
+}
+```
+* 其中`@auth true`表示需要权限验证
+* 其中`@menu true`显示在菜单编辑的节点可选项
+
 技术支持
 --
 开发前请认真阅读 ThinkPHP 官方文档会对您有帮助哦！
