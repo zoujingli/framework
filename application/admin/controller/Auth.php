@@ -106,7 +106,7 @@ class Auth extends Controller
     {
         try {
             NodeService::applyUserAuth(true);
-            $this->success('刷新系统授权成功');
+            $this->success('刷新系统授权成功！');
         } catch (HttpResponseException $exception) {
             throw  $exception;
         } catch (\Exception $e) {

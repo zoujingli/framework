@@ -19,9 +19,10 @@ use library\Controller;
 use library\tools\Data;
 use think\Console;
 use think\Db;
+use think\exception\HttpResponseException;
 
 /**
- * 后台入口管理
+ * 系统公共操作
  * Class Index
  * @package app\admin\controller
  */
@@ -55,52 +56,6 @@ class Index extends Controller
         $this->think_ver = \think\App::VERSION;
         $this->mysql_ver = Db::query('select version() as ver')[0]['ver'];
         $this->fetch();
-    }
-
-    /**
-     * 清理系统运行缓存
-     */
-    public function clearRuntime()
-    {
-        if (!NodeService::islogin()) {
-            $this->error('需要登录才能操作哦！');
-        }
-        $this->list = [
-            [
-                'title'   => 'Clean up running cached files',
-                'message' => nl2br(Console::call('clear')->fetch()),
-            ], [
-                'title'   => 'Clean up invalid session files',
-                'message' => nl2br(Console::call('xclean:session')->fetch()),
-            ],
-        ];
-        $this->fetch('admin@index/command');
-    }
-
-    /**
-     * 压缩发布系统
-     */
-    public function buildOptimize()
-    {
-        if (!NodeService::islogin()) {
-            $this->error('需要登录才能操作哦！');
-        }
-        $this->list = [
-            [
-                'title'   => 'Build route cache',
-                'message' => nl2br(Console::call('optimize:route')->fetch()),
-            ], [
-                'title'   => 'Build database schema cache',
-                'message' => nl2br(Console::call('optimize:schema')->fetch()),
-            ], [
-                'title'   => 'Optimizes PSR0 and PSR4 packages',
-                'message' => nl2br(Console::call('optimize:autoload')->fetch()),
-            ], [
-                'title'   => 'Build config and common file cache',
-                'message' => nl2br(Console::call('optimize:config')->fetch()),
-            ],
-        ];
-        $this->fetch('admin@index/command');
     }
 
     /**
@@ -168,6 +123,42 @@ class Index extends Controller
             $this->_form('SystemUser', 'admin@user/form', 'id', [], ['id' => $id]);
         } else {
             $this->error('只能修改登录用户的资料！');
+        }
+    }
+
+    /**
+     * 清理运行缓存
+     * @auth true
+     */
+    public function clearRuntime()
+    {
+        try {
+            Console::call('clear');
+            Console::call('xclean:session');
+            $this->success('清理运行缓存成功！');
+        } catch (HttpResponseException $exception) {
+            throw $exception;
+        } catch (\Exception $e) {
+            $this->error("清理运行缓存失败，{$e->getMessage()}");
+        }
+    }
+
+    /**
+     * 压缩发布系统
+     * @auth true
+     */
+    public function buildOptimize()
+    {
+        try {
+            Console::call('optimize:route');
+            Console::call('optimize:schema');
+            Console::call('optimize:autoload');
+            Console::call('optimize:config');
+            $this->success('压缩发布成功！');
+        } catch (HttpResponseException $exception) {
+            throw $exception;
+        } catch (\Exception $e) {
+            $this->error("压缩发布失败，{$e->getMessage()}");
         }
     }
 
