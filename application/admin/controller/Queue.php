@@ -54,7 +54,7 @@ class Queue extends Controller
     }
 
     /**
-     * 重置失败的任务
+     * 重置失败任务
      * @auth true
      */
     public function redo()
