@@ -93,11 +93,11 @@ body input::-ms-clear {
 .layui-header .layui-nav-item {
   line-height: 50px;
 }
-.layui-header .layui-nav-item > a {
-  color: #fff !important;
-}
 .layui-header .layui-nav-item.layui-this {
   background: #009688;
+}
+.layui-header .layui-nav-item > a {
+  color: #fff !important;
 }
 .layui-header .layui-nav-item .layui-nav-child {
   top: 49px;
