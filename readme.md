@@ -1,6 +1,6 @@
 大道至简 · 原生框架
 --
-framework V1.0 是一个基于 ThinkPHP5.1 开发的后台管理系统。
+framework V2.0 是一个基于 ThinkPHP5.1 开发的后台管理系统。
 
 我们致力于二次开发底层框架，提供完整的组件及API，基于此框架可以快速开发应用。
 
@@ -45,7 +45,7 @@ PHP 开发技术交流（ QQ 群 513350915）
  
  部分代码来自互联网，若有异议可以联系作者进行删除。
  
- * 在线体验地址：https://framework.thinkadmin.top （账号和密码都是 admin ）
+ * 在线体验地址：https://v2.framework.thinkadmin.top （账号和密码都是 admin ）
  * Gitee仓库地址：https://gitee.com/zoujingli/framework
  * GitHub仓库地址：https://github.com/zoujingli/framework
  
