@@ -35,7 +35,9 @@
   background: #393D49 !important;
 
   [data-target-menu-type] {
-    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .15)
+    // box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .15);
+    border-left: 1px solid rgba(0, 0, 0, 0);
+    border-right: 1px solid rgba(0, 0, 0, .15);
   }
 
   .layui-layout-left,
@@ -45,9 +47,12 @@
 
   .layui-logo {
     color: #fff;
+    width: 199px;
+    height: auto;
     font-size: 18px;
-    line-height: 50px;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .15);
+    line-height: 49px;
+    border-right: 1px solid rgba(0, 0, 0, .15);
+    border-bottom: 1px solid rgba(0, 0, 0, .15);
 
     sup {
       font-size: 9px;
@@ -71,7 +76,6 @@
       padding: 0;
       border: none;
       line-height: 45px;
-      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .2);
 
       + a {
         padding-right: 35px
@@ -97,6 +101,13 @@
   .layui-nav-bar, .layui-nav-item:after {
     display: none !important
   }
+
+  .layui-layout-right {
+    > li > a {
+      border-left: 1px solid rgba(0, 0, 0, .15);
+      border-right: 1px solid rgba(0, 0, 0, 0);
+    }
+  }
 }
 
 /* 页面布局 - 左则 */
@@ -112,13 +123,14 @@
     }
 
     .layui-nav-item {
-      border-bottom: 1px solid #333;
+      border-bottom: 1px solid rgba(0, 0, 0, .2);
+
 
       a {
         height: 45px;
         display: block;
-        color: #fff !important;
         line-height: 45px;
+        color: #fff !important;
 
         &:hover {
           background: hsla(0, 0%, 39%, .2) !important
