@@ -60,8 +60,9 @@ class Config extends Controller
             if ($this->request->post('wechat_type') === 'thr') {
                 WechatService::wechat()->setApiNotifyUri($this->thrNotify);
             }
+            sysoplog('微信管理', '修改微信授权配置成功');
             $uri = url('wechat/config/options');
-            $this->success('微信参数获取成功！', url('@admin') . "#{$uri}");
+            $this->success('微信参数修改成功！', url('@admin') . "#{$uri}");
         }
     }
 
@@ -96,6 +97,7 @@ class Config extends Controller
                 }
             }
             foreach ($this->request->post() as $k => $v) sysconf($k, $v);
+            sysoplog('微信管理', '修改微信支付配置成功');
             $this->success('微信支付配置成功！');
         }
     }
