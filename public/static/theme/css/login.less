@@ -135,7 +135,6 @@ body {
       color: #ccc
     }
   }
-
 }
 
 #supersized {
@@ -164,8 +163,8 @@ body {
   }
 
   &.quality img {
+    image-rendering: optimizeQuality;
     -ms-interpolation-mode: bicubic;
-    image-rendering: optimizeQuality
   }
 
   a, li {
@@ -183,16 +182,20 @@ body {
     overflow: hidden;
     list-style: none;
 
-    &.activeslide img, &.prevslide img {
-      display: inline
-    }
-
     &.prevslide {
-      z-index: -20
+      z-index: -20;
+
+      img {
+        display: inline
+      }
     }
 
     &.activeslide {
-      z-index: -10
+      z-index: -10;
+
+      img {
+        display: inline
+      }
     }
 
     &.image-loading {

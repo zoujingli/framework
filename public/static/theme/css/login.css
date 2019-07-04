@@ -143,8 +143,8 @@ body {
   -ms-interpolation-mode: nearest-neighbor;
 }
 #supersized.quality img {
-  -ms-interpolation-mode: bicubic;
   image-rendering: optimizeQuality;
+  -ms-interpolation-mode: bicubic;
 }
 #supersized a,
 #supersized li {
@@ -161,15 +161,17 @@ body {
   overflow: hidden;
   list-style: none;
 }
-#supersized li.activeslide img,
-#supersized li.prevslide img {
-  display: inline;
-}
 #supersized li.prevslide {
   z-index: -20;
 }
+#supersized li.prevslide img {
+  display: inline;
+}
 #supersized li.activeslide {
   z-index: -10;
+}
+#supersized li.activeslide img {
+  display: inline;
 }
 #supersized li.image-loading {
   width: 100%;
