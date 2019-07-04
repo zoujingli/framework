@@ -97,8 +97,11 @@ class Goods extends Controller
         $goods['specs'] = json_decode($goods['specs'], true);
         $goods['lists'] = json_decode($goods['lists'], true);
         $goods['list'] = Db::name('StoreGoodsList')->where(['goods_id' => $goods_id])->select();
-        if (empty($goods['list'])) $this->error('指定商品规格不存在，请更换商品ID重试！');
-        $this->success('获取商品信息成功！', $goods);
+        if (empty($goods['list'])) {
+            $this->error('指定商品规格不存在，请更换商品ID重试！');
+        } else {
+            $this->success('获取商品信息成功！', $goods);
+        }
     }
 
     /**

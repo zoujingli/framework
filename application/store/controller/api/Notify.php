@@ -39,7 +39,9 @@ class Notify
             if ($this->update($notify['out_trade_no'], $notify['transaction_id'], $notify['cash_fee'] / 100, 'wechat')) {
                 return $wechat->getNotifySuccessReply();
             }
-        } else return $wechat->getNotifySuccessReply();
+        } else {
+            return $wechat->getNotifySuccessReply();
+        }
     }
 
     /**

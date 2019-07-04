@@ -15,6 +15,7 @@
 namespace app\store\controller;
 
 use library\Controller;
+use library\tools\Express;
 use think\Db;
 
 /**
@@ -95,7 +96,7 @@ class Order extends Controller
         list($code, $no) = [input('code', ''), input('no', '')];
         if (empty($no)) $this->error('快递编号不能为空！');
         if (empty($code)) $this->error('快递公司编码不能为空！');
-        $this->result = \library\tools\Express::query($code, $no);
+        $this->result = Express::query($code, $no);
         $this->fetch();
     }
 
