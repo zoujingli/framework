@@ -120,14 +120,14 @@ body {
   color: #ccc;
 }
 #supersized {
-  position: fixed;
   top: 0;
   left: 0;
-  z-index: -999;
-  display: block;
-  overflow: hidden;
   width: 100%;
   height: 100%;
+  z-index: -999;
+  display: block;
+  position: fixed;
+  overflow: hidden;
 }
 #supersized img {
   border: 0;
@@ -148,16 +148,16 @@ body {
 }
 #supersized a,
 #supersized li {
-  display: block;
   width: 100%;
   height: 100%;
+  display: block;
   cursor: default;
 }
 #supersized li {
-  position: fixed;
   top: 0;
   left: 0;
   z-index: -30;
+  position: fixed;
   overflow: hidden;
   list-style: none;
 }
