@@ -17,6 +17,7 @@ namespace app\wechat\controller;
 use app\wechat\service\WechatService;
 use library\Controller;
 use think\Db;
+use think\exception\HttpResponseException;
 
 /**
  * 回复规则管理
@@ -58,7 +59,7 @@ class Keys extends Controller
                 $wechat = WechatService::WeChatQrcode();
                 $result = $wechat->create($this->request->get('keys', ''));
                 $this->success('生成二维码成功！', "javascript:$.previewImage('{$wechat->url($result['ticket'])}')");
-            } catch (\think\exception\HttpResponseException $exception) {
+            } catch (HttpResponseException $exception) {
                 throw  $exception;
             } catch (\Exception $e) {
                 $this->error("生成二维码失败，请稍候再试！<br> {$e->getMessage()}");
