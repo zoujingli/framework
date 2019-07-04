@@ -15,6 +15,7 @@
 namespace app\admin\controller;
 
 use library\Controller;
+use think\exception\HttpResponseException;
 
 /**
  * 系统参数配置
@@ -62,8 +63,8 @@ class Config extends Controller
      */
     public function info()
     {
-        $this->applyCsrfToken('save');
         $this->title = '系统参数配置';
+        $this->applyCsrfToken('save');
         $this->fetch();
     }
 
@@ -93,13 +94,13 @@ class Config extends Controller
                     sysconf('storage_oss_domain', $domain);
                 }
                 $this->success('阿里云OSS存储动态配置成功！');
-            } catch (\think\exception\HttpResponseException $exception) {
+            } catch (HttpResponseException $exception) {
                 throw $exception;
             } catch (\Exception $e) {
                 $this->error("阿里云OSS存储配置失效，{$e->getMessage()}");
             }
         } else {
-            $this->success('参数配置成功！');
+            $this->success('系统参数配置成功！');
         }
     }
 
