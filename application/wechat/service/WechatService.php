@@ -106,8 +106,9 @@ class WechatService extends \We
             return self::instance(substr($name, 5), 'WePay', $config);
         } elseif (substr($name, 0, 6) === 'AliPay') {
             return self::instance(substr($name, 6), 'AliPay', $config);
+        } else {
+            throw new \think\Exception("class {$name} not found");
         }
-        throw new \think\Exception("class {$name} not found");
     }
 
     /**
@@ -134,12 +135,12 @@ class WechatService extends \We
         $token = strtolower("{$name}-{$appid}-{$appkey}-{$type}");
         if (class_exists('Yar_Client')) {
             return new \Yar_Client(config('wechat.service_url') . "/service/api.client/yar/{$token}");
-        }
-        if (class_exists('SoapClient')) {
+        } elseif (class_exists('SoapClient')) {
             $location = config('wechat.service_url') . "/service/api.client/soap/{$token}";
             return new \SoapClient(null, ['uri' => strtolower($name), 'location' => $location]);
+        } else {
+            throw new \think\Exception("Yar or Soap extensions are not installed.");
         }
-        throw new \think\Exception("Yar or Soap extensions are not installed.");
     }
 
     /**
