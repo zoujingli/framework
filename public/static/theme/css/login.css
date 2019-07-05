@@ -5,6 +5,7 @@ html {
   display: block;
 }
 body {
+  background: url("../img/login/bg1.jpg") no-repeat center center;
   background-size: cover;
 }
 .login-container {
