@@ -2,9 +2,9 @@
 body,
 html {
   height: 100%;
+  display: block;
 }
 body {
-  background: url("../img/login/bg1.jpg") no-repeat center center;
   background-size: cover;
 }
 .login-container {
@@ -75,9 +75,9 @@ body {
 }
 .login-container form ul li i.layui-icon {
   color: #fff;
-  padding: 13px 15px 13px 20px;
-  position: absolute;
   font-size: 18px;
+  position: absolute;
+  padding: 13px 15px 13px 20px;
 }
 .login-container form ul li span {
   letter-spacing: 1px;
@@ -112,8 +112,8 @@ body {
   position: absolute;
   text-align: center;
   line-height: 30px;
-  text-shadow: #000 0.1em 0.1em 0.1em;
   padding-bottom: 10px;
+  text-shadow: #000 0.1em 0.1em 0.1em;
 }
 .login-container .footer a,
 .login-container .footer span {
