@@ -237,6 +237,10 @@ fieldset legend {
   top: 31px;
   padding: 0;
 }
+.layui-input,
+.layui-select {
+  line-height: 1em;
+}
 /* 表单验证异常提示 */
 .label-required-prev:before {
   width: 1em;
