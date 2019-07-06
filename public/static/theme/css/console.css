@@ -231,7 +231,7 @@ fieldset legend {
   width: 100%;
   height: 32px;
   padding: 2px 8px;
-  line-height: 30px;
+  line-height: 1em;
 }
 .form-search .layui-form-select dl {
   top: 31px;
