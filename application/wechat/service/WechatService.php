@@ -117,7 +117,6 @@ class WechatService extends \We
      * @param string $type 接口类型
      * @param array $config 微信配置
      * @return mixed
-     * @throws \SoapFault
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
