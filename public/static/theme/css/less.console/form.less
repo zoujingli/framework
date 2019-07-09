@@ -33,7 +33,7 @@ fieldset {
       width: 100%;
       height: 32px;
       padding: 2px 8px;
-      line-height: 30px
+      line-height: 1em
     }
   }
 
@@ -43,18 +43,24 @@ fieldset {
   }
 }
 
+.layui-form {
+  .layui-input, .layui-select {
+    line-height: 1em;
+  }
+}
+
 /* 表单验证异常提示 */
 .label-required {
   &-prev:before {
     width: 1em;
-    margin-left: -0.8em;
     color: red;
     content: '*';
     display: inline-block;
     position: absolute;
     text-align: left;
     font-weight: 700;
-    line-height: 1.6em
+    line-height: 1.6em;
+    margin-left: -0.8em;
   }
 
   &:after, &-next:after {
@@ -82,15 +88,15 @@ fieldset {
 }
 
 .think-form-group-right {
+  border-left: none;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-  border-left: none
 }
 
 .think-form-group-left input {
+  border-right: none;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
-  border-right: none
 }
 
 .think-box-shadow {
@@ -101,8 +107,8 @@ fieldset {
 
 /** checkbox & radio */
 label.think-checkbox, label.think-radio {
+  margin-right: 10px;
   display: inline-block;
-  margin-right: 10px
 }
 
 .think-checkbox, .think-radio {

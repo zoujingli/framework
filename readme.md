@@ -1,5 +1,48 @@
+关于项目合并
+--
+* framework v1 合并到 ThinkAdmin v4
+* framework v2 合并到 ThinkAdmin master 分支
+* framework 仅用于 项目基础框架研究与开发，需要进行二开的朋友请移步 ThinkAdmin
+
+ThinkAdmin 版本
+--
+体验账号及密码都是`admin`
+* v1 基于 ThinkPHP5.0 开发
+
+> 在线体验地址：https://v1.thinkadmin.top
+
+> Gitee 代码地址：https://gitee.com/zoujingli/ThinkAdmin/tree/v1
+
+> Github 代码地址：https://github.com/zoujingli/ThinkAdmin/tree/v1
+
+* v2 基于 ThinkPHP5.0 开发
+
+> 在线体验地址：https://v2.thinkadmin.top
+
+> Gitee 代码地址：https://gitee.com/zoujingli/ThinkAdmin/tree/v2
+
+> Github 代码地址：https://github.com/zoujingli/ThinkAdmin/tree/v2
+
+* v3 基于 ThinkPHP5.1 开发
+
+> 在线体验地址：https://v3.thinkadmin.top
+
+> Gitee 代码地址：https://gitee.com/zoujingli/ThinkAdmin/tree/v3
+
+> Github 代码地址：https://github.com/zoujingli/ThinkAdmin/tree/v3
+
+* v4 基于 ThinkPHP5.1 开发
+
+> 在线体验地址：https://v4.thinkadmin.top
+
+> Gitee 代码地址：https://gitee.com/zoujingli/ThinkAdmin/tree/v4
+
+> Github 代码地址：https://github.com/zoujingli/ThinkAdmin/tree/v4
+
+
 大道至简 · 原生框架
 --
+
 framework V2.0 是一个基于 ThinkPHP5.1 开发的后台管理系统。
 
 我们致力于二次开发底层框架，提供完整的组件及API，基于此框架可以快速开发应用。

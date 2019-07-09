@@ -14,9 +14,8 @@
 
 {block name="content"}
 <div class="think-box-shadow">
-
-    <table class="layui-table" lay-skin="line">
-        <caption class="margin-bottom-10 text-left">{include file='user/index_search'}</caption>
+    {include file='user/index_search'}
+    <table class="layui-table margin-top-10" lay-skin="line">
         {notempty name='list'}
         <thead>
         <tr>
@@ -57,7 +56,7 @@
 
                 {if $vo.status eq 1 and auth("admin/user/forbid")}
                 <a class="layui-btn layui-btn-sm layui-btn-warm" data-action="{:url('forbid')}" data-value="id#{$vo.id};status#0" data-csrf="{:systoken('admin/user/forbid')}">禁 用</a>
-                {elseif auth("admin/user/resume")}
+                {elseif $vo.status eq 0 and auth("admin/user/resume")}
                 <a class="layui-btn layui-btn-sm layui-btn-warm" data-action="{:url('resume')}" data-value="id#{$vo.id};status#1" data-csrf="{:systoken('admin/user/resume')}">启 用</a>
                 {/if}
 
