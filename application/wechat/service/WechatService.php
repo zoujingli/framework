@@ -117,28 +117,30 @@ class WechatService extends \We
      * @param string $type 接口类型
      * @param array $config 微信配置
      * @return mixed
+     * @throws \SoapFault
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
     public static function instance($name, $type = 'WeChat', $config = [])
     {
-        if (in_array($type, ['WePay', 'AliPay']) || "{$type}{$name}" === 'WeChatPay') {
+        if (self::getType() === 'api' || in_array($type, ['WePay', 'AliPay']) || "{$type}{$name}" === 'WeChatPay') {
             if (class_exists($class = "\\{$type}\\" . ucfirst(strtolower($name)))) {
                 return new $class(empty($config) ? self::config() : $config);
             } else {
                 throw new \think\Exception("Class {$class} not found");
             }
-        }
-        set_time_limit(3600);
-        list($appid, $appkey) = [sysconf('wechat_thr_appid'), sysconf('wechat_thr_appkey')];
-        $token = strtolower("{$name}-{$appid}-{$appkey}-{$type}");
-        if (class_exists('Yar_Client')) {
-            return new \Yar_Client(config('wechat.service_url') . "/service/api.client/yar/{$token}");
-        } elseif (class_exists('SoapClient')) {
-            $location = config('wechat.service_url') . "/service/api.client/soap/{$token}";
-            return new \SoapClient(null, ['uri' => strtolower($name), 'location' => $location]);
         } else {
-            throw new \think\Exception("Yar or Soap extensions are not installed.");
+            set_time_limit(3600);
+            list($appid, $appkey) = [sysconf('wechat_thr_appid'), sysconf('wechat_thr_appkey')];
+            $token = strtolower("{$name}-{$appid}-{$appkey}-{$type}");
+            if (class_exists('Yar_Client')) {
+                return new \Yar_Client(config('wechat.service_url') . "/service/api.client/yar/{$token}");
+            } elseif (class_exists('SoapClient')) {
+                $location = config('wechat.service_url') . "/service/api.client/soap/{$token}";
+                return new \SoapClient(null, ['uri' => strtolower($name), 'location' => $location]);
+            } else {
+                throw new \think\Exception("Yar or Soap extensions are not installed.");
+            }
         }
     }
 
